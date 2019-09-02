@@ -18,7 +18,7 @@ Please reproduce all issues without any other unnecessary mods before submitting
  * Forge:
 
 #### Description of a Bug:
-A clear and concise description of what the bug is.
+A clear and concise description of what the issue is.
 
 #### How to Reproduce:
 1. 
