@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:iron_ring"
+    }
+  ],
+  "pattern": [
+    "nXn",
+    "X X",
+    "nXn"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:iron_ingot"
+    },
+	"n": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:iron_ring"
+  }
+}

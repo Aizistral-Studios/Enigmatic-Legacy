@@ -1,0 +1,54 @@
+package com.integral.enigmaticlegacy.brewing;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraftforge.common.brewing.IBrewingRecipe;
+
+public class ValidationBrewingRecipe implements IBrewingRecipe {
+	
+	    private final Ingredient input;
+	    private final Ingredient ingredient;
+
+	    public ValidationBrewingRecipe(Ingredient input, Ingredient ingredient) {
+	        this.input = input;
+	        this.ingredient = ingredient;
+	    }
+
+	    @Override
+	    public boolean isInput(ItemStack stack) {
+			
+			if (stack != null && this.input != null)
+				if (this.input.test(stack))
+					return true;
+			
+
+			return false;
+	    }
+
+	    @Override
+	    public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
+	        return ItemStack.EMPTY;
+	    }
+
+	    public Ingredient getInput() {
+	        return input;
+	    }
+
+	    public Ingredient getIngredient() {
+	        return ingredient;
+	    }
+
+	    public ItemStack getOutput() {
+	        return ItemStack.EMPTY;
+	    }
+
+	    @Override
+	    public boolean isIngredient(ItemStack ingredient) {
+	    	if (ingredient != null && this.ingredient != null)
+	    		return this.ingredient.test(ingredient);
+	    	else
+	    		return false;
+	    }
+	
+
+}
+

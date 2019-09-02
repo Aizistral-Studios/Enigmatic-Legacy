@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:ender_ring"
+    }
+  ],
+  "pattern": [
+    " C ",
+    "IXI",
+    "NPN"
+  ],
+  "key": {
+    "X": {
+      "item": "enigmaticlegacy:iron_ring"
+    },
+	"C": {
+      "item": "minecraft:ender_chest"
+    },
+	"I": {
+      "item": "minecraft:gold_ingot"
+    },
+	"N": {
+      "item": "minecraft:gold_nugget"
+    },
+	"P": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:ender_ring"
+  }
+}

@@ -1,0 +1,11 @@
+Changelog:
+- Fixed Mending Mixture recipe returning empty glass bottles. Now repair recipe it is used in does this;
+- Pearl of the Void no longer kills other bearers of the pearl if they are close enough and in darkness;
+- Will of the Ocean will now consume experience from Scroll of Ageless Wisdom, if player has one equipped and if there is enough experience stored in it;
+- Removed ability to open Ender Chest inventory by simply right-clicking with Ring of Ender, without equipping it and using keybind;
+- Fixed fatal error appearing when player dies while /gamerule keepInventory is set to true;
+- Some cleanup in lore functions;
+- Implemented config file;
+- Default cooldown of active ability of Eye of Nebula increased to 3 seconds;
+- Default cooldown of active ability of Angel's Blessing increased to 2 seconds;
+- Default mining speed boost from Charm of Treasure Hunter decreased to 50%.

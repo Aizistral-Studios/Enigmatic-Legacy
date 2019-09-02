@@ -1,0 +1,5 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "enigmaticlegacy:items/magma_heart"    }
+}

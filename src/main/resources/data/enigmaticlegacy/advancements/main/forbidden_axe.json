@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:forbidden_axe"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:forbiddenAxe"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:forbiddenAxe.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true,
+	"frame": "challenge"
+  },
+  "parent": "enigmaticlegacy:main/recall_potion",
+  "criteria": {
+    "spellstone": {
+      "trigger": "enigmaticlegacy:forbidden_axe_beheading"
+    }
+  }
+}

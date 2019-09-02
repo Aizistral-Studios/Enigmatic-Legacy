@@ -1,0 +1,18 @@
+{
+  "misc.hhon": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:misc/hhon",
+        "stream": false
+      }
+    ]
+  },
+  "misc.hhoff": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:misc/hhoff",
+        "stream": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:golem_heart"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:discoverSpellstone"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:discoverSpellstone.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "parent": "enigmaticlegacy:main/root",
+  "criteria": {
+    "spellstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "curios:spellstone"
+          }
+        ]
+      }
+    }
+  }
+}
