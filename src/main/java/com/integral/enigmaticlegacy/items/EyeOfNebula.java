@@ -12,9 +12,9 @@ import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
 import com.integral.enigmaticlegacy.helpers.Perhaps;
 import com.integral.enigmaticlegacy.helpers.Vector3;
-import com.integral.enigmaticlegacy.packets.PacketPlayerSetlook;
-import com.integral.enigmaticlegacy.packets.PacketPortalParticles;
-import com.integral.enigmaticlegacy.packets.PacketRecallParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketPlayerSetlook;
+import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.settings.KeyBinding;
@@ -104,7 +104,7 @@ public class EyeOfNebula extends Item implements ICurio, IPerhaps {
 	 if (SuperpositionHandler.hasSpellstoneCooldown(player))
 		 return;
 	 
-	 LivingEntity target = SuperpositionHandler.searchForTarget(player, world, 3.0F, (int) phaseRange);
+	 LivingEntity target = SuperpositionHandler.getObservedEntity(player, world, 3.0F, (int) phaseRange);
 	 
 	 if (target != null) {
 		 Vector3 targetPos = Vector3.fromEntityCenter(target);
@@ -134,24 +134,24 @@ public class EyeOfNebula extends Item implements ICurio, IPerhaps {
  }
  
  @Override
- public void onCurioTick(String identifier, LivingEntity living) {
-	 
+ public boolean canRightClickEquip() {
+     return true;
  }
  
-  @Override
-  public boolean canRightClickEquip() {
-    return true;
-  }
+ @Override
+ public void onCurioTick(String identifier, LivingEntity living) {
+	 // Insert existential void here
+ }
   
-  @Override
-  public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-	  
-  }
+ @Override
+ public void onEquipped(String identifier, LivingEntity entityLivingBase) {
+	 // Insert existential void here
+ }
   
-  @Override
-  public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-  
-  }
+ @Override
+ public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
+	 // Insert existential void here
+ }
   
 }
 

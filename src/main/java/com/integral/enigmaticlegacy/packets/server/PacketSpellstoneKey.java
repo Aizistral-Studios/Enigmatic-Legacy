@@ -1,4 +1,4 @@
-package com.integral.enigmaticlegacy.packets;
+package com.integral.enigmaticlegacy.packets.server;
 
 import java.util.function.Supplier;
 
@@ -9,10 +9,16 @@ import com.integral.enigmaticlegacy.items.EyeOfNebula;
 import com.integral.enigmaticlegacy.items.GolemHeart;
 import com.integral.enigmaticlegacy.items.MagmaHeart;
 import com.integral.enigmaticlegacy.items.OceanStone;
+import com.integral.enigmaticlegacy.items.VoidPearl;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
+
+/**
+ * Packet for triggering active ability of the spellstone.
+ * @author Integral
+ */
 
 public class PacketSpellstoneKey {
 	
@@ -45,6 +51,10 @@ public class PacketSpellstoneKey {
 		      			break;
 		      		
 		      		case 0:
+		      			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticLegacy.voidPearl)) {
+		      				VoidPearl spellstoneVoidPearl = (VoidPearl) EnigmaticLegacy.voidPearl;
+		      				spellstoneVoidPearl.triggerActiveAbility(playerServ.world, playerServ, SuperpositionHandler.getCurioStack(playerServ, EnigmaticLegacy.voidPearl));
+		      			}
 		      			break;
 		      			
 		      		case 1:

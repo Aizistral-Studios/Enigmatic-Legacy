@@ -122,20 +122,23 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
 		 }
  }
  
+  public void triggerActiveAbility(World world, PlayerEntity player, ItemStack stack) {
+	  // Insert existential void here
+  }
+ 
   @Override
   public boolean canRightClickEquip() {
-
-    return true;
+      return true;
   }
   
   @Override
   public void onEquipped(String identifier, LivingEntity living) {
-	  //Insert existential void here
+	  // Insert existential void here
   }
   
   @Override
   public void onUnequipped(String identifier, LivingEntity living) {
-	   
+	  // Insert existential void here
   }
   
   @Override

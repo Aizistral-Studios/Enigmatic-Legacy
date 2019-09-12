@@ -157,12 +157,10 @@ public class GolemHeart extends Item implements ICurio, IPerhaps {
  public void triggerActiveAbility(World world, ServerPlayerEntity player, ItemStack stack) {
 	 if (SuperpositionHandler.hasSpellstoneCooldown(player))
 		 return;
-	 //Insert existential void here
  }
  
   @Override
   public boolean canRightClickEquip() {
-
     return true;
   }
   
@@ -194,12 +192,7 @@ public class GolemHeart extends Item implements ICurio, IPerhaps {
 			  if (!stack.isEmpty())
 			  armorAmount++;
 		  }
-		  /*
-		  if (player.ticksExisted % 20 == 0)
-		  System.out.println("Armor stacks: " + player.inventory.getStackInSlot(100) + ", " + player.inventory.getStackInSlot(101) + ", " + player.inventory.getStackInSlot(102) + ", " + player.inventory.getStackInSlot(103));
 		  
-		  if (player.inventory.getStackInSlot(100) != null || player.inventory.getStackInSlot(101) != null || player.inventory.getStackInSlot(102) != null || player.inventory.getStackInSlot(103) != null) {
-			*/  
 		  if (armorAmount != 0) {
 			  map.removeAttributeModifiers(attributesDefault);
 			  map.removeAttributeModifiers(attributesNoArmor);

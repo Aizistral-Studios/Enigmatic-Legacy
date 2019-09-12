@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
-import com.integral.enigmaticlegacy.packets.PacketPortalParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -72,28 +72,26 @@ public class SuperMagnetRing extends Item implements ICurio, IPerhaps {
  
   @Override
   public boolean canRightClickEquip() {
-
-    return true;
+      return true;
   }
   
   @Override
   public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-
+	  // Insert existential void here
   }
   
   @Override
   public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-	  
+	  // Insert existential void here
   }
   
   @Override
   public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-	   
+	  // Insert existential void here
   }
   
   @Override
   public void onCurioTick(String identifier, LivingEntity living) {
-	  
 	  	if (living.isSneaking() || living.world.isRemote)
 	  		return;
 	  		

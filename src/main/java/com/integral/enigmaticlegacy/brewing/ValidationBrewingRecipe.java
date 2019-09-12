@@ -3,6 +3,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
 
+/**
+ * Stub brewing recipe used to validate some potions as valid inputs
+ * for brewing stand, even though they cannot actually be processed
+ * or upgraded any further.
+ * @author Integral
+ */
+
 public class ValidationBrewingRecipe implements IBrewingRecipe {
 	
 	    private final Ingredient input;

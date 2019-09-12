@@ -142,8 +142,7 @@ public class OceanStone extends Item implements ICurio, IPerhaps {
  
   @Override
   public boolean canRightClickEquip() {
-
-    return true;
+      return true;
   }
   
   @Override
@@ -153,7 +152,7 @@ public class OceanStone extends Item implements ICurio, IPerhaps {
   
   @Override
   public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-	   
+	  // Insert existential void here
   }
   
   @Override

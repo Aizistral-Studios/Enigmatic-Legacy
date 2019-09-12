@@ -1,6 +1,7 @@
 package com.integral.enigmaticlegacy.items;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -23,6 +24,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootTables;
@@ -85,7 +87,9 @@ public class LootGenerator extends Item {
 	 return integratedProperties;
  }
  
- public static void initConfigValues() {}
+ public static void initConfigValues() {
+	 // Insert existential void here
+ }
  
  @OnlyIn(Dist.CLIENT)
  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
@@ -98,6 +102,8 @@ public class LootGenerator extends Item {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGenerator5");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGenerator6");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGenerator7");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGenerator8");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGenerator9");
 	 } else {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 	 }
@@ -144,16 +150,53 @@ public class LootGenerator extends Item {
 	 World world = context.getWorld();
 	 ItemStack stack = context.getItem();
 	 
+	 if (world.isRemote)
+		 return ActionResultType.SUCCESS;
+	 
 	 if (world.getBlockState(context.getPos()).hasTileEntity()) {
 		 if (world.getTileEntity(context.getPos()) instanceof ChestTileEntity) {
 			 ChestTileEntity chest = (ChestTileEntity) world.getTileEntity(context.getPos());
 			 
 			 
-			 if (context.getFace() != Direction.UP) {
-				 chest.clear();
-		 	 } else {
+			 if (context.getFace() == Direction.UP) {
 				 chest.setLootTable(lootList.get(stack.getDamage()), lootRandomizer.nextLong());
 				 chest.fillWithLoot(player);
+		 	 } else if (context.getFace() == Direction.DOWN) {
+		 		 
+		 		HashMap<Item, Integer> lootMap = new HashMap<Item, Integer>();
+		 		 
+		 		 for (int counter = 0; counter < 32768; counter++) {
+		 			 chest.setLootTable(lootList.get(stack.getDamage()), lootRandomizer.nextLong());
+		 			 chest.fillWithLoot(player);
+		 			 
+		 			 for (int slot = 0; slot < chest.getSizeInventory(); slot++) {
+		 				 ItemStack generatedStack = chest.getStackInSlot(slot);
+		 				 Item generatedItem = generatedStack.getItem();
+		 				 int amount = generatedStack.getCount();
+		 				 
+		 				 if (!generatedStack.isEmpty()) {
+		 				 
+		 				 if (lootMap.containsKey(generatedItem)) {
+		 					 lootMap.put(generatedItem, lootMap.get(generatedItem)+amount);
+		 				 } else {
+		 					lootMap.put(generatedItem, amount);
+		 				 }
+		 				 
+		 				 }
+		 			 }
+		 			 
+		 			chest.clear();
+		 		 }
+		 		 
+		 		 EnigmaticLegacy.enigmaticLogger.info("Estimated generation complete in 32768 instances, results:");
+	 			 for (Item theItem : lootMap.keySet()) {
+	 				EnigmaticLegacy.enigmaticLogger.info("Item: " + theItem.getDisplayName(new ItemStack(theItem)).getUnformattedComponentText() + ", Amount: " + lootMap.get(theItem));
+	 			 }
+	 			 
+	 			 player.sendMessage(new TranslationTextComponent("message.enigmaticlegacy.gen_sim_complete").applyTextStyle(TextFormatting.DARK_PURPLE));
+	 			 
+			 } else {
+				 chest.clear();
 			 }
 			 
 			 return ActionResultType.SUCCESS;

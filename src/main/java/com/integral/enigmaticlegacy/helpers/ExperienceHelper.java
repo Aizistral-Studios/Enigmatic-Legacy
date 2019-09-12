@@ -2,6 +2,12 @@ package com.integral.enigmaticlegacy.helpers;
 
 import net.minecraft.entity.player.PlayerEntity;
 
+/**
+ * A couple of methods for messing around with player's experience.
+ * Originated from Botania's code.
+ * @author Integral
+ */
+
 public class ExperienceHelper {
 
 	public static int getPlayerXP(PlayerEntity player) {

@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "enigmaticlegacy:items/ultimate_potion_overlay",
+        "layer1": "enigmaticlegacy:items/ultimate_splash_potion"
+    }
+}

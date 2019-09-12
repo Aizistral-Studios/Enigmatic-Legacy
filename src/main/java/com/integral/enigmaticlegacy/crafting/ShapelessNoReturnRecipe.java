@@ -15,6 +15,12 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 
+/**
+ * A copy of regular Shapeless Recipe, but any container items
+ * are destroyed instead of remaining in a crafting grid.
+ * @author Integral
+ */
+
 public class ShapelessNoReturnRecipe extends ShapelessRecipe {
 	
 	private final String group;
@@ -37,7 +43,7 @@ public class ShapelessNoReturnRecipe extends ShapelessRecipe {
 
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
-		return ModRecipeSerializers.CRAFTING_MENDING_MIXTURE_REPAIR;
+		return EnigmaticRecipeSerializers.SHAPELESS_NO_RETURN;
 	}
 
 	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ShapelessNoReturnRecipe> {

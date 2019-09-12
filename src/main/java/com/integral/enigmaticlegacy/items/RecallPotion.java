@@ -8,8 +8,8 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
-import com.integral.enigmaticlegacy.packets.PacketPortalParticles;
-import com.integral.enigmaticlegacy.packets.PacketRecallParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.gui.screen.ControlsScreen;
@@ -51,7 +51,9 @@ public class RecallPotion extends Item implements IPerhaps {
  
  }
  
- public static void initConfigValues() {}
+ public static void initConfigValues() {
+	 // Insert existential void here
+ }
  
  @OnlyIn(Dist.CLIENT)
  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
@@ -105,26 +107,16 @@ public class RecallPotion extends Item implements IPerhaps {
      return stack;
   }
 
-  /**
-   * How long it takes to use or consume an item
-   */
  @Override
   public int getUseDuration(ItemStack stack) {
      return 32;
   }
 
-  /**
-   * returns the action that specifies what animation to play when the items is being used
-   */
  @Override
   public UseAction getUseAction(ItemStack stack) {
      return UseAction.DRINK;
   }
 
-  /**
-   * Called to trigger the item's "innate" right click behavior. To handle when this item is used on a Block, see
-   * {@link #onItemUse}.
-   */
  @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
      playerIn.setActiveHand(handIn);

@@ -10,13 +10,19 @@ import com.integral.enigmaticlegacy.brewing.SpecialBrewingRecipe;
 import com.integral.enigmaticlegacy.brewing.ValidationBrewingRecipe;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.config.ConfigHelper;
-import com.integral.enigmaticlegacy.crafting.ModRecipeSerializers;
+import com.integral.enigmaticlegacy.crafting.EnigmaticRecipeSerializers;
+import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
+import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticKeybindHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticMaterials;
+import com.integral.enigmaticlegacy.handlers.EnigmaticUpdateHandler;
 import com.integral.enigmaticlegacy.handlers.OneSpecialHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.helpers.AdvancedPotion;
+import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
+import com.integral.enigmaticlegacy.items.AstralDust;
 import com.integral.enigmaticlegacy.items.EnderRing;
 import com.integral.enigmaticlegacy.items.EnigmaticAmulet;
 import com.integral.enigmaticlegacy.items.EnigmaticItem;
@@ -41,24 +47,31 @@ import com.integral.enigmaticlegacy.items.RecallPotion;
 import com.integral.enigmaticlegacy.items.RelicOfTesting;
 import com.integral.enigmaticlegacy.items.SuperMagnetRing;
 import com.integral.enigmaticlegacy.items.ThiccScroll;
+import com.integral.enigmaticlegacy.items.UltimatePotionBase;
+import com.integral.enigmaticlegacy.items.UltimatePotionLingering;
+import com.integral.enigmaticlegacy.items.UltimatePotionSplash;
 import com.integral.enigmaticlegacy.items.UnholyGrail;
 import com.integral.enigmaticlegacy.items.VoidPearl;
 import com.integral.enigmaticlegacy.items.XPScroll;
-import com.integral.enigmaticlegacy.packets.PacketConfirmTeleportation;
-import com.integral.enigmaticlegacy.packets.PacketEnderRingKey;
-import com.integral.enigmaticlegacy.packets.PacketPlayerMotion;
-import com.integral.enigmaticlegacy.packets.PacketPlayerRotations;
-import com.integral.enigmaticlegacy.packets.PacketPlayerSetlook;
-import com.integral.enigmaticlegacy.packets.PacketPortalParticles;
-import com.integral.enigmaticlegacy.packets.PacketRecallParticles;
-import com.integral.enigmaticlegacy.packets.PacketRequestTeleportation;
-import com.integral.enigmaticlegacy.packets.PacketSlotUnlocked;
-import com.integral.enigmaticlegacy.packets.PacketSpellstoneKey;
-import com.integral.enigmaticlegacy.packets.PacketXPScrollKey;
+import com.integral.enigmaticlegacy.packets.clients.PacketHandleItemPickup;
+import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
+import com.integral.enigmaticlegacy.packets.clients.PacketPlayerRotations;
+import com.integral.enigmaticlegacy.packets.clients.PacketPlayerSetlook;
+import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketSlotUnlocked;
+import com.integral.enigmaticlegacy.packets.clients.PacketUpdateNotification;
+import com.integral.enigmaticlegacy.packets.server.PacketConfirmTeleportation;
+import com.integral.enigmaticlegacy.packets.server.PacketEnderRingKey;
+import com.integral.enigmaticlegacy.packets.server.PacketSpellstoneKey;
+import com.integral.enigmaticlegacy.packets.server.PacketXPScrollKey;
+import com.integral.enigmaticlegacy.proxy.ClientProxy;
+import com.integral.enigmaticlegacy.proxy.CommonProxy;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -67,6 +80,9 @@ import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.DamageSource;
@@ -79,6 +95,7 @@ import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.crafting.IngredientNBT;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -91,7 +108,6 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 @Mod("enigmaticlegacy")
-//@ObjectHolder(EnigmaticLegacy.MODID)
 public class EnigmaticLegacy {
 
 	public static EnigmaticLegacy enigmaticLegacy;
@@ -99,7 +115,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 	
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "1.1.0";
+	public static final String VERSION = "1.2.0";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 	
@@ -109,6 +125,8 @@ public class EnigmaticLegacy {
 	public static EnigmaticKeybindHandler keybindHandler;
 	public static final OneSpecialHandler butImAsGuiltyAsThe = new OneSpecialHandler();
 	public static List<String> damageTypesFire = new ArrayList<String>();
+	public static List<AdvancedPotion> ultimatePotionTypes = new ArrayList<AdvancedPotion>();
+	public static List<AdvancedPotion> commonPotionTypes = new ArrayList<AdvancedPotion>();
 	public static ConfigHandler configHandler;
 	public static SoundEvent HHON;
 	public static SoundEvent HHOFF;
@@ -146,8 +164,45 @@ public class EnigmaticLegacy {
 	public static Item hastePotionEmpowered;
 	public static Item hastePotionExtendedEmpowered;
 	public static Item etheriumIngot;
+	public static Item astralDust;
+	public static Item ultimatePotionBase;
+	public static Item ultimatePotionSplash;
+	public static Item ultimatePotionLingering;
+	public static Item commonPotionBase;
+	public static Item commonPotionSplash;
+	public static Item commonPotionLingering;
+	
+	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
+	public static AdvancedPotion ULTIMATE_INVISIBILITY;
+	public static AdvancedPotion ULTIMATE_LEAPING;
+	public static AdvancedPotion ULTIMATE_FIRE_RESISTANCE;
+	public static AdvancedPotion ULTIMATE_SWIFTNESS;
+	public static AdvancedPotion ULTIMATE_SLOWNESS;
+	public static AdvancedPotion ULTIMATE_TURTLE_MASTER;
+	public static AdvancedPotion ULTIMATE_WATER_BREATHING;
+	public static AdvancedPotion ULTIMATE_HEALING;
+	public static AdvancedPotion ULTIMATE_HARMING;
+	public static AdvancedPotion ULTIMATE_POISON;
+	public static AdvancedPotion ULTIMATE_REGENERATION;
+	public static AdvancedPotion ULTIMATE_STRENGTH;
+	public static AdvancedPotion ULTIMATE_WEAKNESS;
+	public static AdvancedPotion ULTIMATE_SLOW_FALLING;
+	
+	public static AdvancedPotion HASTE;
+	public static AdvancedPotion LONG_HASTE;
+	public static AdvancedPotion STRONG_HASTE;
+	public static AdvancedPotion ULTIMATE_HASTE;
+	
+	public static AdvancedPotion EMPTY;
+	
+	public static AdvancedPotion testingPotion;
+	
+	private static final String PTC_VERSION = "1";
+	
+	public static final CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	
 	public EnigmaticLegacy() {
+		enigmaticLogger.info("Constructing mod instance...");
 		
 		enigmaticLegacy = this;
 		
@@ -160,61 +215,62 @@ public class EnigmaticLegacy {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientRegistries);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::intermodStuff);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onLoadComplete);
-		FMLJavaModLoadingContext.get().getModEventBus().register(new ModRecipeSerializers());
+		FMLJavaModLoadingContext.get().getModEventBus().register(new EnigmaticRecipeSerializers());
+		
+		FMLJavaModLoadingContext.get().getModEventBus().register(this);
 		
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(enigmaticHandler);
 		MinecraftForge.EVENT_BUS.register(keybindHandler);
-		
-		//FMLJavaModLoadingContext.get().getModEventBus().register(enigmaticHandler);
-		
-		HHON = SuperpositionHandler.registerSound("misc.hhon");
-		HHOFF = SuperpositionHandler.registerSound("misc.hhoff");
+		MinecraftForge.EVENT_BUS.register(new EnigmaticUpdateHandler());
 		
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, configHandler.COMMON, "enigmatic-legacy-common.toml");
 		
+		enigmaticLogger.info("Mod instance constructed successfully.");
 	}
 	
-	public void onLoadComplete(final FMLLoadCompleteEvent event) {
+	private void onLoadComplete(final FMLLoadCompleteEvent event) {
+		
+		enigmaticLogger.info("Initializing load completion phase...");
+		
+		enigmaticLogger.info("Initializing config values...");
 		ConfigHelper.initializeConfigValues();
 		configLoaded = true;
 		
-		ItemStack stackAwkwardPotion = new ItemStack(Items.POTION, 1);
-		stackAwkwardPotion = PotionUtils.addPotionToItemStack(stackAwkwardPotion, Potions.AWKWARD);
-		ItemStack stackThiccPotion = new ItemStack(Items.POTION, 1);
-		stackThiccPotion = PotionUtils.addPotionToItemStack(stackThiccPotion, Potions.THICK);
-		
-		/*
-		HashMap<Ingredient, ItemStack> testMap = new HashMap<Ingredient, ItemStack>();
-		testMap.put(Ingredient.fromItems(Items.REDSTONE), new ItemStack(hastePotionExtended));
-		testMap.put(Ingredient.fromItems(Items.GLOWSTONE), new ItemStack(hastePotionEmpowered));
-		BrewingRecipeRegistry.addRecipe(new ComplexBrewingRecipe(Ingredient.fromItems(hastePotionDefault), testMap));
-		*/
-		
+		enigmaticLogger.info("Registering brewing recipes...");
 		if (configHandler.RECALL_POTION_ENABLED.get())
-			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(IngredientNBT.fromStacks(stackAwkwardPotion), Ingredient.fromItems(Items.ENDER_EYE), new ItemStack(recallPotion)));
+			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(IngredientNBT.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.AWKWARD)), Ingredient.fromItems(Items.ENDER_EYE), new ItemStack(recallPotion)));
 		
-		if (configHandler.HASTE_POTION_ENABLED.get()) {
-			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(IngredientNBT.fromStacks(stackAwkwardPotion), Ingredient.fromItems(Items.QUARTZ), new ItemStack(hastePotionDefault)));
-			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.fromItems(hastePotionDefault), Ingredient.fromItems(Items.REDSTONE), new ItemStack(hastePotionExtended)));
-			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.fromItems(hastePotionDefault), Ingredient.fromItems(Items.GLOWSTONE_DUST), new ItemStack(hastePotionEmpowered)));
-			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.fromItems(hastePotionExtended), Ingredient.fromItems(Items.GLOWSTONE_DUST), new ItemStack(hastePotionExtendedEmpowered)));
-			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.fromItems(hastePotionEmpowered), Ingredient.fromItems(Items.REDSTONE), new ItemStack(hastePotionExtendedEmpowered)));
+		if (true) {
+			
+			PotionHelper.registerCommonPotions();
+			
+			PotionHelper.registerBasicUltimatePotions();
+			PotionHelper.registerSplashUltimatePotions();
+			PotionHelper.registerLingeringUltimatePotions();
+			
 		}
 		
-		BrewingRecipeRegistry.addRecipe(new ValidationBrewingRecipe(Ingredient.fromItems(hastePotionExtendedEmpowered, recallPotion), null));
+		BrewingRecipeRegistry.addRecipe(new ValidationBrewingRecipe(Ingredient.fromItems(hastePotionExtendedEmpowered, recallPotion, ultimatePotionLingering, commonPotionLingering), null));
+		
+		EnigmaticUpdateHandler.init();
+		
+		enigmaticLogger.info("Load completion phase finished successfully");
 	}
 	
-	public void setup(final FMLCommonSetupEvent event) {
+	private void setup(final FMLCommonSetupEvent event) {
+		
+		enigmaticLogger.info("Initializing common setup phase...");
 		
 		damageTypesFire.add(DamageSource.LAVA.damageType);
 		damageTypesFire.add(DamageSource.IN_FIRE.damageType);
 		damageTypesFire.add(DamageSource.ON_FIRE.damageType);
 		
+		enigmaticLogger.info("Registering packets...");
 		packetInstance = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(EnigmaticLegacy.MODID, "main"))
-                .networkProtocolVersion(() -> "1")
-                .clientAcceptedVersions("1"::equals)
-                .serverAcceptedVersions("1"::equals)
+                .networkProtocolVersion(() -> PTC_VERSION)
+                .clientAcceptedVersions(PTC_VERSION::equals)
+                .serverAcceptedVersions(PTC_VERSION::equals)
                 .simpleChannel();
 		
 		packetInstance.registerMessage(0, PacketRecallParticles.class, PacketRecallParticles::encode, PacketRecallParticles::decode,
@@ -229,8 +285,7 @@ public class EnigmaticLegacy {
 				PacketPlayerRotations::handle);
 		packetInstance.registerMessage(5, PacketPlayerSetlook.class, PacketPlayerSetlook::encode, PacketPlayerSetlook::decode,
 				PacketPlayerSetlook::handle);
-		packetInstance.registerMessage(6, PacketRequestTeleportation.class, PacketRequestTeleportation::encode, PacketRequestTeleportation::decode,
-				PacketRequestTeleportation::handle);
+		
 		packetInstance.registerMessage(7, PacketConfirmTeleportation.class, PacketConfirmTeleportation::encode, PacketConfirmTeleportation::decode,
 				PacketConfirmTeleportation::handle);
 		packetInstance.registerMessage(8, PacketPortalParticles.class, PacketPortalParticles::encode, PacketPortalParticles::decode,
@@ -239,18 +294,27 @@ public class EnigmaticLegacy {
 				PacketXPScrollKey::handle);
 		packetInstance.registerMessage(10, PacketSlotUnlocked.class, PacketSlotUnlocked::encode, PacketSlotUnlocked::decode,
 				PacketSlotUnlocked::handle);
+		packetInstance.registerMessage(11, PacketHandleItemPickup.class, PacketHandleItemPickup::encode, PacketHandleItemPickup::decode,
+				PacketHandleItemPickup::handle);
+		packetInstance.registerMessage(12, PacketUpdateNotification.class, PacketUpdateNotification::encode, PacketUpdateNotification::decode,
+				PacketUpdateNotification::handle);
 		
-		
+		enigmaticLogger.info("Registering triggers...");
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);
 		CriteriaTriggers.register(BeheadingTrigger.INSTANCE);
+		
+		enigmaticLogger.info("Common setup phase finished successfully.");
 	}
 	
-	public void clientRegistries(final FMLClientSetupEvent event) {
-		//RenderingRegistry.registerEntityRenderingHandler(EternalItemEntity.class, renderManager -> new ItemRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
+	private void clientRegistries(final FMLClientSetupEvent event) {
+		enigmaticLogger.info("Initializing client setup phase...");
 		keybindHandler.registerKeybinds();
+		
+		enigmaticLogger.info("Client setup phase finished successfully.");
 	}
 	
-	public void intermodStuff(final InterModEnqueueEvent event) {
+	private void intermodStuff(final InterModEnqueueEvent event) {
+		enigmaticLogger.info("Sending messages to Curios API...");
 		SuperpositionHandler.registerCurioType("charm", 1, true, false, null);
 		SuperpositionHandler.registerCurioType("ring", 2, false, false, null);
 		SuperpositionHandler.registerCurioType("spellstone", 1, false, false, new ResourceLocation(EnigmaticLegacy.MODID, "textures/slots/spellstone_slot.png"));
@@ -263,7 +327,9 @@ public class EnigmaticLegacy {
 		
 		@SubscribeEvent
 		public static void registerItems(final RegistryEvent.Register<Item> event) {
-				
+			
+			enigmaticLogger.info("Initializing items registration...");
+			
 			enigmaticItem = new EnigmaticItem(EnigmaticItem.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_item"));
 			xpScroll = new XPScroll(XPScroll.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "xp_scroll"));
 			enigmaticAmulet = new EnigmaticAmulet(EnigmaticAmulet.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet"));
@@ -295,6 +361,16 @@ public class EnigmaticLegacy {
 			hastePotionEmpowered = new HastePotion(HastePotion.setupIntegratedProperties(Rarity.COMMON), 1800, 1).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "haste_potion_empowered"));
 			hastePotionExtendedEmpowered = new HastePotion(HastePotion.setupIntegratedProperties(Rarity.RARE), 4800, 1).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "haste_potion_extended_empowered"));
 			etheriumIngot = new EtheriumIngot(EtheriumIngot.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_ingot"));
+			astralDust = new AstralDust(AstralDust.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_dust"));
+			
+			commonPotionBase = new UltimatePotionBase(UltimatePotionBase.setupIntegratedProperties(Rarity.COMMON), true).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "common_potion"));
+			commonPotionSplash = new UltimatePotionSplash(UltimatePotionSplash.setupIntegratedProperties(Rarity.COMMON), true).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "common_potion_splash"));
+			commonPotionLingering = new UltimatePotionLingering(UltimatePotionLingering.setupIntegratedProperties(Rarity.COMMON), true).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "common_potion_lingering"));
+			
+			ultimatePotionBase = new UltimatePotionBase(UltimatePotionBase.setupIntegratedProperties(Rarity.RARE), false).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ultimate_potion"));
+			ultimatePotionSplash = new UltimatePotionSplash(UltimatePotionSplash.setupIntegratedProperties(Rarity.RARE), false).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ultimate_potion_splash"));
+			ultimatePotionLingering = new UltimatePotionLingering(UltimatePotionLingering.setupIntegratedProperties(Rarity.RARE), false).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ultimate_potion_lingering"));
+			
 			
 			event.getRegistry().registerAll(
 					enigmaticItem,
@@ -327,17 +403,27 @@ public class EnigmaticLegacy {
 					hastePotionEmpowered,
 					hastePotionExtendedEmpowered,
 					relicOfTesting,
-					etheriumIngot
+					etheriumIngot,
+					astralDust,
+					commonPotionBase,
+					commonPotionSplash,
+					commonPotionLingering,
+					ultimatePotionBase,
+					ultimatePotionSplash,
+					ultimatePotionLingering
 			);
 			
-			enigmaticLogger.info("Items registered!");
+			enigmaticLogger.info("Items registered successfully.");
 		}
 		
 		@SubscribeEvent
 		public static void registerSounds(final RegistryEvent.Register<SoundEvent> event) {
-		
+			enigmaticLogger.info("Initializing sounds registration...");
 			
-			enigmaticLogger.info("Sounds registered!");
+			HHON = SuperpositionHandler.registerSound("misc.hhon");
+			HHOFF = SuperpositionHandler.registerSound("misc.hhoff");
+			
+			enigmaticLogger.info("Sounds registered successfully.");
 		}
 		
 		@SubscribeEvent
@@ -346,15 +432,96 @@ public class EnigmaticLegacy {
         }
 		
 		@SubscribeEvent
-    	public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> entityRegistryEvent) {
+		public static void registerBrewing(RegistryEvent.Register<Potion> event) {
 			
-			/*entityRegistryEvent.getRegistry().registerAll(		    	
-					eternalitementity = (EntityType<EternalItemEntity>) EntityType.Builder.<EternalItemEntity>create(EternalItemEntity::new, EntityClassification.MISC).setCustomClientFactory(EternalItemEntity::new)
-    		    	.setShouldReceiveVelocityUpdates(true).setUpdateInterval(60)
-    		    	.build("eternalitementity").setRegistryName(EnigmaticLegacy.MODID, "eternalitementity")
-    		);*/	
+			enigmaticLogger.info("Initializing advanced potion system...");
+			
+			ULTIMATE_NIGHT_VISION = new AdvancedPotion("ultimate_night_vision", new EffectInstance(Effects.NIGHT_VISION, 19200));
+			ULTIMATE_INVISIBILITY = new AdvancedPotion("ultimate_invisibility", new EffectInstance(Effects.INVISIBILITY, 19200));
+			ULTIMATE_LEAPING = new AdvancedPotion("ultimate_leaping", new EffectInstance(Effects.JUMP_BOOST, 9600, 1));
+			ULTIMATE_FIRE_RESISTANCE = new AdvancedPotion("ultimate_fire_resistance", new EffectInstance(Effects.FIRE_RESISTANCE, 19200));
+			ULTIMATE_SWIFTNESS = new AdvancedPotion("ultimate_swiftness", new EffectInstance(Effects.SPEED, 9600, 1));
+			ULTIMATE_SLOWNESS = new AdvancedPotion("ultimate_slowness", new EffectInstance(Effects.SLOWNESS, 1200, 3));
+			ULTIMATE_TURTLE_MASTER = new AdvancedPotion("ultimate_turtle_master", new EffectInstance(Effects.SLOWNESS, 800, 5), new EffectInstance(Effects.RESISTANCE, 800, 3));
+			ULTIMATE_WATER_BREATHING =  new AdvancedPotion("ultimate_water_breathing", new EffectInstance(Effects.WATER_BREATHING, 19200));
+			ULTIMATE_HEALING = new AdvancedPotion("ultimate_healing", new EffectInstance(Effects.INSTANT_HEALTH, 1, 2));
+			ULTIMATE_HARMING = new AdvancedPotion("ultimate_harming", new EffectInstance(Effects.INSTANT_DAMAGE, 1, 2));
+			ULTIMATE_POISON = new AdvancedPotion("ultimate_poison", new EffectInstance(Effects.POISON, 1800, 1));
+			ULTIMATE_REGENERATION = new AdvancedPotion("ultimate_regeneration", new EffectInstance(Effects.REGENERATION, 1800, 1));
+			ULTIMATE_STRENGTH = new AdvancedPotion("ultimate_strength", new EffectInstance(Effects.STRENGTH, 9600, 1));
+			ULTIMATE_WEAKNESS = new AdvancedPotion("ultimate_weakness", new EffectInstance(Effects.WEAKNESS, 9600));
+			ULTIMATE_SLOW_FALLING = new AdvancedPotion("ultimate_slow_falling", new EffectInstance(Effects.SLOW_FALLING, 9600));
+	
+			HASTE = new AdvancedPotion("haste", new EffectInstance(Effects.HASTE, 3600));
+			LONG_HASTE = new AdvancedPotion("long_haste", new EffectInstance(Effects.HASTE, 9600));
+			STRONG_HASTE = new AdvancedPotion("strong_haste", new EffectInstance(Effects.HASTE, 1800, 1));
+			ULTIMATE_HASTE = new AdvancedPotion("ultimate_haste", new EffectInstance(Effects.HASTE, 9600, 1));
+			
+			EMPTY = new AdvancedPotion("empty");
+			
+			ultimatePotionTypes.add(ULTIMATE_NIGHT_VISION);
+			ultimatePotionTypes.add(ULTIMATE_INVISIBILITY);
+			ultimatePotionTypes.add(ULTIMATE_LEAPING);
+			ultimatePotionTypes.add(ULTIMATE_FIRE_RESISTANCE);
+			ultimatePotionTypes.add(ULTIMATE_SWIFTNESS);
+			ultimatePotionTypes.add(ULTIMATE_SLOWNESS);
+			ultimatePotionTypes.add(ULTIMATE_TURTLE_MASTER);
+			ultimatePotionTypes.add(ULTIMATE_WATER_BREATHING);
+			ultimatePotionTypes.add(ULTIMATE_HEALING);
+			ultimatePotionTypes.add(ULTIMATE_HARMING);
+			ultimatePotionTypes.add(ULTIMATE_POISON);
+			ultimatePotionTypes.add(ULTIMATE_REGENERATION);
+			ultimatePotionTypes.add(ULTIMATE_STRENGTH);
+			ultimatePotionTypes.add(ULTIMATE_WEAKNESS);
+			ultimatePotionTypes.add(ULTIMATE_SLOW_FALLING);
+			
+			commonPotionTypes.add(HASTE);
+			commonPotionTypes.add(LONG_HASTE);
+			commonPotionTypes.add(STRONG_HASTE);
+			ultimatePotionTypes.add(ULTIMATE_HASTE);
+			
+			enigmaticLogger.info("Advanced potion system initialized successfully.");
+		}
+		
+		@SubscribeEvent
+    	public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> event) {
+			enigmaticLogger.info("Initializing entities registration...");
+			
+			event.getRegistry().register(EntityType.Builder.<PermanentItemEntity>create(PermanentItemEntity::new, EntityClassification.MISC)
+					.size(0.25F, 0.25F)
+					.setTrackingRange(64)
+					.setCustomClientFactory((spawnEntity,world) -> new PermanentItemEntity(PermanentItemEntity.TYPE, world))
+					.setUpdateInterval(2)
+					.setShouldReceiveVelocityUpdates(true)
+					.build("")
+					.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "permanent_item_entity")));
+			
+			event.getRegistry().register(EntityType.Builder.<EnigmaticPotionEntity>create(EnigmaticPotionEntity::new, EntityClassification.MISC)
+					.size(0.25F, 0.25F)
+					.setTrackingRange(64)
+					.setCustomClientFactory((spawnEntity,world) -> new EnigmaticPotionEntity(EnigmaticPotionEntity.TYPE, world))
+					.setUpdateInterval(10)
+					.setShouldReceiveVelocityUpdates(true)
+					.build("")
+					.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_potion_entity")));
     		
+			enigmaticLogger.info("Entities registered successfully.");
     	}
+	}
+	
+	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
+	public void onColorInit(net.minecraftforge.client.event.ColorHandlerEvent.Item event) {
+		enigmaticLogger.info("Initializing colors registration...");
+		
+		event.getItemColors().register((stack, color) -> {
+			 if (PotionHelper.isAdvancedPotion(stack))
+				 return color > 0 ? -1 : PotionHelper.getColor(stack);
+				 
+	         return color > 0 ? -1 : PotionUtils.getColor(stack);
+	      }, EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.commonPotionLingering);
+		
+		enigmaticLogger.info("Colors registered successfully.");
 	}
 	
 	 public static final ItemGroup enigmaticTab = new ItemGroup("enigmaticCreativeTab") {
@@ -363,5 +530,16 @@ public class EnigmaticLegacy {
 	         return new ItemStack(EnigmaticLegacy.enigmaticItem);
 	      }
 	   };
+	   
+	   
+	 public static final ItemGroup enigmaticPotionTab = new ItemGroup("enigmaticPotionCreativeTab") {
+		 @OnlyIn(Dist.CLIENT)
+	      public ItemStack createIcon() {
+	         return new ItemStack(EnigmaticLegacy.recallPotion);
+	      }
+	 };
+	   
+	   
+	
 	
 }

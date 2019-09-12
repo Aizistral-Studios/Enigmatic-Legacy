@@ -4,6 +4,12 @@ import java.util.HashMap;
 
 import net.minecraft.entity.LivingEntity;
 
+/**
+ * Basically, a HashMap<LivingEntity, Integer>, but with integrated
+ * ticking and checking functions for stored cooldowns.
+ * @author Integral
+ */
+
 public class CooldownMap extends HashMap<LivingEntity, Integer> {
 
 	private static final long serialVersionUID = 1159860520734947286L;

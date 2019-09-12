@@ -9,6 +9,11 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.LogicalSidedProvider;
 
+/**
+ * Did you get the reference?
+ * @author Integral
+ */
+
 public class OneSpecialHandler {
 	
 	Random rand = new Random();

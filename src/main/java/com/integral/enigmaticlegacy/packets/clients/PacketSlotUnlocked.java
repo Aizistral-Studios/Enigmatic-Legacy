@@ -1,4 +1,4 @@
-package com.integral.enigmaticlegacy.packets;
+package com.integral.enigmaticlegacy.packets.clients;
 import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
@@ -6,13 +6,16 @@ import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.helpers.SlotUnlockedToast;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.toasts.IToast;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkEvent;
+
+/**
+ * Packet for displaying Curio slot unlock notification.
+ * @author Integral
+ */
 
 public class PacketSlotUnlocked {
 	
@@ -29,12 +32,11 @@ public class PacketSlotUnlocked {
 	  public static PacketSlotUnlocked decode(PacketBuffer buf) {
 	    return new PacketSlotUnlocked(buf.readString());
 	 }
-	  
-	  @OnlyIn(Dist.CLIENT)
+
 	  public static void handle(PacketSlotUnlocked msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {
-		      PlayerEntity player = Minecraft.getInstance().player;
+		      ClientPlayerEntity player = Minecraft.getInstance().player;
 		      ItemStack stack;
 		      
 		      if (msg.type.equals("ring"))

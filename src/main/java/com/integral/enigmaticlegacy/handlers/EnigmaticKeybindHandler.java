@@ -3,9 +3,9 @@ package com.integral.enigmaticlegacy.handlers;
 import org.lwjgl.glfw.GLFW;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.packets.PacketEnderRingKey;
-import com.integral.enigmaticlegacy.packets.PacketSpellstoneKey;
-import com.integral.enigmaticlegacy.packets.PacketXPScrollKey;
+import com.integral.enigmaticlegacy.packets.server.PacketEnderRingKey;
+import com.integral.enigmaticlegacy.packets.server.PacketSpellstoneKey;
+import com.integral.enigmaticlegacy.packets.server.PacketXPScrollKey;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
@@ -15,6 +15,11 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
+
+/**
+ * Class for creating and handling keybinds on the client.
+ * @author Integral
+ */
 
 public class EnigmaticKeybindHandler {
 	
@@ -74,17 +79,4 @@ public class EnigmaticKeybindHandler {
 		}
 		
 	}
-	
-	/*
-	@SubscribeEvent
-    public void onKeyInputLul(InputEvent.KeyInputEvent event) {
-		//System.out.println("HEY BOY: " + event.getPhase());
-		
-		if (this.discordRingKey.isPressed()) {
-			//Minecraft.getMinecraft().thePlayer.addChatMessage(new ChatComponentText("Hello there! You've just pressed: " + Keyboard.getKeyName(discordRingKey.getKeyCode())));
-			Main.packetInstance.sendToServer(new DiscordKeybindMessage(true));
-		}
-		
-    }
-	*/
 }

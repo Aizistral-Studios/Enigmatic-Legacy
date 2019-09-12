@@ -43,7 +43,9 @@ public class EnigmaticAmulet extends Item implements ICurio {
  
  }
  
- public static void initConfigValues() {}
+ public static void initConfigValues() {
+	 // Insert existential void here
+ }
  
  @OnlyIn(Dist.CLIENT)
  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
@@ -74,59 +76,29 @@ public class EnigmaticAmulet extends Item implements ICurio {
     return true;
   }
   
-  /*
-  @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-	  
-	  ItemStack itemstack = playerIn.getHeldItem(handIn);
-		playerIn.setActiveHand(handIn);
-		
-		EnigmaticLegacy.enigmaticLogger.info("Item used: " + CuriosAPI.getCurioTags(itemstack.getItem()));
-		
-		LazyOptional<ICurioItemHandler> curioHandler = CuriosAPI.getCuriosHandler(playerIn);
-		curioHandler.ifPresent(handler -> {
-			//handler.disableCurio("spellstone");
-			//System.out.println(handler.getDisabled());
-			//System.out.println(handler.getWearer());
-		});
-		
-		if (worldIn.isRemote) {
-			IToast toast = new SlotUnlockedToast(new ItemStack(EnigmaticLegacy.thiccScroll), "scroll");
-			Minecraft.getInstance().getToastGui().add(toast);
-			
-		}
-		
-		//CuriosAPI.enableTypeForEntity("ring", playerIn);
-		
-		System.out.println("Value: " + EnigmaticLegacy.configHandler.SUPER_MAGNET_RING_SOUND.get());
-		//System.out.println("Value Original: " + EnigmaticLegacy.configHandler.MAGNET_RING_RANGE.get());
-		
-	  return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-	  
-  }
-  */
-  
   @Override
   public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 	 /* if (entityIn instanceof PlayerEntity & !worldIn.isRemote)
 	  if (!ItemNBTHelper.verifyExistance(stack, "Inscription")) {
 		  ItemNBTHelper.setString(stack, "Inscription", entityIn.getDisplayName().getString());
 	  }*/
+	  
+	 // Insert existential void here
   }
   
   @Override
   public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-	  
+	 // Insert existential void here
   }
   
   @Override
   public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-	   
+	 // Insert existential void here
   }
   
   @Override
   public void onCurioTick(String identifier, LivingEntity entityLivingBase) {
-	 
+	 // Insert existential void here
   }
   
   @Override

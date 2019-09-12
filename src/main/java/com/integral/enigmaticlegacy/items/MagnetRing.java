@@ -68,41 +68,26 @@ public class MagnetRing extends Item implements ICurio, IPerhaps {
  
   @Override
   public boolean canRightClickEquip() {
-
-    return true;
+      return true;
   }
 
   @Override
   public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-
+	  // Insert existential void here
   }
   
   @Override
   public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-	  
+	  // Insert existential void here
   }
   
   @Override
   public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-	   
+	  // Insert existential void here
   }
   
   @Override
   public void onCurioTick(String identifier, LivingEntity living) {
-	  /*
-	  Integer ticksFlying =
-		        ObfuscationReflectionHelper.getPrivateValue(LivingEntity.class, living,
-		                                                    "field_184629_bo");
-	  
-	  try {
-	  Field target = Class.forName("net.minecraft.entity.LivingEntity").getDeclaredField("activeItemStackUseCount");
-		
-	   target.setAccessible(true);
-       target.setInt(living, 5);
-	  	
-	  } catch (Exception ex) {
-		  
-	  }*/
 	  
 	  	if (living.isSneaking())
 	  		return;

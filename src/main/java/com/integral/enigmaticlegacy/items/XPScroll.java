@@ -32,7 +32,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import top.theillusivec4.curios.api.capability.ICurio;
 
-@SuppressWarnings("static-access")
 public class XPScroll extends Item implements ICurio, IPerhaps {
 	
  public static Properties integratedProperties = new Item.Properties();
@@ -169,11 +168,11 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
 		 
 		 if (ItemNBTHelper.getBoolean(itemstack, "AbsorptionMode", true)) {
 			 
-			 if (player.experienceTotal >= this.xpPortion) {
-			 player.giveExperiencePoints(-this.xpPortion);
-			 ItemNBTHelper.setInt(itemstack, "XPStored", ItemNBTHelper.getInt(itemstack, "XPStored", 0) + this.xpPortion);
+			 if (player.experienceTotal >= xpPortion) {
+			 player.giveExperiencePoints(-xpPortion);
+			 ItemNBTHelper.setInt(itemstack, "XPStored", ItemNBTHelper.getInt(itemstack, "XPStored", 0) + xpPortion);
 			 }
-			 else if (player.experienceTotal > 0 & ExperienceHelper.getPlayerXP(player) < this.xpPortion) {
+			 else if (player.experienceTotal > 0 & ExperienceHelper.getPlayerXP(player) < xpPortion) {
 			 int exp = player.experienceTotal;
 			 player.giveExperiencePoints(-exp);
 			 ItemNBTHelper.setInt(itemstack, "XPStored", ItemNBTHelper.getInt(itemstack, "XPStored", 0) + exp);
@@ -184,10 +183,10 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
 			 
 			 int xp = ItemNBTHelper.getInt(itemstack, "XPStored", 0);
 			 
-				if (xp >= this.xpPortion) {
-					ItemNBTHelper.setInt(itemstack, "XPStored", xp-this.xpPortion);
-					player.giveExperiencePoints(this.xpPortion);
-				} else if (xp > 0 & xp < this.xpPortion) {
+				if (xp >= xpPortion) {
+					ItemNBTHelper.setInt(itemstack, "XPStored", xp-xpPortion);
+					player.giveExperiencePoints(xpPortion);
+				} else if (xp > 0 & xp < xpPortion) {
 					ItemNBTHelper.setInt(itemstack, "XPStored", 0);
 					player.giveExperiencePoints(xp);
 				}
@@ -203,18 +202,17 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
  
   @Override
   public boolean canRightClickEquip() {
-
-    return false;
+      return false;
   }
   
   @Override
   public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-	  
+	  // Insert existential void here
   }
   
   @Override
   public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-	   
+	  // Insert existential void here
   }
   
 }

@@ -31,6 +31,11 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import top.theillusivec4.curios.api.capability.CuriosCapability;
 import top.theillusivec4.curios.api.capability.ICurio;
 
+/**
+ * Handler for registering item's capabilities implemented in ICurio interface.
+ * @author Integral
+ */
+
 public class CapabilitiesRegistrationHandler {
 	
 	public static void registerCapabilities(AttachCapabilitiesEvent<ItemStack> evt) {

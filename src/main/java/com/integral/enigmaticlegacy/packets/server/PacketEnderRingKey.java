@@ -1,4 +1,4 @@
-package com.integral.enigmaticlegacy.packets;
+package com.integral.enigmaticlegacy.packets.server;
 
 import java.util.function.Supplier;
 
@@ -13,6 +13,11 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.network.NetworkEvent;
+
+/**
+ * Packet for opening Ender Chest inventory to a player.
+ * @author Integral
+ */
 
 public class PacketEnderRingKey {
 	

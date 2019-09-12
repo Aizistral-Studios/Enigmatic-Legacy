@@ -1,4 +1,4 @@
-package com.integral.enigmaticlegacy.packets;
+package com.integral.enigmaticlegacy.packets.server;
 
 import java.util.function.Supplier;
 
@@ -11,6 +11,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
 import net.minecraftforge.fml.network.NetworkEvent;
+
+/**
+ * Packet for handing the keybind of Scroll of Ageless Wisdom.
+ * @author Integral
+ */
 
 public class PacketXPScrollKey {
 	

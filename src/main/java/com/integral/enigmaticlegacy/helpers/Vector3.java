@@ -17,8 +17,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class Vector3
-{
+/**
+ * Advanced version of vanilla Vec3d object.
+ * Originated from Botania's code.
+ * @author Integral
+ */
+
+public class Vector3 {
 	public static final Vector3 ZERO = new Vector3(0, 0, 0);
 	public static final Vector3 ONE = new Vector3(1, 1, 1);
 	public static final Vector3 CENTER = new Vector3(0.5, 0.5, 0.5);

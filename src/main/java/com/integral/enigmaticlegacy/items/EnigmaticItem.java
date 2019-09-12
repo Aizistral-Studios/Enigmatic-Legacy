@@ -1,15 +1,18 @@
 package com.integral.enigmaticlegacy.items;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
 
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
@@ -20,7 +23,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import top.theillusivec4.curios.api.capability.ICurio;
 
 public class EnigmaticItem extends Item implements ICurio {
-	
+ 
+ public static HashMap<PlayerEntity, Boolean> flightMap = new HashMap<PlayerEntity, Boolean>();
  public static Properties integratedProperties = new Item.Properties();
 
  public EnigmaticItem(Properties properties) {
@@ -36,7 +40,9 @@ public class EnigmaticItem extends Item implements ICurio {
  
  }
  
- public static void initConfigValues() {}
+ public static void initConfigValues() {
+	 // Insert existential void here
+ }
  
  @OnlyIn(Dist.CLIENT)
  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
@@ -53,29 +59,6 @@ public class EnigmaticItem extends Item implements ICurio {
 	 }
  }
  
- /*
- @Override
- public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        
-	 	 EnigmaticLegacy.enigmaticLogger.info("Item used!");
-	 	 ItemStack itemstack = playerIn.getHeldItem(handIn);
-	 	 playerIn.setActiveHand(handIn);
-	 	 
-	 	 boolean flyingAllowed = playerIn.abilities.allowFlying;
-		 
-		 if (!flyingAllowed)
-			 playerIn.abilities.allowFlying = true;
-		 else {
-			 playerIn.abilities.allowFlying = false;
-			 playerIn.abilities.isFlying = false;
-		 }
-		 
-		 playerIn.sendPlayerAbilities();
-        return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
-        
-  }
- */
- 
   @Override
   public boolean canRightClickEquip() {
 
@@ -84,12 +67,12 @@ public class EnigmaticItem extends Item implements ICurio {
   
   @Override
   public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-	  //Insert existential void here
+	  // Insert existential void here
   }
   
   @Override
   public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-	   
+	  // Insert existential void here
   }
   
   @Override
@@ -98,6 +81,27 @@ public class EnigmaticItem extends Item implements ICurio {
 		  entityLivingBase.extinguish();
 
 	  entityLivingBase.clearActivePotions();
+  }
+  
+  public static void handleEnigmaticFlight(final PlayerEntity player) {
+      try {
+          if (SuperpositionHandler.hasCurio((LivingEntity)player, EnigmaticLegacy.enigmaticItem)) {
+              flightMap.put(player, true);
+              if (!player.abilities.allowFlying) {
+                  player.abilities.allowFlying = true;
+                  player.sendPlayerAbilities();
+              }
+          }
+          else if (flightMap.get(player)) {
+              player.abilities.allowFlying = false;
+              player.abilities.isFlying = false;
+              player.sendPlayerAbilities();
+              flightMap.put(player, false);
+          }
+      }
+      catch (NullPointerException ex) {
+          flightMap.put(player, false);
+      }
   }
   
 }

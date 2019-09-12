@@ -36,7 +36,9 @@ public class EscapeScroll extends Item implements ICurio, IPerhaps {
 	 return integratedProperties;
  }
  
- public static void initConfigValues() {}
+ public static void initConfigValues() {
+	 // Insert existential void here
+ }
  
  @Override
  public boolean isForMortals() {
@@ -64,12 +66,12 @@ public class EscapeScroll extends Item implements ICurio, IPerhaps {
   
   @Override
   public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-	  
+	 // Insert existential void here
   }
   
   @Override
   public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-	   
+	 // Insert existential void here
   }
   
 }

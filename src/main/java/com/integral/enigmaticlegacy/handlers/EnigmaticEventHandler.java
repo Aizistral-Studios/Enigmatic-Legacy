@@ -3,12 +3,14 @@ package com.integral.enigmaticlegacy.handlers;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.helpers.CooldownMap;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
+import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
+import com.integral.enigmaticlegacy.items.EnigmaticItem;
 import com.integral.enigmaticlegacy.items.EyeOfNebula;
 import com.integral.enigmaticlegacy.items.ForbiddenAxe;
 import com.integral.enigmaticlegacy.items.GolemHeart;
@@ -17,10 +19,10 @@ import com.integral.enigmaticlegacy.items.MiningCharm;
 import com.integral.enigmaticlegacy.items.MonsterCharm;
 import com.integral.enigmaticlegacy.items.OceanStone;
 import com.integral.enigmaticlegacy.items.VoidPearl;
-import com.integral.enigmaticlegacy.packets.PacketConfirmTeleportation;
-import com.integral.enigmaticlegacy.packets.PacketPortalParticles;
-import com.integral.enigmaticlegacy.packets.PacketRecallParticles;
-import com.integral.enigmaticlegacy.packets.PacketSlotUnlocked;
+import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketSlotUnlocked;
+import com.integral.enigmaticlegacy.packets.server.PacketConfirmTeleportation;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
 
 import net.minecraft.client.Minecraft;
@@ -45,7 +47,6 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
@@ -55,7 +56,6 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.storage.loot.ItemLootEntry;
@@ -90,24 +90,31 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
 import top.theillusivec4.curios.api.CuriosAPI;
 
+/**
+ * Generic event handler of the whole mod.
+ * @author Integral
+ */
+
 @Mod.EventBusSubscriber(modid = EnigmaticLegacy.MODID)
 public class EnigmaticEventHandler {
-	
-	Random randy = new Random();
-	public boolean configsLoaded = false;
+
 	private static final String NBT_KEY_FIRSTJOIN = "enigmaticlegacy.firstjoin";
 	private static final String NBT_KEY_ENABLESPELLSTONE = "enigmaticlegacy.spellstones_enabled";
 	private static final String NBT_KEY_ENABLERING = "enigmaticlegacy.rings_enabled";
 	private static final String NBT_KEY_ENABLESCROLL = "enigmaticlegacy.scrolls_enabled";
-	@OnlyIn(Dist.CLIENT)
+	
 	public static CooldownMap deferredToast = new CooldownMap();
-	@OnlyIn(Dist.CLIENT)
 	public static List<IToast> scheduledToasts = new ArrayList<IToast>();
 	
 	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
 	public void onEntityTick(TickEvent.ClientTickEvent event) {
 		try {
 		PlayerEntity player = Minecraft.getInstance().player;
+		
+		/*
+		 * Handler for displaying queued Toasts on client.
+		 */
 		
 		deferredToast.tick(player);
 		
@@ -118,23 +125,7 @@ public class EnigmaticEventHandler {
 			if (scheduledToasts.size() > 0)
 				deferredToast.put(player, 5);
 		}
-			
 		
-		if (Minecraft.getInstance().isGamePaused())
-			return;
-		
-		int range = 24;
-		List<Entity> list = Minecraft.getInstance().player.world.getEntitiesWithinAABB(Entity.class, new AxisAlignedBB(player.posX - range, player.posY - range, player.posZ - range, player.posX + range, player.posY + range, player.posZ + range));
-		for (Entity entity : list) {
-			if (entity instanceof ItemEntity) {
-				ItemEntity item = (ItemEntity) entity;
-				if (item.getItem() != null)
-					if (item.hasNoGravity())
-						 if (item.getItem().getItem() == EnigmaticLegacy.escapeScroll)
-							item.world.addParticle(ParticleTypes.PORTAL, item.posX, item.posY+(item.getHeight()/2), item.posZ, ((Math.random()-0.5)*2.0), ((Math.random()-0.5)*2.0), ((Math.random()-0.5)*2.0));
-						
-			}
-		}
 		} catch (Exception ex) {
 			//DO NOTHING
 		}
@@ -142,6 +133,12 @@ public class EnigmaticEventHandler {
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onLooting(LootingLevelEvent event) {
+		
+		/*
+		 * Handler for adding additional Looting level,
+		 * if player is bearing Emblem of Monster Slayer.
+		 */
+		
 		if (event.getDamageSource().getTrueSource() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getDamageSource().getTrueSource();
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.monsterCharm))
@@ -163,7 +160,8 @@ public class EnigmaticEventHandler {
 	public void miningStuff(PlayerEvent.BreakSpeed event) {
 		
 		/*
-		 * Handler for calculating mining speed boost from wearing Mining Charm.
+		 * Handler for calculating mining speed boost
+		 * from wearing Charm of Treasure Hunter.
 		 */
 		
 		float miningBoost = 1.0F;
@@ -171,10 +169,6 @@ public class EnigmaticEventHandler {
 			miningBoost += MiningCharm.miningBoost.asModifier(false);
 		
 		event.setNewSpeed(event.getNewSpeed()*miningBoost);
-		
-		
-		//System.out.println("New Speed: " + event.getNewSpeed());
-		//System.out.println("Original Speed: " + event.getOriginalSpeed());
 	}
 	
 	@SubscribeEvent
@@ -182,23 +176,6 @@ public class EnigmaticEventHandler {
 		
 		// This never happens
 		System.out.println("Event fired!");
-		
-		
-		/*
-		try {
-			
-			Field target = Class.forName("net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent").getDeclaredField("fortuneLevel");
-			
-			target.setAccessible(true);
-            target.setInt(event, 10);
-			
-            System.out.println("Level set tp 10!");
-            System.out.println("Level now: " + event.getFortuneLevel());
-            
-		} catch (Exception ex) {
-			System.out.println("Exception!");
-		}
-		*/
 	}
 	
 	@SubscribeEvent
@@ -207,38 +184,35 @@ public class EnigmaticEventHandler {
 		if (event.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 			
+			/*
+			 * Handler for faster effect ticking,
+			 * if player is bearing Blazing Core.
+			 */
+			
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.magmaHeart))
 				if (!player.getActivePotionEffects().isEmpty()) {
 					Collection<EffectInstance> effects = player.getActivePotionEffects();
 					
 					for (EffectInstance effect : effects)
 						effect.tick(player);
-					/*if (player.ticksExisted % 20 == 0)
-					for (EffectInstance effect : effects) {
-						try {
-							Field target = Class.forName("net.minecraft.potion.EffectInstance").getDeclaredField("duration");
-							
-							target.setAccessible(true);
-				            target.setInt(effect, effect.getDuration()+10);
-							
-				            //System.out.println("Sucess!");
-				            
-						} catch (Exception ex) {
-							//ex.printStackTrace();
-						}
-						effect.tick(player);
-					}
-					*/
+					
 				}
+			
+			
 			
 			
 			if (event.getEntityLiving().world.isRemote)		
 				return;
 			
+			/*
+			 * Handler for players' spellstone cooldowns.
+			 */
+			
 			if (SuperpositionHandler.hasSpellstoneCooldown(player))
 				SuperpositionHandler.setSpellstoneCooldown(player, SuperpositionHandler.getSpellstoneCooldown(player)-1);
 			
-			SuperpositionHandler.handleEnigmaticFlight(player);
+			
+			EnigmaticItem.handleEnigmaticFlight(player);
 			
 		}
 		
@@ -246,7 +220,7 @@ public class EnigmaticEventHandler {
 	
 	@SubscribeEvent
 	public void attachCapabilities(AttachCapabilitiesEvent<ItemStack> evt) {
-
+		
 		CapabilitiesRegistrationHandler.registerCapabilities(evt);
 	  
 	}
@@ -256,17 +230,16 @@ public class EnigmaticEventHandler {
 
 		 if(event.getEntityLiving() instanceof PlayerEntity) {
 				PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-
+				
+				/*
+				 * Handler for Scroll of Postmortal Recall.				
+				 */
+				
 				if(SuperpositionHandler.hasCurio(player, EnigmaticLegacy.escapeScroll) & !player.world.isRemote) {
 					ItemStack tomeStack = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.escapeScroll);
-					ItemEntity droppedTomeStack = new ItemEntity(player.world, player.posX, player.posY+(player.getHeight()/2), player.posZ, tomeStack.copy());
+					PermanentItemEntity droppedTomeStack = new PermanentItemEntity(player.world, player.posX, player.posY+(player.getHeight()/2), player.posZ, tomeStack.copy());
 					droppedTomeStack.setPickupDelay(10);
-					droppedTomeStack.setNoGravity(true);
-					droppedTomeStack.setNoDespawn();
-					//droppedTomeStack.setInvulnerable(true);
 					player.world.addEntity(droppedTomeStack);
-					droppedTomeStack.setMotion(0, 0, 0);
-					//droppedTomeStack.setGlowing(fa);
 					
 					tomeStack.shrink(1);
 					
@@ -290,7 +263,11 @@ public class EnigmaticEventHandler {
 
 		 if(event.getEntityLiving() instanceof PlayerEntity) {
 				PlayerEntity player = (PlayerEntity) event.getEntityLiving();
-
+				
+				/*
+				 * Immortality handler for Heart of Creation and Pearl of the Void.
+				 */
+				
 				if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticItem) || player.inventory.hasItemStack(new ItemStack(EnigmaticLegacy.enigmaticItem))) {
 					event.setCanceled(true);
 					player.setHealth(1);
@@ -307,6 +284,10 @@ public class EnigmaticEventHandler {
 		 
 		 if(event.getEntityLiving() instanceof PlayerEntity) {
 				PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+				
+				/*
+				 * Regeneration slowdown handler for Pearl of the Void.
+				 */
 
 				if(SuperpositionHandler.hasCurio(player, EnigmaticLegacy.voidPearl)) {
 					if (event.getAmount() <= 1.0F) {
@@ -322,6 +303,10 @@ public class EnigmaticEventHandler {
 		
 		if (event.getEntityLiving().world.isRemote)
 			return;
+		
+		/*
+		 * Handler for spellstones' immunities.
+		 */
 		
 		if (event.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
@@ -355,6 +340,11 @@ public class EnigmaticEventHandler {
 				} else {}
 			
 			}
+			
+			/*
+			 * Handler for Eye of the Nebula dodge effect.
+			 */
+			
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.eyeOfNebula)) {
 				//System.out.println(player.hurtResistantTime);
 				if (EyeOfNebula.immunityList.contains(event.getSource().damageType)) {
@@ -367,6 +357,11 @@ public class EnigmaticEventHandler {
 			}
 		} else if (event.getSource().getImmediateSource() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getSource().getImmediateSource();
+			
+			/*
+			 * Handler for triggering Extradimensional Eye's effects when player left-clicks
+			 * (or, more technically correct, directly attacks) the entity with the Eye in main hand.
+			 */
 			
 			if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == EnigmaticLegacy.extradimensionalEye)
 				if (ItemNBTHelper.verifyExistance(player.getHeldItemMainhand(), "BoundDimension"))
@@ -395,6 +390,10 @@ public class EnigmaticEventHandler {
 		if (event.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 			
+			/*
+			 * Handler for spellstone's resistance lists.
+			 */
+			
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.angelBlessing))
 				if (AngelBlessing.resistanceList.containsKey(event.getSource().damageType))
 					event.setAmount(event.getAmount() * AngelBlessing.resistanceList.get(event.getSource().damageType));
@@ -404,18 +403,6 @@ public class EnigmaticEventHandler {
 				
 				if (attacker instanceof DrownedEntity || attacker instanceof GuardianEntity || attacker instanceof ElderGuardianEntity)
 					event.setAmount(event.getAmount()*OceanStone.underwaterCreaturesResistance.asModifierInverted());
-			}
-			
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.magmaHeart)) {
-				//System.out.println("Damage type: " + event.getSource().damageType);
-				if (event.getSource().getTrueSource() instanceof LivingEntity && MagmaHeart.nemesisList.contains(event.getSource().damageType)) {
-					LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
-					if (!attacker.isImmuneToFire()) {
-						attacker.attackEntityFrom(new EntityDamageSource(DamageSource.ON_FIRE.damageType, player), (float) MagmaHeart.damageBack);
-						attacker.setFire((int) MagmaHeart.fireBack);
-					}
-				}
-				
 			}
 			
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.eyeOfNebula))
@@ -430,11 +417,31 @@ public class EnigmaticEventHandler {
 				if (VoidPearl.resistanceList.containsKey(event.getSource().damageType))
 					event.setAmount(event.getAmount() * VoidPearl.resistanceList.get(event.getSource().damageType));
 			
+			/*
+			 * Handler for damaging feedback of Blazing Core.
+			 */
+			
+			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.magmaHeart)) {
+				//System.out.println("Damage type: " + event.getSource().damageType);
+				if (event.getSource().getTrueSource() instanceof LivingEntity && MagmaHeart.nemesisList.contains(event.getSource().damageType)) {
+					LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+					if (!attacker.isImmuneToFire()) {
+						attacker.attackEntityFrom(new EntityDamageSource(DamageSource.ON_FIRE.damageType, player), (float) MagmaHeart.damageBack);
+						attacker.setFire((int) MagmaHeart.fireBack);
+					}
+				}
+				
+			}
+			
 		} else if (event.getEntityLiving() instanceof MonsterEntity) {
 			MonsterEntity monster = (MonsterEntity) event.getEntityLiving();
 			
 			if (event.getSource().getTrueSource() instanceof PlayerEntity) {
 				PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
+				
+				/*
+				 * Handler for damage bonuses of Charm of Monster Slayer.
+				 */
 				
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.monsterCharm)) {
 				if (monster.isEntityUndead()) {
@@ -455,6 +462,10 @@ public class EnigmaticEventHandler {
 		if (event.getSource().getTrueSource() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
 			
+			/*
+			 * Handler for applying Withering to victims of bearer of the Void Pearl.
+			 */
+			
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.voidPearl)) {
 				event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.WITHER, VoidPearl.witheringTime, VoidPearl.witheringLevel, false, true));
 			}
@@ -464,6 +475,11 @@ public class EnigmaticEventHandler {
 	
 	@SubscribeEvent
     public void onLivingDrops(LivingDropsEvent event) {
+		
+		/*
+		 * Beheading handler for Axe of Executioner.
+		 */
+		
 		if (event.getEntityLiving().getClass() == SkeletonEntity.class && event.isRecentlyHit() && event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof PlayerEntity) {
             ItemStack weap = ((PlayerEntity) event.getSource().getTrueSource()).getHeldItemMainhand();
             if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !this.containsDrop(event.getDrops(), Items.SKELETON_SKULL) && this.theySeeMeRollin(event.getLootingLevel())) {
@@ -514,24 +530,13 @@ public class EnigmaticEventHandler {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onLootTablesLoaded(LootTableLoadEvent event) {
 		
-		/*
-		if (event.getName().equals(LootTables.CHESTS_SIMPLE_DUNGEON)) {
-		
-			LootPool theOne = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(Items.HEART_OF_THE_SEA)).name("pool34").build();
-	        LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -10F, 1F, ItemLootEntry.builder(EnigmaticLegacy.golemHeart));
-			
-	        LootTable modified = event.getTable();
-			modified.addPool(poolSpellstones);
-			event.setTable(modified);
-			
-			//Builder lootEntry = LootPool.builder().rolls(ConstantRange.of(1)).addEntry(ItemLootEntry.builder(Items.NETHER_BRICK).weight(20)).addEntry(ItemLootEntry.builder(Items.NETHER_STAR)).addEntry(ItemLootEntry.builder(Items.ACACIA_BUTTON).weight(30)).addEntry(ItemLootEntry.builder(Items.BOOK).weight(10).acceptFunction(EnchantRandomly.func_215900_c())).addEntry(ItemLootEntry.builder(Items.YELLOW_WOOL).weight(5)).addEntry(EmptyLootEntry.func_216167_a().weight(5));
-	        
-	    }*/
-		
 		List<ResourceLocation> underwaterRuins = new ArrayList<ResourceLocation>();
 		underwaterRuins.add(LootTables.CHESTS_UNDERWATER_RUIN_BIG);
 		underwaterRuins.add(LootTables.CHESTS_UNDERWATER_RUIN_SMALL);
 		
+		/*
+		 * Handlers for adding spellstones to dungeon loot.
+		 */
 		
 		if (SuperpositionHandler.getMergedAir$EarthenDungeons().contains(event.getName())) {
 			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -8F, 1F, SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.golemHeart, 35), SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.angelBlessing, 65));
@@ -583,6 +588,9 @@ public class EnigmaticEventHandler {
 			
 		}
 		
+		/*
+		 * Handlers for adding epic dungeon loot to most dungeons.
+		 */
 		
 		if (SuperpositionHandler.getOverworldDungeons().contains(event.getName())) {
 			LootPool epic = SuperpositionHandler.constructLootPool("epic", 1F, 2F,
@@ -592,7 +600,7 @@ public class EnigmaticEventHandler {
 				SuperpositionHandler.itemEntryBuilderED(Items.IRON_SHOVEL, 10, 20F, 30F, 1.0F, 0.8F),
 				SuperpositionHandler.itemEntryBuilderED(Items.BOW, 10, 20F, 30F, 1.0F, 0.8F),
 				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.ironRing, 20),
-				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.hastePotionDefault, 20),
+				ItemLootEntry.builder(EnigmaticLegacy.commonPotionBase).weight(20).acceptFunction(SetNBT.func_215952_a(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE).getTag())),
 				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.magnetRing, 7),
 				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.unholyGrail, 4),
 				ItemLootEntry.builder(Items.CLOCK).weight(10),
@@ -637,7 +645,8 @@ public class EnigmaticEventHandler {
 				ItemLootEntry.builder(Items.CAKE).weight(15),
 				ItemLootEntry.builder(Items.END_CRYSTAL).weight(7),
 				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.recallPotion, 15),
-				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.mendingMixture, 35),
+				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.mendingMixture, 40),
+				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.astralDust, 85, 1F, 4F),
 				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.extradimensionalEye, 10)
 				);
 			
@@ -646,7 +655,9 @@ public class EnigmaticEventHandler {
 			event.setTable(modified);
 		}
 
-		
+		/*
+		 * Handlers for adding special loot to some dungeons.
+		 */
 		
 		if (event.getName().equals(LootTables.CHESTS_STRONGHOLD_LIBRARY)) {
 			LootPool special = SuperpositionHandler.constructLootPool("el_special", 1F, 1F,
@@ -676,6 +687,11 @@ public class EnigmaticEventHandler {
 	    		return;
 	    	
 	    	ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
+	    	
+	    	/*
+	    	 * Handler for bestowing Enigmatic Amulet to the player,
+	    	 * when they first join the world.
+	    	 */
 
 	        if (!SuperpositionHandler.hasPersistentTag(player, NBT_KEY_FIRSTJOIN)) {
 	        	
@@ -686,6 +702,10 @@ public class EnigmaticEventHandler {
 	            
 	            SuperpositionHandler.setPersistentBoolean(player, NBT_KEY_FIRSTJOIN, true);
 	        }
+	        
+	        /*
+	         * Handlers for fixing missing Curios slots upong joining the world.
+	         */
 	        
 	        if (!SuperpositionHandler.hasPersistentTag(player, NBT_KEY_ENABLESPELLSTONE))
 	        if (SuperpositionHandler.hasAdvancement(player, new ResourceLocation(EnigmaticLegacy.MODID, "main/discover_spellstone"))) {
@@ -715,6 +735,11 @@ public class EnigmaticEventHandler {
 		String id = event.getAdvancement().getId().toString();
 		PlayerEntity player = event.getPlayer();
 		
+		/*
+		 * Handler for permanently unlocking Curio slots to player
+		 * once they obtain respective advancement.
+		 */
+		
 		if (id.equals(EnigmaticLegacy.MODID + ":main/discover_spellstone")) {	
 			CuriosAPI.enableTypeForEntity("spellstone", player);
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSlotUnlocked("spellstone"));
@@ -728,16 +753,16 @@ public class EnigmaticEventHandler {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSlotUnlocked("ring"));
 			SuperpositionHandler.setPersistentBoolean(player, NBT_KEY_ENABLERING, true);
 		}
-		
-		/*
-		LazyOptional<ICurioItemHandler> curioHandler = CuriosAPI.getCuriosHandler(event.getPlayer());
-		curioHandler.ifPresent(handler -> {});
-		*/
 	}
 	
 	@SubscribeEvent
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
 		PlayerEntity player = event.getPlayer();
+		
+		/*
+		 * Handler for re-enabling disabled Curio slots that are supposed
+		 * to be permanently unlocked, when the player respawns.
+		 */
 		
 		if (!player.world.isRemote)
 		if (!event.isEndConquered()) {
@@ -756,12 +781,21 @@ public class EnigmaticEventHandler {
 		
 	}
 	
+	/**
+	 * Adds passed ItemStack to LivingDropsEvent.
+	 * @author Integral
+	 */
 	
 	public void addDrop(LivingDropsEvent event, ItemStack drop) {
         ItemEntity entityitem = new ItemEntity(event.getEntityLiving().world, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, drop);
         entityitem.setPickupDelay(10);
         event.getDrops().add(entityitem);
     }
+	
+	/**
+	 * Checks whether the collection of ItemEntities contains given Item.
+	 * @author Integral
+	 */
 	
 	public boolean containsDrop(Collection <ItemEntity> drops, Item item) {
 		
@@ -773,6 +807,13 @@ public class EnigmaticEventHandler {
 		
 		return false;
 	}
+	
+	/**
+	 * Calculates the chance for Axe of Executioner to behead an enemy.
+	 * @param lootingLevel Amount of looting levels applied to axe or effective otherwise.
+	 * @return True if chance works and head should drop, false otherwise.
+	 * @author Integral
+	 */
 	
 	public boolean theySeeMeRollin(int lootingLevel) {
 		double chance = ForbiddenAxe.beheadingChanceBase.asMultiplier(false) + (ForbiddenAxe.beheadingChanceBonus.asMultiplier(false)*lootingLevel);

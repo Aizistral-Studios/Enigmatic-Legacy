@@ -1,13 +1,17 @@
-package com.integral.enigmaticlegacy.packets;
+package com.integral.enigmaticlegacy.packets.clients;
 
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkEvent;
+
+/**
+ * Packet for setting player's motion on client side.
+ * Required since motion of the player can only be affected there.
+ * @author Integral
+ */
 
 public class PacketPlayerMotion {
 	
@@ -30,12 +34,12 @@ public class PacketPlayerMotion {
 	  public static PacketPlayerMotion decode(PacketBuffer buf) {
 	     return new PacketPlayerMotion(buf.readDouble(), buf.readDouble(), buf.readDouble());
 	  }
-	  
-	  @OnlyIn(Dist.CLIENT)
+
+
 	  public static void handle(PacketPlayerMotion msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {
-		    	PlayerEntity player = Minecraft.getInstance().player;
+		    	ClientPlayerEntity player = Minecraft.getInstance().player;
 		    	
 		    	player.setMotion(msg.x, msg.y, msg.z);
 		      	

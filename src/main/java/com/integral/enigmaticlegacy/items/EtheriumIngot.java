@@ -20,7 +20,9 @@ public class EtheriumIngot extends Item {
  
  }
  
- public static void initConfigValues() {}
+ public static void initConfigValues() {
+	 // Insert existential void here
+ }
  
   
 }

@@ -15,10 +15,11 @@ import com.google.common.collect.Lists;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.Vector3;
-import com.integral.enigmaticlegacy.packets.PacketPortalParticles;
-import com.integral.enigmaticlegacy.packets.PacketRecallParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -52,6 +53,7 @@ import net.minecraft.world.storage.loot.LootPool.Builder;
 import net.minecraft.world.storage.loot.LootTables;
 import net.minecraft.world.storage.loot.RandomValueRange;
 import net.minecraft.world.storage.loot.functions.EnchantWithLevels;
+import net.minecraft.world.storage.loot.functions.SetCount;
 import net.minecraft.world.storage.loot.functions.SetDamage;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -61,15 +63,30 @@ import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.CuriosAPI;
 import top.theillusivec4.curios.api.imc.CurioIMCMessage;
 
+/**
+ * The vessel and library for most most of the handling methods in the Enigmatic Legacy.
+ * @author Integral
+ */
+
 public class SuperpositionHandler {
-    public static HashMap<PlayerEntity, Boolean> flightMap = new HashMap<PlayerEntity, Boolean>();
-    public static HashMap<PlayerEntity, Integer> spellstoneCooldowns = new HashMap<PlayerEntity, Integer>();
+	
+	public static HashMap<PlayerEntity, Integer> spellstoneCooldowns = new HashMap<PlayerEntity, Integer>();
     
+	/**
+	 * Checks whether LivingEntity has given Item equipped in it's Curios slots.
+	 * @return True if has, false otherwise.
+	 */
+	
     public static boolean hasCurio(final LivingEntity entity, final Item curio) {
         final Optional<ImmutableTriple<String, Integer, ItemStack>> data = (Optional<ImmutableTriple<String, Integer, ItemStack>>)CuriosAPI.getCurioEquipped(curio, entity);
         return data.isPresent();
     }
     
+    /**
+     * Gets the ItemStack of provided Item within entity's Curio slots.
+     * @return First sufficient ItemStack found, null if such item is not equipped.
+     */
+    @Nullable
     public static ItemStack getCurioStack(final LivingEntity entity, final Item curio) {
         final Optional<ImmutableTriple<String, Integer, ItemStack>> data = (Optional<ImmutableTriple<String, Integer, ItemStack>>)CuriosAPI.getCurioEquipped(curio, entity);
         if (data.isPresent()) {
@@ -78,6 +95,16 @@ public class SuperpositionHandler {
         return null;
     }
     
+    /**
+     * Sends message to Curios API in order to register specified Curio type.
+     * Should be used within InterModEnqueueEvent.
+     * 
+     * @param identifier Unique identifier of the type.
+     * @param slots How many slots of this curio will be available by default.
+     * @param isEnabled Whether or not this curio type should be initially acessible by player.
+     * @param isHidden Whether or not this curio type should be hidden from default Curio GUI.
+     * @param icon Optional resource location for custom icon.
+     */
     public static void registerCurioType(final String identifier, final int slots, final boolean isEnabled, final boolean isHidden, @Nullable final ResourceLocation icon) {
         final CurioIMCMessage message = new CurioIMCMessage(identifier);
         message.setSize(slots);
@@ -89,26 +116,12 @@ public class SuperpositionHandler {
         }
     }
     
-    public static void handleEnigmaticFlight(final PlayerEntity player) {
-        try {
-            if (hasCurio((LivingEntity)player, EnigmaticLegacy.enigmaticItem)) {
-                SuperpositionHandler.flightMap.put(player, true);
-                if (!player.abilities.allowFlying) {
-                    player.abilities.allowFlying = true;
-                    player.sendPlayerAbilities();
-                }
-            }
-            else if (SuperpositionHandler.flightMap.get(player)) {
-                player.abilities.allowFlying = false;
-                player.abilities.isFlying = false;
-                player.sendPlayerAbilities();
-                SuperpositionHandler.flightMap.put(player, false);
-            }
-        }
-        catch (NullPointerException ex) {
-            SuperpositionHandler.flightMap.put(player, false);
-        }
-    }
+    /**
+     * Registers a sound in Enigmatic Legacy namespace, for it to be lately defined
+     * in respective .json file.
+     * 
+     * @return SoundEvent usable by playSound() methods.
+     */
     
     public static SoundEvent registerSound(final String soundName) {
         final ResourceLocation location = new ResourceLocation("enigmaticlegacy", soundName);
@@ -118,9 +131,20 @@ public class SuperpositionHandler {
         return event;
     }
     
+    /**
+     * Creates and returns simple bounding box of given radius around the entity.
+     */
+    
     public static AxisAlignedBB getBoundingBoxAroundEntity(final Entity entity, final double radius) {
         return new AxisAlignedBB(entity.posX - radius, entity.posY - radius, entity.posZ - radius, entity.posX + radius, entity.posY + radius, entity.posZ + radius);
     }
+    
+    /**
+     * Accelerates the entity towards specific point.
+     * 
+     * @param originalPosVector Absolute coordinates of the point entity should move towards.
+     * @param modifier Applied velocity modifier.
+     */
     
     public static void setEntityMotionFromVector(final Entity entity, final Vector3 originalPosVector, final float modifier) {
         final Vector3 entityVector = Vector3.fromEntityCenter(entity);
@@ -131,7 +155,17 @@ public class SuperpositionHandler {
         entity.setMotion(finalVector.x * modifier, finalVector.y * modifier, finalVector.z * modifier);
     }
     
-    public static LivingEntity searchForTarget(final PlayerEntity player, final World world, final float range, final int maxDist) {
+    /**
+     * Gets the entity player is looking at.
+     * 
+     * @param range Defines the size of bounding box checked for entities with each iteration.
+     * Smaller box may provide more precise results, but is ineffective over large distances.
+     * @param maxDist Maximum amount of iteration the method should trace for.
+     * @return First entity found on the path, or null if none exist.
+     */
+    
+    @Nullable
+    public static LivingEntity getObservedEntity(final PlayerEntity player, final World world, final float range, final int maxDist) {
         LivingEntity newTarget = null;
         Vector3 target = Vector3.fromEntityCenter((Entity)player);
         List<LivingEntity> entities = new ArrayList<LivingEntity>();
@@ -153,6 +187,12 @@ public class SuperpositionHandler {
         return newTarget;
     }
     
+    /**
+     * Retrieves the player respawn location.
+     * @return Bed position if there is a valid one, coordinates of obsidian
+     * platform in the End, or coordinates of Center of the World otherwise.
+     */
+    
     public static Vec3d getValidSpawn(final World world, final PlayerEntity player) {
         BlockPos pos = player.getBedLocation(world.getDimension().getType());
         if (pos != null && PlayerEntity.func_213822_a((IWorldReader)world, pos, false).isPresent()) {
@@ -170,6 +210,10 @@ public class SuperpositionHandler {
         return new Vec3d(pos.getX() - 0.5, (double)pos.getY(), pos.getZ() - 0.5);
     }
     
+    /**
+     * Returns the given player's spellstone cooldown.
+     */
+    
     public static int getSpellstoneCooldown(PlayerEntity player) {
     	if (!player.world.isRemote) {
     		if (SuperpositionHandler.spellstoneCooldowns.containsKey(player))
@@ -183,6 +227,9 @@ public class SuperpositionHandler {
     	return 0;
     }
     
+    /**
+     * Sets the given player's spellstone cooldown to specified value.
+     */
     
     public static void setSpellstoneCooldown(PlayerEntity player, int cooldown) {
     	if (!player.world.isRemote) {
@@ -192,6 +239,9 @@ public class SuperpositionHandler {
     	return;
     }
     
+    /**
+     * Checks whether player's spellstone cooldown is greater than zero.
+     */
     
     public static boolean hasSpellstoneCooldown(PlayerEntity player) {
     	if (!player.world.isRemote) {
@@ -206,7 +256,12 @@ public class SuperpositionHandler {
     	return false;
     }
     
-    public static void lookAt(double px, double py, double pz, PlayerEntity me) {
+    /**
+     * Sets the player's rotations so that they will looking at specified point in space.
+     */
+    
+    @OnlyIn(Dist.CLIENT)
+    public static void lookAt(double px, double py, double pz, ClientPlayerEntity me) {
         double dirx = me.posX - px;
         double diry = me.posY - py;
         double dirz = me.posZ - pz;
@@ -309,8 +364,11 @@ public class SuperpositionHandler {
 	     return SuperpositionHandler.validTeleport(entity, x, y, z, world, radius);
 	 }
 	 
+	 /**
+	  * Builds standart loot pool with any amount of ItemLootEntries.
+	  */
 	 
-	 public static LootPool constructLootPool(String poolName, float minRolls, float maxRolls, net.minecraft.world.storage.loot.LootEntry.Builder<?>... entries) {
+	 public static LootPool constructLootPool(String poolName, float minRolls, float maxRolls, @Nullable net.minecraft.world.storage.loot.LootEntry.Builder<?>... entries) {
 		 
 		 Builder poolBuilder = LootPool.builder();
 		 poolBuilder.rolls(RandomValueRange.func_215837_a(minRolls, maxRolls));
@@ -327,6 +385,33 @@ public class SuperpositionHandler {
 		 
 	 }
 	 
+	 /**
+	  * Creates ItemLootEntry builder for an item.
+	  * If item is disabled in config, returns null instead.
+	  * Count-sensitive version, allows you to specifiy min-max
+	  * amounts of items generated per entry.
+	  */
+	 
+	 @Nullable
+	 public static net.minecraft.world.storage.loot.StandaloneLootEntry.Builder<?> createOptionalLootEntry(Item item, int weight, float minCount, float maxCount) {
+		 
+		 if (item instanceof IPerhaps) {
+			 IPerhaps perhaps = (IPerhaps) item;
+			 
+			 if (perhaps.isForMortals()) 
+				 return ItemLootEntry.builder(item).weight(weight).acceptFunction(SetCount.func_215932_a(RandomValueRange.func_215837_a(minCount, maxCount)));
+			 else
+				 return null;
+		 }
+			 return ItemLootEntry.builder(item).weight(weight).acceptFunction(SetCount.func_215932_a(RandomValueRange.func_215837_a(minCount, maxCount)));
+	 }
+	 
+	 /**
+	  * Creates ItemLootEntry builder for an item.
+	  * If item is disabled in config, returns null instead.
+	  */
+	 
+	 @Nullable
 	 public static net.minecraft.world.storage.loot.StandaloneLootEntry.Builder<?> createOptionalLootEntry(Item item, int weight) {
 		 
 		 if (item instanceof IPerhaps) {
@@ -339,6 +424,13 @@ public class SuperpositionHandler {
 		 }
 			 return ItemLootEntry.builder(item).weight(weight);
 	 }
+	 
+	 /**
+	  * Creates ItemLootEntry with a given weight, randomly ranged
+	  * damage and level-based enchantments.
+	  * Damage should be specified as modifier, where 1.0 is full durability. 
+	  * @return
+	  */
 	 
 	 public static ItemLootEntry.Builder<?> itemEntryBuilderED(Item item, int weight, float enchantLevelMin, float enchantLevelMax, float damageMin, float damageMax) {
 		 ItemLootEntry.Builder<?> builder = ItemLootEntry.builder(item);
@@ -447,9 +539,13 @@ public class SuperpositionHandler {
 		 return lootChestList;
 	 }
 	 
+	 /**
+	  * Sets the given boolean tag to the player's persistent NBT.
+	  */
+	 
 	 public static void setPersistentBoolean(PlayerEntity player, String tag, boolean value) {
 		 
-		 CompoundNBT data = player.getEntityData();
+		 CompoundNBT data = player.getPersistantData();
 	     CompoundNBT persistent;
 	     
 	     if (!data.contains(PlayerEntity.PERSISTED_NBT_TAG)) {
@@ -462,9 +558,13 @@ public class SuperpositionHandler {
 
 	 }
 	 
+	 /**
+	  * Retrieves the given boolean tag from the player's persistent NBT.
+	  */
+	 
 	 public static boolean getPersistentBoolean(PlayerEntity player, String tag, boolean expectedValue) {
 		 
-		 CompoundNBT data = player.getEntityData();
+		 CompoundNBT data = player.getPersistantData();
 	     CompoundNBT persistent;
 	     
 	     if (!data.contains(PlayerEntity.PERSISTED_NBT_TAG)) {
@@ -482,9 +582,13 @@ public class SuperpositionHandler {
 		 
 	 }
 	 
+	 /**
+	  * Checks whether player has specified tag in their persistent NBT, whatever it's type or value is.	
+	  */
+	 
 	 public static boolean hasPersistentTag(PlayerEntity player, String tag) {
 		 	
-		 CompoundNBT data = player.getEntityData();
+		 CompoundNBT data = player.getPersistantData();
 	     CompoundNBT persistent;
 	     
 	     if (!data.contains(PlayerEntity.PERSISTED_NBT_TAG)) {
@@ -501,12 +605,24 @@ public class SuperpositionHandler {
 		 
 	 }
 	 
+	 /**
+	  * Checks whether or not player has completed specified advancement.
+	  */
+	 
 	 public static boolean hasAdvancement(ServerPlayerEntity player, ResourceLocation location) {
 		 if (player.getAdvancements().getProgress(player.server.getAdvancementManager().getAdvancement(location)).isDone())
 			 return true;
 		 else
 			 return false;
 	 }
+	 
+	 /**
+	  * Applies vanilla-stype potion tooltip to the item.
+	  * 
+	  * @param list List of effects to be displayed in tooltip.
+	  * @param lores Text component list provided in addInformation() method.
+	  * @param durationFactor Displayed effects duration will be multiplied by this value.
+	  */
 	 
 	   @OnlyIn(Dist.CLIENT)
 	   public static void addPotionTooltip(List<EffectInstance> list, ItemStack itemIn, List<ITextComponent> lores, float durationFactor) {

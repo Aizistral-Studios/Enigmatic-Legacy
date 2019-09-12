@@ -1,6 +1,7 @@
 package com.integral.enigmaticlegacy.config;
 
 import com.integral.enigmaticlegacy.items.AngelBlessing;
+import com.integral.enigmaticlegacy.items.AstralDust;
 import com.integral.enigmaticlegacy.items.EnderRing;
 import com.integral.enigmaticlegacy.items.EnigmaticAmulet;
 import com.integral.enigmaticlegacy.items.EscapeScroll;
@@ -24,12 +25,14 @@ import com.integral.enigmaticlegacy.items.RecallPotion;
 import com.integral.enigmaticlegacy.items.RelicOfTesting;
 import com.integral.enigmaticlegacy.items.SuperMagnetRing;
 import com.integral.enigmaticlegacy.items.ThiccScroll;
+import com.integral.enigmaticlegacy.items.UltimatePotionBase;
+import com.integral.enigmaticlegacy.items.UltimatePotionLingering;
+import com.integral.enigmaticlegacy.items.UltimatePotionSplash;
 import com.integral.enigmaticlegacy.items.UnholyGrail;
 import com.integral.enigmaticlegacy.items.VoidPearl;
 import com.integral.enigmaticlegacy.items.XPScroll;
 
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 
 public class ConfigHelper {
 	
@@ -41,12 +44,10 @@ public class ConfigHelper {
 		builder.pop();
 	}
 	
-	public static DoubleValue createRangedEntry(ForgeConfigSpec.Builder builder, String entryName, double min, double max, double def, String comment, String translationKey) {
-		 return builder
-        .comment(comment)
-        .translation(translationKey)
-        .defineInRange(entryName, def, min, max);
-	}
+	/**
+	 * Sets a copy of config values into classes that use them.
+	 * @author Integral
+	 */
 	
 	public static void initializeConfigValues() {
     	
@@ -77,6 +78,10 @@ public class ConfigHelper {
     	UnholyGrail.initConfigValues();
     	VoidPearl.initConfigValues();
     	XPScroll.initConfigValues();
+    	AstralDust.initConfigValues();
+    	UltimatePotionBase.initConfigValues();
+    	UltimatePotionSplash.initConfigValues();
+    	UltimatePotionLingering.initConfigValues();
     	
     }
 	

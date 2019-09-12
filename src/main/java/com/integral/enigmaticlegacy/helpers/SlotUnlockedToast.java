@@ -13,6 +13,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Special type of Toast that alerts player when they unlock new Curio slot.
+ * @author Integral
+ */
+
 @OnlyIn(Dist.CLIENT)
 public class SlotUnlockedToast implements IToast {
    private long firstDrawTime;

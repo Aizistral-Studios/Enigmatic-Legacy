@@ -1,4 +1,4 @@
-package com.integral.enigmaticlegacy.packets;
+package com.integral.enigmaticlegacy.packets.server;
 
 import java.util.function.Supplier;
 
@@ -8,6 +8,12 @@ import com.integral.enigmaticlegacy.items.EyeOfNebula;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
+
+/**
+ * Packet for executing random teleportation.
+ * Used to escape the event in which unnecessary checks take place.
+ * @author Integral
+ */
 
 public class PacketConfirmTeleportation {
 	
@@ -30,7 +36,7 @@ public class PacketConfirmTeleportation {
 		    ctx.get().enqueueWork(() -> {
 		      ServerPlayerEntity playerServ = ctx.get().getSender();
 				
-		      System.out.println("Illuminati confirmed");
+		        //System.out.println("Illuminati confirmed");
 		      
 		         for (int counter = 0; counter <= 32; counter++) {
 		        	 if (SuperpositionHandler.validTeleportRandomly(playerServ, playerServ.world, (int) EyeOfNebula.dodgeRange))

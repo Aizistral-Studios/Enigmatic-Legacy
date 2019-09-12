@@ -11,7 +11,7 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
 import com.integral.enigmaticlegacy.helpers.Vector3;
-import com.integral.enigmaticlegacy.packets.PacketPlayerMotion;
+import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
 
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.settings.KeyBinding;
@@ -178,12 +178,12 @@ public class AngelBlessing extends Item implements ICurio, IPerhaps {
   
   @Override
   public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-	  
+	  // Insert existential void here
   }
   
   @Override
   public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-  
+	  // Insert existential void here
   }
   
 }

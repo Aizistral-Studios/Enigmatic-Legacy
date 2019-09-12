@@ -7,6 +7,11 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
 
+/**
+ * Variation of brewing recipe sensitive to NBT of input stack.
+ * @author Integral
+ */
+
 public class SpecialBrewingRecipe implements IBrewingRecipe {
 	
 	    @Nonnull private final Ingredient input;

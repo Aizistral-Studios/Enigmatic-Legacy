@@ -19,12 +19,19 @@ import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
+/**
+ * Special trigger that activates when player drinks from Unholy Grail.
+ * @author Integral
+ */
+
 public class UseUnholyGrailTrigger implements ICriterionTrigger<UseUnholyGrailTrigger.Instance> {
     public static final ResourceLocation ID = new ResourceLocation(EnigmaticLegacy.MODID, "unholy_grail_drink");
     public static final UseUnholyGrailTrigger INSTANCE = new UseUnholyGrailTrigger();
     private final Map<PlayerAdvancements, PlayerTracker> playerTrackers = new HashMap<>();
 
-    private UseUnholyGrailTrigger() {}
+    private UseUnholyGrailTrigger() {
+    	// Insert existential void here
+    }
 
     @Nonnull
     @Override

@@ -15,7 +15,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
@@ -30,6 +29,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/**
+ * Deprecated since update 1.2.0.
+ * @author Integral
+ */
+
+@Deprecated
 public class HastePotion extends Item implements IPerhaps {
 	
  public static Properties integratedProperties = new Item.Properties();
@@ -43,7 +48,7 @@ public class HastePotion extends Item implements IPerhaps {
  }
  
  public static Properties setupIntegratedProperties(Rarity rarity) {
-	 integratedProperties.group(ItemGroup.BREWING);
+	 //integratedProperties.group(ItemGroup.BREWING);
 	 integratedProperties.maxStackSize(1);
 	 integratedProperties.rarity(rarity);
 	 
@@ -51,7 +56,9 @@ public class HastePotion extends Item implements IPerhaps {
  
  }
  
- public static void initConfigValues() {}
+ public static void initConfigValues() {
+	 // Insert existential void here
+ }
  
  @Override
  public boolean isForMortals() {
@@ -92,26 +99,17 @@ public class HastePotion extends Item implements IPerhaps {
      return stack;
   }
 
-  /**
-   * How long it takes to use or consume an item
-   */
+
  @Override
   public int getUseDuration(ItemStack stack) {
      return 32;
   }
 
-  /**
-   * returns the action that specifies what animation to play when the items is being used
-   */
  @Override
   public UseAction getUseAction(ItemStack stack) {
      return UseAction.DRINK;
   }
 
-  /**
-   * Called to trigger the item's "innate" right click behavior. To handle when this item is used on a Block, see
-   * {@link #onItemUse}.
-   */
  @Override
   public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
      playerIn.setActiveHand(handIn);

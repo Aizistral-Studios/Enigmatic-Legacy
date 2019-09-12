@@ -1,10 +1,10 @@
 # Enigmatic Legacy
 
-**Current Version:** 1.1.0
+**Current Version:** 1.2.0
 
 **Minecraft Version:** 1.14.4
 
-**Forge Version:** 28.0.75 or later.
+**Forge Version:** 28.0.95 or later.
 
 **Dependencies:** CuriosAPI Forge-1.14.4-0.22 or later.
 

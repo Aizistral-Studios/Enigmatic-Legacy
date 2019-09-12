@@ -77,7 +77,7 @@ public class MonsterCharm extends Item implements ICurio, IPerhaps {
  
  @Override
  public void onCurioTick(String identifier, LivingEntity living) {
-	 
+	 // Insert existential void here
  }
  
   @Override
@@ -87,12 +87,12 @@ public class MonsterCharm extends Item implements ICurio, IPerhaps {
   
   @Override
   public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-	  
+	  // Insert existential void here
   }
   
   @Override
   public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-  
+	  // Insert existential void here
   }
   
 }

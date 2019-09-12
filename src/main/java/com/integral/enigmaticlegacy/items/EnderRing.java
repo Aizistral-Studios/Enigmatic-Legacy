@@ -37,7 +37,9 @@ public class EnderRing extends Item implements ICurio, IPerhaps {
 	 return integratedProperties;
  }
  
- public static void initConfigValues() {}
+ public static void initConfigValues() {
+	 // Insert existential void here
+ }
  
  @Override
  public boolean isForMortals() {
@@ -68,12 +70,12 @@ public class EnderRing extends Item implements ICurio, IPerhaps {
  
  @Override
  public void onCurioTick(String identifier, LivingEntity living) {
-	 
+	 // Insert existential void here
  }
  
   @Override
   public boolean canRightClickEquip() {
-    return true;
+     return true;
   }
   /*
   @Override
@@ -103,11 +105,12 @@ public class EnderRing extends Item implements ICurio, IPerhaps {
   */
   @Override
   public void onEquipped(String identifier, LivingEntity entityLivingBase) {
+	 // Insert existential void here
   }
   
   @Override
   public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-  
+	 // Insert existential void here
   }
   
 }

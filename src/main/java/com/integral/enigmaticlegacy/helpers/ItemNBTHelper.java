@@ -3,6 +3,12 @@ package com.integral.enigmaticlegacy.helpers;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 
+/**
+ * A couple of methods for mork convenient work with NBT of ItemStacks.
+ * Originated from Botania's code.
+ * @author Integral
+ */
+
 public final class ItemNBTHelper
 {
     public static boolean detectNBT(final ItemStack stack) {

@@ -35,7 +35,6 @@ public class ForbiddenAxe extends SwordItem implements IPerhaps {
 	
 	public ForbiddenAxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties properties) {
 		super(tier, attackDamageIn, attackSpeedIn, properties);
-		// TODO Auto-generated constructor stub
 	}
 	
 	public static Properties setupIntegratedProperties() {
@@ -75,13 +74,11 @@ public class ForbiddenAxe extends SwordItem implements IPerhaps {
 			 if (EnigmaticLegacy.configHandler.MONSTER_CHARM_BONUS_LOOTING.get())
 			 looting++;
 		 } catch (NullPointerException ex) {
-			 //DO NOTHING
+			 // Just don't do it lol
 		 }
 		 
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance",  (beheadingChanceBase.asPercentage() + (beheadingChanceBonus.asPercentage()*looting)) + "%");
-
-		 //list.add(new TranslationTextComponent("tooltip.enigmaticlegacy.void"));
 	 }
 	
 	@Override

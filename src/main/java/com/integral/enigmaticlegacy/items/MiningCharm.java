@@ -40,8 +40,6 @@ import top.theillusivec4.curios.api.capability.ICurio;
 public class MiningCharm extends Item implements ICurio, IPerhaps {
 	
  public static Properties integratedProperties = new Item.Properties();
- @OnlyIn(Dist.CLIENT)
- public static double savedGamma = 0.5D;
  
  public static Perhaps miningBoost = new Perhaps(0);
  public static double reachBoost = 0D;
@@ -105,11 +103,6 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
 		 PlayerEntity player = (PlayerEntity) living;
 		 ItemStack stack = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.miningCharm);
 		 
-		 
-		 
-		 //if (player.ticksExisted % 20 == 0)
-		 //System.out.println(player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0));
-		 
 		 if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true))
 		 if (player.posY < 50 & player.dimension.getId() != -1 & player.dimension.getId() != 1 & !player.areEyesInFluid(FluidTags.WATER, true) & !player.world.canBlockSeeSky(player.getPosition()))
 		 if (player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0) < 3) {
@@ -117,22 +110,6 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
 		 }
 		 
 	 }
-	 
-	 /*
-	 if (living instanceof PlayerEntity & living.world.isRemote) {
-		 PlayerEntity player = (PlayerEntity) living;
-		 ItemStack stack = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.miningCharm);
-		 
-		 if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true))
-			 if (player.posY < 50 & player.dimension.getId() != -1 & player.dimension.getId() != 1)
-				 if (player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0) < 3) {
-					 savedGamma = Minecraft.getInstance().gameSettings.gamma;
-					 Minecraft.getInstance().gameSettings.gamma = 5.0D;
-					 return;
-				 }
-		 Minecraft.getInstance().gameSettings.gamma = savedGamma;
-	 }
-	*/ 
  }
  
  @Override
@@ -161,12 +138,12 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
   
   @Override
   public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-	  
+	  // Insert existential void here
   }
   
   @Override
   public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-  
+	  // Insert existential void here
   }
   
   @Override

@@ -9,7 +9,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.CooldownMap;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
-import com.integral.enigmaticlegacy.packets.PacketPortalParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -84,7 +84,7 @@ public class Megasponge extends Item implements ICurio, IPerhaps {
  }
  
  @SuppressWarnings("deprecation")
-public BlockPos getCollidedWater(Tag<Fluid> p_210500_1_, PlayerEntity player) {
+ public BlockPos getCollidedWater(Tag<Fluid> p_210500_1_, PlayerEntity player) {
      AxisAlignedBB axisalignedbb = player.getBoundingBox().shrink(0.001D);
      int i = MathHelper.floor(axisalignedbb.minX);
      int j = MathHelper.ceil(axisalignedbb.maxX);
@@ -133,7 +133,6 @@ public BlockPos getCollidedWater(Tag<Fluid> p_210500_1_, PlayerEntity player) {
 			if (initialPos != null)
 			if (initialState.getFluidState() != null && initialState.getFluidState().isTagged(FluidTags.WATER)) {
 				
-				//absorbWaterBlock(player.getPosition(), initialState, player.world);
 				doomedWaterBlocks.add(initialPos);
 				List<BlockPos> processedBlocks = new ArrayList<BlockPos>();
 				processedBlocks.add(initialPos);
@@ -174,7 +173,7 @@ public BlockPos getCollidedWater(Tag<Fluid> p_210500_1_, PlayerEntity player) {
 	 }
  }
  
-public static void absorbWaterBlock(BlockPos pos, BlockState state, World world) {
+ public static void absorbWaterBlock(BlockPos pos, BlockState state, World world) {
 	
 		 if (state.getBlock() instanceof IBucketPickupHandler &&  ((IBucketPickupHandler)state.getBlock()).pickupFluid(world, pos, state) != Fluids.EMPTY) {
 	 		// Whatever
@@ -210,17 +209,17 @@ public static void absorbWaterBlock(BlockPos pos, BlockState state, World world)
  
   @Override
   public boolean canRightClickEquip() {
-    return true;
+      return true;
   }
   
   @Override
   public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-	  
+	  // Insert existential void here
   }
   
   @Override
   public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-  
+	  // Insert existential void here
   }
   
 }

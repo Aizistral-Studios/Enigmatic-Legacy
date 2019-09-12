@@ -37,7 +37,9 @@ public class MendingMixture extends Item implements IPerhaps {
  
  }
  
- public static void initConfigValues() {}
+ public static void initConfigValues() {
+	 // Insert existential void here
+ }
  
  @Override
  public boolean isForMortals() {
@@ -52,13 +54,11 @@ public class MendingMixture extends Item implements IPerhaps {
 	 } else {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 	 }
-	 
-	 //list.add(new TranslationTextComponent("tooltip.enigmaticlegacy.void"));
  }
  
  @OnlyIn(Dist.CLIENT)
  public boolean hasEffect(ItemStack stack) {
-    return true;
+     return true;
  }
  
   

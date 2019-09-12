@@ -17,6 +17,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
+/**
+ * Special recipe type for repairing of damageable items with Mending Mixture.
+ * @author Integral
+ */
+
 public class MendingMixtureRepairRecipe extends ShapelessRecipe {
 	public MendingMixtureRepairRecipe(ResourceLocation id, String group, ItemStack output, NonNullList<Ingredient> inputs) {
 		super(id, group, output, inputs);
@@ -76,7 +81,7 @@ public class MendingMixtureRepairRecipe extends ShapelessRecipe {
 
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
-		return ModRecipeSerializers.CRAFTING_MENDING_MIXTURE_REPAIR;
+		return EnigmaticRecipeSerializers.CRAFTING_MENDING_MIXTURE_REPAIR;
 	}
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<MendingMixtureRepairRecipe> {

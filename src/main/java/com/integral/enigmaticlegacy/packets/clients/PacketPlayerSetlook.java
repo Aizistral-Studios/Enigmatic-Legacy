@@ -1,15 +1,19 @@
-package com.integral.enigmaticlegacy.packets;
+package com.integral.enigmaticlegacy.packets.clients;
 
 import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkEvent;
+
+/**
+ * Packet for setting the player to look at specific point in space,
+ * defined by absolute x/y/z coordinates.
+ * @author Integral
+ */
 
 public class PacketPlayerSetlook {
 	
@@ -32,12 +36,12 @@ public class PacketPlayerSetlook {
 	  public static PacketPlayerSetlook decode(PacketBuffer buf) {
 	     return new PacketPlayerSetlook(buf.readDouble(), buf.readDouble(), buf.readDouble());
 	  }
-	  
-	  @OnlyIn(Dist.CLIENT)
+
+
 	  public static void handle(PacketPlayerSetlook msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {
-		    	PlayerEntity player = Minecraft.getInstance().player;
+		    	ClientPlayerEntity player = Minecraft.getInstance().player;
 		    	
 		    	SuperpositionHandler.lookAt(msg.x, msg.y, msg.z, player);
 		      	

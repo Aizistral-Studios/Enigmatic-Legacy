@@ -8,6 +8,11 @@ import net.minecraft.item.IItemTier;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyLoadBase;
 
+/**
+ * Tools material provider.
+ * @author Integral
+ */
+
 public enum EnigmaticMaterials implements IItemTier {
 	   FORBIDDENAXE(0, 2000, 6.0F, 3.0F, 16, () -> {
 	      return Ingredient.fromItems(EnigmaticLegacy.relicOfTesting);

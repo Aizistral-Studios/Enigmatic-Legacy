@@ -1,5 +1,11 @@
 package com.integral.enigmaticlegacy.helpers;
 
+/**
+ * A percentage-based value that can be converted into factor,
+ * or 1.0 + factor in case it's required.
+ * @author Integral
+ */
+
 public class Perhaps {
 	
 	private int probability;

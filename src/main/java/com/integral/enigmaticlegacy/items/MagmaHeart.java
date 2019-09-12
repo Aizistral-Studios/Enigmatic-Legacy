@@ -97,13 +97,12 @@ public class MagmaHeart extends Item implements ICurio, IPerhaps {
 		 	LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", KeyBinding.getDisplayString("key.spellstoneAbility").get().toUpperCase());
 		 } catch (NullPointerException ex) {
 			// Just don't do it lol 
-	 }
+		 }
  }
  
  public void triggerActiveAbility(World world, ServerPlayerEntity player, ItemStack stack) {
 	 if (SuperpositionHandler.hasSpellstoneCooldown(player))
 		 return;
-	 //Insert existential void here
  }
  
  @Override
@@ -114,17 +113,17 @@ public class MagmaHeart extends Item implements ICurio, IPerhaps {
  
   @Override
   public boolean canRightClickEquip() {
-    return true;
+      return true;
   }
   
   @Override
   public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-	  
+	  // Insert existential void here
   }
   
   @Override
   public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-  
+	  // Insert existential void here
   }
   
 }

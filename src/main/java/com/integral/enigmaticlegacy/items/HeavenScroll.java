@@ -64,21 +64,17 @@ public class HeavenScroll extends Item implements ICurio, IPerhaps {
  
  @Override
  public void onCurioTick(String identifier, LivingEntity living) {
-	 //System.out.print("Default tick");
 	 if (living.world.isRemote)
 		 return;
 	 
 	 if (living instanceof PlayerEntity) {
 		 PlayerEntity player = (PlayerEntity) living;
 		 
-		 //System.out.println("Player tick!");
-		 
 		 if (Math.random() <= (0.025D*xpConsumptionMultiplier) & player.abilities.isFlying)
 			 player.giveExperiencePoints(-1);
 		 
 		 try {
 		 if (player.experienceTotal > 0) {
-			 //System.out.println("Passed experience check");
 			 
 		 if (!player.abilities.allowFlying)
 			 player.abilities.allowFlying = true;
@@ -93,7 +89,6 @@ public class HeavenScroll extends Item implements ICurio, IPerhaps {
 		 
 		 } catch (NullPointerException ex) {
 			 HeavenScroll.flyMap.put(player, false);
-			 //System.out.println("Catched exception");
 		 }
 	 }
 	 
@@ -101,12 +96,12 @@ public class HeavenScroll extends Item implements ICurio, IPerhaps {
  
   @Override
   public boolean canRightClickEquip() {
-    return true;
+      return true;
   }
   
   @Override
   public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-	  
+	  // Insert existential void here
   }
   
   @Override

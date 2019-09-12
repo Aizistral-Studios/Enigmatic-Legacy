@@ -19,12 +19,19 @@ import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
+/**
+ * Special trigger that activates if player successfully beheads a mob with Axe of Executioner.
+ * @author Integral
+ */
+
 public class BeheadingTrigger implements ICriterionTrigger<BeheadingTrigger.Instance> {
     public static final ResourceLocation ID = new ResourceLocation(EnigmaticLegacy.MODID, "forbidden_axe_beheading");
     public static final BeheadingTrigger INSTANCE = new BeheadingTrigger();
     private final Map<PlayerAdvancements, PlayerTracker> playerTrackers = new HashMap<>();
 
-    private BeheadingTrigger() {}
+    private BeheadingTrigger() {
+    	// Insert existential void here
+    }
 
     @Nonnull
     @Override

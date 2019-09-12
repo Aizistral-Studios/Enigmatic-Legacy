@@ -10,6 +10,13 @@ import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
 
+/**
+ * Condition that checks whether item is instance of IPerhaps, and if it is,
+ * whether or not it is enabled. Used to disable recipes for items disabled
+ * in config.
+ * @author Integral
+ */
+
 public class EnabledCondition implements ICondition {
     private static final ResourceLocation ID = new ResourceLocation(EnigmaticLegacy.MODID, "is_enabled");
     private final ResourceLocation item;
