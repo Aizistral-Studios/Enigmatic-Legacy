@@ -42,12 +42,7 @@ public class PacketHandleItemPickup {
 
 		    ctx.get().enqueueWork(() -> {
 		      
-		    	Entity pickuper = Minecraft.getInstance().player.world.getEntityByID(msg.pickuper_id);
-			      Entity entity = Minecraft.getInstance().player.world.getEntityByID(msg.item_id);
-			      
-			      Minecraft.getInstance().particles.addEffect(new ItemPickupParticle(Minecraft.getInstance().player.world, pickuper, entity, 0.5F));
-			      
-				Minecraft.getInstance().player.world.playSound(entity.posX, entity.posY, entity.posZ, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, (random.nextFloat() - random.nextFloat()) * 1.4F + 2.0F, false);
+		    	EnigmaticLegacy.proxy.handleItemPickup(msg.pickuper_id, msg.item_id);
 		    	
 		      });
 		    ctx.get().setPacketHandled(true);

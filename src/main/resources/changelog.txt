@@ -1,2 +1,2 @@
 Changelog:
-- Updated to Forge 28.1.0
+- Fixed broken code of PacketHandleItemPickup.
