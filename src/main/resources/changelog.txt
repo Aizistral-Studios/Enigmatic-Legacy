@@ -1,10 +1,2 @@
 Changelog:
-- Implemented advanced potions and related Astral Dust;
-- Potions of Haste are merged into advanced potion system instead of being presented as separate items;
-- The One Box now has the ability to simulate loot generation in 32768 instances, printing the results to log file;
-- Changed Scroll of Postmortal Recall to create newly implemented PermanentItemEntity instead of regular dropped item;
-- Fixed inevitable crash when on server startup with the mod, due to attempts to use client-only classes on server side (issue #2);
-- Fixed crash caused by renamed method for getting persistent entity NBT (issue #3);
-- Implemented update notifications;
-- Additional logger output;
-- Overall cleanup.
+- Updated to Forge 28.1.0

@@ -545,7 +545,7 @@ public class SuperpositionHandler {
 	 
 	 public static void setPersistentBoolean(PlayerEntity player, String tag, boolean value) {
 		 
-		 CompoundNBT data = player.getPersistantData();
+		 CompoundNBT data = player.getPersistentData();
 	     CompoundNBT persistent;
 	     
 	     if (!data.contains(PlayerEntity.PERSISTED_NBT_TAG)) {
@@ -564,7 +564,7 @@ public class SuperpositionHandler {
 	 
 	 public static boolean getPersistentBoolean(PlayerEntity player, String tag, boolean expectedValue) {
 		 
-		 CompoundNBT data = player.getPersistantData();
+		 CompoundNBT data = player.getPersistentData();
 	     CompoundNBT persistent;
 	     
 	     if (!data.contains(PlayerEntity.PERSISTED_NBT_TAG)) {
@@ -588,7 +588,7 @@ public class SuperpositionHandler {
 	 
 	 public static boolean hasPersistentTag(PlayerEntity player, String tag) {
 		 	
-		 CompoundNBT data = player.getPersistantData();
+		 CompoundNBT data = player.getPersistentData();
 	     CompoundNBT persistent;
 	     
 	     if (!data.contains(PlayerEntity.PERSISTED_NBT_TAG)) {

@@ -1,9 +1,15 @@
 package com.integral.enigmaticlegacy.packets.clients;
+import java.util.Random;
 import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.particle.ItemPickupParticle;
+import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
@@ -14,7 +20,7 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketHandleItemPickup {
 	  
-	  
+	  static Random random = new Random();
 	  private int item_id;
 	  private int pickuper_id;
 
@@ -35,9 +41,14 @@ public class PacketHandleItemPickup {
 	  public static void handle(PacketHandleItemPickup msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {
-		    	
-		      EnigmaticLegacy.proxy.handleItemPickup(msg.pickuper_id, msg.item_id);
 		      
+		    	Entity pickuper = Minecraft.getInstance().player.world.getEntityByID(msg.pickuper_id);
+			      Entity entity = Minecraft.getInstance().player.world.getEntityByID(msg.item_id);
+			      
+			      Minecraft.getInstance().particles.addEffect(new ItemPickupParticle(Minecraft.getInstance().player.world, pickuper, entity, 0.5F));
+			      
+				Minecraft.getInstance().player.world.playSound(entity.posX, entity.posY, entity.posZ, SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, (random.nextFloat() - random.nextFloat()) * 1.4F + 2.0F, false);
+		    	
 		      });
 		    ctx.get().setPacketHandled(true);
 	  }
