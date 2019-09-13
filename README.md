@@ -4,7 +4,7 @@
 
 **Minecraft Version:** 1.14.4
 
-**Forge Version:** 28.0.95 or later.
+**Forge Version:** 28.1.0 or later.
 
 **Dependencies:** CuriosAPI Forge-1.14.4-0.22 or later.
 
