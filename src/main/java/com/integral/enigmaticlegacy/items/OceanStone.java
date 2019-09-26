@@ -9,11 +9,11 @@ import javax.annotation.Nullable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
-import com.integral.enigmaticlegacy.helpers.Perhaps;
 
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.settings.KeyBinding;
@@ -41,14 +41,12 @@ public class OceanStone extends Item implements ICurio, IPerhaps {
  public static Properties integratedProperties = new Item.Properties();
  public static List<String> immunityList = new ArrayList<String>();
  
- public static Perhaps underwaterCreaturesResistance = new Perhaps(0);
- public static Perhaps swimmingBoost = new Perhaps(0);
- public static int abilityCooldown = 0;
  public static int xpCostBase = 150;
- public static double xpCostModifier = 0D;
 
  public OceanStone(Properties properties) {
 		super(properties);
+		
+		immunityList.add(DamageSource.DROWN.damageType);
  }
  
  public static Properties setupIntegratedProperties() {
@@ -56,22 +54,21 @@ public class OceanStone extends Item implements ICurio, IPerhaps {
 	 integratedProperties.maxStackSize(1);
 	 integratedProperties.rarity(Rarity.RARE);
 	 
-	 immunityList.add(DamageSource.DROWN.damageType);
-	 
 	 return integratedProperties;
  
  }
  
- public static void initConfigValues() {
-	 abilityCooldown = EnigmaticLegacy.configHandler.OCEAN_STONE_COOLDOWN.get();
-	 underwaterCreaturesResistance = new Perhaps(EnigmaticLegacy.configHandler.OCEAN_STONE_UNDERWATER_CREATURES_RESISTANCE.get());
-	 swimmingBoost = new Perhaps(EnigmaticLegacy.configHandler.OCEAN_STONE_SWIMMING_SPEED_BOOST.get());
-	 xpCostModifier = EnigmaticLegacy.configHandler.OCEAN_STONE_XP_COST_MODIFIER.get();
+ @Override
+ public boolean isForMortals() {
+ 	return ConfigHandler.OCEAN_STONE_ENABLED.getValue();
  }
  
  @Override
- public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.OCEAN_STONE_ENABLED.get() : false;
+ public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.oceanStone))
+		  return false;
+	  else
+		  return true;
  }
  
  @OnlyIn(Dist.CLIENT)
@@ -84,10 +81,10 @@ public class OceanStone extends Item implements ICurio, IPerhaps {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone2");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone3");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStoneCooldown", ((float)(abilityCooldown))/20.0F);
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStoneCooldown", ((float)(ConfigHandler.OCEAN_STONE_COOLDOWN.getValue()))/20.0F);
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone4");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone5", underwaterCreaturesResistance.asPercentage()+"%");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone5", ConfigHandler.OCEAN_STONE_UNDERWATER_CREATURES_RESISTANCE.getValue().asPercentage()+"%");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone6");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone7");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone8");
@@ -114,10 +111,10 @@ public class OceanStone extends Item implements ICurio, IPerhaps {
 		 ItemStack scroll = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.xpScroll);
 		 
 		 if (scroll != null && ItemNBTHelper.getInt(scroll, "XPStored", 0) >= xpCostBase*2) {
-			 ItemNBTHelper.setInt(scroll, "XPStored", ItemNBTHelper.getInt(scroll, "XPStored", 0) - (int) ((xpCostBase+(Math.random()*xpCostBase))*xpCostModifier));
+			 ItemNBTHelper.setInt(scroll, "XPStored", ItemNBTHelper.getInt(scroll, "XPStored", 0) - (int) ((xpCostBase+(Math.random()*xpCostBase))*ConfigHandler.OCEAN_STONE_XP_COST_MODIFIER.getValue()));
 			 paybackReceived = true;
 		 } else if (player.experienceTotal >= xpCostBase*2) {
-			 player.giveExperiencePoints((int) -((xpCostBase+(Math.random()*xpCostBase))*xpCostModifier));
+			 player.giveExperiencePoints((int) -((xpCostBase+(Math.random()*xpCostBase))*ConfigHandler.OCEAN_STONE_XP_COST_MODIFIER.getValue()));
 			 paybackReceived = true;
 		 }
 		 
@@ -133,7 +130,7 @@ public class OceanStone extends Item implements ICurio, IPerhaps {
 		 
 			 world.playSound(null, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.NEUTRAL, 2.0F, (float) (0.7F + (Math.random()*0.3D)));
 		 
-			 SuperpositionHandler.setSpellstoneCooldown(player, abilityCooldown);
+			 SuperpositionHandler.setSpellstoneCooldown(player, ConfigHandler.OCEAN_STONE_COOLDOWN.getValue());
 		 }
 		 
 	 	 }
@@ -177,7 +174,7 @@ public class OceanStone extends Item implements ICurio, IPerhaps {
     Multimap<String, AttributeModifier> atts = HashMultimap.create();
 
       atts.put(PlayerEntity.SWIM_SPEED.getName(),
-               new AttributeModifier(UUID.fromString("13faf191-bf38-4654-b369-cc1f4f1143bf"), "Swim speed bonus", swimmingBoost.asMultiplier(false),
+               new AttributeModifier(UUID.fromString("13faf191-bf38-4654-b369-cc1f4f1143bf"), "Swim speed bonus", ConfigHandler.OCEAN_STONE_SWIMMING_SPEED_BOOST.getValue().asMultiplier(false),
                                      AttributeModifier.Operation.MULTIPLY_BASE));
     
     return atts;

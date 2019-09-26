@@ -24,9 +24,12 @@ public class OneSpecialHandler {
 		List<ServerPlayerEntity> players = server.getPlayerList().getPlayers();
 		PlayerEntity man;
 		
-		if (players.size() > 0)
-			man = players.get(rand.nextInt(players.size()-1));
-		else
+		if (players.size() > 0) {
+			if (players.size() == 1)
+				man	= players.get(0);
+			else
+				man = players.get(rand.nextInt(players.size() - 1));
+		} else
 			man = null;
 		
 		return man;

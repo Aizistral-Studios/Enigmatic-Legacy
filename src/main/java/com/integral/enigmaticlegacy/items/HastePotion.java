@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 
@@ -56,13 +55,9 @@ public class HastePotion extends Item implements IPerhaps {
  
  }
  
- public static void initConfigValues() {
-	 // Insert existential void here
- }
- 
  @Override
  public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.HASTE_POTION_ENABLED.get() : false;
+ 	return false;
  }
  
  @OnlyIn(Dist.CLIENT)

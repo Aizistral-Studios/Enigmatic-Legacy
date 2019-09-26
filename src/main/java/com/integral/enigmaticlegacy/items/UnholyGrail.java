@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
@@ -46,13 +47,9 @@ public class UnholyGrail extends Item implements IPerhaps {
  
  }
  
- public static void initConfigValues() {
-	 // Insert existential void here
- }
- 
  @Override
  public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.UNHOLY_GRAIL_ENABLED.get() : false;
+ 	return ConfigHandler.UNHOLY_GRAIL_ENABLED.getValue();
  }
  
  @OnlyIn(Dist.CLIENT)

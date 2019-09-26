@@ -4,12 +4,7 @@ import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.ItemPickupParticle;
-import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**

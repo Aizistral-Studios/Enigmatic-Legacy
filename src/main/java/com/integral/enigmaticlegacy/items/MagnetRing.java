@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
@@ -29,7 +30,6 @@ import top.theillusivec4.curios.api.capability.ICurio;
 public class MagnetRing extends Item implements ICurio, IPerhaps {
 	
  public static Properties integratedProperties = new Item.Properties();
- public static int range = 0;
 
  public MagnetRing(Properties properties) {
 		super(properties);
@@ -44,13 +44,9 @@ public class MagnetRing extends Item implements ICurio, IPerhaps {
  
  }
  
- public static void initConfigValues() {
-	 range = EnigmaticLegacy.configHandler.MAGNET_RING_RANGE.get();
- }
- 
  @Override
  public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.MAGNET_RING_ENABLED.get() : false;
+ 	return ConfigHandler.MAGNET_RING_ENABLED.getValue();
  }
  
  @OnlyIn(Dist.CLIENT)
@@ -59,7 +55,7 @@ public class MagnetRing extends Item implements ICurio, IPerhaps {
 	 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 	 
 	 if(ControlsScreen.hasShiftDown()) {
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magnetRing1", range);
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magnetRing1", ConfigHandler.MAGNET_RING_RANGE.getValue());
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magnetRing2");
 	 } else {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -87,6 +83,14 @@ public class MagnetRing extends Item implements ICurio, IPerhaps {
   }
   
   @Override
+  public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.magnetRing))
+		  return false;
+	  else
+		  return true;
+  }
+  
+  @Override
   public void onCurioTick(String identifier, LivingEntity living) {
 	  
 	  	if (living.isSneaking())
@@ -96,7 +100,7 @@ public class MagnetRing extends Item implements ICurio, IPerhaps {
 		double y = living.posY + 0.75;
 		double z = living.posZ;
 
-		List<ItemEntity> items = living.world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
+		List<ItemEntity> items = living.world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - ConfigHandler.MAGNET_RING_RANGE.getValue(), y - ConfigHandler.MAGNET_RING_RANGE.getValue(), z - ConfigHandler.MAGNET_RING_RANGE.getValue(), x + ConfigHandler.MAGNET_RING_RANGE.getValue(), y + ConfigHandler.MAGNET_RING_RANGE.getValue(), z + ConfigHandler.MAGNET_RING_RANGE.getValue()));
 		int pulled = 0;
 		for(ItemEntity item : items)
 			if(canPullItem(item)) {

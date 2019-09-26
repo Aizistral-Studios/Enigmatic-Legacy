@@ -86,11 +86,7 @@ public class LootGenerator extends Item {
 	 
 	 return integratedProperties;
  }
- 
- public static void initConfigValues() {
-	 // Insert existential void here
- }
- 
+
  @OnlyIn(Dist.CLIENT)
  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 	 if(ControlsScreen.hasShiftDown()) {

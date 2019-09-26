@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
@@ -36,7 +37,6 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
 	
  public static Properties integratedProperties = new Item.Properties();
  public static final int xpPortion = 5;
- public static double range = 0D;
 
  public XPScroll(Properties properties) {
 		super(properties);
@@ -52,13 +52,17 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
  
  }
  
- public static void initConfigValues() {
-	 range = EnigmaticLegacy.configHandler.XP_SCROLL_COLLECTION_RANGE.get();
+ @Override
+ public boolean isForMortals() {
+ 	return ConfigHandler.XP_SCROLL_ENABLED.getValue();
  }
  
  @Override
- public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.XP_SCROLL_ENABLED.get() : false;
+ public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.xpScroll))
+		  return false;
+	  else
+		  return true;
  }
  
  @OnlyIn(Dist.CLIENT)
@@ -87,7 +91,7 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome9");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome10");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome11", (int)range);
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome11", (int)ConfigHandler.XP_SCROLL_COLLECTION_RANGE.getValue());
 	 } else {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 	 }
@@ -193,7 +197,7 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
 			 
 		 }
 		 
-		 List<ExperienceOrbEntity> orbs = world.getEntitiesWithinAABB(ExperienceOrbEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, range));
+		 List<ExperienceOrbEntity> orbs = world.getEntitiesWithinAABB(ExperienceOrbEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, ConfigHandler.XP_SCROLL_COLLECTION_RANGE.getValue()));
 		 for (ExperienceOrbEntity processed : orbs) {
 			 player.xpCooldown = 0;
 			 processed.setPositionAndUpdate(player.posX, player.posY, player.posZ);

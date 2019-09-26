@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
 
@@ -43,8 +44,12 @@ public class EnigmaticAmulet extends Item implements ICurio {
  
  }
  
- public static void initConfigValues() {
-	 // Insert existential void here
+ @Override
+ public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.enigmaticAmulet))
+		  return false;
+	  else
+		  return true;
  }
  
  @OnlyIn(Dist.CLIENT)

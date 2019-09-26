@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:etherium_scythe"
+    }
+  ],
+  "pattern": [
+    " XX",
+    " S ",
+    " S "
+  ],
+  "key": {
+    "X": {
+      "item": "enigmaticlegacy:etherium_ingot"
+    },
+	"S": {
+      "item": "enigmaticlegacy:ender_rod"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:etherium_scythe"
+  }
+}

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
@@ -44,10 +45,6 @@ public class AngelBlessing extends Item implements ICurio, IPerhaps {
  public static List<String> immunityList = new ArrayList<String>();
  public static HashMap<String, Float> resistanceList = new HashMap<String, Float>();
  public static double range = 4.0D;
- 
- public static double accelerationModifier = 0.0D;
- public static double accelerationModifierElytra = 0.0D;
- public static int abilityCooldown = 0;
 
  public AngelBlessing(Properties properties) {
 		super(properties);
@@ -64,15 +61,17 @@ public class AngelBlessing extends Item implements ICurio, IPerhaps {
 	 return integratedProperties;
  }
  
- public static void initConfigValues() {
-	 accelerationModifier = EnigmaticLegacy.configHandler.ANGEL_BLESSING_ACCELERATION_MODIFIER.get();
-	 accelerationModifierElytra = EnigmaticLegacy.configHandler.ANGEL_BLESSING_ACCELERATION_MODIFIER_ELYTRA.get();
-	 abilityCooldown = EnigmaticLegacy.configHandler.ANGEL_BLESSING_COOLDOWN.get();	 
+ @Override
+ public boolean isForMortals() {
+ 	return ConfigHandler.ANGEL_BLESSING_ENABLED.getValue();
  }
  
  @Override
- public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.ANGEL_BLESSING_ENABLED.get() : false;
+ public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.angelBlessing))
+		  return false;
+	  else
+		  return true;
  }
  
  @OnlyIn(Dist.CLIENT)
@@ -84,7 +83,7 @@ public class AngelBlessing extends Item implements ICurio, IPerhaps {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing1");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing2");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessingCooldown", ((float)(abilityCooldown))/20.0F);
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessingCooldown", ((float)(ConfigHandler.ANGEL_BLESSING_COOLDOWN.getValue()))/20.0F);
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing3");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing4");
@@ -109,10 +108,10 @@ public class AngelBlessing extends Item implements ICurio, IPerhaps {
 	 Vector3 motionVec = new Vector3(player.getMotion());
 	 
 	 if (player.isElytraFlying()) {
-		 accelerationVec = accelerationVec.multiply(accelerationModifierElytra);
+		 accelerationVec = accelerationVec.multiply(ConfigHandler.ANGEL_BLESSING_ACCELERATION_MODIFIER_ELYTRA.getValue());
 			 accelerationVec = accelerationVec.multiply(1/(motionVec.mag()*2.25D));
 	 } else
-		 accelerationVec = accelerationVec.multiply(accelerationModifier);
+		 accelerationVec = accelerationVec.multiply(ConfigHandler.ANGEL_BLESSING_ACCELERATION_MODIFIER.getValue());
 	 
 	 
 	 
@@ -123,7 +122,7 @@ public class AngelBlessing extends Item implements ICurio, IPerhaps {
 	 
 	 world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.NEUTRAL, 1.0F, (float) (0.6F + (Math.random()*0.1D)));
 	 
-	 SuperpositionHandler.setSpellstoneCooldown(player, abilityCooldown);
+	 SuperpositionHandler.setSpellstoneCooldown(player, ConfigHandler.ANGEL_BLESSING_COOLDOWN.getValue());
  }
  
  @Override

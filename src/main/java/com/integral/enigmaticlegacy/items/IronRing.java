@@ -5,6 +5,8 @@ import java.util.UUID;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 
 import net.minecraft.entity.LivingEntity;
@@ -33,19 +35,23 @@ public class IronRing extends Item implements ICurio, IPerhaps {
 	 return integratedProperties;
  
  }
- 
-  public static void initConfigValues() {
-	  // Insert existential void here
-  }
-  
+
   @Override
   public boolean isForMortals() {
-  	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.IRON_RING_ENABLED.get() : false;
+  	return ConfigHandler.IRON_RING_ENABLED.getValue();
   }
  
   @Override
   public boolean canRightClickEquip() {
     return true;
+  }
+  
+  @Override
+  public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.ironRing))
+		  return false;
+	  else
+		  return true;
   }
   
   

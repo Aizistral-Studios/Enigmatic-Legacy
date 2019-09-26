@@ -3,14 +3,15 @@ package com.integral.enigmaticlegacy.items;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
-import com.integral.enigmaticlegacy.helpers.Perhaps;
 
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.settings.KeyBinding;
@@ -38,19 +39,22 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
  public static Properties integratedProperties = new Item.Properties();
  public static List<String> immunityList = new ArrayList<String>();
  public static List<String> healList = new ArrayList<String>();
- public static HashMap<String, Float> resistanceList = new HashMap<String, Float>();
+ public static HashMap<String, Supplier<Float>> resistanceList = new HashMap<String, Supplier<Float>>();
  public static DamageSource theDarkness;
- 
- public static int abilityCooldown = 0;
- public static Perhaps savingChance = new Perhaps(0);
- public static double baseDarknessDamage = 0D;
- public static double regenerationModifier = 0D;
- public static int witheringLevel = 0;
- public static int witheringTime = 0;
- public static double range = 0D;
  
  public VoidPearl(Properties properties) {
 		super(properties);
+		
+		 immunityList.add(DamageSource.DROWN.damageType);
+		 immunityList.add(DamageSource.IN_WALL.damageType);
+		 
+		 healList.add(DamageSource.WITHER.damageType);
+		 healList.add(DamageSource.MAGIC.damageType);
+		 
+		 theDarkness = new DamageSource("darkness");
+		 theDarkness.setDamageIsAbsolute();
+		 theDarkness.setDamageBypassesArmor();
+		 theDarkness.setMagicDamage();
  }
  
  public static Properties setupIntegratedProperties() {
@@ -58,34 +62,21 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
 	 integratedProperties.maxStackSize(1);
 	 integratedProperties.rarity(Rarity.EPIC);
 	 
-	 immunityList.add(DamageSource.DROWN.damageType);
-	 immunityList.add(DamageSource.IN_WALL.damageType);
-	 
-	 healList.add(DamageSource.WITHER.damageType);
-	 healList.add(DamageSource.MAGIC.damageType);
-	 
-	 theDarkness = new DamageSource("darkness");
-	 theDarkness.setDamageIsAbsolute();
-	 theDarkness.setDamageBypassesArmor();
-	 theDarkness.setMagicDamage();
-	 
 	 return integratedProperties;
  
  }
  
- public static void initConfigValues() {
-	 abilityCooldown =EnigmaticLegacy.configHandler.VOID_PEARL_COOLDOWN.get();
-	 baseDarknessDamage = EnigmaticLegacy.configHandler.VOID_PEARL_BASE_DARKNESS_DAMAGE.get();
-	 regenerationModifier = EnigmaticLegacy.configHandler.VOID_PEARL_REGENERATION_MODIFIER.get();
-	 range = EnigmaticLegacy.configHandler.VOID_PEARL_SHADOW_RANGE.get();
-	 savingChance = new Perhaps(EnigmaticLegacy.configHandler.VOID_PEARL_UNDEAD_PROBABILITY.get());
-	 witheringLevel = EnigmaticLegacy.configHandler.VOID_PEARL_WITHERING_EFFECT_LEVEL.get();
-	 witheringTime = EnigmaticLegacy.configHandler.VOID_PEARL_WITHERING_EFFECT_TIME.get();
+ @Override
+ public boolean isForMortals() {
+ 	return ConfigHandler.VOID_PEARL_ENABLED.getValue();
  }
  
  @Override
- public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.VOID_PEARL_ENABLED.get() : false;
+ public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.voidPearl))
+		  return false;
+	  else
+		  return true;
  }
  
  @OnlyIn(Dist.CLIENT)
@@ -97,7 +88,7 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl1");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl2");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearlCooldown", ((float)(abilityCooldown))/20.0F);
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearlCooldown", ((float)(ConfigHandler.VOID_PEARL_COOLDOWN.getValue()))/20.0F);
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl3");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl4");
@@ -108,7 +99,7 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl9");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl10");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl11");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl12", savingChance.asPercentage()+"%");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl12", ConfigHandler.VOID_PEARL_UNDEAD_PROBABILITY.getValue().asPercentage()+"%");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl13");
 	 } else {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -155,7 +146,7 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
 			player.setAir(300);
 			
 			if (player.ticksExisted % 10 == 0) {
-				List<LivingEntity> entities = living.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(player.posX - range, player.posY - range, player.posZ - range, player.posX + range, player.posY + range, player.posZ + range));
+				List<LivingEntity> entities = living.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(player.posX - ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.posY - ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.posZ - ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.posX + ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.posY + ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.posZ + ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue()));
 				
 				if (entities.contains(player))
 					entities.remove(player);
@@ -172,7 +163,7 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
 						}
 						
 						//if (player.ticksExisted % 20 == 0) {
-							victim.attackEntityFrom(theDarkness, (float) baseDarknessDamage);
+							victim.attackEntityFrom(theDarkness, (float) ConfigHandler.VOID_PEARL_BASE_DARKNESS_DAMAGE.getValue());
 							living.world.playSound(null, victim.getPosition(), SoundEvents.ENTITY_PHANTOM_BITE, SoundCategory.NEUTRAL, 1.0F, (float) (0.3F + (Math.random()*0.4D)));
 						//}
 						

@@ -5,6 +5,8 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
 
@@ -40,8 +42,6 @@ public class RelicOfTesting extends Item {
  
  }
  
- public static void initConfigValues() {}
- 
  @OnlyIn(Dist.CLIENT)
  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 	 if(ControlsScreen.hasShiftDown()) {
@@ -61,6 +61,9 @@ public class RelicOfTesting extends Item {
 	 playerIn.setActiveHand(handIn);
 	 	 
 	 SuperpositionHandler.setSpellstoneCooldown(playerIn, 0);
+	 
+	 PermanentItemEntity testItem = new PermanentItemEntity(playerIn.world, playerIn.posX, playerIn.posY+4, playerIn.posZ, new ItemStack(EnigmaticLegacy.eyeOfNebula));
+	 playerIn.world.addEntity(testItem);
 	 
 	 playerIn.swingArm(handIn);
 

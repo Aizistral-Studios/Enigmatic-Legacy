@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:etherium_sword"
+    }
+  ],
+  "pattern": [
+    " X ",
+    "DXD",
+    " S "
+  ],
+  "key": {
+    "X": {
+      "item": "enigmaticlegacy:etherium_ingot"
+    },
+	"S": {
+      "item": "enigmaticlegacy:ender_rod"
+    },
+	"D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:etherium_sword"
+  }
+}

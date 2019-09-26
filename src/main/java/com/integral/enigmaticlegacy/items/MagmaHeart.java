@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
@@ -32,43 +33,41 @@ public class MagmaHeart extends Item implements ICurio, IPerhaps {
  public static List<String> immunityList = new ArrayList<String>();
  public static HashMap<String, Float> resistanceList = new HashMap<String, Float>();
  public static List<String> nemesisList = new ArrayList<String>();
- 
- public static int abilityCooldown = 0;
- public static double damageBack = 0D;
- public static double fireBack = 0D;
 
  public MagmaHeart(Properties properties) {
 		super(properties);
+		
+		 immunityList.add(DamageSource.LAVA.damageType);
+		 immunityList.add(DamageSource.IN_FIRE.damageType);
+		 immunityList.add(DamageSource.ON_FIRE.damageType);
+		 immunityList.add(DamageSource.HOT_FLOOR.damageType);
+		 //immunityList.add("fireball");
+		 
+		 nemesisList.add("mob");
+		 nemesisList.add(DamageSource.GENERIC.damageType);
+		 nemesisList.add("player");
+		 //nemesisList.add("arrow");
  }
  
  public static Properties setupIntegratedProperties() {
 	 integratedProperties.group(EnigmaticLegacy.enigmaticTab);
 	 integratedProperties.maxStackSize(1);
 	 integratedProperties.rarity(Rarity.UNCOMMON);
-
-	 immunityList.add(DamageSource.LAVA.damageType);
-	 immunityList.add(DamageSource.IN_FIRE.damageType);
-	 immunityList.add(DamageSource.ON_FIRE.damageType);
-	 immunityList.add(DamageSource.HOT_FLOOR.damageType);
-	 //immunityList.add("fireball");
-	 
-	 nemesisList.add("mob");
-	 nemesisList.add(DamageSource.GENERIC.damageType);
-	 nemesisList.add("player");
-	 //nemesisList.add("arrow");
 	 
 	 return integratedProperties;
  }
  
- public static void initConfigValues() {
-	 abilityCooldown = EnigmaticLegacy.configHandler.BLAZING_CORE_COOLDOWN.get();
-	 damageBack = EnigmaticLegacy.configHandler.BLAZING_CORE_DAMAGE_FEEDBACK.get();
-	 fireBack = EnigmaticLegacy.configHandler.BLAZING_CORE_IGNITION_FEEDBACK.get();
+ @Override
+ public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.magmaHeart))
+		  return false;
+	  else
+		  return true;
  }
  
  @Override
  public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.MAGMA_HEART_ENABLED.get() : false;
+ 	return ConfigHandler.MAGMA_HEART_ENABLED.getValue();
  }
  
  @OnlyIn(Dist.CLIENT)
@@ -80,7 +79,7 @@ public class MagmaHeart extends Item implements ICurio, IPerhaps {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart1");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart2");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeartCooldown", ((float)(abilityCooldown))/20.0F);
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeartCooldown", ((float)(ConfigHandler.BLAZING_CORE_COOLDOWN.getValue()))/20.0F);
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart3");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart4");

@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.CooldownMap;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
@@ -46,8 +48,6 @@ public class Megasponge extends Item implements ICurio, IPerhaps {
 	
  public static Properties integratedProperties = new Item.Properties();
  public static CooldownMap cooldownMap = new CooldownMap();
- 
- public static int range = 0;
 
  public Megasponge(Properties properties) {
 		super(properties);
@@ -61,13 +61,17 @@ public class Megasponge extends Item implements ICurio, IPerhaps {
 	 return integratedProperties;
  }
  
- public static void initConfigValues() {
-	 range = EnigmaticLegacy.configHandler.EXTRAPOLATED_MEGASPONGE_RADIUS.get();
+ @Override
+ public boolean isForMortals() {
+ 	return ConfigHandler.MEGASPONGE_ENABLED.getValue();
  }
  
  @Override
- public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.MEGASPONGE_ENABLED.get() : false;
+ public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.megaSponge))
+		  return false;
+	  else
+		  return true;
  }
  
  @OnlyIn(Dist.CLIENT)
@@ -137,7 +141,7 @@ public class Megasponge extends Item implements ICurio, IPerhaps {
 				List<BlockPos> processedBlocks = new ArrayList<BlockPos>();
 				processedBlocks.add(initialPos);
 				
-				for (int counter = 0; counter <= range; counter++) {
+				for (int counter = 0; counter <= ConfigHandler.EXTRAPOLATED_MEGASPONGE_RADIUS.getValue(); counter++) {
 					List<BlockPos> outputBlocks = new ArrayList<BlockPos>();
 					
 					for (BlockPos checkedPos : processedBlocks) {

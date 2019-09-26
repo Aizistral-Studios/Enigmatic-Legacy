@@ -1,5 +1,7 @@
 package com.integral.enigmaticlegacy.items;
 
+import com.integral.enigmaticlegacy.EnigmaticLegacy;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
 
@@ -12,18 +14,13 @@ public class EtheriumIngot extends Item {
  }
  
  public static Properties setupIntegratedProperties() {
-	 //integratedProperties.group(EnigmaticLegacy.enigmaticTab);
+	 integratedProperties.group(EnigmaticLegacy.enigmaticTab);
 	 integratedProperties.maxStackSize(64);
 	 integratedProperties.rarity(Rarity.RARE);
 	 
 	 return integratedProperties;
  
  }
- 
- public static void initConfigValues() {
-	 // Insert existential void here
- }
- 
   
 }
 

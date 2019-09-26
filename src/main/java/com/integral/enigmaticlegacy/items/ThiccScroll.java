@@ -22,10 +22,6 @@ public class ThiccScroll extends Item {
  
  }
  
- public static void initConfigValues() {
-	 // Insert existential void here
- }
- 
   
 }
 

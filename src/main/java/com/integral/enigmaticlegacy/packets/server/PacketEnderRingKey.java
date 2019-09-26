@@ -39,10 +39,6 @@ public class PacketEnderRingKey {
 
 		    ctx.get().enqueueWork(() -> {
 		      ServerPlayerEntity playerServ = ctx.get().getSender();
-				
-		      	//System.out.println("Packet received!");
-		      	
-		         //System.out.println();
 		      
 		      	 if (playerServ.openContainer.windowId == 0)
 		      	 if (SuperpositionHandler.hasCurio(playerServ, EnigmaticLegacy.enderRing)) {

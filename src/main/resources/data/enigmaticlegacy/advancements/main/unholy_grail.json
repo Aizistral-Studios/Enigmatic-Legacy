@@ -13,7 +13,7 @@
     "announce_to_chat": true,
     "hidden": true
   },
-  "parent": "enigmaticlegacy:main/recall_potion",
+  "parent": "enigmaticlegacy:main/megasponge",
   "criteria": {
     "spellstone": {
       "trigger": "enigmaticlegacy:unholy_grail_drink"

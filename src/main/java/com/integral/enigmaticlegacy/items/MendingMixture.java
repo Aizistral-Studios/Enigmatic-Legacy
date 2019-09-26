@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
 
@@ -37,13 +38,9 @@ public class MendingMixture extends Item implements IPerhaps {
  
  }
  
- public static void initConfigValues() {
-	 // Insert existential void here
- }
- 
  @Override
  public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.MENDING_MIXTURE_ENABLED.get() : false;
+ 	return ConfigHandler.MENDING_MIXTURE_ENABLED.getValue();
  }
  
  @OnlyIn(Dist.CLIENT)

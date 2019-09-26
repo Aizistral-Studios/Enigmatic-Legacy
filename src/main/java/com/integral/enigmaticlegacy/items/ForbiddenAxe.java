@@ -5,10 +5,10 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
-import com.integral.enigmaticlegacy.helpers.Perhaps;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -30,9 +30,6 @@ public class ForbiddenAxe extends SwordItem implements IPerhaps {
 	
 	public static Properties integratedProperties = new Item.Properties();
 	
-	public static Perhaps beheadingChanceBase = new Perhaps(0);
-	public static Perhaps beheadingChanceBonus = new Perhaps(0);
-	
 	public ForbiddenAxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties properties) {
 		super(tier, attackDamageIn, attackSpeedIn, properties);
 	}
@@ -47,21 +44,16 @@ public class ForbiddenAxe extends SwordItem implements IPerhaps {
 	 
 	 }
 	
-	public static void initConfigValues() {
-		beheadingChanceBase = new Perhaps(EnigmaticLegacy.configHandler.FORBIDDEN_AXE_BEHEADING_BASE.get());
-		beheadingChanceBonus = new Perhaps(EnigmaticLegacy.configHandler.FORBIDDEN_AXE_BEHEADING_BONUS.get());
-	}
-	
 	 @Override
 	 public boolean isForMortals() {
-	 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.FORBIDDEN_AXE_ENABLED.get() : false;
+	 	return ConfigHandler.FORBIDDEN_AXE_ENABLED.getValue();
 	 }
 	
 	 @OnlyIn(Dist.CLIENT)
 	 public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		 if(ControlsScreen.hasShiftDown()) {
 			 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe1");
-			 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe2", beheadingChanceBonus.asPercentage()+"%");
+			 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe2", ConfigHandler.FORBIDDEN_AXE_BEHEADING_BONUS.getValue().asPercentage()+"%");
 			 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe3");
 		 } else {
 			 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -71,14 +63,14 @@ public class ForbiddenAxe extends SwordItem implements IPerhaps {
 		 
 		 try {
 		 if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.monsterCharm))
-			 if (EnigmaticLegacy.configHandler.MONSTER_CHARM_BONUS_LOOTING.get())
+			 if (ConfigHandler.MONSTER_CHARM_BONUS_LOOTING.getValue())
 			 looting++;
 		 } catch (NullPointerException ex) {
 			 // Just don't do it lol
 		 }
 		 
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance",  (beheadingChanceBase.asPercentage() + (beheadingChanceBonus.asPercentage()*looting)) + "%");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance",  (ConfigHandler.FORBIDDEN_AXE_BEHEADING_BASE.getValue().asPercentage() + (ConfigHandler.FORBIDDEN_AXE_BEHEADING_BONUS.getValue().asPercentage()*looting)) + "%");
 	 }
 	
 	@Override

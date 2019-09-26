@@ -2,8 +2,8 @@ package com.integral.enigmaticlegacy.packets.server;
 
 import java.util.function.Supplier;
 
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.items.EyeOfNebula;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -39,7 +39,7 @@ public class PacketConfirmTeleportation {
 		        //System.out.println("Illuminati confirmed");
 		      
 		         for (int counter = 0; counter <= 32; counter++) {
-		        	 if (SuperpositionHandler.validTeleportRandomly(playerServ, playerServ.world, (int) EyeOfNebula.dodgeRange))
+		        	 if (SuperpositionHandler.validTeleportRandomly(playerServ, playerServ.world, (int) ConfigHandler.EYE_OF_NEBULA_DODGE_RANGE.getValue()))
 		        		 break;
 		         }
 		      

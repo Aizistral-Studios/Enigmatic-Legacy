@@ -216,6 +216,10 @@ public class Vector3 {
 		double m = dotProduct(b)/l;
 		return b.multiply(m);
 	}
+	
+	public Vector3 rotate(double angle, Vector3 axis) {
+		return Quat.aroundAxis(axis.normalize(), angle).rotate(this);
+	}
 
 	@Override
 	public boolean equals(Object o) {

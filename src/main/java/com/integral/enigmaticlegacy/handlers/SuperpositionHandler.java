@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
@@ -605,14 +606,39 @@ public class SuperpositionHandler {
 		 
 	 }
 	 
+	 
+	 public static boolean hasStoredAnvilField(PlayerEntity entity) {
+		 if (EnigmaticEventHandler.anvilFields.containsKey(entity))
+			 if (EnigmaticEventHandler.anvilFields.get(entity) != null && !EnigmaticEventHandler.anvilFields.get(entity).equals(""))
+				 return true;
+		 
+		 return false;
+	 }
+	 
 	 /**
 	  * Checks whether or not player has completed specified advancement.
 	  */
 	 
-	 public static boolean hasAdvancement(ServerPlayerEntity player, ResourceLocation location) {
-		 if (player.getAdvancements().getProgress(player.server.getAdvancementManager().getAdvancement(location)).isDone())
-			 return true;
-		 else
+	 public static boolean hasAdvancement(@Nonnull ServerPlayerEntity player, @Nonnull ResourceLocation location) {
+		 /*
+		 if (player != null && location != null && player.server != null) {
+			 PlayerAdvancements advancements = player.getAdvancements();
+			 AdvancementManager manager = player.server.getAdvancementManager();
+			 	 
+			 if (advancements != null && manager != null) {
+				 if (manager.getAdvancement(location) != null)
+				 return advancements.getProgress(manager.getAdvancement(location)).isDone();
+			 }
+		 }
+		 */
+		 
+		 try {
+			 if (player.getAdvancements().getProgress(player.server.getAdvancementManager().getAdvancement(location)).isDone())
+				 return true;
+		 } catch (NullPointerException ex) {
+			 // Just don't do it lol		 }
+		 }
+		 
 			 return false;
 	 }
 	 

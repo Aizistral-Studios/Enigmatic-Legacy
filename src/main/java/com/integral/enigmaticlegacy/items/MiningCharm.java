@@ -8,11 +8,11 @@ import javax.annotation.Nullable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
-import com.integral.enigmaticlegacy.helpers.Perhaps;
 
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -40,10 +40,6 @@ import top.theillusivec4.curios.api.capability.ICurio;
 public class MiningCharm extends Item implements ICurio, IPerhaps {
 	
  public static Properties integratedProperties = new Item.Properties();
- 
- public static Perhaps miningBoost = new Perhaps(0);
- public static double reachBoost = 0D;
- public static boolean bonusLuck = false;
 
  public MiningCharm(Properties properties) {
 		super(properties);
@@ -57,15 +53,17 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
 	 return integratedProperties;
  }
  
- public static void initConfigValues() {
-	 miningBoost = new Perhaps(EnigmaticLegacy.configHandler.MINING_CHARM_BREAK_BOOST.get());
-	 reachBoost = EnigmaticLegacy.configHandler.MINING_CHARM_REACH_BOOST.get();
-	 bonusLuck = EnigmaticLegacy.configHandler.MINING_CHARM_BONUS_LUCK.get();
+ @Override
+ public boolean isForMortals() {
+ 	return ConfigHandler.MINING_CHARM_ENABLED.getValue();
  }
  
  @Override
- public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.MINING_CHARM_ENABLED.get() : false;
+ public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.miningCharm))
+		  return false;
+	  else
+		  return true;
  }
  
  @OnlyIn(Dist.CLIENT)
@@ -81,7 +79,7 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
 	 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 	 
 	 if(ControlsScreen.hasShiftDown()) {
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm1", miningBoost.asPercentage()+"%");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm1", ConfigHandler.MINING_CHARM_BREAK_BOOST.getValue().asPercentage()+"%");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm2");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm3");
@@ -151,13 +149,13 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
 
     Multimap<String, AttributeModifier> atts = HashMultimap.create();
     
-      if (bonusLuck)
+      if (ConfigHandler.MINING_CHARM_BONUS_LUCK.getValue())
       atts.put(SharedMonsterAttributes.LUCK.getName(),
                new AttributeModifier(UUID.fromString("03c3c89d-7037-4b42-880f-b146bcb64d2e"), "Fortune bonus", 1,
                                      AttributeModifier.Operation.ADDITION));
       
       atts.put(PlayerEntity.REACH_DISTANCE.getName(),
-              new AttributeModifier(UUID.fromString("08c3c83d-7137-4b42-880f-b146bcb64d2e"), "Reach bonus", reachBoost,
+              new AttributeModifier(UUID.fromString("08c3c83d-7137-4b42-880f-b146bcb64d2e"), "Reach bonus", ConfigHandler.MINING_CHARM_REACH_BOOST.getValue(),
                                     AttributeModifier.Operation.ADDITION));
     
     return atts;

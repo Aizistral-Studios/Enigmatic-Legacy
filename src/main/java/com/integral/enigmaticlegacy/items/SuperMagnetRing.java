@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
@@ -30,8 +32,6 @@ import top.theillusivec4.curios.api.capability.ICurio;
 public class SuperMagnetRing extends Item implements ICurio, IPerhaps {
 	
  public static Properties integratedProperties = new Item.Properties();
- public static int range = 0;
- public static boolean sound;
 
  public SuperMagnetRing(Properties properties) {
 		super(properties);
@@ -46,14 +46,17 @@ public class SuperMagnetRing extends Item implements ICurio, IPerhaps {
  
  }
  
- public static void initConfigValues() {
-	 range = EnigmaticLegacy.configHandler.SUPER_MAGNET_RING_RANGE.get();
-	 sound = EnigmaticLegacy.configHandler.SUPER_MAGNET_RING_SOUND.get();
+ @Override
+ public boolean isForMortals() {
+ 	return ConfigHandler.SUPER_MAGNET_RING_ENABLED.getValue();
  }
  
  @Override
- public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.SUPER_MAGNET_RING_ENABLED.get() : false;
+ public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.superMagnetRing))
+		  return false;
+	  else
+		  return true;
  }
  
  @OnlyIn(Dist.CLIENT)
@@ -63,7 +66,7 @@ public class SuperMagnetRing extends Item implements ICurio, IPerhaps {
 	 
 	 if(ControlsScreen.hasShiftDown()) {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.superMagnetRing1");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.superMagnetRing2", range);
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.superMagnetRing2", ConfigHandler.SUPER_MAGNET_RING_RANGE.getValue());
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.superMagnetRing3");
 	 } else {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -99,7 +102,7 @@ public class SuperMagnetRing extends Item implements ICurio, IPerhaps {
 		double y = living.posY + 0.75;
 		double z = living.posZ;
 
-		List<ItemEntity> items = living.world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - range, y - range, z - range, x + range, y + range, z + range));
+		List<ItemEntity> items = living.world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - ConfigHandler.SUPER_MAGNET_RING_RANGE.getValue(), y - ConfigHandler.SUPER_MAGNET_RING_RANGE.getValue(), z - ConfigHandler.SUPER_MAGNET_RING_RANGE.getValue(), x + ConfigHandler.SUPER_MAGNET_RING_RANGE.getValue(), y + ConfigHandler.SUPER_MAGNET_RING_RANGE.getValue(), z + ConfigHandler.SUPER_MAGNET_RING_RANGE.getValue()));
 		int pulled = 0;
 		for(ItemEntity item : items)
 			if(canPullItem(item)) {
@@ -108,7 +111,7 @@ public class SuperMagnetRing extends Item implements ICurio, IPerhaps {
 				
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(item.posX, item.posY, item.posZ, 24, item.dimension)), new PacketPortalParticles(item.posX, item.posY+(item.getHeight()/2), item.posZ, 24, 0.75D));
 				
-				if (sound)
+				if (ConfigHandler.SUPER_MAGNET_RING_SOUND.getValue())
 					item.world.playSound(null, item.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
 				
 				item.setPositionAndUpdate(x, y, z);

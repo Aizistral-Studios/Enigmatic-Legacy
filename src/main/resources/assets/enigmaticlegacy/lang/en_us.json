@@ -29,8 +29,21 @@
 	"item.enigmaticlegacy.haste_potion_extended": "Potion of Haste §4[Deprecated]",
 	"item.enigmaticlegacy.haste_potion_empowered": "Potion of Haste §4[Deprecated]",
 	"item.enigmaticlegacy.haste_potion_extended_empowered": "Potion of Haste §4[Deprecated]",
+	"item.enigmaticlegacy.etherium_ore": "Etherium Ore",
 	"item.enigmaticlegacy.etherium_ingot": "Etherium Ingot",
 	"item.enigmaticlegacy.astral_dust": "Astral Dust",
+	"item.enigmaticlegacy.etherium_helmet": "Etherium Helmet",
+	"item.enigmaticlegacy.etherium_chestplate": "Etherium Cuirass",
+	"item.enigmaticlegacy.etherium_leggings": "Etherium Greaves",
+	"item.enigmaticlegacy.etherium_boots": "Etherium Boots",
+	"item.enigmaticlegacy.etherium_pickaxe": "Etherium Pickaxe",
+	"item.enigmaticlegacy.etherium_axe": "Etherium Waraxe",
+	"item.enigmaticlegacy.etherium_shovel": "Etherium Shovel",
+	"item.enigmaticlegacy.etherium_sword": "Etherium Broadsword",
+	"item.enigmaticlegacy.etherium_scythe": "Etherium Scythe",
+	"item.enigmaticlegacy.lore_inscriber": "The Architect's Inkwell",
+	"item.enigmaticlegacy.lore_fragment": "Lore Fragment",
+	"item.enigmaticlegacy.ender_rod": "Ender Rod",
 	
 	"item.enigmaticlegacy.common_potion.effect.empty": "Hollow Potion",
 	"item.enigmaticlegacy.common_potion.effect.haste": "Potion of Haste",
@@ -105,6 +118,8 @@
 	"curios.identifier.spellstone": "Spellstone",
 	"curios.identifier.ring": "Ring",
 	"curios.identifier.charm": "Charm",
+	"curios.modifiers.spellstone": "When equipped as Spellstone:",
+	"curios.modifiers.scroll": "When equipped as Arcane Scroll:",
 	"tooltip.enigmaticlegacy.enabled": "§6Enabled",
 	"tooltip.enigmaticlegacy.disabled": "§6Disabled",
 	"attribute.name.generic.reachDistance": "Reach Distance",
@@ -133,6 +148,9 @@
 
 	"tooltip.enigmaticlegacy.undefined": "§4Undefined Tooltip Detected",
 	"tooltip.enigmaticlegacy.void": "",
+	"tooltip.enigmaticlegacy.paragraph": "§",
+	"tooltip.enigmaticlegacy.subformat": "&",
+	"tooltip.enigmaticlegacy.tilt": "&",
 	
 
 	"advancementTab.enigmaticlegacy": "Enigmatic Legacy",
@@ -142,12 +160,12 @@
 	"advancement.enigmaticlegacy:discoverSpellstone.desc": "Discover your first Spellstone",
 	
 	"advancement.enigmaticlegacy:discoverScroll": "Supersolid Wizard",
-	"advancement.enigmaticlegacy:discoverScroll.desc": "Discover or create your first Arcane Scroll",
+	"advancement.enigmaticlegacy:discoverScroll.desc": "Obtain your first Arcane Scroll",
 	
 	"advancement.enigmaticlegacy:discoverRing": "Crazy 0.5 Carat Diamond",
 	"advancement.enigmaticlegacy:discoverRing.desc": "Discover or create your first Ring",
 	
-	"advancement.enigmaticlegacy:recallPotion": "There We Go Again",
+	"advancement.enigmaticlegacy:recallPotion": "Gotta Get Out of Here",
 	"advancement.enigmaticlegacy:recallPotion.desc": "Brew the potion of Recall",
 	
 	"advancement.enigmaticlegacy:magnetRing": "Magnificence",
@@ -173,12 +191,39 @@
 	
 	"advancement.enigmaticlegacy:unholyGrail": "Ignoring the Advices",
 	"advancement.enigmaticlegacy:unholyGrail.desc": "Drink from Unholy Grail",
+	
+	"advancement.enigmaticlegacy:astralDust": "Primal Catalyst",
+	"advancement.enigmaticlegacy:astralDust.desc": "Discover the Astral Dust",
+	
+	"advancement.enigmaticlegacy:smeltEtherium": "Not So Ethereal",
+	"advancement.enigmaticlegacy:smeltEtherium.desc": "Smelt the Etherium Ingot",
+	
+	"advancement.enigmaticlegacy:etheriumTool": "Aggressive Landscape Designer",
+	"advancement.enigmaticlegacy:etheriumTool.desc": "Craft any tool out of etherium",
+	
+	"advancement.enigmaticlegacy:etheriumGear": "The Ultimate Shield",
+	"advancement.enigmaticlegacy:etheriumGear.desc": "Create a full set of armor made of etherium",
+	
+	"advancement.enigmaticlegacy:ultimatePotion": "Master of the Brewing Stand",
+	"advancement.enigmaticlegacy:ultimatePotion.desc": "Brew your first ultimate potion",
+	
+	"advancement.enigmaticlegacy:loreInscriber": "Lore Writer",
+	"advancement.enigmaticlegacy:loreInscriber.desc": "Obtain the Architect's Inkwell",
 
 	"tooltip.enigmaticlegacy.holdShift": "§5Hold §6Shift§5 to see details.",
-	"tooltip.enigmaticlegacy.enigmaticItem1": "§5Grants you the ability to fly.",
-	"tooltip.enigmaticlegacy.enigmaticItem2": "§5Immunity to fire and lava.",
-	"tooltip.enigmaticlegacy.enigmaticItem3": "§5Immunity to most status effects.",
-	"tooltip.enigmaticlegacy.enigmaticItem4": "§5You are immortal while possessing it.",
+	
+	"tooltip.enigmaticlegacy.enigmaticItem1": "§dActive ability:",
+	"tooltip.enigmaticlegacy.enigmaticItem2": "§6- Rains down devastating Wither Skulls.",
+	"tooltip.enigmaticlegacy.enigmaticItemCooldown": "§dСooldown: §6%1$s seconds",
+	"tooltip.enigmaticlegacy.enigmaticItem3": "§dPassive abilities:",
+	"tooltip.enigmaticlegacy.enigmaticItem4": "§5- Immunity to suffocation, falling, collision,",
+	"tooltip.enigmaticlegacy.enigmaticItem5": "§5  pressure, hunger, void, pricking, fire and",
+	"tooltip.enigmaticlegacy.enigmaticItem6": "§5  lava damage.",
+	"tooltip.enigmaticlegacy.enigmaticItem7": "§5- Immunity to most status effects.",
+	"tooltip.enigmaticlegacy.enigmaticItem8": "§5- Grants you an ability to fly.",
+	"tooltip.enigmaticlegacy.enigmaticItem9": "§5- Compensates mining speed penalty when flying.",
+	"tooltip.enigmaticlegacy.enigmaticItem10": "§5- You are immortal while having it equipped",
+	"tooltip.enigmaticlegacy.enigmaticItem11": "§5  or in your inventory.",
 
 	"tooltip.enigmaticlegacy.xpTomeMode": "§dMode: %1$s",
 	"tooltip.enigmaticlegacy.code6": "§6",
@@ -249,6 +294,7 @@
 	
 	"tooltip.enigmaticlegacy.heavenTome1": "§5Provides you with ability to freely fly, at the",
 	"tooltip.enigmaticlegacy.heavenTome2": "§5cost of slowly consuming your experience.",
+	"tooltip.enigmaticlegacy.heavenTome3": "§5Compensates mining speed penalty when flying.",
 	
 	"tooltip.enigmaticlegacy.miningCharm1": "§6+%1$s§d Mining Speed",
 	"tooltip.enigmaticlegacy.miningCharm2": "§5When you are underground and in dark,",
@@ -345,7 +391,56 @@
 	"tooltip.enigmaticlegacy.lootGenerator6": "§5estimated loot generation results in §632768",
 	"tooltip.enigmaticlegacy.lootGenerator7": "§5instances to §6latest.log§5 file.",
 	"tooltip.enigmaticlegacy.lootGenerator8": "§5Clicking on other sides of a chest will instead",
-	"tooltip.enigmaticlegacy.lootGenerator9": "§5obliterate anything stored within."
+	"tooltip.enigmaticlegacy.lootGenerator9": "§5obliterate anything stored within.",
+	
+	"tooltip.enigmaticlegacy.etheriumArmor1": "§5Invisible while worn.",
+	"tooltip.enigmaticlegacy.etheriumHelmet1": "§5Invisible while worn.",
+	"tooltip.enigmaticlegacy.etheriumChestplate1": "§5Invisible while worn.",
+	"tooltip.enigmaticlegacy.etheriumLeggings1": "§5Invisible while worn.",
+	"tooltip.enigmaticlegacy.etheriumBoots1": "§5Invisible while worn.",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus1": "§dSet Bonus:",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus2": "§5- When your health drops below §6%1$s§5, generates a",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus3": "§5  powerful shield that reflects most projectiles,",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus4": "§5  provides §6%1$s Damage Resistance§5, immunity to",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus5": "§5  most debuffs, and knocks back any creatures",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus6": "§5  that attack you.",
+	
+	"tooltip.enigmaticlegacy.loreInscriber1": "§5Combine with §6Lore Fragment§5 in §6Anvil§5 to write",
+	"tooltip.enigmaticlegacy.loreInscriber2": "§5formatted name and lore lines to it.",
+	
+	"tooltip.enigmaticlegacy.loreInscriber3": "§5Use §d&§6[0-f]§5 to apply color formatting to any",
+	"tooltip.enigmaticlegacy.loreInscriber4": "§5following text in the name field.",
+	"tooltip.enigmaticlegacy.loreInscriber5": "§5Use §d&§6[k/l/m/n/o/r]§5 to apply font formatting.",
+	
+	"tooltip.enigmaticlegacy.loreInscriber6": "§5Start the line with §d!§5 to add it as lore line,",
+	"tooltip.enigmaticlegacy.loreInscriber7": "§5or with §d!§6[0-99]§5 to set the lore line with",
+	"tooltip.enigmaticlegacy.loreInscriber8": "§5specified index.",
+	
+	"tooltip.enigmaticlegacy.loreInscriber9": "§5Enter §d-!§5 or §d-!§6[0-99]§5 to remove the last lore",
+	"tooltip.enigmaticlegacy.loreInscriber10": "§5line added or lore line with specified index,",
+	"tooltip.enigmaticlegacy.loreInscriber11": "§5respectively.",
+	
+	"tooltip.enigmaticlegacy.loreFragment1": "§5Use §6The Architect's Inkwell§5 to write in",
+	"tooltip.enigmaticlegacy.loreFragment2": "§5name and lore.",
+	"tooltip.enigmaticlegacy.loreFragment3": "§5When done, combine with any item in §6Anvil§5",
+	"tooltip.enigmaticlegacy.loreFragment4": "§5to attach those writings to that item.",
+	
+	"tooltip.enigmaticlegacy.etheriumPickaxe1": "§5Mines blocks in §6%1$sx%1$sx%2$s§5 area.",
+	"tooltip.enigmaticlegacy.etheriumPickaxe2": "§5Hold §6Shift§5 to prevent this effect.",
+	
+	"tooltip.enigmaticlegacy.etheriumAxe1": "§5Chops wood and leaves in §6%1$sx%1$sx%1$s§5 area.",
+	"tooltip.enigmaticlegacy.etheriumAxe2": "§5Hold §6Shift§5 to prevent this effect.",
+	
+	"tooltip.enigmaticlegacy.etheriumShovel1": "§5Digs blocks in §6%1$sx%1$sx%2$s§5 area.",
+	"tooltip.enigmaticlegacy.etheriumShovel2": "§5Hold §6Shift§5 to prevent this effect.",
+	
+	"tooltip.enigmaticlegacy.etheriumSword1": "§5Pressing §6Right-Click§5 while holding it will",
+	"tooltip.enigmaticlegacy.etheriumSword2": "§5throw you in the direction opposite to",
+	"tooltip.enigmaticlegacy.etheriumSword3": "§5your sight.",
+	"tooltip.enigmaticlegacy.etheriumSword4": "§5This ability has §6%1$s seconds§5 cooldown.",
+	
+	"tooltip.enigmaticlegacy.etheriumScythe1": "§5Harvests plants in §6%1$sx%1$sx%1$s§5 area.",
+	"tooltip.enigmaticlegacy.etheriumScythe2": "§5Hold §6Shift§5 to prevent this effect."
 	
 
 

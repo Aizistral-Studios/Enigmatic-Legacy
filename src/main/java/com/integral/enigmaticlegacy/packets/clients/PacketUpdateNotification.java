@@ -30,7 +30,6 @@ public class PacketUpdateNotification {
 
 		    ctx.get().enqueueWork(() -> {
 		      ClientPlayerEntity player = Minecraft.getInstance().player;
-		      
 		      EnigmaticUpdateHandler.handleShowup(player);
 		      
 		    });

@@ -14,7 +14,11 @@
     "hidden": true,
 	"frame": "challenge"
   },
-  "parent": "enigmaticlegacy:main/recall_potion",
+  
+  "rewards": {
+    "experience": 100
+  },
+  "parent": "enigmaticlegacy:main/megasponge",
   "criteria": {
     "spellstone": {
       "trigger": "enigmaticlegacy:forbidden_axe_beheading"

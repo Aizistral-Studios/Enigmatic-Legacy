@@ -22,10 +22,6 @@ public class AstralDust extends Item {
  
  }
  
- public static void initConfigValues() {
-	 // Insert existential void here
- }
- 
   
 }
 

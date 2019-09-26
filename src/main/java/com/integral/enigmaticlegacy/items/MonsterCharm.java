@@ -5,9 +5,10 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
-import com.integral.enigmaticlegacy.helpers.Perhaps;
 
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -26,20 +27,8 @@ public class MonsterCharm extends Item implements ICurio, IPerhaps {
  public static Properties integratedProperties = new Item.Properties();
  public static float bonusXPModifier = 2.0F;
  
- public static Perhaps aggressiveDamageModifier = new Perhaps(0);
- public static Perhaps undeadDamageModifier = new Perhaps(0);
- public static boolean lootingLevelEnabled = false;
- public static boolean xpBonusEnabled = false;
- 
  public MonsterCharm(Properties properties) {
 		super(properties);
- }
- 
- public static void initConfigValues() {
-	 	undeadDamageModifier = new Perhaps(EnigmaticLegacy.configHandler.MONSTER_CHARM_UNDEAD_DAMAGE.get());
-		aggressiveDamageModifier = new Perhaps(EnigmaticLegacy.configHandler.MONSTER_CHARM_AGGRESSIVE_DAMAGE.get());
-		lootingLevelEnabled = EnigmaticLegacy.configHandler.MONSTER_CHARM_BONUS_LOOTING.get();
-		xpBonusEnabled = EnigmaticLegacy.configHandler.MONSTER_CHARM_DOUBLE_XP.get();
  }
  
  public static Properties setupIntegratedProperties() {
@@ -52,7 +41,15 @@ public class MonsterCharm extends Item implements ICurio, IPerhaps {
  
  @Override
  public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.MONSTER_CHARM_ENABLED.get() : false;
+ 	return ConfigHandler.MONSTER_CHARM_ENABLED.getValue();
+ }
+ 
+ @Override
+ public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.monsterCharm))
+		  return false;
+	  else
+		  return true;
  }
  
  @OnlyIn(Dist.CLIENT)
@@ -62,11 +59,11 @@ public class MonsterCharm extends Item implements ICurio, IPerhaps {
 	 
 	 
 	 if(ControlsScreen.hasShiftDown()) {
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.monsterCharm1", undeadDamageModifier.asPercentage()+"%");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.monsterCharm2", aggressiveDamageModifier.asPercentage()+"%");
-		 if (lootingLevelEnabled)
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.monsterCharm1", ConfigHandler.MONSTER_CHARM_UNDEAD_DAMAGE.getValue().asPercentage()+"%");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.monsterCharm2", ConfigHandler.MONSTER_CHARM_AGGRESSIVE_DAMAGE.getValue().asPercentage()+"%");
+		 if (ConfigHandler.MONSTER_CHARM_BONUS_LOOTING.getValue())
 			 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.monsterCharm3");
-		 if (xpBonusEnabled) {
+		 if (ConfigHandler.MONSTER_CHARM_DOUBLE_XP.getValue()) {
 			 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.monsterCharm4");
 		 }

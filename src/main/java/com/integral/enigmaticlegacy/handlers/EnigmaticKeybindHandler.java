@@ -78,5 +78,11 @@ public class EnigmaticKeybindHandler {
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true, ID));
 		}
 		
+		if (this.spellstoneAbilityKey.isKeyDown()) {
+			if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.enigmaticItem))
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true, 6));
+					
+		}
+		
 	}
 }

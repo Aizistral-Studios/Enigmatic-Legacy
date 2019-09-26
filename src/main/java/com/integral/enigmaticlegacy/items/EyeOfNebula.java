@@ -3,14 +3,15 @@ package com.integral.enigmaticlegacy.items;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
-import com.integral.enigmaticlegacy.helpers.Perhaps;
 import com.integral.enigmaticlegacy.helpers.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerSetlook;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
@@ -38,16 +39,13 @@ public class EyeOfNebula extends Item implements ICurio, IPerhaps {
 	
  public static Properties integratedProperties = new Item.Properties();
  public static List<String> immunityList = new ArrayList<String>();
- public static HashMap<String, Float> resistanceList = new HashMap<String, Float>();
- 
- public static int abilityCooldown = 0;
- public static Perhaps magicDamageResistance = new Perhaps(0);
- public static Perhaps dodgeChance = new Perhaps(0);
- public static double dodgeRange = 0D;
- public static double phaseRange = 0D;
+ public static HashMap<String, Supplier<Float>> resistanceList = new HashMap<String, Supplier<Float>>();
 
  public EyeOfNebula(Properties properties) {
 		super(properties);
+		
+		resistanceList.put(DamageSource.MAGIC.getDamageType(), () -> ConfigHandler.EYE_OF_NEBULA_MAGIC_RESISTANCE.getValue().asModifierInverted());
+		resistanceList.put(DamageSource.DRAGON_BREATH.getDamageType(), () -> ConfigHandler.EYE_OF_NEBULA_MAGIC_RESISTANCE.getValue().asModifierInverted());
  }
  
  public static Properties setupIntegratedProperties() {
@@ -58,20 +56,17 @@ public class EyeOfNebula extends Item implements ICurio, IPerhaps {
 	 return integratedProperties;
  }
  
- public static void initConfigValues() {
-	 abilityCooldown = EnigmaticLegacy.configHandler.EYE_OF_NEBULA_COOLDOWN.get();
-	 magicDamageResistance = new Perhaps(EnigmaticLegacy.configHandler.EYE_OF_NEBULA_MAGIC_RESISTANCE.get());
-	 dodgeChance = new Perhaps(EnigmaticLegacy.configHandler.EYE_OF_NEBULA_DODGE_PROBABILITY.get());
-	 dodgeRange = EnigmaticLegacy.configHandler.EYE_OF_NEBULA_DODGE_RANGE.get();
-	 phaseRange = EnigmaticLegacy.configHandler.EYE_OF_NEBULA_PHASE_RANGE.get();
-	 
-	 resistanceList.put(DamageSource.MAGIC.getDamageType(), magicDamageResistance.asModifierInverted());
-	 resistanceList.put(DamageSource.DRAGON_BREATH.getDamageType(), magicDamageResistance.asModifierInverted());
+ @Override
+ public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.eyeOfNebula))
+		  return false;
+	  else
+		  return true;
  }
  
  @Override
  public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.EYE_OF_NEBULA_ENABLED.get() : false;
+ 	return ConfigHandler.EYE_OF_NEBULA_ENABLED.getValue();
  }
  
  @OnlyIn(Dist.CLIENT)
@@ -83,11 +78,11 @@ public class EyeOfNebula extends Item implements ICurio, IPerhaps {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula1");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula2");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebulaCooldown", ((float)(abilityCooldown))/20.0F);
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebulaCooldown", ((float)(ConfigHandler.EYE_OF_NEBULA_COOLDOWN.getValue()))/20.0F);
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula3");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula4", magicDamageResistance.asPercentage()+"%");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula5", dodgeChance.asPercentage()+"%");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula4", ConfigHandler.EYE_OF_NEBULA_MAGIC_RESISTANCE.getValue().asPercentage()+"%");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula5", ConfigHandler.EYE_OF_NEBULA_DODGE_PROBABILITY.getValue().asPercentage()+"%");
 	 } else {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 	 }
@@ -104,7 +99,7 @@ public class EyeOfNebula extends Item implements ICurio, IPerhaps {
 	 if (SuperpositionHandler.hasSpellstoneCooldown(player))
 		 return;
 	 
-	 LivingEntity target = SuperpositionHandler.getObservedEntity(player, world, 3.0F, (int) phaseRange);
+	 LivingEntity target = SuperpositionHandler.getObservedEntity(player, world, 3.0F, (int) ConfigHandler.EYE_OF_NEBULA_PHASE_RANGE.getValue());
 	 
 	 if (target != null) {
 		 Vector3 targetPos = Vector3.fromEntityCenter(target);
@@ -128,7 +123,7 @@ public class EyeOfNebula extends Item implements ICurio, IPerhaps {
 		 world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
 	     EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.posX, player.posY, player.posZ, 128, player.dimension)), new PacketRecallParticles(player.posX, player.posY+(player.getHeight()/2), player.posZ, 24));
 
-		 SuperpositionHandler.setSpellstoneCooldown(player, abilityCooldown);
+		 SuperpositionHandler.setSpellstoneCooldown(player, ConfigHandler.EYE_OF_NEBULA_COOLDOWN.getValue());
 	 }
 	 
  }

@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
+import com.integral.enigmaticlegacy.items.EnigmaticItem;
 import com.integral.enigmaticlegacy.items.EyeOfNebula;
 import com.integral.enigmaticlegacy.items.GolemHeart;
 import com.integral.enigmaticlegacy.items.MagmaHeart;
@@ -89,6 +90,12 @@ public class PacketSpellstoneKey {
 		      			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticLegacy.eyeOfNebula)) {
 		      				EyeOfNebula spellstoneEyeOfNebula = (EyeOfNebula) EnigmaticLegacy.eyeOfNebula;
 		      				spellstoneEyeOfNebula.triggerActiveAbility(playerServ.world, playerServ, SuperpositionHandler.getCurioStack(playerServ, EnigmaticLegacy.eyeOfNebula));
+		      			}
+		      			break;
+		      		case 6:
+		      			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticLegacy.enigmaticItem)) {
+		      				EnigmaticItem spellstoneEnigmaticItem = (EnigmaticItem) EnigmaticLegacy.enigmaticItem;
+		      				spellstoneEnigmaticItem.triggerActiveAbility(playerServ.world, playerServ, SuperpositionHandler.getCurioStack(playerServ, EnigmaticLegacy.enigmaticItem));
 		      			}
 		      			break;
 		      	}

@@ -3,6 +3,7 @@ package com.integral.enigmaticlegacy.proxy.renderers;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
+import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
@@ -24,6 +25,8 @@ public final class ModelHandler {
 	public static void registerModels(ModelRegistryEvent evt) {
 		RenderingRegistry.registerEntityRenderingHandler(PermanentItemEntity.class, renderManager -> new PermanentItemRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
 		RenderingRegistry.registerEntityRenderingHandler(EnigmaticPotionEntity.class, renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
+		RenderingRegistry.registerEntityRenderingHandler(UltimateWitherSkullEntity.class, UltimateWitherSkullRenderer::new);
+		//RenderingRegistry.registerEntityRenderingHandler(AbstractClientPlayerEntity.class, renderManager -> new ShieldAuraRenderer(renderManager));
 	}
 
 }

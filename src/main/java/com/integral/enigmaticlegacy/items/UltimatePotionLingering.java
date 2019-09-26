@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.AdvancedPotion;
@@ -32,7 +33,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class UltimatePotionLingering extends Item implements IPerhaps {
 	
- public static Properties integratedProperties = new Item.Properties();
+ //public static Properties integratedProperties = new Item.Properties();
  public boolean common;
  
  public UltimatePotionLingering(Properties properties, boolean common) {
@@ -42,6 +43,7 @@ public class UltimatePotionLingering extends Item implements IPerhaps {
  }
  
  public static Properties setupIntegratedProperties(Rarity rarity) {
+	 Properties integratedProperties = new Item.Properties();
 	 integratedProperties.group(EnigmaticLegacy.enigmaticPotionTab);
 	 integratedProperties.maxStackSize(1);
 	 integratedProperties.rarity(rarity);
@@ -66,13 +68,9 @@ public class UltimatePotionLingering extends Item implements IPerhaps {
     return true;
  }
  
- public static void initConfigValues() {
-	 // Insert existential void here
- }
- 
  @Override
  public boolean isForMortals() {
- 	return true;
+	 return this.common ? ConfigHandler.COMMON_POTIONS_ENABLED.getValue() : ConfigHandler.ULTIMATE_POTIONS_ENABLED.getValueDefault();
  }
  
  @OnlyIn(Dist.CLIENT)

@@ -29,7 +29,6 @@ public class SpecialBrewingRecipe implements IBrewingRecipe {
 			
 			if (stack != null)
 			for (ItemStack testStack : this.getInput().getMatchingStacks()) {
-				//System.out.println(testStack);
 				if (testStack.getItem() == stack.getItem() && PotionUtils.getPotionFromItem(testStack) == PotionUtils.getPotionFromItem(stack))
 					return true;
 			}

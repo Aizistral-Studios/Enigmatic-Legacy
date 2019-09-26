@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
@@ -51,10 +52,6 @@ public class RecallPotion extends Item implements IPerhaps {
  
  }
  
- public static void initConfigValues() {
-	 // Insert existential void here
- }
- 
  @OnlyIn(Dist.CLIENT)
  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 	 if(ControlsScreen.hasShiftDown()) {
@@ -67,7 +64,7 @@ public class RecallPotion extends Item implements IPerhaps {
  
  @Override
  public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.RECALL_POTION_ENABLED.get() : false;
+ 	return ConfigHandler.RECALL_POTION_ENABLED.getValue();
  }
 
  @Override

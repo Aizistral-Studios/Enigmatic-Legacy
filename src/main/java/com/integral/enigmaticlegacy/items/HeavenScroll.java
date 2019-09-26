@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
 
@@ -26,8 +28,6 @@ public class HeavenScroll extends Item implements ICurio, IPerhaps {
 	
  public static Properties integratedProperties = new Item.Properties();
  public static HashMap<PlayerEntity, Boolean> flyMap = new HashMap<PlayerEntity, Boolean>();
- 
- public static double xpConsumptionMultiplier;
 
  public HeavenScroll(Properties properties) {
 		super(properties);
@@ -41,13 +41,17 @@ public class HeavenScroll extends Item implements ICurio, IPerhaps {
 	 return integratedProperties;
  }
  
- public static void initConfigValues() {
-	 xpConsumptionMultiplier = EnigmaticLegacy.configHandler.HEAVEN_SCROLL_XP_COST_MODIFIER.get();
+ @Override
+ public boolean isForMortals() {
+ 	return ConfigHandler.HEAVEN_SCROLL_ENABLED.getValue();
  }
  
  @Override
- public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.HEAVEN_SCROLL_ENABLED.get() : false;
+ public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.heavenScroll))
+		  return false;
+	  else
+		  return true;
  }
  
  @OnlyIn(Dist.CLIENT)
@@ -57,6 +61,8 @@ public class HeavenScroll extends Item implements ICurio, IPerhaps {
 	 if(ControlsScreen.hasShiftDown()) {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome1");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome2");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome3");
 	 } else {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 	 }
@@ -70,7 +76,7 @@ public class HeavenScroll extends Item implements ICurio, IPerhaps {
 	 if (living instanceof PlayerEntity) {
 		 PlayerEntity player = (PlayerEntity) living;
 		 
-		 if (Math.random() <= (0.025D*xpConsumptionMultiplier) & player.abilities.isFlying)
+		 if (Math.random() <= (0.025D*ConfigHandler.HEAVEN_SCROLL_XP_COST_MODIFIER.getValue()) & player.abilities.isFlying)
 			 player.giveExperiencePoints(-1);
 		 
 		 try {
@@ -92,7 +98,7 @@ public class HeavenScroll extends Item implements ICurio, IPerhaps {
 		 }
 	 }
 	 
- }
+  }
  
   @Override
   public boolean canRightClickEquip() {

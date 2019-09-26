@@ -4,16 +4,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
-import com.integral.enigmaticlegacy.helpers.Perhaps;
 
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.settings.KeyBinding;
@@ -38,22 +39,28 @@ public class GolemHeart extends Item implements ICurio, IPerhaps {
 	
  public static Properties integratedProperties = new Item.Properties();
  public static List<String> immunityList = new ArrayList<String>();
- public static HashMap<String, Float> resistanceList = new HashMap<String, Float>();
+ public static HashMap<String, Supplier<Float>> resistanceList = new HashMap<String, Supplier<Float>>();
  
  public static Multimap<String, AttributeModifier> attributesDefault = HashMultimap.create();
  public static Multimap<String, AttributeModifier> attributesNoArmor = HashMultimap.create();
-
- public static int abilityCooldown = 0;
- public static double armorPointsDefault = 0;
- public static double armorPointsSuper = 0;
- public static double armorToughnessSuper = 0;
- public static Perhaps knockbackResistance = new Perhaps(0);
- public static Perhaps explosionResistance = new Perhaps(0);
- public static Perhaps meleeResistance = new Perhaps(0);
- public static double magicVulnerability = 0D;
  
  public GolemHeart(Properties properties) {
 		super(properties);
+		
+		immunityList.add(DamageSource.CACTUS.damageType);
+		immunityList.add(DamageSource.CRAMMING.damageType);
+		immunityList.add(DamageSource.IN_WALL.damageType);
+		immunityList.add(DamageSource.FALLING_BLOCK.damageType);
+		immunityList.add(DamageSource.SWEET_BERRY_BUSH.damageType);
+		
+		resistanceList.put(DamageSource.GENERIC.damageType, () -> ConfigHandler.GOLEM_HEART_MELEE_RESISTANCE.getValue().asModifierInverted());
+		resistanceList.put("mob", () -> ConfigHandler.GOLEM_HEART_MELEE_RESISTANCE.getValue().asModifierInverted());
+		resistanceList.put("explosion", () -> ConfigHandler.GOLEM_HEART_EXPLOSION_RESISTANCE.getValue().asModifierInverted());
+		resistanceList.put("explosion.player", () -> ConfigHandler.GOLEM_HEART_EXPLOSION_RESISTANCE.getValue().asModifierInverted());
+		resistanceList.put("player", () -> ConfigHandler.GOLEM_HEART_MELEE_RESISTANCE.getValue().asModifierInverted());
+		 
+		resistanceList.put(DamageSource.MAGIC.damageType, () -> (float)ConfigHandler.GOLEM_HEART_VULNERABILITY_MODIFIER.getValue());
+		resistanceList.put(DamageSource.DRAGON_BREATH.damageType, () -> (float)ConfigHandler.GOLEM_HEART_VULNERABILITY_MODIFIER.getValue());
  }
  
  public static Properties setupIntegratedProperties() {
@@ -61,64 +68,47 @@ public class GolemHeart extends Item implements ICurio, IPerhaps {
 	 integratedProperties.maxStackSize(1);
 	 integratedProperties.rarity(Rarity.UNCOMMON);
 	 
-	 immunityList.add(DamageSource.CACTUS.damageType);
-	 immunityList.add(DamageSource.CRAMMING.damageType);
-	 immunityList.add(DamageSource.IN_WALL.damageType);
-	 immunityList.add(DamageSource.FALLING_BLOCK.damageType);
-	 immunityList.add(DamageSource.SWEET_BERRY_BUSH.damageType);
-	 
 	 return integratedProperties;
- 
  }
  
- public static void initConfigValues() {
-	 abilityCooldown = EnigmaticLegacy.configHandler.GOLEM_HEART_COOLDOWN.get();
-	 armorPointsDefault = EnigmaticLegacy.configHandler.GOLEM_HEART_DEFAULT_ARMOR.get();
-	 armorPointsSuper = EnigmaticLegacy.configHandler.GOLEM_HEART_SUPER_ARMOR.get();
-	 armorToughnessSuper = EnigmaticLegacy.configHandler.GOLEM_HEART_SUPER_ARMOR_TOUGHNESS.get();
-	 knockbackResistance = new Perhaps(EnigmaticLegacy.configHandler.GOLEM_HEART_KNOCKBACK_RESISTANCE.get());
-	 explosionResistance = new Perhaps(EnigmaticLegacy.configHandler.GOLEM_HEART_EXPLOSION_RESISTANCE.get());
-	 meleeResistance = new Perhaps(EnigmaticLegacy.configHandler.GOLEM_HEART_MELEE_RESISTANCE.get());
-	 magicVulnerability = EnigmaticLegacy.configHandler.GOLEM_HEART_VULNERABILITY_MODIFIER.get();
+ @Override
+ public boolean canEquip(String identifier, LivingEntity living) {
+	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.golemHeart))
+		  return false;
+	  else
+		  return true;
+ }
+ 
+ public static void initAttributes() {
 	 
 	 
 	 attributesDefault.put(SharedMonsterAttributes.ARMOR.getName(),
-             new AttributeModifier(UUID.fromString("15faf191-bf21-4654-b359-cc1f4f1243bf"), "GolemHeart DAB", armorPointsDefault,
+             new AttributeModifier(UUID.fromString("15faf191-bf21-4654-b359-cc1f4f1243bf"), "GolemHeart DAB", ConfigHandler.GOLEM_HEART_DEFAULT_ARMOR.getValue(),
                                    AttributeModifier.Operation.ADDITION));
 	 
 	 attributesDefault.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.getName(),
-			 new AttributeModifier(UUID.fromString("10faf191-bf21-4554-b359-cc1f4f1233bf"), "GolemHeart KR", knockbackResistance.asModifier(false),
+			 new AttributeModifier(UUID.fromString("10faf191-bf21-4554-b359-cc1f4f1233bf"), "GolemHeart KR", ConfigHandler.GOLEM_HEART_KNOCKBACK_RESISTANCE.getValue().asModifier(false),
 					 AttributeModifier.Operation.ADDITION));
 	 
 	 
 	 
 	 attributesNoArmor.put(SharedMonsterAttributes.ARMOR.getName(),
-             new AttributeModifier(UUID.fromString("14faf191-bf23-4654-b359-cc1f4f1243bf"), "GolemHeart SAB", armorPointsSuper,
+             new AttributeModifier(UUID.fromString("14faf191-bf23-4654-b359-cc1f4f1243bf"), "GolemHeart SAB", ConfigHandler.GOLEM_HEART_SUPER_ARMOR.getValue(),
                                    AttributeModifier.Operation.ADDITION));
 	 
 	 attributesNoArmor.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(),
-             new AttributeModifier(UUID.fromString("11faf181-bf23-4354-b359-cc1f5f1253bf"), "GolemHeart STB", armorToughnessSuper,
+             new AttributeModifier(UUID.fromString("11faf181-bf23-4354-b359-cc1f5f1253bf"), "GolemHeart STB", ConfigHandler.GOLEM_HEART_SUPER_ARMOR_TOUGHNESS.getValue(),
                                    AttributeModifier.Operation.ADDITION));
 	 
 	 attributesNoArmor.put(SharedMonsterAttributes.KNOCKBACK_RESISTANCE.getName(),
-			 new AttributeModifier(UUID.fromString("12faf181-bf21-4554-b359-cc1f4f1254bf"), "GolemHeart KR", knockbackResistance.asModifier(false),
+			 new AttributeModifier(UUID.fromString("12faf181-bf21-4554-b359-cc1f4f1254bf"), "GolemHeart KR", ConfigHandler.GOLEM_HEART_KNOCKBACK_RESISTANCE.getValue().asModifier(false),
 					 AttributeModifier.Operation.ADDITION));
-	 
-	 
-	 resistanceList.put(DamageSource.GENERIC.damageType, meleeResistance.asModifierInverted());
-	 resistanceList.put("mob", meleeResistance.asModifierInverted());
-	 resistanceList.put("explosion", explosionResistance.asModifierInverted());
-	 resistanceList.put("explosion.player", explosionResistance.asModifierInverted());
-	 resistanceList.put("player", meleeResistance.asModifierInverted());
-	 
-	 resistanceList.put(DamageSource.MAGIC.damageType, (float) magicVulnerability);
-	 resistanceList.put(DamageSource.DRAGON_BREATH.damageType, (float) magicVulnerability);
 	 
  }
  
  @Override
  public boolean isForMortals() {
- 	return EnigmaticLegacy.configLoaded ? EnigmaticLegacy.configHandler.GOLEM_HEART_ENABLED.get() : false;
+ 	return ConfigHandler.GOLEM_HEART_ENABLED.getValue();
  }
  
  @OnlyIn(Dist.CLIENT)
@@ -129,15 +119,15 @@ public class GolemHeart extends Item implements ICurio, IPerhaps {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart1");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart2");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeartCooldown", ((float)(abilityCooldown))/20.0F);
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeartCooldown", ((float)(ConfigHandler.GOLEM_HEART_COOLDOWN.getValue()))/20.0F);
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart3");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart4", (int)armorPointsDefault);
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart4", (int)ConfigHandler.GOLEM_HEART_DEFAULT_ARMOR.getValue());
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart5");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart6", (int)armorPointsSuper, (int)armorToughnessSuper);
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart7", knockbackResistance.asPercentage()+"%");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart8", meleeResistance.asPercentage()+"%");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart9", explosionResistance.asPercentage()+"%");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart6", (int)ConfigHandler.GOLEM_HEART_SUPER_ARMOR.getValue(), (int)ConfigHandler.GOLEM_HEART_SUPER_ARMOR_TOUGHNESS.getValue());
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart7", ConfigHandler.GOLEM_HEART_KNOCKBACK_RESISTANCE.getValue().asPercentage()+"%");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart8", ConfigHandler.GOLEM_HEART_MELEE_RESISTANCE.getValue().asPercentage()+"%");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart9", ConfigHandler.GOLEM_HEART_EXPLOSION_RESISTANCE.getValue().asPercentage()+"%");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart10");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart11");
 	 } else {

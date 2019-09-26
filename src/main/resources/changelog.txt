@@ -1,2 +1,13 @@
 Changelog:
-- Fixed broken code of PacketHandleItemPickup.
+- Increased attack cooldown of Axe of Executioner to that of a regular sword;
+- Implemented Etherium, alongside with tools and armor made of it;
+- Implemented The Architect's Inkwell and Lore Fragment;
+- Implemented proper exception handling in onPlayerJoin event (related to issue #5);
+- Expanded immunity list of Heart of Creation and added active ability, also changed it's tooltip to have more correct wording and be more similar to other spellstones;
+- Heart of Creation and Gift of the Heaven now compensate mining speed penalty while in the air;
+- All curios in the mod changed so that player cannot equip duplicate trinkets. Mainly affects rings;
+- Significant optimizational changes into functional implementation of config;
+- A bunch of new config options;
+- Implemented config versioning;
+- Added some new advancements;
+- Added Russian localization.

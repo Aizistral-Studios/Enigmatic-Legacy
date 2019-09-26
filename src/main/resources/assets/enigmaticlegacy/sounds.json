@@ -14,5 +14,16 @@
         "stream": false
       }
     ]
+  },
+  "misc.shield_trigger": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:misc/shield_hit_0",
+        "stream": false
+      }, {
+        "name": "enigmaticlegacy:misc/shield_hit_1",
+        "stream": false
+      }
+    ]
   }
 }

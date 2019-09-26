@@ -15,7 +15,11 @@ import net.minecraft.util.LazyLoadBase;
 
 public enum EnigmaticMaterials implements IItemTier {
 	   FORBIDDENAXE(0, 2000, 6.0F, 3.0F, 16, () -> {
-	      return Ingredient.fromItems(EnigmaticLegacy.relicOfTesting);
+	      return Ingredient.EMPTY;
+	   }),
+	
+	   ETHERIUM(4, 3000, 8.0F, 5.0F, 32, () -> {
+	      return Ingredient.fromItems(EnigmaticLegacy.etheriumIngot);
 	   });
 
 	   private final int harvestLevel;
