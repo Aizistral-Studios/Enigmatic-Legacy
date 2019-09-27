@@ -1,12 +1,12 @@
 package com.integral.enigmaticlegacy.helpers;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 public class ItemLoreHelper {
 	
@@ -126,8 +126,8 @@ public class ItemLoreHelper {
 		}
 		
 		public static String parseFormatting(String field) {
-			String formatter = I18n.format("tooltip.enigmaticlegacy.paragraph");
-			String subformat = I18n.format("tooltip.enigmaticlegacy.subformat");
+			String formatter = new TranslationTextComponent("tooltip.enigmaticlegacy.paragraph").getFormattedText();
+			String subformat = new TranslationTextComponent("tooltip.enigmaticlegacy.subformat").getFormattedText();
 			
 			return field.replace(subformat, formatter);
 		}
