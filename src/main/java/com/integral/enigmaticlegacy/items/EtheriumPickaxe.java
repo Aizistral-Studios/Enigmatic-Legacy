@@ -20,6 +20,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
@@ -52,6 +53,9 @@ public class EtheriumPickaxe extends ToolItem implements IPerhaps {
 		effectiveMaterials.add(Material.IRON);
 		effectiveMaterials.add(Material.ROCK);
 		effectiveMaterials.add(Material.ANVIL);
+		effectiveMaterials.add(Material.GLASS);
+		effectiveMaterials.add(Material.PACKED_ICE);
+		effectiveMaterials.add(Material.ICE);
 	}
  
  public static Properties setupIntegratedProperties() {
@@ -92,7 +96,7 @@ public class EtheriumPickaxe extends ToolItem implements IPerhaps {
              BlockRayTraceResult blockTrace = (BlockRayTraceResult) trace;
              Direction face = blockTrace.getFace();
              
-             AOEMiningHelper.harvestCube(world, (PlayerEntity)entityLiving, face, pos, effectiveMaterials, ConfigHandler.ETHERIUM_PICKAXE_RADIUS.getValue(), ConfigHandler.ETHERIUM_PICKAXE_DEPTH.getValue(), true, pos, stack, true);
+             AOEMiningHelper.harvestCube(world, (PlayerEntity)entityLiving, face, pos, effectiveMaterials, ConfigHandler.ETHERIUM_PICKAXE_RADIUS.getValue(), ConfigHandler.ETHERIUM_PICKAXE_DEPTH.getValue(), true, pos, stack, (objPos, objState) -> { stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(MobEntity.getSlotForItemStack(stack))); });
          }
      }
      

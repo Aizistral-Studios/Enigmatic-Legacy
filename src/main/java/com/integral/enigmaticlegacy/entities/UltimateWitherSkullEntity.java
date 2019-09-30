@@ -21,8 +21,11 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext.FluidMode;
@@ -88,7 +91,7 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
     * Explosion resistance of a block relative to this entity
     */
    public float getExplosionResistance(Explosion explosionIn, IBlockReader worldIn, BlockPos pos, BlockState blockStateIn, IFluidState p_180428_5_, float p_180428_6_) {
-      return this.isSkullInvulnerable() && blockStateIn.canEntityDestroy(worldIn, pos, this) ? Math.min(0.8F, p_180428_6_) : p_180428_6_;
+      return this.isSkullInvulnerable() && !BlockTags.WITHER_IMMUNE.contains(blockStateIn.getBlock()) ? Math.min(0.8F, p_180428_6_) : p_180428_6_;
    }
    
    @Override
@@ -99,13 +102,12 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 		   return;
 	   
 	   if (!(this.shootingEntity instanceof PlayerEntity)) {
-		   this.remove();
 		   return;
 	   }
 	   
 	   if (this.ticksExisted < 10) {
 		   
-		   Vector3 res = AOEMiningHelper.calcRayTrace(world, (PlayerEntity) this.shootingEntity, FluidMode.NONE, 64);
+		   Vector3 res = AOEMiningHelper.calcRayTrace(world, (PlayerEntity) this.shootingEntity, FluidMode.NONE, 128);
 		   
 		   this.initMotion(this.shootingEntity, res.x - this.posX, res.y - this.posY, res.z - this.posZ, 0.1F);
 		   
@@ -113,9 +115,14 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 	   }
 	   
 	   if (this.ticksExisted == 10) {
-		   Vector3 res = AOEMiningHelper.calcRayTrace(world, (PlayerEntity) this.shootingEntity, FluidMode.NONE, 64);
+		   Vector3 res = AOEMiningHelper.calcRayTrace(world, (PlayerEntity) this.shootingEntity, FluidMode.NONE, 128);
 		   
 		   this.initMotion(this.shootingEntity, res.x - this.posX, res.y - this.posY, res.z - this.posZ, 1.0F);
+	   }
+	   
+	   if (this.ticksExisted >= 400) {
+		   this.onImpact(BlockRayTraceResult.createMiss(this.getPositionVector(), Direction.DOWN, this.getPosition()));
+		   
 	   }
    }
 
@@ -151,8 +158,9 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
          this.world.createExplosion(this, this.posX, this.posY, this.posZ, this.isSkullInvulnerable() ? 1.5F : 1.0F, false, Explosion.Mode.DESTROY);
          
          List<ItemEntity> drops = this.world.getEntitiesWithinAABB(ItemEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(this, 2D));
-         for (ItemEntity drop : drops)
+         for (ItemEntity drop : drops) {
         	 drop.remove();
+         }
          
          this.remove();
       }

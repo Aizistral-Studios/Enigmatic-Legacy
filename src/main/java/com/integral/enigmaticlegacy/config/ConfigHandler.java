@@ -254,6 +254,9 @@ public class ConfigHandler {
     public static final OmnipotentConfig.BooleanParameter ETHERIUM_ARMOR_ENABLED
     = new OmnipotentConfig.BooleanParameter(true);
     
+    public static final OmnipotentConfig.BooleanParameter ETHERIUM_ORE_ENABLED
+    = new OmnipotentConfig.BooleanParameter(true);
+    
     public static final OmnipotentConfig.BooleanParameter LORE_INSCRIBER_ENABLED
     = new OmnipotentConfig.BooleanParameter(true);
     
@@ -389,6 +392,11 @@ public class ConfigHandler {
         		.comment("Whether or not Etherium Tools should be enabled.")
         		.translation("configGui.enigmaticlegacy.etherium_tools_enabled")
         		.define("etheriumToolsEnabled", ETHERIUM_TOOLS_ENABLED.getValueDefault());
+        
+        ETHERIUM_ORE_ENABLED.configObj = common
+        		.comment("Whether or not Etherium Ore should generate among dungeon loot.")
+        		.translation("configGui.enigmaticlegacy.etherium_ore_enabled")
+        		.define("etheriumOreEnabled", ETHERIUM_ORE_ENABLED.getValueDefault());
         
         LORE_INSCRIBER_ENABLED.configObj = common
         		.comment("Whether or not Arcane Inscriber should be enabled.")

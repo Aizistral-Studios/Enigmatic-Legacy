@@ -17,6 +17,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.AxeItem;
 import net.minecraft.item.IItemTier;
@@ -78,7 +79,7 @@ public class EtheriumAxe extends AxeItem implements IPerhaps {
      if (entityLiving instanceof PlayerEntity && !entityLiving.isSneaking() && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && ConfigHandler.ETHERIUM_AXE_VOLUME.getValue() != -1) {
     	 Direction face = Direction.UP;
     	 
-         AOEMiningHelper.harvestCube(world, (PlayerEntity)entityLiving, face, pos.add(0, (ConfigHandler.ETHERIUM_AXE_VOLUME.getValue()-1)/2, 0), effectiveMaterials, ConfigHandler.ETHERIUM_AXE_VOLUME.getValue(), ConfigHandler.ETHERIUM_AXE_VOLUME.getValue(), false, pos, stack, true);
+         AOEMiningHelper.harvestCube(world, (PlayerEntity)entityLiving, face, pos.add(0, (ConfigHandler.ETHERIUM_AXE_VOLUME.getValue()-1)/2, 0), effectiveMaterials, ConfigHandler.ETHERIUM_AXE_VOLUME.getValue(), ConfigHandler.ETHERIUM_AXE_VOLUME.getValue(), false, pos, stack, (objPos, objState) -> { stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(MobEntity.getSlotForItemStack(stack))); });
      }
      
      return super.onBlockDestroyed(stack, world, state, pos, entityLiving);

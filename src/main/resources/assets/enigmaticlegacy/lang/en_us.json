@@ -1,5 +1,4 @@
 {
-
 	"item.enigmaticlegacy.enigmatic_item": "Heart of Creation",
 	"item.enigmaticlegacy.xp_scroll": "Scroll of Ageless Wisdom",
 	"item.enigmaticlegacy.enigmatic_amulet": "Enigmatic Amulet",
@@ -440,7 +439,8 @@
 	"tooltip.enigmaticlegacy.etheriumSword4": "§5This ability has §6%1$s seconds§5 cooldown.",
 	
 	"tooltip.enigmaticlegacy.etheriumScythe1": "§5Harvests plants in §6%1$sx%1$sx%1$s§5 area.",
-	"tooltip.enigmaticlegacy.etheriumScythe2": "§5Hold §6Shift§5 to prevent this effect."
+	"tooltip.enigmaticlegacy.etheriumScythe2": "§5Tills land in §6%1$sx%1$sx1§5 area.",
+	"tooltip.enigmaticlegacy.etheriumScythe3": "§5Hold §6Shift§5 to prevent these effects."
 	
 
 

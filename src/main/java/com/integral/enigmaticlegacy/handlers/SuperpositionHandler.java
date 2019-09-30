@@ -399,9 +399,7 @@ public class SuperpositionHandler {
 		 if (item instanceof IPerhaps) {
 			 IPerhaps perhaps = (IPerhaps) item;
 			 
-			 if (perhaps.isForMortals()) 
-				 return ItemLootEntry.builder(item).weight(weight).acceptFunction(SetCount.func_215932_a(RandomValueRange.func_215837_a(minCount, maxCount)));
-			 else
+			 if (!perhaps.isForMortals())
 				 return null;
 		 }
 			 return ItemLootEntry.builder(item).weight(weight).acceptFunction(SetCount.func_215932_a(RandomValueRange.func_215837_a(minCount, maxCount)));
@@ -418,9 +416,7 @@ public class SuperpositionHandler {
 		 if (item instanceof IPerhaps) {
 			 IPerhaps perhaps = (IPerhaps) item;
 			 
-			 if (perhaps.isForMortals()) 
-				 return ItemLootEntry.builder(item).weight(weight);
-			 else
+			 if (!perhaps.isForMortals())
 				 return null;
 		 }
 			 return ItemLootEntry.builder(item).weight(weight);

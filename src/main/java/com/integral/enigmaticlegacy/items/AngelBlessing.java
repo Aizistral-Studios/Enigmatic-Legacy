@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
@@ -24,6 +25,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.entity.projectile.PotionEntity;
+import net.minecraft.entity.projectile.WitherSkullEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
@@ -146,6 +148,9 @@ public class AngelBlessing extends Item implements ICurio, IPerhaps {
  }
  
  public void redirect(LivingEntity bearer, Entity redirected) {
+	 if (redirected instanceof UltimateWitherSkullEntity || redirected instanceof WitherSkullEntity)
+		 return;
+	 
 	 Vector3 entityPos = Vector3.fromEntityCenter(redirected);
 	 Vector3 bearerPos = Vector3.fromEntityCenter(bearer);
 	 

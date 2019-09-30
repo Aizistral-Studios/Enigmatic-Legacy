@@ -19,6 +19,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
@@ -96,7 +97,7 @@ public class EtheriumShovel extends ToolItem implements IPerhaps {
              BlockRayTraceResult blockTrace = (BlockRayTraceResult) trace;
              Direction face = blockTrace.getFace();
              
-             AOEMiningHelper.harvestCube(world, (PlayerEntity)entityLiving, face, pos, effectiveMaterials, ConfigHandler.ETHERIUM_SHOVEL_RADIUS.getValue(), ConfigHandler.ETHERIUM_SHOVEL_DEPTH.getValue(), false, pos, stack, true);
+             AOEMiningHelper.harvestCube(world, (PlayerEntity)entityLiving, face, pos, effectiveMaterials, ConfigHandler.ETHERIUM_SHOVEL_RADIUS.getValue(), ConfigHandler.ETHERIUM_SHOVEL_DEPTH.getValue(), false, pos, stack, (objPos, objState) -> { stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(MobEntity.getSlotForItemStack(stack))); });
          }
      }
      

@@ -435,7 +435,8 @@
 	"tooltip.enigmaticlegacy.etheriumSword4": "§5Эта способность восстанавливается §6%1$s секунд§5.",
 	
 	"tooltip.enigmaticlegacy.etheriumScythe1": "§5Собирает растения в области §6%1$sx%1$sx%1$s§5.",
-	"tooltip.enigmaticlegacy.etheriumScythe2": "§5Удерживайте §6Shift§5, чтобы предотвратить это."
+	"tooltip.enigmaticlegacy.etheriumScythe2": "§5Вспахивает землю в области §6%1$sx%1$sx1§5.",
+	"tooltip.enigmaticlegacy.etheriumScythe3": "§5Удерживайте §6Shift§5, чтобы предотвратить это."
 
 
 }
