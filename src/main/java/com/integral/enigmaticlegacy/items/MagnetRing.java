@@ -16,6 +16,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
@@ -92,8 +93,7 @@ public class MagnetRing extends Item implements ICurio, IPerhaps {
   
   @Override
   public void onCurioTick(String identifier, LivingEntity living) {
-	  
-	  	if (living.isSneaking())
+	  	if (living.isSneaking() || !(living instanceof PlayerEntity))
 	  		return;
 	  		
 	    double x = living.posX;
@@ -107,11 +107,15 @@ public class MagnetRing extends Item implements ICurio, IPerhaps {
 				if(pulled > 200)
 					break;
 				
+				if (!SuperpositionHandler.canPickStack((PlayerEntity) living, item.getItem()))
+					continue;
+				
 				SuperpositionHandler.setEntityMotionFromVector(item, new Vector3(x, y, z), 0.45F);
 				item.setNoPickupDelay();
+				
 				for (int counter = 0; counter <= 2; counter++)
-				living.world.addParticle(ParticleTypes.WITCH, item.posX, item.posY-item.getYOffset()+item.getHeight()/2, item.posZ, (Math.random()-0.5D)*0.1D, (Math.random()-0.5D)*0.1D, (Math.random()-0.5D)*0.1D);
-				pulled++;
+					living.world.addParticle(ParticleTypes.WITCH, item.posX, item.posY-item.getYOffset()+item.getHeight()/2, item.posZ, (Math.random()-0.5D)*0.1D, (Math.random()-0.5D)*0.1D, (Math.random()-0.5D)*0.1D);
+					pulled++;
 			}
 	 
   }

@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
@@ -33,6 +34,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectUtils;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -700,5 +702,41 @@ public class SuperpositionHandler {
 	      }
 
 	   }
+	   
+	   /**
+	    * @return True if ItemStack can be added to player's inventory (fully or partially), false otherwise.
+	    */
+	   
+	   public static boolean canPickStack(PlayerEntity player, ItemStack stack) {
+		   
+		   if (player.inventory.getFirstEmptyStack() >= 0)
+			   return true;
+		   else {
+			   List<ItemStack> allInventories = new ArrayList<ItemStack>();
+			   
+			   allInventories.addAll(player.inventory.armorInventory);
+			   allInventories.addAll(player.inventory.mainInventory);
+			   allInventories.addAll(player.inventory.offHandInventory);
+			   
+			   for (ItemStack invStack : allInventories) {
+				   if (canMergeStacks(invStack, stack, player.inventory.getInventoryStackLimit())) {
+					   return true;
+				   }
+			   }
+		   }
+		   
+		   return false;
+	   }
+	   
+	       public static boolean canMergeStacks(ItemStack stack1, ItemStack stack2, int invStackLimit) {
+		      return !stack1.isEmpty() && stackEqualExact(stack1, stack2) && stack1.isStackable() && stack1.getCount() < stack1.getMaxStackSize() && stack1.getCount() < invStackLimit;
+		   }
+
+		   /**
+		    * Checks item, NBT, and meta if the item is not damageable
+		    */
+		   public static boolean stackEqualExact(ItemStack stack1, ItemStack stack2) {
+		      return stack1.getItem() == stack2.getItem() && ItemStack.areItemStackTagsEqual(stack1, stack2);
+		   }
 	 
 }

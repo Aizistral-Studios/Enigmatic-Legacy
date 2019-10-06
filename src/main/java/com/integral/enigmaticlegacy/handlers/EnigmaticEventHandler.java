@@ -22,6 +22,7 @@ import com.integral.enigmaticlegacy.items.EtheriumArmor;
 import com.integral.enigmaticlegacy.items.EtheriumSword;
 import com.integral.enigmaticlegacy.items.EyeOfNebula;
 import com.integral.enigmaticlegacy.items.GolemHeart;
+import com.integral.enigmaticlegacy.items.LootGenerator;
 import com.integral.enigmaticlegacy.items.MagmaHeart;
 import com.integral.enigmaticlegacy.items.MonsterCharm;
 import com.integral.enigmaticlegacy.items.OceanStone;
@@ -169,8 +170,9 @@ public class EnigmaticEventHandler {
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onExperienceDrop(LivingExperienceDropEvent event) {
 		PlayerEntity player = event.getAttackingPlayer();
+		
 		if (event.getEntityLiving() instanceof MonsterEntity)
-		if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.monsterCharm))
+		if (player != null && SuperpositionHandler.hasCurio(player, EnigmaticLegacy.monsterCharm))
 			event.setDroppedExperience((int) (event.getDroppedExperience()*MonsterCharm.bonusXPModifier));
 	}
 	

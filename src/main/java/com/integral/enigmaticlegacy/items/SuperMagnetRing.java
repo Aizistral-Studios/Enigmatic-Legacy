@@ -16,6 +16,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
@@ -95,9 +96,11 @@ public class SuperMagnetRing extends Item implements ICurio, IPerhaps {
   
   @Override
   public void onCurioTick(String identifier, LivingEntity living) {
-	  	if (living.isSneaking() || living.world.isRemote)
+	  	if (living.isSneaking() || living.world.isRemote || !(living instanceof PlayerEntity))
 	  		return;
-	  		
+	  	
+	  	PlayerEntity player = (PlayerEntity) living;
+	  	
 	    double x = living.posX;
 		double y = living.posY + 0.75;
 		double z = living.posZ;
@@ -109,13 +112,18 @@ public class SuperMagnetRing extends Item implements ICurio, IPerhaps {
 				if(pulled > 512)
 					break;
 				
+				if (!SuperpositionHandler.canPickStack(player, item.getItem()))
+					continue;
+				
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(item.posX, item.posY, item.posZ, 24, item.dimension)), new PacketPortalParticles(item.posX, item.posY+(item.getHeight()/2), item.posZ, 24, 0.75D));
 				
 				if (ConfigHandler.SUPER_MAGNET_RING_SOUND.getValue())
 					item.world.playSound(null, item.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
 				
-				item.setPositionAndUpdate(x, y, z);
+				//item.setPositionAndUpdate(x, y, z);
 				item.setNoPickupDelay();
+				item.onCollideWithPlayer(player);
+				
 				pulled++;
 			}
 	 

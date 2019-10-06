@@ -1,7 +1,4 @@
 Changelog:
-- Angel's Blessing is no longer capable of redirecting Wither skulls;
-- Wither Skulls shot by Heart of Creation now explode after existing for 20 seconds. They are also no longer removed upon world reloading, do not destroy blocks that are supposed to be indestructible and raytrace for target within 128 blocks distance, instead of previous 64;
-- Etherium Scythe can now till dirt and grass blocks in 3x3x1 area;
-- Added Ice, Packed Ice and Glass to the list of effective materials for Etherium Pickaxe;
-- Added config option to disable generation of Etherium Ore as dungeon loot in End Cities;
-- Replaced temporary texture of The Architect's Inkwell.
+
+- Fixed crash with LivingExperienceDropEvent handler;
+- Magnetic Ring and Dislocation Ring no longer work if player cannot pick up attracted/teleported items due to having their inventory full.
