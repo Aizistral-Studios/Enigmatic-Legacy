@@ -21,11 +21,10 @@ Please reproduce all issues without any other unnecessary mods before submitting
 A clear and concise description of what the issue is.
 
 #### How to Reproduce:
-1. 
-2. 
-3. 
-...
-n. Behold!
+1. ...
+2. ...
+3. ...
+4. Behold!
 
 #### Logs:
 <!--
