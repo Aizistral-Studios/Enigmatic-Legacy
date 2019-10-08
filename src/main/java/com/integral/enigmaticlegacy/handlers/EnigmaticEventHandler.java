@@ -568,12 +568,14 @@ public class EnigmaticEventHandler {
         }
 		else if (event.getEntityLiving().getClass() == WitherSkeletonEntity.class && event.isRecentlyHit() && event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof PlayerEntity) {
             ItemStack weap = ((PlayerEntity) event.getSource().getTrueSource()).getHeldItemMainhand();
-            if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !this.containsDrop(event.getDrops(), Items.WITHER_SKELETON_SKULL) && this.theySeeMeRollin(event.getLootingLevel())) {
-                this.addDrop(event, new ItemStack(Items.WITHER_SKELETON_SKULL, 1));
+            if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe) {
+            	
+            	if (!this.containsDrop(event.getDrops(), Items.WITHER_SKELETON_SKULL) && this.theySeeMeRollin(event.getLootingLevel()))
+            		this.addDrop(event, new ItemStack(Items.WITHER_SKELETON_SKULL, 1));
+
+                if (event.getSource().getTrueSource() instanceof ServerPlayerEntity && this.containsDrop(event.getDrops(), Items.WITHER_SKELETON_SKULL))
+                    BeheadingTrigger.INSTANCE.trigger((ServerPlayerEntity) event.getSource().getTrueSource());
             }
-            
-            if (event.getSource().getTrueSource() instanceof ServerPlayerEntity && this.containsDrop(event.getDrops(), Items.WITHER_SKELETON_SKULL))
-                BeheadingTrigger.INSTANCE.trigger((ServerPlayerEntity) event.getSource().getTrueSource());
         }
 		else if (event.getEntityLiving().getClass() == ZombieEntity.class && event.isRecentlyHit() && event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof PlayerEntity) {
             ItemStack weap = ((PlayerEntity) event.getSource().getTrueSource()).getHeldItemMainhand();
@@ -751,7 +753,7 @@ public class EnigmaticEventHandler {
 		
 		
 		 if (event.getName().equals(LootTables.CHESTS_UNDERWATER_RUIN_BIG) || event.getName().equals(LootTables.CHESTS_UNDERWATER_RUIN_SMALL)) {
-				LootPool special = SuperpositionHandler.constructLootPool("el_special", 1F, 1F,
+				LootPool special = SuperpositionHandler.constructLootPool("el_special", -5F, 1F,
 						ItemLootEntry.builder(Items.TRIDENT).acceptFunction(SetDamage.func_215931_a(RandomValueRange.func_215837_a(0.5F, 1.0F))).acceptFunction(EnchantWithLevels.func_215895_a(RandomValueRange.func_215837_a(15F, 40F)).func_216059_e())
 						);
 				

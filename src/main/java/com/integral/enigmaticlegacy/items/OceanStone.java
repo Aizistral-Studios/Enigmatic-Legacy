@@ -161,7 +161,7 @@ public class OceanStone extends Item implements ICurio, IPerhaps {
 				 //ItemStack stack = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.oceanStone);
 				 
 				 if (player.areEyesInFluid(FluidTags.WATER, true)) {
-					 player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 4, 0, true, false));
+					 player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, ConfigHandler.OCEAN_STONE_NIGHT_VISION_DURATION.getValue(), 0, true, false));
 					 player.setAir(300);
 				 }
 			 }

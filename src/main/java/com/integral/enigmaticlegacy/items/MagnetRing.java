@@ -57,7 +57,7 @@ public class MagnetRing extends Item implements ICurio, IPerhaps {
 	 
 	 if(ControlsScreen.hasShiftDown()) {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magnetRing1", ConfigHandler.MAGNET_RING_RANGE.getValue());
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magnetRing2");
+		 LoreHelper.addLocalizedString(list, ConfigHandler.INVERT_MAGNETS_SHIFT.getValue() ? "tooltip.enigmaticlegacy.magnetRing2_alt" : "tooltip.enigmaticlegacy.magnetRing2");
 	 } else {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 	 }
@@ -93,7 +93,7 @@ public class MagnetRing extends Item implements ICurio, IPerhaps {
   
   @Override
   public void onCurioTick(String identifier, LivingEntity living) {
-	  	if (living.isSneaking() || !(living instanceof PlayerEntity))
+	  	if (ConfigHandler.INVERT_MAGNETS_SHIFT.getValue() ? !living.isSneaking() : living.isSneaking() || !(living instanceof PlayerEntity))
 	  		return;
 	  		
 	    double x = living.posX;
@@ -122,7 +122,7 @@ public class MagnetRing extends Item implements ICurio, IPerhaps {
   
     private boolean canPullItem(ItemEntity item) {
 		ItemStack stack = item.getItem();
-		if(stack.isEmpty())
+		if(!item.isAlive() || stack.isEmpty())
 			return false;
 
 		return true;

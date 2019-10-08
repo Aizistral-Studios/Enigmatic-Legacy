@@ -68,7 +68,7 @@ public class SuperMagnetRing extends Item implements ICurio, IPerhaps {
 	 if(ControlsScreen.hasShiftDown()) {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.superMagnetRing1");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.superMagnetRing2", ConfigHandler.SUPER_MAGNET_RING_RANGE.getValue());
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.superMagnetRing3");
+		 LoreHelper.addLocalizedString(list, ConfigHandler.INVERT_MAGNETS_SHIFT.getValue() ? "tooltip.enigmaticlegacy.superMagnetRing3_alt" : "tooltip.enigmaticlegacy.superMagnetRing3");
 	 } else {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 	 }
@@ -96,7 +96,7 @@ public class SuperMagnetRing extends Item implements ICurio, IPerhaps {
   
   @Override
   public void onCurioTick(String identifier, LivingEntity living) {
-	  	if (living.isSneaking() || living.world.isRemote || !(living instanceof PlayerEntity))
+	  	if (ConfigHandler.INVERT_MAGNETS_SHIFT.getValue() ? !living.isSneaking() : living.isSneaking() || living.world.isRemote || !(living instanceof PlayerEntity))
 	  		return;
 	  	
 	  	PlayerEntity player = (PlayerEntity) living;
@@ -131,7 +131,7 @@ public class SuperMagnetRing extends Item implements ICurio, IPerhaps {
   
     private boolean canPullItem(ItemEntity item) {
 		ItemStack stack = item.getItem();
-		if(stack.isEmpty())
+		if(!item.isAlive() || stack.isEmpty())
 			return false;
 
 		return true;

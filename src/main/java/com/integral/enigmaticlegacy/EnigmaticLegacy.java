@@ -23,6 +23,7 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.AdvancedPotion;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
+import com.integral.enigmaticlegacy.items.AstralBreaker;
 import com.integral.enigmaticlegacy.items.AstralDust;
 import com.integral.enigmaticlegacy.items.EnderRing;
 import com.integral.enigmaticlegacy.items.EnderRod;
@@ -129,7 +130,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 	
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "1.3.3";
+	public static final String VERSION = "1.3.4";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 	
@@ -199,6 +200,8 @@ public class EnigmaticLegacy {
 	public static Item loreInscriber;
 	public static Item loreFragment;
 	public static Item enderRod;
+	
+	public static Item astralBreaker;
 	
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -429,6 +432,8 @@ public class EnigmaticLegacy {
 			loreFragment = new LoreFragment(LoreFragment.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "lore_fragment"));
 			enderRod = new EnderRod(EnderRod.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ender_rod"));
 			
+			astralBreaker = new AstralBreaker(EnigmaticMaterials.ETHERIUM, p -> AstralBreaker.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_breaker"));
+			
 			event.getRegistry().registerAll(
 					enigmaticItem,
 					golemHeart,
@@ -480,7 +485,8 @@ public class EnigmaticLegacy {
 					astralDust,
 					loreInscriber,
 					loreFragment,
-					enderRod
+					enderRod,
+					astralBreaker
 			);
 			
 			enigmaticLogger.info("Items registered successfully.");

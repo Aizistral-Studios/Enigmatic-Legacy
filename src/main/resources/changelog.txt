@@ -1,4 +1,6 @@
 Changelog:
-
-- Fixed crash with LivingExperienceDropEvent handler;
-- Magnetic Ring and Dislocation Ring no longer work if player cannot pick up attracted/teleported items due to having their inventory full.
+- Fixed generating tridents within every single chest in underwater ruins;
+- Fixed receiving Fearsome Vengeance advancement when beheading a Wither Skeleton ordinarily, without holding Axe of Executioner;
+- Fixed dupe with Dislocation Ring (critical in multiplayer);
+- Implemented config option for inverting Shift behaviour of Magnetic Ring and Dislocation Ring;
+- Implemented config options for controlling the duration of Night Vision effect applied by Charm of Treasure Hunter and Will of the Ocean;

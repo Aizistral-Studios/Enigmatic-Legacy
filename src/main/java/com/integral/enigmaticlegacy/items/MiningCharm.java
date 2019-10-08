@@ -104,7 +104,7 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
 		 if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true))
 		 if (player.posY < 50 & player.dimension.getId() != -1 & player.dimension.getId() != 1 & !player.areEyesInFluid(FluidTags.WATER, true) & !player.world.canBlockSeeSky(player.getPosition()))
 		 if (player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0) < 3) {
-			 player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, 4, 0, true, false));
+			 player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, ConfigHandler.MINING_CHARM_NIGHT_VISION_DURATION.getValue(), 0, true, false));
 		 }
 		 
 	 }

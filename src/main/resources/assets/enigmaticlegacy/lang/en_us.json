@@ -256,6 +256,7 @@
 
 	"tooltip.enigmaticlegacy.magnetRing1": "§5Attracts items within §6%1$s blocks§5 radius.",
 	"tooltip.enigmaticlegacy.magnetRing2": "§5This can be disabled by holding §6Shift§5.",
+	"tooltip.enigmaticlegacy.magnetRing2_alt": "§5Only takes effect when holding §6Shift§5.",
 
 	"tooltip.enigmaticlegacy.extradimensionalEyeLocation": "§dBound Location:",
 	"tooltip.enigmaticlegacy.extradimensionalEyeX": "§dX: §6%1$s",
@@ -290,6 +291,7 @@
 	"tooltip.enigmaticlegacy.superMagnetRing1": "§5Instantly collects any dropped items",
 	"tooltip.enigmaticlegacy.superMagnetRing2": "§5within §6%1$s blocks§5 radius.",
 	"tooltip.enigmaticlegacy.superMagnetRing3": "§5This can be disabled by holding §6Shift§5.",
+	"tooltip.enigmaticlegacy.superMagnetRing3_alt": "§5Only takes effect when holding §6Shift§5.",
 	
 	"tooltip.enigmaticlegacy.heavenTome1": "§5Provides you with ability to freely fly, at the",
 	"tooltip.enigmaticlegacy.heavenTome2": "§5cost of slowly consuming your experience.",

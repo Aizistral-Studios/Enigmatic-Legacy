@@ -252,6 +252,7 @@
 
 	"tooltip.enigmaticlegacy.magnetRing1": "§5Притягивает предметы в радиусе §6%1$s блоков§5.",
 	"tooltip.enigmaticlegacy.magnetRing2": "§5Удерживайте §6Shift§5, чтобы предотвратить это.",
+	"tooltip.enigmaticlegacy.magnetRing2_alt": "§Работает только при удержании §6Shift§5.",
 
 	"tooltip.enigmaticlegacy.extradimensionalEyeLocation": "§dПривязанная локация:",
 	"tooltip.enigmaticlegacy.extradimensionalEyeX": "§dX: §6%1$s",
@@ -286,6 +287,7 @@
 	"tooltip.enigmaticlegacy.superMagnetRing1": "§5Мгновенно подбирает все брошенные предметы",
 	"tooltip.enigmaticlegacy.superMagnetRing2": "§5в радиусе §6%1$s блоков§5.",
 	"tooltip.enigmaticlegacy.superMagnetRing3": "§5Удерживайте §6Shift§5, чтобы предотвратить это.",
+	"tooltip.enigmaticlegacy.superMagnetRing3_alt": "§Работает только при удержании §6Shift§5.",
 	
 	"tooltip.enigmaticlegacy.heavenTome1": "§5Дарует вам способность свободно летать, ценой",
 	"tooltip.enigmaticlegacy.heavenTome2": "§5медленного поглощения вашего опыта.",

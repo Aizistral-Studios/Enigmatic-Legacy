@@ -85,6 +85,15 @@ public class ConfigHandler {
     public static final OmnipotentConfig.PerhapsParameter ETHERIUM_ARMOR_SHIELD_REDUCTION
     = new OmnipotentConfig.PerhapsParameter(50);
     
+    public static final OmnipotentConfig.BooleanParameter INVERT_MAGNETS_SHIFT
+    = new OmnipotentConfig.BooleanParameter(false);
+    
+    public static final OmnipotentConfig.IntParameter MINING_CHARM_NIGHT_VISION_DURATION
+    = new OmnipotentConfig.IntParameter(4);
+
+    public static final OmnipotentConfig.IntParameter OCEAN_STONE_NIGHT_VISION_DURATION
+    = new OmnipotentConfig.IntParameter(4);
+    
     
     //SPELLSTONES SPECIFIC
     public static final OmnipotentConfig.IntParameter ANGEL_BLESSING_COOLDOWN
@@ -430,6 +439,11 @@ public class ConfigHandler {
                 .translation("configGui.enigmaticlegacy.super_magnet_ring_sound")
                 .define("superMagnetRingSound", SUPER_MAGNET_RING_SOUND.getValueDefault());
         
+        INVERT_MAGNETS_SHIFT.configObj = common
+        		.comment("Inverts the Shift behaviour of Magnetic Ring and Dislocation Ring.")
+        		.translation("configGui.enigmaticlegacy.invert_magnets_shift")
+        		.define("invertMagnetsShift", INVERT_MAGNETS_SHIFT.getValueDefault());
+        
         common.pop();
         
         common.comment("Various options that affect individual items").push("Balance Options");
@@ -558,6 +572,16 @@ public class ConfigHandler {
         		.comment("Cooldown of Etherium Broadsword ability. Measured in ticks.")
         		.translation("configGui.enigmaticlegacy.etherium_sword_cooldown")
         		.defineInRange("etheriumSwordCooldown", ETHERIUM_SWORD_COOLDOWN.getValueDefault(), 0, 32768);
+        
+        MINING_CHARM_NIGHT_VISION_DURATION.configObj = common
+                .comment("The duration (in ticks) for which Charm of the Treasure Hunter applies Night Vision effect each tick required conditions are met.")
+                .translation("configGui.enigmaticlegacy.mining_charm_night_vision_duration")
+                .defineInRange("miningCharmNightVisionDuration", MINING_CHARM_NIGHT_VISION_DURATION.getValueDefault(), 0, 32768);
+ 
+        OCEAN_STONE_NIGHT_VISION_DURATION.configObj = common
+        		.comment("The duration (in ticks) for which Will of the Ocean applies Night Vision effect each tick required conditions are met.")
+        		.translation("configGui.enigmaticlegacy.ocean_stone_night_vision_duration")
+        		.defineInRange("oceanStoneNightVisionDuration", OCEAN_STONE_NIGHT_VISION_DURATION.getValueDefault(), 0, 32768);
         
         common.pop();
         
