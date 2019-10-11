@@ -44,6 +44,8 @@
 	"item.enigmaticlegacy.lore_inscriber": "Инструмент Писаря",
 	"item.enigmaticlegacy.lore_fragment": "Фрагмент писаний",
 	"item.enigmaticlegacy.ender_rod": "Стержень Края",
+	"item.enigmaticlegacy.astral_breaker": "Астральный Крушитель",
+	"item.enigmaticlegacy.oblivion_stone": "Ключ-камень Забвения",
 	
 	"item.enigmaticlegacy.common_potion.effect.empty": "Зелье пустоты",
 	"item.enigmaticlegacy.common_potion.effect.haste": "Зелье спешки",
@@ -438,7 +440,36 @@
 	
 	"tooltip.enigmaticlegacy.etheriumScythe1": "§5Собирает растения в области §6%1$sx%1$sx%1$s§5.",
 	"tooltip.enigmaticlegacy.etheriumScythe2": "§5Вспахивает землю в области §6%1$sx%1$sx1§5.",
-	"tooltip.enigmaticlegacy.etheriumScythe3": "§5Удерживайте §6Shift§5, чтобы предотвратить это."
+	"tooltip.enigmaticlegacy.etheriumScythe3": "§5Удерживайте §6Shift§5, чтобы предотвратить это.",
+	
+	"tooltip.enigmaticlegacy.oblivionStoneHoldCtrl": "§5§5Удерживайте §6Ctrl§5 для списка предметов.",
+	"tooltip.enigmaticlegacy.oblivionStoneCtrlList": "§5Список поглощаемых предметов:",
+	"tooltip.enigmaticlegacy.oblivionStone1": "§5Объедините с любым предметом в сетке крафта,",
+	"tooltip.enigmaticlegacy.oblivionStone2": "§5что бы позволить ему поглощать этот предмет,",
+	"tooltip.enigmaticlegacy.oblivionStone2_more": "§5или ни с чем для очищения списка предметов.",
+	"tooltip.enigmaticlegacy.oblivionStone3": "§5Нажмите §6ПКМ§5 для переключения режима.",
+	"tooltip.enigmaticlegacy.oblivionStone4": "§5Нажмите §6Shift§5+§6ПКМ§5 для полной активации",
+	"tooltip.enigmaticlegacy.oblivionStone5": "§5или деактивации.",
+	"tooltip.enigmaticlegacy.oblivionStone6": "§5В режиме §6\"Абсолютное поглощение\"§5, камень",
+	"tooltip.enigmaticlegacy.oblivionStone7": "§5поглощает все указанные предметы в вашем",
+	"tooltip.enigmaticlegacy.oblivionStone8": "§5инвентаре, пока не останется ничего.",
+	"tooltip.enigmaticlegacy.oblivionStone9": "§5В режиме §6\"Последний стак\"§5, он всегда будет",
+	"tooltip.enigmaticlegacy.oblivionStone10": "§5оставлять последний стак каждого типа",
+	"tooltip.enigmaticlegacy.oblivionStone11": "§5предмета, но поглощать всё сверх этого.",
+	"tooltip.enigmaticlegacy.oblivionStone12": "§5В режиме §6\"Эксцессивное поглощение\"§5, он",
+	"tooltip.enigmaticlegacy.oblivionStone13": "§5будет поглощать что-либо только если у",
+	"tooltip.enigmaticlegacy.oblivionStone14": "§5вас в инвентаре нет свободного места, и",
+	"tooltip.enigmaticlegacy.oblivionStone15": "§5только пока оно не появится",
+	
+	"tooltip.enigmaticlegacy.oblivionStoneModeDesc": "§6Текущий режим: §d%1$s",
+	"tooltip.enigmaticlegacy.oblivionStoneMode0": "Абсолютное поглощение",
+	"tooltip.enigmaticlegacy.oblivionStoneMode1": "Последний стак",
+	"tooltip.enigmaticlegacy.oblivionStoneMode2": "Эксцессивное поглощение",
+	"tooltip.enigmaticlegacy.oblivionStoneModeInactive": "Деактивирован",
+	
+	"tooltip.enigmaticlegacy.astralBreaker1": "§5Разрушает блоки в области §6%1$sx%1$sx%2$s§5.",
+	"tooltip.enigmaticlegacy.astralBreaker2": "§5Удерживайте §6Shift§5, чтобы предотвратить это.",
+	"tooltip.enigmaticlegacy.astralBreaker3": "§5Эффективен против большинства блоков."
 
 
 }

@@ -40,6 +40,7 @@ import top.theillusivec4.curios.api.capability.ICurio;
 public class MiningCharm extends Item implements ICurio, IPerhaps {
 	
  public static Properties integratedProperties = new Item.Properties();
+ public static final int nightVisionDuration = 210;
 
  public MiningCharm(Properties properties) {
 		super(properties);
@@ -93,6 +94,16 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
 	 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharmNightVision", mode.getFormattedText());
  }
  
+ public static void removeNightVisionEffect(PlayerEntity player, int duration) {
+	 if (player.getActivePotionEffect(Effects.NIGHT_VISION) != null) {
+		 EffectInstance effect = player.getActivePotionEffect(Effects.NIGHT_VISION);
+		 
+		 if (effect.getDuration() == (duration-1))
+			 player.removePotionEffect(Effects.NIGHT_VISION);
+		 
+	 }
+ }
+ 
  @Override
  public void onCurioTick(String identifier, LivingEntity living) {
 	 
@@ -101,10 +112,13 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
 		 PlayerEntity player = (PlayerEntity) living;
 		 ItemStack stack = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.miningCharm);
 		 
-		 if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true))
-		 if (player.posY < 50 & player.dimension.getId() != -1 & player.dimension.getId() != 1 & !player.areEyesInFluid(FluidTags.WATER, true) & !player.world.canBlockSeeSky(player.getPosition()))
-		 if (player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0) < 3) {
-			 player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, ConfigHandler.MINING_CHARM_NIGHT_VISION_DURATION.getValue(), 0, true, false));
+		 if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) &&
+				 player.posY < 50 && player.dimension.getId() != -1 && player.dimension.getId() != 1 && !player.areEyesInFluid(FluidTags.WATER, true) && !player.world.canBlockSeeSky(player.getPosition()) &&
+				 player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0) < 3) {
+			 
+			 player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, nightVisionDuration, 0, true, false));
+		 } else {
+			 removeNightVisionEffect(player, nightVisionDuration);
 		 }
 		 
 	 }
@@ -135,13 +149,14 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
   }
   
   @Override
-  public void onEquipped(String identifier, LivingEntity entityLivingBase) {
+  public void onEquipped(String identifier, LivingEntity living) {
 	  // Insert existential void here
   }
   
   @Override
-  public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-	  // Insert existential void here
+  public void onUnequipped(String identifier, LivingEntity living) {
+	  if (living instanceof PlayerEntity)
+		  removeNightVisionEffect((PlayerEntity) living, nightVisionDuration);
   }
   
   @Override

@@ -89,10 +89,16 @@ public class ConfigHandler {
     = new OmnipotentConfig.BooleanParameter(false);
     
     public static final OmnipotentConfig.IntParameter MINING_CHARM_NIGHT_VISION_DURATION
-    = new OmnipotentConfig.IntParameter(4);
+    = new OmnipotentConfig.IntParameter(210);
 
     public static final OmnipotentConfig.IntParameter OCEAN_STONE_NIGHT_VISION_DURATION
-    = new OmnipotentConfig.IntParameter(4);
+    = new OmnipotentConfig.IntParameter(210);
+    
+    public static final OmnipotentConfig.IntParameter OBLIVION_STONE_SOFTCAP
+    = new OmnipotentConfig.IntParameter(25);
+    
+    public static final OmnipotentConfig.IntParameter OBLIVION_STONE_HARDCAP
+    = new OmnipotentConfig.IntParameter(100);
     
     
     //SPELLSTONES SPECIFIC
@@ -275,12 +281,21 @@ public class ConfigHandler {
     public static final OmnipotentConfig.BooleanParameter COMMON_POTIONS_ENABLED
     = new OmnipotentConfig.BooleanParameter(true);
     
+    public static final OmnipotentConfig.BooleanParameter ASTRAL_BREAKER_ENABLED
+    = new OmnipotentConfig.BooleanParameter(true);
+    
+    public static final OmnipotentConfig.BooleanParameter OBLIVION_STONE_ENABLED
+    = new OmnipotentConfig.BooleanParameter(true);
+    
+    public static final OmnipotentConfig.BooleanParameter BONUS_WOOL_RECIPES_ENABLED
+    = new OmnipotentConfig.BooleanParameter(true);
+    
 
 
     static {
         final ForgeConfigSpec.Builder common = new ForgeConfigSpec.Builder();
 
-        common.comment("Enable or disable certain items. Disabled items will not be craftable and will not generate in dungeons").push("Accesibility Config");
+        common.comment("Enable or disable certain features. Disabled items will not be craftable and will not generate in dungeons").push("Accesibility Config");
         
         ANGEL_BLESSING_ENABLED.configObj = common
                 .comment("Whether or not Angel's Blessing should be enabled.")
@@ -421,6 +436,21 @@ public class ConfigHandler {
         		.comment("Whether or not new conventional potions should be enabled. This includes only Haste potions, currently.")
         		.translation("configGui.enigmaticlegacy.common_potions_enabled")
         		.define("commonPotionsEnabled", COMMON_POTIONS_ENABLED.getValueDefault());
+        
+        ASTRAL_BREAKER_ENABLED.configObj = common
+        		.comment("Whether or not Astral Breaker should be enabled.")
+        		.translation("configGui.enigmaticlegacy.astral_breaker_enabled")
+        		.define("astralBreakerEnabled", ASTRAL_BREAKER_ENABLED.getValueDefault());
+
+        OBLIVION_STONE_ENABLED.configObj = common
+        		.comment("Whether or not Keystone of The Oblivion should be enabled.")
+        		.translation("configGui.enigmaticlegacy.oblivion_stone_enabled")
+        		.define("oblivionStoneEnabled", OBLIVION_STONE_ENABLED.getValueDefault());
+        
+        BONUS_WOOL_RECIPES_ENABLED.configObj = common
+        		.comment("Whether or not bonus recipes for wool dyeing should be enabled.")
+        		.translation("configGui.enigmaticlegacy.bonus_wool_recipes_enabled")
+        		.define("bonusWoolRecipesEnabled", BONUS_WOOL_RECIPES_ENABLED.getValueDefault());
         
         common.pop();
         
@@ -574,14 +604,24 @@ public class ConfigHandler {
         		.defineInRange("etheriumSwordCooldown", ETHERIUM_SWORD_COOLDOWN.getValueDefault(), 0, 32768);
         
         MINING_CHARM_NIGHT_VISION_DURATION.configObj = common
-                .comment("The duration (in ticks) for which Charm of the Treasure Hunter applies Night Vision effect each tick required conditions are met.")
+                .comment("The duration (in ticks) for which Charm of the Treasure Hunter applies Night Vision effect each tick required conditions are met. Deprecated as of 1.4.0, affects nothing now.")
                 .translation("configGui.enigmaticlegacy.mining_charm_night_vision_duration")
                 .defineInRange("miningCharmNightVisionDuration", MINING_CHARM_NIGHT_VISION_DURATION.getValueDefault(), 0, 32768);
  
         OCEAN_STONE_NIGHT_VISION_DURATION.configObj = common
-        		.comment("The duration (in ticks) for which Will of the Ocean applies Night Vision effect each tick required conditions are met.")
+        		.comment("The duration (in ticks) for which Will of the Ocean applies Night Vision effect each tick required conditions are met. Deprecated as of 1.4.0, affects nothing now.")
         		.translation("configGui.enigmaticlegacy.ocean_stone_night_vision_duration")
         		.defineInRange("oceanStoneNightVisionDuration", OCEAN_STONE_NIGHT_VISION_DURATION.getValueDefault(), 0, 32768);
+
+        OBLIVION_STONE_SOFTCAP.configObj = common
+        		.comment("Soft cap for Keystone of The Oblivion. When it's reached, the list view seen in it's Ctrl tooltip will be fixed at this amount of items, and become chaotic and unreadable. Required since monitors are not infinitely large these days.")
+        		.translation("configGui.enigmaticlegacy.oblivion_stone_softcap")
+        		.defineInRange("oblivionStoneSoftcap", OBLIVION_STONE_SOFTCAP.getValueDefault(), 1, 32768);
+        
+        OBLIVION_STONE_HARDCAP.configObj = common
+        		.comment("Hard cap for Keystone of The Oblivion. When it's reached, you will no longer be able to add new items to it's list via crafting. Required to prevent potential perfomance issues with ridiculously large lists.")
+        		.translation("configGui.enigmaticlegacy.oblivion_stone_hardcap")
+        		.defineInRange("oblivionStoneHardcap", OBLIVION_STONE_HARDCAP.getValueDefault(), 1, 32768);
         
         common.pop();
         

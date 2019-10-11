@@ -41,7 +41,8 @@ public class OceanStone extends Item implements ICurio, IPerhaps {
  public static Properties integratedProperties = new Item.Properties();
  public static List<String> immunityList = new ArrayList<String>();
  
- public static int xpCostBase = 150;
+ public static final int xpCostBase = 150;
+ public static final int nightVisionDuration = 210;
 
  public OceanStone(Properties properties) {
 		super(properties);
@@ -143,13 +144,14 @@ public class OceanStone extends Item implements ICurio, IPerhaps {
   }
   
   @Override
-  public void onEquipped(String identifier, LivingEntity entityLivingBase) {
+  public void onEquipped(String identifier, LivingEntity living) {
 	  //Insert existential void here
   }
   
   @Override
-  public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-	  // Insert existential void here
+  public void onUnequipped(String identifier, LivingEntity living) {
+	  if (living instanceof PlayerEntity)
+		  MiningCharm.removeNightVisionEffect((PlayerEntity) living, nightVisionDuration);
   }
   
   @Override
@@ -158,11 +160,12 @@ public class OceanStone extends Item implements ICurio, IPerhaps {
 	  if (living instanceof PlayerEntity & !living.world.isRemote)
 			 if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.oceanStone)) {
 				 PlayerEntity player = (PlayerEntity) living;
-				 //ItemStack stack = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.oceanStone);
 				 
 				 if (player.areEyesInFluid(FluidTags.WATER, true)) {
-					 player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, ConfigHandler.OCEAN_STONE_NIGHT_VISION_DURATION.getValue(), 0, true, false));
+					 player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, nightVisionDuration, 0, true, false));
 					 player.setAir(300);
+				 } else {
+					 MiningCharm.removeNightVisionEffect(player, nightVisionDuration);
 				 }
 			 }
 	  

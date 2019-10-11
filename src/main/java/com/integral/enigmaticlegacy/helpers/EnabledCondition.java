@@ -2,6 +2,7 @@ package com.integral.enigmaticlegacy.helpers;
 
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.JSONUtils;
@@ -33,7 +34,13 @@ public class EnabledCondition implements ICondition {
     @Override
     public boolean test() {
         Item item = ForgeRegistries.ITEMS.getValue(this.item);
-        if (item == null) return false;
+        
+        if (item == null)
+        	return false;
+        
+        if (this.item.toString().equals(EnigmaticLegacy.MODID + ":bonuswoolrecipes"))
+        	return ConfigHandler.BONUS_WOOL_RECIPES_ENABLED.getValue();
+        
         return !(item instanceof IPerhaps) || ((IPerhaps) item).isForMortals();
     }
 

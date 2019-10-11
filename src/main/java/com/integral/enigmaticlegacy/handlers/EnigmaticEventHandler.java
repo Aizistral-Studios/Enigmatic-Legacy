@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
@@ -65,6 +68,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Direction;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -83,6 +87,9 @@ import net.minecraft.world.storage.loot.functions.SetNBT;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
@@ -107,6 +114,8 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
 import top.theillusivec4.curios.api.CuriosAPI;
+import top.theillusivec4.curios.api.capability.CuriosCapability;
+import top.theillusivec4.curios.api.capability.ICurio;
 
 /**
  * Generic event handler of the whole mod.
@@ -262,7 +271,27 @@ public class EnigmaticEventHandler {
 	@SubscribeEvent
 	public void attachCapabilities(AttachCapabilitiesEvent<ItemStack> evt) {
 		
-		CapabilitiesRegistrationHandler.registerCapabilities(evt);
+		ItemStack stack = evt.getObject();
+		
+		/*
+		 * Handler for registering item's capabilities implemented in ICurio interface, for Enigmatic Legacy's namespace specifically.
+		 */
+		
+		if (stack.getItem() instanceof ICurio && stack.getItem().getRegistryName().getNamespace().equals(EnigmaticLegacy.MODID)) {
+			ICurio curioCapabilities = (ICurio) stack.getItem();
+			
+		    evt.addCapability(CuriosCapability.ID_ITEM, new ICapabilityProvider() {
+		      LazyOptional<ICurio> curio = LazyOptional.of(() -> curioCapabilities);
+
+		      @Nonnull
+		      @Override
+		      public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap,
+		                                               @Nullable Direction side) {
+
+		        return CuriosCapability.ITEM.orEmpty(cap, curio);
+		      }
+		    });
+		}
 	  
 	}
 	
@@ -682,7 +711,9 @@ public class EnigmaticEventHandler {
 				ItemLootEntry.builder(EnigmaticLegacy.commonPotionBase).weight(20).acceptFunction(SetNBT.func_215952_a(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE).getTag())),
 				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.magnetRing, 8),
 				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.unholyGrail, 4),
-				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.loreInscriber, 6),
+				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.loreInscriber, 5),
+				// TODO Maybe reconsider
+				// SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.oblivionStone, 4),
 				ItemLootEntry.builder(Items.CLOCK).weight(10),
 				ItemLootEntry.builder(Items.COMPASS).weight(10),
 				ItemLootEntry.builder(Items.EMERALD).weight(20).acceptFunction(SetCount.func_215932_a(RandomValueRange.func_215837_a(1.0F, 4F))),
@@ -698,12 +729,13 @@ public class EnigmaticEventHandler {
 		} else if (event.getName().equals(LootTables.CHESTS_NETHER_BRIDGE)) {
 			ItemStack fireResistancePotion = new ItemStack(Items.POTION);
 			fireResistancePotion = PotionUtils.addPotionToItemStack(fireResistancePotion, Potions.LONG_FIRE_RESISTANCE);
-			
+
 			LootPool epic = SuperpositionHandler.constructLootPool("epic", 1F, 2F,
 				SuperpositionHandler.itemEntryBuilderED(Items.GOLDEN_PICKAXE, 10, 25F, 30F, 1.0F, 1.0F),
 				SuperpositionHandler.itemEntryBuilderED(Items.GOLDEN_AXE, 10, 25F, 30F, 1.0F, 1.0F),
 				SuperpositionHandler.itemEntryBuilderED(Items.GOLDEN_SWORD, 10, 25F, 30F, 1.0F, 1.0F),
 				SuperpositionHandler.itemEntryBuilderED(Items.GOLDEN_SHOVEL, 10, 25F, 30F, 1.0F, 1.0F),
+				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.oblivionStone, 8),
 				ItemLootEntry.builder(Items.EMERALD).weight(30).acceptFunction(SetCount.func_215932_a(RandomValueRange.func_215837_a(2.0F, 7F))),
 				ItemLootEntry.builder(Items.WITHER_ROSE).weight(25).acceptFunction(SetCount.func_215932_a(RandomValueRange.func_215837_a(1.0F, 4F))),
 				ItemLootEntry.builder(Items.GHAST_TEAR).weight(10).acceptFunction(SetCount.func_215932_a(RandomValueRange.func_215837_a(1.0F, 2F))),
@@ -729,7 +761,7 @@ public class EnigmaticEventHandler {
 				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.mendingMixture, 40),
 				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.astralDust, 85, 1F, 4F),
 				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.etheriumOre, 60, 1F, 2F),
-				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.extradimensionalEye, 10)
+				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.extradimensionalEye, 20)
 				);
 			
 			LootTable modified = event.getTable();

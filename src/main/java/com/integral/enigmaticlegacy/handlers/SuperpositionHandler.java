@@ -714,7 +714,7 @@ public class SuperpositionHandler {
 		   else {
 			   List<ItemStack> allInventories = new ArrayList<ItemStack>();
 			   
-			   allInventories.addAll(player.inventory.armorInventory);
+			   //allInventories.addAll(player.inventory.armorInventory);
 			   allInventories.addAll(player.inventory.mainInventory);
 			   allInventories.addAll(player.inventory.offHandInventory);
 			   

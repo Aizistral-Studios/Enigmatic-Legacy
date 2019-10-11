@@ -199,8 +199,12 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
 		 
 		 List<ExperienceOrbEntity> orbs = world.getEntitiesWithinAABB(ExperienceOrbEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, ConfigHandler.XP_SCROLL_COLLECTION_RANGE.getValue()));
 		 for (ExperienceOrbEntity processed : orbs) {
+			 if (!processed.isAlive())
+				 continue;
+			 
 			 player.xpCooldown = 0;
-			 processed.setPositionAndUpdate(player.posX, player.posY, player.posZ);
+			 processed.onCollideWithPlayer(player);
+			 //processed.setPositionAndUpdate(player.posX, player.posY, player.posZ);
 		 }
   }
  

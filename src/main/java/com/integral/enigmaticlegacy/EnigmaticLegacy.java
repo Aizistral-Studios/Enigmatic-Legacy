@@ -54,6 +54,7 @@ import com.integral.enigmaticlegacy.items.Megasponge;
 import com.integral.enigmaticlegacy.items.MendingMixture;
 import com.integral.enigmaticlegacy.items.MiningCharm;
 import com.integral.enigmaticlegacy.items.MonsterCharm;
+import com.integral.enigmaticlegacy.items.OblivionStone;
 import com.integral.enigmaticlegacy.items.OceanStone;
 import com.integral.enigmaticlegacy.items.RecallPotion;
 import com.integral.enigmaticlegacy.items.RelicOfTesting;
@@ -65,6 +66,7 @@ import com.integral.enigmaticlegacy.items.UltimatePotionSplash;
 import com.integral.enigmaticlegacy.items.UnholyGrail;
 import com.integral.enigmaticlegacy.items.VoidPearl;
 import com.integral.enigmaticlegacy.items.XPScroll;
+import com.integral.enigmaticlegacy.packets.clients.PacketFlameParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketHandleItemPickup;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerRotations;
@@ -130,7 +132,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 	
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "1.3.4";
+	public static final String VERSION = "1.4.0";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 	
@@ -202,6 +204,7 @@ public class EnigmaticLegacy {
 	public static Item enderRod;
 	
 	public static Item astralBreaker;
+	public static Item oblivionStone;
 	
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -342,6 +345,8 @@ public class EnigmaticLegacy {
 				PacketAnvilField::handle);
 		packetInstance.registerMessage(14, PacketWitherParticles.class, PacketWitherParticles::encode, PacketWitherParticles::decode,
 				PacketWitherParticles::handle);
+		packetInstance.registerMessage(15, PacketFlameParticles.class, PacketFlameParticles::encode, PacketFlameParticles::decode,
+				PacketFlameParticles::handle);
 		
 		
 		enigmaticLogger.info("Registering triggers...");
@@ -433,6 +438,7 @@ public class EnigmaticLegacy {
 			enderRod = new EnderRod(EnderRod.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ender_rod"));
 			
 			astralBreaker = new AstralBreaker(EnigmaticMaterials.ETHERIUM, p -> AstralBreaker.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_breaker"));
+			oblivionStone = new OblivionStone(OblivionStone.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "oblivion_stone"));
 			
 			event.getRegistry().registerAll(
 					enigmaticItem,
@@ -482,11 +488,12 @@ public class EnigmaticLegacy {
 					etheriumShovel,
 					etheriumSword,
 					etheriumScythe,
+					astralBreaker,
 					astralDust,
+					enderRod,
 					loreInscriber,
 					loreFragment,
-					enderRod,
-					astralBreaker
+					oblivionStone
 			);
 			
 			enigmaticLogger.info("Items registered successfully.");

@@ -43,6 +43,8 @@
 	"item.enigmaticlegacy.lore_inscriber": "The Architect's Inkwell",
 	"item.enigmaticlegacy.lore_fragment": "Lore Fragment",
 	"item.enigmaticlegacy.ender_rod": "Ender Rod",
+	"item.enigmaticlegacy.astral_breaker": "Astral Breaker",
+	"item.enigmaticlegacy.oblivion_stone": "Keystone of The Oblivion",
 	
 	"item.enigmaticlegacy.common_potion.effect.empty": "Hollow Potion",
 	"item.enigmaticlegacy.common_potion.effect.haste": "Potion of Haste",
@@ -394,11 +396,11 @@
 	"tooltip.enigmaticlegacy.lootGenerator8": "§5Clicking on other sides of a chest will instead",
 	"tooltip.enigmaticlegacy.lootGenerator9": "§5obliterate anything stored within.",
 	
-	"tooltip.enigmaticlegacy.etheriumArmor1": "§5Invisible while worn.",
-	"tooltip.enigmaticlegacy.etheriumHelmet1": "§5Invisible while worn.",
-	"tooltip.enigmaticlegacy.etheriumChestplate1": "§5Invisible while worn.",
-	"tooltip.enigmaticlegacy.etheriumLeggings1": "§5Invisible while worn.",
-	"tooltip.enigmaticlegacy.etheriumBoots1": "§5Invisible while worn.",
+	"tooltip.enigmaticlegacy.etheriumArmor1": "§5Is invisible while worn.",
+	"tooltip.enigmaticlegacy.etheriumHelmet1": "§5Is invisible while worn.",
+	"tooltip.enigmaticlegacy.etheriumChestplate1": "§5Is invisible while worn.",
+	"tooltip.enigmaticlegacy.etheriumLeggings1": "§5Are invisible while worn.",
+	"tooltip.enigmaticlegacy.etheriumBoots1": "§5Are invisible while worn.",
 	"tooltip.enigmaticlegacy.etheriumArmorSetBonus1": "§dSet Bonus:",
 	"tooltip.enigmaticlegacy.etheriumArmorSetBonus2": "§5- When your health drops below §6%1$s§5, generates a",
 	"tooltip.enigmaticlegacy.etheriumArmorSetBonus3": "§5  powerful shield that reflects most projectiles,",
@@ -442,7 +444,36 @@
 	
 	"tooltip.enigmaticlegacy.etheriumScythe1": "§5Harvests plants in §6%1$sx%1$sx%1$s§5 area.",
 	"tooltip.enigmaticlegacy.etheriumScythe2": "§5Tills land in §6%1$sx%1$sx1§5 area.",
-	"tooltip.enigmaticlegacy.etheriumScythe3": "§5Hold §6Shift§5 to prevent these effects."
+	"tooltip.enigmaticlegacy.etheriumScythe3": "§5Hold §6Shift§5 to prevent these effects.",
+	
+	"tooltip.enigmaticlegacy.oblivionStoneHoldCtrl": "§5Hold §6Ctrl§5 to see consumable items.",
+	"tooltip.enigmaticlegacy.oblivionStoneCtrlList": "§5List of consumable items:",
+	"tooltip.enigmaticlegacy.oblivionStone1": "§5Combine with any item in crafting grid",
+	"tooltip.enigmaticlegacy.oblivionStone2": "§5to allow it consuming this item, or with",
+	"tooltip.enigmaticlegacy.oblivionStone2_more": "§5nothing to clear the list.",
+	"tooltip.enigmaticlegacy.oblivionStone3": "§5Press §6Right-Click§5 to switch modes.",
+	"tooltip.enigmaticlegacy.oblivionStone4": "§5Press §6Shift§5+§6Right-Click§5 to activate",
+	"tooltip.enigmaticlegacy.oblivionStone5": "§5or deactivate it completely.",
+	"tooltip.enigmaticlegacy.oblivionStone6": "§5In §6Total Absorption§5 mode, keystone",
+	"tooltip.enigmaticlegacy.oblivionStone7": "§5consumes all specified items within",
+	"tooltip.enigmaticlegacy.oblivionStone8": "§5your inventory, until none left.",
+	"tooltip.enigmaticlegacy.oblivionStone9": "§5In §6Last Stack§5 mode, it will always leave",
+	"tooltip.enigmaticlegacy.oblivionStone10": "§5one stack of each type of item, but will",
+	"tooltip.enigmaticlegacy.oblivionStone11": "§5consume anything more than that.",
+	"tooltip.enigmaticlegacy.oblivionStone12": "§5In §6Excess Absorption§5 mode, it will only",
+	"tooltip.enigmaticlegacy.oblivionStone13": "§5consume anything if you have no free",
+	"tooltip.enigmaticlegacy.oblivionStone14": "§5space in your inventory, and only until",
+	"tooltip.enigmaticlegacy.oblivionStone15": "§5it appears.",
+	
+	"tooltip.enigmaticlegacy.oblivionStoneModeDesc": "§6Current Mode: §d%1$s",
+	"tooltip.enigmaticlegacy.oblivionStoneMode0": "Total Absorption",
+	"tooltip.enigmaticlegacy.oblivionStoneMode1": "Last Stack",
+	"tooltip.enigmaticlegacy.oblivionStoneMode2": "Excess Absorption",
+	"tooltip.enigmaticlegacy.oblivionStoneModeInactive": "Deactivated",
+	
+	"tooltip.enigmaticlegacy.astralBreaker1": "§5Breaks blocks in §6%1$sx%1$sx%2$s§5 area.",
+	"tooltip.enigmaticlegacy.astralBreaker2": "§5Hold §6Shift§5 to prevent this effect.",
+	"tooltip.enigmaticlegacy.astralBreaker3": "§5Effective against most blocks."
 	
 
 
