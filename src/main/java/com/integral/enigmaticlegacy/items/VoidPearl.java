@@ -1,5 +1,6 @@
 package com.integral.enigmaticlegacy.items;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import top.theillusivec4.curios.api.capability.ICurio;
 
 public class VoidPearl extends Item implements ICurio, IPerhaps {
@@ -40,6 +42,7 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
  public static List<String> immunityList = new ArrayList<String>();
  public static List<String> healList = new ArrayList<String>();
  public static HashMap<String, Supplier<Float>> resistanceList = new HashMap<String, Supplier<Float>>();
+ public static Field foodSaturationField;
  public static DamageSource theDarkness;
  
  public VoidPearl(Properties properties) {
@@ -55,6 +58,8 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
 		 theDarkness.setDamageIsAbsolute();
 		 theDarkness.setDamageBypassesArmor();
 		 theDarkness.setMagicDamage();
+		 
+		 foodSaturationField = ObfuscationReflectionHelper.findField(FoodStats.class, "field_75125_b");
  }
  
  public static Properties setupIntegratedProperties() {
@@ -139,8 +144,15 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
 			PlayerEntity player = (PlayerEntity)living;
 			
 			FoodStats stats = player.getFoodStats();
-			stats.setFoodSaturationLevel(0F);
 			stats.setFoodLevel(20);
+				
+			if (foodSaturationField != null) {
+				try {
+					foodSaturationField.setFloat(stats, 0F);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
 		
 			if (player.getAir() < 300)
 			player.setAir(300);

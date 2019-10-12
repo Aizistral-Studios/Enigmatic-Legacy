@@ -1,8 +1,2 @@
 Changelog:
-- Changed the way Charm of the Treasure Hunter and Will of the Ocean apply Night Vision effect to ultimately prevent rendering issues. Deprecated related config options;
-- Changed the wording of Etherium Armor tooltip. Since obviously it remains unobvious for some people out there;
-- Implemented Astral Breaker;
-- Implemented Keystone of the Oblivion;
-- Optimized capabilities registration for curios;
-- Changed the way of collecting experience orbs by Scroll of Ageless Wisdom, now calls .onCollideWithPlayer() method similarly to Dislocation Ring;
-- Implemented bonus recipes for more effective wool dyeing.
+- Fixed player crashing on server upon equipping Pearl of the Void.

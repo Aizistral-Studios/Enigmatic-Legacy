@@ -43,7 +43,7 @@ public class PacketEnderRingKey {
 		      	 if (playerServ.openContainer.windowId == 0)
 		      	 if (SuperpositionHandler.hasCurio(playerServ, EnigmaticLegacy.enderRing)) {
 				 ChestContainer container = ChestContainer.createGeneric9X3(playerServ.currentWindowId+1, playerServ.inventory, playerServ.getInventoryEnderChest());
-				
+				 
 				 playerServ.currentWindowId = container.windowId;
 				 playerServ.connection.sendPacket(new SOpenWindowPacket(container.windowId, container.getType(), new TranslationTextComponent("container.enderchest")));
 		         container.addListener(playerServ);
