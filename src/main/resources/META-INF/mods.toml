@@ -3,7 +3,7 @@ loaderVersion="[28,)" #mandatory (26 is current forge version)
 issueTrackerURL="https://github.com/Extegral/Enigmatic-Legacy/issues" #optional
 [[mods]] #mandatory
 modId="enigmaticlegacy" #mandatory
-version="1.4.1" #mandatory
+version="1.4.2" #mandatory
 displayName="Enigmatic Legacy" #mandatory
 displayURL="https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy" #optional
 logoFile="EL_logo.png" #optional
