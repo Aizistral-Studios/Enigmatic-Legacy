@@ -3,10 +3,13 @@ package com.integral.enigmaticlegacy.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.integral.enigmaticlegacy.config.OmnipotentConfig.DoubleParameter;
+
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ConfigHandler {
     public static ForgeConfigSpec COMMON;
+    public static ForgeConfigSpec CLIENT;
     
     public static List<IComplexParameter> allValues = new ArrayList<IComplexParameter>();
     
@@ -290,10 +293,66 @@ public class ConfigHandler {
     public static final OmnipotentConfig.BooleanParameter BONUS_WOOL_RECIPES_ENABLED
     = new OmnipotentConfig.BooleanParameter(true);
     
+    
+    
+    
+    public static final OmnipotentConfig.BooleanParameter CLOCK_HUD_ENABLED
+    = new OmnipotentConfig.BooleanParameter(true);
+    
+    public static final OmnipotentConfig.BooleanParameter CLOCK_HUD_HIDE_IN_CHAT
+    = new OmnipotentConfig.BooleanParameter(true);
+    
+    public static final OmnipotentConfig.BooleanParameter CLOCK_HUD_BACKGROUND_ENABLED
+    = new OmnipotentConfig.BooleanParameter(true);
+    
+    public static final OmnipotentConfig.IntParameter CLOCK_HUD_X
+    = new OmnipotentConfig.IntParameter(30);
+    
+    public static final OmnipotentConfig.IntParameter CLOCK_HUD_Y
+    = new OmnipotentConfig.IntParameter(314);
+    
+    public static final OmnipotentConfig.DoubleParameter CLOCK_HUD_SCALE
+    = new OmnipotentConfig.DoubleParameter(1.0D);
+    
 
 
     static {
         final ForgeConfigSpec.Builder common = new ForgeConfigSpec.Builder();
+        final ForgeConfigSpec.Builder client = new ForgeConfigSpec.Builder();
+        
+        client.comment("Options that allow to disable/enable Univesal Clock and adjust it").push("Universal Clock HUD");
+        
+        CLOCK_HUD_ENABLED.configObj = client
+        		.comment("Whether or not Universal Clock should be displayed in the HUD.")
+        		.translation("configGui.enigmaticlegacy.clock_hud_enabled")
+        		.define("clockHudEnabled", CLOCK_HUD_ENABLED.getValueDefault());
+
+        CLOCK_HUD_HIDE_IN_CHAT.configObj = client
+        		.comment("Whether or not Universal Clock should be hidden when chat screen is opened.")
+        		.translation("configGui.enigmaticlegacy.clock_hud_hide_in_chat")
+        		.define("clockHudHideInChat", CLOCK_HUD_HIDE_IN_CHAT.getValueDefault());
+        
+        CLOCK_HUD_BACKGROUND_ENABLED.configObj = client
+        		.comment("Whether or not Universal Clock should have background.")
+        		.translation("configGui.enigmaticlegacy.clock_hud_background_enabled")
+        		.define("clockHudBackgroundEnabled", CLOCK_HUD_BACKGROUND_ENABLED.getValueDefault());
+
+        CLOCK_HUD_X.configObj = client
+                .comment("Position of Universal Clock on X axis of the screen.")
+                .translation("configGui.enigmaticlegacy.clock_hud_X")
+                .defineInRange("clockHudX", CLOCK_HUD_X.getValueDefault(), -32768, 32768);
+        
+        CLOCK_HUD_Y.configObj = client
+        		.comment("Position of Universal Clock on Y axis of the screen.")
+        		.translation("configGui.enigmaticlegacy.clock_hud_Y")
+        		
+        		.defineInRange("clockHudY", CLOCK_HUD_Y.getValueDefault(), -32768, 32768);
+        CLOCK_HUD_SCALE.configObj = client
+        		.comment("Visible size of the Universal Clock.")
+        		.translation("configGui.enigmaticlegacy.clock_hud_scale")
+        		.defineInRange("clockHudScale", CLOCK_HUD_SCALE.getValueDefault(), -32768F, 32768F);
+        
+        client.pop();
 
         common.comment("Enable or disable certain features. Disabled items will not be craftable and will not generate in dungeons").push("Accesibility Config");
         
@@ -798,6 +857,7 @@ public class ConfigHandler {
         
         
         COMMON = common.build();
+        CLIENT = client.build();
     }
     
     

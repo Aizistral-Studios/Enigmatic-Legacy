@@ -1,2 +1,2 @@
 Changelog:
-- Fixed player crashing on server upon equipping Pearl of the Void.
+- Implemented Universal Clock HUD and a bunch of client-sided config options for it.

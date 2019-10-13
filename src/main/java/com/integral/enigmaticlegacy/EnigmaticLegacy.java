@@ -132,7 +132,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 	
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "1.4.2";
+	public static final String VERSION = "1.5.0";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 	
@@ -231,6 +231,8 @@ public class EnigmaticLegacy {
 	
 	public static AdvancedPotion testingPotion;
 	
+	public static ItemStack universalClock;
+	
 	private static final String PTC_VERSION = "1";
 	
 	public static final CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
@@ -257,6 +259,7 @@ public class EnigmaticLegacy {
 		MinecraftForge.EVENT_BUS.register(new EnigmaticUpdateHandler());
 		
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandler.COMMON, "enigmatic-legacy-common.toml");
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT, "enigmatic-legacy-client.toml");
 		
 		enigmaticLogger.info("Mod instance constructed successfully.");
 	}
@@ -297,6 +300,8 @@ public class EnigmaticLegacy {
 		EnigmaticUpdateHandler.init();
 
 		proxy.loadComplete(event);
+		
+		universalClock = new ItemStack(Items.CLOCK);
 		
 		enigmaticLogger.info("Load completion phase finished successfully");
 	}

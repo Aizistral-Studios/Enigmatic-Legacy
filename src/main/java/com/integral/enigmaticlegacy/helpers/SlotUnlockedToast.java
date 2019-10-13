@@ -30,7 +30,7 @@ public class SlotUnlockedToast implements IToast {
    }
 
    public IToast.Visibility draw(ToastGui toastGui, long delta) {
-
+	   
          toastGui.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(EnigmaticLegacy.MODID, "textures/gui/enigmatic_toasts.png"));
          GlStateManager.color3f(1.0F, 1.0F, 1.0F);
          toastGui.blit(0, 0, 0, 0, 160, 43);

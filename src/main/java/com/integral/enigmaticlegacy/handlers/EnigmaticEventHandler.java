@@ -2,7 +2,9 @@ package com.integral.enigmaticlegacy.handlers;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -36,11 +38,17 @@ import com.integral.enigmaticlegacy.packets.clients.PacketSlotUnlocked;
 import com.integral.enigmaticlegacy.packets.server.PacketAnvilField;
 import com.integral.enigmaticlegacy.packets.server.PacketConfirmTeleportation;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
+import com.mojang.blaze3d.platform.GlStateManager;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.inventory.AnvilScreen;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
@@ -74,6 +82,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.storage.loot.ItemLootEntry;
 import net.minecraft.world.storage.loot.LootPool;
@@ -87,6 +96,7 @@ import net.minecraft.world.storage.loot.functions.SetNBT;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -111,6 +121,7 @@ import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
 import top.theillusivec4.curios.api.CuriosAPI;
@@ -993,6 +1004,73 @@ public class EnigmaticEventHandler {
 			event.setMaterialCost(1);
 			event.setOutput(ItemLoreHelper.mergeDisplayData(event.getRight(), event.getLeft().copy()));
 		}
+	}
+	
+	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
+	public void onRenderTick(RenderGameOverlayEvent.Pre event) {
+		
+			/*
+			 * Five-minute job that took me almost TEN FREAKIN' HOURS TO GET IT TO WORK!
+			 */
+			
+			if (event.getType() != RenderGameOverlayEvent.ElementType.ALL || !ConfigHandler.CLOCK_HUD_ENABLED.getValue())
+				return;
+			
+			if (ConfigHandler.CLOCK_HUD_HIDE_IN_CHAT.getValue())
+				if (Minecraft.getInstance().currentScreen instanceof ChatScreen)
+					return;
+			
+		    String text = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":" + (Calendar.getInstance().get(Calendar.MINUTE) <= 9 ? ("0"+Calendar.getInstance().get(Calendar.MINUTE)) : (""+Calendar.getInstance().get(Calendar.MINUTE)));
+		    
+		    Minecraft minecraft = Minecraft.getInstance();
+	        FontRenderer textRenderer = minecraft.fontRenderer;
+	        
+	        int guiPosX = ConfigHandler.CLOCK_HUD_X.getValue();
+	        int guiPosY = minecraft.mainWindow.getScaledHeight() - ConfigHandler.CLOCK_HUD_Y.getValue();
+	        float scale = (float) ConfigHandler.CLOCK_HUD_SCALE.getValue();
+	        
+	        //1736173
+	        
+	         if (ConfigHandler.CLOCK_HUD_BACKGROUND_ENABLED.getValue()) {
+	         
+	         GlStateManager.pushMatrix();
+
+             GlStateManager.disableLighting();
+	         GlStateManager.enableAlphaTest();
+	         
+	         GlStateManager.alphaFunc(516, 0.1F);
+	         GlStateManager.enableBlend();
+	         GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+	         
+	         GlStateManager.pushMatrix();
+	        
+	         GlStateManager.scalef(scale, scale, scale);
+	        
+	         minecraft.getTextureManager().bindTexture(new ResourceLocation(EnigmaticLegacy.MODID, "textures/gui/clock_hud_rect.png"));
+             GlStateManager.color3f(1.0F, 1.0F, 1.0F);
+             GuiUtils.drawTexturedModalRect(guiPosX-29, guiPosY-10, 0, 0, 66, 28, 0F); 
+            
+            
+             GlStateManager.popMatrix();
+	        
+             GlStateManager.disableAlphaTest();
+             RenderHelper.enableGUIStandardItemLighting();
+	         
+	         GlStateManager.popMatrix();
+	         
+	         }
+	         
+	         GlStateManager.pushMatrix();
+	         
+	         GlStateManager.scalef(scale, scale, scale);
+	         
+	         minecraft.getItemRenderer().renderItemAndEffectIntoGUI(EnigmaticLegacy.universalClock, guiPosX-20, guiPosY-4);
+	         
+	         textRenderer.drawStringWithShadow(text, guiPosX, guiPosY, TextFormatting.GOLD.getColor());
+	         
+	         GlStateManager.popMatrix();
+	        
 	}
 	
 	/**
