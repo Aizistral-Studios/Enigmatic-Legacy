@@ -309,7 +309,7 @@ public class ConfigHandler {
     = new OmnipotentConfig.IntParameter(30);
     
     public static final OmnipotentConfig.IntParameter CLOCK_HUD_Y
-    = new OmnipotentConfig.IntParameter(314);
+    = new OmnipotentConfig.IntParameter(20);
     
     public static final OmnipotentConfig.DoubleParameter CLOCK_HUD_SCALE
     = new OmnipotentConfig.DoubleParameter(1.0D);

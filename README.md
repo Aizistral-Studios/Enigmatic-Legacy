@@ -1,6 +1,6 @@
 # Enigmatic Legacy
 
-**Current Version:** 1.5.0
+**Current Version:** 1.5.1
 
 **Minecraft Version:** 1.14.4
 
