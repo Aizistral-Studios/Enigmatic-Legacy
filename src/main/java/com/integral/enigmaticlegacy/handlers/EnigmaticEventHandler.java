@@ -820,13 +820,21 @@ public class EnigmaticEventHandler {
 	    	 * Handler for bestowing Enigmatic Amulet to the player,
 	    	 * when they first join the world.
 	    	 */
-
+	    	
+	    	
 	        if (!SuperpositionHandler.hasPersistentTag(player, NBT_KEY_FIRSTJOIN)) {
 	        	
 	            ItemStack stack = new ItemStack(EnigmaticLegacy.enigmaticAmulet);
 	            ItemNBTHelper.setString(stack, "Inscription", player.getDisplayName().getString());
 	            
-	            player.inventory.setInventorySlotContents(8, stack);
+	            if (player.inventory.getStackInSlot(8).isEmpty()) {
+	            	player.inventory.setInventorySlotContents(8, stack);
+	            } else {
+	            	if (!player.inventory.addItemStackToInventory(stack)) {
+	            		ItemEntity dropIt = new ItemEntity(player.world, player.posX, player.posY, player.posZ, stack);
+	            		player.world.addEntity(dropIt);
+	            	}
+	            }
 	            
 	            SuperpositionHandler.setPersistentBoolean(player, NBT_KEY_FIRSTJOIN, true);
 	        }
@@ -872,7 +880,7 @@ public class EnigmaticEventHandler {
 		 * Handler for permanently unlocking Curio slots to player
 		 * once they obtain respective advancement.
 		 */
-		
+
 		if (id.equals(EnigmaticLegacy.MODID + ":main/discover_spellstone")) {	
 			CuriosAPI.enableTypeForEntity("spellstone", player);
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSlotUnlocked("spellstone"));
@@ -1019,6 +1027,10 @@ public class EnigmaticEventHandler {
 			
 			if (ConfigHandler.CLOCK_HUD_HIDE_IN_CHAT.getValue())
 				if (Minecraft.getInstance().currentScreen instanceof ChatScreen)
+					return;
+			
+			if (ConfigHandler.CLOCK_HUD_ONLY_IN_FULLSCREEN.getValue())
+				if (!Minecraft.getInstance().mainWindow.isFullscreen())
 					return;
 			
 		    String text = Calendar.getInstance().get(Calendar.HOUR_OF_DAY) + ":" + (Calendar.getInstance().get(Calendar.MINUTE) <= 9 ? ("0"+Calendar.getInstance().get(Calendar.MINUTE)) : (""+Calendar.getInstance().get(Calendar.MINUTE)));

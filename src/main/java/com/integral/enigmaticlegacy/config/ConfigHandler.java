@@ -299,6 +299,9 @@ public class ConfigHandler {
     public static final OmnipotentConfig.BooleanParameter CLOCK_HUD_ENABLED
     = new OmnipotentConfig.BooleanParameter(true);
     
+    public static final OmnipotentConfig.BooleanParameter CLOCK_HUD_ONLY_IN_FULLSCREEN
+    = new OmnipotentConfig.BooleanParameter(false);
+    
     public static final OmnipotentConfig.BooleanParameter CLOCK_HUD_HIDE_IN_CHAT
     = new OmnipotentConfig.BooleanParameter(true);
     
@@ -326,6 +329,11 @@ public class ConfigHandler {
         		.comment("Whether or not Universal Clock should be displayed in the HUD.")
         		.translation("configGui.enigmaticlegacy.clock_hud_enabled")
         		.define("clockHudEnabled", CLOCK_HUD_ENABLED.getValueDefault());
+
+        CLOCK_HUD_ONLY_IN_FULLSCREEN.configObj = client
+        		.comment("Whether or not Universal Clock should be displayed only when in fullscreen mode.")
+        		.translation("configGui.enigmaticlegacy.clock_hud_only_in_fullscreen")
+        		.define("clockHudOnlyInFullscreen", CLOCK_HUD_ONLY_IN_FULLSCREEN.getValueDefault());
 
         CLOCK_HUD_HIDE_IN_CHAT.configObj = client
         		.comment("Whether or not Universal Clock should be hidden when chat screen is opened.")

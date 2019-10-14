@@ -1,2 +1,3 @@
 Changelog:
-- Implemented Universal Clock HUD and a bunch of client-sided config options for it.
+- Implemented config option that allow to make Universal Clock HUD only displayed in fullscreen mode;
+- Fixed overwriting any stack in targeted slot when adding Enigmatic Amulet to player's inventory.
