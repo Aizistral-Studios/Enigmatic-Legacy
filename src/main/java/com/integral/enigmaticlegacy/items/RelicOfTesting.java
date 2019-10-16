@@ -20,6 +20,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -62,8 +63,9 @@ public class RelicOfTesting extends Item {
 	 	 
 	 SuperpositionHandler.setSpellstoneCooldown(playerIn, 0);
 	 
-	 PermanentItemEntity testItem = new PermanentItemEntity(playerIn.world, playerIn.posX, playerIn.posY+4, playerIn.posZ, new ItemStack(EnigmaticLegacy.eyeOfNebula));
-	 playerIn.world.addEntity(testItem);
+	 ItemStack checkTag = playerIn.inventory.offHandInventory.get(0);
+	 
+	 playerIn.sendMessage(new StringTextComponent(checkTag.getOrCreateTag().getString()));
 	 
 	 playerIn.swingArm(handIn);
 

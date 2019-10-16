@@ -25,6 +25,7 @@ import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
 import com.integral.enigmaticlegacy.items.AstralBreaker;
 import com.integral.enigmaticlegacy.items.AstralDust;
+import com.integral.enigmaticlegacy.items.EnchantmentTransposer;
 import com.integral.enigmaticlegacy.items.EnderRing;
 import com.integral.enigmaticlegacy.items.EnderRod;
 import com.integral.enigmaticlegacy.items.EnigmaticAmulet;
@@ -132,7 +133,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 	
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "1.5.3";
+	public static final String VERSION = "1.6.0";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 	
@@ -205,6 +206,7 @@ public class EnigmaticLegacy {
 	
 	public static Item astralBreaker;
 	public static Item oblivionStone;
+	public static Item enchantmentTransposer;
 	
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -444,6 +446,7 @@ public class EnigmaticLegacy {
 			
 			astralBreaker = new AstralBreaker(EnigmaticMaterials.ETHERIUM, p -> AstralBreaker.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_breaker"));
 			oblivionStone = new OblivionStone(OblivionStone.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "oblivion_stone"));
+			enchantmentTransposer = new EnchantmentTransposer(EnchantmentTransposer.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enchantment_transposer"));
 			
 			event.getRegistry().registerAll(
 					enigmaticItem,
@@ -498,7 +501,8 @@ public class EnigmaticLegacy {
 					enderRod,
 					loreInscriber,
 					loreFragment,
-					oblivionStone
+					oblivionStone,
+					enchantmentTransposer
 			);
 			
 			enigmaticLogger.info("Items registered successfully.");

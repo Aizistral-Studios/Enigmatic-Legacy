@@ -12,6 +12,7 @@ import java.util.Random;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.google.common.collect.Sets;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
@@ -1083,6 +1084,16 @@ public class EnigmaticEventHandler {
 	         
 	         GlStateManager.popMatrix();
 	        
+	}
+	
+	@SubscribeEvent
+	public void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
+		
+		if (event.getPlayer() != null && !event.getPlayer().world.isRemote) {
+			if (event.getInventory().count(EnigmaticLegacy.enchantmentTransposer) == 1 && event.getCrafting().getItem() == Items.ENCHANTED_BOOK)
+				event.getPlayer().world.playSound(null, event.getPlayer().getPosition(), SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1.0F, (float) (0.9F + (Math.random()*0.1F)));
+		}
+		
 	}
 	
 	/**

@@ -5,7 +5,7 @@ import com.integral.enigmaticlegacy.helpers.Perhaps;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class OmnipotentConfig {
-	
+
 	public static class BooleanParameter implements IComplexParameter {
 		public ForgeConfigSpec.BooleanValue configObj;
 		private boolean defaultValue;

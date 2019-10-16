@@ -291,6 +291,9 @@ public class ConfigHandler {
     public static final OmnipotentConfig.BooleanParameter OBLIVION_STONE_ENABLED
     = new OmnipotentConfig.BooleanParameter(true);
     
+    public static final OmnipotentConfig.BooleanParameter ENCHANTMENT_TRANSPOSER_ENABLED
+    = new OmnipotentConfig.BooleanParameter(true);
+    
     public static final OmnipotentConfig.BooleanParameter BONUS_WOOL_RECIPES_ENABLED
     = new OmnipotentConfig.BooleanParameter(true);
     
@@ -514,6 +517,11 @@ public class ConfigHandler {
         		.comment("Whether or not Keystone of The Oblivion should be enabled.")
         		.translation("configGui.enigmaticlegacy.oblivion_stone_enabled")
         		.define("oblivionStoneEnabled", OBLIVION_STONE_ENABLED.getValueDefault());
+        
+        ENCHANTMENT_TRANSPOSER_ENABLED.configObj = common
+        		.comment("Whether or not Tome of Hungering Knowledge should be enabled.")
+        		.translation("configGui.enigmaticlegacy.enchantment_transposer_enabled")
+        		.define("enchantmentTransposerEnabled", ENCHANTMENT_TRANSPOSER_ENABLED.getValueDefault());
         
         BONUS_WOOL_RECIPES_ENABLED.configObj = common
         		.comment("Whether or not bonus recipes for wool dyeing should be enabled.")

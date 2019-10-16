@@ -13,6 +13,7 @@ public class EnigmaticRecipeSerializers {
 	public static final IRecipeSerializer<MendingMixtureRepairRecipe> CRAFTING_MENDING_MIXTURE_REPAIR = new MendingMixtureRepairRecipe.Serializer();
 	public static final IRecipeSerializer<ShapelessNoReturnRecipe> SHAPELESS_NO_RETURN = new ShapelessNoReturnRecipe.Serializer();
 	public static final IRecipeSerializer<OblivionStoneCombineRecipe> OBLIVION_STONE_COMBINE = new OblivionStoneCombineRecipe.Serializer();
+	public static final IRecipeSerializer<EnchantmentTransposingRecipe> ENCHANTMENT_TRANSPOSING = new EnchantmentTransposingRecipe.Serializer();
 
 	@SubscribeEvent
 	public void onRegisterSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
@@ -22,6 +23,7 @@ public class EnigmaticRecipeSerializers {
 		event.getRegistry().register(CRAFTING_MENDING_MIXTURE_REPAIR.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "mending_mixture_repair")));
 		event.getRegistry().register(SHAPELESS_NO_RETURN.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "shapeless_no_return_craft")));
 		event.getRegistry().register(OBLIVION_STONE_COMBINE.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "oblivion_stone_combine")));
+		event.getRegistry().register(ENCHANTMENT_TRANSPOSING.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enchantment_transposing")));
 		EnigmaticLegacy.enigmaticLogger.info("Recipe serializers registered successfully.");
 	}
 }

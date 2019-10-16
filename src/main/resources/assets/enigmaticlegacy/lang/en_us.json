@@ -45,6 +45,7 @@
 	"item.enigmaticlegacy.ender_rod": "Ender Rod",
 	"item.enigmaticlegacy.astral_breaker": "Astral Breaker",
 	"item.enigmaticlegacy.oblivion_stone": "Keystone of The Oblivion",
+	"item.enigmaticlegacy.enchantment_transposer": "Tome of Hungering Knowledge",
 	
 	"item.enigmaticlegacy.common_potion.effect.empty": "Hollow Potion",
 	"item.enigmaticlegacy.common_potion.effect.haste": "Potion of Haste",
@@ -474,7 +475,11 @@
 	
 	"tooltip.enigmaticlegacy.astralBreaker1": "§5Breaks blocks in §6%1$sx%1$sx%2$s§5 area.",
 	"tooltip.enigmaticlegacy.astralBreaker2": "§5Hold §6Shift§5 to prevent this effect.",
-	"tooltip.enigmaticlegacy.astralBreaker3": "§5Effective against most blocks."
+	"tooltip.enigmaticlegacy.astralBreaker3": "§5Effective against most blocks.",
+	
+	"tooltip.enigmaticlegacy.enchantmentTransposer1": "§5Combine with any enchanted item in a crafting grid",
+	"tooltip.enigmaticlegacy.enchantmentTransposer2": "§5to transfer all enchantments from item to the tome.",
+	"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5The tome will be transformed into §6Enchanted Book§5."
 	
 
 

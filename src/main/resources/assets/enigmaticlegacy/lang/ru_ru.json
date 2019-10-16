@@ -470,7 +470,11 @@
 	
 	"tooltip.enigmaticlegacy.astralBreaker1": "§5Разрушает блоки в области §6%1$sx%1$sx%2$s§5.",
 	"tooltip.enigmaticlegacy.astralBreaker2": "§5Удерживайте §6Shift§5, чтобы предотвратить это.",
-	"tooltip.enigmaticlegacy.astralBreaker3": "§5Эффективен против большинства блоков."
+	"tooltip.enigmaticlegacy.astralBreaker3": "§5Эффективен против большинства блоков.",
+	
+	"tooltip.enigmaticlegacy.enchantmentTransposer1": "§5Соедините с зачарованным предметом в сетке крафта,",
+	"tooltip.enigmaticlegacy.enchantmentTransposer2": "§5чтобы перенести все зачарования с предмета на том.",
+	"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5Том превратится в §6Зачарованную книгу§5."
 
 
 }
