@@ -109,12 +109,12 @@ public class OceanStone extends Item implements ICurio, IPerhaps {
 	 if (player.world.getDimension().getType().getId() != 1 & player.world.getDimension().getType().getId() != -1)
 	 if (!world.getWorldInfo().isThundering()) {
 		 boolean paybackReceived = false;
-		 ItemStack scroll = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.xpScroll);
+		 /*ItemStack scroll = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.xpScroll);
 		 
 		 if (scroll != null && ItemNBTHelper.getInt(scroll, "XPStored", 0) >= xpCostBase*2) {
 			 ItemNBTHelper.setInt(scroll, "XPStored", ItemNBTHelper.getInt(scroll, "XPStored", 0) - (int) ((xpCostBase+(Math.random()*xpCostBase))*ConfigHandler.OCEAN_STONE_XP_COST_MODIFIER.getValue()));
 			 paybackReceived = true;
-		 } else if (player.experienceTotal >= xpCostBase*2) {
+		 } else*/ if (player.experienceTotal >= xpCostBase*2) {
 			 player.giveExperiencePoints((int) -((xpCostBase+(Math.random()*xpCostBase))*ConfigHandler.OCEAN_STONE_XP_COST_MODIFIER.getValue()));
 			 paybackReceived = true;
 		 }

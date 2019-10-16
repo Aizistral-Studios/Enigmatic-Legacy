@@ -1,5 +1,5 @@
 {
-	"item.enigmaticlegacy.enigmatic_item": "Heart of Creation",
+	"item.enigmaticlegacy.enigmatic_item": "Heart of Creation",	
 	"item.enigmaticlegacy.xp_scroll": "Scroll of Ageless Wisdom",
 	"item.enigmaticlegacy.enigmatic_amulet": "Enigmatic Amulet",
 	"item.enigmaticlegacy.magnet_ring": "Magnetic Ring",
@@ -315,6 +315,7 @@
 	"tooltip.enigmaticlegacy.angelBlessing3": "§dPassive abilities:",
 	"tooltip.enigmaticlegacy.angelBlessing4": "§5- Immunity to fall and collision damage.",
 	"tooltip.enigmaticlegacy.angelBlessing5": "§5- Redirects any approaching projectiles away.",
+	"tooltip.enigmaticlegacy.angelBlessing6": "§5- Your own projectiles are greatly accelerated.",
 	
 	"tooltip.enigmaticlegacy.eyeOfNebula1": "§dActive ability:",
 	"tooltip.enigmaticlegacy.eyeOfNebula2": "§6- Teleports you behind creature you are looking at.",

@@ -79,7 +79,7 @@ public class EtheriumSword extends SwordItem implements IPerhaps {
 			Vector3 dir = look.multiply(1D);
 			
 			this.knockBack(player, 1.0F, dir.x, dir.z);
-			world.playSound(null, player.getPosition(), SoundEvents.ENTITY_SKELETON_SHOOT, SoundCategory.NEUTRAL, 1.0F, (float) (0.6F + (Math.random()*0.1D)));
+			world.playSound(null, player.getPosition(), SoundEvents.ENTITY_SKELETON_SHOOT, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random()*0.1D)));
 			
 			etheriumSwordCooldowns.put(player, ConfigHandler.ETHERIUM_SWORD_COOLDOWN.getValue());
 		}

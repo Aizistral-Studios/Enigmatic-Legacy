@@ -14,7 +14,8 @@ public class ConfigHandler {
     public static List<IComplexParameter> allValues = new ArrayList<IComplexParameter>();
     
     public static final ForgeConfigSpec.ConfigValue<String> CONFIG_VERSION;
-    public static final String CURRENT_VERSION = "1.0";
+    public static final String CURRENT_VERSION = "1.1";
+    public static final String ZERO_VERSION = "0.0";
     
     public static final OmnipotentConfig.IntParameter MAGNET_RING_RANGE
     = new OmnipotentConfig.IntParameter(8);
@@ -38,7 +39,7 @@ public class ConfigHandler {
 	= new OmnipotentConfig.PerhapsParameter(10);
     
     public static final OmnipotentConfig.PerhapsParameter MINING_CHARM_BREAK_BOOST
-	= new OmnipotentConfig.PerhapsParameter(50);
+	= new OmnipotentConfig.PerhapsParameter(30);
     
     public static final OmnipotentConfig.DoubleParameter MINING_CHARM_REACH_BOOST
 	= new OmnipotentConfig.DoubleParameter(2.15D);
@@ -529,7 +530,7 @@ public class ConfigHandler {
         CONFIG_VERSION = common
                 .comment("Version of config file. DO NOT MODIFY UNLESS YOU KNOW EXACTLY WHAT YOU'RE DOING!")
                 .translation("configGui.enigmaticlegacy.config_version")
-                .define("configVersion", CURRENT_VERSION);
+                .define("configVersion", ZERO_VERSION);
         
         SUPER_MAGNET_RING_SOUND.configObj = common
                 .comment("Whether or not Dislocation Ring should play any sounds when teleporting items to it's bearer.")

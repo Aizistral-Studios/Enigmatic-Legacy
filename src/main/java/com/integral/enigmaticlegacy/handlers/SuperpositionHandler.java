@@ -308,7 +308,7 @@ public class SuperpositionHandler {
 				
 				if (!world.isAirBlock(new BlockPos(x, y+counter-1, z)) & world.getBlockState(new BlockPos(x, y+counter-1, z)).isSolid() & world.isAirBlock(new BlockPos(x, y+counter, z)) & world.isAirBlock(new BlockPos(x, y+counter+1, z))) {
 					
-					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
+					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.posX, entity.posY, entity.posZ, 128, entity.dimension)), new PacketPortalParticles(entity.posX, entity.posY+(entity.getHeight()/2), entity.posZ, 72, 1.0F));
 					
 					if (entity instanceof ServerPlayerEntity) {
@@ -317,7 +317,7 @@ public class SuperpositionHandler {
 					} else
 						((LivingEntity) entity).setPositionAndUpdate(x+0.5, y+counter, z+0.5);
 					
-					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
+					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.posX, entity.posY, entity.posZ, 128, entity.dimension)), new PacketRecallParticles(entity.posX, entity.posY+(entity.getHeight()/2), entity.posZ, 48));
 					
 					return true;
@@ -331,7 +331,7 @@ public class SuperpositionHandler {
 				
 				if (!world.isAirBlock(new BlockPos(x, y-counter-1, z)) & world.getBlockState(new BlockPos(x, y-counter-1, z)).isSolid() & world.isAirBlock(new BlockPos(x, y-counter, z)) & world.isAirBlock(new BlockPos(x, y-counter+1, z))) {
 					
-					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
+					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.posX, entity.posY, entity.posZ, 128, entity.dimension)), new PacketRecallParticles(entity.posX, entity.posY+(entity.getHeight()/2), entity.posZ, 48));
 					
 					if (entity instanceof ServerPlayerEntity) {
@@ -340,7 +340,7 @@ public class SuperpositionHandler {
 					} else
 						((LivingEntity) entity).setPositionAndUpdate(x+0.5, y-counter, z+0.5);
 					
-					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
+					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.posX, entity.posY, entity.posZ, 128, entity.dimension)), new PacketRecallParticles(entity.posX, entity.posY+(entity.getHeight()/2), entity.posZ, 48));
 					
 					return true;

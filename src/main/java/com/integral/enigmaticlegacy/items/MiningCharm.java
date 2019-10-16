@@ -112,9 +112,11 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
 		 PlayerEntity player = (PlayerEntity) living;
 		 ItemStack stack = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.miningCharm);
 		 
+		 //System.out.println("Light Level:" + player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0));
+		 
 		 if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) &&
 				 player.posY < 50 && player.dimension.getId() != -1 && player.dimension.getId() != 1 && !player.areEyesInFluid(FluidTags.WATER, true) && !player.world.canBlockSeeSky(player.getPosition()) &&
-				 player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0) < 3) {
+				 player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0) <= 8) {
 			 
 			 player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, nightVisionDuration, 0, true, false));
 		 } else {
@@ -131,10 +133,10 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
 
 	 	if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
 	 		ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", false);
-	 		world.playSound(null, player.getPosition(), EnigmaticLegacy.HHOFF, SoundCategory.NEUTRAL, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+	 		world.playSound(null, player.getPosition(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 	 	} else { 
 	 		ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", true);
-	 		world.playSound(null, player.getPosition(), EnigmaticLegacy.HHON, SoundCategory.NEUTRAL, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+	 		world.playSound(null, player.getPosition(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 	 	}
 	 	
 	 	player.swingArm(handIn);

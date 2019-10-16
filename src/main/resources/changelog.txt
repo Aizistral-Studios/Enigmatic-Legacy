@@ -1,3 +1,9 @@
 Changelog:
-- Implemented config option that allow to make Universal Clock HUD only displayed in fullscreen mode;
-- Fixed overwriting any stack in targeted slot when adding Enigmatic Amulet to player's inventory.
+- Reclassified most sound events played by mod from neutral to players category;
+- Lowered mining speed bonus provided by Charm of the Treasure Hunter to 30% (from previous 50%), to prevent players from gaining instamine on stone and similar blocks when using Diamond Pickaxe with Efficiency V;
+- Increased light tolerance of Charm of the Treasure Hunters, so that it's not affected by weaker light sources, like lit Redstone Ore or Redstone Torch. Now works in light levels of 8 and below;
+- Angel's Blessing now accelerates player's own projectiles (instead of slowing them down);
+- Will of the Ocean is no longer capable of consuming experience from Scroll of Ageless Wisdom when one is equipped;
+- Universal Clock HUD is now handled in RenderGameOverlayEvent.Post to avoid being overlapped by other elements, like vignette. Likely will soon be moved into a separate mod;
+- Config versioning system is changed to also reset all values upon updating from versions of the mod that didn't have it implemented yet;
+- Config version is changed to 1.1.

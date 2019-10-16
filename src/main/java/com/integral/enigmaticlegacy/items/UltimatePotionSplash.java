@@ -106,7 +106,7 @@ public class UltimatePotionSplash extends Item implements IPerhaps {
       ItemStack itemstack = playerIn.getHeldItem(handIn);
       ItemStack throwed = playerIn.abilities.isCreativeMode ? itemstack.copy() : itemstack.split(1);
       
-      worldIn.playSound((PlayerEntity)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_LINGERING_POTION_THROW, SoundCategory.NEUTRAL, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+      worldIn.playSound((PlayerEntity)null, playerIn.posX, playerIn.posY, playerIn.posZ, SoundEvents.ENTITY_LINGERING_POTION_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
       if (!worldIn.isRemote) {
          EnigmaticPotionEntity potionEntity = new EnigmaticPotionEntity(worldIn, playerIn);
          potionEntity.setItem(throwed);

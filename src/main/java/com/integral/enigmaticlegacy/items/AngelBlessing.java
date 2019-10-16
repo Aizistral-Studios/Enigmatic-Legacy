@@ -25,6 +25,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.entity.projectile.PotionEntity;
+import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.entity.projectile.WitherSkullEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -90,6 +91,7 @@ public class AngelBlessing extends Item implements ICurio, IPerhaps {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing3");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing4");
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing5");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing6");
 	 } else {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 	 }
@@ -122,7 +124,7 @@ public class AngelBlessing extends Item implements ICurio, IPerhaps {
 	 EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity)player), new PacketPlayerMotion(finalMotion.x, finalMotion.y, finalMotion.z));
 	 player.setMotion(finalMotion.x, finalMotion.y, finalMotion.z);
 	 
-	 world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.NEUTRAL, 1.0F, (float) (0.6F + (Math.random()*0.1D)));
+	 world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random()*0.1D)));
 	 
 	 SuperpositionHandler.setSpellstoneCooldown(player, ConfigHandler.ANGEL_BLESSING_COOLDOWN.getValue());
  }
@@ -151,20 +153,27 @@ public class AngelBlessing extends Item implements ICurio, IPerhaps {
 	 if (redirected instanceof UltimateWitherSkullEntity || redirected instanceof WitherSkullEntity)
 		 return;
 	 
+	 /*if (redirected instanceof TridentEntity)
+	 	 if (((TridentEntity)redirected).getShooter() == bearer)
+	 		 return;*/
+	 
 	 Vector3 entityPos = Vector3.fromEntityCenter(redirected);
 	 Vector3 bearerPos = Vector3.fromEntityCenter(bearer);
 	 
 	 Vector3 redirection = entityPos.subtract(bearerPos);
 	 redirection = redirection.normalize();
-	 /*
-	 if (redirected instanceof AbstractArrowEntity) {
-		 AbstractArrowEntity arrow = (AbstractArrowEntity) redirected;
+	 
+	 if (redirected instanceof AbstractArrowEntity && ((AbstractArrowEntity)redirected).getShooter() == bearer) {
 		 
-		 if (arrow.getShooter() == bearer)
-			 redirected.setMotion(redirected.getMotion().x*1.75D, redirected.getMotion().y*1.75D, redirected.getMotion().z*1.75D);
-		 else
-			 redirected.setMotion(redirection.x, redirection.y, redirection.z);
-	 } else*/
+		 if (redirected instanceof TridentEntity) {
+			 TridentEntity trident = (TridentEntity) redirected;
+			 
+			 if (trident.returningTicks > 0)
+				 return;
+		 }
+		 
+		 redirected.setMotion(redirected.getMotion().x*1.75D, redirected.getMotion().y*1.75D, redirected.getMotion().z*1.75D);
+	 } else
 		 redirected.setMotion(redirection.x, redirection.y, redirection.z);
 	 
 	 if (redirected instanceof DamagingProjectileEntity) {

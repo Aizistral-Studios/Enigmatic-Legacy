@@ -326,12 +326,12 @@ public class EnigmaticEventHandler {
 					
 					Vec3d vec = SuperpositionHandler.getValidSpawn(player.world, player);
 					
-					player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1.0F, (float) (0.8F + (Math.random()*0.2)));
+					player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random()*0.2)));
 			    	EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.posX, player.posY, player.posZ, 1024, player.dimension)), new PacketPortalParticles(player.posX, player.posY+(player.getHeight()/2), player.posZ, 72, 1.0F));
 					
 					player.setPositionAndUpdate(vec.x, vec.y, vec.z);
 					
-					player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1.0F, (float) (0.8F + (Math.random()*0.2)));
+					player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random()*0.2)));
 			    	EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.posX, player.posY, player.posZ, 1024, player.dimension)), new PacketRecallParticles(player.posX, player.posY+(player.getHeight()/2), player.posZ, 48));
 				}
 		 }
@@ -473,9 +473,9 @@ public class EnigmaticEventHandler {
 					  
 					  EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, 128, event.getEntityLiving().dimension)), new PacketPortalParticles(event.getEntityLiving().posX, event.getEntityLiving().posY+(event.getEntityLiving().getHeight()/2), event.getEntityLiving().posZ, 96, 1.5D));
 					  
-					  event.getEntityLiving().world.playSound(null, event.getEntityLiving().getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1.0F, (float) (0.8F + (Math.random()*0.2)));
+					  event.getEntityLiving().world.playSound(null, event.getEntityLiving().getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random()*0.2)));
 					  event.getEntityLiving().setPositionAndUpdate(ItemNBTHelper.getDouble(stack, "BoundX", 0D), ItemNBTHelper.getDouble(stack, "BoundY", 0D), ItemNBTHelper.getDouble(stack, "BoundZ", 0D));
-					  event.getEntityLiving().world.playSound(null, event.getEntityLiving().getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.NEUTRAL, 1.0F, (float) (0.8F + (Math.random()*0.2)));
+					  event.getEntityLiving().world.playSound(null, event.getEntityLiving().getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random()*0.2)));
 					  
 					  EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, 128, event.getEntityLiving().dimension)), new PacketRecallParticles(event.getEntityLiving().posX, event.getEntityLiving().posY+(event.getEntityLiving().getHeight()/2), event.getEntityLiving().posZ, 48));
 					  
@@ -1016,7 +1016,7 @@ public class EnigmaticEventHandler {
 	
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
-	public void onRenderTick(RenderGameOverlayEvent.Pre event) {
+	public void onRenderTick(RenderGameOverlayEvent.Post event) {
 		
 			/*
 			 * Five-minute job that took me almost TEN FREAKIN' HOURS TO GET IT TO WORK!

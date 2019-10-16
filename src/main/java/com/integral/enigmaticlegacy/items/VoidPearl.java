@@ -176,7 +176,7 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
 						
 						//if (player.ticksExisted % 20 == 0) {
 							victim.attackEntityFrom(theDarkness, (float) ConfigHandler.VOID_PEARL_BASE_DARKNESS_DAMAGE.getValue());
-							living.world.playSound(null, victim.getPosition(), SoundEvents.ENTITY_PHANTOM_BITE, SoundCategory.NEUTRAL, 1.0F, (float) (0.3F + (Math.random()*0.4D)));
+							living.world.playSound(null, victim.getPosition(), SoundEvents.ENTITY_PHANTOM_BITE, SoundCategory.PLAYERS, 1.0F, (float) (0.3F + (Math.random()*0.4D)));
 						//}
 						
 						victim.addPotionEffect(new EffectInstance(Effects.WITHER, 80, 1, false, true));
