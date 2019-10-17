@@ -1,6 +1,13 @@
 The Changelog:
 
+[Release 1.6.1]:
+
+- Removed Universal Clock HUD. Now available as a separate mod: https://www.curseforge.com/minecraft/mc-mods/universal-clock-hud
+
+
+
 [Release 1.6.0]:
+
 - Implemeted global changelog. Included as part of the mod file;
 - Implemeted Tome of Hungering Knowledge.
 
