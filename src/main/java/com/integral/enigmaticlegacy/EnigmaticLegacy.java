@@ -1,7 +1,9 @@
 package com.integral.enigmaticlegacy;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,6 +23,7 @@ import com.integral.enigmaticlegacy.handlers.EnigmaticUpdateHandler;
 import com.integral.enigmaticlegacy.handlers.OneSpecialHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.AdvancedPotion;
+import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
 import com.integral.enigmaticlegacy.items.AstralBreaker;
@@ -42,6 +45,7 @@ import com.integral.enigmaticlegacy.items.EtheriumSword;
 import com.integral.enigmaticlegacy.items.ExtradimensionalEye;
 import com.integral.enigmaticlegacy.items.EyeOfNebula;
 import com.integral.enigmaticlegacy.items.ForbiddenAxe;
+import com.integral.enigmaticlegacy.items.GemOfBinding;
 import com.integral.enigmaticlegacy.items.GolemHeart;
 import com.integral.enigmaticlegacy.items.HastePotion;
 import com.integral.enigmaticlegacy.items.HeavenScroll;
@@ -66,6 +70,7 @@ import com.integral.enigmaticlegacy.items.UltimatePotionLingering;
 import com.integral.enigmaticlegacy.items.UltimatePotionSplash;
 import com.integral.enigmaticlegacy.items.UnholyGrail;
 import com.integral.enigmaticlegacy.items.VoidPearl;
+import com.integral.enigmaticlegacy.items.WormholePotion;
 import com.integral.enigmaticlegacy.items.XPScroll;
 import com.integral.enigmaticlegacy.packets.clients.PacketFlameParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketHandleItemPickup;
@@ -88,6 +93,7 @@ import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.gui.screen.CreateWorldScreen;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -116,6 +122,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -133,7 +140,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 	
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "1.6.1";
+	public static final String VERSION = "1.6.2";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 	
@@ -208,6 +215,9 @@ public class EnigmaticLegacy {
 	public static Item oblivionStone;
 	public static Item enchantmentTransposer;
 	
+	public static Item gemOfBinding;
+	public static Item wormholePotion;
+	
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
 	public static AdvancedPotion ULTIMATE_LEAPING;
@@ -232,8 +242,9 @@ public class EnigmaticLegacy {
 	public static AdvancedPotion EMPTY;
 	
 	public static AdvancedPotion testingPotion;
-	
+	 
 	public static ItemStack universalClock;
+	public static UUID soulOfTheArchitect;
 	
 	private static final String PTC_VERSION = "1";
 	
@@ -304,6 +315,7 @@ public class EnigmaticLegacy {
 		proxy.loadComplete(event);
 		
 		universalClock = new ItemStack(Items.CLOCK);
+		soulOfTheArchitect = UUID.fromString("3efc546d-30bb-4c29-bb61-b3081a118408");
 		
 		enigmaticLogger.info("Load completion phase finished successfully");
 	}
@@ -360,12 +372,16 @@ public class EnigmaticLegacy {
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);
 		CriteriaTriggers.register(BeheadingTrigger.INSTANCE);
 		
+		ObfuscatedFields.extractCommonFields();
+		
 		enigmaticLogger.info("Common setup phase finished successfully.");
 	}
 	
 	private void clientRegistries(final FMLClientSetupEvent event) {
 		enigmaticLogger.info("Initializing client setup phase...");
 		keybindHandler.registerKeybinds();
+		
+		ObfuscatedFields.extractClientFields();
 		
 		enigmaticLogger.info("Client setup phase finished successfully.");
 	}
@@ -447,6 +463,9 @@ public class EnigmaticLegacy {
 			astralBreaker = new AstralBreaker(EnigmaticMaterials.ETHERIUM, p -> AstralBreaker.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_breaker"));
 			oblivionStone = new OblivionStone(OblivionStone.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "oblivion_stone"));
 			enchantmentTransposer = new EnchantmentTransposer(EnchantmentTransposer.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enchantment_transposer"));
+
+			gemOfBinding = new GemOfBinding(GemOfBinding.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "gem_of_binding"));
+			wormholePotion = new WormholePotion(WormholePotion.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "wormhole_potion"));
 			
 			event.getRegistry().registerAll(
 					enigmaticItem,
@@ -502,7 +521,9 @@ public class EnigmaticLegacy {
 					loreInscriber,
 					loreFragment,
 					oblivionStone,
-					enchantmentTransposer
+					enchantmentTransposer/*,
+					gemOfBinding,
+					wormholePotion*/
 			);
 			
 			enigmaticLogger.info("Items registered successfully.");

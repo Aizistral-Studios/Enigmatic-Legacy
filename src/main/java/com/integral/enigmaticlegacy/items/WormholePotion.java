@@ -6,13 +6,16 @@ import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.crafting.BindToPlayerRecipe.IBound;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
+import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -35,11 +38,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-public class RecallPotion extends Item implements IPerhaps {
+public class WormholePotion extends Item implements IPerhaps, IBound {
 	
  public static Properties integratedProperties = new Item.Properties();
 
- public RecallPotion(Properties properties) {
+ public WormholePotion(Properties properties) {
 		super(properties);
  }
  
@@ -55,49 +58,65 @@ public class RecallPotion extends Item implements IPerhaps {
  @OnlyIn(Dist.CLIENT)
  public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 	 if(ControlsScreen.hasShiftDown()) {
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.recallPotion1");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.recallPotion2");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.wormholePotion1");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.wormholePotion2");
 	 } else {
 		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+	 }
+	 
+	 if (ItemNBTHelper.verifyExistance(stack, "BoundPlayer")) {
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.boundToPlayer", ItemNBTHelper.getString(stack, "BoundPlayer", "Herobrine"));
 	 }
  }
  
  @Override
  public boolean isForMortals() {
- 	return ConfigHandler.RECALL_POTION_ENABLED.getValue();
+ 	return true;
  }
 
  @Override
  public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-     PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity)entityLiving : null;
+	 if (!(entityLiving instanceof PlayerEntity))
+		 return stack;
+	 
+     PlayerEntity player = (PlayerEntity)entityLiving;
 
      if (player instanceof ServerPlayerEntity) {
         CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity)player, stack);
      }
+     
+     PlayerEntity receiver = this.getBoundPlayer(worldIn, stack);
 
-     if (!worldIn.isRemote) {
-    	Vec3d vec = SuperpositionHandler.getValidSpawn(worldIn, player);
-
+     if (!worldIn.isRemote && receiver != null) {
+    	 
+    	Vec3d vec = receiver.getPositionVector();
+    			 
+    	while (vec.distanceTo(receiver.getPositionVector()) < 1.0D) 
+    		vec = receiver.getPositionVector().add((random.nextDouble()-0.5D)*4D, 0, (random.nextDouble()-0.5D)*4D);
+    	
+    	
+    	
     	worldIn.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random()*0.2)));
     	
     	EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.posX, player.posY, player.posZ, 128, player.dimension)), new PacketPortalParticles(player.posX, player.posY+(player.getHeight()/2), player.posZ, 100, 1.25F));
     	
-    	player.setPositionAndUpdate(vec.x, vec.y, vec.z);
+    	player.setPositionAndUpdate(vec.x, vec.y+0.25, vec.z);
     	worldIn.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random()*0.2)));
     	
     	EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.posX, player.posY, player.posZ, 128, player.dimension)), new PacketRecallParticles(player.posX, player.posY+(player.getHeight()/2), player.posZ, 48));
      }
 
-     if (player == null || !player.abilities.isCreativeMode) {
+     if (!player.abilities.isCreativeMode) {
+    	 
     	stack.shrink(1);
     	 
         if (stack.isEmpty()) {
            return new ItemStack(Items.GLASS_BOTTLE);
         }
-
-        if (player != null) {
-           player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
-        }
+          
+        player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
+        
      }
 
      return stack;
@@ -114,10 +133,18 @@ public class RecallPotion extends Item implements IPerhaps {
   }
 
  @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-     playerIn.setActiveHand(handIn);
-     return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
-  }
+  public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+	 ItemStack stack = player.getHeldItem(hand);
+	 
+	 PlayerEntity receiver = this.getBoundPlayer(world, stack);
+		 
+	 if (receiver != null/* && receiver != player*/) {
+		 player.setActiveHand(hand);
+		 return new ActionResult<>(ActionResultType.SUCCESS, stack);
+	 }
+	 
+	 return new ActionResult<>(ActionResultType.FAIL, stack);
+ }
 
   @OnlyIn(Dist.CLIENT)
   public boolean hasEffect(ItemStack stack) {

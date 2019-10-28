@@ -131,4 +131,36 @@ public class OmnipotentConfig {
 			this.configObj.save();
 		}
 	}
+	
+	public static class GenericParameter<Whatever> implements IComplexParameter {
+		public ForgeConfigSpec.ConfigValue<Whatever> configObj;
+		private Whatever defaultValue;
+		
+		public GenericParameter(Whatever defaultValueIn) {
+			this.defaultValue = defaultValueIn;
+			ConfigHandler.allValues.add(this);
+		}
+		
+		public Whatever getValueDefault() {
+			return this.defaultValue;
+		}
+		
+		public void setDefaultValue(Whatever value) {
+			this.defaultValue = value;
+		}
+		
+		public Whatever getValue() {
+			
+			if (this.configObj != null)
+				return this.configObj.get();
+			else
+				return defaultValue;
+		}
+		
+		public void reset() {
+			this.configObj.set(this.defaultValue);
+			this.configObj.save();
+		}
+		
+	}
 }

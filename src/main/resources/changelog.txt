@@ -1,5 +1,11 @@
 The Changelog:
 
+[Release 1.6.2]:
+
+- Magnetic Ring and Dislocation Ring now respect Demagnetize.
+
+
+
 [Release 1.6.1]:
 
 - Removed Universal Clock HUD. Now available as a separate mod: https://www.curseforge.com/minecraft/mc-mods/universal-clock-hud

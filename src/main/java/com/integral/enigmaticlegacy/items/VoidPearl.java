@@ -13,6 +13,7 @@ import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
+import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
 
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.settings.KeyBinding;
@@ -42,7 +43,6 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
  public static List<String> immunityList = new ArrayList<String>();
  public static List<String> healList = new ArrayList<String>();
  public static HashMap<String, Supplier<Float>> resistanceList = new HashMap<String, Supplier<Float>>();
- public static Field foodSaturationField;
  public static DamageSource theDarkness;
  
  public VoidPearl(Properties properties) {
@@ -59,7 +59,6 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
 		 theDarkness.setDamageBypassesArmor();
 		 theDarkness.setMagicDamage();
 		 
-		 foodSaturationField = ObfuscationReflectionHelper.findField(FoodStats.class, "field_75125_b");
  }
  
  public static Properties setupIntegratedProperties() {
@@ -146,13 +145,12 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
 			FoodStats stats = player.getFoodStats();
 			stats.setFoodLevel(20);
 				
-			if (foodSaturationField != null) {
-				try {
-					foodSaturationField.setFloat(stats, 0F);
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
+			try {
+				ObfuscatedFields.foodSaturationField.setFloat(stats, 0F);
+			} catch (Exception ex) {
+				ex.printStackTrace();
 			}
+			
 		
 			if (player.getAir() < 300)
 			player.setAir(300);

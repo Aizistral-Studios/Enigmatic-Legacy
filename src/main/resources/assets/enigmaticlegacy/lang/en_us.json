@@ -138,6 +138,7 @@
 	"message.enigmaticlegacy.gen_sim_complete": "Estimated generation complete in §632768§5 instances; check §6latest.log§5 file to see the results.",
 	"status.enigmaticlegacy.outdated": "New version of §6Enigmatic Legacy§5 was established: %1$s. You should behold it's greatness!",
 	"status.enigmaticlegacy.noconnection": "Enigmatic Legacy was unable to check for updates.",
+	"world.enigmaticlegacy.name": "World #",
 	
 	"enigmaticlegacy.toasts.slotUnlocked.title": "%1$s are unlocked!",
 	"enigmaticlegacy.toasts.slotUnlocked.text1": "You can now equip them",
@@ -479,7 +480,9 @@
 	
 	"tooltip.enigmaticlegacy.enchantmentTransposer1": "§5Combine with any enchanted item in a crafting grid",
 	"tooltip.enigmaticlegacy.enchantmentTransposer2": "§5to transfer all enchantments from item to the tome.",
-	"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5The tome will be transformed into §6Enchanted Book§5."
+	"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5The tome will be transformed into §6Enchanted Book§5.",
+	
+	"tooltip.enigmaticlegacy.boundToPlayer": "§5Bound to: §6%1$s"
 	
 
 

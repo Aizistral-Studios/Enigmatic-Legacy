@@ -120,9 +120,9 @@ public class MagnetRing extends Item implements ICurio, IPerhaps {
 	 
   }
   
-    private boolean canPullItem(ItemEntity item) {
+    protected boolean canPullItem(ItemEntity item) {
 		ItemStack stack = item.getItem();
-		if(!item.isAlive() || stack.isEmpty())
+		if(!item.isAlive() || stack.isEmpty() || item.getPersistentData().getBoolean("PreventRemoteMovement"))
 			return false;
 
 		return true;

@@ -20,6 +20,7 @@ import com.integral.enigmaticlegacy.helpers.CooldownMap;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper.AnvilParser;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
+import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.helpers.Vector3;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
@@ -41,15 +42,18 @@ import com.integral.enigmaticlegacy.packets.server.PacketConfirmTeleportation;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
 import com.mojang.blaze3d.platform.GlStateManager;
 
+import cpw.mods.modlauncher.Launcher;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.ChatScreen;
+import net.minecraft.client.gui.screen.CreateWorldScreen;
 import net.minecraft.client.gui.screen.inventory.AnvilScreen;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
@@ -79,6 +83,7 @@ import net.minecraft.potion.Potions;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.FoodStats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -112,6 +117,7 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
@@ -124,6 +130,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.network.PacketDistributor;
 import top.theillusivec4.curios.api.CuriosAPI;
 import top.theillusivec4.curios.api.capability.CuriosCapability;
@@ -141,6 +149,8 @@ public class EnigmaticEventHandler {
 	private static final String NBT_KEY_ENABLESPELLSTONE = "enigmaticlegacy.spellstones_enabled";
 	private static final String NBT_KEY_ENABLERING = "enigmaticlegacy.rings_enabled";
 	private static final String NBT_KEY_ENABLESCROLL = "enigmaticlegacy.scrolls_enabled";
+	
+	//private static final String NBT_KEY_CREEPERKEY = "enigmaticlegacy.scrolls_enabled";
 	
 	public static CooldownMap deferredToast = new CooldownMap();
 	public static List<IToast> scheduledToasts = new ArrayList<IToast>();
@@ -572,7 +582,11 @@ public class EnigmaticEventHandler {
 					}
 					
 				}
-			}	
+			}
+			
+			if (monster instanceof CreeperEntity)
+				monster.setLastAttackedEntity(player);
+			// TODO Test if required
 			
 			}
 		}
@@ -952,6 +966,33 @@ public class EnigmaticEventHandler {
 	}
 	
 	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
+	public void onWorldCreation(GuiScreenEvent.InitGuiEvent event) {
+		
+		if (event.getGui() instanceof CreateWorldScreen && FMLLoader.getNameFunction("srg").isPresent()) {
+			
+			/*
+			 * Handler for setting in random world name and respective seed
+			 * when creating a new world.
+			 */
+			
+			CreateWorldScreen screen = (CreateWorldScreen) event.getGui();
+			
+			try {
+				String localizedWorld = I18n.format("world.enigmaticlegacy.name");
+				String number = SuperpositionHandler.generateRandomWorldNumber();
+				String name = localizedWorld+number;
+				
+				ObfuscatedFields.worldNameField.set(screen, name);
+				ObfuscatedFields.worldSeedField.set(screen, number);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		
+		}
+	}
+	
+	@SubscribeEvent
 	public void onAnvilRepair(AnvilRepairEvent event) {
 		if (!SuperpositionHandler.hasStoredAnvilField(event.getPlayer()) || event.getPlayer().world.isRemote || event.getItemInput().getItem() != EnigmaticLegacy.loreFragment || event.getIngredientInput().getItem() != EnigmaticLegacy.loreInscriber)
 			return;
@@ -1024,6 +1065,20 @@ public class EnigmaticEventHandler {
 		}
 		
 	}
+	
+	/*
+	@SubscribeEvent
+	public void onAttackTargetSet(LivingSetAttackTargetEvent event) {
+		if (event.getEntityLiving() instanceof CreeperEntity && event.getTarget() instanceof PlayerEntity) {
+			if (SuperpositionHandler.hasCurio(event.getTarget(), EnigmaticLegacy.enigmaticAmulet) && event.getEntityLiving().getLastAttackedEntity() != event.getTarget())
+				((CreeperEntity)event.getEntityLiving()).setAttackTarget(null);
+				//((CreeperEntity)event.getEntityLiving()).setAttackTarget(null);
+			
+				// TODO Finish
+			
+		}
+	}
+	*/
 	
 	/**
 	 * Adds passed ItemStack to LivingDropsEvent.

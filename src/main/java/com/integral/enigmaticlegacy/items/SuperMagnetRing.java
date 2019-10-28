@@ -129,12 +129,8 @@ public class SuperMagnetRing extends Item implements ICurio, IPerhaps {
 	 
   }
   
-    private boolean canPullItem(ItemEntity item) {
-		ItemStack stack = item.getItem();
-		if(!item.isAlive() || stack.isEmpty())
-			return false;
-
-		return true;
+    protected boolean canPullItem(ItemEntity item) {
+		return ((MagnetRing)EnigmaticLegacy.magnetRing).canPullItem(item);
 	}
   
 }

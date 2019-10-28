@@ -1,5 +1,7 @@
 package com.integral.enigmaticlegacy.helpers;
 
+import java.util.UUID;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 
@@ -62,12 +64,24 @@ public final class ItemNBTHelper
         getNBT(stack).putString(tag, s);
     }
     
+    public static void setUUID(final ItemStack stack, final String tag, final UUID id) {
+        getNBT(stack).putUniqueId(tag, id);
+    }
+    
     public static boolean verifyExistance(final ItemStack stack, final String tag) {
         return stack != null && getNBT(stack).contains(tag);
     }
     
     public static boolean getBoolean(final ItemStack stack, final String tag, final boolean defaultExpected) {
         return verifyExistance(stack, tag) ? getNBT(stack).getBoolean(tag) : defaultExpected;
+    }
+    
+    public static boolean containsUUID(final ItemStack stack, final String tag) {
+    	return stack != null && getNBT(stack).hasUniqueId(tag);
+    }
+    
+    public static UUID getUUID(final ItemStack stack, final String tag, UUID defaultExpected) {
+    	return containsUUID(stack, tag) ? getNBT(stack).getUniqueId(tag) : defaultExpected;
     }
     
     public static byte getByte(final ItemStack stack, final String tag, final byte defaultExpected) {

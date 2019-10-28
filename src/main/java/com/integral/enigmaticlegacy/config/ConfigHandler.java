@@ -310,9 +310,9 @@ public class ConfigHandler {
         common.comment("Enable or disable certain features. Disabled items will not be craftable and will not generate in dungeons").push("Accesibility Config");
         
         ANGEL_BLESSING_ENABLED.configObj = common
-                .comment("Whether or not Angel's Blessing should be enabled.")
-                .translation("configGui.enigmaticlegacy.angel_blessing_enabled")
-                .define("angelBlessingEnabled", ANGEL_BLESSING_ENABLED.getValueDefault());
+        		.comment("Whether or not Angel's Blessing should be enabled.")
+        		.translation("configGui.enigmaticlegacy.angel_blessing_enabled")
+        		.define("angelBlessingEnabled", ANGEL_BLESSING_ENABLED.getValueDefault());
         
         ENDER_RING_ENABLED.configObj = common
         		.comment("Whether or not Ender Ring should be enabled.")

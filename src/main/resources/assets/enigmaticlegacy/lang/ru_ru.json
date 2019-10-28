@@ -138,6 +138,7 @@
 	"message.enigmaticlegacy.gen_sim_complete": "Симулированная генерация произведена в §632768§5 экземплярах; просмотрите файл §6latest.log§5 чтобы увидеть результаты.",
 	"status.enigmaticlegacy.outdated": "Новая версия §6Enigmatic Legacy§5 была создана: %1$s. Вы должны узреть её величие!",
 	"status.enigmaticlegacy.noconnection": "Не удалось проверить наличие обновлений для Enigmatic Legacy.",
+	"world.enigmaticlegacy.name": "Мир #",
 	
 	"enigmaticlegacy.toasts.slotUnlocked.title": "%1$s открыты!",
 	"enigmaticlegacy.toasts.slotUnlocked.text1": "Вы можете надеть их",

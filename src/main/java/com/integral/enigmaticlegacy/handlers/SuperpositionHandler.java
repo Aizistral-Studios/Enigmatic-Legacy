@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Random;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -72,6 +73,9 @@ import top.theillusivec4.curios.api.imc.CurioIMCMessage;
  */
 
 public class SuperpositionHandler {
+	
+	public static final Random random = new Random();
+	public static final char[] symbols = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
 	
 	public static HashMap<PlayerEntity, Integer> spellstoneCooldowns = new HashMap<PlayerEntity, Integer>();
     
@@ -638,6 +642,43 @@ public class SuperpositionHandler {
 		 }
 		 
 			 return false;
+	 }
+	 
+	 /**
+	  * Creates random world number.
+	  * Formatted like XXXX-FFXX, where X is any digit and F is any letter from A to Z.
+	  */
+	 
+	 public static String generateRandomWorldNumber() {
+		 
+		 String number = "";
+		 
+		 while (number.length() < 4) {
+			 number = number.concat(""+random.nextInt(10));
+		 }
+		 
+		 number = number.concat("-");
+		 
+		 while (number.length() < 7) {
+			 number = number.concat(""+symbols[random.nextInt(symbols.length)]);
+		 }
+		 
+		 while (number.length() < 9) {
+			 number = number.concat(""+random.nextInt(10));
+		 }
+		 
+		 return number;
+	 }
+	 
+	 public static PlayerEntity getPlayerByName(World world, String name) {
+		 PlayerEntity player = null;
+		 
+		 for (PlayerEntity checkedPlayer : world.getPlayers()) {
+			 if (checkedPlayer.getDisplayName().getString().equals(name))
+				 player = checkedPlayer;
+		 }
+		 
+		 return player;
 	 }
 	 
 	 /**
