@@ -3,6 +3,8 @@ package com.integral.enigmaticlegacy.packets.clients;
 import java.util.Random;
 import java.util.function.Supplier;
 
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.network.PacketBuffer;
@@ -22,12 +24,14 @@ public class PacketFlameParticles {
 	private double y;
 	private double z;
 	private int num;
+	private boolean check;
 
-	  public PacketFlameParticles(double x, double y, double z, int number) {
+	  public PacketFlameParticles(double x, double y, double z, int number, boolean checkSettings) {
 	    this.x = x;
 	    this.y = y;
 	    this.z = z;
 	    this.num = number;
+	    this.check = checkSettings;
 	  }
 
 	  public static void encode(PacketFlameParticles msg, PacketBuffer buf) {
@@ -35,10 +39,11 @@ public class PacketFlameParticles {
 	    buf.writeDouble(msg.y);
 	    buf.writeDouble(msg.z);
 	    buf.writeInt(msg.num);
+	    buf.writeBoolean(msg.check);
 	  }
 
 	  public static PacketFlameParticles decode(PacketBuffer buf) {
-		  return new PacketFlameParticles(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readInt());
+		  return new PacketFlameParticles(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readInt(), buf.readBoolean());
 	  }
 
 
@@ -47,7 +52,12 @@ public class PacketFlameParticles {
 		    ctx.get().enqueueWork(() -> {    	
 		      ClientPlayerEntity player = Minecraft.getInstance().player;
 		      
-		      for (int counter = 0; counter <= msg.num; counter++) {
+		      int amount = msg.num;
+		      
+		      if (msg.check)
+		    	  amount *= SuperpositionHandler.getParticleMultiplier();
+		      
+		      for (int counter = 0; counter <= amount; counter++) {
 		    		player.world.addParticle(ParticleTypes.FLAME, true, msg.x+(Math.random()-0.5), msg.y+(Math.random()-0.5), msg.z+(Math.random()-0.5), (Math.random()-0.5D)*0.1D, (Math.random()-0.5D)*0.1D, (Math.random()-0.5D)*0.1D);
 		      }
 		      

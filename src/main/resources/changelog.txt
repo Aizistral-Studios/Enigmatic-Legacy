@@ -1,5 +1,14 @@
 The Changelog:
 
+[Release 1.6.4]:
+
+- Fixed side violation on dedicated servers caused by Eye of the Nebula (#15);
+- Unequipping Heart of Creation and Gift of the Heaven no longer causes flight to be disabled while in Creative Mode (#16);
+- Removed excessive log output in BlockDropsHarvest event handler (#20);
+- Astral Breaker and Dislocation Ring now respect client particle settings (#26).
+
+
+
 [Release 1.6.3]:
 
 - Added simplified Chinese translation (thanks to LyricaPrismriver) #21.

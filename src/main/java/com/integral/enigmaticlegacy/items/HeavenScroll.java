@@ -87,9 +87,12 @@ public class HeavenScroll extends Item implements ICurio, IPerhaps {
 		 	 player.sendPlayerAbilities();
 		 	 HeavenScroll.flyMap.put(player, true);
 		 } else if (HeavenScroll.flyMap.get(player)) {
-			 player.abilities.allowFlying = false;
-			 player.abilities.isFlying = false;
-			 player.sendPlayerAbilities();
+			 if (!player.isCreative()) {
+       		  player.abilities.allowFlying = false;
+       		  player.abilities.isFlying = false;
+       		  player.sendPlayerAbilities();
+       	  	 }
+			 
 			 HeavenScroll.flyMap.put(player, false);
 		 }
 		 
@@ -116,10 +119,13 @@ public class HeavenScroll extends Item implements ICurio, IPerhaps {
 	  if (entityLivingBase instanceof PlayerEntity) {
 		  PlayerEntity player = (PlayerEntity) entityLivingBase;
 		  
-			 player.abilities.allowFlying = false;
-			 player.abilities.isFlying = false;
-			 player.sendPlayerAbilities();
-			 HeavenScroll.flyMap.put(player, false);
+		  if (!player.isCreative()) {
+    		  player.abilities.allowFlying = false;
+    		  player.abilities.isFlying = false;
+    		  player.sendPlayerAbilities();
+    	  }
+		  
+		  HeavenScroll.flyMap.put(player, false);
 	  
 	  }
   }

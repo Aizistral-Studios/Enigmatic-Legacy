@@ -231,8 +231,8 @@ public class EnigmaticEventHandler {
 	@SubscribeEvent
 	public void onBlockDropsHarvest(HarvestDropsEvent event) {
 		
-		// This never happens
-		System.out.println("Event fired!");
+		// Oh my god it happens!
+		//System.out.println("Event fired!");
 	}
 	
 	@SubscribeEvent
@@ -338,12 +338,12 @@ public class EnigmaticEventHandler {
 					Vec3d vec = SuperpositionHandler.getValidSpawn(player.world, player);
 					
 					player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random()*0.2)));
-			    	EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.posX, player.posY, player.posZ, 1024, player.dimension)), new PacketPortalParticles(player.posX, player.posY+(player.getHeight()/2), player.posZ, 72, 1.0F));
+			    	EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.posX, player.posY, player.posZ, 1024, player.dimension)), new PacketPortalParticles(player.posX, player.posY+(player.getHeight()/2), player.posZ, 72, 1.0F, false));
 					
 					player.setPositionAndUpdate(vec.x, vec.y, vec.z);
 					
 					player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random()*0.2)));
-			    	EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.posX, player.posY, player.posZ, 1024, player.dimension)), new PacketRecallParticles(player.posX, player.posY+(player.getHeight()/2), player.posZ, 48));
+			    	EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.posX, player.posY, player.posZ, 1024, player.dimension)), new PacketRecallParticles(player.posX, player.posY+(player.getHeight()/2), player.posZ, 48, false));
 				}
 		 }
 		 
@@ -463,7 +463,12 @@ public class EnigmaticEventHandler {
 				if (EyeOfNebula.immunityList.contains(event.getSource().damageType)) {
 					event.setCanceled(true);
 			    } else if (Math.random() <= ConfigHandler.EYE_OF_NEBULA_DODGE_PROBABILITY.getValue().asMultiplier(false) && player.hurtResistantTime <= 10 && event.getSource().getTrueSource() instanceof LivingEntity) {
-			    	EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketConfirmTeleportation(true));
+			    	
+			    	 for (int counter = 0; counter <= 32; counter++) {
+			        	 if (SuperpositionHandler.validTeleportRandomly(player, player.world, (int) ConfigHandler.EYE_OF_NEBULA_DODGE_RANGE.getValue()))
+			        		 break;
+			         }
+			    	
 			    	player.hurtResistantTime = 20;
 					event.setCanceled(true);
 				}
@@ -482,13 +487,13 @@ public class EnigmaticEventHandler {
 					  event.setCanceled(true);
 					  ItemStack stack = player.getHeldItemMainhand();
 					  
-					  EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, 128, event.getEntityLiving().dimension)), new PacketPortalParticles(event.getEntityLiving().posX, event.getEntityLiving().posY+(event.getEntityLiving().getHeight()/2), event.getEntityLiving().posZ, 96, 1.5D));
+					  EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, 128, event.getEntityLiving().dimension)), new PacketPortalParticles(event.getEntityLiving().posX, event.getEntityLiving().posY+(event.getEntityLiving().getHeight()/2), event.getEntityLiving().posZ, 96, 1.5D, false));
 					  
 					  event.getEntityLiving().world.playSound(null, event.getEntityLiving().getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random()*0.2)));
 					  event.getEntityLiving().setPositionAndUpdate(ItemNBTHelper.getDouble(stack, "BoundX", 0D), ItemNBTHelper.getDouble(stack, "BoundY", 0D), ItemNBTHelper.getDouble(stack, "BoundZ", 0D));
 					  event.getEntityLiving().world.playSound(null, event.getEntityLiving().getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random()*0.2)));
 					  
-					  EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, 128, event.getEntityLiving().dimension)), new PacketRecallParticles(event.getEntityLiving().posX, event.getEntityLiving().posY+(event.getEntityLiving().getHeight()/2), event.getEntityLiving().posZ, 48));
+					  EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ, 128, event.getEntityLiving().dimension)), new PacketRecallParticles(event.getEntityLiving().posX, event.getEntityLiving().posY+(event.getEntityLiving().getHeight()/2), event.getEntityLiving().posZ, 48, false));
 					  
 					  if (!player.abilities.isCreativeMode)
 					  stack.shrink(1);

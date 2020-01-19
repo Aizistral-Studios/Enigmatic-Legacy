@@ -130,9 +130,11 @@ public class EnigmaticItem extends Item implements ICurio {
               }
           }
           else if (flightMap.get(player)) {
-              player.abilities.allowFlying = false;
-              player.abilities.isFlying = false;
-              player.sendPlayerAbilities();
+        	  if (!player.isCreative()) {
+        		  player.abilities.allowFlying = false;
+        		  player.abilities.isFlying = false;
+        		  player.sendPlayerAbilities();
+        	  }
               flightMap.put(player, false);
           }
       }
@@ -189,7 +191,7 @@ public class EnigmaticItem extends Item implements ICurio {
       
 		world.addEntity(witherskullentity);
 		
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(witherskullentity.posX, witherskullentity.posY, witherskullentity.posZ, 64, witherskullentity.dimension)), new PacketWitherParticles(witherskullentity.posX, witherskullentity.posY+(witherskullentity.getHeight()/2), witherskullentity.posZ, 8));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(witherskullentity.posX, witherskullentity.posY, witherskullentity.posZ, 64, witherskullentity.dimension)), new PacketWitherParticles(witherskullentity.posX, witherskullentity.posY+(witherskullentity.getHeight()/2), witherskullentity.posZ, 8, false));
 
    }
   

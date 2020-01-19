@@ -22,7 +22,9 @@ import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 
 import net.minecraft.block.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.settings.ParticleStatus;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -313,7 +315,7 @@ public class SuperpositionHandler {
 				if (!world.isAirBlock(new BlockPos(x, y+counter-1, z)) & world.getBlockState(new BlockPos(x, y+counter-1, z)).isSolid() & world.isAirBlock(new BlockPos(x, y+counter, z)) & world.isAirBlock(new BlockPos(x, y+counter+1, z))) {
 					
 					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.posX, entity.posY, entity.posZ, 128, entity.dimension)), new PacketPortalParticles(entity.posX, entity.posY+(entity.getHeight()/2), entity.posZ, 72, 1.0F));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.posX, entity.posY, entity.posZ, 128, entity.dimension)), new PacketPortalParticles(entity.posX, entity.posY+(entity.getHeight()/2), entity.posZ, 72, 1.0F, false));
 					
 					if (entity instanceof ServerPlayerEntity) {
 						ServerPlayerEntity player = (ServerPlayerEntity) entity;
@@ -322,7 +324,7 @@ public class SuperpositionHandler {
 						((LivingEntity) entity).setPositionAndUpdate(x+0.5, y+counter, z+0.5);
 					
 					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.posX, entity.posY, entity.posZ, 128, entity.dimension)), new PacketRecallParticles(entity.posX, entity.posY+(entity.getHeight()/2), entity.posZ, 48));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.posX, entity.posY, entity.posZ, 128, entity.dimension)), new PacketRecallParticles(entity.posX, entity.posY+(entity.getHeight()/2), entity.posZ, 48, false));
 					
 					return true;
 				}
@@ -336,7 +338,7 @@ public class SuperpositionHandler {
 				if (!world.isAirBlock(new BlockPos(x, y-counter-1, z)) & world.getBlockState(new BlockPos(x, y-counter-1, z)).isSolid() & world.isAirBlock(new BlockPos(x, y-counter, z)) & world.isAirBlock(new BlockPos(x, y-counter+1, z))) {
 					
 					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.posX, entity.posY, entity.posZ, 128, entity.dimension)), new PacketRecallParticles(entity.posX, entity.posY+(entity.getHeight()/2), entity.posZ, 48));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.posX, entity.posY, entity.posZ, 128, entity.dimension)), new PacketRecallParticles(entity.posX, entity.posY+(entity.getHeight()/2), entity.posZ, 48, false));
 					
 					if (entity instanceof ServerPlayerEntity) {
 						ServerPlayerEntity player = (ServerPlayerEntity) entity;
@@ -345,7 +347,7 @@ public class SuperpositionHandler {
 						((LivingEntity) entity).setPositionAndUpdate(x+0.5, y-counter, z+0.5);
 					
 					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.posX, entity.posY, entity.posZ, 128, entity.dimension)), new PacketRecallParticles(entity.posX, entity.posY+(entity.getHeight()/2), entity.posZ, 48));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.posX, entity.posY, entity.posZ, 128, entity.dimension)), new PacketRecallParticles(entity.posX, entity.posY+(entity.getHeight()/2), entity.posZ, 48, false));
 					
 					return true;
 				}
@@ -779,5 +781,22 @@ public class SuperpositionHandler {
 		   public static boolean stackEqualExact(ItemStack stack1, ItemStack stack2) {
 		      return stack1.getItem() == stack2.getItem() && ItemStack.areItemStackTagsEqual(stack1, stack2);
 		   }
+		   
+		   
+	  /**
+	   * @return Multiplier for amount of particles based on client settings.
+	   */
+	  @OnlyIn(Dist.CLIENT)
+	  public static float getParticleMultiplier() {
+		  
+		  if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.MINIMAL) {
+			  return 0.35F;
+		  } else if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.DECREASED) {
+			  return 0.65F;
+		  } else {
+			  return 1.0F;
+		  }
+
+	  }
 	 
 }

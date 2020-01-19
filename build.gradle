@@ -18,7 +18,7 @@ apply plugin: 'maven-publish'
 
 version = '1.0'
 group = 'com.integral.enigmaticlegacy' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'EnigmaticLegacy-build'
+archivesBaseName = 'EnigmaticLegacy-smv'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -101,7 +101,7 @@ configurations {
 }
 
 dependencies {
-	minecraft 'net.minecraftforge:forge:1.14.4-28.1.61'
+	minecraft 'net.minecraftforge:forge:1.14.4-28.1.115'
 	compile fg.deobf('top.theillusivec4.curios:curios:FORGE-1.14.4-1.0.4')
 	//compile files('C:/Stuff/curios-FORGE-1.14.4-1.0-deobf.jar')
 	compile 'com.google.code.gson:gson:2.8.5' // Serialize More Difficult Configs, REQUIRED

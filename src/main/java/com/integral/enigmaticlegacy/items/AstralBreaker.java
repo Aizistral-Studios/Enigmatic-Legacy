@@ -19,6 +19,7 @@ import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.ControlsScreen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -89,7 +90,7 @@ public class AstralBreaker extends ToolItem implements IPerhaps {
  }
  
  public void spawnFlameParticles(World world, BlockPos pos) {
-	 EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 128, world.dimension.getType())), new PacketFlameParticles(pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, 18));
+	 EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 128, world.dimension.getType())), new PacketFlameParticles(pos.getX()+0.5D, pos.getY()+0.5D, pos.getZ()+0.5D, 18, true));
  }
  
  @Override

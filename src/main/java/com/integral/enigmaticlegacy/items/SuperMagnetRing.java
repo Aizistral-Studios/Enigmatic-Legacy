@@ -115,7 +115,7 @@ public class SuperMagnetRing extends Item implements ICurio, IPerhaps {
 				if (!SuperpositionHandler.canPickStack(player, item.getItem()))
 					continue;
 				
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(item.posX, item.posY, item.posZ, 24, item.dimension)), new PacketPortalParticles(item.posX, item.posY+(item.getHeight()/2), item.posZ, 24, 0.75D));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(item.posX, item.posY, item.posZ, 24, item.dimension)), new PacketPortalParticles(item.posX, item.posY+(item.getHeight()/2), item.posZ, 24, 0.75D, true));
 				
 				if (ConfigHandler.SUPER_MAGNET_RING_SOUND.getValue())
 					item.world.playSound(null, item.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random()*0.2D)));
