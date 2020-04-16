@@ -3,8 +3,6 @@ package com.integral.enigmaticlegacy.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.integral.enigmaticlegacy.config.OmnipotentConfig.DoubleParameter;
-
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class ConfigHandler {

@@ -11,7 +11,7 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
 
-import net.minecraft.client.gui.screen.ControlsScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,109 +25,110 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import top.theillusivec4.curios.api.capability.ICurio;
 
 public class HeavenScroll extends Item implements ICurio, IPerhaps {
-	
- public static Properties integratedProperties = new Item.Properties();
- public static HashMap<PlayerEntity, Boolean> flyMap = new HashMap<PlayerEntity, Boolean>();
 
- public HeavenScroll(Properties properties) {
+	public static Properties integratedProperties = new Item.Properties();
+	public static HashMap<PlayerEntity, Boolean> flyMap = new HashMap<PlayerEntity, Boolean>();
+
+	public HeavenScroll(Properties properties) {
 		super(properties);
- }
- 
- public static Properties setupIntegratedProperties() {
-	 integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-	 integratedProperties.maxStackSize(1);
-	 integratedProperties.rarity(Rarity.EPIC);
-	 
-	 return integratedProperties;
- }
- 
- @Override
- public boolean isForMortals() {
- 	return ConfigHandler.HEAVEN_SCROLL_ENABLED.getValue();
- }
- 
- @Override
- public boolean canEquip(String identifier, LivingEntity living) {
-	  if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.heavenScroll))
-		  return false;
-	  else
-		  return true;
- }
- 
- @OnlyIn(Dist.CLIENT)
- public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-	 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-	 
-	 if(ControlsScreen.hasShiftDown()) {
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome1");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome2");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome3");
-	 } else {
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
-	 }
- }
- 
- @Override
- public void onCurioTick(String identifier, LivingEntity living) {
-	 if (living.world.isRemote)
-		 return;
-	 
-	 if (living instanceof PlayerEntity) {
-		 PlayerEntity player = (PlayerEntity) living;
-		 
-		 if (Math.random() <= (0.025D*ConfigHandler.HEAVEN_SCROLL_XP_COST_MODIFIER.getValue()) & player.abilities.isFlying)
-			 player.giveExperiencePoints(-1);
-		 
-		 try {
-		 if (player.experienceTotal > 0) {
-			 
-		 if (!player.abilities.allowFlying)
-			 player.abilities.allowFlying = true;
-		 	 player.sendPlayerAbilities();
-		 	 HeavenScroll.flyMap.put(player, true);
-		 } else if (HeavenScroll.flyMap.get(player)) {
-			 if (!player.isCreative()) {
-       		  player.abilities.allowFlying = false;
-       		  player.abilities.isFlying = false;
-       		  player.sendPlayerAbilities();
-       	  	 }
-			 
-			 HeavenScroll.flyMap.put(player, false);
-		 }
-		 
-		 } catch (NullPointerException ex) {
-			 HeavenScroll.flyMap.put(player, false);
-		 }
-	 }
-	 
-  }
- 
-  @Override
-  public boolean canRightClickEquip() {
-      return true;
-  }
-  
-  @Override
-  public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-	  // Insert existential void here
-  }
-  
-  @Override
-  public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-	  	
-	  if (entityLivingBase instanceof PlayerEntity) {
-		  PlayerEntity player = (PlayerEntity) entityLivingBase;
-		  
-		  if (!player.isCreative()) {
-    		  player.abilities.allowFlying = false;
-    		  player.abilities.isFlying = false;
-    		  player.sendPlayerAbilities();
-    	  }
-		  
-		  HeavenScroll.flyMap.put(player, false);
-	  
-	  }
-  }
-  
+	}
+
+	public static Properties setupIntegratedProperties() {
+		HeavenScroll.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
+		HeavenScroll.integratedProperties.maxStackSize(1);
+		HeavenScroll.integratedProperties.rarity(Rarity.EPIC);
+
+		return HeavenScroll.integratedProperties;
+	}
+
+	@Override
+	public boolean isForMortals() {
+		return ConfigHandler.HEAVEN_SCROLL_ENABLED.getValue();
+	}
+
+	@Override
+	public boolean canEquip(String identifier, LivingEntity living) {
+		if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.heavenScroll))
+			return false;
+		else
+			return true;
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+
+		if (Screen.hasShiftDown()) {
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome1");
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome2");
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome3");
+		} else {
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+		}
+	}
+
+	@Override
+	public void onCurioTick(String identifier, int index, LivingEntity living) {
+		if (living.world.isRemote)
+			return;
+
+		if (living instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) living;
+
+			if (Math.random() <= (0.025D * ConfigHandler.HEAVEN_SCROLL_XP_COST_MODIFIER.getValue()) & player.abilities.isFlying)
+				player.giveExperiencePoints(-1);
+
+			try {
+				if (player.experienceTotal > 0) {
+
+					if (!player.abilities.allowFlying)
+						player.abilities.allowFlying = true;
+					player.sendPlayerAbilities();
+					HeavenScroll.flyMap.put(player, true);
+				} else if (HeavenScroll.flyMap.get(player)) {
+					if (!player.isCreative()) {
+						player.abilities.allowFlying = false;
+						player.abilities.isFlying = false;
+						player.sendPlayerAbilities();
+					}
+
+					HeavenScroll.flyMap.put(player, false);
+				}
+
+			} catch (NullPointerException ex) {
+				HeavenScroll.flyMap.put(player, false);
+			}
+		}
+
+	}
+
+	@Override
+	public boolean canRightClickEquip() {
+		return true;
+	}
+
+	@Override
+	public void onEquipped(String identifier, LivingEntity entityLivingBase) {
+		// Insert existential void here
+	}
+
+	@Override
+	public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
+
+		if (entityLivingBase instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) entityLivingBase;
+
+			if (!player.isCreative()) {
+				player.abilities.allowFlying = false;
+				player.abilities.isFlying = false;
+				player.sendPlayerAbilities();
+			}
+
+			HeavenScroll.flyMap.put(player, false);
+
+		}
+	}
+
 }

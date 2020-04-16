@@ -23,28 +23,30 @@ public class SlotUnlockedToast implements IToast {
    private long firstDrawTime;
    private ItemStack drawnStack;
    private String identifier;
-   
+
    public SlotUnlockedToast(ItemStack stack, String id) {
       this.drawnStack = stack;
       this.identifier = id;
    }
 
+   @Override
    public IToast.Visibility draw(ToastGui toastGui, long delta) {
-	   
+
          toastGui.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(EnigmaticLegacy.MODID, "textures/gui/enigmatic_toasts.png"));
-         GlStateManager.color3f(1.0F, 1.0F, 1.0F);
+         GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+
          toastGui.blit(0, 0, 0, 0, 160, 43);
-         toastGui.getMinecraft().fontRenderer.drawString(I18n.format("enigmaticlegacy.toasts.slotUnlocked.title", I18n.format("enigmaticlegacy.curiotype." + identifier)), 7.0F, 7.0F, -11534256);
+         toastGui.getMinecraft().fontRenderer.drawString(I18n.format("enigmaticlegacy.toasts.slotUnlocked.title", I18n.format("enigmaticlegacy.curiotype." + this.identifier)), 7.0F, 7.0F, -11534256);
          toastGui.getMinecraft().fontRenderer.drawString(I18n.format("enigmaticlegacy.toasts.slotUnlocked.text1"), 30.0F, 18.0F, -16777216);
          toastGui.getMinecraft().fontRenderer.drawString(I18n.format("enigmaticlegacy.toasts.slotUnlocked.text2"), 30.0F, 28.0F, -16777216);
-         RenderHelper.enableGUIStandardItemLighting();
+         RenderHelper.enableStandardItemLighting();
          GlStateManager.pushMatrix();
          GlStateManager.scalef(1.6F, 1.6F, 1.0F);
          GlStateManager.popMatrix();
-         toastGui.getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI((LivingEntity)null, drawnStack, 8, 18);
+         toastGui.getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI((LivingEntity)null, this.drawnStack, 8, 18);
          return delta - this.firstDrawTime >= 5000L ? IToast.Visibility.HIDE : IToast.Visibility.SHOW;
-      
+
    }
 
-   
+
 }

@@ -35,86 +35,86 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @Deprecated
 public class HastePotion extends Item implements IPerhaps {
-	
- public static Properties integratedProperties = new Item.Properties();
- public List<EffectInstance> effectList;
 
- public HastePotion(Properties properties, int duration, int amplifier) {
+	public static Properties integratedProperties = new Item.Properties();
+	public List<EffectInstance> effectList;
+
+	public HastePotion(Properties properties, int duration, int amplifier) {
 		super(properties);
-		
+
 		this.effectList = new ArrayList<EffectInstance>();
 		this.effectList.add(new EffectInstance(Effects.HASTE, duration, amplifier, false, true));
- }
- 
- public static Properties setupIntegratedProperties(Rarity rarity) {
-	 //integratedProperties.group(ItemGroup.BREWING);
-	 integratedProperties.maxStackSize(1);
-	 integratedProperties.rarity(rarity);
-	 
-	 return integratedProperties;
- 
- }
- 
- @Override
- public boolean isForMortals() {
- 	return false;
- }
- 
- @OnlyIn(Dist.CLIENT)
- public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-	 SuperpositionHandler.addPotionTooltip(this.effectList, stack, list, 1.0F);
- }
+	}
 
- @Override
- public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-     PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity)entityLiving : null;
-     if (player == null || !player.abilities.isCreativeMode) {
-        stack.shrink(1);
-     }
+	public static Properties setupIntegratedProperties(Rarity rarity) {
+		//integratedProperties.group(ItemGroup.BREWING);
+		HastePotion.integratedProperties.maxStackSize(1);
+		HastePotion.integratedProperties.rarity(rarity);
 
-     if (player instanceof ServerPlayerEntity) {
-        CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity)player, stack);
-     }
+		return HastePotion.integratedProperties;
 
-     if (!worldIn.isRemote)
-    	 for (EffectInstance instance : effectList) {
-    		 player.addPotionEffect(new EffectInstance(instance));
-    	 }
+	}
 
-     if (player == null || !player.abilities.isCreativeMode) {
-        if (stack.isEmpty()) {
-           return new ItemStack(Items.GLASS_BOTTLE);
-        }
+	@Override
+	public boolean isForMortals() {
+		return false;
+	}
 
-        if (player != null) {
-           player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
-        }
-     }
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+		SuperpositionHandler.addPotionTooltip(this.effectList, stack, list, 1.0F);
+	}
 
-     return stack;
-  }
+	@Override
+	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+		PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
+		if (player == null || !player.abilities.isCreativeMode) {
+			stack.shrink(1);
+		}
 
+		if (player instanceof ServerPlayerEntity) {
+			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
+		}
 
- @Override
-  public int getUseDuration(ItemStack stack) {
-     return 32;
-  }
+		if (!worldIn.isRemote)
+			for (EffectInstance instance : this.effectList) {
+				player.addPotionEffect(new EffectInstance(instance));
+			}
 
- @Override
-  public UseAction getUseAction(ItemStack stack) {
-     return UseAction.DRINK;
-  }
+		if (player == null || !player.abilities.isCreativeMode) {
+			if (stack.isEmpty()) {
+				return new ItemStack(Items.GLASS_BOTTLE);
+			}
 
- @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-     playerIn.setActiveHand(handIn);
-     return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
-  }
+			if (player != null) {
+				player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
+			}
+		}
 
-  @OnlyIn(Dist.CLIENT)
-  public boolean hasEffect(ItemStack stack) {
-     return true;
-  }
-  
+		return stack;
+	}
+
+	@Override
+	public int getUseDuration(ItemStack stack) {
+		return 32;
+	}
+
+	@Override
+	public UseAction getUseAction(ItemStack stack) {
+		return UseAction.DRINK;
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		playerIn.setActiveHand(handIn);
+		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean hasEffect(ItemStack stack) {
+		return true;
+	}
+
 }
-

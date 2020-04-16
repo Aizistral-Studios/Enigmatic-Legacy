@@ -11,30 +11,30 @@ import net.minecraft.potion.EffectInstance;
  */
 
 public class AdvancedPotion {
-	
+
 	private List<EffectInstance> effects;
 	private String id;
-	
+
 	public AdvancedPotion(String identifier, EffectInstance... effects) {
-		
+
 		this.effects = new ArrayList<EffectInstance>();
-		
+
 		for (EffectInstance effect : effects)
 			this.effects.add(effect);
-		
+
 		this.id = identifier;
 	}
-	
+
 	public String getId() {
 		return this.id;
 	}
-	
+
 	public List<EffectInstance> getEffects() {
 		List<EffectInstance> returnList = new ArrayList<EffectInstance>();
-		
-		for (EffectInstance effect : effects)
+
+		for (EffectInstance effect : this.effects)
 			returnList.add(new EffectInstance(effect));
-		
+
 		return returnList;
 	}
 

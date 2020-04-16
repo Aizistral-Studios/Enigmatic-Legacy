@@ -158,7 +158,7 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
    }
 
    private void makeAreaOfEffectCloud(ItemStack stack, List<EffectInstance> list) {
-      AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.world, this.posX, this.posY, this.posZ);
+      AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.world, this.getPosX(), this.getPosY(), this.getPosZ());
       areaeffectcloudentity.setOwner(this.getThrower());
       areaeffectcloudentity.setRadius(3.0F);
       areaeffectcloudentity.setRadiusOnUse(-0.5F);

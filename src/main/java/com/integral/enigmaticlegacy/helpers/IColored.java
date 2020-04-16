@@ -1,5 +1,5 @@
 package com.integral.enigmaticlegacy.helpers;
-
+/*
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.color.IBlockColor;
@@ -32,3 +32,4 @@ public interface IColored {
 		}
 	}
 }
+*/

@@ -35,127 +35,130 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class UltimatePotionBase extends Item implements IPerhaps {
-	
- //public static Properties integratedProperties = new Item.Properties();
- public boolean common;
- 
- public UltimatePotionBase(Properties properties, boolean common) {
+
+	//public static Properties integratedProperties = new Item.Properties();
+	public boolean common;
+
+	public UltimatePotionBase(Properties properties, boolean common) {
 		super(properties);
-		
+
 		this.common = common;
- }
- 
- public static Properties setupIntegratedProperties(Rarity rarity) {
-	 Properties integratedProperties = new Item.Properties();
-	 integratedProperties.group(EnigmaticLegacy.enigmaticPotionTab);
-	 integratedProperties.maxStackSize(1);
-	 integratedProperties.rarity(rarity);
-	 
-	 return integratedProperties;
- 
- }
+	}
 
- @Override
- public boolean isForMortals() {
- 	return this.common ? ConfigHandler.COMMON_POTIONS_ENABLED.getValue() : ConfigHandler.ULTIMATE_POTIONS_ENABLED.getValueDefault();
- }
- 
- @OnlyIn(Dist.CLIENT)
- public boolean hasEffect(ItemStack stack) {
-    return true;
- }
- 
- @OnlyIn(Dist.CLIENT)
- public ItemStack getDefaultInstance() {
-	ItemStack stack = super.getDefaultInstance().copy();
-	PotionHelper.setAdvancedPotion(stack, EnigmaticLegacy.EMPTY);
-    return stack.copy();
- }
- 
- public String getTranslationKey(ItemStack stack) {
-     return this.getTranslationKey() + ".effect." + PotionHelper.getAdvancedPotion(stack).getId();
-  }
- 
- @OnlyIn(Dist.CLIENT)
- public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-	 SuperpositionHandler.addPotionTooltip(PotionHelper.getEffects(stack), stack, list, 1.0F);
- }
-  
-  @Override
-  public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-      if (this.isInGroup(group)) {
-    	  
-    	  if (this.common) {
-    		  for (AdvancedPotion potion : EnigmaticLegacy.commonPotionTypes) {
-    			  ItemStack stack = new ItemStack(this);
-    			  ItemNBTHelper.setString(stack, "EnigmaticPotion", potion.getId());
-    			  items.add(stack);
-    		  }
-    	  } else {
-    		  for (AdvancedPotion potion : EnigmaticLegacy.ultimatePotionTypes) {
-    			  ItemStack stack = new ItemStack(this);
-    			  ItemNBTHelper.setString(stack, "EnigmaticPotion", potion.getId());
-    			  items.add(stack);
-    		  }
-    	  }
-      }
+	public static Properties setupIntegratedProperties(Rarity rarity) {
+		Properties integratedProperties = new Item.Properties();
+		integratedProperties.group(EnigmaticLegacy.enigmaticPotionTab);
+		integratedProperties.maxStackSize(1);
+		integratedProperties.rarity(rarity);
 
-   }
-  
-  @Override
-  public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-      PlayerEntity playerentity = entityLiving instanceof PlayerEntity ? (PlayerEntity)entityLiving : null;
-      List<EffectInstance> effectList = PotionHelper.getEffects(stack);
-      if (playerentity == null || !playerentity.abilities.isCreativeMode) {
-          stack.shrink(1);
-       }
-      
-      if (playerentity instanceof ServerPlayerEntity) {
-         CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity)playerentity, stack);
-      }
+		return integratedProperties;
 
-      if (!worldIn.isRemote) {
-         for(EffectInstance effectinstance : effectList) {
-            if (effectinstance.getPotion().isInstant()) {
-               effectinstance.getPotion().affectEntity(playerentity, playerentity, entityLiving, effectinstance.getAmplifier(), 1.0D);
-            } else {
-               entityLiving.addPotionEffect(new EffectInstance(effectinstance));
-            }
-         }
-      }
+	}
 
-      if (playerentity != null) {
-         playerentity.addStat(Stats.ITEM_USED.get(this));
-      }
+	@Override
+	public boolean isForMortals() {
+		return this.common ? ConfigHandler.COMMON_POTIONS_ENABLED.getValue() : ConfigHandler.ULTIMATE_POTIONS_ENABLED.getValueDefault();
+	}
 
-      if (playerentity == null || !playerentity.abilities.isCreativeMode) {
-         if (stack.isEmpty()) {
-            return new ItemStack(Items.GLASS_BOTTLE);
-         }
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean hasEffect(ItemStack stack) {
+		return true;
+	}
 
-         if (playerentity != null) {
-            playerentity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
-         }
-      }
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public ItemStack getDefaultInstance() {
+		ItemStack stack = super.getDefaultInstance().copy();
+		PotionHelper.setAdvancedPotion(stack, EnigmaticLegacy.EMPTY);
+		return stack.copy();
+	}
 
-      return stack;
-   }
-  
-  @Override
-  public int getUseDuration(ItemStack stack) {
-     return 32;
-  }
+	@Override
+	public String getTranslationKey(ItemStack stack) {
+		return this.getTranslationKey() + ".effect." + PotionHelper.getAdvancedPotion(stack).getId();
+	}
 
- @Override
-  public UseAction getUseAction(ItemStack stack) {
-     return UseAction.DRINK;
-  }
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+		SuperpositionHandler.addPotionTooltip(PotionHelper.getEffects(stack), stack, list, 1.0F);
+	}
 
- @Override
-  public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-     playerIn.setActiveHand(handIn);
-     return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
-  }
-  
+	@Override
+	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+		if (this.isInGroup(group)) {
+
+			if (this.common) {
+				for (AdvancedPotion potion : EnigmaticLegacy.commonPotionTypes) {
+					ItemStack stack = new ItemStack(this);
+					ItemNBTHelper.setString(stack, "EnigmaticPotion", potion.getId());
+					items.add(stack);
+				}
+			} else {
+				for (AdvancedPotion potion : EnigmaticLegacy.ultimatePotionTypes) {
+					ItemStack stack = new ItemStack(this);
+					ItemNBTHelper.setString(stack, "EnigmaticPotion", potion.getId());
+					items.add(stack);
+				}
+			}
+		}
+
+	}
+
+	@Override
+	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+		PlayerEntity playerentity = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
+		List<EffectInstance> effectList = PotionHelper.getEffects(stack);
+		if (playerentity == null || !playerentity.abilities.isCreativeMode) {
+			stack.shrink(1);
+		}
+
+		if (playerentity instanceof ServerPlayerEntity) {
+			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) playerentity, stack);
+		}
+
+		if (!worldIn.isRemote) {
+			for (EffectInstance effectinstance : effectList) {
+				if (effectinstance.getPotion().isInstant()) {
+					effectinstance.getPotion().affectEntity(playerentity, playerentity, entityLiving, effectinstance.getAmplifier(), 1.0D);
+				} else {
+					entityLiving.addPotionEffect(new EffectInstance(effectinstance));
+				}
+			}
+		}
+
+		if (playerentity != null) {
+			playerentity.addStat(Stats.ITEM_USED.get(this));
+		}
+
+		if (playerentity == null || !playerentity.abilities.isCreativeMode) {
+			if (stack.isEmpty()) {
+				return new ItemStack(Items.GLASS_BOTTLE);
+			}
+
+			if (playerentity != null) {
+				playerentity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
+			}
+		}
+
+		return stack;
+	}
+
+	@Override
+	public int getUseDuration(ItemStack stack) {
+		return 32;
+	}
+
+	@Override
+	public UseAction getUseAction(ItemStack stack) {
+		return UseAction.DRINK;
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		playerIn.setActiveHand(handIn);
+		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+	}
+
 }
-

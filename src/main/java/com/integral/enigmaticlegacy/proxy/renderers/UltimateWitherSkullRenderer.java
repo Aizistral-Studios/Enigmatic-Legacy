@@ -1,71 +1,61 @@
 package com.integral.enigmaticlegacy.proxy.renderers;
 
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.model.GenericHeadModel;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+@SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
 public class UltimateWitherSkullRenderer extends EntityRenderer<UltimateWitherSkullEntity> {
-   private static final ResourceLocation INVULNERABLE_WITHER_TEXTURES = new ResourceLocation("textures/entity/wither/wither_invulnerable.png");
-   private static final ResourceLocation WITHER_TEXTURES = new ResourceLocation("textures/entity/wither/wither.png");
-   private final GenericHeadModel skeletonHeadModel = new GenericHeadModel();
-   private final GenericHeadModel skeletonHeadModelBig = new GenericHeadModel();
+	private static final ResourceLocation INVULNERABLE_WITHER_TEXTURES = new ResourceLocation("textures/entity/wither/wither_invulnerable.png");
+	private static final ResourceLocation WITHER_TEXTURES = new ResourceLocation("textures/entity/wither/wither.png");
+	private final GenericHeadModel skeletonHeadModel = new GenericHeadModel();
 
-   public UltimateWitherSkullRenderer(EntityRendererManager renderManagerIn) {
-      super(renderManagerIn);
-   }
+	public UltimateWitherSkullRenderer(EntityRendererManager renderManagerIn) {
+		super(renderManagerIn);
+	}
 
-   private float getRenderYaw(float p_82400_1_, float p_82400_2_, float p_82400_3_) {
-      float f;
-      for(f = p_82400_2_ - p_82400_1_; f < -180.0F; f += 360.0F) {
-         ;
-      }
+	@Override
+	protected int getBlockLight(UltimateWitherSkullEntity entityIn, float partialTicks) {
+		return 15;
+	}
 
-      while(f >= 180.0F) {
-         f -= 360.0F;
-      }
+	@Override
+	public void render(UltimateWitherSkullEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+		matrixStackIn.push();
 
-      return p_82400_1_ + p_82400_3_ * f;
-   }
+		if (entityIn.isSkullInvulnerable())
+			matrixStackIn.scale(-1.4F, -1.4F, 1.4F);
+		else
+			matrixStackIn.scale(-1.0F, -1.0F, 1.0F);
 
-   public void doRender(UltimateWitherSkullEntity entity, double x, double y, double z, float entityYaw, float partialTicks) {
-      GlStateManager.pushMatrix();
-      GlStateManager.disableCull();
-      float f = this.getRenderYaw(entity.prevRotationYaw, entity.rotationYaw, partialTicks);
-      float f1 = MathHelper.lerp(partialTicks, entity.prevRotationPitch, entity.rotationPitch);
-      GlStateManager.translatef((float)x, (float)y, (float)z);
-      GlStateManager.enableRescaleNormal();
-      GlStateManager.scalef(-1.0F, -1.0F, 1.0F);
-      GlStateManager.enableAlphaTest();
-      this.bindEntityTexture(entity);
-      if (this.renderOutlines) {
-         GlStateManager.enableColorMaterial();
-         GlStateManager.setupSolidRenderingTextureCombine(this.getTeamColor(entity));
-      }
-      
-      if (!entity.isSkullInvulnerable()) {
-    	  this.skeletonHeadModel.func_217104_a(0.0F, 0.0F, 0.0F, f, f1, 0.0625F);
-      } else {
-    	  this.skeletonHeadModelBig.func_217104_a(0.0F, 0.0F, 0.0F, f, f1, 0.0825F);
-      }
-      
-      if (this.renderOutlines) {
-         GlStateManager.tearDownSolidRenderingTextureCombine();
-         GlStateManager.disableColorMaterial();
-      }
+		float f = MathHelper.rotLerp(entityIn.prevRotationYaw, entityIn.rotationYaw, partialTicks);
+		float f1 = MathHelper.lerp(partialTicks, entityIn.prevRotationPitch, entityIn.rotationPitch);
+		IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.skeletonHeadModel.getRenderType(this.getEntityTexture(entityIn)));
+		this.skeletonHeadModel.func_225603_a_(0.0F, f, f1);
+		this.skeletonHeadModel.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 
-      GlStateManager.popMatrix();
-      super.doRender(entity, x, y, z, entityYaw, partialTicks);
-   }
+		matrixStackIn.pop();
 
-   protected ResourceLocation getEntityTexture(UltimateWitherSkullEntity entity) {
-      return entity.isSkullInvulnerable() ? WITHER_TEXTURES : WITHER_TEXTURES;
-   }
+		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+	}
+
+	/**
+	* Returns the location of an entity's texture.
+	*/
+	@Override
+	public ResourceLocation getEntityTexture(UltimateWitherSkullEntity entity) {
+		//return entity.isSkullInvulnerable() ? UltimateWitherSkullRenderer.INVULNERABLE_WITHER_TEXTURES : UltimateWitherSkullRenderer.WITHER_TEXTURES;
+		return UltimateWitherSkullRenderer.WITHER_TEXTURES;
+	}
 }

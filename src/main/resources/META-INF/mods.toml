@@ -1,9 +1,9 @@
 modLoader="javafml" #mandatory
-loaderVersion="[28,)" #mandatory (26 is current forge version)
+loaderVersion="[31,)" #mandatory (26 is current forge version)
 issueTrackerURL="https://github.com/Extegral/Enigmatic-Legacy/issues" #optional
 [[mods]] #mandatory
 modId="enigmaticlegacy" #mandatory
-version="1.6.4" #mandatory
+version="1.7.0" #mandatory
 displayName="Enigmatic Legacy" #mandatory
 displayURL="https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy" #optional
 logoFile="EL_logo.png" #optional
@@ -15,18 +15,18 @@ Even though it shares magical theme, this mod was orginally designed to contribu
 [[dependencies.enigmaticlegacy]] #optional
     modId="forge" #mandatory
     mandatory=true #mandatory
-    versionRange="[28.1.0,)" #mandatory
+    versionRange="[31.1.0,)" #mandatory
     ordering="NONE"
     side="BOTH"
 [[dependencies.enigmaticlegacy]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.14.4]"
+    versionRange="[1.15.2]"
     ordering="NONE"
     side="BOTH"
 [[dependencies.enigmaticlegacy]]
     modId="curios"
     mandatory=true
-    versionRange="[FORGE-1.14.4-1.0.0.3,)"
+    versionRange="[FORGE-1.15.2-2.0,)"
     ordering="NONE"
     side="BOTH"

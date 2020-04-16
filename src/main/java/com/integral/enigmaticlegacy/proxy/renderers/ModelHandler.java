@@ -20,13 +20,14 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, modid = EnigmaticLegacy.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class ModelHandler {
-	
+
 	@SubscribeEvent
 	public static void registerModels(ModelRegistryEvent evt) {
-		RenderingRegistry.registerEntityRenderingHandler(PermanentItemEntity.class, renderManager -> new PermanentItemRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
-		RenderingRegistry.registerEntityRenderingHandler(EnigmaticPotionEntity.class, renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
-		RenderingRegistry.registerEntityRenderingHandler(UltimateWitherSkullEntity.class, UltimateWitherSkullRenderer::new);
-		//RenderingRegistry.registerEntityRenderingHandler(AbstractClientPlayerEntity.class, renderManager -> new ShieldAuraRenderer(renderManager));
+
+		RenderingRegistry.registerEntityRenderingHandler(PermanentItemEntity.TYPE, renderManager -> new PermanentItemRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
+		RenderingRegistry.registerEntityRenderingHandler(EnigmaticPotionEntity.TYPE, renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
+		RenderingRegistry.registerEntityRenderingHandler(UltimateWitherSkullEntity.TYPE, UltimateWitherSkullRenderer::new);
+
 	}
 
 }

@@ -33,9 +33,9 @@ public class Vector3 {
 	public final double z;
 
 	public Vector3(double d, double d1, double d2) {
-		x = d;
-		y = d1;
-		z = d2;
+		this.x = d;
+		this.y = d1;
+		this.z = d2;
 	}
 
 	public Vector3(Vec3d vec) {
@@ -47,23 +47,23 @@ public class Vector3 {
 	}
 
 	public static Vector3 fromEntity(Entity e) {
-		return new Vector3(e.posX, e.posY, e.posZ);
+		return new Vector3(e.getPosX(), e.getPosY(), e.getPosZ());
 	}
 
 	public static Vector3 fromEntityCenter(Entity e) {
-		return new Vector3(e.posX, e.posY - e.getYOffset() + e.getHeight() / 2, e.posZ);
+		return new Vector3(e.getPosX(), e.getPosY() - e.getYOffset() + e.getHeight() / 2, e.getPosZ());
 	}
 
 	public static Vector3 fromTileEntity(TileEntity e) {
-		return fromBlockPos(e.getPos());
+		return Vector3.fromBlockPos(e.getPos());
 	}
 
 	public static Vector3 fromTileEntityCenter(TileEntity e) {
-		return fromTileEntity(e).add(0.5);
+		return Vector3.fromTileEntity(e).add(0.5);
 	}
 
 	public double dotProduct(Vector3 vec) {
-		double d = vec.x * x + vec.y * y + vec.z * z;
+		double d = vec.x * this.x + vec.y * this.y + vec.z * this.z;
 
 		if(d > 1 && d < 1.00001)
 			d = 1;
@@ -73,64 +73,64 @@ public class Vector3 {
 	}
 
 	public double dotProduct(double d, double d1, double d2) {
-		return d * x + d1 * y + d2 * z;
+		return d * this.x + d1 * this.y + d2 * this.z;
 	}
 
 	public Vector3 crossProduct(Vector3 vec) {
-		double d = y * vec.z - z * vec.y;
-		double d1 = z * vec.x - x * vec.z;
-		double d2 = x * vec.y - y * vec.x;
+		double d = this.y * vec.z - this.z * vec.y;
+		double d1 = this.z * vec.x - this.x * vec.z;
+		double d2 = this.x * vec.y - this.y * vec.x;
 		return new Vector3(d, d1, d2);
 	}
 
 	public Vector3 add(double d, double d1, double d2) {
-		return new Vector3(x + d, y + d1, z + d2);
+		return new Vector3(this.x + d, this.y + d1, this.z + d2);
 	}
 
 	public Vector3 add(Vector3 vec) {
-		return add(vec.x, vec.y, vec.z);
+		return this.add(vec.x, vec.y, vec.z);
 	}
 
 	public Vector3 add(double d) {
-		return add(d, d, d);
+		return this.add(d, d, d);
 	}
 
 	public Vector3 subtract(Vector3 vec) {
-		return new Vector3(x - vec.x, y - vec.y, z - vec.z);
+		return new Vector3(this.x - vec.x, this.y - vec.y, this.z - vec.z);
 	}
 
 	public Vector3 multiply(double d) {
-		return multiply(d, d, d);
+		return this.multiply(d, d, d);
 	}
 
 	public Vector3 multiply(Vector3 f) {
-		return multiply(f.x, f.y, f.z);
+		return this.multiply(f.x, f.y, f.z);
 	}
 
 	public Vector3 multiply(double fx, double fy, double fz) {
-		return new Vector3(x * fx, y * fy, z * fz);
+		return new Vector3(this.x * fx, this.y * fy, this.z * fz);
 	}
 
 	public double mag() {
-		return Math.sqrt(x * x + y * y + z * z);
+		return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
 	}
 
 	public double magSquared() {
-		return x * x + y * y + z * z;
+		return this.x * this.x + this.y * this.y + this.z * this.z;
 	}
 
 	public Vector3 normalize() {
-		double d = mag();
+		double d = this.mag();
 		if(d != 0)
-			return multiply(1 / d);
+			return this.multiply(1 / d);
 
 		return this;
 	}
-	
+
 	public Vector3 normalize(double normalizeFactor) {
-		double d = mag();
+		double d = this.mag();
 		if(d != 0)
-			return multiply(normalizeFactor / d);
+			return this.multiply(normalizeFactor / d);
 
 		return this;
 	}
@@ -138,85 +138,85 @@ public class Vector3 {
 	@Override
 	public String toString() {
 		MathContext cont = new MathContext(4, RoundingMode.HALF_UP);
-		return "Vector3(" + new BigDecimal(x, cont) + ", " +new BigDecimal(y, cont) + ", " + new BigDecimal(z, cont) + ")";
+		return "Vector3(" + new BigDecimal(this.x, cont) + ", " +new BigDecimal(this.y, cont) + ", " + new BigDecimal(this.z, cont) + ")";
 	}
 
 	public Vector3 perpendicular() {
-		if(z == 0)
-			return zCrossProduct();
-		return xCrossProduct();
+		if(this.z == 0)
+			return this.zCrossProduct();
+		return this.xCrossProduct();
 	}
 
 	public Vector3 xCrossProduct() {
-		double d = z;
-		double d1 = -y;
+		double d = this.z;
+		double d1 = -this.y;
 		return new Vector3(0, d, d1);
 	}
 
 	public Vector3 zCrossProduct() {
-		double d = y;
-		double d1 = -x;
+		double d = this.y;
+		double d1 = -this.x;
 		return new Vector3(d, d1, 0);
 	}
 
 	public Vector3 yCrossProduct() {
-		double d = -z;
-		double d1 = x;
+		double d = -this.z;
+		double d1 = this.x;
 		return new Vector3(d, 0, d1);
 	}
 
 	public Vec3d toVec3D() {
-		return new Vec3d(x, y, z);
+		return new Vec3d(this.x, this.y, this.z);
 	}
 
 	public double angle(Vector3 vec) {
-		return Math.acos(normalize().dotProduct(vec.normalize()));
+		return Math.acos(this.normalize().dotProduct(vec.normalize()));
 	}
 
 	public boolean isInside(AxisAlignedBB aabb) {
-		return x >= aabb.minX && y >= aabb.maxY && z >= aabb.minZ && x < aabb.maxX && y < aabb.maxY && z < aabb.maxZ;
+		return this.x >= aabb.minX && this.y >= aabb.maxY && this.z >= aabb.minZ && this.x < aabb.maxX && this.y < aabb.maxY && this.z < aabb.maxZ;
 	}
 
 	public boolean isZero() {
-		return x == 0 && y == 0 && z == 0;
+		return this.x == 0 && this.y == 0 && this.z == 0;
 	}
 
 	public boolean isAxial() {
-		return x == 0 ? y == 0 || z == 0 : y == 0 && z == 0;
+		return this.x == 0 ? this.y == 0 || this.z == 0 : this.y == 0 && this.z == 0;
 	}
 
 	public Vector3f vector3f() {
-		return new Vector3f((float)x, (float)y, (float)z);
+		return new Vector3f((float)this.x, (float)this.y, (float)this.z);
 	}
 
 	public Vector4f vector4f() {
-		return new Vector4f((float)x, (float)y, (float)z, 1);
+		return new Vector4f((float)this.x, (float)this.y, (float)this.z, 1);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public void glVertex() {
-		GL11.glVertex3d(x, y, z);
+		GL11.glVertex3d(this.x, this.y, this.z);
 	}
 
 	public Vector3 negate() {
-		return new Vector3(-x, -y, -z);
+		return new Vector3(-this.x, -this.y, -this.z);
 	}
 
 	public double scalarProject(Vector3 b) {
 		double l = b.mag();
-		return l == 0 ? 0 : dotProduct(b)/l;
+		return l == 0 ? 0 : this.dotProduct(b)/l;
 	}
 
 	public Vector3 project(Vector3 b) {
 		double l = b.magSquared();
 		if(l == 0) {
-			return ZERO;
+			return Vector3.ZERO;
 		}
 
-		double m = dotProduct(b)/l;
+		double m = this.dotProduct(b)/l;
 		return b.multiply(m);
 	}
-	
+
 	public Vector3 rotate(double angle, Vector3 axis) {
 		return Quat.aroundAxis(axis.normalize(), angle).rotate(this);
 	}
@@ -227,11 +227,11 @@ public class Vector3 {
 			return false;
 
 		Vector3 v = (Vector3)o;
-		return x == v.x && y == v.y && z == v.z;
+		return this.x == v.x && this.y == v.y && this.z == v.z;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(x, y, z);
+		return Objects.hash(this.x, this.y, this.z);
 	}
 }

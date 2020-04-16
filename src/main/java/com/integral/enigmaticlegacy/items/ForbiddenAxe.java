@@ -12,7 +12,7 @@ import com.integral.enigmaticlegacy.helpers.LoreHelper;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.ControlsScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -27,55 +27,56 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ForbiddenAxe extends SwordItem implements IPerhaps {
-	
+
 	public static Properties integratedProperties = new Item.Properties();
-	
+
 	public ForbiddenAxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties properties) {
 		super(tier, attackDamageIn, attackSpeedIn, properties);
 	}
-	
+
 	public static Properties setupIntegratedProperties() {
-		 integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		 integratedProperties.maxStackSize(1);
-		 integratedProperties.rarity(Rarity.EPIC);
-		 integratedProperties.maxDamage(2000);
-		 
-		 return integratedProperties;
-	 
-	 }
-	
-	 @Override
-	 public boolean isForMortals() {
-	 	return ConfigHandler.FORBIDDEN_AXE_ENABLED.getValue();
-	 }
-	
-	 @OnlyIn(Dist.CLIENT)
-	 public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		 if(ControlsScreen.hasShiftDown()) {
-			 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe1");
-			 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe2", ConfigHandler.FORBIDDEN_AXE_BEHEADING_BONUS.getValue().asPercentage()+"%");
-			 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe3");
-		 } else {
-			 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
-		 }
-		 
-		 int looting = EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING, stack);
-		 
-		 try {
-		 if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.monsterCharm))
-			 if (ConfigHandler.MONSTER_CHARM_BONUS_LOOTING.getValue())
-			 looting++;
-		 } catch (NullPointerException ex) {
-			 // Just don't do it lol
-		 }
-		 
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance",  (ConfigHandler.FORBIDDEN_AXE_BEHEADING_BASE.getValue().asPercentage() + (ConfigHandler.FORBIDDEN_AXE_BEHEADING_BONUS.getValue().asPercentage()*looting)) + "%");
-	 }
-	
+		ForbiddenAxe.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
+		ForbiddenAxe.integratedProperties.maxStackSize(1);
+		ForbiddenAxe.integratedProperties.rarity(Rarity.EPIC);
+		ForbiddenAxe.integratedProperties.maxDamage(2000);
+
+		return ForbiddenAxe.integratedProperties;
+
+	}
+
+	@Override
+	public boolean isForMortals() {
+		return ConfigHandler.FORBIDDEN_AXE_ENABLED.getValue();
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+		if (Screen.hasShiftDown()) {
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe1");
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe2", ConfigHandler.FORBIDDEN_AXE_BEHEADING_BONUS.getValue().asPercentage() + "%");
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe3");
+		} else {
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+		}
+
+		int looting = EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING, stack);
+
+		try {
+			if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.monsterCharm))
+				if (ConfigHandler.MONSTER_CHARM_BONUS_LOOTING.getValue())
+					looting++;
+		} catch (NullPointerException ex) {
+			// Just don't do it lol
+		}
+
+		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance", (ConfigHandler.FORBIDDEN_AXE_BEHEADING_BASE.getValue().asPercentage() + (ConfigHandler.FORBIDDEN_AXE_BEHEADING_BONUS.getValue().asPercentage() * looting)) + "%");
+	}
+
 	@Override
 	public boolean canHarvestBlock(BlockState blockIn) {
-	      return false;
+		return false;
 	}
 
 }

@@ -14,7 +14,7 @@ import com.integral.enigmaticlegacy.helpers.LoreHelper;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.gui.screen.ControlsScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
@@ -32,72 +32,71 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EtheriumAxe extends AxeItem implements IPerhaps {
-	
- public static Properties integratedProperties = new Item.Properties();
- public Set<Material> effectiveMaterials;
- 
- public EtheriumAxe(IItemTier tier, Properties properties,  float attackSpeedIn, float attackDamageIn) {
+
+	public static Properties integratedProperties = new Item.Properties();
+	public Set<Material> effectiveMaterials;
+
+	public EtheriumAxe(IItemTier tier, Properties properties, float attackSpeedIn, float attackDamageIn) {
 		super(tier, attackDamageIn, attackSpeedIn, properties);
-		
-		effectiveMaterials = Sets.newHashSet();
-		effectiveMaterials.add(Material.WOOD);
-		effectiveMaterials.add(Material.LEAVES);
-		effectiveMaterials.add(Material.CACTUS);
-		effectiveMaterials.add(Material.BAMBOO);
- }
- 
- public static Properties setupIntegratedProperties(int harvestLevel) {
-	 integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-	 integratedProperties.maxStackSize(1);
-	 integratedProperties.rarity(Rarity.RARE);
-	 
-	 return integratedProperties;
- 
- }
- 
- @OnlyIn(Dist.CLIENT)
- public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-	 if (ConfigHandler.ETHERIUM_AXE_VOLUME.getValue() == -1)
-		 return;
-	 
-	 if(ControlsScreen.hasShiftDown()) {
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumAxe1", ConfigHandler.ETHERIUM_AXE_VOLUME.getValue());
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumAxe2");
-	 } else {
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
-	 }
- }
- 
- @Override
- public boolean isForMortals() {
-	 return ConfigHandler.ETHERIUM_TOOLS_ENABLED.getValue();
- }
- 
- @Override
- public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-     if (entityLiving instanceof PlayerEntity && !entityLiving.isSneaking() && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && ConfigHandler.ETHERIUM_AXE_VOLUME.getValue() != -1) {
-    	 Direction face = Direction.UP;
-    	 
-         AOEMiningHelper.harvestCube(world, (PlayerEntity)entityLiving, face, pos.add(0, (ConfigHandler.ETHERIUM_AXE_VOLUME.getValue()-1)/2, 0), effectiveMaterials, ConfigHandler.ETHERIUM_AXE_VOLUME.getValue(), ConfigHandler.ETHERIUM_AXE_VOLUME.getValue(), false, pos, stack, (objPos, objState) -> { stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(MobEntity.getSlotForItemStack(stack))); });
-     }
-     
-     return super.onBlockDestroyed(stack, world, state, pos, entityLiving);
- }
- 
- /*
- public ActionResultType onItemUse(ItemUseContext context) {
-	 return Items.DIAMOND_AXE.onItemUse(context);
- }
- */
- 
-  @Override
-  public float getDestroySpeed(ItemStack stack, BlockState state) {
-     Material material = state.getMaterial();
-     return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.efficiency;
-  }
- 
-  
+		this.effectiveMaterials = Sets.newHashSet();
+		this.effectiveMaterials.add(Material.WOOD);
+		this.effectiveMaterials.add(Material.LEAVES);
+		this.effectiveMaterials.add(Material.CACTUS);
+		this.effectiveMaterials.add(Material.BAMBOO);
+	}
+
+	public static Properties setupIntegratedProperties(int harvestLevel) {
+		EtheriumAxe.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
+		EtheriumAxe.integratedProperties.maxStackSize(1);
+		EtheriumAxe.integratedProperties.rarity(Rarity.RARE);
+
+		return EtheriumAxe.integratedProperties;
+
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+		if (ConfigHandler.ETHERIUM_AXE_VOLUME.getValue() == -1)
+			return;
+
+		if (Screen.hasShiftDown()) {
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumAxe1", ConfigHandler.ETHERIUM_AXE_VOLUME.getValue());
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumAxe2");
+		} else {
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+		}
+	}
+
+	@Override
+	public boolean isForMortals() {
+		return ConfigHandler.ETHERIUM_TOOLS_ENABLED.getValue();
+	}
+
+	@Override
+	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+
+		if (entityLiving instanceof PlayerEntity && !entityLiving.isShiftKeyDown() && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && ConfigHandler.ETHERIUM_AXE_VOLUME.getValue() != -1) {
+			Direction face = Direction.UP;
+
+			AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos.add(0, (ConfigHandler.ETHERIUM_AXE_VOLUME.getValue() - 1) / 2, 0), this.effectiveMaterials, ConfigHandler.ETHERIUM_AXE_VOLUME.getValue(), ConfigHandler.ETHERIUM_AXE_VOLUME.getValue(), false, pos, stack, (objPos, objState) -> {
+				stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(MobEntity.getSlotForItemStack(stack)));
+			});
+		}
+
+		return super.onBlockDestroyed(stack, world, state, pos, entityLiving);
+	}
+
+	/*
+	 * public ActionResultType onItemUse(ItemUseContext context) { return
+	 * Items.DIAMOND_AXE.onItemUse(context); }
+	 */
+
+	@Override
+	public float getDestroySpeed(ItemStack stack, BlockState state) {
+		Material material = state.getMaterial();
+		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.efficiency;
+	}
+
 }
-
-

@@ -10,7 +10,7 @@ import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
 
-import net.minecraft.client.gui.screen.ControlsScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,75 +31,75 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class UnholyGrail extends Item implements IPerhaps {
-	
- public static Properties integratedProperties = new Item.Properties();
 
- public UnholyGrail(Properties properties) {
+	public static Properties integratedProperties = new Item.Properties();
+
+	public UnholyGrail(Properties properties) {
 		super(properties);
- }
- 
- public static Properties setupIntegratedProperties() {
-	 integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-	 integratedProperties.maxStackSize(1);
-	 integratedProperties.rarity(Rarity.EPIC);
-	 
-	 return integratedProperties;
- 
- }
- 
- @Override
- public boolean isForMortals() {
- 	return ConfigHandler.UNHOLY_GRAIL_ENABLED.getValue();
- }
- 
- @OnlyIn(Dist.CLIENT)
- public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-	 if(ControlsScreen.hasShiftDown()) {
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.unholyGrail1");
-	 } else {
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
-	 }
- }
- 
- @Override
- public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-	 if (!(entityLiving instanceof PlayerEntity))
-		 return stack;
-	 
-     PlayerEntity player = (PlayerEntity)entityLiving;
-     
-     if (!worldIn.isRemote) {
-    	 player.addPotionEffect(new EffectInstance(Effects.WITHER, 100, 2, false, true));
-    	 player.addPotionEffect(new EffectInstance(Effects.POISON, 160, 1, false, true));
-    	 player.addPotionEffect(new EffectInstance(Effects.NAUSEA, 240, 0, false, true));
-    	 player.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 200, 1, false, true));
-    	 player.addPotionEffect(new EffectInstance(Effects.HUNGER, 160, 2, false, true));
-    	 player.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 240, 0, false, true));
-    	 
-    	 UseUnholyGrailTrigger.INSTANCE.trigger((ServerPlayerEntity) player);
-    	 
-     }
-     
-     player.addStat(Stats.ITEM_USED.get(this));
+	}
 
-     return stack;
-  }
+	public static Properties setupIntegratedProperties() {
+		UnholyGrail.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
+		UnholyGrail.integratedProperties.maxStackSize(1);
+		UnholyGrail.integratedProperties.rarity(Rarity.EPIC);
 
- @Override
- public int getUseDuration(ItemStack stack) {
-    return 32;
- }
+		return UnholyGrail.integratedProperties;
 
- @Override
- public UseAction getUseAction(ItemStack stack) {
-    return UseAction.DRINK;
- }
+	}
 
- @Override
- public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-    playerIn.setActiveHand(handIn);
-    return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
- }
-  
-  
+	@Override
+	public boolean isForMortals() {
+		return ConfigHandler.UNHOLY_GRAIL_ENABLED.getValue();
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+		if (Screen.hasShiftDown()) {
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.unholyGrail1");
+		} else {
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+		}
+	}
+
+	@Override
+	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+		if (!(entityLiving instanceof PlayerEntity))
+			return stack;
+
+		PlayerEntity player = (PlayerEntity) entityLiving;
+
+		if (!worldIn.isRemote) {
+			player.addPotionEffect(new EffectInstance(Effects.WITHER, 100, 2, false, true));
+			player.addPotionEffect(new EffectInstance(Effects.POISON, 160, 1, false, true));
+			player.addPotionEffect(new EffectInstance(Effects.NAUSEA, 240, 0, false, true));
+			player.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 200, 1, false, true));
+			player.addPotionEffect(new EffectInstance(Effects.HUNGER, 160, 2, false, true));
+			player.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 240, 0, false, true));
+
+			UseUnholyGrailTrigger.INSTANCE.trigger((ServerPlayerEntity) player);
+
+		}
+
+		player.addStat(Stats.ITEM_USED.get(this));
+
+		return stack;
+	}
+
+	@Override
+	public int getUseDuration(ItemStack stack) {
+		return 32;
+	}
+
+	@Override
+	public UseAction getUseAction(ItemStack stack) {
+		return UseAction.DRINK;
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		playerIn.setActiveHand(handIn);
+		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+	}
+
 }

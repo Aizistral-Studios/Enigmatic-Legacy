@@ -7,7 +7,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.LazyLoadBase;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 
@@ -23,7 +23,7 @@ public enum EnigmaticArmorMaterials implements IArmorMaterial {
     private final int enchantability;
     private final SoundEvent soundEvent;
     private final float toughness;
-    private final LazyLoadBase<Ingredient> repairMaterial;
+    private final LazyValue<Ingredient> repairMaterial;
 
     EnigmaticArmorMaterials(String name, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness, Supplier<Ingredient> repairMaterial) {
         this.name = name;
@@ -32,7 +32,7 @@ public enum EnigmaticArmorMaterials implements IArmorMaterial {
         this.enchantability = enchantability;
         this.soundEvent = soundEvent;
         this.toughness = toughness;
-        this.repairMaterial = new LazyLoadBase<>(repairMaterial);
+        this.repairMaterial = new LazyValue<>(repairMaterial);
     }
 
     @Override

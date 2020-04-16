@@ -1,9 +1,6 @@
 buildscript {
     repositories {
-        maven {
-			url = 'https://files.minecraftforge.net/maven'
-		}
-		
+        maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
         mavenCentral()
     }
@@ -17,7 +14,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 version = '1.0'
-group = 'com.integral.enigmaticlegacy' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group = 'com.integral.enigmaticlegacy'
 archivesBaseName = 'EnigmaticLegacy-smv'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
@@ -28,7 +25,7 @@ minecraft {
     // stable_#            Stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not always work.
     // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'snapshot', version: '20190719-1.14.3'
+    mappings channel: 'snapshot', version: '20200225-1.15.1'
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
     
     // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -77,7 +74,7 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
-            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/')
+            args '--mod', 'enigmaticlegacy', '--all', '--output', file('src/generated/resources/')
 
             mods {
                 enigmaticlegacy {
@@ -89,7 +86,6 @@ minecraft {
 }
 
 repositories {
-    
 	maven {  url = "https://maven.theillusivec4.top/" } // curios
 }
 
@@ -101,10 +97,9 @@ configurations {
 }
 
 dependencies {
-	minecraft 'net.minecraftforge:forge:1.14.4-28.1.115'
-	compile fg.deobf('top.theillusivec4.curios:curios:FORGE-1.14.4-1.0.4')
+	minecraft 'net.minecraftforge:forge:1.15.2-31.1.46'
+	compile fg.deobf('top.theillusivec4.curios:curios:FORGE-1.15.2-2.0.2.1')
 	//compile files('C:/Stuff/curios-FORGE-1.14.4-1.0-deobf.jar')
-	compile 'com.google.code.gson:gson:2.8.5' // Serialize More Difficult Configs, REQUIRED
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -123,18 +118,15 @@ jar {
 }
 
 // Example configuration to allow publishing using the maven-publish task
-// we define a custom artifact that is sourced from the reobfJar output task
-// and then declare that to be published
-// Note you'll need to add a repository here
-def reobfFile = file("$buildDir/reobfJar/output.jar")
-def reobfArtifact = artifacts.add('default', reobfFile) {
-    type 'jar'
-    builtBy 'reobfJar'
-}
+// This is the preferred method to reobfuscate your jar file
+jar.finalizedBy('reobfJar') 
+// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
+//publish.dependsOn('reobfJar')
+
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact reobfArtifact
+            artifact jar
         }
     }
     repositories {

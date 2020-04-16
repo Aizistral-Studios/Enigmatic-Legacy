@@ -29,59 +29,59 @@ public class EnigmaticUpdateHandler {
 	public static TranslationTextComponent updateStatus = null;
 	public static boolean show = false;
 	static boolean worked = false;
-	
+
 	@SubscribeEvent
 	public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-		
+
 		if (event.getPlayer() instanceof ServerPlayerEntity)
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> ((ServerPlayerEntity)event.getPlayer())), new PacketUpdateNotification());
 	}
-	
+
 	@OnlyIn(Dist.CLIENT)
 	public static void handleShowup(ClientPlayerEntity player) {
-		if (!show)
+		if (!EnigmaticUpdateHandler.show)
 			return;
 
 		player.sendMessage(EnigmaticUpdateHandler.updateStatus);
-		show = false;
-		
+		EnigmaticUpdateHandler.show = false;
+
 	}
 
 	public static void init() {
-		
-		getNewestVersion();
 
-		if (newestVersion != null)
+		EnigmaticUpdateHandler.getNewestVersion();
+
+		if (EnigmaticUpdateHandler.newestVersion != null)
 		{
-			if (newestVersion.equalsIgnoreCase(currentVersion))
+			if (EnigmaticUpdateHandler.newestVersion.equalsIgnoreCase(EnigmaticUpdateHandler.currentVersion))
 			{
-				show = false;
+				EnigmaticUpdateHandler.show = false;
 			}
-			else if (!newestVersion.equalsIgnoreCase(currentVersion))
+			else if (!EnigmaticUpdateHandler.newestVersion.equalsIgnoreCase(EnigmaticUpdateHandler.currentVersion))
 			{
-				show = true;
-				
-				StringTextComponent newVerArg = new StringTextComponent(newestVersion);
+				EnigmaticUpdateHandler.show = true;
+
+				StringTextComponent newVerArg = new StringTextComponent(EnigmaticUpdateHandler.newestVersion);
 				newVerArg.applyTextStyle(TextFormatting.GOLD);
-				
-				updateStatus = new TranslationTextComponent("status.enigmaticlegacy.outdated", newVerArg.getFormattedText());
-				updateStatus.applyTextStyle(TextFormatting.DARK_PURPLE);
+
+				EnigmaticUpdateHandler.updateStatus = new TranslationTextComponent("status.enigmaticlegacy.outdated", newVerArg.getFormattedText());
+				EnigmaticUpdateHandler.updateStatus.applyTextStyle(TextFormatting.DARK_PURPLE);
 			}
 		}
 		else
 		{
-			show = true;
-			updateStatus = new TranslationTextComponent("status.enigmaticlegacy.noconnection");
-			updateStatus.applyTextStyle(TextFormatting.RED);
+			EnigmaticUpdateHandler.show = true;
+			EnigmaticUpdateHandler.updateStatus = new TranslationTextComponent("status.enigmaticlegacy.noconnection");
+			EnigmaticUpdateHandler.updateStatus.applyTextStyle(TextFormatting.RED);
 		}
 	}
 
 	private static void getNewestVersion() {
 		try
 		{
-			URL url = new URL("https://raw.githubusercontent.com/Extegral/Enigmatic-Legacy/master/version.txt");
+			URL url = new URL("https://raw.githubusercontent.com/Extegral/Enigmatic-Legacy/1.15.X/version.txt");
 			Scanner s = new Scanner(url.openStream());
-			newestVersion = s.nextLine();
+			EnigmaticUpdateHandler.newestVersion = s.nextLine();
 			s.close();
 		}
 		catch (Exception ex)

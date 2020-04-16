@@ -1,5 +1,12 @@
 The Changelog:
 
+[Release 1.7.0]:
+
+- Initial 1.15.2 port;
+- Reduced amount of particles produced by Astral Breaker.
+
+
+
 [Release 1.6.4]:
 
 - Fixed side violation on dedicated servers caused by Eye of the Nebula (#15);

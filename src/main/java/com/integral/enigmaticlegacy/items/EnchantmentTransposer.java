@@ -9,8 +9,7 @@ import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.LoreHelper;
 
-import net.minecraft.client.gui.screen.ControlsScreen;
-import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,41 +20,40 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EnchantmentTransposer extends Item implements IPerhaps {
-	
- public static Properties integratedProperties = new Item.Properties();
 
- public EnchantmentTransposer(Properties properties) {
+	public static Properties integratedProperties = new Item.Properties();
+
+	public EnchantmentTransposer(Properties properties) {
 		super(properties);
- }
- 
- public static Properties setupIntegratedProperties() {
-	 integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-	 integratedProperties.maxStackSize(1);
-	 integratedProperties.rarity(Rarity.UNCOMMON);
-	 
-	 return integratedProperties;
- 
- }
- 
- @OnlyIn(Dist.CLIENT)
- public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-	 
-	 if(ControlsScreen.hasShiftDown()) {
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enchantmentTransposer1");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enchantmentTransposer2");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enchantmentTransposer3");
-	 } else {
-		 LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
-	 }
+	}
 
- }
+	public static Properties setupIntegratedProperties() {
+		EnchantmentTransposer.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
+		EnchantmentTransposer.integratedProperties.maxStackSize(1);
+		EnchantmentTransposer.integratedProperties.rarity(Rarity.UNCOMMON);
 
- @Override
- public boolean isForMortals() {
-	 return ConfigHandler.ENCHANTMENT_TRANSPOSER_ENABLED.getValue();
- }
- 
-  
+		return EnchantmentTransposer.integratedProperties;
+
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+
+		if (Screen.hasShiftDown()) {
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enchantmentTransposer1");
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enchantmentTransposer2");
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enchantmentTransposer3");
+		} else {
+			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+		}
+
+	}
+
+	@Override
+	public boolean isForMortals() {
+		return ConfigHandler.ENCHANTMENT_TRANSPOSER_ENABLED.getValue();
+	}
+
 }
-

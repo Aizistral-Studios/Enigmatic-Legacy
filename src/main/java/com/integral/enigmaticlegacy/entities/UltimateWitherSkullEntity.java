@@ -58,7 +58,7 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 	   
 	   
    public void initMotion(LivingEntity player, double accelX, double accelY, double accelZ, float modifier) {
-	      this.setPosition(this.posX, this.posY, this.posZ);
+	      this.setPosition(this.getPosX(), this.getPosY(), this.getPosZ());
 	      //this.setMotion(Vec3d.ZERO);
 	      accelX = accelX + this.rand.nextGaussian() * 0.4D;
 	      accelY = accelY + this.rand.nextGaussian() * 0.4D;
@@ -109,7 +109,7 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 		   
 		   Vector3 res = AOEMiningHelper.calcRayTrace(world, (PlayerEntity) this.shootingEntity, FluidMode.NONE, 128);
 		   
-		   this.initMotion(this.shootingEntity, res.x - this.posX, res.y - this.posY, res.z - this.posZ, 0.1F);
+		   this.initMotion(this.shootingEntity, res.x - this.getPosX(), res.y - this.getPosY(), res.z - this.getPosZ(), 0.1F);
 		   
 		   return;
 	   }
@@ -117,7 +117,7 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 	   if (this.ticksExisted == 10) {
 		   Vector3 res = AOEMiningHelper.calcRayTrace(world, (PlayerEntity) this.shootingEntity, FluidMode.NONE, 128);
 		   
-		   this.initMotion(this.shootingEntity, res.x - this.posX, res.y - this.posY, res.z - this.posZ, 1.0F);
+		   this.initMotion(this.shootingEntity, res.x - this.getPosX(), res.y - this.getPosY(), res.z - this.getPosZ(), 1.0F);
 	   }
 	   
 	   if (this.ticksExisted >= 400) {
@@ -155,7 +155,7 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
             }
          }
          
-         this.world.createExplosion(this, this.posX, this.posY, this.posZ, this.isSkullInvulnerable() ? 1.5F : 1.0F, false, Explosion.Mode.DESTROY);
+         this.world.createExplosion(this, this.getPosX(), this.getPosY(), this.getPosZ(), this.isSkullInvulnerable() ? 1.5F : 1.0F, false, Explosion.Mode.DESTROY);
          
          List<ItemEntity> drops = this.world.getEntitiesWithinAABB(ItemEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(this, 2D));
          for (ItemEntity drop : drops) {

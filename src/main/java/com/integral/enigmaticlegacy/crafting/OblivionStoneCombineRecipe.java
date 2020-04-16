@@ -78,7 +78,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 			ListNBT arrCopy = arr.copy();
 			CompoundNBT nbtCopy = nbt.copy();
 			
-			arrCopy.add(new StringNBT(ForgeRegistries.ITEMS.getKey(savedStack.getItem()).toString()));
+			arrCopy.add(StringNBT.valueOf(ForgeRegistries.ITEMS.getKey(savedStack.getItem()).toString()));
 
 			nbtCopy.put("SupersolidID", arrCopy);
 

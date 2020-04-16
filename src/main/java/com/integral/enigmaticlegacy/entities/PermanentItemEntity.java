@@ -87,9 +87,9 @@ public class PermanentItemEntity extends Entity {
             --this.pickupDelay;
          }
 
-         this.prevPosX = this.posX;
-         this.prevPosY = this.posY;
-         this.prevPosZ = this.posZ;
+         this.prevPosX = this.getPosX();
+         this.prevPosY = this.getPosY();
+         this.prevPosZ = this.getPosZ();
          Vec3d vec3d = this.getMotion();
          
          if (!this.hasNoGravity()) {
@@ -99,7 +99,7 @@ public class PermanentItemEntity extends Entity {
          if (this.world.isRemote) {
             this.noClip = false;
             
-            this.world.addParticle(ParticleTypes.PORTAL, this.posX, this.posY+(this.getHeight()/2), this.posZ, ((Math.random()-0.5)*2.0), ((Math.random()-0.5)*2.0), ((Math.random()-0.5)*2.0));
+            this.world.addParticle(ParticleTypes.PORTAL, this.getPosX(), this.getPosY()+(this.getHeight()/2), this.getPosZ(), ((Math.random()-0.5)*2.0), ((Math.random()-0.5)*2.0), ((Math.random()-0.5)*2.0));
             
          }
 
@@ -194,7 +194,7 @@ public class PermanentItemEntity extends Entity {
             if (itemstack.isEmpty()) {
                entityIn.onItemPickup(this, i);
                
-               EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.posX, this.posY, this.posZ, 64, this.dimension)), new PacketHandleItemPickup(entityIn.getEntityId(), this.getEntityId()));
+               EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.dimension)), new PacketHandleItemPickup(entityIn.getEntityId(), this.getEntityId()));
                
                this.remove();
                itemstack.setCount(i);
