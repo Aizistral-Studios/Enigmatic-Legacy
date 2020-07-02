@@ -1,4 +1,4 @@
-# Enigmatic Legacy
+# Enigmatic Legacy [![](http://cf.way2muchnoise.eu/versions/enigmatic-legacy.svg)](https://www.curseforge.com/minecraft/mc-mods/curios) [![](http://cf.way2muchnoise.eu/full_enigmatic-legacy_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/curios/files)
 
 **Current Version:** 1.7.0
 
