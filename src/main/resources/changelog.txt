@@ -1,5 +1,11 @@
 The Changelog:
 
+[Release 1.8.2]:
+
+- Fixed dedicated server crashing when attempting to use active abilities of spellstones (#33).
+
+
+
 [Release 1.8.1]:
 
 - Fallback to classical reflection via ObfuscationReflectionHelper;

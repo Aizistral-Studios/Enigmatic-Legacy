@@ -44,14 +44,10 @@ public class PacketSpellstoneKey {
 
 		    ctx.get().enqueueWork(() -> {
 		      ServerPlayerEntity playerServ = ctx.get().getSender();
-
-		      System.out.println("Handling packet");
 		      
 		      if (SuperpositionHandler.hasSpellstone(playerServ)) {
 		    	  ItemStack spellstone = SuperpositionHandler.getSpellstone(playerServ);
 		    	  ISpellstone function = (ISpellstone) spellstone.getItem();
-		    	  
-		    	  System.out.println("Triggering ability of: " + spellstone.getItem().getName());
 		    	  
 		    	  function.triggerActiveAbility(playerServ.world, playerServ, spellstone);
 		      }
