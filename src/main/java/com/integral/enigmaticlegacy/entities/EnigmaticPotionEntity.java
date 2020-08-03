@@ -45,7 +45,7 @@ import net.minecraftforge.registries.ObjectHolder;
 public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAsItem {
    @ObjectHolder(EnigmaticLegacy.MODID + ":enigmatic_potion_entity")
    public static EntityType<EnigmaticPotionEntity> TYPE;
-   
+
    private static final DataParameter<ItemStack> ITEM = EntityDataManager.createKey(EnigmaticPotionEntity.class, DataSerializers.ITEMSTACK);
 
    public EnigmaticPotionEntity(EntityType<EnigmaticPotionEntity> type, World world) {
@@ -53,22 +53,22 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
    }
 
    public EnigmaticPotionEntity(World world, LivingEntity entity) {
-      super(TYPE, entity, world);
+      super(EnigmaticPotionEntity.TYPE, entity, world);
    }
 
    public EnigmaticPotionEntity(World world, double x, double y, double z) {
-      super(TYPE, x, y, z, world);
+      super(EnigmaticPotionEntity.TYPE, x, y, z, world);
    }
-   
+
    @Override
    protected void registerData() {
-      this.getDataManager().register(ITEM, ItemStack.EMPTY);
+      this.getDataManager().register(EnigmaticPotionEntity.ITEM, ItemStack.EMPTY);
    }
-   
+
    @Override
    public ItemStack getItem() {
-      ItemStack itemstack = this.getDataManager().get(ITEM);
-      
+      ItemStack itemstack = this.getDataManager().get(EnigmaticPotionEntity.ITEM);
+
       if (PotionHelper.isAdvancedPotion(itemstack))
       //if (!itemstack.isEmpty())
     	  return itemstack;
@@ -76,11 +76,11 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
     	  return new ItemStack(Items.SPLASH_POTION);
       //else
     	  //return new ItemStack(Items.SPLASH_POTION);
-      
+
    }
 
    public void setItem(ItemStack stack) {
-      this.getDataManager().set(ITEM, stack.copy());
+      this.getDataManager().set(EnigmaticPotionEntity.ITEM, stack.copy());
    }
 
    /**
@@ -90,7 +90,7 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
    protected float getGravityVelocity() {
       return 0.05F;
    }
-   
+
    @Override
    public void tick() {
 	   super.tick();
@@ -103,8 +103,10 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
    protected void onImpact(RayTraceResult result) {
       if (!this.world.isRemote) {
          ItemStack itemstack = this.getItem();
-         
+
          List<EffectInstance> list = PotionHelper.getEffects(itemstack);
+
+         int i = 2002;
 
          if (list != null && !list.isEmpty()) {
             if (this.isLingering()) {
@@ -112,15 +114,13 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
             } else {
                this.triggerSplash(list, result.getType() == RayTraceResult.Type.ENTITY ? ((EntityRayTraceResult)result).getEntity() : null);
             }
+
+            for (EffectInstance instance : list) {
+           	 if (instance.getPotion().isInstant())
+           		 i = 2007;
+            }
          }
 
-         int i = 2002;
-         
-         for (EffectInstance instance : list) {
-        	 if (instance.getPotion().isInstant())
-        		 i = 2007;
-         }         
-         
          this.world.playEvent(i, new BlockPos(this), PotionHelper.getColor(itemstack));
          this.remove();
       }
@@ -144,7 +144,7 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
                      if (effect.isInstant()) {
                         effect.affectEntity(this, this.getThrower(), livingentity, effectinstance.getAmplifier(), d1);
                      } else {
-                        int i = (int)(d1 * (double)effectinstance.getDuration() + 0.5D);
+                        int i = (int)(d1 * effectinstance.getDuration() + 0.5D);
                         if (i > 20) {
                            livingentity.addPotionEffect(new EffectInstance(effect, i, effectinstance.getAmplifier(), effectinstance.isAmbient(), effectinstance.doesShowParticles()));
                         }
@@ -163,14 +163,14 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
       areaeffectcloudentity.setRadius(3.0F);
       areaeffectcloudentity.setRadiusOnUse(-0.5F);
       areaeffectcloudentity.setWaitTime(10);
-      areaeffectcloudentity.setRadiusPerTick(-areaeffectcloudentity.getRadius() / (float)areaeffectcloudentity.getDuration());
+      areaeffectcloudentity.setRadiusPerTick(-areaeffectcloudentity.getRadius() / areaeffectcloudentity.getDuration());
 
       for(EffectInstance effectInstance : list) {
     	  areaeffectcloudentity.addEffect(new EffectInstance(effectInstance.getPotion(), effectInstance.getDuration()/4, effectInstance.getAmplifier(), effectInstance.isAmbient(), effectInstance.doesShowParticles()));
       }
-      
+
       areaeffectcloudentity.setColor(PotionHelper.getColor(stack));
-      
+
       this.world.addEntity(areaeffectcloudentity);
    }
 
@@ -181,7 +181,7 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
    /**
     * (abstract) Protected helper method to read subclass entity data from NBT.
     */
-   
+
    @Override
    public void readAdditional(CompoundNBT compound) {
       super.readAdditional(compound);
@@ -203,10 +203,10 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
       }
 
    }
-   
+
    @Override
    public IPacket<?> createSpawnPacket() {
 	      return NetworkHooks.getEntitySpawningPacket(this);
    }
-   
+
 }

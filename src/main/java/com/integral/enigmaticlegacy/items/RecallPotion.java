@@ -7,8 +7,8 @@ import javax.annotation.Nullable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
-import com.integral.enigmaticlegacy.helpers.LoreHelper;
+import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
+import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 
@@ -18,7 +18,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
@@ -26,6 +25,7 @@ import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.Vec3d;
@@ -35,31 +35,21 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-public class RecallPotion extends Item implements IPerhaps {
+public class RecallPotion extends ItemBase {
 
-	public static Properties integratedProperties = new Item.Properties();
-
-	public RecallPotion(Properties properties) {
-		super(properties);
-	}
-
-	public static Properties setupIntegratedProperties() {
-		RecallPotion.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		RecallPotion.integratedProperties.maxStackSize(1);
-		RecallPotion.integratedProperties.rarity(Rarity.RARE);
-
-		return RecallPotion.integratedProperties;
-
+	public RecallPotion() {
+		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.RARE));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "recall_potion"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.recallPotion1");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.recallPotion2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.recallPotion1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.recallPotion2");
 		} else {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 	}
 
@@ -76,7 +66,7 @@ public class RecallPotion extends Item implements IPerhaps {
 			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
 		}
 
-		if (!worldIn.isRemote) {
+		if (!worldIn.isRemote && player != null) {
 			Vec3d vec = SuperpositionHandler.getValidSpawn(worldIn, player);
 
 			worldIn.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));

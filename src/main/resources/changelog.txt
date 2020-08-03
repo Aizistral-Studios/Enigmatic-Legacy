@@ -1,5 +1,13 @@
 The Changelog:
 
+[Release 1.7.1]:
+
+- Wither Skulls summoned by Heart of Creation now home in on observed entity. Also, new animation for indicating stronger skulls;
+- Implemented null check in LootingLevelEvent event listener, to prevent potential issues (#31);
+- Etherium Pickaxe and Astral Breaker are now effective against shulker boxes;
+
+
+
 [Release 1.7.0]:
 
 - Initial 1.15.2 port;

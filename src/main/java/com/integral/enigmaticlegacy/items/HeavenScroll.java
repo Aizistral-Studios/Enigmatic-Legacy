@@ -7,38 +7,28 @@ import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
-import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
-import com.integral.enigmaticlegacy.helpers.LoreHelper;
+import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
+import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import top.theillusivec4.curios.api.capability.ICurio;
 
-public class HeavenScroll extends Item implements ICurio, IPerhaps {
+public class HeavenScroll extends ItemBaseCurio {
 
-	public static Properties integratedProperties = new Item.Properties();
-	public static HashMap<PlayerEntity, Boolean> flyMap = new HashMap<PlayerEntity, Boolean>();
+	public HashMap<PlayerEntity, Boolean> flyMap = new HashMap<PlayerEntity, Boolean>();
 
-	public HeavenScroll(Properties properties) {
-		super(properties);
-	}
-
-	public static Properties setupIntegratedProperties() {
-		HeavenScroll.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		HeavenScroll.integratedProperties.maxStackSize(1);
-		HeavenScroll.integratedProperties.rarity(Rarity.EPIC);
-
-		return HeavenScroll.integratedProperties;
+	public HeavenScroll() {
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "heaven_scroll"));
 	}
 
 	@Override
@@ -47,25 +37,17 @@ public class HeavenScroll extends Item implements ICurio, IPerhaps {
 	}
 
 	@Override
-	public boolean canEquip(String identifier, LivingEntity living) {
-		if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.heavenScroll))
-			return false;
-		else
-			return true;
-	}
-
-	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome1");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome2");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.heavenTome3");
 		} else {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 	}
 
@@ -86,34 +68,23 @@ public class HeavenScroll extends Item implements ICurio, IPerhaps {
 					if (!player.abilities.allowFlying)
 						player.abilities.allowFlying = true;
 					player.sendPlayerAbilities();
-					HeavenScroll.flyMap.put(player, true);
-				} else if (HeavenScroll.flyMap.get(player)) {
+					this.flyMap.put(player, true);
+				} else if (this.flyMap.get(player)) {
 					if (!player.isCreative()) {
 						player.abilities.allowFlying = false;
 						player.abilities.isFlying = false;
 						player.sendPlayerAbilities();
 					}
 
-					HeavenScroll.flyMap.put(player, false);
+					this.flyMap.put(player, false);
 				}
 
 			} catch (NullPointerException ex) {
-				HeavenScroll.flyMap.put(player, false);
+				this.flyMap.put(player, false);
 			}
 		}
 
 	}
-
-	@Override
-	public boolean canRightClickEquip() {
-		return true;
-	}
-
-	@Override
-	public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-		// Insert existential void here
-	}
-
 	@Override
 	public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
 
@@ -126,7 +97,7 @@ public class HeavenScroll extends Item implements ICurio, IPerhaps {
 				player.sendPlayerAbilities();
 			}
 
-			HeavenScroll.flyMap.put(player, false);
+			this.flyMap.put(player, false);
 
 		}
 	}

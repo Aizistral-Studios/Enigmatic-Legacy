@@ -1,7 +1,8 @@
-package com.integral.enigmaticlegacy.helpers;
+package com.integral.enigmaticlegacy.objects;
 
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.IPerhaps;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 
 import net.minecraft.item.Item;

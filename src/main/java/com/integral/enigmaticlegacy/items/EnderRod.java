@@ -1,25 +1,15 @@
 package com.integral.enigmaticlegacy.items;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.Rarity;
+import net.minecraft.util.ResourceLocation;
 
-public class EnderRod extends Item {
+public class EnderRod extends ItemBase {
 
-	public static Properties integratedProperties = new Item.Properties();
-
-	public EnderRod(Properties properties) {
-		super(properties);
-	}
-
-	public static Properties setupIntegratedProperties() {
-		EnderRod.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		EnderRod.integratedProperties.maxStackSize(64);
-		EnderRod.integratedProperties.rarity(Rarity.COMMON);
-
-		return EnderRod.integratedProperties;
-
+	public EnderRod() {
+		super(ItemBase.getDefaultProperties());
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ender_rod"));
 	}
 
 }

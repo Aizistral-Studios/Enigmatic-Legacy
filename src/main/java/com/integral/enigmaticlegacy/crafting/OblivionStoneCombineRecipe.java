@@ -55,7 +55,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 
 		}
 
-		if (voidStone != null & stackList.size() == 1) {
+		if (voidStone != null && stackList.size() == 1) {
 			ItemStack savedStack = stackList.get(0).copy();
 
 			CompoundNBT nbt = voidStone.getOrCreateTag();
@@ -68,16 +68,16 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 
 			for (INBT s_uncast : arr) {
 				counter++;
-				
+
 				String s = ((StringNBT)s_uncast).getString();
-				
+
 				if (s.equals(ForgeRegistries.ITEMS.getKey(savedStack.getItem()).toString()))
 					return ItemStack.EMPTY;
 			}
 
 			ListNBT arrCopy = arr.copy();
 			CompoundNBT nbtCopy = nbt.copy();
-			
+
 			arrCopy.add(StringNBT.valueOf(ForgeRegistries.ITEMS.getKey(savedStack.getItem()).toString()));
 
 			nbtCopy.put("SupersolidID", arrCopy);
@@ -86,8 +86,8 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 			returnedStack.setTag(nbtCopy);
 
 			return returnedStack;
-			
-		} else if (voidStone != null & stackList.size() == 0) {
+
+		} else if (voidStone != null && stackList.size() == 0) {
 			ItemStack returnedStack = new ItemStack(EnigmaticLegacy.oblivionStone, 1);
 			returnedStack.setTag(voidStone.getOrCreateTag().copy());
 			returnedStack.removeChildTag("SupersolidID");
@@ -118,7 +118,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 
 		}
 
-		if (voidStone != null & stackList.size() == 1) {
+		if (voidStone != null && stackList.size() == 1) {
 			ItemStack savedStack = stackList.get(0).copy();
 
 			CompoundNBT nbt = voidStone.getOrCreateTag();
@@ -131,21 +131,21 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 
 			for (INBT s_uncast : arr) {
 				counter++;
-				
+
 				String s = ((StringNBT)s_uncast).getString();
-				
+
 				if (s.equals(ForgeRegistries.ITEMS.getKey(savedStack.getItem()).toString()))
 					return false;
 			}
 
 			return true;
-			
-		} else if (voidStone != null & stackList.size() == 0) {
+
+		} else if (voidStone != null && stackList.size() == 0) {
 			return true;
 		} else
 			return false;
 	}
-	
+
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(CraftingInventory inv) {
 		NonNullList<ItemStack> nonnulllist = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
@@ -156,7 +156,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 	public ItemStack getRecipeOutput() {
 		return ItemStack.EMPTY;
 	}
-	
+
 	@Override
 	public boolean isDynamic() {
 		return true;

@@ -7,10 +7,9 @@ import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
-import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.helpers.CooldownMap;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
-import com.integral.enigmaticlegacy.helpers.LoreHelper;
+import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
+import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
+import com.integral.enigmaticlegacy.objects.CooldownMap;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 
 import net.minecraft.block.Block;
@@ -26,12 +25,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -43,23 +42,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
-import top.theillusivec4.curios.api.capability.ICurio;
 
-public class Megasponge extends Item implements ICurio, IPerhaps {
+public class Megasponge extends ItemBaseCurio {
 
-	public static Properties integratedProperties = new Item.Properties();
-	public static CooldownMap cooldownMap = new CooldownMap();
+	public CooldownMap cooldownMap = new CooldownMap();
 
-	public Megasponge(Properties properties) {
-		super(properties);
-	}
-
-	public static Properties setupIntegratedProperties() {
-		Megasponge.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		Megasponge.integratedProperties.maxStackSize(1);
-		Megasponge.integratedProperties.rarity(Rarity.UNCOMMON);
-
-		return Megasponge.integratedProperties;
+	public Megasponge() {
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "mega_sponge"));
 	}
 
 	@Override
@@ -68,24 +58,16 @@ public class Megasponge extends Item implements ICurio, IPerhaps {
 	}
 
 	@Override
-	public boolean canEquip(String identifier, LivingEntity living) {
-		if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.megaSponge))
-			return false;
-		else
-			return true;
-	}
-
-	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.megaSponge1");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.megaSponge2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.megaSponge1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.megaSponge2");
 		} else {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 	}
 
@@ -128,14 +110,14 @@ public class Megasponge extends Item implements ICurio, IPerhaps {
 		if (living instanceof PlayerEntity & !living.world.isRemote) {
 			PlayerEntity player = (PlayerEntity) living;
 
-			Megasponge.cooldownMap.tick(living);
+			this.cooldownMap.tick(living);
 
-			if (!Megasponge.cooldownMap.hasCooldown(player)) {
+			if (!this.cooldownMap.hasCooldown(player)) {
 				List<BlockPos> doomedWaterBlocks = new ArrayList<BlockPos>();
 				BlockPos initialPos = this.getCollidedWater(FluidTags.WATER, player);
 				BlockState initialState = initialPos != null ? player.world.getBlockState(initialPos) : null;
 
-				if (initialPos != null)
+				if (initialPos != null && initialState != null)
 					if (initialState.getFluidState() != null && initialState.getFluidState().isTagged(FluidTags.WATER)) {
 
 						doomedWaterBlocks.add(initialPos);
@@ -146,7 +128,7 @@ public class Megasponge extends Item implements ICurio, IPerhaps {
 							List<BlockPos> outputBlocks = new ArrayList<BlockPos>();
 
 							for (BlockPos checkedPos : processedBlocks) {
-								outputBlocks.addAll(Megasponge.getNearbyWater(player.world, checkedPos));
+								outputBlocks.addAll(this.getNearbyWater(player.world, checkedPos));
 							}
 
 							processedBlocks.clear();
@@ -164,13 +146,13 @@ public class Megasponge extends Item implements ICurio, IPerhaps {
 						processedBlocks.clear();
 
 						for (BlockPos exterminatedBlock : doomedWaterBlocks)
-							Megasponge.absorbWaterBlock(exterminatedBlock, player.world.getBlockState(exterminatedBlock), player.world);
+							this.absorbWaterBlock(exterminatedBlock, player.world.getBlockState(exterminatedBlock), player.world);
 
 						doomedWaterBlocks.clear();
 
 						player.world.playSound(null, player.getPosition(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 64, player.dimension)), new PacketPortalParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 40, 1.0D, false));
-						Megasponge.cooldownMap.put(player, 20);
+						this.cooldownMap.put(player, 20);
 
 					}
 
@@ -178,7 +160,7 @@ public class Megasponge extends Item implements ICurio, IPerhaps {
 		}
 	}
 
-	public static void absorbWaterBlock(BlockPos pos, BlockState state, World world) {
+	public void absorbWaterBlock(BlockPos pos, BlockState state, World world) {
 
 		if (state.getBlock() instanceof IBucketPickupHandler && ((IBucketPickupHandler) state.getBlock()).pickupFluid(world, pos, state) != Fluids.EMPTY) {
 			// Whatever
@@ -191,7 +173,7 @@ public class Megasponge extends Item implements ICurio, IPerhaps {
 		}
 	}
 
-	public static List<BlockPos> getNearbyWater(World world, BlockPos pos) {
+	public List<BlockPos> getNearbyWater(World world, BlockPos pos) {
 		List<BlockPos> nearBlocks = new ArrayList<BlockPos>();
 		List<BlockPos> waterBlocks = new ArrayList<BlockPos>();
 
@@ -209,21 +191,6 @@ public class Megasponge extends Item implements ICurio, IPerhaps {
 		}
 
 		return waterBlocks;
-	}
-
-	@Override
-	public boolean canRightClickEquip() {
-		return true;
-	}
-
-	@Override
-	public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-		// Insert existential void here
-	}
-
-	@Override
-	public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-		// Insert existential void here
 	}
 
 }

@@ -10,9 +10,9 @@ import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
+import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
-import com.integral.enigmaticlegacy.helpers.LoreHelper;
+import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -20,7 +20,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
@@ -29,42 +28,26 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import top.theillusivec4.curios.api.capability.ICurio;
 
-public class MiningCharm extends Item implements ICurio, IPerhaps {
+public class MiningCharm extends ItemBaseCurio {
 
-	public static Properties integratedProperties = new Item.Properties();
-	public static final int nightVisionDuration = 210;
+	public final int nightVisionDuration = 210;
 
-	public MiningCharm(Properties properties) {
-		super(properties);
-	}
-
-	public static Properties setupIntegratedProperties() {
-		MiningCharm.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		MiningCharm.integratedProperties.maxStackSize(1);
-		MiningCharm.integratedProperties.rarity(Rarity.RARE);
-
-		return MiningCharm.integratedProperties;
+	public MiningCharm() {
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.RARE));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "mining_charm"));
 	}
 
 	@Override
 	public boolean isForMortals() {
 		return ConfigHandler.MINING_CHARM_ENABLED.getValue();
-	}
-
-	@Override
-	public boolean canEquip(String identifier, LivingEntity living) {
-		if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.miningCharm))
-			return false;
-		else
-			return true;
 	}
 
 	@Override
@@ -77,24 +60,24 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
 			if (!ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true))
 				mode = new TranslationTextComponent("tooltip.enigmaticlegacy.disabled");
 
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm1", ConfigHandler.MINING_CHARM_BREAK_BOOST.getValue().asPercentage() + "%");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm2");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm3");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm4");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm5");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm1", ConfigHandler.MINING_CHARM_BREAK_BOOST.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm4");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm5");
 		} else {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharmNightVision", mode.getFormattedText());
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharmNightVision", mode.getFormattedText());
 	}
 
-	public static void removeNightVisionEffect(PlayerEntity player, int duration) {
+	public void removeNightVisionEffect(PlayerEntity player, int duration) {
 		if (player.getActivePotionEffect(Effects.NIGHT_VISION) != null) {
 			EffectInstance effect = player.getActivePotionEffect(Effects.NIGHT_VISION);
 
@@ -116,9 +99,9 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
 
 				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) && player.getPosY() < 50 && player.dimension.getId() != -1 && player.dimension.getId() != 1 && !player.areEyesInFluid(FluidTags.WATER, true) && !player.world.canBlockSeeSky(player.getPosition()) && player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0) <= 8) {
 
-					player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, MiningCharm.nightVisionDuration, 0, true, false));
+					player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
 				} else {
-					MiningCharm.removeNightVisionEffect(player, MiningCharm.nightVisionDuration);
+					this.removeNightVisionEffect(player, this.nightVisionDuration);
 				}
 
 			}
@@ -144,19 +127,9 @@ public class MiningCharm extends Item implements ICurio, IPerhaps {
 	}
 
 	@Override
-	public boolean canRightClickEquip() {
-		return false;
-	}
-
-	@Override
-	public void onEquipped(String identifier, LivingEntity living) {
-		// Insert existential void here
-	}
-
-	@Override
 	public void onUnequipped(String identifier, LivingEntity living) {
 		if (living instanceof PlayerEntity)
-			MiningCharm.removeNightVisionEffect((PlayerEntity) living, MiningCharm.nightVisionDuration);
+			this.removeNightVisionEffect((PlayerEntity) living, this.nightVisionDuration);
 	}
 
 	@Override

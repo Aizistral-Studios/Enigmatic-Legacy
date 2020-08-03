@@ -13,23 +13,14 @@ import javax.annotation.Nullable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
-import com.integral.enigmaticlegacy.helpers.CooldownMap;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper.AnvilParser;
+import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
+import com.integral.enigmaticlegacy.objects.CooldownMap;
+import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
-import com.integral.enigmaticlegacy.helpers.Vector3;
-import com.integral.enigmaticlegacy.items.AngelBlessing;
-import com.integral.enigmaticlegacy.items.EnigmaticItem;
-import com.integral.enigmaticlegacy.items.EtheriumArmor;
-import com.integral.enigmaticlegacy.items.EtheriumSword;
-import com.integral.enigmaticlegacy.items.EyeOfNebula;
-import com.integral.enigmaticlegacy.items.GolemHeart;
-import com.integral.enigmaticlegacy.items.MagmaHeart;
-import com.integral.enigmaticlegacy.items.MonsterCharm;
-import com.integral.enigmaticlegacy.items.OceanStone;
-import com.integral.enigmaticlegacy.items.VoidPearl;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketSlotUnlocked;
@@ -112,7 +103,6 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.fml.network.PacketDistributor;
 import top.theillusivec4.curios.api.CuriosAPI;
 import top.theillusivec4.curios.api.capability.CuriosCapability;
@@ -120,7 +110,6 @@ import top.theillusivec4.curios.api.capability.ICurio;
 
 /**
  * Generic event handler of the whole mod.
- *
  * @author Integral
  */
 
@@ -173,12 +162,13 @@ public class EnigmaticEventHandler {
 		 * Monster Slayer.
 		 */
 
-		if (event.getDamageSource().getTrueSource() instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) event.getDamageSource().getTrueSource();
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.monsterCharm))
-				if (ConfigHandler.MONSTER_CHARM_BONUS_LOOTING.getValue())
-					event.setLootingLevel(event.getLootingLevel() + 1);
-		}
+		if (event.getDamageSource() != null)
+			if (event.getDamageSource().getTrueSource() instanceof PlayerEntity) {
+				PlayerEntity player = (PlayerEntity) event.getDamageSource().getTrueSource();
+				if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.monsterCharm))
+					if (ConfigHandler.MONSTER_CHARM_BONUS_LOOTING.getValue())
+						event.setLootingLevel(event.getLootingLevel() + 1);
+			}
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -187,7 +177,7 @@ public class EnigmaticEventHandler {
 
 		if (event.getEntityLiving() instanceof MonsterEntity)
 			if (player != null && SuperpositionHandler.hasCurio(player, EnigmaticLegacy.monsterCharm))
-				event.setDroppedExperience((int) (event.getDroppedExperience() * MonsterCharm.bonusXPModifier));
+				event.setDroppedExperience((int) (event.getDroppedExperience() * EnigmaticLegacy.monsterCharm.bonusXPModifier));
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -241,7 +231,7 @@ public class EnigmaticEventHandler {
 			 * Handler for removing debuffs from players protected by Etherium Armor Shield.
 			 */
 
-			if (EtheriumArmor.hasShield(player))
+			if (EnigmaticLegacy.etheriumChestplate.hasShield(player))
 				if (!player.getActivePotionEffects().isEmpty()) {
 					List<EffectInstance> effects = new ArrayList<EffectInstance>(player.getActivePotionEffects());
 
@@ -261,8 +251,8 @@ public class EnigmaticEventHandler {
 			if (SuperpositionHandler.hasSpellstoneCooldown(player))
 				SuperpositionHandler.setSpellstoneCooldown(player, SuperpositionHandler.getSpellstoneCooldown(player) - 1);
 
-			EtheriumSword.etheriumSwordCooldowns.tick(player);
-			EnigmaticItem.handleEnigmaticFlight(player);
+			EnigmaticLegacy.etheriumSword.etheriumSwordCooldowns.tick(player);
+			EnigmaticLegacy.enigmaticItem.handleEnigmaticFlight(player);
 
 		}
 
@@ -386,13 +376,13 @@ public class EnigmaticEventHandler {
 			return;
 
 		/*
-		 * Handler for spellstones' immunities.
+		 * Handler for immunities.
 		 */
 
 		if (event.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 
-			if (EtheriumArmor.hasShield(player)) {
+			if (EnigmaticLegacy.etheriumChestplate.hasShield(player)) {
 				if (event.getSource().getImmediateSource() instanceof DamagingProjectileEntity || event.getSource().getImmediateSource() instanceof AbstractArrowEntity) {
 					event.setCanceled(true);
 					player.world.playSound(null, player.getPosition(), EnigmaticLegacy.SHIELD_TRIGGER, SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
@@ -400,45 +390,27 @@ public class EnigmaticEventHandler {
 				}
 			}
 
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticItem))
-				if (EnigmaticItem.immunityList.contains(event.getSource().damageType))
-					event.setCanceled(true);
+			List<ItemStack> advancedCurios = SuperpositionHandler.getAdvancedCurios(player);
+			if (advancedCurios.size() > 0) {
+				for (ItemStack advancedCurioStack : advancedCurios) {
+					ItemAdvancedCurio advancedCurio = (ItemAdvancedCurio) advancedCurioStack.getItem();
 
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.angelBlessing))
-				if (AngelBlessing.immunityList.contains(event.getSource().damageType))
-					event.setCanceled(true);
+					if (advancedCurio.immunityList.contains(event.getSource().damageType))
+						event.setCanceled(true);
 
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.oceanStone))
-				if (OceanStone.immunityList.contains(event.getSource().damageType))
-					event.setCanceled(true);
-
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.magmaHeart))
-				if (MagmaHeart.immunityList.contains(event.getSource().damageType))
-					event.setCanceled(true);
-
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.golemHeart))
-				if (GolemHeart.immunityList.contains(event.getSource().damageType))
-					event.setCanceled(true);
-
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.voidPearl)) {
-				if (VoidPearl.immunityList.contains(event.getSource().damageType))
-					event.setCanceled(true);
-				else if (VoidPearl.healList.contains(event.getSource().damageType)) {
-					player.heal(event.getAmount());
-					event.setCanceled(true);
-				} else {
+					if (advancedCurio == EnigmaticLegacy.voidPearl && EnigmaticLegacy.voidPearl.healList.contains(event.getSource().damageType)) {
+						player.heal(event.getAmount());
+						event.setCanceled(true);
+					}
 				}
-
 			}
 
 			/*
 			 * Handler for Eye of the Nebula dodge effect.
 			 */
 
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.eyeOfNebula)) {
-				if (EyeOfNebula.immunityList.contains(event.getSource().damageType)) {
-					event.setCanceled(true);
-				} else if (Math.random() <= ConfigHandler.EYE_OF_NEBULA_DODGE_PROBABILITY.getValue().asMultiplier(false) && player.hurtResistantTime <= 10 && event.getSource().getTrueSource() instanceof LivingEntity) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.eyeOfNebula) && !event.isCanceled()) {
+				if (Math.random() <= ConfigHandler.EYE_OF_NEBULA_DODGE_PROBABILITY.getValue().asMultiplier(false) && player.hurtResistantTime <= 10 && event.getSource().getTrueSource() instanceof LivingEntity) {
 
 					for (int counter = 0; counter <= 32; counter++) {
 						if (SuperpositionHandler.validTeleportRandomly(player, player.world, (int) ConfigHandler.EYE_OF_NEBULA_DODGE_RANGE.getValue()))
@@ -449,6 +421,7 @@ public class EnigmaticEventHandler {
 					event.setCanceled(true);
 				}
 			}
+
 		} else if (event.getSource().getImmediateSource() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getSource().getImmediateSource();
 
@@ -486,31 +459,25 @@ public class EnigmaticEventHandler {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 
 			/*
-			 * Handler for spellstone's resistance lists.
+			 * Handler for resistance lists.
 			 */
 
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.angelBlessing))
-				if (AngelBlessing.resistanceList.containsKey(event.getSource().damageType))
-					event.setAmount(event.getAmount() * AngelBlessing.resistanceList.get(event.getSource().damageType));
+			List<ItemStack> advancedCurios = SuperpositionHandler.getAdvancedCurios(player);
+			if (advancedCurios.size() > 0) {
+				for (ItemStack advancedCurioStack : advancedCurios) {
+					ItemAdvancedCurio advancedCurio = (ItemAdvancedCurio) advancedCurioStack.getItem();
 
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.oceanStone)) {
-				Entity attacker = event.getSource().getTrueSource();
+					if (advancedCurio.resistanceList.containsKey(event.getSource().damageType)) {
+						event.setAmount(event.getAmount() * advancedCurio.resistanceList.get(event.getSource().damageType).get());
+					}
 
-				if (attacker instanceof DrownedEntity || attacker instanceof GuardianEntity || attacker instanceof ElderGuardianEntity)
-					event.setAmount(event.getAmount() * ConfigHandler.OCEAN_STONE_UNDERWATER_CREATURES_RESISTANCE.getValue().asModifierInverted());
+					if (advancedCurio == EnigmaticLegacy.oceanStone) {
+						Entity attacker = event.getSource().getTrueSource();
+						if (attacker instanceof DrownedEntity || attacker instanceof GuardianEntity || attacker instanceof ElderGuardianEntity)
+							event.setAmount(event.getAmount() * ConfigHandler.OCEAN_STONE_UNDERWATER_CREATURES_RESISTANCE.getValue().asModifierInverted());
+					}
+				}
 			}
-
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.eyeOfNebula))
-				if (EyeOfNebula.resistanceList.containsKey(event.getSource().damageType))
-					event.setAmount(event.getAmount() * EyeOfNebula.resistanceList.get(event.getSource().damageType).get());
-
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.golemHeart))
-				if (GolemHeart.resistanceList.containsKey(event.getSource().damageType))
-					event.setAmount(event.getAmount() * GolemHeart.resistanceList.get(event.getSource().damageType).get());
-
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.voidPearl))
-				if (VoidPearl.resistanceList.containsKey(event.getSource().damageType))
-					event.setAmount(event.getAmount() * VoidPearl.resistanceList.get(event.getSource().damageType).get());
 
 			/*
 			 * Handler for damaging feedback of Blazing Core.
@@ -518,7 +485,7 @@ public class EnigmaticEventHandler {
 
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.magmaHeart)) {
 				// System.out.println("Damage type: " + event.getSource().damageType);
-				if (event.getSource().getTrueSource() instanceof LivingEntity && MagmaHeart.nemesisList.contains(event.getSource().damageType)) {
+				if (event.getSource().getTrueSource() instanceof LivingEntity && EnigmaticLegacy.magmaHeart.nemesisList.contains(event.getSource().damageType)) {
 					LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
 					if (!attacker.isImmuneToFire()) {
 						attacker.attackEntityFrom(new EntityDamageSource(DamageSource.ON_FIRE.damageType, player), (float) ConfigHandler.BLAZING_CORE_DAMAGE_FEEDBACK.getValue());
@@ -532,7 +499,7 @@ public class EnigmaticEventHandler {
 			 * Handler for knockback feedback and damage reduction of Etherium Armor Shield.
 			 */
 
-			if (EtheriumArmor.hasShield(player)) {
+			if (EnigmaticLegacy.etheriumChestplate.hasShield(player)) {
 				if (event.getSource().getImmediateSource() instanceof LivingEntity) {
 					LivingEntity attacker = ((LivingEntity) event.getSource().getTrueSource());
 					Vector3 vec = Vector3.fromEntityCenter(player).subtract(Vector3.fromEntityCenter(event.getSource().getTrueSource())).normalize();
@@ -945,7 +912,7 @@ public class EnigmaticEventHandler {
 	@OnlyIn(Dist.CLIENT)
 	public void onWorldCreation(GuiScreenEvent.InitGuiEvent event) {
 
-		if (event.getGui() instanceof CreateWorldScreen && FMLLoader.getNameFunction("srg").isPresent()) {
+		if (event.getGui() instanceof CreateWorldScreen && true) {
 
 			/*
 			 * Handler for setting in random world name and respective seed when creating a

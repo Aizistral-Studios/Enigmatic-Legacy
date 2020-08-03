@@ -120,10 +120,10 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 	}
 
 	/**
-    * @return If items should have a bob effect
-    */
-   public boolean shouldBob() {
-      return true;
-   }
+	* @return If items should have a bob effect
+	*/
+	public boolean shouldBob() {
+		return true;
+	}
 	/*==================================== FORGE END =============================================*/
 }

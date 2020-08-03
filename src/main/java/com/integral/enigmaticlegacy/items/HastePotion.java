@@ -5,15 +5,15 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
+import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
@@ -23,6 +23,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -34,25 +35,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 
 @Deprecated
-public class HastePotion extends Item implements IPerhaps {
+public class HastePotion extends ItemBase {
 
-	public static Properties integratedProperties = new Item.Properties();
 	public List<EffectInstance> effectList;
 
-	public HastePotion(Properties properties, int duration, int amplifier) {
-		super(properties);
+	public HastePotion(Rarity rarity, int duration, int amplifier) {
+		super(ItemBase.getDefaultProperties().rarity(rarity).maxStackSize(1).group(null));
 
 		this.effectList = new ArrayList<EffectInstance>();
 		this.effectList.add(new EffectInstance(Effects.HASTE, duration, amplifier, false, true));
-	}
-
-	public static Properties setupIntegratedProperties(Rarity rarity) {
-		//integratedProperties.group(ItemGroup.BREWING);
-		HastePotion.integratedProperties.maxStackSize(1);
-		HastePotion.integratedProperties.rarity(rarity);
-
-		return HastePotion.integratedProperties;
-
 	}
 
 	@Override
@@ -77,7 +68,7 @@ public class HastePotion extends Item implements IPerhaps {
 			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
 		}
 
-		if (!worldIn.isRemote)
+		if (!worldIn.isRemote && player != null)
 			for (EffectInstance instance : this.effectList) {
 				player.addPotionEffect(new EffectInstance(instance));
 			}

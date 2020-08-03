@@ -15,8 +15,9 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 import com.google.common.collect.Lists;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
-import com.integral.enigmaticlegacy.helpers.Vector3;
+import com.integral.enigmaticlegacy.api.items.IPerhaps;
+import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
+import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 
@@ -62,8 +63,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.CuriosAPI;
+import top.theillusivec4.curios.api.capability.ICurioItemHandler;
 import top.theillusivec4.curios.api.imc.CurioIMCMessage;
 
 /**
@@ -79,9 +82,31 @@ public class SuperpositionHandler {
 
 	public static HashMap<PlayerEntity, Integer> spellstoneCooldowns = new HashMap<PlayerEntity, Integer>();
 
+	public static boolean hasAdvancedCurios(final LivingEntity entity) {
+		return SuperpositionHandler.getAdvancedCurios(entity).size() > 0;
+	}
+
+	public static List<ItemStack> getAdvancedCurios(final LivingEntity entity) {
+		ICurioItemHandler stackHandler = CuriosAPI.getCuriosHandler(entity).orElse(null);
+		List<ItemStack> stackList = new ArrayList<ItemStack>();
+
+		if (stackHandler != null) {
+			for (String slotType : stackHandler.getCurioMap().keySet()) {
+				ItemStackHandler handler = stackHandler.getStackHandler(slotType);
+
+				for (int id = 0; id < handler.getSlots(); id++) {
+					if (handler.getStackInSlot(id) != null && handler.getStackInSlot(id).getItem() instanceof ItemAdvancedCurio) {
+						stackList.add(handler.getStackInSlot(id));
+					}
+				}
+			}
+		}
+
+		return stackList;
+	}
+
 	/**
 	 * Checks whether LivingEntity has given Item equipped in it's Curios slots.
-	 *
 	 * @return True if has, false otherwise.
 	 */
 
@@ -92,7 +117,6 @@ public class SuperpositionHandler {
 
 	/**
 	 * Gets the ItemStack of provided Item within entity's Curio slots.
-	 *
 	 * @return First sufficient ItemStack found, null if such item is not equipped.
 	 */
 	@Nullable
@@ -193,11 +217,6 @@ public class SuperpositionHandler {
 					target.y - range, target.z - range, target.x + range, target.y + range, target.z + range));
 			if (entities.contains(player)) {
 				entities.remove(player);
-			}
-			for (final LivingEntity checked : entities) {
-				if (!checked.isNonBoss()) {
-					entities.remove(checked);
-				}
 			}
 		}
 		if (entities.size() > 0) {
@@ -423,8 +442,8 @@ public class SuperpositionHandler {
 			@Nullable net.minecraft.world.storage.loot.LootEntry.Builder<?>... entries) {
 
 		Builder poolBuilder = LootPool.builder();
-		poolBuilder.rolls(RandomValueRange.of(minRolls, maxRolls));
 		poolBuilder.name(poolName);
+		poolBuilder.rolls(RandomValueRange.of(minRolls, maxRolls));
 
 		for (net.minecraft.world.storage.loot.LootEntry.Builder<?> entry : entries) {
 			if (entry != null)
@@ -855,11 +874,11 @@ public class SuperpositionHandler {
 	public static float getParticleMultiplier() {
 
 		if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.MINIMAL) {
-			return 0.20F;
-		} else if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.DECREASED) {
 			return 0.35F;
-		} else {
+		} else if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.DECREASED) {
 			return 0.65F;
+		} else {
+			return 1.0F;
 		}
 
 	}

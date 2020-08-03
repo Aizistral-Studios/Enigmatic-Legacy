@@ -7,42 +7,34 @@ import javax.annotation.Nullable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
-import com.integral.enigmaticlegacy.helpers.LoreHelper;
-import com.integral.enigmaticlegacy.helpers.Vector3;
+import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
+import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
+import com.integral.enigmaticlegacy.objects.Vector3;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import top.theillusivec4.curios.api.capability.ICurio;
 
-public class MagnetRing extends Item implements ICurio, IPerhaps {
+public class MagnetRing extends ItemBaseCurio {
 
-	public static Properties integratedProperties = new Item.Properties();
+	public MagnetRing() {
+		this(ItemBaseCurio.getDefaultProperties().rarity(Rarity.RARE));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "magnet_ring"));
+	}
 
 	public MagnetRing(Properties properties) {
 		super(properties);
-	}
-
-	public static Properties setupIntegratedProperties() {
-		MagnetRing.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		MagnetRing.integratedProperties.maxStackSize(1);
-		MagnetRing.integratedProperties.rarity(Rarity.RARE);
-
-		return MagnetRing.integratedProperties;
-
 	}
 
 	@Override
@@ -54,42 +46,14 @@ public class MagnetRing extends Item implements ICurio, IPerhaps {
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magnetRing1", ConfigHandler.MAGNET_RING_RANGE.getValue());
-			LoreHelper.addLocalizedString(list, ConfigHandler.INVERT_MAGNETS_SHIFT.getValue() ? "tooltip.enigmaticlegacy.magnetRing2_alt" : "tooltip.enigmaticlegacy.magnetRing2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magnetRing1", ConfigHandler.MAGNET_RING_RANGE.getValue());
+			ItemLoreHelper.addLocalizedString(list, ConfigHandler.INVERT_MAGNETS_SHIFT.getValue() ? "tooltip.enigmaticlegacy.magnetRing2_alt" : "tooltip.enigmaticlegacy.magnetRing2");
 		} else {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
-	}
-
-	@Override
-	public boolean canRightClickEquip() {
-		return true;
-	}
-
-	@Override
-	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		// Insert existential void here
-	}
-
-	@Override
-	public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-		// Insert existential void here
-	}
-
-	@Override
-	public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-		// Insert existential void here
-	}
-
-	@Override
-	public boolean canEquip(String identifier, LivingEntity living) {
-		if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.magnetRing))
-			return false;
-		else
-			return true;
 	}
 
 	@Override

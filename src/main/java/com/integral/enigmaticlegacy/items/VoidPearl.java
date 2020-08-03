@@ -1,31 +1,30 @@
 package com.integral.enigmaticlegacy.items;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
-import com.integral.enigmaticlegacy.helpers.LoreHelper;
+import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
+import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.FoodStats;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -33,38 +32,25 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import top.theillusivec4.curios.api.capability.ICurio;
 
-public class VoidPearl extends Item implements ICurio, IPerhaps {
+public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
+	public List<String> healList = new ArrayList<String>();
+	public DamageSource theDarkness;
 
-	public static Properties integratedProperties = new Item.Properties();
-	public static List<String> immunityList = new ArrayList<String>();
-	public static List<String> healList = new ArrayList<String>();
-	public static HashMap<String, Supplier<Float>> resistanceList = new HashMap<String, Supplier<Float>>();
-	public static DamageSource theDarkness;
+	public VoidPearl() {
+		super(ItemAdvancedCurio.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "void_pearl"));
 
-	public VoidPearl(Properties properties) {
-		super(properties);
+		this.immunityList.add(DamageSource.DROWN.damageType);
+		this.immunityList.add(DamageSource.IN_WALL.damageType);
 
-		VoidPearl.immunityList.add(DamageSource.DROWN.damageType);
-		VoidPearl.immunityList.add(DamageSource.IN_WALL.damageType);
+		this.healList.add(DamageSource.WITHER.damageType);
+		this.healList.add(DamageSource.MAGIC.damageType);
 
-		VoidPearl.healList.add(DamageSource.WITHER.damageType);
-		VoidPearl.healList.add(DamageSource.MAGIC.damageType);
-
-		VoidPearl.theDarkness = new DamageSource("darkness");
-		VoidPearl.theDarkness.setDamageIsAbsolute();
-		VoidPearl.theDarkness.setDamageBypassesArmor();
-		VoidPearl.theDarkness.setMagicDamage();
-
-	}
-
-	public static Properties setupIntegratedProperties() {
-		VoidPearl.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		VoidPearl.integratedProperties.maxStackSize(1);
-		VoidPearl.integratedProperties.rarity(Rarity.EPIC);
-
-		return VoidPearl.integratedProperties;
+		this.theDarkness = new DamageSource("darkness");
+		this.theDarkness.setDamageIsAbsolute();
+		this.theDarkness.setDamageBypassesArmor();
+		this.theDarkness.setMagicDamage();
 
 	}
 
@@ -74,65 +60,38 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
 	}
 
 	@Override
-	public boolean canEquip(String identifier, LivingEntity living) {
-		if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.voidPearl))
-			return false;
-		else
-			return true;
-	}
-
-	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl1");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl2");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearlCooldown", ((ConfigHandler.VOID_PEARL_COOLDOWN.getValue())) / 20.0F);
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl3");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl4");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl5");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl6");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl7");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl8");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl9");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl10");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl11");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl12", ConfigHandler.VOID_PEARL_UNDEAD_PROBABILITY.getValue().asPercentage() + "%");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl13");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearlCooldown", ((ConfigHandler.VOID_PEARL_COOLDOWN.getValue())) / 20.0F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl4");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl5");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl6");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl7");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl8");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl9");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl10");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl11");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl12", ConfigHandler.VOID_PEARL_UNDEAD_PROBABILITY.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl13");
 		} else {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 
 		try {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", KeyBinding.getDisplayString("key.spellstoneAbility").get().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", KeyBinding.getDisplayString("key.spellstoneAbility").get().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
-	}
-
-	public void triggerActiveAbility(World world, PlayerEntity player, ItemStack stack) {
-		// Insert existential void here
-	}
-
-	@Override
-	public boolean canRightClickEquip() {
-		return true;
-	}
-
-	@Override
-	public void onEquipped(String identifier, LivingEntity living) {
-		// Insert existential void here
-	}
-
-	@Override
-	public void onUnequipped(String identifier, LivingEntity living) {
-		// Insert existential void here
 	}
 
 	@Override
@@ -171,7 +130,7 @@ public class VoidPearl extends Item implements ICurio, IPerhaps {
 						}
 
 						//if (player.ticksExisted % 20 == 0) {
-						victim.attackEntityFrom(VoidPearl.theDarkness, (float) ConfigHandler.VOID_PEARL_BASE_DARKNESS_DAMAGE.getValue());
+						victim.attackEntityFrom(this.theDarkness, (float) ConfigHandler.VOID_PEARL_BASE_DARKNESS_DAMAGE.getValue());
 						living.world.playSound(null, victim.getPosition(), SoundEvents.ENTITY_PHANTOM_BITE, SoundCategory.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
 						//}
 

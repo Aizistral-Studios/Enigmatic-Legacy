@@ -1,4 +1,4 @@
-package com.integral.enigmaticlegacy.handlers;
+package com.integral.enigmaticlegacy.api.materials;
 
 import java.util.function.Supplier;
 

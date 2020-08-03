@@ -1,4 +1,4 @@
-package com.integral.enigmaticlegacy.helpers;
+package com.integral.enigmaticlegacy.objects;
 
 /**
  * A percentage-based value that can be converted into factor,
