@@ -8,7 +8,7 @@
 
 **Dependencies:** CuriosAPI Forge-1.16.1-3.0-beta4 or later.
 
-This mod is designed to bring new magical-themed content to the game, mainly of utilitary nature. New trinkets and powerful relics are restlessly waiting to contribute to your creational and/or destructional purposes, whatever moral are standing behind them, if any at all...
+This mod is designed to bring new magical-themed content to the game, mainly of utilitary nature. New trinkets and powerful relics are restlessly waiting to contribute to your creational and/or destructional purposes, whatever moral is standing behind them, if any at all...
 
 Whatever fate your advent will bring upon this forgotten land.
 
