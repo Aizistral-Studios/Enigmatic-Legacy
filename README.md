@@ -2,7 +2,7 @@
 
 **Current Version:** 1.7.1
 
-**Minecraft Version:** 1.15.1
+**Minecraft Version:** 1.15.2
 
 **Forge Version:** 31.1.0 or later.
 
