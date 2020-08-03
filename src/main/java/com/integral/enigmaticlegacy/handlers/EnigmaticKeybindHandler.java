@@ -58,31 +58,13 @@ public class EnigmaticKeybindHandler {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketXPScrollKey(true));
 		}
 		
-		if (this.spellstoneAbilityKey.isPressed()) {
-			int ID = -1;
-			
-			if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.voidPearl))
-				ID = 0;
-			else if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.angelBlessing))
-				ID = 1;
-			else if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.oceanStone))
-				ID = 2;
-			else if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.magmaHeart))
-				ID = 3;
-			else if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.golemHeart))
-				ID = 4;
-			else if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.eyeOfNebula))
-				ID = 5;
-				
-			if (ID != -1)
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true, ID));
+		if (this.spellstoneAbilityKey.isKeyDown() && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.enigmaticItem)) {
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true));
+		} else if (this.spellstoneAbilityKey.isPressed() && SuperpositionHandler.hasSpellstone(Minecraft.getInstance().player)) {
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true));
 		}
 		
-		if (this.spellstoneAbilityKey.isKeyDown()) {
-			if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.enigmaticItem))
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true, 6));
-					
-		}
+
 		
 	}
 }

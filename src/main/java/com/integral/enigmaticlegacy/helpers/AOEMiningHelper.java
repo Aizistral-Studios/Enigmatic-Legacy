@@ -7,6 +7,7 @@ import java.util.function.BiConsumer;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Sets;
+import com.integral.enigmaticlegacy.objects.Vector3;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -22,7 +23,7 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class AOEMiningHelper {
@@ -37,7 +38,7 @@ public class AOEMiningHelper {
                                              Set<Material> effectiveMaterials,
                                              boolean checkHarvestLevel) {
 
-        RayTraceResult trace = calcRayTrace(world, player, RayTraceContext.FluidMode.ANY);
+        RayTraceResult trace = AOEMiningHelper.calcRayTrace(world, player, RayTraceContext.FluidMode.ANY);
 
         if (trace.getType() == RayTraceResult.Type.BLOCK) {
             BlockRayTraceResult blockTrace = (BlockRayTraceResult) trace;
@@ -56,7 +57,7 @@ public class AOEMiningHelper {
                     if (face == Direction.NORTH || face == Direction.SOUTH) target = pos.add(a, b, 0);
                     if (face == Direction.EAST  || face == Direction.WEST)  target = pos.add(0, a, b);
 
-                    attemptBreak(world, target, player, effectiveOn, effectiveMaterials, fortuneLevel, silkLevel, checkHarvestLevel, null, (objPos, objState) -> {});
+                    AOEMiningHelper.attemptBreak(world, target, player, effectiveOn, effectiveMaterials, fortuneLevel, silkLevel, checkHarvestLevel, null, (objPos, objState) -> {});
                 }
             }
         }
@@ -74,21 +75,21 @@ public class AOEMiningHelper {
                                     Set<Material> effectiveMaterials,
                                     int fortuneLevel,
                                     int silkLevel,
-                                    boolean checkHarvestLevel, ItemStack tool, 
+                                    boolean checkHarvestLevel, ItemStack tool,
                                     BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
         BlockState state = world.getBlockState(pos);
 
         boolean validHarvest = !checkHarvestLevel || player.getHeldItemMainhand().canHarvestBlock(state);
         boolean isEffective = effectiveOn.contains(state.getBlock()) || effectiveMaterials.contains(state.getMaterial());
-        boolean witherImmune = BlockTags.WITHER_IMMUNE.contains(state.getBlock());
+        boolean witherImmune = BlockTags.WITHER_IMMUNE.func_230235_a_(state.getBlock());
 
         if (validHarvest && isEffective && !witherImmune) {
             world.destroyBlock(pos, false);
             Block.spawnDrops(state, world, pos, null, player, player.getHeldItemMainhand());
-            
-            
+
+
             toolDamageConsumer.accept(pos, state);
-            
+
             int exp = state.getExpDrop(world, pos, fortuneLevel, silkLevel);
             if (exp > 0) {
                 state.getBlock().dropXpOnBlockBreak(world, pos, exp);
@@ -97,26 +98,25 @@ public class AOEMiningHelper {
     }
 
     /** Copy-pasted from "Item.rayTrace" which is protected static, making it unusable in my own static helper methods.*/
-    public static RayTraceResult calcRayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidMode fluidMode) {
+    public static BlockRayTraceResult calcRayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidMode fluidMode) {
         float f = player.rotationPitch;
         float f1 = player.rotationYaw;
-        Vec3d vec3d = player.getEyePosition(1.0F);
+        Vector3d vector3d = player.getEyePosition(1.0F);
         float f2 = MathHelper.cos(-f1 * ((float)Math.PI / 180F) - (float)Math.PI);
         float f3 = MathHelper.sin(-f1 * ((float)Math.PI / 180F) - (float)Math.PI);
         float f4 = -MathHelper.cos(-f * ((float)Math.PI / 180F));
         float f5 = MathHelper.sin(-f * ((float)Math.PI / 180F));
         float f6 = f3 * f4;
         float f7 = f2 * f4;
-        double d0 = player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue();;
-        Vec3d vec3d1 = vec3d.add((double)f6 * d0, (double)f5 * d0, (double)f7 * d0);
-        return worldIn.rayTraceBlocks(new RayTraceContext(vec3d, vec3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, player));
-    }
-    
-    /** Copy-pasted from "Item.rayTrace" which is protected static, making it unusable in my own static helper methods.*/
+        double d0 = player.getAttribute(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get()).getValue();;
+        Vector3d vector3d1 = vector3d.add((double)f6 * d0, (double)f5 * d0, (double)f7 * d0);
+        return worldIn.rayTraceBlocks(new RayTraceContext(vector3d, vector3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, player));
+     }
+
     public static Vector3 calcRayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidMode fluidMode, double distance) {
         float f = player.rotationPitch;
         float f1 = player.rotationYaw;
-        Vec3d vec3d = player.getEyePosition(1.0F);
+        Vector3d vector3d = player.getEyePosition(1.0F);
         float f2 = MathHelper.cos(-f1 * ((float)Math.PI / 180F) - (float)Math.PI);
         float f3 = MathHelper.sin(-f1 * ((float)Math.PI / 180F) - (float)Math.PI);
         float f4 = -MathHelper.cos(-f * ((float)Math.PI / 180F));
@@ -124,23 +124,23 @@ public class AOEMiningHelper {
         float f6 = f3 * f4;
         float f7 = f2 * f4;
         double d0 = distance;
-        Vec3d vec3d1 = vec3d.add((double)f6 * d0, (double)f5 * d0, (double)f7 * d0);
-        RayTraceResult result = worldIn.rayTraceBlocks(new RayTraceContext(vec3d, vec3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, player));
+        Vector3d vector3d1 = vector3d.add((double)f6 * d0, (double)f5 * d0, (double)f7 * d0);
+        RayTraceResult result = worldIn.rayTraceBlocks(new RayTraceContext(vector3d, vector3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, player));
         
         if (result.getType() == RayTraceResult.Type.BLOCK)
         	return new Vector3(result.getHitVec());
         else {
-        	Vector3 vec = new Vector3(player.getLookVec()).multiply(64F).add(new Vector3(player.getPositionVector()));
+        	Vector3 vec = new Vector3(player.getLookVec()).multiply(64F).add(new Vector3(player.getPositionVec()));
         	return vec;
         }
-    }
-    
-    
+     }
+
+
     public static void harvestPlane(World world, PlayerEntity player, Direction dir, BlockPos pos, Set<Material> effectiveMaterials, int radius, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
     	int fortuneLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
         int silkLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand());
         int supRad = (radius-1)/2;
-        
+
         for (int a = -supRad; a <= supRad; a++) {
             for (int b = -supRad; b <= supRad; b++) {
                 BlockPos target = null;
@@ -148,32 +148,32 @@ public class AOEMiningHelper {
                 if (dir == Direction.UP    || dir == Direction.DOWN)  target = pos.add(a, 0, b);
                 if (dir == Direction.NORTH || dir == Direction.SOUTH) target = pos.add(a, b, 0);
                 if (dir == Direction.EAST  || dir == Direction.WEST)  target = pos.add(0, a, b);
-                
-                if (excludedBlock != null)
+
+                if (excludedBlock != null && target != null)
                 	if (target.equals(excludedBlock))
                 		continue;
-                
-                attemptBreak(world, target, player, Sets.newHashSet(), effectiveMaterials, fortuneLevel, silkLevel, harvestLevelCheck, tool, toolDamageConsumer);
+
+                AOEMiningHelper.attemptBreak(world, target, player, Sets.newHashSet(), effectiveMaterials, fortuneLevel, silkLevel, harvestLevelCheck, tool, toolDamageConsumer);
             }
         }
     }
-    
+
     public static void harvestCube(World world, PlayerEntity player, Direction dir, BlockPos centralPos, Set<Material> effectiveMaterials, int planeRadius, int depth, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
-    	
+
     	for (int a = 0; a < depth; a++) {
     		int x = 0;
     		int y = 0;
     		int z = 0;
-    		
+
     		if (dir == Direction.UP) y -= a;
     		if (dir == Direction.DOWN) y += a;
             if (dir == Direction.SOUTH) z -= a;
             if (dir == Direction.NORTH) z += a;
             if (dir == Direction.EAST) x -= a;
             if (dir == Direction.WEST) x += a;
-    		
-    		harvestPlane(world, player, dir, new BlockPos(centralPos).add(x, y, z), effectiveMaterials, planeRadius, harvestLevelCheck, excludedBlock, tool, toolDamageConsumer);
+
+    		AOEMiningHelper.harvestPlane(world, player, dir, new BlockPos(centralPos).add(x, y, z), effectiveMaterials, planeRadius, harvestLevelCheck, excludedBlock, tool, toolDamageConsumer);
     	}
     }
-    
+
 }

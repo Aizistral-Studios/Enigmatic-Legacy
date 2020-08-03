@@ -6,37 +6,26 @@ import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
-import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
-import com.integral.enigmaticlegacy.helpers.LoreHelper;
+import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
+import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import top.theillusivec4.curios.api.capability.ICurio;
 
-public class EnderRing extends Item implements ICurio, IPerhaps {
+public class EnderRing extends ItemBaseCurio {
 
-	public static Properties integratedProperties = new Item.Properties();
-
-	public EnderRing(Properties properties) {
-		super(properties);
-	}
-
-	public static Properties setupIntegratedProperties() {
-		EnderRing.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		EnderRing.integratedProperties.maxStackSize(1);
-		EnderRing.integratedProperties.rarity(Rarity.UNCOMMON);
-
-		return EnderRing.integratedProperties;
+	public EnderRing() {
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ender_ring"));
 	}
 
 	@Override
@@ -45,43 +34,25 @@ public class EnderRing extends Item implements ICurio, IPerhaps {
 	}
 
 	@Override
-	public boolean canEquip(String identifier, LivingEntity living) {
-		if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.enderRing))
-			return false;
-		else
-			return true;
-	}
-
-	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.hasShiftDown()) {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enderRing1");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enderRing2");
+		if (Screen.func_231173_s_()) {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enderRing1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enderRing2");
 		} else {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 
 		try {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", KeyBinding.getDisplayString("key.enderRing").get().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.getDisplayString("key.enderRing").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
 
-	}
-
-	@Override
-	public void onCurioTick(String identifier, int index, LivingEntity living) {
-		// Insert existential void here
-	}
-
-	@Override
-	public boolean canRightClickEquip() {
-		return true;
 	}
 
 	/*
@@ -114,14 +85,5 @@ public class EnderRing extends Item implements ICurio, IPerhaps {
 	 *
 	 * }
 	 */
-	@Override
-	public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-		// Insert existential void here
-	}
-
-	@Override
-	public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-		// Insert existential void here
-	}
 
 }

@@ -2,7 +2,10 @@ package com.integral.enigmaticlegacy.helpers;
 
 import java.lang.reflect.Field;
 
+import cpw.mods.modlauncher.api.INameMappingService;
 import net.minecraft.client.gui.screen.CreateWorldScreen;
+import net.minecraft.client.gui.screen.WorldOptionsScreen;
+import net.minecraft.tileentity.BeaconTileEntity;
 import net.minecraft.util.FoodStats;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -34,14 +37,22 @@ public class ObfuscatedFields {
 	 */
 	public static Field foodSaturationField;
 	
-	public static void extractCommonFields() {
+	/**
+	 * Class: BeaconTileEntity.class,
+	 * Deobfuscated Name: beamSegments
+	 */
+	public static Field beamSegmentsField;
+	
+	public static void extractCommonFields() {		
 		foodSaturationField = ObfuscationReflectionHelper.findField(FoodStats.class, "field_75125_b");
+		beamSegmentsField = ObfuscationReflectionHelper.findField(BeaconTileEntity.class, "field_174909_f");
 	}
 	
 	@OnlyIn(Dist.CLIENT)
 	public static void extractClientFields() {
+		
 		worldNameField = ObfuscationReflectionHelper.findField(CreateWorldScreen.class, "field_146330_J");
-		worldSeedField = ObfuscationReflectionHelper.findField(CreateWorldScreen.class, "field_146329_I");
+		worldSeedField = ObfuscationReflectionHelper.findField(WorldOptionsScreen.class, "field_239041_o_");
 	}
 
 }

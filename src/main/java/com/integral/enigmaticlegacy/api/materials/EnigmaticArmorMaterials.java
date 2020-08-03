@@ -1,4 +1,4 @@
-package com.integral.enigmaticlegacy.handlers;
+package com.integral.enigmaticlegacy.api.materials;
 
 import java.util.function.Supplier;
 
@@ -70,4 +70,10 @@ public enum EnigmaticArmorMaterials implements IArmorMaterial {
     public float getToughness() {
         return this.toughness;
     }
+
+	@Override
+	public float func_230304_f_() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

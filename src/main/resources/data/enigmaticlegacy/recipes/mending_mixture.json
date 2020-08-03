@@ -21,6 +21,9 @@
     },
     {
       "item": "minecraft:blaze_powder"
+    },
+	{
+      "item": "minecraft:ghast_tear"
     }
   ],
   "result": {

@@ -11,9 +11,9 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
+import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
-import com.integral.enigmaticlegacy.helpers.LoreHelper;
+import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -41,20 +41,11 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class OblivionStone extends Item implements IPerhaps {
+public class OblivionStone extends ItemBase {
 
-	public static Properties integratedProperties = new Item.Properties();
-
-	public OblivionStone(Properties properties) {
-		super(properties);
-	}
-
-	public static Properties setupIntegratedProperties() {
-		OblivionStone.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		OblivionStone.integratedProperties.maxStackSize(1);
-		OblivionStone.integratedProperties.rarity(Rarity.EPIC);
-
-		return OblivionStone.integratedProperties;
+	public OblivionStone() {
+		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.RARE));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "oblivion_stone"));
 	}
 
 	@Override
@@ -62,55 +53,38 @@ public class OblivionStone extends Item implements IPerhaps {
 		return ConfigHandler.OBLIVION_STONE_ENABLED.getValue();
 	}
 
-	/*
-	 * @Override public boolean canEquip(String identifier, LivingEntity living) {
-	 * if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.oblivionStone))
-	 * return false; else return true; }
-	 *
-	 * @Override public boolean canRightClickEquip() { return false; }
-	 *
-	 * @Override public void onCurioTick(String identifier, LivingEntity living) {
-	 * // Insert existential void here }
-	 *
-	 * @Override public void onEquipped(String identifier, LivingEntity
-	 * entityLivingBase) { // Insert existential void here }
-	 *
-	 * @Override public void onUnequipped(String identifier, LivingEntity
-	 * entityLivingBase) { // Insert existential void here }
-	 */
-
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		//LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.hasShiftDown()) {
+		if (Screen.func_231173_s_()) {
 
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone1");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone2");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone2_more");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone3");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone4");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone5");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone6");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone7");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone8");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone9");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone10");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone11");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone12");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone13");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone14");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone15");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone2_more");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone4");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone5");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone6");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone7");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone8");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone9");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone10");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone11");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone12");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone13");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone14");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone15");
 
-		} else if (Screen.hasControlDown()) {
+		} else if (Screen.func_231172_r_()) {
 
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneCtrlList");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneCtrlList");
 			if (stack.hasTag()) {
 				CompoundNBT nbt = stack.getTag();
 				ListNBT arr = nbt.getList("SupersolidID", 8);
@@ -124,7 +98,7 @@ public class OblivionStone extends Item implements IPerhaps {
 							ItemStack displayStack;
 							displayStack = new ItemStack(something, 1);
 
-							list.add(new StringTextComponent(" - " + displayStack.getDisplayName().getUnformattedComponentText()).applyTextStyles(TextFormatting.GOLD));
+							list.add(new StringTextComponent(" - " + displayStack.getDisplayName().getUnformattedComponentText()).func_240699_a_(TextFormatting.GOLD));
 						}
 						counter++;
 					}
@@ -137,18 +111,18 @@ public class OblivionStone extends Item implements IPerhaps {
 							ItemStack displayStack;
 							displayStack = new ItemStack(something, 1);
 
-							list.add(new StringTextComponent(" - " + displayStack.getDisplayName().getUnformattedComponentText()).applyTextStyles(TextFormatting.GOLD));
+							list.add(new StringTextComponent(" - " + displayStack.getDisplayName().getUnformattedComponentText()).func_240699_a_(TextFormatting.GOLD));
 						}
 					}
 				}
 			}
 
 		} else {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneHoldCtrl");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneHoldCtrl");
 		}
 
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		TranslationTextComponent mode;
 
@@ -157,34 +131,28 @@ public class OblivionStone extends Item implements IPerhaps {
 		} else
 			mode = new TranslationTextComponent("tooltip.enigmaticlegacy.oblivionStoneModeInactive");
 
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneModeDesc", mode);
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneModeDesc", null, mode);
 	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 
 		ItemStack stack = player.getHeldItem(hand);
-
 		int mode = ItemNBTHelper.getInt(stack, "ConsumptionMode", 0);
 
-		if (player.isShiftKeyDown()) {
-
-			world.playSound(null, player.getPosition(), ItemNBTHelper.getBoolean(stack, "IsActive", true) ? EnigmaticLegacy.HHOFF : EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+		if (player.isCrouching()) {
+			world.playSound(null, player.func_233580_cy_(), ItemNBTHelper.getBoolean(stack, "IsActive", true) ? EnigmaticLegacy.HHOFF : EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			ItemNBTHelper.setBoolean(stack, "IsActive", !ItemNBTHelper.getBoolean(stack, "IsActive", true));
-
 		} else {
-
 			if (mode >= 0 && mode < 2)
 				ItemNBTHelper.setInt(stack, "ConsumptionMode", mode + 1);
 			else
 				ItemNBTHelper.setInt(stack, "ConsumptionMode", 0);
 
-			world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
-
+			world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 		}
 
 		player.swingArm(hand);
-
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);
 
 	}
@@ -222,15 +190,12 @@ public class OblivionStone extends Item implements IPerhaps {
 			return;
 
 		if (mode == 0) {
-
 			for (INBT sID : list) {
 				String str = ((StringNBT) sID).getString();
 
 				for (int slot : stackMap.keySet()) {
-
 					if (stackMap.get(slot).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation(str)))
 						player.inventory.setInventorySlotContents(slot, ItemStack.EMPTY);
-
 				}
 				cycleCounter++;
 			}
@@ -243,10 +208,8 @@ public class OblivionStone extends Item implements IPerhaps {
 				Multimap<Integer, Integer> stackSizeMultimap = ArrayListMultimap.create();
 
 				for (int slot : stackMap.keySet()) {
-
 					if (stackMap.get(slot).getItem() != ForgeRegistries.ITEMS.getValue(new ResourceLocation(str)))
 						localStackMap.remove(slot);
-
 				}
 
 				for (int slot : localStackMap.keySet()) {
@@ -270,15 +233,12 @@ public class OblivionStone extends Item implements IPerhaps {
 
 				for (INBT sID : list) {
 					String str = ((StringNBT) sID).getString();
-
 					HashMap<Integer, ItemStack> localStackMap = new HashMap<Integer, ItemStack>(stackMap);
 					Multimap<Integer, Integer> stackSizeMultimap = ArrayListMultimap.create();
 
 					for (int slot : stackMap.keySet()) {
-
 						if (stackMap.get(slot).getItem() != ForgeRegistries.ITEMS.getValue(new ResourceLocation(str)))
 							localStackMap.remove(slot);
-
 					}
 
 					for (int slot : localStackMap.keySet()) {

@@ -1,14 +1,46 @@
 package com.integral.enigmaticlegacy.helpers;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 public class ItemLoreHelper {
+
+	public static void addLocalizedString(List<ITextComponent> list, String str) {
+		list.add(new TranslationTextComponent(str));
+	}
+
+	public static void addLocalizedString(List<ITextComponent> list, String str, @Nullable TextFormatting format, Object... values) {
+		TextComponent[] stringValues = new TextComponent[values.length];
+		
+		int counter = 0;
+		for (Object value : values) {
+			TextComponent comp;
+			
+			if (value instanceof TextComponent)
+				comp = (TextComponent)value;
+			else
+				comp = new StringTextComponent(value.toString());
+			
+			if (format != null)
+				comp.func_240699_a_(format);
+			
+			stringValues[counter] = comp;
+			counter++;
+		}
+		
+		list.add(new TranslationTextComponent(str, (Object[])stringValues));
+	}
 
 	public static ItemStack mergeDisplayData(ItemStack from, ItemStack to) {
 		CompoundNBT nbt = from.getOrCreateChildTag("display");
@@ -27,64 +59,64 @@ public class ItemLoreHelper {
 	public static ItemStack addLoreString(ItemStack stack, String string) {
 		CompoundNBT nbt = stack.getOrCreateChildTag("display");
 
-	    ListNBT loreList = nbt.getList("Lore", 8);
-	    loreList.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
+		ListNBT loreList = nbt.getList("Lore", 8);
+		loreList.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
 
-	    nbt.put("Lore", loreList);
+		nbt.put("Lore", loreList);
 
-	    return stack;
+		return stack;
 	}
 
 	public static ItemStack setLoreString(ItemStack stack, String string, int index) {
 		CompoundNBT nbt = stack.getOrCreateChildTag("display");
 
-	    ListNBT loreList = nbt.getList("Lore", 8);
-	    if (loreList.size()-1 >= index)
-	    	loreList.set(index, StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
-	    else
-	    	loreList.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
+		ListNBT loreList = nbt.getList("Lore", 8);
+		if (loreList.size() - 1 >= index)
+			loreList.set(index, StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
+		else
+			loreList.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
 
-	    nbt.put("Lore", loreList);
+		nbt.put("Lore", loreList);
 
-	    return stack;
+		return stack;
 	}
 
 	public static ItemStack removeLoreString(ItemStack stack, int index) {
 		CompoundNBT nbt = stack.getOrCreateChildTag("display");
 
-	    ListNBT loreList = nbt.getList("Lore", 8);
+		ListNBT loreList = nbt.getList("Lore", 8);
 
-	    if (index == -1 && loreList.size() > 0)
-	    	loreList.remove(loreList.size()-1);
-	    else if (loreList.size()-1 >= index)
-	    	loreList.remove(index);
+		if (index == -1 && loreList.size() > 0)
+			loreList.remove(loreList.size() - 1);
+		else if (loreList.size() - 1 >= index)
+			loreList.remove(index);
 
-	    nbt.put("Lore", loreList);
+		nbt.put("Lore", loreList);
 
-	    return stack;
+		return stack;
 	}
 
 	public static ItemStack setLastLoreString(ItemStack stack, String string) {
 		CompoundNBT nbt = stack.getOrCreateChildTag("display");
 
-	    ListNBT loreList = nbt.getList("Lore", 8);
+		ListNBT loreList = nbt.getList("Lore", 8);
 
-	    if (loreList.size() > 0)
-	    	loreList.set(loreList.size()-1, StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
-	    else
-	    	loreList.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
+		if (loreList.size() > 0)
+			loreList.set(loreList.size() - 1, StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
+		else
+			loreList.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
 
-	    nbt.put("Lore", loreList);
+		nbt.put("Lore", loreList);
 
-	    return stack;
+		return stack;
 	}
 
 	public static ItemStack setDisplayName(ItemStack stack, String name) {
 		CompoundNBT nbt = stack.getOrCreateChildTag("display");
 
-	    nbt.putString("Name", ITextComponent.Serializer.toJson(new StringTextComponent(name)));
+		nbt.putString("Name", ITextComponent.Serializer.toJson(new StringTextComponent(name)));
 
-	    return stack;
+		return stack;
 	}
 
 	public static class AnvilParser {
@@ -126,8 +158,8 @@ public class ItemLoreHelper {
 		}
 
 		public static String parseFormatting(String field) {
-			String formatter = new TranslationTextComponent("tooltip.enigmaticlegacy.paragraph").getFormattedText();
-			String subformat = new TranslationTextComponent("tooltip.enigmaticlegacy.subformat").getFormattedText();
+			String formatter = new TranslationTextComponent("tooltip.enigmaticlegacy.paragraph").getString();
+			String subformat = new TranslationTextComponent("tooltip.enigmaticlegacy.subformat").getString();
 
 			return field.replace(subformat, formatter);
 		}
@@ -136,10 +168,9 @@ public class ItemLoreHelper {
 			String number = "";
 			int index = -1;
 
-
 			for (char symbol : field.toCharArray()) {
 				if (Character.isDigit(symbol)) {
-					number = number+symbol;
+					number = number + symbol;
 				} else
 					break;
 
@@ -151,7 +182,7 @@ public class ItemLoreHelper {
 				return number;
 			}
 
-			return ""+index;
+			return "" + index;
 		}
 
 		public boolean isLoreString() {

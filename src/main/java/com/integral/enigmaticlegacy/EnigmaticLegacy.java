@@ -7,6 +7,10 @@ import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.integral.enigmaticlegacy.api.items.IAdvancedPotionItem.PotionType;
+import com.integral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
+import com.integral.enigmaticlegacy.blocks.BlockBigLamp;
+import com.integral.enigmaticlegacy.blocks.BlockMassiveLamp;
 import com.integral.enigmaticlegacy.brewing.SpecialBrewingRecipe;
 import com.integral.enigmaticlegacy.brewing.ValidationBrewingRecipe;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
@@ -14,14 +18,11 @@ import com.integral.enigmaticlegacy.crafting.EnigmaticRecipeSerializers;
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
-import com.integral.enigmaticlegacy.handlers.EnigmaticArmorMaterials;
 import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticKeybindHandler;
-import com.integral.enigmaticlegacy.handlers.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.handlers.EnigmaticUpdateHandler;
 import com.integral.enigmaticlegacy.handlers.OneSpecialHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.helpers.AdvancedPotion;
 import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
@@ -43,6 +44,7 @@ import com.integral.enigmaticlegacy.items.EtheriumShovel;
 import com.integral.enigmaticlegacy.items.EtheriumSword;
 import com.integral.enigmaticlegacy.items.ExtradimensionalEye;
 import com.integral.enigmaticlegacy.items.EyeOfNebula;
+import com.integral.enigmaticlegacy.items.FabulousScroll;
 import com.integral.enigmaticlegacy.items.ForbiddenAxe;
 import com.integral.enigmaticlegacy.items.GemOfBinding;
 import com.integral.enigmaticlegacy.items.GolemHeart;
@@ -71,6 +73,8 @@ import com.integral.enigmaticlegacy.items.UnholyGrail;
 import com.integral.enigmaticlegacy.items.VoidPearl;
 import com.integral.enigmaticlegacy.items.WormholePotion;
 import com.integral.enigmaticlegacy.items.XPScroll;
+import com.integral.enigmaticlegacy.items.generic.GenericBlockItem;
+import com.integral.enigmaticlegacy.objects.AdvancedPotion;
 import com.integral.enigmaticlegacy.packets.clients.PacketFlameParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketHandleItemPickup;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
@@ -92,6 +96,10 @@ import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -129,6 +137,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
+import vazkii.patchouli.api.PatchouliAPI;
 
 @Mod("enigmaticlegacy")
 public class EnigmaticLegacy {
@@ -138,7 +147,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "1.7.0";
+	public static final String VERSION = "1.8.1";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -153,68 +162,72 @@ public class EnigmaticLegacy {
 	public static SoundEvent HHON;
 	public static SoundEvent HHOFF;
 	public static SoundEvent SHIELD_TRIGGER;
+	
+	public static BlockMassiveLamp massiveLamp;
+	public static BlockBigLamp bigLamp;
 
-	public static Item enigmaticItem;
-	public static Item xpScroll;
-	public static Item enigmaticAmulet;
-	public static Item magnetRing;
-	public static Item extradimensionalEye;
-	public static Item relicOfTesting;
-	public static Item recallPotion;
-	public static Item forbiddenAxe;
-	public static Item escapeScroll;
-	public static Item heavenScroll;
-	public static Item superMagnetRing;
-	public static Item golemHeart;
-	public static Item megaSponge;
-	public static Item unholyGrail;
-	public static Item eyeOfNebula;
-	public static Item magmaHeart;
-	public static Item voidPearl;
-	public static Item oceanStone;
-	public static Item angelBlessing;
-	public static Item monsterCharm;
-	public static Item miningCharm;
-	public static Item enderRing;
-	public static Item mendingMixture;
-	public static Item lootGenerator;
-	public static Item thiccScroll;
-	public static Item ironRing;
-	public static Item hastePotionDefault;
-	public static Item hastePotionExtended;
-	public static Item hastePotionEmpowered;
-	public static Item hastePotionExtendedEmpowered;
-	public static Item etheriumOre;
-	public static Item etheriumIngot;
-	public static Item ultimatePotionBase;
-	public static Item ultimatePotionSplash;
-	public static Item ultimatePotionLingering;
-	public static Item commonPotionBase;
-	public static Item commonPotionSplash;
-	public static Item commonPotionLingering;
+	public static EnigmaticItem enigmaticItem;
+	public static XPScroll xpScroll;
+	public static EnigmaticAmulet enigmaticAmulet;
+	public static MagnetRing magnetRing;
+	public static ExtradimensionalEye extradimensionalEye;
+	public static RelicOfTesting relicOfTesting;
+	public static RecallPotion recallPotion;
+	public static ForbiddenAxe forbiddenAxe;
+	public static EscapeScroll escapeScroll;
+	public static HeavenScroll heavenScroll;
+	public static SuperMagnetRing superMagnetRing;
+	public static GolemHeart golemHeart;
+	public static Megasponge megaSponge;
+	public static UnholyGrail unholyGrail;
+	public static EyeOfNebula eyeOfNebula;
+	public static MagmaHeart magmaHeart;
+	public static VoidPearl voidPearl;
+	public static OceanStone oceanStone;
+	public static AngelBlessing angelBlessing;
+	public static MonsterCharm monsterCharm;
+	public static MiningCharm miningCharm;
+	public static EnderRing enderRing;
+	public static MendingMixture mendingMixture;
+	public static LootGenerator lootGenerator;
+	public static ThiccScroll thiccScroll;
+	public static IronRing ironRing;
+	public static HastePotion hastePotionDefault;
+	public static HastePotion hastePotionExtended;
+	public static HastePotion hastePotionEmpowered;
+	public static HastePotion hastePotionExtendedEmpowered;
+	public static EtheriumOre etheriumOre;
+	public static EtheriumIngot etheriumIngot;
+	public static UltimatePotionBase ultimatePotionBase;
+	public static UltimatePotionSplash ultimatePotionSplash;
+	public static UltimatePotionLingering ultimatePotionLingering;
+	public static UltimatePotionBase commonPotionBase;
+	public static UltimatePotionSplash commonPotionSplash;
+	public static UltimatePotionLingering commonPotionLingering;
 
-	public static Item etheriumHelmet;
-	public static Item etheriumChestplate;
-	public static Item etheriumLeggings;
-	public static Item etheriumBoots;
+	public static EtheriumArmor etheriumHelmet;
+	public static EtheriumArmor etheriumChestplate;
+	public static EtheriumArmor etheriumLeggings;
+	public static EtheriumArmor etheriumBoots;
 
-	public static Item etheriumPickaxe;
-	public static Item etheriumAxe;
-	public static Item etheriumShovel;
-	public static Item etheriumSword;
-	public static Item etheriumScythe;
+	public static EtheriumPickaxe etheriumPickaxe;
+	public static EtheriumAxe etheriumAxe;
+	public static EtheriumShovel etheriumShovel;
+	public static EtheriumSword etheriumSword;
+	public static EtheriumScythe etheriumScythe;
 
-	public static Item astralDust;
-	public static Item loreInscriber;
-	public static Item loreFragment;
-	public static Item enderRod;
+	public static AstralDust astralDust;
+	public static LoreInscriber loreInscriber;
+	public static LoreFragment loreFragment;
+	public static EnderRod enderRod;
 
-	public static Item astralBreaker;
-	public static Item oblivionStone;
-	public static Item enchantmentTransposer;
+	public static AstralBreaker astralBreaker;
+	public static OblivionStone oblivionStone;
+	public static EnchantmentTransposer enchantmentTransposer;
 
-	public static Item gemOfBinding;
-	public static Item wormholePotion;
+	public static GemOfBinding gemOfBinding;
+	public static WormholePotion wormholePotion;
+	public static FabulousScroll fabulousScroll;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -246,8 +259,9 @@ public class EnigmaticLegacy {
 
 	private static final String PTC_VERSION = "1";
 
-	public static final CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+	public static final CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
+	@SuppressWarnings("deprecation")
 	public EnigmaticLegacy() {
 		EnigmaticLegacy.enigmaticLogger.info("Constructing mod instance...");
 
@@ -255,6 +269,75 @@ public class EnigmaticLegacy {
 
 		EnigmaticLegacy.enigmaticHandler = new EnigmaticEventHandler();
 		EnigmaticLegacy.keybindHandler = new EnigmaticKeybindHandler();
+
+		massiveLamp = new BlockMassiveLamp(Block.Properties.from(Blocks.BEACON));
+		bigLamp = new BlockBigLamp(Block.Properties.from(Blocks.BEACON));
+		
+		EnigmaticLegacy.enigmaticItem = new EnigmaticItem();
+		EnigmaticLegacy.xpScroll = new XPScroll();
+		EnigmaticLegacy.enigmaticAmulet = new EnigmaticAmulet();
+		EnigmaticLegacy.magnetRing = new MagnetRing();
+		EnigmaticLegacy.extradimensionalEye = new ExtradimensionalEye();
+		EnigmaticLegacy.relicOfTesting = new RelicOfTesting();
+		EnigmaticLegacy.recallPotion = new RecallPotion();
+		EnigmaticLegacy.forbiddenAxe = new ForbiddenAxe();
+		EnigmaticLegacy.escapeScroll = new EscapeScroll();
+		EnigmaticLegacy.heavenScroll = new HeavenScroll();
+		EnigmaticLegacy.superMagnetRing = new SuperMagnetRing();
+		EnigmaticLegacy.golemHeart = new GolemHeart();
+		EnigmaticLegacy.megaSponge = new Megasponge();
+		EnigmaticLegacy.unholyGrail = new UnholyGrail();
+		EnigmaticLegacy.eyeOfNebula = new EyeOfNebula();
+		EnigmaticLegacy.magmaHeart = new MagmaHeart();
+		EnigmaticLegacy.voidPearl = new VoidPearl();
+		EnigmaticLegacy.oceanStone = new OceanStone();
+		EnigmaticLegacy.angelBlessing = new AngelBlessing();
+		EnigmaticLegacy.monsterCharm = new MonsterCharm();
+		EnigmaticLegacy.miningCharm = new MiningCharm();
+		EnigmaticLegacy.enderRing = new EnderRing();
+		EnigmaticLegacy.mendingMixture = new MendingMixture();
+		EnigmaticLegacy.lootGenerator = new LootGenerator();
+		EnigmaticLegacy.thiccScroll = new ThiccScroll();
+		EnigmaticLegacy.ironRing = new IronRing();
+		EnigmaticLegacy.etheriumOre = new EtheriumOre();
+		EnigmaticLegacy.etheriumIngot = new EtheriumIngot();
+
+		EnigmaticLegacy.hastePotionDefault = (HastePotion) new HastePotion(Rarity.COMMON, 3600, 0).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "haste_potion_default"));
+		EnigmaticLegacy.hastePotionExtended = (HastePotion) new HastePotion(Rarity.COMMON, 9600, 0).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "haste_potion_extended"));
+		EnigmaticLegacy.hastePotionEmpowered = (HastePotion) new HastePotion(Rarity.COMMON, 1800, 1).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "haste_potion_empowered"));
+		EnigmaticLegacy.hastePotionExtendedEmpowered = (HastePotion) new HastePotion(Rarity.RARE, 4800, 1).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "haste_potion_extended_empowered"));
+
+		EnigmaticLegacy.commonPotionBase = (UltimatePotionBase) new UltimatePotionBase(Rarity.COMMON, PotionType.COMMON).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "common_potion"));
+		EnigmaticLegacy.commonPotionSplash = (UltimatePotionSplash) new UltimatePotionSplash(Rarity.COMMON, PotionType.COMMON).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "common_potion_splash"));
+		EnigmaticLegacy.commonPotionLingering = (UltimatePotionLingering) new UltimatePotionLingering(Rarity.COMMON, PotionType.COMMON).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "common_potion_lingering"));
+
+		EnigmaticLegacy.ultimatePotionBase = (UltimatePotionBase) new UltimatePotionBase(Rarity.RARE, PotionType.ULTIMATE).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ultimate_potion"));
+		EnigmaticLegacy.ultimatePotionSplash = (UltimatePotionSplash) new UltimatePotionSplash(Rarity.RARE, PotionType.ULTIMATE).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ultimate_potion_splash"));
+		EnigmaticLegacy.ultimatePotionLingering = (UltimatePotionLingering) new UltimatePotionLingering(Rarity.RARE, PotionType.ULTIMATE).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ultimate_potion_lingering"));
+
+		EnigmaticLegacy.etheriumHelmet = (EtheriumArmor) new EtheriumArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.HEAD).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_helmet"));
+		EnigmaticLegacy.etheriumChestplate = (EtheriumArmor) new EtheriumArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.CHEST).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_chestplate"));
+		EnigmaticLegacy.etheriumLeggings = (EtheriumArmor) new EtheriumArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.LEGS).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_leggings"));
+		EnigmaticLegacy.etheriumBoots = (EtheriumArmor) new EtheriumArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.FEET).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_boots"));
+
+		EnigmaticLegacy.etheriumPickaxe = new EtheriumPickaxe();
+		EnigmaticLegacy.etheriumAxe = new EtheriumAxe();
+		EnigmaticLegacy.etheriumShovel = new EtheriumShovel();
+		EnigmaticLegacy.etheriumSword = new EtheriumSword();
+		EnigmaticLegacy.etheriumScythe = new EtheriumScythe();
+
+		EnigmaticLegacy.astralDust = new AstralDust();
+		EnigmaticLegacy.loreInscriber = new LoreInscriber();
+		EnigmaticLegacy.loreFragment = new LoreFragment();
+		EnigmaticLegacy.enderRod = new EnderRod();
+
+		EnigmaticLegacy.astralBreaker = new AstralBreaker();
+		EnigmaticLegacy.oblivionStone = new OblivionStone();
+		EnigmaticLegacy.enchantmentTransposer = new EnchantmentTransposer();
+
+		EnigmaticLegacy.gemOfBinding = new GemOfBinding();
+		EnigmaticLegacy.wormholePotion = new WormholePotion();
+		EnigmaticLegacy.fabulousScroll = new FabulousScroll();
 
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientRegistries);
@@ -274,7 +357,7 @@ public class EnigmaticLegacy {
 
 		EnigmaticLegacy.enigmaticLogger.info("Mod instance constructed successfully.");
 	}
-
+	
 	private void onLoadComplete(final FMLLoadCompleteEvent event) {
 
 		EnigmaticLegacy.enigmaticLogger.info("Initializing load completion phase...");
@@ -288,7 +371,7 @@ public class EnigmaticLegacy {
 			ConfigHandler.CONFIG_VERSION.save();
 		}
 
-		GolemHeart.initAttributes();
+		EnigmaticLegacy.golemHeart.initAttributes();
 
 		EnigmaticLegacy.enigmaticLogger.info("Registering brewing recipes...");
 
@@ -360,6 +443,8 @@ public class EnigmaticLegacy {
 		EnigmaticLegacy.keybindHandler.registerKeybinds();
 
 		ObfuscatedFields.extractClientFields();
+		RenderTypeLookup.setRenderLayer(EnigmaticLegacy.massiveLamp, RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(EnigmaticLegacy.bigLamp, RenderType.getCutout());
 
 		EnigmaticLegacy.enigmaticLogger.info("Client setup phase finished successfully.");
 	}
@@ -387,79 +472,80 @@ public class EnigmaticLegacy {
 
 			}
 		}
+		
+		@SubscribeEvent
+		public static void registerBlocks(final RegistryEvent.Register<Block> event) {
+			EnigmaticLegacy.enigmaticLogger.info("Initializing blocks registration...");
+			
+			event.getRegistry().registerAll(massiveLamp, bigLamp);
+			
+			EnigmaticLegacy.enigmaticLogger.info("Blocks registered successfully.");
+		}
 
 		@SubscribeEvent
 		public static void registerItems(final RegistryEvent.Register<Item> event) {
 
 			EnigmaticLegacy.enigmaticLogger.info("Initializing items registration...");
 
-			EnigmaticLegacy.enigmaticItem = new EnigmaticItem(EnigmaticItem.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_item"));
-			EnigmaticLegacy.xpScroll = new XPScroll(XPScroll.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "xp_scroll"));
-			EnigmaticLegacy.enigmaticAmulet = new EnigmaticAmulet(EnigmaticAmulet.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet"));
-			EnigmaticLegacy.magnetRing = new MagnetRing(MagnetRing.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "magnet_ring"));
-			EnigmaticLegacy.extradimensionalEye = new ExtradimensionalEye(ExtradimensionalEye.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "extradimensional_eye"));
-			EnigmaticLegacy.relicOfTesting = new RelicOfTesting(RelicOfTesting.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "relic_of_testing"));
-			EnigmaticLegacy.recallPotion = new RecallPotion(RecallPotion.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "recall_potion"));
-			EnigmaticLegacy.forbiddenAxe = new ForbiddenAxe(EnigmaticMaterials.FORBIDDENAXE, 6, -2.4F, ForbiddenAxe.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "forbidden_axe"));
-			EnigmaticLegacy.escapeScroll = new EscapeScroll(EscapeScroll.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "escape_scroll"));
-			EnigmaticLegacy.heavenScroll = new HeavenScroll(HeavenScroll.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "heaven_scroll"));
-			EnigmaticLegacy.superMagnetRing = new SuperMagnetRing(SuperMagnetRing.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "super_magnet_ring"));
-			EnigmaticLegacy.golemHeart = new GolemHeart(GolemHeart.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "golem_heart"));
-			EnigmaticLegacy.megaSponge = new Megasponge(Megasponge.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "mega_sponge"));
-			EnigmaticLegacy.unholyGrail = new UnholyGrail(UnholyGrail.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "unholy_grail"));
-			EnigmaticLegacy.eyeOfNebula = new EyeOfNebula(EyeOfNebula.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "eye_of_nebula"));
-			EnigmaticLegacy.magmaHeart = new MagmaHeart(MagmaHeart.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "magma_heart"));
-			EnigmaticLegacy.voidPearl = new VoidPearl(VoidPearl.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "void_pearl"));
-			EnigmaticLegacy.oceanStone = new OceanStone(OceanStone.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ocean_stone"));
-			EnigmaticLegacy.angelBlessing = new AngelBlessing(AngelBlessing.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "angel_blessing"));
-			EnigmaticLegacy.monsterCharm = new MonsterCharm(MonsterCharm.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "monster_charm"));
-			EnigmaticLegacy.miningCharm = new MiningCharm(MiningCharm.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "mining_charm"));
-			EnigmaticLegacy.enderRing = new EnderRing(EnderRing.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ender_ring"));
-			EnigmaticLegacy.mendingMixture = new MendingMixture(MendingMixture.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "mending_mixture"));
-			EnigmaticLegacy.lootGenerator = new LootGenerator(LootGenerator.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "loot_generator"));
-			EnigmaticLegacy.thiccScroll = new ThiccScroll(ThiccScroll.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "thicc_scroll"));
-			EnigmaticLegacy.ironRing = new IronRing(IronRing.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "iron_ring"));
-			EnigmaticLegacy.hastePotionDefault = new HastePotion(HastePotion.setupIntegratedProperties(Rarity.COMMON), 3600, 0).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "haste_potion_default"));
-			EnigmaticLegacy.hastePotionExtended = new HastePotion(HastePotion.setupIntegratedProperties(Rarity.COMMON), 9600, 0).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "haste_potion_extended"));
-			EnigmaticLegacy.hastePotionEmpowered = new HastePotion(HastePotion.setupIntegratedProperties(Rarity.COMMON), 1800, 1).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "haste_potion_empowered"));
-			EnigmaticLegacy.hastePotionExtendedEmpowered = new HastePotion(HastePotion.setupIntegratedProperties(Rarity.RARE), 4800, 1).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "haste_potion_extended_empowered"));
-			EnigmaticLegacy.etheriumOre = new EtheriumOre(EtheriumOre.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_ore"));
-			EnigmaticLegacy.etheriumIngot = new EtheriumIngot(EtheriumIngot.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_ingot"));
-
-			EnigmaticLegacy.commonPotionBase = new UltimatePotionBase(UltimatePotionBase.setupIntegratedProperties(Rarity.COMMON), true).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "common_potion"));
-			EnigmaticLegacy.commonPotionSplash = new UltimatePotionSplash(UltimatePotionSplash.setupIntegratedProperties(Rarity.COMMON), true).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "common_potion_splash"));
-			EnigmaticLegacy.commonPotionLingering = new UltimatePotionLingering(UltimatePotionLingering.setupIntegratedProperties(Rarity.COMMON), true).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "common_potion_lingering"));
-
-			EnigmaticLegacy.ultimatePotionBase = new UltimatePotionBase(UltimatePotionBase.setupIntegratedProperties(Rarity.RARE), false).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ultimate_potion"));
-			EnigmaticLegacy.ultimatePotionSplash = new UltimatePotionSplash(UltimatePotionSplash.setupIntegratedProperties(Rarity.RARE), false).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ultimate_potion_splash"));
-			EnigmaticLegacy.ultimatePotionLingering = new UltimatePotionLingering(UltimatePotionLingering.setupIntegratedProperties(Rarity.RARE), false).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ultimate_potion_lingering"));
-
-			EnigmaticLegacy.etheriumHelmet = new EtheriumArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.HEAD, EtheriumArmor.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_helmet"));
-			EnigmaticLegacy.etheriumChestplate = new EtheriumArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.CHEST, EtheriumArmor.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_chestplate"));
-			EnigmaticLegacy.etheriumLeggings = new EtheriumArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.LEGS, EtheriumArmor.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_leggings"));
-			EnigmaticLegacy.etheriumBoots = new EtheriumArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.FEET, EtheriumArmor.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_boots"));
-
-			EnigmaticLegacy.etheriumPickaxe = new EtheriumPickaxe(EnigmaticMaterials.ETHERIUM, p -> EtheriumPickaxe.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_pickaxe"));
-			EnigmaticLegacy.etheriumAxe = new EtheriumAxe(EnigmaticMaterials.ETHERIUM, EtheriumAxe.setupIntegratedProperties(0), -3.2F, 10).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_axe"));
-			EnigmaticLegacy.etheriumShovel = new EtheriumShovel(EnigmaticMaterials.ETHERIUM, p -> EtheriumShovel.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_shovel"));
-			EnigmaticLegacy.etheriumSword = new EtheriumSword(EtheriumSword.setupIntegratedProperties(), EnigmaticMaterials.ETHERIUM, -2.6F, 6).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_sword"));
-			EnigmaticLegacy.etheriumScythe = new EtheriumScythe(EtheriumScythe.setupIntegratedProperties(), EnigmaticMaterials.ETHERIUM, -2.0F, 3).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_scythe"));
-
-			EnigmaticLegacy.astralDust = new AstralDust(AstralDust.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_dust"));
-			EnigmaticLegacy.loreInscriber = new LoreInscriber(LoreInscriber.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "lore_inscriber"));
-			EnigmaticLegacy.loreFragment = new LoreFragment(LoreFragment.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "lore_fragment"));
-			EnigmaticLegacy.enderRod = new EnderRod(EnderRod.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ender_rod"));
-
-			EnigmaticLegacy.astralBreaker = new AstralBreaker(EnigmaticMaterials.ETHERIUM, p -> AstralBreaker.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_breaker"));
-			EnigmaticLegacy.oblivionStone = new OblivionStone(OblivionStone.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "oblivion_stone"));
-			EnigmaticLegacy.enchantmentTransposer = new EnchantmentTransposer(EnchantmentTransposer.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enchantment_transposer"));
-
-			EnigmaticLegacy.gemOfBinding = new GemOfBinding(GemOfBinding.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "gem_of_binding"));
-			EnigmaticLegacy.wormholePotion = new WormholePotion(WormholePotion.setupIntegratedProperties()).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "wormhole_potion"));
-
-			event.getRegistry().registerAll(EnigmaticLegacy.enigmaticItem, EnigmaticLegacy.golemHeart, EnigmaticLegacy.angelBlessing, EnigmaticLegacy.oceanStone, EnigmaticLegacy.magmaHeart, EnigmaticLegacy.eyeOfNebula, EnigmaticLegacy.voidPearl, EnigmaticLegacy.ironRing, EnigmaticLegacy.enigmaticAmulet, EnigmaticLegacy.thiccScroll, EnigmaticLegacy.xpScroll, EnigmaticLegacy.escapeScroll, EnigmaticLegacy.heavenScroll, EnigmaticLegacy.magnetRing, EnigmaticLegacy.superMagnetRing, EnigmaticLegacy.enderRing, EnigmaticLegacy.monsterCharm, EnigmaticLegacy.miningCharm, EnigmaticLegacy.megaSponge, EnigmaticLegacy.extradimensionalEye, EnigmaticLegacy.forbiddenAxe, EnigmaticLegacy.unholyGrail, EnigmaticLegacy.recallPotion, EnigmaticLegacy.mendingMixture, EnigmaticLegacy.lootGenerator, EnigmaticLegacy.hastePotionDefault, EnigmaticLegacy.hastePotionExtended, EnigmaticLegacy.hastePotionEmpowered, EnigmaticLegacy.hastePotionExtendedEmpowered, EnigmaticLegacy.relicOfTesting, EnigmaticLegacy.etheriumOre, EnigmaticLegacy.etheriumIngot, EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.etheriumHelmet, EnigmaticLegacy.etheriumChestplate, EnigmaticLegacy.etheriumLeggings, EnigmaticLegacy.etheriumBoots, EnigmaticLegacy.etheriumPickaxe, EnigmaticLegacy.etheriumAxe, EnigmaticLegacy.etheriumShovel, EnigmaticLegacy.etheriumSword, EnigmaticLegacy.etheriumScythe, EnigmaticLegacy.astralBreaker, EnigmaticLegacy.astralDust, EnigmaticLegacy.enderRod, EnigmaticLegacy.loreInscriber, EnigmaticLegacy.loreFragment, EnigmaticLegacy.oblivionStone, EnigmaticLegacy.enchantmentTransposer/*,
-																																																																																																																																																																																																																																																																																																																																																																																																																																																									gemOfBinding,
-																																																																																																																																																																																																																																																																																																																																																																																																																																																									wormholePotion*/
+			event.getRegistry().registerAll(
+					EnigmaticLegacy.enigmaticItem,
+					EnigmaticLegacy.golemHeart,
+					EnigmaticLegacy.angelBlessing,
+					EnigmaticLegacy.oceanStone,
+					EnigmaticLegacy.magmaHeart,
+					EnigmaticLegacy.eyeOfNebula,
+					EnigmaticLegacy.voidPearl,
+					EnigmaticLegacy.ironRing,
+					EnigmaticLegacy.enigmaticAmulet,
+					EnigmaticLegacy.thiccScroll,
+					EnigmaticLegacy.xpScroll,
+					EnigmaticLegacy.escapeScroll,
+					EnigmaticLegacy.heavenScroll,
+					EnigmaticLegacy.magnetRing,
+					EnigmaticLegacy.superMagnetRing,
+					EnigmaticLegacy.enderRing,
+					EnigmaticLegacy.monsterCharm,
+					EnigmaticLegacy.miningCharm,
+					EnigmaticLegacy.megaSponge,
+					EnigmaticLegacy.extradimensionalEye,
+					EnigmaticLegacy.forbiddenAxe,
+					EnigmaticLegacy.unholyGrail,
+					EnigmaticLegacy.recallPotion,
+					EnigmaticLegacy.mendingMixture,
+					EnigmaticLegacy.lootGenerator,
+					EnigmaticLegacy.hastePotionDefault,
+					EnigmaticLegacy.hastePotionExtended,
+					EnigmaticLegacy.hastePotionEmpowered,
+					EnigmaticLegacy.hastePotionExtendedEmpowered,
+					EnigmaticLegacy.relicOfTesting,
+					EnigmaticLegacy.etheriumOre,
+					EnigmaticLegacy.etheriumIngot,
+					EnigmaticLegacy.commonPotionBase,
+					EnigmaticLegacy.commonPotionSplash,
+					EnigmaticLegacy.commonPotionLingering,
+					EnigmaticLegacy.ultimatePotionBase,
+					EnigmaticLegacy.ultimatePotionSplash,
+					EnigmaticLegacy.ultimatePotionLingering,
+					EnigmaticLegacy.etheriumHelmet,
+					EnigmaticLegacy.etheriumChestplate,
+					EnigmaticLegacy.etheriumLeggings,
+					EnigmaticLegacy.etheriumBoots,
+					EnigmaticLegacy.etheriumPickaxe,
+					EnigmaticLegacy.etheriumAxe,
+					EnigmaticLegacy.etheriumShovel,
+					EnigmaticLegacy.etheriumSword,
+					EnigmaticLegacy.etheriumScythe,
+					EnigmaticLegacy.astralBreaker,
+					EnigmaticLegacy.astralDust,
+					EnigmaticLegacy.enderRod,
+					EnigmaticLegacy.loreInscriber,
+					EnigmaticLegacy.loreFragment,
+					EnigmaticLegacy.oblivionStone,
+					EnigmaticLegacy.enchantmentTransposer,
+					EnigmaticLegacy.fabulousScroll,
+					new GenericBlockItem(massiveLamp),
+					new GenericBlockItem(bigLamp)
+					/*,gemOfBinding,wormholePotion*/
 			);
 
 			EnigmaticLegacy.enigmaticLogger.info("Items registered successfully.");

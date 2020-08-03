@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "hanging=false": {
+      "model": "enigmaticlegacy:block/big_lamp"
+    },
+    "hanging=true": {
+      "model": "enigmaticlegacy:block/big_hanging_lamp"
+    }
+  }
+}

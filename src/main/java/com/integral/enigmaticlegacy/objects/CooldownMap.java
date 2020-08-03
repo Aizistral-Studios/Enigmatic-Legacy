@@ -1,4 +1,4 @@
-package com.integral.enigmaticlegacy.helpers;
+package com.integral.enigmaticlegacy.objects;
 
 import java.util.HashMap;
 

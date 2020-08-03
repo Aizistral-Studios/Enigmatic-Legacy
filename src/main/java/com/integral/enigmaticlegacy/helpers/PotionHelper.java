@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.brewing.ComplexBrewingRecipe;
+import com.integral.enigmaticlegacy.objects.AdvancedPotion;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

@@ -5,10 +5,12 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.IPerhaps;
+import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
-import com.integral.enigmaticlegacy.helpers.LoreHelper;
+import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
+import com.integral.enigmaticlegacy.items.generic.ItemBaseTool;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -16,32 +18,21 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.item.SwordItem;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ForbiddenAxe extends SwordItem implements IPerhaps {
 
-	public static Properties integratedProperties = new Item.Properties();
-
-	public ForbiddenAxe(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties properties) {
-		super(tier, attackDamageIn, attackSpeedIn, properties);
-	}
-
-	public static Properties setupIntegratedProperties() {
-		ForbiddenAxe.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		ForbiddenAxe.integratedProperties.maxStackSize(1);
-		ForbiddenAxe.integratedProperties.rarity(Rarity.EPIC);
-		ForbiddenAxe.integratedProperties.maxDamage(2000);
-
-		return ForbiddenAxe.integratedProperties;
-
+	public ForbiddenAxe() {
+		super(EnigmaticMaterials.FORBIDDENAXE, 6, -2.4F, ItemBaseTool.getDefaultProperties().defaultMaxDamage(2000).rarity(Rarity.EPIC));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "forbidden_axe"));
 	}
 
 	@Override
@@ -52,12 +43,12 @@ public class ForbiddenAxe extends SwordItem implements IPerhaps {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		if (Screen.hasShiftDown()) {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe1");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe2", ConfigHandler.FORBIDDEN_AXE_BEHEADING_BONUS.getValue().asPercentage() + "%");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe3");
+		if (Screen.func_231173_s_()) {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe2", TextFormatting.GOLD, ConfigHandler.FORBIDDEN_AXE_BEHEADING_BONUS.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe3");
 		} else {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 
 		int looting = EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING, stack);
@@ -70,8 +61,8 @@ public class ForbiddenAxe extends SwordItem implements IPerhaps {
 			// Just don't do it lol
 		}
 
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance", (ConfigHandler.FORBIDDEN_AXE_BEHEADING_BASE.getValue().asPercentage() + (ConfigHandler.FORBIDDEN_AXE_BEHEADING_BONUS.getValue().asPercentage() * looting)) + "%");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance", TextFormatting.GOLD, (ConfigHandler.FORBIDDEN_AXE_BEHEADING_BASE.getValue().asPercentage() + (ConfigHandler.FORBIDDEN_AXE_BEHEADING_BONUS.getValue().asPercentage() * looting)) + "%");
 	}
 
 	@Override

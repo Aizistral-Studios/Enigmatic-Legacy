@@ -1,4 +1,4 @@
-package com.integral.enigmaticlegacy.helpers;
+package com.integral.enigmaticlegacy.objects;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -7,13 +7,13 @@ import java.util.Objects;
 
 import org.lwjgl.opengl.GL11;
 
-import net.minecraft.client.renderer.Vector3f;
-import net.minecraft.client.renderer.Vector4f;
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.util.math.vector.Vector4f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -24,6 +24,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 
 public class Vector3 {
+
 	public static final Vector3 ZERO = new Vector3(0, 0, 0);
 	public static final Vector3 ONE = new Vector3(1, 1, 1);
 	public static final Vector3 CENTER = new Vector3(0.5, 0.5, 0.5);
@@ -38,7 +39,7 @@ public class Vector3 {
 		this.z = d2;
 	}
 
-	public Vector3(Vec3d vec) {
+	public Vector3(Vector3d vec) {
 		this(vec.x, vec.y, vec.z);
 	}
 
@@ -65,9 +66,9 @@ public class Vector3 {
 	public double dotProduct(Vector3 vec) {
 		double d = vec.x * this.x + vec.y * this.y + vec.z * this.z;
 
-		if(d > 1 && d < 1.00001)
+		if (d > 1 && d < 1.00001)
 			d = 1;
-		else if(d < -1 && d > -1.00001)
+		else if (d < -1 && d > -1.00001)
 			d = -1;
 		return d;
 	}
@@ -121,7 +122,7 @@ public class Vector3 {
 
 	public Vector3 normalize() {
 		double d = this.mag();
-		if(d != 0)
+		if (d != 0)
 			return this.multiply(1 / d);
 
 		return this;
@@ -129,7 +130,7 @@ public class Vector3 {
 
 	public Vector3 normalize(double normalizeFactor) {
 		double d = this.mag();
-		if(d != 0)
+		if (d != 0)
 			return this.multiply(normalizeFactor / d);
 
 		return this;
@@ -138,11 +139,11 @@ public class Vector3 {
 	@Override
 	public String toString() {
 		MathContext cont = new MathContext(4, RoundingMode.HALF_UP);
-		return "Vector3(" + new BigDecimal(this.x, cont) + ", " +new BigDecimal(this.y, cont) + ", " + new BigDecimal(this.z, cont) + ")";
+		return "Vector3(" + new BigDecimal(this.x, cont) + ", " + new BigDecimal(this.y, cont) + ", " + new BigDecimal(this.z, cont) + ")";
 	}
 
 	public Vector3 perpendicular() {
-		if(this.z == 0)
+		if (this.z == 0)
 			return this.zCrossProduct();
 		return this.xCrossProduct();
 	}
@@ -165,8 +166,8 @@ public class Vector3 {
 		return new Vector3(d, 0, d1);
 	}
 
-	public Vec3d toVec3D() {
-		return new Vec3d(this.x, this.y, this.z);
+	public Vector3d toVec3D() {
+		return new Vector3d(this.x, this.y, this.z);
 	}
 
 	public double angle(Vector3 vec) {
@@ -186,11 +187,11 @@ public class Vector3 {
 	}
 
 	public Vector3f vector3f() {
-		return new Vector3f((float)this.x, (float)this.y, (float)this.z);
+		return new Vector3f((float) this.x, (float) this.y, (float) this.z);
 	}
 
 	public Vector4f vector4f() {
-		return new Vector4f((float)this.x, (float)this.y, (float)this.z, 1);
+		return new Vector4f((float) this.x, (float) this.y, (float) this.z, 1);
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -204,16 +205,16 @@ public class Vector3 {
 
 	public double scalarProject(Vector3 b) {
 		double l = b.mag();
-		return l == 0 ? 0 : this.dotProduct(b)/l;
+		return l == 0 ? 0 : this.dotProduct(b) / l;
 	}
 
 	public Vector3 project(Vector3 b) {
 		double l = b.magSquared();
-		if(l == 0) {
+		if (l == 0) {
 			return Vector3.ZERO;
 		}
 
-		double m = this.dotProduct(b)/l;
+		double m = this.dotProduct(b) / l;
 		return b.multiply(m);
 	}
 
@@ -223,10 +224,10 @@ public class Vector3 {
 
 	@Override
 	public boolean equals(Object o) {
-		if(!(o instanceof Vector3))
+		if (!(o instanceof Vector3))
 			return false;
 
-		Vector3 v = (Vector3)o;
+		Vector3 v = (Vector3) o;
 		return this.x == v.x && this.y == v.y && this.z == v.z;
 	}
 

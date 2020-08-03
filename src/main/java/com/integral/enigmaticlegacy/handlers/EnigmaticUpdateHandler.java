@@ -42,7 +42,7 @@ public class EnigmaticUpdateHandler {
 		if (!EnigmaticUpdateHandler.show)
 			return;
 
-		player.sendMessage(EnigmaticUpdateHandler.updateStatus);
+		player.sendMessage(EnigmaticUpdateHandler.updateStatus, player.getUniqueID());
 		EnigmaticUpdateHandler.show = false;
 
 	}
@@ -62,24 +62,24 @@ public class EnigmaticUpdateHandler {
 				EnigmaticUpdateHandler.show = true;
 
 				StringTextComponent newVerArg = new StringTextComponent(EnigmaticUpdateHandler.newestVersion);
-				newVerArg.applyTextStyle(TextFormatting.GOLD);
+				newVerArg.func_240699_a_(TextFormatting.GOLD);
 
-				EnigmaticUpdateHandler.updateStatus = new TranslationTextComponent("status.enigmaticlegacy.outdated", newVerArg.getFormattedText());
-				EnigmaticUpdateHandler.updateStatus.applyTextStyle(TextFormatting.DARK_PURPLE);
+				EnigmaticUpdateHandler.updateStatus = new TranslationTextComponent("status.enigmaticlegacy.outdated", newVerArg.getString());
+				EnigmaticUpdateHandler.updateStatus.func_240699_a_(TextFormatting.DARK_PURPLE);
 			}
 		}
 		else
 		{
 			EnigmaticUpdateHandler.show = true;
 			EnigmaticUpdateHandler.updateStatus = new TranslationTextComponent("status.enigmaticlegacy.noconnection");
-			EnigmaticUpdateHandler.updateStatus.applyTextStyle(TextFormatting.RED);
+			EnigmaticUpdateHandler.updateStatus.func_240699_a_(TextFormatting.RED);
 		}
 	}
 
 	private static void getNewestVersion() {
 		try
 		{
-			URL url = new URL("https://raw.githubusercontent.com/Extegral/Enigmatic-Legacy/1.15.X/version.txt");
+			URL url = new URL("https://raw.githubusercontent.com/Extegral/Enigmatic-Legacy/1.16.X/version.txt");
 			Scanner s = new Scanner(url.openStream());
 			EnigmaticUpdateHandler.newestVersion = s.nextLine();
 			s.close();

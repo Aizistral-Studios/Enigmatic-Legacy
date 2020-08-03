@@ -8,48 +8,29 @@ import javax.annotation.Nullable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
-import com.integral.enigmaticlegacy.helpers.LoreHelper;
+import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.item.Item;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import top.theillusivec4.curios.api.capability.ICurio;
 
-public class EnigmaticAmulet extends Item implements ICurio {
+public class EnigmaticAmulet extends ItemBaseCurio {
 
-	public static Properties integratedProperties = new Item.Properties();
-
-	public EnigmaticAmulet(Properties properties) {
-		super(properties);
-	}
-
-	public static Properties setupIntegratedProperties() {
-		EnigmaticAmulet.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		EnigmaticAmulet.integratedProperties.maxStackSize(1);
-		EnigmaticAmulet.integratedProperties.rarity(Rarity.UNCOMMON);
-
-		return EnigmaticAmulet.integratedProperties;
-
-	}
-
-	@Override
-	public boolean canEquip(String identifier, LivingEntity living) {
-		if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.enigmaticAmulet))
-			return false;
-		else
-			return true;
+	public EnigmaticAmulet() {
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet"));
 	}
 
 	@Override
@@ -57,65 +38,33 @@ public class EnigmaticAmulet extends Item implements ICurio {
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		String name = ItemNBTHelper.getString(stack, "Inscription", null);
 
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.hasShiftDown()) {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet1");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet2");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet3");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet4");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet5");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet6");
+		if (Screen.func_231173_s_()) {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet4");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet5");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet6");
 		} else {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 
 		if (name != null) {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletInscription", name);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletInscription", TextFormatting.DARK_RED, name);
 		}
 	}
 
 	@Override
-	public boolean canRightClickEquip() {
-		return true;
-	}
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier) {
 
-	@Override
-	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		/*
-		 * if (entityIn instanceof PlayerEntity & !worldIn.isRemote) if
-		 * (!ItemNBTHelper.verifyExistance(stack, "Inscription")) {
-		 * ItemNBTHelper.setString(stack, "Inscription",
-		 * entityIn.getDisplayName().getString()); }
-		 */
+		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
-		// Insert existential void here
-	}
-
-	@Override
-	public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-		// Insert existential void here
-	}
-
-	@Override
-	public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-		// Insert existential void here
-	}
-
-	@Override
-	public void onCurioTick(String identifier, int index, LivingEntity entityLivingBase) {
-		// Insert existential void here
-	}
-
-	@Override
-	public Multimap<String, AttributeModifier> getAttributeModifiers(String identifier) {
-
-		Multimap<String, AttributeModifier> atts = HashMultimap.create();
-
-		atts.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(UUID.fromString("50faf191-bf78-4654-b349-cc1f4f1143bf"), "Armor bonus", 2.0, AttributeModifier.Operation.ADDITION));
-		atts.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(UUID.fromString("cb7f55d3-685c-4f38-a497-9c13a33db5cf"), "Attack bonus", 1.5, AttributeModifier.Operation.ADDITION));
+		atts.put(Attributes.field_233826_i_, new AttributeModifier(UUID.fromString("50faf191-bf78-4654-b349-cc1f4f1143bf"), "Armor bonus", 2.0, AttributeModifier.Operation.ADDITION));
+		atts.put(Attributes.field_233823_f_, new AttributeModifier(UUID.fromString("cb7f55d3-685c-4f38-a497-9c13a33db5cf"), "Attack bonus", 1.5, AttributeModifier.Operation.ADDITION));
 
 		return atts;
 	}

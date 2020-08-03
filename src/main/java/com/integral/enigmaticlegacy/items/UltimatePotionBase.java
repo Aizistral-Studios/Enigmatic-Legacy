@@ -5,19 +5,19 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.IAdvancedPotionItem;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.helpers.AdvancedPotion;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
+import com.integral.enigmaticlegacy.items.generic.ItemBase;
+import com.integral.enigmaticlegacy.objects.AdvancedPotion;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -29,35 +29,24 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class UltimatePotionBase extends Item implements IPerhaps {
+public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem {
+	public PotionType potionType;
 
-	//public static Properties integratedProperties = new Item.Properties();
-	public boolean common;
+	public UltimatePotionBase(Rarity rarity, PotionType type) {
+		super(ItemBase.getDefaultProperties().rarity(rarity).maxStackSize(1).group(EnigmaticLegacy.enigmaticPotionTab));
 
-	public UltimatePotionBase(Properties properties, boolean common) {
-		super(properties);
-
-		this.common = common;
-	}
-
-	public static Properties setupIntegratedProperties(Rarity rarity) {
-		Properties integratedProperties = new Item.Properties();
-		integratedProperties.group(EnigmaticLegacy.enigmaticPotionTab);
-		integratedProperties.maxStackSize(1);
-		integratedProperties.rarity(rarity);
-
-		return integratedProperties;
-
+		this.potionType = type;
 	}
 
 	@Override
 	public boolean isForMortals() {
-		return this.common ? ConfigHandler.COMMON_POTIONS_ENABLED.getValue() : ConfigHandler.ULTIMATE_POTIONS_ENABLED.getValueDefault();
+		return this.potionType == PotionType.COMMON ? ConfigHandler.COMMON_POTIONS_ENABLED.getValue() : ConfigHandler.ULTIMATE_POTIONS_ENABLED.getValueDefault();
 	}
 
 	@Override
@@ -89,7 +78,7 @@ public class UltimatePotionBase extends Item implements IPerhaps {
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
 		if (this.isInGroup(group)) {
 
-			if (this.common) {
+			if (this.potionType == PotionType.COMMON) {
 				for (AdvancedPotion potion : EnigmaticLegacy.commonPotionTypes) {
 					ItemStack stack = new ItemStack(this);
 					ItemNBTHelper.setString(stack, "EnigmaticPotion", potion.getId());
@@ -159,6 +148,11 @@ public class UltimatePotionBase extends Item implements IPerhaps {
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		playerIn.setActiveHand(handIn);
 		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+	}
+
+	@Override
+	public PotionType getPotionType() {
+		return this.potionType;
 	}
 
 }

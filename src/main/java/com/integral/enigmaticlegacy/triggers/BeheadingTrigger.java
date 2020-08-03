@@ -17,6 +17,8 @@ import net.minecraft.advancements.ICriterionInstance;
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.loot.ConditionArrayParser;
+import net.minecraft.loot.ConditionArraySerializer;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -61,12 +63,11 @@ public class BeheadingTrigger implements ICriterionTrigger<BeheadingTrigger.Inst
     public void removeAllListeners(@Nonnull PlayerAdvancements player) {
         playerTrackers.remove(player);
     }
-
-    @Nonnull
+    
     @Override
-    public Instance deserializeInstance(@Nonnull JsonObject json, @Nonnull JsonDeserializationContext context) {
-        return new Instance();
-    }
+	public Instance func_230307_a_(JsonObject p_230307_1_, ConditionArrayParser p_230307_2_) {
+    	return new Instance();
+	}
 
     static class PlayerTracker {
         private final PlayerAdvancements playerAdvancements;
@@ -112,5 +113,10 @@ public class BeheadingTrigger implements ICriterionTrigger<BeheadingTrigger.Inst
         boolean test() {
             return true;
         }
+
+		@Override
+		public JsonObject func_230240_a_(ConditionArraySerializer p_230240_1_) {
+			return new JsonObject();
+		}
     }
 }

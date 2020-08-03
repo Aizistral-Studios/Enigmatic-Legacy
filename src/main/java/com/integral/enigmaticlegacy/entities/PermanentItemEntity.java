@@ -21,11 +21,11 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -90,7 +90,7 @@ public class PermanentItemEntity extends Entity {
          this.prevPosX = this.getPosX();
          this.prevPosY = this.getPosY();
          this.prevPosZ = this.getPosZ();
-         Vec3d vec3d = this.getMotion();
+         Vector3d vec3d = this.getMotion();
          
          if (!this.hasNoGravity()) {
             this.setMotion(this.getMotion().add(0.0D, -0.04D, 0.0D));
@@ -122,12 +122,6 @@ public class PermanentItemEntity extends Entity {
       }
    }
 
-
-   @Override
-   protected void dealFireDamage(int amount) {
-      this.attackEntityFrom(DamageSource.IN_FIRE, (float)amount);
-   }
-
    @Override
    public boolean attackEntityFrom(DamageSource source, float amount) {
       if (this.world.isRemote || !this.isAlive()) return false;
@@ -145,11 +139,11 @@ public class PermanentItemEntity extends Entity {
       compound.putShort("Age", (short)this.age);
       compound.putShort("PickupDelay", (short)this.pickupDelay);
       if (this.getThrowerId() != null) {
-         compound.put("Thrower", NBTUtil.writeUniqueId(this.getThrowerId()));
+         compound.putUniqueId("Thrower",this.getThrowerId());
       }
 
       if (this.getOwnerId() != null) {
-         compound.put("Owner", NBTUtil.writeUniqueId(this.getOwnerId()));
+    	  compound.putUniqueId("Owner", this.getOwnerId());
       }
 
       if (!this.getItem().isEmpty()) {
@@ -194,8 +188,8 @@ public class PermanentItemEntity extends Entity {
             if (itemstack.isEmpty()) {
                entityIn.onItemPickup(this, i);
                
-               EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.dimension)), new PacketHandleItemPickup(entityIn.getEntityId(), this.getEntityId()));
-               
+               EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.func_234923_W_())), new PacketHandleItemPickup(entityIn.getEntityId(), this.getEntityId()));
+
                this.remove();
                itemstack.setCount(i);
             }
@@ -214,13 +208,6 @@ public class PermanentItemEntity extends Entity {
 
    public boolean canBeAttackedWithItem() {
       return false;
-   }
-
-   @Nullable
-   public Entity changeDimension(DimensionType destination) {
-      Entity entity = super.changeDimension(destination);
-
-      return entity;
    }
 
    public ItemStack getItem() {

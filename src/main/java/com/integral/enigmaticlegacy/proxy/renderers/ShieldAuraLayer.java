@@ -1,7 +1,6 @@
 package com.integral.enigmaticlegacy.proxy.renderers;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.items.EtheriumArmor;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
@@ -38,7 +37,7 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 	@Override
 	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, AbstractClientPlayerEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 
-		if (EtheriumArmor.hasShield(entitylivingbaseIn)) {
+		if (EnigmaticLegacy.etheriumChestplate.hasShield(entitylivingbaseIn)) {
 			float f;
 
 			if (!Minecraft.getInstance().isGamePaused())
@@ -68,7 +67,7 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 				this.witherModel.bipedRightArmwear.showModel = false;
 				*/
 
-				this.witherModel.isSneak = entitylivingbaseIn.isShiftKeyDown();
+				this.witherModel.isSneak = entitylivingbaseIn.isCrouching();
 				BipedModel.ArmPose bipedmodel$armpose = this.func_217766_a(entitylivingbaseIn, itemstack, itemstack1, Hand.MAIN_HAND);
 				BipedModel.ArmPose bipedmodel$armpose1 = this.func_217766_a(entitylivingbaseIn, itemstack, itemstack1, Hand.OFF_HAND);
 				if (entitylivingbaseIn.getPrimaryHand() == HandSide.RIGHT) {
@@ -81,7 +80,7 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 			}
 
 			this.getEntityModel().copyModelAttributesTo(entitymodel);
-			IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEnergySwirl(this.func_225633_a_(), this.func_225634_a_(f), f * 0.01F));
+			IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEnergySwirl(ShieldAuraLayer.func_225633_a_(), ShieldAuraLayer.func_225634_a_(f), f * 0.01F));
 			entitymodel.setRotationAngles(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 			entitymodel.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
 		}
@@ -122,11 +121,11 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 		return bipedmodel$armpose;
 	}
 
-	protected float func_225634_a_(float p_225634_1_) {
+	protected static float func_225634_a_(float p_225634_1_) {
 		return MathHelper.cos(p_225634_1_ * 0.02F) * 2.0F;
 	}
 
-	protected ResourceLocation func_225633_a_() {
+	protected static ResourceLocation func_225633_a_() {
 		return ShieldAuraLayer.WITHER_ARMOR;
 	}
 

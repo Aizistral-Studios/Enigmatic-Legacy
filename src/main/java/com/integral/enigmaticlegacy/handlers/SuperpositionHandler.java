@@ -15,10 +15,14 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 import com.google.common.collect.Lists;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
-import com.integral.enigmaticlegacy.helpers.Vector3;
+import com.integral.enigmaticlegacy.api.items.IPerhaps;
+import com.integral.enigmaticlegacy.api.items.ISpellstone;
+import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
+import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
+import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
+import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
@@ -26,16 +30,28 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.ParticleStatus;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.loot.ItemLootEntry;
+import net.minecraft.loot.LootEntry;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootPool.Builder;
+import net.minecraft.loot.LootTables;
+import net.minecraft.loot.RandomValueRange;
+import net.minecraft.loot.StandaloneLootEntry;
+import net.minecraft.loot.functions.EnchantWithLevels;
+import net.minecraft.loot.functions.SetCount;
+import net.minecraft.loot.functions.SetDamage;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectUtils;
+import net.minecraft.tileentity.BeaconTileEntity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -43,28 +59,25 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.ItemLootEntry;
-import net.minecraft.world.storage.loot.LootPool;
-import net.minecraft.world.storage.loot.LootPool.Builder;
-import net.minecraft.world.storage.loot.LootTables;
-import net.minecraft.world.storage.loot.RandomValueRange;
-import net.minecraft.world.storage.loot.functions.EnchantWithLevels;
-import net.minecraft.world.storage.loot.functions.SetCount;
-import net.minecraft.world.storage.loot.functions.SetDamage;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ForgeRegistries;
-import top.theillusivec4.curios.api.CuriosAPI;
-import top.theillusivec4.curios.api.imc.CurioIMCMessage;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotTypeMessage;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
+import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
+import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
 /**
  * The vessel and library for most most of the handling methods in the Enigmatic Legacy.
@@ -79,25 +92,71 @@ public class SuperpositionHandler {
 
 	public static HashMap<PlayerEntity, Integer> spellstoneCooldowns = new HashMap<PlayerEntity, Integer>();
 
+	public static boolean hasAdvancedCurios(final LivingEntity entity) {
+		return SuperpositionHandler.getAdvancedCurios(entity).size() > 0;
+	}
+
+	public static List<ItemStack> getAdvancedCurios(final LivingEntity entity) {
+		List<ItemStack> stackList = new ArrayList<ItemStack>();
+		
+		  CuriosApi.getCuriosHelper().getCuriosHandler(entity)
+          .ifPresent(handler -> handler.getCurios().values().forEach(stacksHandler -> {
+            IDynamicStackHandler soloStackHandler = stacksHandler.getStacks();
+            
+            for (int i = 0; i < stacksHandler.getSlots(); i++) {
+            	if (soloStackHandler.getStackInSlot(i) != null && soloStackHandler.getStackInSlot(i).getItem() instanceof ItemAdvancedCurio) {
+					stackList.add(soloStackHandler.getStackInSlot(i));
+				}
+            }
+            
+          }));
+		  
+		return stackList;
+	}
+	
+	public static boolean hasSpellstone(final LivingEntity entity) {
+		return getSpellstone(entity) != null;
+	}
+	
+	
+	public static ItemStack getSpellstone(final LivingEntity entity) {
+		List<ItemStack> spellstoneStack = new ArrayList<ItemStack>();
+
+		CuriosApi.getCuriosHelper().getCuriosHandler(entity).ifPresent(handler -> {
+
+			ICurioStacksHandler stacksHandler = handler.getCurios().get("spellstone");
+			IDynamicStackHandler soloStackHandler = stacksHandler.getStacks();
+
+			for (int i = 0; i < stacksHandler.getSlots(); i++) {
+				if (soloStackHandler.getStackInSlot(i) != null
+						&& soloStackHandler.getStackInSlot(i).getItem() instanceof ISpellstone) {
+					spellstoneStack.add(soloStackHandler.getStackInSlot(i));
+					break;
+				}
+			}
+
+		});
+
+		return spellstoneStack.isEmpty() ? null : spellstoneStack.get(0);
+	}
+
 	/**
 	 * Checks whether LivingEntity has given Item equipped in it's Curios slots.
-	 *
 	 * @return True if has, false otherwise.
 	 */
 
 	public static boolean hasCurio(final LivingEntity entity, final Item curio) {
-		final Optional<ImmutableTriple<String, Integer, ItemStack>> data = CuriosAPI.getCurioEquipped(curio, entity);
+		final Optional<ImmutableTriple<String, Integer, ItemStack>> data = CuriosApi.getCuriosHelper().findEquippedCurio(curio, entity);
 		return data.isPresent();
 	}
 
 	/**
 	 * Gets the ItemStack of provided Item within entity's Curio slots.
-	 *
 	 * @return First sufficient ItemStack found, null if such item is not equipped.
 	 */
 	@Nullable
 	public static ItemStack getCurioStack(final LivingEntity entity, final Item curio) {
-		final Optional<ImmutableTriple<String, Integer, ItemStack>> data = CuriosAPI.getCurioEquipped(curio, entity);
+		final Optional<ImmutableTriple<String, Integer, ItemStack>> data = CuriosApi.getCuriosHelper().findEquippedCurio(curio, entity);
 		if (data.isPresent()) {
 			return data.get().getRight();
 		}
@@ -116,17 +175,21 @@ public class SuperpositionHandler {
 	 *                   default Curio GUI.
 	 * @param icon       Optional resource location for custom icon.
 	 */
-	public static void registerCurioType(final String identifier, final int slots, final boolean isEnabled,
-			final boolean isHidden, @Nullable final ResourceLocation icon) {
-		final CurioIMCMessage message = new CurioIMCMessage(identifier);
-		message.setSize(slots);
-		message.setEnabled(isEnabled);
-		message.setHidden(isHidden);
-		InterModComms.sendTo("curios", CuriosAPI.IMC.REGISTER_TYPE, () -> message);
-		if (icon != null) {
-			InterModComms.sendTo("curios", CuriosAPI.IMC.REGISTER_ICON,
-					() -> new Tuple<String, ResourceLocation>(identifier, icon));
-		}
+	public static void registerCurioType(final String identifier, final int slots, final boolean isEnabled, final boolean isHidden, @Nullable final ResourceLocation icon) {
+		final SlotTypeMessage.Builder message = new SlotTypeMessage.Builder(identifier);
+		
+		message.size(slots);
+		
+		if (!isEnabled)
+			message.lock();
+		if (isHidden)
+			message.hide();
+		
+		if (icon != null)
+			message.icon(icon);
+	
+		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> message.build());
+		
 	}
 
 	/**
@@ -194,11 +257,6 @@ public class SuperpositionHandler {
 			if (entities.contains(player)) {
 				entities.remove(player);
 			}
-			for (final LivingEntity checked : entities) {
-				if (!checked.isNonBoss()) {
-					entities.remove(checked);
-				}
-			}
 		}
 		if (entities.size() > 0) {
 			newTarget = entities.get(0);
@@ -213,10 +271,12 @@ public class SuperpositionHandler {
 	 *         platform in the End, or coordinates of Center of the World otherwise.
 	 */
 
-	public static Vec3d getValidSpawn(final World world, final PlayerEntity player) {
-		BlockPos pos = player.getBedLocation(world.getDimension().getType());
-		if (pos != null && PlayerEntity.func_213822_a(world, pos, false).isPresent()) {
-			final Vec3d vec = PlayerEntity.func_213822_a(world, pos, true).get();
+	public static Vector3d getValidSpawn(final ServerWorld world, final ServerPlayerEntity player) {
+		/*
+		BlockPos pos = player.getBedPosition().isPresent() ? player.getBedPosition().get() : null;
+		Optional<Vector3d> bedPos = world instanceof ServerWorld ? PlayerEntity.func_234567_a_((ServerWorld) world, pos, false, true) : null;
+		if (pos != null && bedPos != null && bedPos.isPresent()) {
+			final Vector3d vec = bedPos.get();
 			return vec;
 		}
 
@@ -229,6 +289,27 @@ public class SuperpositionHandler {
 			}
 
 		return new Vec3d(pos.getX() - 0.5, pos.getY(), pos.getZ() - 0.5);
+		*/
+		
+		Vector3d vector3d;
+		
+		BlockPos blockpos = player.func_241140_K_();
+		Optional<Vector3d> optional;
+	      if (world != null && blockpos != null) {
+	         optional = PlayerEntity.func_234567_a_(world, blockpos, false, true);
+	      } else {
+	         optional = Optional.empty();
+	      }
+	      
+	      if (optional.isPresent()) {
+	          vector3d = optional.get();
+	      } else if (blockpos != null) {
+	    	  vector3d = new Vector3d(blockpos.getX()-0.5, blockpos.getY(), blockpos.getZ()-0.5);
+	      } else {
+	    	  vector3d = new Vector3d(0, 64, 0);
+	      }
+		
+		return vector3d;
 	}
 
 	/**
@@ -332,11 +413,11 @@ public class SuperpositionHandler {
 						& world.isAirBlock(new BlockPos(x, y + counter, z))
 						& world.isAirBlock(new BlockPos(x, y + counter + 1, z))) {
 
-					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT,
-							SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+					world.playSound(null, entity.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+
 					EnigmaticLegacy.packetInstance.send(
 							PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(),
-									entity.getPosY(), entity.getPosZ(), 128, entity.dimension)),
+									entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())),
 							new PacketPortalParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2),
 									entity.getPosZ(), 72, 1.0F, false));
 
@@ -346,11 +427,11 @@ public class SuperpositionHandler {
 					} else
 						((LivingEntity) entity).setPositionAndUpdate(x + 0.5, y + counter, z + 0.5);
 
-					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT,
-							SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+					world.playSound(null, entity.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+					
 					EnigmaticLegacy.packetInstance.send(
 							PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(),
-									entity.getPosY(), entity.getPosZ(), 128, entity.dimension)),
+									entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())),
 							new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2),
 									entity.getPosZ(), 48, false));
 
@@ -368,11 +449,11 @@ public class SuperpositionHandler {
 						& world.isAirBlock(new BlockPos(x, y - counter, z))
 						& world.isAirBlock(new BlockPos(x, y - counter + 1, z))) {
 
-					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT,
+					world.playSound(null, entity.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT,
 							SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 					EnigmaticLegacy.packetInstance.send(
 							PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(),
-									entity.getPosY(), entity.getPosZ(), 128, entity.dimension)),
+									entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())),
 							new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2),
 									entity.getPosZ(), 48, false));
 
@@ -382,11 +463,11 @@ public class SuperpositionHandler {
 					} else
 						((LivingEntity) entity).setPositionAndUpdate(x + 0.5, y - counter, z + 0.5);
 
-					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT,
+					world.playSound(null, entity.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT,
 							SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 					EnigmaticLegacy.packetInstance.send(
 							PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(),
-									entity.getPosY(), entity.getPosZ(), 128, entity.dimension)),
+									entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())),
 							new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2),
 									entity.getPosZ(), 48, false));
 
@@ -420,13 +501,13 @@ public class SuperpositionHandler {
 	 */
 
 	public static LootPool constructLootPool(String poolName, float minRolls, float maxRolls,
-			@Nullable net.minecraft.world.storage.loot.LootEntry.Builder<?>... entries) {
+			@Nullable LootEntry.Builder<?>... entries) {
 
 		Builder poolBuilder = LootPool.builder();
-		poolBuilder.rolls(RandomValueRange.of(minRolls, maxRolls));
 		poolBuilder.name(poolName);
+		poolBuilder.rolls(RandomValueRange.of(minRolls, maxRolls));
 
-		for (net.minecraft.world.storage.loot.LootEntry.Builder<?> entry : entries) {
+		for (LootEntry.Builder<?> entry : entries) {
 			if (entry != null)
 				poolBuilder.addEntry(entry);
 		}
@@ -444,7 +525,7 @@ public class SuperpositionHandler {
 	 */
 
 	@Nullable
-	public static net.minecraft.world.storage.loot.StandaloneLootEntry.Builder<?> createOptionalLootEntry(Item item,
+	public static StandaloneLootEntry.Builder<?> createOptionalLootEntry(Item item,
 			int weight, float minCount, float maxCount) {
 
 		if (item instanceof IPerhaps) {
@@ -463,7 +544,7 @@ public class SuperpositionHandler {
 	 */
 
 	@Nullable
-	public static net.minecraft.world.storage.loot.StandaloneLootEntry.Builder<?> createOptionalLootEntry(Item item,
+	public static StandaloneLootEntry.Builder<?> createOptionalLootEntry(Item item,
 			int weight) {
 
 		if (item instanceof IPerhaps) {
@@ -743,70 +824,56 @@ public class SuperpositionHandler {
 	@OnlyIn(Dist.CLIENT)
 	public static void addPotionTooltip(List<EffectInstance> list, ItemStack itemIn, List<ITextComponent> lores,
 			float durationFactor) {
-		List<Tuple<String, AttributeModifier>> list1 = Lists.newArrayList();
+		List<Pair<Attribute, AttributeModifier>> list1 = Lists.newArrayList();
 		if (list.isEmpty()) {
-			lores.add((new TranslationTextComponent("effect.none")).applyTextStyle(TextFormatting.GRAY));
+			lores.add((new TranslationTextComponent("effect.none")).func_240699_a_(TextFormatting.GRAY));
 		} else {
-			for (EffectInstance effectinstance : list) {
-				ITextComponent itextcomponent = new TranslationTextComponent(effectinstance.getEffectName());
-				Effect effect = effectinstance.getPotion();
-				Map<IAttribute, AttributeModifier> map = effect.getAttributeModifierMap();
-				if (!map.isEmpty()) {
-					for (Entry<IAttribute, AttributeModifier> entry : map.entrySet()) {
-						AttributeModifier attributemodifier = entry.getValue();
-						AttributeModifier attributemodifier1 = new AttributeModifier(attributemodifier.getName(),
-								effect.getAttributeModifierAmount(effectinstance.getAmplifier(), attributemodifier),
-								attributemodifier.getOperation());
-						list1.add(new Tuple<>(entry.getKey().getName(), attributemodifier1));
-					}
-				}
+	         for(EffectInstance effectinstance : list) {
+	             IFormattableTextComponent iformattabletextcomponent = new TranslationTextComponent(effectinstance.getEffectName());
+	             Effect effect = effectinstance.getPotion();
+	             Map<Attribute, AttributeModifier> map = effect.getAttributeModifierMap();
+	             if (!map.isEmpty()) {
+	                for(Entry<Attribute, AttributeModifier> entry : map.entrySet()) {
+	                   AttributeModifier attributemodifier = entry.getValue();
+	                   AttributeModifier attributemodifier1 = new AttributeModifier(attributemodifier.getName(), effect.getAttributeModifierAmount(effectinstance.getAmplifier(), attributemodifier), attributemodifier.getOperation());
+	                   list1.add(new Pair<>(entry.getKey(), attributemodifier1));
+	                }
+	             }
 
-				if (effectinstance.getAmplifier() > 0) {
-					itextcomponent.appendText(" ").appendSibling(
-							new TranslationTextComponent("potion.potency." + effectinstance.getAmplifier()));
-				}
+	             if (effectinstance.getAmplifier() > 0) {
+	                iformattabletextcomponent.func_240702_b_(" ").func_230529_a_(new TranslationTextComponent("potion.potency." + effectinstance.getAmplifier()));
+	             }
 
-				if (effectinstance.getDuration() > 20) {
-					itextcomponent.appendText(" (")
-							.appendText(EffectUtils.getPotionDurationString(effectinstance, durationFactor))
-							.appendText(")");
-				}
+	             if (effectinstance.getDuration() > 20) {
+	                iformattabletextcomponent.func_240702_b_(" (").func_240702_b_(EffectUtils.getPotionDurationString(effectinstance, durationFactor)).func_240702_b_(")");
+	             }
 
-				lores.add(itextcomponent.applyTextStyle(effect.getEffectType().getColor()));
-			}
-		}
+	             lores.add(iformattabletextcomponent.func_240699_a_(effect.getEffectType().getColor()));
+	          }
+	       }
 
 		if (!list1.isEmpty()) {
-			lores.add(new StringTextComponent(""));
-			lores.add((new TranslationTextComponent("potion.whenDrank")).applyTextStyle(TextFormatting.DARK_PURPLE));
+	         lores.add(StringTextComponent.field_240750_d_);
+	         lores.add((new TranslationTextComponent("potion.whenDrank")).func_240699_a_(TextFormatting.DARK_PURPLE));
 
-			for (Tuple<String, AttributeModifier> tuple : list1) {
-				AttributeModifier attributemodifier2 = tuple.getB();
-				double d0 = attributemodifier2.getAmount();
-				double d1;
-				if (attributemodifier2.getOperation() != AttributeModifier.Operation.MULTIPLY_BASE
-						&& attributemodifier2.getOperation() != AttributeModifier.Operation.MULTIPLY_TOTAL) {
-					d1 = attributemodifier2.getAmount();
-				} else {
-					d1 = attributemodifier2.getAmount() * 100.0D;
-				}
+	         for(Pair<Attribute, AttributeModifier> pair : list1) {
+	            AttributeModifier attributemodifier2 = pair.getSecond();
+	            double d0 = attributemodifier2.getAmount();
+	            double d1;
+	            if (attributemodifier2.getOperation() != AttributeModifier.Operation.MULTIPLY_BASE && attributemodifier2.getOperation() != AttributeModifier.Operation.MULTIPLY_TOTAL) {
+	               d1 = attributemodifier2.getAmount();
+	            } else {
+	               d1 = attributemodifier2.getAmount() * 100.0D;
+	            }
 
-				if (d0 > 0.0D) {
-					lores.add((new TranslationTextComponent(
-							"attribute.modifier.plus." + attributemodifier2.getOperation().getId(),
-							ItemStack.DECIMALFORMAT.format(d1),
-							new TranslationTextComponent("attribute.name." + tuple.getA())))
-									.applyTextStyle(TextFormatting.BLUE));
-				} else if (d0 < 0.0D) {
-					d1 = d1 * -1.0D;
-					lores.add((new TranslationTextComponent(
-							"attribute.modifier.take." + attributemodifier2.getOperation().getId(),
-							ItemStack.DECIMALFORMAT.format(d1),
-							new TranslationTextComponent("attribute.name." + tuple.getA())))
-									.applyTextStyle(TextFormatting.RED));
-				}
-			}
-		}
+	            if (d0 > 0.0D) {
+	               lores.add((new TranslationTextComponent("attribute.modifier.plus." + attributemodifier2.getOperation().getId(), ItemStack.DECIMALFORMAT.format(d1), new TranslationTextComponent(pair.getFirst().func_233754_c_()))).func_240699_a_(TextFormatting.BLUE));
+	            } else if (d0 < 0.0D) {
+	               d1 = d1 * -1.0D;
+	               lores.add((new TranslationTextComponent("attribute.modifier.take." + attributemodifier2.getOperation().getId(), ItemStack.DECIMALFORMAT.format(d1), new TranslationTextComponent(pair.getFirst().func_233754_c_()))).func_240699_a_(TextFormatting.DARK_RED));
+	            }
+	         }
+	      }
 
 	}
 
@@ -855,13 +922,48 @@ public class SuperpositionHandler {
 	public static float getParticleMultiplier() {
 
 		if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.MINIMAL) {
-			return 0.20F;
-		} else if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.DECREASED) {
 			return 0.35F;
-		} else {
+		} else if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.DECREASED) {
 			return 0.65F;
+		} else {
+			return 1.0F;
 		}
 
+	}
+	
+	/**
+	 * Checks whether or on the player is within the range of any active beacon.
+	 */
+	
+	public static boolean isInBeaconRange(PlayerEntity player) {
+		List<BeaconTileEntity> list = new ArrayList<BeaconTileEntity>();
+		boolean inRange = false;
+		
+		for (TileEntity tile : player.world.loadedTileEntityList) {
+			if (tile instanceof BeaconTileEntity)
+				list.add((BeaconTileEntity)tile);
+		}
+		
+		if (list.size() > 0)
+			for (BeaconTileEntity beacon : list)
+				if (beacon.getLevels() > 0) {
+					try {
+						if (((List<BeaconTileEntity.BeamSegment>)ObfuscatedFields.beamSegmentsField.get(beacon)).isEmpty())
+							continue;
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
+					
+					int range = (beacon.getLevels()+1)*10;
+					double distance = Math.sqrt(beacon.getPos().distanceSq(player.getPosX(), beacon.getPos().getY(), player.getPosZ(), true));						
+					
+					//System.out.println("Distance to " + beacon + ": " + distance);
+					
+					if (distance <= range)
+						inRange = true;
+				}
+		
+		return inRange;
 	}
 
 }

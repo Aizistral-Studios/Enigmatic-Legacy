@@ -1,4 +1,4 @@
-package com.integral.enigmaticlegacy.helpers;
+package com.integral.enigmaticlegacy.api.items;
 
 /**
  * A simple interface for use with EnabledCondition.
@@ -8,7 +8,7 @@ package com.integral.enigmaticlegacy.helpers;
  */
 
 public interface IPerhaps {
-	
+
 	boolean isForMortals();
-	
+
 }

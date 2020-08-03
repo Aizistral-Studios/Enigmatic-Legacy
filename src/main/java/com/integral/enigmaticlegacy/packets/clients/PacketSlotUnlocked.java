@@ -3,7 +3,7 @@ import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
-import com.integral.enigmaticlegacy.helpers.SlotUnlockedToast;
+import com.integral.enigmaticlegacy.objects.SlotUnlockedToast;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;

@@ -3,15 +3,22 @@ buildscript {
         maven { url = 'https://files.minecraftforge.net/maven' }
         jcenter()
         mavenCentral()
+        maven { url = 'https://dist.creeper.host/Sponge/maven' }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
+		classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
+apply plugin: 'org.spongepowered.mixin'
+
+mixin {
+    add sourceSets.main, "enigmaticlegacy.refmap.json"
+}
 
 version = '1.0'
 group = 'com.integral.enigmaticlegacy'
@@ -19,20 +26,13 @@ archivesBaseName = 'EnigmaticLegacy-smv'
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    // The mappings can be changed at any time, and must be in the following format.
-    // snapshot_YYYYMMDD   Snapshot are built nightly.
-    // stable_#            Stables are built at the discretion of the MCP team.
-    // Use non-default mappings at your own risk. they may not always work.
-    // Simply re-run your setup task after changing the mappings to update your workspace.
-    mappings channel: 'snapshot', version: '20200225-1.15.1'
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    mappings channel: 'snapshot', version: '20200514-1.16'
     
-    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
-    runs {
+	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+	
+	runs {
         client {
             workingDirectory project.file('run')
 
@@ -85,21 +85,42 @@ minecraft {
     }
 }
 
-repositories {
-	maven {  url = "https://maven.theillusivec4.top/" } // curios
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
 }
 
-configurations {
-        // configuration that holds jars to embed inside the jar
-    embed
-	compile.extendsFrom(embed)
-	
+repositories {
+	maven {  url = "https://maven.theillusivec4.top/" } // curios
+	maven {  url = "https://maven.blamejared.com/" } // patchouli
+	maven {  url = "https://repo.spongepowered.org/maven" }
+	jcenter()
+    mavenCentral()
+	flatDir {
+        dirs 'deps'
+    }
 }
 
 dependencies {
-	minecraft 'net.minecraftforge:forge:1.15.2-31.1.46'
-	compile fg.deobf('top.theillusivec4.curios:curios:FORGE-1.15.2-2.0.2.1')
+    minecraft 'net.minecraftforge:forge:1.16.1-32.0.67'
+
+	compile 'org.spongepowered:mixin:0.8.1-SNAPSHOT'
+	
+	annotationProcessor 'org.spongepowered:mixin:0.8'
+    annotationProcessor 'com.google.code.gson:gson:2.8.0'
+    annotationProcessor 'com.google.guava:guava:21.0'
+    annotationProcessor 'org.ow2.asm:asm-tree:7.2'
+    annotationProcessor 'org.ow2.asm:asm-commons:7.2'
+    annotationProcessor 'org.ow2.asm:asm-util:7.2'
+	
+	//compileOnly files('ofstuff2.jar')
+
+    compile fg.deobf('top.theillusivec4.curios:curios:FORGE-1.16.1-3.0-beta4')
 	//compile files('C:/Stuff/curios-FORGE-1.14.4-1.0-deobf.jar')
+	//compile files('C:/Stuff/curios-FORGE-1.16.1-3.0-beta4-deobf.jar')
+	
+	compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16-39:api")
+    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16-39")
+
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -112,7 +133,8 @@ jar {
             "Implementation-Title": project.name,
             "Implementation-Version": "${version}",
             "Implementation-Vendor" :"Integral",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            "MixinConnector": "com.integral.enigmaticlegacy.MixinConnector"
         ])
     }
 }

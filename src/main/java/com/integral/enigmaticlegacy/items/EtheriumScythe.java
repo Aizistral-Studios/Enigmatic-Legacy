@@ -10,10 +10,12 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.IPerhaps;
+import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.helpers.AOEMiningHelper;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
-import com.integral.enigmaticlegacy.helpers.LoreHelper;
+import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
+import com.integral.enigmaticlegacy.items.generic.ItemBaseTool;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -24,8 +26,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
@@ -34,27 +34,24 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EtheriumScythe extends SwordItem implements IPerhaps {
 
-	public static Properties integratedProperties = new Item.Properties();
 	protected static final Map<Block, BlockState> HOE_LOOKUP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.getDefaultState(), Blocks.GRASS_PATH, Blocks.FARMLAND.getDefaultState(), Blocks.DIRT, Blocks.FARMLAND.getDefaultState(), Blocks.COARSE_DIRT, Blocks.DIRT.getDefaultState()));
 	public Set<Material> effectiveMaterials;
-	private final float speed;
-	private final float attackDamage;
 
-	public EtheriumScythe(Properties properties, IItemTier tier, float attackSpeedIn, int attackDamageIn) {
-		super(tier, attackDamageIn, attackSpeedIn, properties);
-
-		this.speed = attackSpeedIn;
-		this.attackDamage = attackDamageIn;
+	public EtheriumScythe() {
+		super(EnigmaticMaterials.ETHERIUM, 3, -2.0F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_scythe"));
 
 		this.effectiveMaterials = Sets.newHashSet();
 		this.effectiveMaterials.add(Material.LEAVES);
@@ -67,27 +64,18 @@ public class EtheriumScythe extends SwordItem implements IPerhaps {
 		this.effectiveMaterials.add(Material.CACTUS);
 	}
 
-	public static Properties setupIntegratedProperties() {
-		EtheriumScythe.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		EtheriumScythe.integratedProperties.maxStackSize(1);
-		EtheriumScythe.integratedProperties.rarity(Rarity.RARE);
-
-		return EtheriumScythe.integratedProperties;
-
-	}
-
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue() == -1)
 			return;
 
-		if (Screen.hasShiftDown()) {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe1", ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue());
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe2", ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue());
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe3");
+		if (Screen.func_231173_s_()) {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe1", TextFormatting.GOLD, ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe2", TextFormatting.GOLD, ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe3");
 		} else {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 	}
 
@@ -122,7 +110,7 @@ public class EtheriumScythe extends SwordItem implements IPerhaps {
 	public ActionResultType onItemUse(ItemUseContext context) {
 		ActionResultType type = Items.DIAMOND_HOE.onItemUse(context);
 
-		if (context.getPlayer().isShiftKeyDown())
+		if (context.getPlayer().isCrouching())
 			return type;
 
 		int supRad = (ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue() - 1) / 2;
@@ -143,7 +131,7 @@ public class EtheriumScythe extends SwordItem implements IPerhaps {
 	@Override
 	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-		if (entityLiving instanceof PlayerEntity && !entityLiving.isShiftKeyDown() && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue() != -1) {
+		if (entityLiving instanceof PlayerEntity && !entityLiving.isCrouching() && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue() != -1) {
 			Direction face = Direction.UP;
 
 			AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos.add(0, (ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue() - 1) / 2, 0), this.effectiveMaterials, ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue(), ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue(), false, pos, stack, (objPos, objState) -> {

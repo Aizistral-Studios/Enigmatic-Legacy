@@ -1,6 +1,6 @@
 package com.integral.enigmaticlegacy.config;
 
-import com.integral.enigmaticlegacy.helpers.Perhaps;
+import com.integral.enigmaticlegacy.objects.Perhaps;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 

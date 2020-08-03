@@ -1,25 +1,16 @@
 package com.integral.enigmaticlegacy.items;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.Rarity;
+import net.minecraft.util.ResourceLocation;
 
-public class AstralDust extends Item {
+public class AstralDust extends ItemBase {
 
-	public static Properties integratedProperties = new Item.Properties();
-
-	public AstralDust(Properties properties) {
-		super(properties);
-	}
-
-	public static Properties setupIntegratedProperties() {
-		AstralDust.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		AstralDust.integratedProperties.maxStackSize(64);
-		AstralDust.integratedProperties.rarity(Rarity.EPIC);
-
-		return AstralDust.integratedProperties;
-
+	public AstralDust() {
+		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_dust"));
 	}
 
 }

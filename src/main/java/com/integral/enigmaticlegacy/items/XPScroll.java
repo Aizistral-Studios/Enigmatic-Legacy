@@ -8,9 +8,9 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
-import com.integral.enigmaticlegacy.helpers.IPerhaps;
+import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
-import com.integral.enigmaticlegacy.helpers.LoreHelper;
+import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
@@ -18,51 +18,32 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import top.theillusivec4.curios.api.capability.ICurio;
 
-public class XPScroll extends Item implements ICurio, IPerhaps {
+public class XPScroll extends ItemBaseCurio {
+	public final int xpPortion = 5;
 
-	public static Properties integratedProperties = new Item.Properties();
-	public static final int xpPortion = 5;
-
-	public XPScroll(Properties properties) {
-		super(properties);
-
-	}
-
-	public static Properties setupIntegratedProperties() {
-		XPScroll.integratedProperties.group(EnigmaticLegacy.enigmaticTab);
-		XPScroll.integratedProperties.maxStackSize(1);
-		XPScroll.integratedProperties.rarity(Rarity.UNCOMMON);
-
-		return XPScroll.integratedProperties;
-
+	public XPScroll() {
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "xp_scroll"));
 	}
 
 	@Override
 	public boolean isForMortals() {
 		return ConfigHandler.XP_SCROLL_ENABLED.getValue();
-	}
-
-	@Override
-	public boolean canEquip(String identifier, LivingEntity living) {
-		if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.xpScroll))
-			return false;
-		else
-			return true;
 	}
 
 	@Override
@@ -77,35 +58,35 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
 		else
 			cMode = new TranslationTextComponent("tooltip.enigmaticlegacy.xpTomeExtraction");
 
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.hasShiftDown()) {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome1");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome2");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome3");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome4");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome4_5");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome5");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome6");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome7");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome8");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome9");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome10");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome11", (int) ConfigHandler.XP_SCROLL_COLLECTION_RANGE.getValue());
+		if (Screen.func_231173_s_()) {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome4");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome4_5");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome5");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome6");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome7");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome8");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome9");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome10");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome11", TextFormatting.GOLD, (int) ConfigHandler.XP_SCROLL_COLLECTION_RANGE.getValue());
 		} else {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTomeMode", cMode.getFormattedText());
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTomeStoredXP");
-		LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTomeUnits", ItemNBTHelper.getInt(stack, "XPStored", 0), ExperienceHelper.getLevelForExperience(ItemNBTHelper.getInt(stack, "XPStored", 0)));
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTomeMode", null, cMode);
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTomeStoredXP");
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTomeUnits", TextFormatting.GOLD, ItemNBTHelper.getInt(stack, "XPStored", 0), ExperienceHelper.getLevelForExperience(ItemNBTHelper.getInt(stack, "XPStored", 0)));
 
 		try {
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", KeyBinding.getDisplayString("key.xpScroll").get().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.getDisplayString("key.xpScroll").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
@@ -113,7 +94,6 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand handIn) {
-
 		ItemStack stack = player.getHeldItem(handIn);
 		this.trigger(world, stack, player, handIn, true);
 
@@ -123,23 +103,23 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
 
 	public void trigger(World world, ItemStack stack, PlayerEntity player, Hand hand, boolean swing) {
 
-		if (!player.isShiftKeyDown()) {
+		if (!player.isCrouching()) {
 
 			if (ItemNBTHelper.getBoolean(stack, "AbsorptionMode", true)) {
 				ItemNBTHelper.setBoolean(stack, "AbsorptionMode", false);
-				world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			} else {
 				ItemNBTHelper.setBoolean(stack, "AbsorptionMode", true);
-				world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		} else {
 
 			if (ItemNBTHelper.getBoolean(stack, "IsActive", false)) {
 				ItemNBTHelper.setBoolean(stack, "IsActive", false);
-				world.playSound(null, player.getPosition(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.func_233580_cy_(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			} else {
 				ItemNBTHelper.setBoolean(stack, "IsActive", true);
-				world.playSound(null, player.getPosition(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.func_233580_cy_(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 
@@ -155,7 +135,7 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
 	}
 
 	@Override
-	public void onCurioTick(String identifier, int index, LivingEntity entity) {
+	public void curioTick(String identifier, int index, LivingEntity entity) {
 
 		ItemStack itemstack = SuperpositionHandler.getCurioStack(entity, EnigmaticLegacy.xpScroll);
 
@@ -167,10 +147,10 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
 
 		if (ItemNBTHelper.getBoolean(itemstack, "AbsorptionMode", true)) {
 
-			if (player.experienceTotal >= XPScroll.xpPortion) {
-				player.giveExperiencePoints(-XPScroll.xpPortion);
-				ItemNBTHelper.setInt(itemstack, "XPStored", ItemNBTHelper.getInt(itemstack, "XPStored", 0) + XPScroll.xpPortion);
-			} else if (player.experienceTotal > 0 & ExperienceHelper.getPlayerXP(player) < XPScroll.xpPortion) {
+			if (player.experienceTotal >= this.xpPortion) {
+				player.giveExperiencePoints(-this.xpPortion);
+				ItemNBTHelper.setInt(itemstack, "XPStored", ItemNBTHelper.getInt(itemstack, "XPStored", 0) + this.xpPortion);
+			} else if (player.experienceTotal > 0 & ExperienceHelper.getPlayerXP(player) < this.xpPortion) {
 				int exp = player.experienceTotal;
 				player.giveExperiencePoints(-exp);
 				ItemNBTHelper.setInt(itemstack, "XPStored", ItemNBTHelper.getInt(itemstack, "XPStored", 0) + exp);
@@ -180,10 +160,10 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
 
 			int xp = ItemNBTHelper.getInt(itemstack, "XPStored", 0);
 
-			if (xp >= XPScroll.xpPortion) {
-				ItemNBTHelper.setInt(itemstack, "XPStored", xp - XPScroll.xpPortion);
-				player.giveExperiencePoints(XPScroll.xpPortion);
-			} else if (xp > 0 & xp < XPScroll.xpPortion) {
+			if (xp >= this.xpPortion) {
+				ItemNBTHelper.setInt(itemstack, "XPStored", xp - this.xpPortion);
+				player.giveExperiencePoints(this.xpPortion);
+			} else if (xp > 0 & xp < this.xpPortion) {
 				ItemNBTHelper.setInt(itemstack, "XPStored", 0);
 				player.giveExperiencePoints(xp);
 			}
@@ -204,16 +184,6 @@ public class XPScroll extends Item implements ICurio, IPerhaps {
 	@Override
 	public boolean canRightClickEquip() {
 		return false;
-	}
-
-	@Override
-	public void onEquipped(String identifier, LivingEntity entityLivingBase) {
-		// Insert existential void here
-	}
-
-	@Override
-	public void onUnequipped(String identifier, LivingEntity entityLivingBase) {
-		// Insert existential void here
 	}
 
 }
