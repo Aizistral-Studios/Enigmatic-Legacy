@@ -1,5 +1,11 @@
 The Changelog:
 
+[Release 1.7.2]:
+
+- Re-added missing localized names for Enigmatic Amulet and Scroll of Ageless Wisdom.
+
+
+
 [Release 1.7.1]:
 
 - Wither Skulls summoned by Heart of Creation now home in on observed entity. Also, new animation for indicating stronger skulls;
