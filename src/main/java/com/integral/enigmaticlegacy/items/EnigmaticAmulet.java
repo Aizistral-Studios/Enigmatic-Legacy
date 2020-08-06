@@ -29,7 +29,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class EnigmaticAmulet extends ItemBaseCurio {
 
 	public EnigmaticAmulet() {
-		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).func_234689_a_());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet"));
 	}
 
@@ -41,6 +41,18 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.func_231173_s_()) {
+			
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletShift1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletShift2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletShift3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletShift4");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletShift5");
+			
+		} else {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet3");
@@ -48,14 +60,13 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet5");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet6");
-		} else {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+			
+			if (name != null) {
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletInscription", TextFormatting.DARK_RED, name);
+			}
 		}
-
-		if (name != null) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletInscription", TextFormatting.DARK_RED, name);
-		}
+		
 	}
 
 	@Override
@@ -63,7 +74,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
-		atts.put(Attributes.field_233826_i_, new AttributeModifier(UUID.fromString("50faf191-bf78-4654-b349-cc1f4f1143bf"), "Armor bonus", 2.0, AttributeModifier.Operation.ADDITION));
+		//atts.put(Attributes.field_233826_i_, new AttributeModifier(UUID.fromString("50faf191-bf78-4654-b349-cc1f4f1143bf"), "Armor bonus", 2.0, AttributeModifier.Operation.ADDITION));
 		atts.put(Attributes.field_233823_f_, new AttributeModifier(UUID.fromString("cb7f55d3-685c-4f38-a497-9c13a33db5cf"), "Attack bonus", 1.5, AttributeModifier.Operation.ADDITION));
 
 		return atts;

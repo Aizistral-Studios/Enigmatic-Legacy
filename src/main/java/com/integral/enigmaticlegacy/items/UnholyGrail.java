@@ -33,7 +33,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class UnholyGrail extends ItemBase {
 
 	public UnholyGrail() {
-		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC));
+		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).func_234689_a_());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "unholy_grail"));
 	}
 

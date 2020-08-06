@@ -41,7 +41,8 @@ public class EtheriumPickaxe extends ItemBaseTool {
 				ItemBaseTool.getDefaultProperties()
 				.defaultMaxDamage((int) (EnigmaticMaterials.ETHERIUM.getMaxUses() * 1.5))
 				.addToolType(ToolType.PICKAXE, EnigmaticMaterials.ETHERIUM.getHarvestLevel())
-				.rarity(Rarity.RARE));
+				.rarity(Rarity.RARE)
+				.func_234689_a_());
 
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_pickaxe"));
 

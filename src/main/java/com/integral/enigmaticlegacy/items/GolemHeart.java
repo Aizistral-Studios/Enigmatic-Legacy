@@ -124,7 +124,7 @@ public class GolemHeart extends ItemAdvancedCurio implements ISpellstone {
 
 			AttributeModifierManager map = player.func_233645_dx_();
 			int armorAmount = 0;
-
+			
 			for (ItemStack stack : player.getArmorInventoryList()) {
 				if (!stack.isEmpty())
 					armorAmount++;

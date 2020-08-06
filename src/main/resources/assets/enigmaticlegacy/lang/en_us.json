@@ -47,6 +47,15 @@
 	"item.enigmaticlegacy.enchantment_transposer": "Tome of Hungering Knowledge",
 	"item.enigmaticlegacy.xp_scroll": "Scroll of Agaless Wisdom",
 	"item.enigmaticlegacy.fabulous_scroll": "Grace of the Creator",
+	"item.enigmaticlegacy.storage_crystal": "Extradimensional Vessel",
+	"item.enigmaticlegacy.soul_crystal": "Soul Crystal",
+	
+	"block.enigmaticlegacy.big_lamp": "Lamp",
+	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
+	"block.enigmaticlegacy.big_shroomlamp": "Shroomlamp",
+	"block.enigmaticlegacy.massive_shroomlamp": "Encased Shroomlamp",
+	"block.enigmaticlegacy.big_redstonelamp": "Redstone Lantern",
+	"block.enigmaticlegacy.massive_redstonelamp": "Encased Redstone Lantern",
 	
 	"item.enigmaticlegacy.common_potion.effect.empty": "Hollow Potion",
 	"item.enigmaticlegacy.common_potion.effect.haste": "Potion of Haste",
@@ -258,6 +267,12 @@
 	"tooltip.enigmaticlegacy.enigmaticAmulet5": "§5of shattered memories.",
 	"tooltip.enigmaticlegacy.enigmaticAmulet6": "§5Memories about something important...",
 	"tooltip.enigmaticlegacy.enigmaticAmuletInscription": "§5Name is engraved upon it: §4%1$s",
+	"tooltip.enigmaticlegacy.enigmaticAmuletShift1": "§5Whenever you die while having it equipped or",
+	"tooltip.enigmaticlegacy.enigmaticAmuletShift2": "§5in your inventory, summons §6Extradimensional",
+	"tooltip.enigmaticlegacy.enigmaticAmuletShift3": "§6Vessel§5 that safely stores your items, soul",
+	"tooltip.enigmaticlegacy.enigmaticAmuletShift4": "§5crystals and experience.",
+	"tooltip.enigmaticlegacy.enigmaticAmuletShift5": "§5Approach the vessel to regain what was lost.",
+
 
 	"tooltip.enigmaticlegacy.magnetRing1": "§5Attracts items within §6%1$s§6 blocks§5 radius.",
 	"tooltip.enigmaticlegacy.magnetRing2": "§5This can be disabled by holding §6Shift§5.",
@@ -351,8 +366,9 @@
 	"tooltip.enigmaticlegacy.magmaHeart4": "§5- Immunity to fire and lava.",
 	"tooltip.enigmaticlegacy.magmaHeart5": "§5- Extinguishes you when on fire.",
 	"tooltip.enigmaticlegacy.magmaHeart6": "§5- Burns those who attack you in melee.",
-	"tooltip.enigmaticlegacy.magmaHeart7": "§5- Any status effects applied to you tick",
-	"tooltip.enigmaticlegacy.magmaHeart8": "§5  down twice as fast.",
+	"tooltip.enigmaticlegacy.magmaHeart7": "§5- Heavily improved visibility in lava.",
+	"tooltip.enigmaticlegacy.magmaHeart8": "§5- Any status effects applied to you tick",
+	"tooltip.enigmaticlegacy.magmaHeart9": "§5  down twice as fast.",
 	
 	"tooltip.enigmaticlegacy.golemHeart1": "§dActive ability:",
 	"tooltip.enigmaticlegacy.golemHeart2": "§4- Absent.",

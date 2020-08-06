@@ -28,7 +28,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class EtheriumArmor extends ItemBaseArmor {
 
 	public EtheriumArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
-		super(materialIn, slot, ItemBaseArmor.getDefaultProperties().rarity(Rarity.RARE));
+		super(materialIn, slot, ItemBaseArmor.getDefaultProperties().rarity(Rarity.RARE).func_234689_a_());
 	}
 
 	public boolean hasShield(@Nonnull PlayerEntity player) {

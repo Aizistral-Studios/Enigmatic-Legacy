@@ -1,6 +1,7 @@
 package com.integral.enigmaticlegacy.handlers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import com.google.common.collect.Lists;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.IPerhaps;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
 import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
 import com.integral.enigmaticlegacy.objects.Vector3;
@@ -32,6 +34,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -46,7 +49,10 @@ import net.minecraft.loot.StandaloneLootEntry;
 import net.minecraft.loot.functions.EnchantWithLevels;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.loot.functions.SetDamage;
+import net.minecraft.nbt.ByteNBT;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.IntNBT;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectUtils;
@@ -65,6 +71,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
@@ -671,32 +678,12 @@ public class SuperpositionHandler {
 
 		return lootChestList;
 	}
-
+	
 	/**
-	 * Sets the given boolean tag to the player's persistent NBT.
+	 * Retrieves the given INBT type from the player's persistent NBT.
 	 */
-
-	public static void setPersistentBoolean(PlayerEntity player, String tag, boolean value) {
-
-		CompoundNBT data = player.getPersistentData();
-		CompoundNBT persistent;
-
-		if (!data.contains(PlayerEntity.PERSISTED_NBT_TAG)) {
-			data.put(PlayerEntity.PERSISTED_NBT_TAG, (persistent = new CompoundNBT()));
-		} else {
-			persistent = data.getCompound(PlayerEntity.PERSISTED_NBT_TAG);
-		}
-
-		persistent.putBoolean(tag, value);
-
-	}
-
-	/**
-	 * Retrieves the given boolean tag from the player's persistent NBT.
-	 */
-
-	public static boolean getPersistentBoolean(PlayerEntity player, String tag, boolean expectedValue) {
-
+	
+	public static INBT getPersistentTag(PlayerEntity player, String tag, INBT expectedValue) {
 		CompoundNBT data = player.getPersistentData();
 		CompoundNBT persistent;
 
@@ -707,21 +694,63 @@ public class SuperpositionHandler {
 		}
 
 		if (persistent.contains(tag)) {
-			return persistent.getBoolean(tag);
+			return persistent.get(tag);
 		} else {
-			persistent.putBoolean(tag, expectedValue);
+			persistent.put(tag, expectedValue);
 			return expectedValue;
 		}
 
 	}
+	
+	/**
+	 * Sets the given INBT type to the player's persistent NBT.
+	 */
+	
+	public static void setPersistentTag(PlayerEntity player, String tag, INBT value) {
+		CompoundNBT data = player.getPersistentData();
+		CompoundNBT persistent;
 
+		if (!data.contains(PlayerEntity.PERSISTED_NBT_TAG)) {
+			data.put(PlayerEntity.PERSISTED_NBT_TAG, (persistent = new CompoundNBT()));
+		} else {
+			persistent = data.getCompound(PlayerEntity.PERSISTED_NBT_TAG);
+		}
+
+		persistent.put(tag, value);
+	}
+
+	/**
+	 * Sets the given boolean tag to the player's persistent NBT.
+	 */
+
+	public static void setPersistentBoolean(PlayerEntity player, String tag, boolean value) {
+		setPersistentTag(player, tag, ByteNBT.valueOf(value));
+	}
+
+	/**
+	 * Retrieves the given boolean tag from the player's persistent NBT.
+	 */
+
+	public static boolean getPersistentBoolean(PlayerEntity player, String tag, boolean expectedValue) {
+		INBT theTag = getPersistentTag(player, tag, ByteNBT.valueOf(expectedValue));
+		return theTag instanceof ByteNBT ? ((ByteNBT)theTag).getByte() != 0 : expectedValue;
+	}
+	
+	public static void setPersistentInteger(PlayerEntity player, String tag, int value) {
+		setPersistentTag(player, tag, IntNBT.valueOf(value));
+	}
+	
+	public static int getPersistentInteger(PlayerEntity player, String tag, int expectedValue) {
+		INBT theTag = getPersistentTag(player, tag, IntNBT.valueOf(expectedValue));
+		return theTag instanceof IntNBT ? ((IntNBT)theTag).getInt() : expectedValue;
+	}
+	
 	/**
 	 * Checks whether player has specified tag in their persistent NBT, whatever
 	 * it's type or value is.
 	 */
 
 	public static boolean hasPersistentTag(PlayerEntity player, String tag) {
-
 		CompoundNBT data = player.getPersistentData();
 		CompoundNBT persistent;
 
@@ -935,6 +964,7 @@ public class SuperpositionHandler {
 	 * Checks whether or on the player is within the range of any active beacon.
 	 */
 	
+	@SuppressWarnings("unchecked")
 	public static boolean isInBeaconRange(PlayerEntity player) {
 		List<BeaconTileEntity> list = new ArrayList<BeaconTileEntity>();
 		boolean inRange = false;
@@ -955,15 +985,50 @@ public class SuperpositionHandler {
 					}
 					
 					int range = (beacon.getLevels()+1)*10;
-					double distance = Math.sqrt(beacon.getPos().distanceSq(player.getPosX(), beacon.getPos().getY(), player.getPosZ(), true));						
-					
-					//System.out.println("Distance to " + beacon + ": " + distance);
+					double distance = Math.sqrt(beacon.getPos().distanceSq(player.getPosX(), beacon.getPos().getY(), player.getPosZ(), true));
 					
 					if (distance <= range)
 						inRange = true;
 				}
 		
 		return inRange;
+	}
+	
+	public static boolean hasItem(PlayerEntity player, Item item) {
+		return player.inventory.hasItemStack(new ItemStack(item));
+	}
+	
+	/**
+	 * Checks whether the collection of ItemEntities contains given Item.
+	 *
+	 * @author Integral
+	 */
+
+	public static boolean ifDroplistContainsItem(Collection<ItemEntity> drops, Item item) {
+
+		for (ItemEntity drop : drops) {
+			if (drop.getItem() != null)
+				if (drop.getItem().getItem() == item)
+					return true;
+		}
+
+		return false;
+	}
+	
+	public static boolean shouldPlayerDropSoulCrystal(PlayerEntity player) {
+		int dropMode = ConfigHandler.SOUL_CRYSTALS_MODE.getValue();
+		int maxCrystalLoss = ConfigHandler.MAX_SOUL_CRYSTAL_LOSS.getValue();
+		
+		if (dropMode == 0) {
+			// TODO Expand
+			return false;
+		} else if (dropMode == 1) {
+			return player.world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY) && EnigmaticLegacy.soulCrystal.getLostCrystals(player) < maxCrystalLoss;
+		} else if (dropMode == 2) {
+			return EnigmaticLegacy.soulCrystal.getLostCrystals(player) < maxCrystalLoss;
+		}
+		
+		return false;
 	}
 
 }

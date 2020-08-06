@@ -40,7 +40,7 @@ public class EtheriumSword extends SwordItem implements IPerhaps {
 	public CooldownMap etheriumSwordCooldowns = new CooldownMap();
 
 	public EtheriumSword() {
-		super(EnigmaticMaterials.ETHERIUM, 6, -2.6F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE));
+		super(EnigmaticMaterials.ETHERIUM, 6, -2.6F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).func_234689_a_());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_sword"));
 	}
 

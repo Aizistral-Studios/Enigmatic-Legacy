@@ -70,6 +70,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.EntityDamageSource;
@@ -81,6 +82,7 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -89,6 +91,7 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -132,6 +135,21 @@ public class EnigmaticEventHandler {
 	public static List<IToast> scheduledToasts = new ArrayList<IToast>();
 	public static Random theySeeMeRollin = new Random();
 	public static HashMap<PlayerEntity, String> anvilFields = new HashMap<PlayerEntity, String>();
+	public static HashMap<PlayerEntity, Boolean> hadEnigmaticAmulet = new HashMap<PlayerEntity, Boolean>();
+	
+	
+	
+	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
+	public void onFogRender(EntityViewRenderEvent.FogDensity event) {
+		
+		if (event.getInfo().getFluidState().isTagged(FluidTags.LAVA) && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.magmaHeart)) {
+			event.setCanceled(true);
+			event.setDensity((float) ConfigHandler.MAGMA_HEART_LAVAFOG_DENSITY.getValue());
+		}
+		
+	}
+	
 	
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
@@ -300,6 +318,13 @@ public class EnigmaticEventHandler {
 			ServerPlayerEntity player = (ServerPlayerEntity) event.getEntityLiving();
 
 			/*
+			 * Updates Enigmatic Amulet possession status for LivingDropsEvent.
+			 */
+			
+			hadEnigmaticAmulet.put(player, SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticAmulet) || SuperpositionHandler.hasItem(player, EnigmaticLegacy.enigmaticAmulet));
+
+			
+			/*
 			 * Handler for Scroll of Postmortal Recall.
 			 */
 
@@ -321,6 +346,7 @@ public class EnigmaticEventHandler {
 				player.world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 1024, player.world.func_234923_W_())), new PacketRecallParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 48, false));
 			}
+			
 		}
 
 	}
@@ -492,7 +518,6 @@ public class EnigmaticEventHandler {
 			 */
 
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.magmaHeart)) {
-				// System.out.println("Damage type: " + event.getSource().damageType);
 				if (event.getSource().getTrueSource() instanceof LivingEntity && EnigmaticLegacy.magmaHeart.nemesisList.contains(event.getSource().damageType)) {
 					LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
 					if (!attacker.func_230279_az_()) {
@@ -562,17 +587,65 @@ public class EnigmaticEventHandler {
 		}
 
 	}
+	
+	@SubscribeEvent
+	public void playerClone(PlayerEvent.Clone evt) {
+		PlayerEntity player = evt.getPlayer();
+		
+		EnigmaticLegacy.soulCrystal.updatePlayerSoulMap(player);
+	}
+	
+	@SubscribeEvent
+	public void entityJoinWorld(EntityJoinWorldEvent evt) {
+		Entity entity = evt.getEntity();
+
+		if (entity instanceof ServerPlayerEntity) {
+			ServerPlayerEntity player = (ServerPlayerEntity) entity;
+			EnigmaticLegacy.soulCrystal.updatePlayerSoulMap(player);
+		}
+
+	}
+	
+	@SubscribeEvent
+	public void onExperienceDrops(LivingExperienceDropEvent event) {
+		if (event.getEntityLiving() instanceof ServerPlayerEntity) {
+			if (this.hadEnigmaticAmulet((PlayerEntity) event.getEntityLiving()) && !event.getEntityLiving().world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY)) {
+				event.setCanceled(true);
+			}
+		}
+	}
 
 	@SubscribeEvent
 	public void onLivingDrops(LivingDropsEvent event) {
+		
+		if (event.getEntityLiving() instanceof ServerPlayerEntity) {
+			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+
+			if (this.hadEnigmaticAmulet(player) && !event.getDrops().isEmpty()) {
+				ItemStack storageCrystal = EnigmaticLegacy.storageCrystal.storeDropsOnCrystal(event.getDrops(), player, SuperpositionHandler.shouldPlayerDropSoulCrystal(player) ? EnigmaticLegacy.soulCrystal.createCrystalFrom(player) : null);
+				PermanentItemEntity droppedStorageCrystal = new PermanentItemEntity(player.world, player.getPosX(), player.getPosY() + 1.5, player.getPosZ(), storageCrystal);
+				droppedStorageCrystal.setOwnerId(player.getUniqueID());
+				player.world.addEntity(droppedStorageCrystal);
+				EnigmaticLegacy.enigmaticLogger.info("Summoned Extradimensional Storage Crystal for " + player.getGameProfile().getName() + " at X: " + player.getPosX() + ", Y: " + player.getPosY() + ", Z: " + player.getPosZ());
+				event.getDrops().clear();
+			} else if (SuperpositionHandler.shouldPlayerDropSoulCrystal(player)) {
+				ItemStack soulCrystal = EnigmaticLegacy.soulCrystal.createCrystalFrom(player);
+				PermanentItemEntity droppedSoulCrystal = new PermanentItemEntity(player.world, player.getPosX(), player.getPosY() + 1.5, player.getPosZ(), soulCrystal);
+				droppedSoulCrystal.setOwnerId(player.getUniqueID());
+				player.world.addEntity(droppedSoulCrystal);
+				EnigmaticLegacy.enigmaticLogger.info("Teared Soul Crystal from " + player.getGameProfile().getName() + " at X: " + player.getPosX() + ", Y: " + player.getPosY() + ", Z: " + player.getPosZ());
+			}
+
+		}
+		
 
 		/*
 		 * Beheading handler for Axe of Executioner.
 		 */
-
+		
 		if (event.getEntityLiving().getClass() == SkeletonEntity.class && event.isRecentlyHit() && event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof PlayerEntity) {
 			ItemStack weap = ((PlayerEntity) event.getSource().getTrueSource()).getHeldItemMainhand();
-			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !this.containsDrop(event.getDrops(), Items.SKELETON_SKULL) && this.theySeeMeRollin(event.getLootingLevel())) {
+			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !SuperpositionHandler.ifDroplistContainsItem(event.getDrops(), Items.SKELETON_SKULL) && this.theySeeMeRollin(event.getLootingLevel())) {
 				this.addDrop(event, new ItemStack(Items.SKELETON_SKULL, 1));
 
 				if (event.getSource().getTrueSource() instanceof ServerPlayerEntity)
@@ -582,15 +655,15 @@ public class EnigmaticEventHandler {
 			ItemStack weap = ((PlayerEntity) event.getSource().getTrueSource()).getHeldItemMainhand();
 			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe) {
 
-				if (!this.containsDrop(event.getDrops(), Items.WITHER_SKELETON_SKULL) && this.theySeeMeRollin(event.getLootingLevel()))
+				if (!SuperpositionHandler.ifDroplistContainsItem(event.getDrops(), Items.WITHER_SKELETON_SKULL) && this.theySeeMeRollin(event.getLootingLevel()))
 					this.addDrop(event, new ItemStack(Items.WITHER_SKELETON_SKULL, 1));
 
-				if (event.getSource().getTrueSource() instanceof ServerPlayerEntity && this.containsDrop(event.getDrops(), Items.WITHER_SKELETON_SKULL))
+				if (event.getSource().getTrueSource() instanceof ServerPlayerEntity && SuperpositionHandler.ifDroplistContainsItem(event.getDrops(), Items.WITHER_SKELETON_SKULL))
 					BeheadingTrigger.INSTANCE.trigger((ServerPlayerEntity) event.getSource().getTrueSource());
 			}
 		} else if (event.getEntityLiving().getClass() == ZombieEntity.class && event.isRecentlyHit() && event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof PlayerEntity) {
 			ItemStack weap = ((PlayerEntity) event.getSource().getTrueSource()).getHeldItemMainhand();
-			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !this.containsDrop(event.getDrops(), Items.ZOMBIE_HEAD) && this.theySeeMeRollin(event.getLootingLevel())) {
+			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !SuperpositionHandler.ifDroplistContainsItem(event.getDrops(), Items.ZOMBIE_HEAD) && this.theySeeMeRollin(event.getLootingLevel())) {
 				this.addDrop(event, new ItemStack(Items.ZOMBIE_HEAD, 1));
 
 				if (event.getSource().getTrueSource() instanceof ServerPlayerEntity)
@@ -598,7 +671,7 @@ public class EnigmaticEventHandler {
 			}
 		} else if (event.getEntityLiving().getClass() == CreeperEntity.class && event.isRecentlyHit() && event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof PlayerEntity) {
 			ItemStack weap = ((PlayerEntity) event.getSource().getTrueSource()).getHeldItemMainhand();
-			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !this.containsDrop(event.getDrops(), Items.CREEPER_HEAD) && this.theySeeMeRollin(event.getLootingLevel())) {
+			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !SuperpositionHandler.ifDroplistContainsItem(event.getDrops(), Items.CREEPER_HEAD) && this.theySeeMeRollin(event.getLootingLevel())) {
 				this.addDrop(event, new ItemStack(Items.CREEPER_HEAD, 1));
 
 				if (event.getSource().getTrueSource() instanceof ServerPlayerEntity)
@@ -606,7 +679,7 @@ public class EnigmaticEventHandler {
 			}
 		} else if (event.getEntityLiving().getClass() == EnderDragonEntity.class && event.isRecentlyHit() && event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof PlayerEntity) {
 			ItemStack weap = ((PlayerEntity) event.getSource().getTrueSource()).getHeldItemMainhand();
-			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !this.containsDrop(event.getDrops(), Items.DRAGON_HEAD) && this.theySeeMeRollin(event.getLootingLevel())) {
+			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !SuperpositionHandler.ifDroplistContainsItem(event.getDrops(), Items.DRAGON_HEAD) && this.theySeeMeRollin(event.getLootingLevel())) {
 				this.addDrop(event, new ItemStack(Items.DRAGON_HEAD, 1));
 
 				if (event.getSource().getTrueSource() instanceof ServerPlayerEntity)
@@ -1045,23 +1118,6 @@ public class EnigmaticEventHandler {
 	}
 
 	/**
-	 * Checks whether the collection of ItemEntities contains given Item.
-	 *
-	 * @author Integral
-	 */
-
-	public boolean containsDrop(Collection<ItemEntity> drops, Item item) {
-
-		for (ItemEntity drop : drops) {
-			if (drop.getItem() != null)
-				if (drop.getItem().getItem() == item)
-					return true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Calculates the chance for Axe of Executioner to behead an enemy.
 	 *
 	 * @param lootingLevel Amount of looting levels applied to axe or effective
@@ -1078,5 +1134,10 @@ public class EnigmaticEventHandler {
 		else
 			return false;
 	}
+
+	public boolean hadEnigmaticAmulet(PlayerEntity player) {
+		return hadEnigmaticAmulet.containsKey(player) ? hadEnigmaticAmulet.get(player) : false;
+	}
+
 
 }

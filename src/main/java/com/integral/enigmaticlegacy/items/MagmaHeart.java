@@ -32,7 +32,7 @@ public class MagmaHeart extends ItemAdvancedCurio implements ISpellstone {
 	public List<String> nemesisList = new ArrayList<String>();
 
 	public MagmaHeart() {
-		super(ItemAdvancedCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
+		super(ItemAdvancedCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).func_234689_a_());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "magma_heart"));
 
 		this.immunityList.add(DamageSource.LAVA.damageType);
@@ -70,6 +70,7 @@ public class MagmaHeart extends ItemAdvancedCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart6");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart7");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart8");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart9");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}

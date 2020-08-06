@@ -1,5 +1,19 @@
 The Changelog:
 
+[Release 1.8.3]:
+
+- A little overhaul of mod's logo and updated description in mods.toml;
+- Entirely removed sound and particle effects produced by Ring of Dislocation;
+- Implemented new mechanic for Enigmatic Amulet, outlined in it's Shift-tooltip. Removed +2 armor stat bonus from it;
+- Added lamps and encased lamps, with three variations being available;
+- PermanentItemEntities created by some items upon player's death will now spawn at y=0 if player dies further below in the Void. Also, they are now visible from up to 64 blocks away;
+- Technically completed soul loss mechanic. Will remain disabled, however, until implementation of in-game guidebook where details about it will be outlined for affected players;
+- Axe of Executioner now takes two Netherite Ingots to be created, instead of iron ones previously used; 
+- Following items are now immune to fire and lava, similar to netherite gear: etherium ore, ingots, armor, tools and weapons, Astral Breaker, Enigmatic Amulet, Heart of Creation, Axe of Executioner, Blazing Core, Keystone of The Oblivion, Unholy Grail, Void Pearl;
+- Blazing Core now significantly improves visibility when submerged in lava, among it's other abilities;
+
+
+
 [Release 1.8.2]:
 
 - Fixed dedicated server crashing when attempting to use active abilities of spellstones (#33).

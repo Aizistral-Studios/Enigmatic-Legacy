@@ -51,7 +51,8 @@ public class EtheriumShovel extends ToolItem implements IPerhaps {
 		super(2.5F, -3.0F, EnigmaticMaterials.ETHERIUM, new HashSet<>(), ItemBaseTool
 				.getDefaultProperties().defaultMaxDamage((int) (EnigmaticMaterials.ETHERIUM.getMaxUses() * 1.5))
 				.addToolType(ToolType.SHOVEL, EnigmaticMaterials.ETHERIUM.getHarvestLevel())
-				.rarity(Rarity.RARE));
+				.rarity(Rarity.RARE)
+				.func_234689_a_());
 
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_shovel"));
 

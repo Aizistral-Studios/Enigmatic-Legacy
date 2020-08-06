@@ -44,7 +44,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class OblivionStone extends ItemBase {
 
 	public OblivionStone() {
-		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.RARE));
+		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.RARE).func_234689_a_());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "oblivion_stone"));
 	}
 

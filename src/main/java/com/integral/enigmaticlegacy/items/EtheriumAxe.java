@@ -38,7 +38,7 @@ public class EtheriumAxe extends AxeItem implements IPerhaps {
 	public Set<Material> effectiveMaterials;
 
 	public EtheriumAxe() {
-		super(EnigmaticMaterials.ETHERIUM, 10, -3.2F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE));
+		super(EnigmaticMaterials.ETHERIUM, 10, -3.2F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).func_234689_a_());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_axe"));
 
 		this.effectiveMaterials = Sets.newHashSet();

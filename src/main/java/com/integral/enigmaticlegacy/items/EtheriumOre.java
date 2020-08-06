@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 public class EtheriumOre extends ItemBase {
 
 	public EtheriumOre() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.RARE));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.RARE).func_234689_a_());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_ore"));
 	}
 

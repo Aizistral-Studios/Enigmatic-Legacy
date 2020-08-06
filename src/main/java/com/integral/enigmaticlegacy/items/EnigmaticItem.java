@@ -39,7 +39,7 @@ public class EnigmaticItem extends ItemAdvancedCurio implements ISpellstone {
 	public HashMap<PlayerEntity, Boolean> flightMap = new HashMap<PlayerEntity, Boolean>();
 
 	public EnigmaticItem() {
-		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC));
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC).func_234689_a_());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_item"));
 
 		this.immunityList.add(DamageSource.FALL.damageType);

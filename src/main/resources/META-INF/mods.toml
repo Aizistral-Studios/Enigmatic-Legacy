@@ -4,14 +4,14 @@ loaderVersion="[31,)" #mandatory (26 is current forge version)
 issueTrackerURL="https://github.com/Extegral/Enigmatic-Legacy/issues" #optional
 [[mods]] #mandatory
 modId="enigmaticlegacy" #mandatory
-version="1.8.2" #mandatory
+version="1.8.3" #mandatory
 displayName="Enigmatic Legacy" #mandatory
 displayURL="https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy" #optional
 logoFile="EL_logo.png" #optional
-credits="Terraria and some of it's mods, for inspiring my creations; frdovahkick, for amazing work over some of the last textures in the mod." #optional
+credits="Terraria and some of it's mods, for inspiring my creations functionally and visually; frdovahkick, for amazing work over some of the textures in the mod." #optional
 authors="Integral" #optional
 description='''
-Even though it shares magical theme, this mod was orginally designed to contribute to vanilla flavor, bringing items and features that Minecraft on it's own really lacks. At the same time, it adds things usually added by more global mods with their own progression, but in my mind, absolutely required for fine and comfortable gameplay.
+This mod is designed to provide tools that will aid you in exploring seemingly endless reaches of Minecraft's worlds. As well as new resources, powerful gear and ancient relics - to reward you for doing so. Despite revolving around themes of arcane and mystery, Enigmatic Legacy doesn't stray too far away from what vanilla has to offer, instead attempting to expand upon it's mechanics and fill in the holes left open.
 '''
 [[dependencies.enigmaticlegacy]] #optional
     modId="forge" #mandatory

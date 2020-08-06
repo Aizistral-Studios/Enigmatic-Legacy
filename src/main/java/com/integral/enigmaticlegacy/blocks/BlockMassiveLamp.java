@@ -1,13 +1,19 @@
 package com.integral.enigmaticlegacy.blocks;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SoundType;
 import net.minecraft.item.DyeColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootContext.Builder;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -15,10 +21,11 @@ import net.minecraft.world.IBlockReader;
 
 public class BlockMassiveLamp extends Block {
 
-	public BlockMassiveLamp(Properties properties) {
-		super(properties.notSolid());
+	public BlockMassiveLamp(Properties properties, String registryName) {
+		super(properties.sound(SoundType.GLASS).notSolid());
 		
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "massive_lamp"));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, registryName));
+		EnigmaticLegacy.cutoutBlockRegistry.add(this);
 	}
 
 	@Override
@@ -26,14 +33,14 @@ public class BlockMassiveLamp extends Block {
 		return BlockRenderType.MODEL;
 	}
 	
-	/*
 	@Override
-	public Item asItem() {
-		return Item.BLOCK_TO_ITEM.get(this);
+	public List<ItemStack> getDrops(BlockState state, Builder builder) {
+		List<ItemStack> stacklist = new ArrayList<ItemStack>();
+		stacklist.add(new ItemStack(Item.getItemFromBlock(this)));
+		return stacklist;
 	}
-	*/
 	
-	/*
+	
 	@Override
 	public boolean isVariableOpacity() {
 		return true;
@@ -43,5 +50,5 @@ public class BlockMassiveLamp extends Block {
 	public boolean isTransparent(BlockState state) {
 		return true;
 	}
-	*/
+	
 }

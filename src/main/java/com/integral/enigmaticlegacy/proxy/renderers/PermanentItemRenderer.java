@@ -2,9 +2,12 @@ package com.integral.enigmaticlegacy.proxy.renderers;
 
 import java.util.Random;
 
+import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.IPermanentCrystal;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
@@ -56,8 +59,17 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 
 	@Override
 	public void render(PermanentItemEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+		if (!Minecraft.getInstance().player.isAlive() && Math.sqrt(entityIn.getDistanceSq(Minecraft.getInstance().player.getPosX(), Minecraft.getInstance().player.getPosYEye(), Minecraft.getInstance().player.getPosZ())) <= 1.0)
+			return;
+		
 		matrixStackIn.push();
 		ItemStack itemstack = entityIn.getItem();
+		
+		if (itemstack.getItem() instanceof IPermanentCrystal) {
+			matrixStackIn.scale(1.25f, 1.25f, 1.25f);
+			matrixStackIn.translate(0, -0.1125d, 0);		
+		}
+		
 		int i = itemstack.isEmpty() ? 187 : Item.getIdFromItem(itemstack.getItem()) + itemstack.getDamage();
 		this.random.setSeed(i);
 		IBakedModel ibakedmodel = this.itemRenderer.getItemModelWithOverrides(itemstack, entityIn.world, (LivingEntity) null);

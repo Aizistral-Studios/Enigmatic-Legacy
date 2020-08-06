@@ -50,7 +50,7 @@ public class EtheriumScythe extends SwordItem implements IPerhaps {
 	public Set<Material> effectiveMaterials;
 
 	public EtheriumScythe() {
-		super(EnigmaticMaterials.ETHERIUM, 3, -2.0F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE));
+		super(EnigmaticMaterials.ETHERIUM, 3, -2.0F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).func_234689_a_());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_scythe"));
 
 		this.effectiveMaterials = Sets.newHashSet();

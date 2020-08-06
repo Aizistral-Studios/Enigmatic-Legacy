@@ -31,7 +31,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ForbiddenAxe extends SwordItem implements IPerhaps {
 
 	public ForbiddenAxe() {
-		super(EnigmaticMaterials.FORBIDDENAXE, 6, -2.4F, ItemBaseTool.getDefaultProperties().defaultMaxDamage(2000).rarity(Rarity.EPIC));
+		super(EnigmaticMaterials.FORBIDDENAXE, 6, -2.4F, ItemBaseTool.getDefaultProperties().defaultMaxDamage(2000).rarity(Rarity.EPIC).func_234689_a_());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "forbidden_axe"));
 	}
 

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:massive_shroomlamp"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "enigmaticlegacy:big_shroomlamp"
+    },
+    {
+      "item": "minecraft:glass"
+    }
+  ],
+  "result": {
+    "item": "enigmaticlegacy:massive_shroomlamp"
+  }
+}

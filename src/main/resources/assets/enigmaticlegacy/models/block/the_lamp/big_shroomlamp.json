@@ -1,0 +1,9 @@
+{
+  "parent": "enigmaticlegacy:block/big_lamp_template",
+  "textures": {
+		"lantern": "block/lantern",
+		"metalplate": "enigmaticlegacy:blocks/plate",
+		"lampcore": "enigmaticlegacy:blocks/shroomlamp",
+		"particle": "enigmaticlegacy:blocks/plate"
+	}
+}

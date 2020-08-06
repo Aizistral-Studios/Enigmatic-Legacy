@@ -44,7 +44,8 @@ public class AstralBreaker extends ItemBaseTool {
 				.addToolType(ToolType.AXE, EnigmaticMaterials.ETHERIUM.getHarvestLevel())
 				.addToolType(ToolType.SHOVEL, EnigmaticMaterials.ETHERIUM.getHarvestLevel())
 				.defaultMaxDamage(4000)
-				.rarity(Rarity.EPIC));
+				.rarity(Rarity.EPIC)
+				.func_234689_a_());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_breaker"));
 
 		this.effectiveMaterials.addAll(((EtheriumPickaxe) EnigmaticLegacy.etheriumPickaxe).effectiveMaterials);

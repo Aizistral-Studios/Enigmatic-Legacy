@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:big_lamp"
+    }
+  ],
+  "pattern": [
+    "ici",
+    "gXg",
+    "igi"
+  ],
+  "key": {
+	"X": {
+      "item": "minecraft:glowstone"
+    },
+	"i": {
+      "item": "minecraft:iron_ingot"
+    },
+	"g": {
+      "item": "minecraft:gold_nugget"
+    },
+	"c": {
+      "item": "minecraft:chain"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:big_lamp",
+    "count": 2
+  }
+}

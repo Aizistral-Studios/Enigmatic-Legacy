@@ -295,13 +295,25 @@ public class ConfigHandler {
     public static final OmnipotentConfig.BooleanParameter BONUS_WOOL_RECIPES_ENABLED
     = new OmnipotentConfig.BooleanParameter(true);
     
-
+    public static final OmnipotentConfig.IntParameter SOUL_CRYSTALS_MODE
+    = new OmnipotentConfig.IntParameter(1);
+    
+    public static final OmnipotentConfig.IntParameter MAX_SOUL_CRYSTAL_LOSS
+    = new OmnipotentConfig.IntParameter(9);
+    
+    public static final OmnipotentConfig.DoubleParameter MAGMA_HEART_LAVAFOG_DENSITY
+    = new OmnipotentConfig.DoubleParameter(0.3D);
 
     static {
         final ForgeConfigSpec.Builder common = new ForgeConfigSpec.Builder();
         final ForgeConfigSpec.Builder client = new ForgeConfigSpec.Builder();
         
         client.comment("Some more different stuff").push("Generic Config");
+        
+        MAGMA_HEART_LAVAFOG_DENSITY.configObj = client
+        		.comment("Controls how obscured your vision is in lava when Blazing Core is equipped. Lower value equals more visibility.")
+        		.translation("configGui.enigmaticlegacy.magma_heart_lava_density")
+        		.defineInRange("magmaHeartLavaDensity", MAGMA_HEART_LAVAFOG_DENSITY.getValueDefault(), 0.0, 1024.0);
         
         client.pop();
 
@@ -488,6 +500,16 @@ public class ConfigHandler {
         		.comment("Inverts the Shift behaviour of Magnetic Ring and Dislocation Ring.")
         		.translation("configGui.enigmaticlegacy.invert_magnets_shift")
         		.define("invertMagnetsShift", INVERT_MAGNETS_SHIFT.getValueDefault());
+        
+        SOUL_CRYSTALS_MODE.configObj = common
+        		.comment("Soul Crystals mechanic mode. 0 - disabled unless enforced by specific in-game items; 1 - also enabled when keepInventory is true; 2 - always enabled.")
+        		.translation("configGui.enigmaticlegacy.soul_crystals_mode")
+        		.defineInRange("soulCrystalsMode", SOUL_CRYSTALS_MODE.getValueDefault(), 0, 2);
+        
+        MAX_SOUL_CRYSTAL_LOSS.configObj = common
+        		.comment("Maximum amount of Soul Crystals a player can loose before they won't drop anymore. Each crystal lost subtracts 10% of from their maximum possible health value.")
+        		.translation("configGui.enigmaticlegacy.max_soul_crystal_loss")
+        		.defineInRange("maxSoulCrystalLoss", MAX_SOUL_CRYSTAL_LOSS.getValueDefault(), 1, 10);
         
         common.pop();
         

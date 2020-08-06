@@ -1,0 +1,9 @@
+{
+  "parent": "enigmaticlegacy:block/big_hanging_lamp_template",
+  "textures": {
+		"lantern": "block/lantern",
+		"metalplate": "enigmaticlegacy:blocks/plate",
+		"lampcore": "enigmaticlegacy:blocks/redstone_lamp",
+		"particle": "enigmaticlegacy:blocks/plate"
+	}
+}

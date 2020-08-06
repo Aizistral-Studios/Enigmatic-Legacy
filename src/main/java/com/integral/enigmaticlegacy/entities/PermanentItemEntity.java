@@ -5,7 +5,11 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
+import com.integral.enigmaticlegacy.items.SoulCrystal;
+import com.integral.enigmaticlegacy.items.StorageCrystal;
 import com.integral.enigmaticlegacy.packets.clients.PacketHandleItemPickup;
+import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -21,6 +25,9 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -57,7 +64,7 @@ public class PermanentItemEntity extends Entity {
 
    public PermanentItemEntity(World worldIn, double x, double y, double z) {
       this(TYPE, worldIn);
-      this.setPosition(x, y, z);
+      this.setPosition(x, y <= 0 ? 1 : y, z);
       this.rotationYaw = this.rand.nextFloat() * 360.0F;
       
       this.setNoGravity(true);
@@ -159,12 +166,12 @@ public class PermanentItemEntity extends Entity {
          this.pickupDelay = compound.getShort("PickupDelay");
       }
 
-      if (compound.contains("Owner", 10)) {
-         this.owner = NBTUtil.readUniqueId(compound.getCompound("Owner"));
+      if (compound.contains("Owner")) {
+         this.owner = compound.getUniqueId("Owner");
       }
 
-      if (compound.contains("Thrower", 10)) {
-         this.thrower = NBTUtil.readUniqueId(compound.getCompound("Thrower"));
+      if (compound.contains("Thrower")) {
+         this.thrower = compound.getUniqueId("Thrower");
       }
 
       CompoundNBT compoundnbt = compound.getCompound("Item");
@@ -175,7 +182,7 @@ public class PermanentItemEntity extends Entity {
 
    }
 
-   public void onCollideWithPlayer(PlayerEntity entityIn) {
+   public void onCollideWithPlayer(PlayerEntity player) {
       if (!this.world.isRemote) {
          if (this.pickupDelay > 0) return;
          ItemStack itemstack = this.getItem();
@@ -183,21 +190,62 @@ public class PermanentItemEntity extends Entity {
          int i = itemstack.getCount();
 
          ItemStack copy = itemstack.copy();
-         if (this.pickupDelay == 0 && (this.owner == null || this.owner.equals(entityIn.getUniqueID())) && (i <= 0 || entityIn.inventory.addItemStackToInventory(itemstack))) {
+         
+         if (item instanceof StorageCrystal || (item instanceof SoulCrystal && player.getUniqueID().equals(this.getOwnerId()))) {
+        	 
+				if (item instanceof StorageCrystal) {
+					CompoundNBT crystalNBT = ItemNBTHelper.getNBT(itemstack);
+					ItemStack embeddedSoul = crystalNBT.contains("embeddedSoul") ? ItemStack.read(crystalNBT.getCompound("embeddedSoul")) : null;
+					boolean retrieveSoul = player.getUniqueID().equals(this.getOwnerId());
+					
+					EnigmaticLegacy.storageCrystal.retrieveDropsFromCrystal(itemstack, player, retrieveSoul ? embeddedSoul : null);
+					
+					if (!retrieveSoul && embeddedSoul != null) {
+						PermanentItemEntity droppedSoulCrystal = new PermanentItemEntity(this.world, this.getPosX(), this.getPosY(), this.getPosZ(), embeddedSoul);
+						droppedSoulCrystal.setOwnerId(this.getOwnerId());
+						this.world.addEntity(droppedSoulCrystal);
+					}
+						
+				} else if (item instanceof SoulCrystal) {
+					if (!EnigmaticLegacy.soulCrystal.retrieveSoulFromCrystal(player, itemstack))
+						return;
+				}
+
+			 EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY()+(this.getHeight()/2), this.getPosZ(), 64, player.world.func_234923_W_())), new PacketRecallParticles(this.getPosX(), this.getPosY()+(this.getHeight()/2), this.getPosZ(), 48, false));
+			 
+			 player.onItemPickup(this, i);
+	         EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.func_234923_W_())), new PacketHandleItemPickup(player.getEntityId(), this.getEntityId()));
+	         
+             this.remove();
+             itemstack.setCount(0);
+             
+         } else if (this.pickupDelay == 0 && (this.owner == null || this.owner.equals(player.getUniqueID())) && (i <= 0 || player.inventory.addItemStackToInventory(itemstack))) {
             copy.setCount(copy.getCount() - getItem().getCount());
             if (itemstack.isEmpty()) {
-               entityIn.onItemPickup(this, i);
+               player.onItemPickup(this, i);
                
-               EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.func_234923_W_())), new PacketHandleItemPickup(entityIn.getEntityId(), this.getEntityId()));
-
+               EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.func_234923_W_())), new PacketHandleItemPickup(player.getEntityId(), this.getEntityId()));
+               
                this.remove();
                itemstack.setCount(i);
             }
 
-            entityIn.addStat(Stats.ITEM_PICKED_UP.get(item), i);
+            player.addStat(Stats.ITEM_PICKED_UP.get(item), i);
          }
 
       }
+   }
+   
+   @Override
+   @OnlyIn(Dist.CLIENT)
+   public boolean isInRangeToRenderDist(double distance) {
+      double d0 = this.getBoundingBox().getAverageEdgeLength() * 4.0D;
+      if (Double.isNaN(d0)) {
+         d0 = 4.0D;
+      }
+
+      d0 = d0 * 64.0D;
+      return distance < d0 * d0;
    }
 
    public ITextComponent getName() {

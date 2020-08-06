@@ -1,0 +1,9 @@
+{
+  "parent": "enigmaticlegacy:block/massive_lamp_template",
+  "textures": {
+		"casing": "block/glass",
+		"metalplate": "enigmaticlegacy:blocks/plate",
+		"lampcore": "enigmaticlegacy:blocks/the_lamp",
+		"particle": "enigmaticlegacy:blocks/plate"
+	}
+}
