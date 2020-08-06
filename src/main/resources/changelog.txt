@@ -10,7 +10,7 @@ The Changelog:
 - Technically completed soul loss mechanic. Will remain disabled, however, until implementation of in-game guidebook where details about it will be outlined for affected players;
 - Axe of Executioner now takes two Netherite Ingots to be created, instead of iron ones previously used; 
 - Following items are now immune to fire and lava, similar to netherite gear: etherium ore, ingots, armor, tools and weapons, Astral Breaker, Enigmatic Amulet, Heart of Creation, Axe of Executioner, Blazing Core, Keystone of The Oblivion, Unholy Grail, Void Pearl;
-- Blazing Core now significantly improves visibility when submerged in lava, among it's other abilities;
+- Blazing Core now significantly improves visibility when submerged in lava, among it's other abilities.
 
 
 

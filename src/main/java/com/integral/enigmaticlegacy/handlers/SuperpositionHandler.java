@@ -1015,9 +1015,13 @@ public class SuperpositionHandler {
 		return false;
 	}
 	
+	@SuppressWarnings("unused")
 	public static boolean shouldPlayerDropSoulCrystal(PlayerEntity player) {
 		int dropMode = ConfigHandler.SOUL_CRYSTALS_MODE.getValue();
 		int maxCrystalLoss = ConfigHandler.MAX_SOUL_CRYSTAL_LOSS.getValue();
+		
+		if (true)
+			return false;
 		
 		if (dropMode == 0) {
 			// TODO Expand
