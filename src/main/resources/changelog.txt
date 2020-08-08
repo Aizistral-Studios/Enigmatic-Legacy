@@ -2,6 +2,15 @@ The Changelog:
 
 [Release 1.8.3]:
 
+- Fixed item names not displaying correctly in list of consumable items of Keystone of The Oblivion (#40);
+- Altered recipe of Emblem of Monster Slayer, to involve some new items from Nether Update (#37);
+- Buffed armor toughness values of etherium armor from +2.5 on each piece to +4.0, to surpass those of netherite armor;
+- The One Box now looks a bit more like a box. Also doesn't prest anymore.
+
+
+
+[Release 1.8.3]:
+
 - A little overhaul of mod's logo and updated description in mods.toml;
 - Entirely removed sound and particle effects produced by Ring of Dislocation;
 - Implemented new mechanic for Enigmatic Amulet, outlined in it's Shift-tooltip. Removed +2 armor stat bonus from it;

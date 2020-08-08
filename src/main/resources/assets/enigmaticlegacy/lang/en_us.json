@@ -49,6 +49,7 @@
 	"item.enigmaticlegacy.fabulous_scroll": "Grace of the Creator",
 	"item.enigmaticlegacy.storage_crystal": "Extradimensional Vessel",
 	"item.enigmaticlegacy.soul_crystal": "Soul Crystal",
+	"item.enigmaticlegacy.the_acknowledgment": "The Acknowledgment",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -412,7 +413,7 @@
 	"tooltip.enigmaticlegacy.megaSponge2": "§5around you, when you enter it.",
 	
 	"tooltip.enigmaticlegacy.lootGeneratorCurrent": "§dCurrent Loot Table:",
-	"tooltip.enigmaticlegacy.lootGenerator1": "§5Prest §6Right-Click§5 or §6Shift+Right-Click§5 to",
+	"tooltip.enigmaticlegacy.lootGenerator1": "§5Press §6Right-Click§5 or §6Shift+Right-Click§5 to",
 	"tooltip.enigmaticlegacy.lootGenerator2": "§5cycle back and forth the loot tables list.",
 	
 	"tooltip.enigmaticlegacy.lootGenerator3": "§5Press §6Shift+Right-Click§5 on the top of a chest",

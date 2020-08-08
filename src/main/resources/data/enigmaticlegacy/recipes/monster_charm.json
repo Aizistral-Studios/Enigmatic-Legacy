@@ -7,9 +7,9 @@
     }
   ],
   "pattern": [
-    "PAP",
-    "BXB",
-    "GEG"
+    " S ",
+    "PXP",
+    "EIE"
   ],
   "key": {
     "X": {
@@ -21,14 +21,11 @@
 	"E": {
       "item": "minecraft:experience_bottle"
     },
-	"G": {
-      "item": "minecraft:glowstone_dust"
+	"S": {
+      "item": "minecraft:soul_lantern"
     },
-	"B": {
-      "item": "minecraft:nether_brick"
-    },
-	"A": {
-      "item": "minecraft:golden_apple"
+	"I": {
+      "item": "minecraft:netherite_ingot"
     }
   },
   "result": {

@@ -12,7 +12,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 
 public enum EnigmaticArmorMaterials implements IArmorMaterial {
-    ETHERIUM(EnigmaticLegacy.MODID + ":etherium", 132, new int[] { 4, 7, 9, 4 }, 24, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.5F, () -> {
+    ETHERIUM(EnigmaticLegacy.MODID + ":etherium", 132, new int[] { 4, 7, 9, 4 }, 24, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 4F, () -> {
         return Ingredient.fromItems(EnigmaticLegacy.etheriumIngot);
     });
 

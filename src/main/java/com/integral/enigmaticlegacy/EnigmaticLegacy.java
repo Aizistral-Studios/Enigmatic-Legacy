@@ -67,6 +67,7 @@ import com.integral.enigmaticlegacy.items.RelicOfTesting;
 import com.integral.enigmaticlegacy.items.SoulCrystal;
 import com.integral.enigmaticlegacy.items.StorageCrystal;
 import com.integral.enigmaticlegacy.items.SuperMagnetRing;
+import com.integral.enigmaticlegacy.items.TheAcknowledgment;
 import com.integral.enigmaticlegacy.items.ThiccScroll;
 import com.integral.enigmaticlegacy.items.UltimatePotionBase;
 import com.integral.enigmaticlegacy.items.UltimatePotionLingering;
@@ -149,7 +150,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "1.8.3";
+	public static final String VERSION = "1.8.4";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -165,7 +166,7 @@ public class EnigmaticLegacy {
 	public static SoundEvent HHON;
 	public static SoundEvent HHOFF;
 	public static SoundEvent SHIELD_TRIGGER;
-	
+
 	public static BlockMassiveLamp massiveLamp;
 	public static BlockBigLamp bigLamp;
 	public static BlockMassiveLamp massiveShroomlamp;
@@ -238,6 +239,8 @@ public class EnigmaticLegacy {
 	public static StorageCrystal storageCrystal;
 	public static SoulCrystal soulCrystal;
 
+	public static TheAcknowledgment theAcknowledgment;
+
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
 	public static AdvancedPotion ULTIMATE_LEAPING;
@@ -279,13 +282,13 @@ public class EnigmaticLegacy {
 		EnigmaticLegacy.enigmaticHandler = new EnigmaticEventHandler();
 		EnigmaticLegacy.keybindHandler = new EnigmaticKeybindHandler();
 
-		massiveLamp = new BlockMassiveLamp(Block.Properties.from(Blocks.LANTERN), "massive_lamp");
-		bigLamp = new BlockBigLamp(Block.Properties.from(Blocks.LANTERN), "big_lamp");
-		massiveShroomlamp = new BlockMassiveLamp(Block.Properties.from(Blocks.LANTERN), "massive_shroomlamp");
-		bigShroomlamp = new BlockBigLamp(Block.Properties.from(Blocks.LANTERN), "big_shroomlamp");
-		massiveRedstonelamp = new BlockMassiveLamp(Block.Properties.from(Blocks.LANTERN), "massive_redstonelamp");
-		bigRedstonelamp = new BlockBigLamp(Block.Properties.from(Blocks.LANTERN), "big_redstonelamp");
-		
+		EnigmaticLegacy.massiveLamp = new BlockMassiveLamp(Block.Properties.from(Blocks.LANTERN), "massive_lamp");
+		EnigmaticLegacy.bigLamp = new BlockBigLamp(Block.Properties.from(Blocks.LANTERN), "big_lamp");
+		EnigmaticLegacy.massiveShroomlamp = new BlockMassiveLamp(Block.Properties.from(Blocks.LANTERN), "massive_shroomlamp");
+		EnigmaticLegacy.bigShroomlamp = new BlockBigLamp(Block.Properties.from(Blocks.LANTERN), "big_shroomlamp");
+		EnigmaticLegacy.massiveRedstonelamp = new BlockMassiveLamp(Block.Properties.from(Blocks.LANTERN), "massive_redstonelamp");
+		EnigmaticLegacy.bigRedstonelamp = new BlockBigLamp(Block.Properties.from(Blocks.LANTERN), "big_redstonelamp");
+
 		EnigmaticLegacy.enigmaticItem = new EnigmaticItem();
 		EnigmaticLegacy.xpScroll = new XPScroll();
 		EnigmaticLegacy.enigmaticAmulet = new EnigmaticAmulet();
@@ -354,6 +357,8 @@ public class EnigmaticLegacy {
 		EnigmaticLegacy.storageCrystal = new StorageCrystal();
 		EnigmaticLegacy.soulCrystal = new SoulCrystal();
 
+		EnigmaticLegacy.theAcknowledgment = new TheAcknowledgment();
+
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientRegistries);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::intermodStuff);
@@ -372,7 +377,7 @@ public class EnigmaticLegacy {
 
 		EnigmaticLegacy.enigmaticLogger.info("Mod instance constructed successfully.");
 	}
-	
+
 	private void onLoadComplete(final FMLLoadCompleteEvent event) {
 
 		EnigmaticLegacy.enigmaticLogger.info("Initializing load completion phase...");
@@ -458,8 +463,8 @@ public class EnigmaticLegacy {
 		EnigmaticLegacy.keybindHandler.registerKeybinds();
 
 		ObfuscatedFields.extractClientFields();
-		
-		for (Block theBlock : cutoutBlockRegistry)
+
+		for (Block theBlock : EnigmaticLegacy.cutoutBlockRegistry)
 			RenderTypeLookup.setRenderLayer(theBlock, RenderType.getCutout());
 
 		EnigmaticLegacy.enigmaticLogger.info("Client setup phase finished successfully.");
@@ -488,19 +493,19 @@ public class EnigmaticLegacy {
 
 			}
 		}
-		
+
 		@SubscribeEvent
 		public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 			EnigmaticLegacy.enigmaticLogger.info("Initializing blocks registration...");
-			
+
 			event.getRegistry().registerAll(
-					massiveLamp,
-					bigLamp,
-					massiveShroomlamp,
-					bigShroomlamp,
-					massiveRedstonelamp,
-					bigRedstonelamp);
-			
+					EnigmaticLegacy.massiveLamp,
+					EnigmaticLegacy.bigLamp,
+					EnigmaticLegacy.massiveShroomlamp,
+					EnigmaticLegacy.bigShroomlamp,
+					EnigmaticLegacy.massiveRedstonelamp,
+					EnigmaticLegacy.bigRedstonelamp);
+
 			EnigmaticLegacy.enigmaticLogger.info("Blocks registered successfully.");
 		}
 
@@ -567,12 +572,13 @@ public class EnigmaticLegacy {
 					EnigmaticLegacy.fabulousScroll,
 					EnigmaticLegacy.storageCrystal,
 					EnigmaticLegacy.soulCrystal,
-					new GenericBlockItem(massiveLamp),
-					new GenericBlockItem(bigLamp),
-					new GenericBlockItem(massiveShroomlamp),
-					new GenericBlockItem(bigShroomlamp),
-					new GenericBlockItem(massiveRedstonelamp),
-					new GenericBlockItem(bigRedstonelamp)
+					EnigmaticLegacy.theAcknowledgment,
+					new GenericBlockItem(EnigmaticLegacy.massiveLamp),
+					new GenericBlockItem(EnigmaticLegacy.bigLamp),
+					new GenericBlockItem(EnigmaticLegacy.massiveShroomlamp),
+					new GenericBlockItem(EnigmaticLegacy.bigShroomlamp),
+					new GenericBlockItem(EnigmaticLegacy.massiveRedstonelamp),
+					new GenericBlockItem(EnigmaticLegacy.bigRedstonelamp)
 					/*,gemOfBinding,wormholePotion*/
 			);
 

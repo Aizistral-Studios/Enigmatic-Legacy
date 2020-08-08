@@ -105,27 +105,27 @@ public class SuperpositionHandler {
 
 	public static List<ItemStack> getAdvancedCurios(final LivingEntity entity) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
-		
+
 		  CuriosApi.getCuriosHelper().getCuriosHandler(entity)
           .ifPresent(handler -> handler.getCurios().values().forEach(stacksHandler -> {
             IDynamicStackHandler soloStackHandler = stacksHandler.getStacks();
-            
+
             for (int i = 0; i < stacksHandler.getSlots(); i++) {
             	if (soloStackHandler.getStackInSlot(i) != null && soloStackHandler.getStackInSlot(i).getItem() instanceof ItemAdvancedCurio) {
 					stackList.add(soloStackHandler.getStackInSlot(i));
 				}
             }
-            
+
           }));
-		  
+
 		return stackList;
 	}
-	
+
 	public static boolean hasSpellstone(final LivingEntity entity) {
-		return getSpellstone(entity) != null;
+		return SuperpositionHandler.getSpellstone(entity) != null;
 	}
-	
-	
+
+
 	public static ItemStack getSpellstone(final LivingEntity entity) {
 		List<ItemStack> spellstoneStack = new ArrayList<ItemStack>();
 
@@ -184,19 +184,19 @@ public class SuperpositionHandler {
 	 */
 	public static void registerCurioType(final String identifier, final int slots, final boolean isEnabled, final boolean isHidden, @Nullable final ResourceLocation icon) {
 		final SlotTypeMessage.Builder message = new SlotTypeMessage.Builder(identifier);
-		
+
 		message.size(slots);
-		
+
 		if (!isEnabled)
 			message.lock();
 		if (isHidden)
 			message.hide();
-		
+
 		if (icon != null)
 			message.icon(icon);
-	
+
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> message.build());
-		
+
 	}
 
 	/**
@@ -297,9 +297,9 @@ public class SuperpositionHandler {
 
 		return new Vec3d(pos.getX() - 0.5, pos.getY(), pos.getZ() - 0.5);
 		*/
-		
+
 		Vector3d vector3d;
-		
+
 		BlockPos blockpos = player.func_241140_K_();
 		Optional<Vector3d> optional;
 	      if (world != null && blockpos != null) {
@@ -307,7 +307,7 @@ public class SuperpositionHandler {
 	      } else {
 	         optional = Optional.empty();
 	      }
-	      
+
 	      if (optional.isPresent()) {
 	          vector3d = optional.get();
 	      } else if (blockpos != null) {
@@ -315,7 +315,7 @@ public class SuperpositionHandler {
 	      } else {
 	    	  vector3d = new Vector3d(0, 64, 0);
 	      }
-		
+
 		return vector3d;
 	}
 
@@ -435,7 +435,7 @@ public class SuperpositionHandler {
 						((LivingEntity) entity).setPositionAndUpdate(x + 0.5, y + counter, z + 0.5);
 
 					world.playSound(null, entity.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-					
+
 					EnigmaticLegacy.packetInstance.send(
 							PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(),
 									entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())),
@@ -678,11 +678,11 @@ public class SuperpositionHandler {
 
 		return lootChestList;
 	}
-	
+
 	/**
 	 * Retrieves the given INBT type from the player's persistent NBT.
 	 */
-	
+
 	public static INBT getPersistentTag(PlayerEntity player, String tag, INBT expectedValue) {
 		CompoundNBT data = player.getPersistentData();
 		CompoundNBT persistent;
@@ -701,11 +701,11 @@ public class SuperpositionHandler {
 		}
 
 	}
-	
+
 	/**
 	 * Sets the given INBT type to the player's persistent NBT.
 	 */
-	
+
 	public static void setPersistentTag(PlayerEntity player, String tag, INBT value) {
 		CompoundNBT data = player.getPersistentData();
 		CompoundNBT persistent;
@@ -724,7 +724,7 @@ public class SuperpositionHandler {
 	 */
 
 	public static void setPersistentBoolean(PlayerEntity player, String tag, boolean value) {
-		setPersistentTag(player, tag, ByteNBT.valueOf(value));
+		SuperpositionHandler.setPersistentTag(player, tag, ByteNBT.valueOf(value));
 	}
 
 	/**
@@ -732,19 +732,19 @@ public class SuperpositionHandler {
 	 */
 
 	public static boolean getPersistentBoolean(PlayerEntity player, String tag, boolean expectedValue) {
-		INBT theTag = getPersistentTag(player, tag, ByteNBT.valueOf(expectedValue));
+		INBT theTag = SuperpositionHandler.getPersistentTag(player, tag, ByteNBT.valueOf(expectedValue));
 		return theTag instanceof ByteNBT ? ((ByteNBT)theTag).getByte() != 0 : expectedValue;
 	}
-	
+
 	public static void setPersistentInteger(PlayerEntity player, String tag, int value) {
-		setPersistentTag(player, tag, IntNBT.valueOf(value));
+		SuperpositionHandler.setPersistentTag(player, tag, IntNBT.valueOf(value));
 	}
-	
+
 	public static int getPersistentInteger(PlayerEntity player, String tag, int expectedValue) {
-		INBT theTag = getPersistentTag(player, tag, IntNBT.valueOf(expectedValue));
+		INBT theTag = SuperpositionHandler.getPersistentTag(player, tag, IntNBT.valueOf(expectedValue));
 		return theTag instanceof IntNBT ? ((IntNBT)theTag).getInt() : expectedValue;
 	}
-	
+
 	/**
 	 * Checks whether player has specified tag in their persistent NBT, whatever
 	 * it's type or value is.
@@ -959,21 +959,21 @@ public class SuperpositionHandler {
 		}
 
 	}
-	
+
 	/**
 	 * Checks whether or on the player is within the range of any active beacon.
 	 */
-	
+
 	@SuppressWarnings("unchecked")
 	public static boolean isInBeaconRange(PlayerEntity player) {
 		List<BeaconTileEntity> list = new ArrayList<BeaconTileEntity>();
 		boolean inRange = false;
-		
+
 		for (TileEntity tile : player.world.loadedTileEntityList) {
 			if (tile instanceof BeaconTileEntity)
 				list.add((BeaconTileEntity)tile);
 		}
-		
+
 		if (list.size() > 0)
 			for (BeaconTileEntity beacon : list)
 				if (beacon.getLevels() > 0) {
@@ -983,21 +983,21 @@ public class SuperpositionHandler {
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
-					
+
 					int range = (beacon.getLevels()+1)*10;
 					double distance = Math.sqrt(beacon.getPos().distanceSq(player.getPosX(), beacon.getPos().getY(), player.getPosZ(), true));
-					
+
 					if (distance <= range)
 						inRange = true;
 				}
-		
+
 		return inRange;
 	}
-	
+
 	public static boolean hasItem(PlayerEntity player, Item item) {
 		return player.inventory.hasItemStack(new ItemStack(item));
 	}
-	
+
 	/**
 	 * Checks whether the collection of ItemEntities contains given Item.
 	 *
@@ -1014,15 +1014,15 @@ public class SuperpositionHandler {
 
 		return false;
 	}
-	
+
 	@SuppressWarnings("unused")
 	public static boolean shouldPlayerDropSoulCrystal(PlayerEntity player) {
 		int dropMode = ConfigHandler.SOUL_CRYSTALS_MODE.getValue();
 		int maxCrystalLoss = ConfigHandler.MAX_SOUL_CRYSTAL_LOSS.getValue();
-		
+
 		if (true)
 			return false;
-		
+
 		if (dropMode == 0) {
 			// TODO Expand
 			return false;
@@ -1031,7 +1031,7 @@ public class SuperpositionHandler {
 		} else if (dropMode == 2) {
 			return EnigmaticLegacy.soulCrystal.getLostCrystals(player) < maxCrystalLoss;
 		}
-		
+
 		return false;
 	}
 
