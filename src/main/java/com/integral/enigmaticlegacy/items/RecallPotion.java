@@ -1,18 +1,22 @@
 package com.integral.enigmaticlegacy.items;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.handlers.RealSmoothTeleporter;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -25,11 +29,14 @@ import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.Dimension;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
@@ -49,6 +56,7 @@ public class RecallPotion extends ItemBase {
 		if (Screen.func_231173_s_()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.recallPotion1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.recallPotion2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.recallPotion3");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -65,19 +73,7 @@ public class RecallPotion extends ItemBase {
 
 		if (player instanceof ServerPlayerEntity) {
 			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
-		}
-
-		if (!worldIn.isRemote && player instanceof ServerPlayerEntity) {
-			Vector3d vec = SuperpositionHandler.getValidSpawn((ServerWorld)worldIn, (ServerPlayerEntity)player);
-
-			worldIn.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 128, player.world.func_234923_W_())), new PacketPortalParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 100, 1.25F, false));
-
-			player.setPositionAndUpdate(vec.x, vec.y, vec.z);
-			worldIn.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 128, player.world.func_234923_W_())), new PacketRecallParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 48, false));
+			SuperpositionHandler.backToSpawn((ServerPlayerEntity)player);
 		}
 
 		if (player == null || !player.abilities.isCreativeMode) {
@@ -107,8 +103,11 @@ public class RecallPotion extends ItemBase {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		playerIn.setActiveHand(handIn);
-		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+		if (EnigmaticLegacy.proxy.isInVanillaDimension(playerIn)) {
+			playerIn.setActiveHand(handIn);
+			return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+		} else
+			return new ActionResult<>(ActionResultType.PASS, playerIn.getHeldItem(handIn));
 	}
 
 	@Override

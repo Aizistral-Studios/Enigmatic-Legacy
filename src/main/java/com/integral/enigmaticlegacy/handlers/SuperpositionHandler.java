@@ -19,6 +19,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.IPerhaps;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
 import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
 import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
 import com.integral.enigmaticlegacy.objects.Vector3;
@@ -37,6 +38,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.player.SpawnLocationHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.ItemLootEntry;
@@ -58,6 +60,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectUtils;
 import net.minecraft.tileentity.BeaconTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -65,6 +68,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
@@ -72,16 +76,19 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotTypeMessage;
+import top.theillusivec4.curios.api.type.ISlotType;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
@@ -105,20 +112,32 @@ public class SuperpositionHandler {
 
 	public static List<ItemStack> getAdvancedCurios(final LivingEntity entity) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
+		ICuriosItemHandler handler = CuriosApi.getCuriosHelper().getCuriosHandler(entity).orElse(null);
 
-		  CuriosApi.getCuriosHelper().getCuriosHandler(entity)
-          .ifPresent(handler -> handler.getCurios().values().forEach(stacksHandler -> {
-            IDynamicStackHandler soloStackHandler = stacksHandler.getStacks();
+		if (handler != null) {
+			handler.getCurios().values().forEach(stacksHandler -> {
+				IDynamicStackHandler soloStackHandler = stacksHandler.getStacks();
 
-            for (int i = 0; i < stacksHandler.getSlots(); i++) {
-            	if (soloStackHandler.getStackInSlot(i) != null && soloStackHandler.getStackInSlot(i).getItem() instanceof ItemAdvancedCurio) {
-					stackList.add(soloStackHandler.getStackInSlot(i));
+				for (int i = 0; i < stacksHandler.getSlots(); i++) {
+					if (soloStackHandler.getStackInSlot(i) != null && soloStackHandler.getStackInSlot(i).getItem() instanceof ItemAdvancedCurio) {
+						stackList.add(soloStackHandler.getStackInSlot(i));
+					}
 				}
-            }
 
-          }));
+			});
+		}
 
 		return stackList;
+	}
+
+	public static boolean isSlotLocked(String id, final LivingEntity livingEntity) {
+		ICuriosItemHandler handler = CuriosApi.getCuriosHelper().getCuriosHandler(livingEntity).orElse(null);
+
+		if (handler != null) {
+			return handler.getLockedSlots().contains(id);
+		} else
+			return false;
+
 	}
 
 	public static boolean hasSpellstone(final LivingEntity entity) {
@@ -269,54 +288,6 @@ public class SuperpositionHandler {
 			newTarget = entities.get(0);
 		}
 		return newTarget;
-	}
-
-	/**
-	 * Retrieves the player respawn location.
-	 *
-	 * @return Bed position if there is a valid one, coordinates of obsidian
-	 *         platform in the End, or coordinates of Center of the World otherwise.
-	 */
-
-	public static Vector3d getValidSpawn(final ServerWorld world, final ServerPlayerEntity player) {
-		/*
-		BlockPos pos = player.getBedPosition().isPresent() ? player.getBedPosition().get() : null;
-		Optional<Vector3d> bedPos = world instanceof ServerWorld ? PlayerEntity.func_234567_a_((ServerWorld) world, pos, false, true) : null;
-		if (pos != null && bedPos != null && bedPos.isPresent()) {
-			final Vector3d vec = bedPos.get();
-			return vec;
-		}
-
-		pos = world.getSpawnPoint();
-
-		if (world instanceof ServerWorld)
-			if (((ServerWorld) player.world).getSpawnCoordinate() != null) {
-				pos = ((ServerWorld) player.world).getSpawnCoordinate();
-				pos = new BlockPos(pos.getX() + 1, pos.getY(), pos.getZ() + 1);
-			}
-
-		return new Vec3d(pos.getX() - 0.5, pos.getY(), pos.getZ() - 0.5);
-		*/
-
-		Vector3d vector3d;
-
-		BlockPos blockpos = player.func_241140_K_();
-		Optional<Vector3d> optional;
-	      if (world != null && blockpos != null) {
-	         optional = PlayerEntity.func_234567_a_(world, blockpos, false, true);
-	      } else {
-	         optional = Optional.empty();
-	      }
-
-	      if (optional.isPresent()) {
-	          vector3d = optional.get();
-	      } else if (blockpos != null) {
-	    	  vector3d = new Vector3d(blockpos.getX()-0.5, blockpos.getY(), blockpos.getZ()-0.5);
-	      } else {
-	    	  vector3d = new Vector3d(0, 64, 0);
-	      }
-
-		return vector3d;
 	}
 
 	/**
@@ -1033,6 +1004,58 @@ public class SuperpositionHandler {
 		}
 
 		return false;
+	}
+
+	public static ServerWorld getWorld(RegistryKey<World> key) {
+		return ServerLifecycleHooks.getCurrentServer().getWorld(key);
+	}
+
+	public static ServerWorld getOverworld() {
+		return SuperpositionHandler.getWorld(EnigmaticLegacy.proxy.getOverworldKey());
+	}
+
+	public static ServerWorld getNether() {
+		return SuperpositionHandler.getWorld(EnigmaticLegacy.proxy.getNetherKey());
+	}
+
+	public static ServerWorld getEnd() {
+		return SuperpositionHandler.getWorld(EnigmaticLegacy.proxy.getEndKey());
+	}
+
+	public static void backToSpawn(ServerPlayerEntity serverPlayer) {
+		RegistryKey<World> respawnDimension = AdvancedSpawnLocationHelper.getPlayerRespawnDimension(serverPlayer);
+		ServerWorld respawnWorld = SuperpositionHandler.getWorld(respawnDimension);
+
+		serverPlayer.world.playSound(null, serverPlayer.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getPosX(), serverPlayer.getPosY(), serverPlayer.getPosZ(), 128, serverPlayer.world.func_234923_W_())), new PacketPortalParticles(serverPlayer.getPosX(), serverPlayer.getPosY() + (serverPlayer.getHeight() / 2), serverPlayer.getPosZ(), 100, 1.25F, false));
+
+		Optional<Vector3d> vec = AdvancedSpawnLocationHelper.getValidSpawn(respawnWorld, serverPlayer);
+		Optional<Vector3d> vec2;
+		ServerWorld destinationWorld = vec.isPresent() ? respawnWorld : serverPlayer.server.func_241755_D_();
+
+		if (!serverPlayer.getServerWorld().equals(destinationWorld)) {
+			serverPlayer.changeDimension(destinationWorld, new RealSmoothTeleporter());
+		}
+
+		if (!respawnWorld.equals(destinationWorld)) {
+			 vec2 = AdvancedSpawnLocationHelper.getValidSpawn(destinationWorld, serverPlayer);
+		} else
+			vec2 = Optional.empty();
+
+		if (vec.isPresent()) {
+			Vector3d trueVec = vec.get();
+			serverPlayer.setPositionAndUpdate(trueVec.x, trueVec.y, trueVec.z);
+		} else if (vec2.isPresent()) {
+			Vector3d trueVec = vec2.get();
+			serverPlayer.setPositionAndUpdate(trueVec.x, trueVec.y, trueVec.z);
+		} else {
+			AdvancedSpawnLocationHelper.fuckBackToSpawn(serverPlayer.getServerWorld(), serverPlayer);
+		}
+
+		serverPlayer.world.playSound(null, serverPlayer.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getPosX(), serverPlayer.getPosY(), serverPlayer.getPosZ(), 128, serverPlayer.world.func_234923_W_())), new PacketRecallParticles(serverPlayer.getPosX(), serverPlayer.getPosY() + (serverPlayer.getHeight() / 2), serverPlayer.getPosZ(), 48, false));
 	}
 
 }

@@ -13,6 +13,7 @@ import javax.annotation.Nullable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
+import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper.AnvilParser;
 import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
@@ -32,6 +33,7 @@ import net.minecraft.client.gui.screen.CreateWorldScreen;
 import net.minecraft.client.gui.screen.inventory.AnvilScreen;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.resources.I18n;
@@ -114,6 +116,9 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.type.capability.ICurio;
+import vazkii.patchouli.api.BookDrawScreenEvent;
+import vazkii.patchouli.client.book.gui.GuiBookLanding;
+import vazkii.patchouli.client.book.gui.button.GuiButtonBookEdit;
 
 /**
  * Generic event handler of the whole mod.
@@ -136,21 +141,35 @@ public class EnigmaticEventHandler {
 	public static Random theySeeMeRollin = new Random();
 	public static HashMap<PlayerEntity, String> anvilFields = new HashMap<PlayerEntity, String>();
 	public static HashMap<PlayerEntity, Boolean> hadEnigmaticAmulet = new HashMap<PlayerEntity, Boolean>();
-	
-	
-	
+	/*
+	@SubscribeEvent
+	public void onBook(BookDrawScreenEvent event) {
+		if (event.gui instanceof GuiBookLanding) {
+
+			//System.out.println("Fired!");
+
+			GuiBookLanding gui = (GuiBookLanding) event.gui;
+
+			gui.removeButtonsIf(button -> {
+				return button instanceof GuiButtonBookEdit;
+			});
+
+		}
+	}
+	*/
+
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onFogRender(EntityViewRenderEvent.FogDensity event) {
-		
+
 		if (event.getInfo().getFluidState().isTagged(FluidTags.LAVA) && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.magmaHeart)) {
 			event.setCanceled(true);
 			event.setDensity((float) ConfigHandler.MAGMA_HEART_LAVAFOG_DENSITY.getValue());
 		}
-		
+
 	}
-	
-	
+
+
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onEntityTick(TickEvent.ClientTickEvent event) {
@@ -212,7 +231,7 @@ public class EnigmaticEventHandler {
 
 		float originalSpeed = event.getOriginalSpeed();
 		float newSpeed = originalSpeed;
-		
+
 		float miningBoost = 1.0F;
 		if (SuperpositionHandler.hasCurio(event.getPlayer(), EnigmaticLegacy.miningCharm))
 			miningBoost += ConfigHandler.MINING_CHARM_BREAK_BOOST.getValue().asModifier(false);
@@ -320,10 +339,10 @@ public class EnigmaticEventHandler {
 			/*
 			 * Updates Enigmatic Amulet possession status for LivingDropsEvent.
 			 */
-			
-			hadEnigmaticAmulet.put(player, SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticAmulet) || SuperpositionHandler.hasItem(player, EnigmaticLegacy.enigmaticAmulet));
 
-			
+			EnigmaticEventHandler.hadEnigmaticAmulet.put(player, SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticAmulet) || SuperpositionHandler.hasItem(player, EnigmaticLegacy.enigmaticAmulet));
+
+
 			/*
 			 * Handler for Scroll of Postmortal Recall.
 			 */
@@ -336,17 +355,9 @@ public class EnigmaticEventHandler {
 
 				tomeStack.shrink(1);
 
-				Vector3d vec = SuperpositionHandler.getValidSpawn((ServerWorld) player.world, player);
-
-				player.world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 1024, player.world.func_234923_W_())), new PacketPortalParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 72, 1.0F, false));
-
-				player.setPositionAndUpdate(vec.x, vec.y, vec.z);
-
-				player.world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 1024, player.world.func_234923_W_())), new PacketRecallParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 48, false));
+				SuperpositionHandler.backToSpawn(player);
 			}
-			
+
 		}
 
 	}
@@ -470,7 +481,7 @@ public class EnigmaticEventHandler {
 					if (ItemNBTHelper.getString(player.getHeldItemMainhand(), "BoundDimension", "minecraft:overworld").equals(event.getEntityLiving().world.func_234923_W_().func_240901_a_().toString())) {
 						event.setCanceled(true);
 						ItemStack stack = player.getHeldItemMainhand();
-						
+
 						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntityLiving().getPosX(), event.getEntityLiving().getPosY(), event.getEntityLiving().getPosZ(), 128, event.getEntityLiving().world.func_234923_W_())), new PacketPortalParticles(event.getEntityLiving().getPosX(), event.getEntityLiving().getPosY() + (event.getEntityLiving().getHeight() / 2), event.getEntityLiving().getPosZ(), 96, 1.5D, false));
 
 						event.getEntityLiving().world.playSound(null, event.getEntityLiving().func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
@@ -587,14 +598,14 @@ public class EnigmaticEventHandler {
 		}
 
 	}
-	
+
 	@SubscribeEvent
 	public void playerClone(PlayerEvent.Clone evt) {
 		PlayerEntity player = evt.getPlayer();
-		
+
 		EnigmaticLegacy.soulCrystal.updatePlayerSoulMap(player);
 	}
-	
+
 	@SubscribeEvent
 	public void entityJoinWorld(EntityJoinWorldEvent evt) {
 		Entity entity = evt.getEntity();
@@ -605,7 +616,7 @@ public class EnigmaticEventHandler {
 		}
 
 	}
-	
+
 	@SubscribeEvent
 	public void onExperienceDrops(LivingExperienceDropEvent event) {
 		if (event.getEntityLiving() instanceof ServerPlayerEntity) {
@@ -617,7 +628,7 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onLivingDrops(LivingDropsEvent event) {
-		
+
 		if (event.getEntityLiving() instanceof ServerPlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 
@@ -637,12 +648,12 @@ public class EnigmaticEventHandler {
 			}
 
 		}
-		
+
 
 		/*
 		 * Beheading handler for Axe of Executioner.
 		 */
-		
+
 		if (event.getEntityLiving().getClass() == SkeletonEntity.class && event.isRecentlyHit() && event.getSource().getTrueSource() != null && event.getSource().getTrueSource() instanceof PlayerEntity) {
 			ItemStack weap = ((PlayerEntity) event.getSource().getTrueSource()).getHeldItemMainhand();
 			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !SuperpositionHandler.ifDroplistContainsItem(event.getDrops(), Items.SKELETON_SKULL) && this.theySeeMeRollin(event.getLootingLevel())) {
@@ -1136,7 +1147,7 @@ public class EnigmaticEventHandler {
 	}
 
 	public boolean hadEnigmaticAmulet(PlayerEntity player) {
-		return hadEnigmaticAmulet.containsKey(player) ? hadEnigmaticAmulet.get(player) : false;
+		return EnigmaticEventHandler.hadEnigmaticAmulet.containsKey(player) ? EnigmaticEventHandler.hadEnigmaticAmulet.get(player) : false;
 	}
 
 

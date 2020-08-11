@@ -1,6 +1,15 @@
 The Changelog:
 
-[Release 1.8.3]:
+[Release 1.8.5]:
+
+- Scroll of Ageless Wisdom doesn't Agaless anymore;
+- Fixed dedicated server crash when attempting to generate config files (#41); 
+- Potion of Recall and Scroll of Postmortal Recall are now capable of teleporting player across vanilla dimensions. Improved their algorithm to correctly seek respawn point in case player has no valid bed/anchor location. Their description also got altered to indicate the fact that they are capable of working with Respawn Anchors;
+- Attempted to overhaul texture of The Architect's Inkwell. I really hope I didn't make it look worse than it did before.
+
+
+
+[Release 1.8.4]:
 
 - Fixed item names not displaying correctly in list of consumable items of Keystone of The Oblivion (#40);
 - Altered recipe of Emblem of Monster Slayer, to involve some new items from Nether Update (#37);

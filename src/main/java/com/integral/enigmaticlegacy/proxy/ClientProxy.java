@@ -6,12 +6,19 @@ import java.util.Random;
 import com.integral.enigmaticlegacy.proxy.renderers.ShieldAuraLayer;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.particle.ItemPickupParticle;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class ClientProxy extends CommonProxy {
 
@@ -46,5 +53,17 @@ public class ClientProxy extends CommonProxy {
 	public void loadComplete(FMLLoadCompleteEvent event) {
 		this.initAuxiliaryRender();
 	}
+
+	@Override
+	public boolean isInVanillaDimension(PlayerEntity player) {
+		return player.world.func_234923_W_().equals(this.getOverworldKey()) || player.world.func_234923_W_().equals(this.getNetherKey()) || player.world.func_234923_W_().equals(this.getEndKey());
+	}
+
+	@Override
+	public boolean isInDimension(PlayerEntity player, RegistryKey<World> world) {
+		return player.world.func_234923_W_().equals(world);
+	}
+
+
 
 }

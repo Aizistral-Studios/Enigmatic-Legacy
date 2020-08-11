@@ -45,7 +45,7 @@
 	"item.enigmaticlegacy.astral_breaker": "Astral Breaker",
 	"item.enigmaticlegacy.oblivion_stone": "Keystone of The Oblivion",
 	"item.enigmaticlegacy.enchantment_transposer": "Tome of Hungering Knowledge",
-	"item.enigmaticlegacy.xp_scroll": "Scroll of Agaless Wisdom",
+	"item.enigmaticlegacy.xp_scroll": "Scroll of Ageless Wisdom",
 	"item.enigmaticlegacy.fabulous_scroll": "Grace of the Creator",
 	"item.enigmaticlegacy.storage_crystal": "Extradimensional Vessel",
 	"item.enigmaticlegacy.soul_crystal": "Soul Crystal",
@@ -297,17 +297,19 @@
 	"tooltip.enigmaticlegacy.extradimensionalEye6": "§5same dimension.",
 	"tooltip.enigmaticlegacy.extradimensionalEye7": "§6Vanishes after being used.",
 
-	"tooltip.enigmaticlegacy.recallPotion1": "§5Returns you to your bed location, or to the",
-	"tooltip.enigmaticlegacy.recallPotion2": "§6Center of The World§5 if you don't have one.",
+	"tooltip.enigmaticlegacy.recallPotion1": "§5Returns you to your bed or §6Respawn Anchor§5",
+	"tooltip.enigmaticlegacy.recallPotion2": "§5location, or to the §6Center of The Overworld§5",
+	"tooltip.enigmaticlegacy.recallPotion3": "§5if you don't have one.",
 	
 	"tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance": "§6+%1$s §dBeheading Chance",
 	"tooltip.enigmaticlegacy.forbiddenAxe1": "§5Has a chance to behead slain monsters.",
 	"tooltip.enigmaticlegacy.forbiddenAxe2": "§5Each level of Looting applied adds§6 +%1$s§5",
 	"tooltip.enigmaticlegacy.forbiddenAxe3": "§5to the overall beheading chance.",
 	
-	"tooltip.enigmaticlegacy.escapeTome1": "§5When you die, returns you to your bed location,",
-	"tooltip.enigmaticlegacy.escapeTome2": "§5or to the §6Center of The World§5 if you don't have",
-	"tooltip.enigmaticlegacy.escapeTome3": "§5one - but remains at the location of your death.",
+	"tooltip.enigmaticlegacy.escapeTome1": "§5When you die, returns you to your bed or §6Respawn",
+	"tooltip.enigmaticlegacy.escapeTome2": "§6Anchor§5 location, or to the §6Center of The Overworld§5",
+	"tooltip.enigmaticlegacy.escapeTome3": "§5if you don't have one - but itself remains at the",
+	"tooltip.enigmaticlegacy.escapeTome4": "§5location of your death.",
 	
 	"tooltip.enigmaticlegacy.superMagnetRing1": "§5Instantly collects any dropped items",
 	"tooltip.enigmaticlegacy.superMagnetRing2": "§5within §6%1$s§6 blocks§5 radius.",
@@ -507,7 +509,41 @@
 	"tooltip.enigmaticlegacy.enchantmentTransposer2": "§5to transfer all enchantments from item to the tome.",
 	"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5The tome will be transformed into §6Enchanted Book§5.",
 	
-	"tooltip.enigmaticlegacy.boundToPlayer": "§5Bound to: §6%1$s"
+	"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5The tome will be transformed into §6Enchanted Book§5.",
+	
+	"tooltip.enigmaticlegacy.boundToPlayer": "§5Bound to: §6%1$s",
+	
+	"book.enigmaticlegacy.category.accessories.name": "Accessories",
+	"book.enigmaticlegacy.category.accessories.desc": "Generic category description",
+	
+	"book.enigmaticlegacy.category.world.name": "The World",
+	"book.enigmaticlegacy.category.world.desc": "Generic category description",
+	
+	"book.enigmaticlegacy.category.materials.name": "Resources & Materials",
+	"book.enigmaticlegacy.category.materials.desc": "Generic category description",
+	
+	"book.enigmaticlegacy.category.tools.name": "Tools & Weapons",
+	"book.enigmaticlegacy.category.tools.desc": "Generic category description",
+	
+	"book.enigmaticlegacy.category.armor.name": "Armor",
+	"book.enigmaticlegacy.category.armor.desc": "Generic category description",
+	
+	"book.enigmaticlegacy.category.decorations.name": "Decorations",
+	"book.enigmaticlegacy.category.decorations.desc": "Generic category description",
+	
+	"book.enigmaticlegacy.category.relics.name": "Artifacts",
+	"book.enigmaticlegacy.category.relics.desc": "Generic category description",
+	
+	"book.enigmaticlegacy.category.brewing.name": "Brewing",
+	"book.enigmaticlegacy.category.brewing.desc": "Generic category description",
+	
+	"book.enigmaticlegacy.category.misc.name": "Miscellaneous",
+	"book.enigmaticlegacy.category.misc.desc": "Generic category description",
+	
+	"book.enigmaticlegacy.entry.iron_ring.name": "Iron Ring",
+	
+	
+	"book.enigmaticlegacy.landing_text": "In front of you lies the well of great knowledge, a place where some of this world's greatest mysteries belong, scrupulously researched and carefully catalogized.<br2/>As your journey continues and the world reveals itself to you, you may revisit and behold knowledge you gathered within these pages."
 	
 
 

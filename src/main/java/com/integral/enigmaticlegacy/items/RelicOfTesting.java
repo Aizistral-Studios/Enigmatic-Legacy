@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
+import com.integral.enigmaticlegacy.helpers.PatchouliHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.client.gui.screen.Screen;
@@ -23,11 +24,18 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import vazkii.patchouli.client.base.PersistentData;
+import vazkii.patchouli.client.base.PersistentData.DataHolder.BookData;
+import vazkii.patchouli.client.book.BookCategory;
+import vazkii.patchouli.client.book.BookEntry;
+import vazkii.patchouli.common.book.Book;
+import vazkii.patchouli.common.book.BookRegistry;
 
 public class RelicOfTesting extends ItemBase {
 
@@ -60,7 +68,10 @@ public class RelicOfTesting extends ItemBase {
 
 		ItemStack checkTag = playerIn.inventory.offHandInventory.get(0);
 
-		playerIn.sendMessage(new StringTextComponent(checkTag.getOrCreateTag().getString()), playerIn.getUniqueID());
+		if (checkTag != null)
+			playerIn.sendMessage(new StringTextComponent(checkTag.getOrCreateTag().getString()), playerIn.getUniqueID());
+
+		PatchouliHelper.markEverythingUnread();
 
 		playerIn.swingArm(handIn);
 

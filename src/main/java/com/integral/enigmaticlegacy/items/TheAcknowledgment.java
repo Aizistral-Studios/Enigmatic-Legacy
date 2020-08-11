@@ -16,6 +16,7 @@ import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -25,6 +26,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.registries.ForgeRegistries;
 import vazkii.patchouli.api.PatchouliAPI;
+import vazkii.patchouli.client.base.PersistentData;
+import vazkii.patchouli.client.base.PersistentData.DataHolder.BookData;
+import vazkii.patchouli.client.book.BookCategory;
+import vazkii.patchouli.client.book.BookEntry;
+import vazkii.patchouli.common.book.Book;
+import vazkii.patchouli.common.book.BookRegistry;
 
 public class TheAcknowledgment extends ItemBase {
 
@@ -61,22 +68,29 @@ public class TheAcknowledgment extends ItemBase {
 		if (playerIn instanceof ServerPlayerEntity) {
 			ServerPlayerEntity player = (ServerPlayerEntity) playerIn;
 			PatchouliAPI.instance.openBookGUI((ServerPlayerEntity) playerIn, Registry.ITEM.getKey(EnigmaticLegacy.theAcknowledgment));
+
+
+
+			//PatchouliAPI.instance.get
+			//PatchouliAPI.instance.
+
 			//playerIn.playSound(ModSounds.lexiconOpen, 1F, (float) (0.7 + Math.random() * 0.4));
 		}
 
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);
 	}
-	*/
+
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 
 		try {
-			//tooltip.add(new StringTextComponent("").func_230529_a_(TheAcknowledgment.getEdition()).func_240699_a_(TextFormatting.DARK_PURPLE));
+			tooltip.add(new StringTextComponent("").func_230529_a_(TheAcknowledgment.getEdition()).func_240699_a_(TextFormatting.DARK_PURPLE));
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			// Just don't do it lol
 		}
 	}
-
+	*/
 }

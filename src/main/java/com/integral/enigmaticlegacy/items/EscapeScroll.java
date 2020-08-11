@@ -41,6 +41,7 @@ public class EscapeScroll extends ItemBaseCurio {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.escapeTome1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.escapeTome2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.escapeTome3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.escapeTome4");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
