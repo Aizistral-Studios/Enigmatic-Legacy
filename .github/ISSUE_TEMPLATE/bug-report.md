@@ -28,7 +28,7 @@ A clear and concise description of what the issue is.
 
 #### Logs:
 <!--
-Add a crash log file if you encountered a crash, or latest.log in case of startup error or some other kind of error.
+Add a crash log file if you encountered a crash, or latest.log in case of startup error or some other kind of error. Ideally you should attach latest.log file in either of these cases, since crash report may not contain all data required for figuring out initial cause of the crash.
 -->
 
 Crash Log: Please use a paste site like [hastebin](https://hastebin.com/).
