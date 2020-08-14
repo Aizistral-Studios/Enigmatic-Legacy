@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -29,7 +30,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  * @author Integral
  */
 
-@SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
 public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 	private final net.minecraft.client.renderer.ItemRenderer itemRenderer;
@@ -57,29 +57,30 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 		return i;
 	}
 
+	@SuppressWarnings({ "deprecation", "unused" })
 	@Override
 	public void render(PermanentItemEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
 		if (!Minecraft.getInstance().player.isAlive() && Math.sqrt(entityIn.getDistanceSq(Minecraft.getInstance().player.getPosX(), Minecraft.getInstance().player.getPosYEye(), Minecraft.getInstance().player.getPosZ())) <= 1.0)
 			return;
-		
+
 		matrixStackIn.push();
 		ItemStack itemstack = entityIn.getItem();
-		
+
 		if (itemstack.getItem() instanceof IPermanentCrystal) {
 			matrixStackIn.scale(1.25f, 1.25f, 1.25f);
-			matrixStackIn.translate(0, -0.1125d, 0);		
+			matrixStackIn.translate(0, -0.1125d, 0);
 		}
-		
+
 		int i = itemstack.isEmpty() ? 187 : Item.getIdFromItem(itemstack.getItem()) + itemstack.getDamage();
 		this.random.setSeed(i);
 		IBakedModel ibakedmodel = this.itemRenderer.getItemModelWithOverrides(itemstack, entityIn.world, (LivingEntity) null);
 		boolean flag = ibakedmodel.isGui3d();
 		int j = this.getModelCount(itemstack);
 		float f = 0.25F;
-		float f1 = this.shouldBob() ? MathHelper.sin((entityIn.getAge() + partialTicks) / 10.0F + entityIn.hoverStart) * 0.1F + 0.1F : 0;
-		float f2 = ibakedmodel.getItemCameraTransforms().getTransform(ItemCameraTransforms.TransformType.GROUND).scale.getY();
+		float f1 = MathHelper.sin((entityIn.getAge() + partialTicks) / 10.0F + entityIn.hoverStart) * 0.1F + 0.1F;
+		float f2 = this.shouldBob() ? ibakedmodel.getItemCameraTransforms().getTransform(ItemCameraTransforms.TransformType.GROUND).scale.getY() : 0;
 		matrixStackIn.translate(0.0D, f1 + 0.25F * f2, 0.0D);
-		float f3 = (entityIn.getAge() + partialTicks) / 20.0F + entityIn.hoverStart;
+		float f3 = entityIn.func_234272_a_(partialTicks);
 		matrixStackIn.rotate(Vector3f.YP.rotation(f3));
 		if (!flag) {
 			float f7 = -0.0F * (j - 1) * 0.5F;
@@ -117,6 +118,7 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 	/**
 	* Returns the location of an entity's texture.
 	*/
+	@SuppressWarnings("deprecation")
 	@Override
 	public ResourceLocation getEntityTexture(PermanentItemEntity entity) {
 		return AtlasTexture.LOCATION_BLOCKS_TEXTURE;

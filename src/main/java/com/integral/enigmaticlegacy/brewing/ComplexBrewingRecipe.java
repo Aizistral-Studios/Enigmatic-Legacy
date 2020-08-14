@@ -4,11 +4,14 @@ import java.util.HashMap;
 
 import javax.annotation.Nonnull;
 
+import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
 
 /**
@@ -16,12 +19,17 @@ import net.minecraftforge.common.brewing.IBrewingRecipe;
  * @author Integral
  */
 
-public class ComplexBrewingRecipe implements IBrewingRecipe {
+public class ComplexBrewingRecipe extends AbstractBrewingRecipe {
     @Nonnull private final HashMap<Ingredient, Ingredient> processingMappings;
     @Nonnull private final ItemStack output;
 
-    public ComplexBrewingRecipe(HashMap<Ingredient, Ingredient> ingredientCompliances, ItemStack output) {
-        this.processingMappings = ingredientCompliances;
+	public ComplexBrewingRecipe(HashMap<Ingredient, Ingredient> ingredientCompliances, ItemStack output) {
+    	this(ingredientCompliances, output, new ResourceLocation(EnigmaticLegacy.MODID, ItemNBTHelper.getString(output, "EnigmaticPotion", "unknown")));
+    }
+
+    public ComplexBrewingRecipe(HashMap<Ingredient, Ingredient> ingredientCompliances, ItemStack output, ResourceLocation name) {
+        super(name);
+    	this.processingMappings = ingredientCompliances;
         this.output = output;
     }
 
@@ -31,30 +39,30 @@ public class ComplexBrewingRecipe implements IBrewingRecipe {
         	if (this.isInput(stack, ing))
         		return true;
         }
-        
+
         return false;
     }
-    
+
     public boolean isInput(@Nonnull ItemStack stack, Ingredient ingredient) {
     	for (ItemStack testStack : ingredient.getMatchingStacks()) {
     		if (testStack.getItem().equals(stack.getItem()) && PotionUtils.getPotionFromItem(testStack).equals(PotionUtils.getPotionFromItem(stack)) && PotionHelper.getAdvancedPotion(testStack).equals(PotionHelper.getAdvancedPotion(stack)))
     			return true;
     	}
-    	
+
     	return false;
     }
 
     @Override
     public ItemStack getOutput(ItemStack input, ItemStack ingredient) {
     	for (Ingredient ing : this.processingMappings.keySet()) {
-    		
+
     		if (this.isInput(input, ing)) {
     			if (this.processingMappings.get(ing).test(ingredient))
     				return this.output.copy();
     		}
-    		
+
     	}
-    	
+
     	return ItemStack.EMPTY;
     }
 
@@ -65,7 +73,15 @@ public class ComplexBrewingRecipe implements IBrewingRecipe {
     		if (ing.test(stack))
     			return true;
     	}
-    	
+
         return false;
     }
+
+    public HashMap<Ingredient, Ingredient> getProcessingMappings() {
+		return this.processingMappings;
+	}
+
+	public ItemStack getOutput() {
+		return this.output;
+	}
 }

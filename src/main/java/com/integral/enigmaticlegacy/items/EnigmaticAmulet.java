@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
@@ -40,19 +41,21 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.func_231173_s_()) {
-			
+		if (Screen.func_231173_s_() && this.isVesselEnabled()) {
+
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletShift1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletShift2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletShift3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletShift4");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletShift5");
-			
+
 		} else {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			
+			if (this.isVesselEnabled()) {
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			}
+
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet3");
@@ -60,13 +63,13 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet5");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet6");
-			
+
 			if (name != null) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletInscription", TextFormatting.DARK_RED, name);
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -75,9 +78,18 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
 		//atts.put(Attributes.field_233826_i_, new AttributeModifier(UUID.fromString("50faf191-bf78-4654-b349-cc1f4f1143bf"), "Armor bonus", 2.0, AttributeModifier.Operation.ADDITION));
-		atts.put(Attributes.field_233823_f_, new AttributeModifier(UUID.fromString("cb7f55d3-685c-4f38-a497-9c13a33db5cf"), "Attack bonus", 1.5, AttributeModifier.Operation.ADDITION));
+		if (ConfigHandler.ENIGMATIC_AMULET_DAMAGE_BONUS.getValue() != 0)
+			atts.put(Attributes.field_233823_f_, new AttributeModifier(UUID.fromString("cb7f55d3-685c-4f38-a497-9c13a33db5cf"), "Attack bonus", ConfigHandler.ENIGMATIC_AMULET_DAMAGE_BONUS.getValue(), AttributeModifier.Operation.ADDITION));
 
 		return atts;
+	}
+
+	public boolean isVesselEnabled() {
+		return ConfigHandler.ENIGMATIC_AMULET_VESSEL_ENABLED.getValue();
+	}
+
+	public boolean isVesselOwnerOnly() {
+		return ConfigHandler.OWNER_ONLY_VESSEL.getValue();
 	}
 
 }

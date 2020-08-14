@@ -1,6 +1,7 @@
 package com.integral.enigmaticlegacy.brewing;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
 
 /**
@@ -11,7 +12,7 @@ import net.minecraftforge.common.brewing.IBrewingRecipe;
  */
 
 public class ValidationBrewingRecipe implements IBrewingRecipe {
-	
+
 	    private final Ingredient input;
 	    private final Ingredient ingredient;
 
@@ -22,11 +23,11 @@ public class ValidationBrewingRecipe implements IBrewingRecipe {
 
 	    @Override
 	    public boolean isInput(ItemStack stack) {
-			
+
 			if (stack != null && this.input != null)
 				if (this.input.test(stack))
 					return true;
-			
+
 
 			return false;
 	    }
@@ -37,11 +38,11 @@ public class ValidationBrewingRecipe implements IBrewingRecipe {
 	    }
 
 	    public Ingredient getInput() {
-	        return input;
+	        return this.input;
 	    }
 
 	    public Ingredient getIngredient() {
-	        return ingredient;
+	        return this.ingredient;
 	    }
 
 	    public ItemStack getOutput() {
@@ -55,7 +56,7 @@ public class ValidationBrewingRecipe implements IBrewingRecipe {
 	    	else
 	    		return false;
 	    }
-	
+
 
 }
 

@@ -64,6 +64,7 @@ import com.integral.enigmaticlegacy.items.OblivionStone;
 import com.integral.enigmaticlegacy.items.OceanStone;
 import com.integral.enigmaticlegacy.items.RecallPotion;
 import com.integral.enigmaticlegacy.items.RelicOfTesting;
+import com.integral.enigmaticlegacy.items.RevelationTome;
 import com.integral.enigmaticlegacy.items.SoulCrystal;
 import com.integral.enigmaticlegacy.items.StorageCrystal;
 import com.integral.enigmaticlegacy.items.SuperMagnetRing;
@@ -95,6 +96,7 @@ import com.integral.enigmaticlegacy.packets.server.PacketSpellstoneKey;
 import com.integral.enigmaticlegacy.packets.server.PacketXPScrollKey;
 import com.integral.enigmaticlegacy.proxy.ClientProxy;
 import com.integral.enigmaticlegacy.proxy.CommonProxy;
+import com.integral.enigmaticlegacy.proxy.renderers.ModelHandler;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
 
@@ -122,6 +124,7 @@ import net.minecraft.potion.Potions;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -150,7 +153,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "1.8.5";
+	public static final String VERSION = "1.8.6";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -240,6 +243,9 @@ public class EnigmaticLegacy {
 	public static SoulCrystal soulCrystal;
 
 	public static TheAcknowledgment theAcknowledgment;
+	public static RevelationTome overworldRevelationTome;
+	public static RevelationTome netherRevelationTome;
+	public static RevelationTome endRevelationTome;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -358,6 +364,7 @@ public class EnigmaticLegacy {
 		EnigmaticLegacy.soulCrystal = new SoulCrystal();
 
 		EnigmaticLegacy.theAcknowledgment = new TheAcknowledgment();
+		EnigmaticLegacy.overworldRevelationTome = new RevelationTome(Rarity.COMMON, RevelationTome.TomeType.OVERWORLD);
 
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientRegistries);
@@ -396,7 +403,7 @@ public class EnigmaticLegacy {
 		EnigmaticLegacy.enigmaticLogger.info("Registering brewing recipes...");
 
 		if (ConfigHandler.RECALL_POTION_ENABLED.getValue())
-			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.AWKWARD)), Ingredient.fromItems(Items.ENDER_EYE), new ItemStack(EnigmaticLegacy.recallPotion)));
+			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.AWKWARD)), Ingredient.fromItems(Items.ENDER_EYE), new ItemStack(EnigmaticLegacy.recallPotion), new ResourceLocation(EnigmaticLegacy.MODID, "recall_potion")));
 
 		if (ConfigHandler.COMMON_POTIONS_ENABLED.getValue())
 			PotionHelper.registerCommonPotions();
@@ -466,6 +473,8 @@ public class EnigmaticLegacy {
 
 		for (Block theBlock : EnigmaticLegacy.cutoutBlockRegistry)
 			RenderTypeLookup.setRenderLayer(theBlock, RenderType.getCutout());
+
+		ModelHandler.registerModels();
 
 		EnigmaticLegacy.enigmaticLogger.info("Client setup phase finished successfully.");
 	}
@@ -573,6 +582,7 @@ public class EnigmaticLegacy {
 					EnigmaticLegacy.storageCrystal,
 					EnigmaticLegacy.soulCrystal,
 					EnigmaticLegacy.theAcknowledgment,
+					EnigmaticLegacy.overworldRevelationTome,
 					new GenericBlockItem(EnigmaticLegacy.massiveLamp),
 					new GenericBlockItem(EnigmaticLegacy.bigLamp),
 					new GenericBlockItem(EnigmaticLegacy.massiveShroomlamp),
@@ -700,5 +710,7 @@ public class EnigmaticLegacy {
 			return new ItemStack(EnigmaticLegacy.recallPotion);
 		}
 	};
+
+	public static final Rarity LEGENDARY = Rarity.create("legendary", TextFormatting.GOLD);
 
 }

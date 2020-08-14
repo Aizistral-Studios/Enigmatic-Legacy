@@ -432,7 +432,7 @@
 	"tooltip.enigmaticlegacy.etheriumLeggings1": "§5Are invisible while worn.",
 	"tooltip.enigmaticlegacy.etheriumBoots1": "§5Are invisible while worn.",
 	"tooltip.enigmaticlegacy.etheriumArmorSetBonus1": "§dSet Bonus:",
-	"tooltip.enigmaticlegacy.etheriumArmorSetBonus2": "§5- When your health drops below §6%1$s§5, generates a",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus2": "§5- When your health drops below §6%1$s§5, generates",
 	"tooltip.enigmaticlegacy.etheriumArmorSetBonus3": "§5  powerful shield that reflects most projectiles,",
 	"tooltip.enigmaticlegacy.etheriumArmorSetBonus4": "§5  provides §6%1$s§6 Damage Resistance§5, immunity to",
 	"tooltip.enigmaticlegacy.etheriumArmorSetBonus5": "§5  most debuffs, and knocks back any creatures",

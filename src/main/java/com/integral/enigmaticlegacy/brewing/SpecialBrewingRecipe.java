@@ -1,10 +1,16 @@
 package com.integral.enigmaticlegacy.brewing;
 
+import java.util.HashMap;
+
 import javax.annotation.Nonnull;
+
+import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
 
 /**
@@ -12,21 +18,26 @@ import net.minecraftforge.common.brewing.IBrewingRecipe;
  * @author Integral
  */
 
-public class SpecialBrewingRecipe implements IBrewingRecipe {
-	
+public class SpecialBrewingRecipe extends AbstractBrewingRecipe {
 	    @Nonnull private final Ingredient input;
 	    @Nonnull private final Ingredient ingredient;
 	    @Nonnull private final ItemStack output;
 
+
 	    public SpecialBrewingRecipe(Ingredient input, Ingredient ingredient, ItemStack output) {
-	        this.input = input;
+	    	this(input, ingredient, output, new ResourceLocation(EnigmaticLegacy.MODID, ItemNBTHelper.getString(output, "EnigmaticPotion", "unknown")));
+	    }
+
+	    public SpecialBrewingRecipe(Ingredient input, Ingredient ingredient, ItemStack output, ResourceLocation name) {
+	        super(name);
+	    	this.input = input;
 	        this.ingredient = ingredient;
 	        this.output = output;
 	    }
 
 	    @Override
 	    public boolean isInput(@Nonnull ItemStack stack) {
-			
+
 			if (stack != null)
 			for (ItemStack testStack : this.getInput().getMatchingStacks()) {
 				if (testStack.getItem() == stack.getItem() && PotionUtils.getPotionFromItem(testStack) == PotionUtils.getPotionFromItem(stack))
@@ -39,22 +50,22 @@ public class SpecialBrewingRecipe implements IBrewingRecipe {
 	    @Override
 	    public ItemStack getOutput(ItemStack input, ItemStack ingredient)
 	    {
-	        return isInput(input) && isIngredient(ingredient) ? getOutput().copy() : ItemStack.EMPTY;
+	        return this.isInput(input) && this.isIngredient(ingredient) ? this.getOutput().copy() : ItemStack.EMPTY;
 	    }
 
 	    public Ingredient getInput()
 	    {
-	        return input;
+	        return this.input;
 	    }
 
 	    public Ingredient getIngredient()
 	    {
-	        return ingredient;
+	        return this.ingredient;
 	    }
 
 	    public ItemStack getOutput()
 	    {
-	        return output;
+	        return this.output;
 	    }
 
 	    @Override
@@ -64,6 +75,6 @@ public class SpecialBrewingRecipe implements IBrewingRecipe {
 	    	else
 	    		return false;
 	    }
-	
+
 
 }

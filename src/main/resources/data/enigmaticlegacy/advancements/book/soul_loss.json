@@ -1,0 +1,13 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "criteria": {
+    "incompletable": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "requirements": [
+    [
+      "incompletable"
+    ]
+  ]
+}

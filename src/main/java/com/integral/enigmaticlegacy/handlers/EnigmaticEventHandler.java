@@ -10,9 +10,12 @@ import java.util.Random;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.spongepowered.asm.mixin.MixinEnvironment.Side;
+
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
+import com.integral.enigmaticlegacy.gui.containers.EnigmaticEnchantmentContainer;
 import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper.AnvilParser;
@@ -56,6 +59,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
+import net.minecraft.inventory.container.EnchantmentContainer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -81,6 +85,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -93,6 +98,8 @@ import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.TickEvent.Phase;
+import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -104,6 +111,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.AnvilRepairEvent;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
@@ -116,9 +124,6 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.type.capability.ICurio;
-import vazkii.patchouli.api.BookDrawScreenEvent;
-import vazkii.patchouli.client.book.gui.GuiBookLanding;
-import vazkii.patchouli.client.book.gui.button.GuiButtonBookEdit;
 
 /**
  * Generic event handler of the whole mod.
@@ -141,8 +146,36 @@ public class EnigmaticEventHandler {
 	public static Random theySeeMeRollin = new Random();
 	public static HashMap<PlayerEntity, String> anvilFields = new HashMap<PlayerEntity, String>();
 	public static HashMap<PlayerEntity, Boolean> hadEnigmaticAmulet = new HashMap<PlayerEntity, Boolean>();
+
 	/*
 	@SubscribeEvent
+	public void onContainerOpen(PlayerContainerEvent.Open event) {
+		if (event.getEntityLiving() instanceof ServerPlayerEntity) {
+			ServerPlayerEntity player = (ServerPlayerEntity) event.getEntityLiving();
+
+			if (event.getContainer() instanceof EnchantmentContainer && !(event.getContainer() instanceof EnigmaticEnchantmentContainer)) {
+				try {
+					player.openContainer = EnigmaticEnchantmentContainer.fromOld((EnchantmentContainer) event.getContainer(), player);
+
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+
+			System.out.println(player.openContainer.getClass());
+
+
+		}
+	}
+	*/
+
+	@SubscribeEvent
+	public void onEnchantmentLevelSet(EnchantmentLevelSetEvent event) {
+		//event.setLevel(50);
+	}
+/*
+	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
 	public void onBook(BookDrawScreenEvent event) {
 		if (event.gui instanceof GuiBookLanding) {
 
@@ -150,13 +183,13 @@ public class EnigmaticEventHandler {
 
 			GuiBookLanding gui = (GuiBookLanding) event.gui;
 
-			gui.removeButtonsIf(button -> {
+			gui.rmoveButtonsIf(button -> {
 				return button instanceof GuiButtonBookEdit;
 			});
 
 		}
 	}
-	*/
+*/
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
@@ -379,18 +412,6 @@ public class EnigmaticEventHandler {
 				event.setCanceled(true);
 				player.setHealth(1);
 			}
-
-			/*
-			 * Immortality handler for Etherium Armor.
-			 */
-			/*
-			 * if (!event.isCanceled() & EtheriumArmor.hasFullSet(player)) { for (ItemStack
-			 * stack : player.getArmorInventoryList()) { int damage = 50 +
-			 * theySeeMeRollin.nextInt(50); stack.damageItem(damage, player, p ->
-			 * p.sendBreakAnimation(MobEntity.getSlotForItemStack(stack))); }
-			 *
-			 * event.setCanceled(true); player.setHealth(1); }
-			 */
 		}
 
 	}
@@ -630,21 +651,37 @@ public class EnigmaticEventHandler {
 	public void onLivingDrops(LivingDropsEvent event) {
 
 		if (event.getEntityLiving() instanceof ServerPlayerEntity) {
-			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+			ServerPlayerEntity player = (ServerPlayerEntity) event.getEntityLiving();
+			Boolean droppedCrystal = false;
 
-			if (this.hadEnigmaticAmulet(player) && !event.getDrops().isEmpty()) {
-				ItemStack storageCrystal = EnigmaticLegacy.storageCrystal.storeDropsOnCrystal(event.getDrops(), player, SuperpositionHandler.shouldPlayerDropSoulCrystal(player) ? EnigmaticLegacy.soulCrystal.createCrystalFrom(player) : null);
+			if (this.hadEnigmaticAmulet(player) && !event.getDrops().isEmpty() && EnigmaticLegacy.enigmaticAmulet.isVesselEnabled()) {
+				ItemStack soulCrystal = SuperpositionHandler.shouldPlayerDropSoulCrystal(player) ? EnigmaticLegacy.soulCrystal.createCrystalFrom(player) : null;
+				ItemStack storageCrystal = EnigmaticLegacy.storageCrystal.storeDropsOnCrystal(event.getDrops(), player, soulCrystal);
 				PermanentItemEntity droppedStorageCrystal = new PermanentItemEntity(player.world, player.getPosX(), player.getPosY() + 1.5, player.getPosZ(), storageCrystal);
 				droppedStorageCrystal.setOwnerId(player.getUniqueID());
 				player.world.addEntity(droppedStorageCrystal);
 				EnigmaticLegacy.enigmaticLogger.info("Summoned Extradimensional Storage Crystal for " + player.getGameProfile().getName() + " at X: " + player.getPosX() + ", Y: " + player.getPosY() + ", Z: " + player.getPosZ());
 				event.getDrops().clear();
+
+				if (soulCrystal != null)
+					droppedCrystal = true;
+
 			} else if (SuperpositionHandler.shouldPlayerDropSoulCrystal(player)) {
 				ItemStack soulCrystal = EnigmaticLegacy.soulCrystal.createCrystalFrom(player);
 				PermanentItemEntity droppedSoulCrystal = new PermanentItemEntity(player.world, player.getPosX(), player.getPosY() + 1.5, player.getPosZ(), soulCrystal);
 				droppedSoulCrystal.setOwnerId(player.getUniqueID());
 				player.world.addEntity(droppedSoulCrystal);
 				EnigmaticLegacy.enigmaticLogger.info("Teared Soul Crystal from " + player.getGameProfile().getName() + " at X: " + player.getPosX() + ", Y: " + player.getPosY() + ", Z: " + player.getPosZ());
+
+				droppedCrystal = true;
+			}
+
+			ResourceLocation soulLossAdvancement = new ResourceLocation(EnigmaticLegacy.MODID, "book/soul_loss");
+
+			if (droppedCrystal) {
+				SuperpositionHandler.grantAdvancement(player, soulLossAdvancement);
+			} else if (!droppedCrystal && SuperpositionHandler.hasAdvancement(player, soulLossAdvancement)) {
+				SuperpositionHandler.revokeAdvancement(player, soulLossAdvancement);
 			}
 
 		}
@@ -932,16 +969,25 @@ public class EnigmaticEventHandler {
 		 */
 
 		if (id.equals(EnigmaticLegacy.MODID + ":main/discover_spellstone")) {
-			CuriosApi.getSlotHelper().unlockSlotType("spellstone", player);
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSlotUnlocked("spellstone"));
+			if (SuperpositionHandler.isSlotLocked("spellstone", player)) {
+				CuriosApi.getSlotHelper().unlockSlotType("spellstone", player);
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSlotUnlocked("spellstone"));
+			}
+
 			SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_ENABLESPELLSTONE, true);
 		} else if (id.equals(EnigmaticLegacy.MODID + ":main/discover_scroll")) {
-			CuriosApi.getSlotHelper().unlockSlotType("scroll", player);
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSlotUnlocked("scroll"));
+			if (SuperpositionHandler.isSlotLocked("scroll", player)) {
+				CuriosApi.getSlotHelper().unlockSlotType("scroll", player);
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSlotUnlocked("scroll"));
+			}
+
 			SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL, true);
 		} else if (id.equals(EnigmaticLegacy.MODID + ":main/discover_ring")) {
-			CuriosApi.getSlotHelper().unlockSlotType("ring", player);
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSlotUnlocked("ring"));
+			if (SuperpositionHandler.isSlotLocked("ring", player)) {
+				CuriosApi.getSlotHelper().unlockSlotType("ring", player);
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSlotUnlocked("ring"));
+			}
+
 			SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_ENABLERING, true);
 		}
 	}

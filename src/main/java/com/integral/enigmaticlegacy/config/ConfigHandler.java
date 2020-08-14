@@ -304,6 +304,15 @@ public class ConfigHandler {
     public static final OmnipotentConfig.DoubleParameter MAGMA_HEART_LAVAFOG_DENSITY
     = new OmnipotentConfig.DoubleParameter(0.3D).setClientOnly();
 
+    public static final OmnipotentConfig.BooleanParameter ENIGMATIC_AMULET_VESSEL_ENABLED
+    = new OmnipotentConfig.BooleanParameter(true);
+
+    public static final OmnipotentConfig.BooleanParameter OWNER_ONLY_VESSEL
+    = new OmnipotentConfig.BooleanParameter(false);
+
+    public static final OmnipotentConfig.DoubleParameter ENIGMATIC_AMULET_DAMAGE_BONUS
+	= new OmnipotentConfig.DoubleParameter(1.5D);
+
     static {
         final ForgeConfigSpec.Builder common = new ForgeConfigSpec.Builder();
         final ForgeConfigSpec.Builder client = new ForgeConfigSpec.Builder();
@@ -479,6 +488,16 @@ public class ConfigHandler {
         		.translation("configGui.enigmaticlegacy.bonus_wool_recipes_enabled")
         		.define("bonusWoolRecipesEnabled", ConfigHandler.BONUS_WOOL_RECIPES_ENABLED.getValueDefault());
 
+        ConfigHandler.ENIGMATIC_AMULET_VESSEL_ENABLED.configObj = common
+        		.comment("Whether or not Enigmatic Amulet should be summoning Extradimensional Vessel on owner's death.")
+        		.translation("configGui.enigmaticlegacy.enigmatic_amulet_vessel_enabled")
+        		.define("enigmaticAmuletVesselEnabled", ConfigHandler.ENIGMATIC_AMULET_VESSEL_ENABLED.getValueDefault());
+
+        ConfigHandler.OWNER_ONLY_VESSEL.configObj = common
+        		.comment("If true, only original owner of Extradimensional Vessel will be able to pick it up.")
+        		.translation("configGui.enigmaticlegacy.owner_only_vessel")
+        		.define("ownerOnlyVessel", ConfigHandler.OWNER_ONLY_VESSEL.getValueDefault());
+
         common.pop();
 
 
@@ -515,10 +534,15 @@ public class ConfigHandler {
 
         common.comment("Various options that affect individual items").push("Balance Options");
 
+        ConfigHandler.ENIGMATIC_AMULET_DAMAGE_BONUS.configObj = common
+                .comment("The damage bonus stat provided by Enigmatic Amulet.")
+                .translation("configGui.enigmaticlegacy.enigmatic_amulet_damage_bonus")
+                .defineInRange("enigmaticAmuletDamageBonus", ConfigHandler.ENIGMATIC_AMULET_DAMAGE_BONUS.getValueDefault(), -32768, 32768);
+
         ConfigHandler.MAGNET_RING_RANGE.configObj = common
-                .comment("The radius in which Magnetic Ring will attract items.")
-                .translation("configGui.enigmaticlegacy.magnet_ring_range")
-                .defineInRange("magnetRingRange", ConfigHandler.MAGNET_RING_RANGE.getValueDefault(), 1, 32);
+        		.comment("The radius in which Magnetic Ring will attract items.")
+        		.translation("configGui.enigmaticlegacy.magnet_ring_range")
+        		.defineInRange("magnetRingRange", ConfigHandler.MAGNET_RING_RANGE.getValueDefault(), 1, 32);
 
         ConfigHandler.SUPER_MAGNET_RING_RANGE.configObj = common
         		.comment("The radius in which Dislocation Ring will collect items.")

@@ -36,7 +36,7 @@ import vazkii.patchouli.common.book.BookRegistry;
 public class TheAcknowledgment extends ItemBase {
 
 	public TheAcknowledgment() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON).maxStackSize(1));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1));
 
 		this.setRegistryName(EnigmaticLegacy.MODID, "the_acknowledgment");
 	}
@@ -69,12 +69,6 @@ public class TheAcknowledgment extends ItemBase {
 			ServerPlayerEntity player = (ServerPlayerEntity) playerIn;
 			PatchouliAPI.instance.openBookGUI((ServerPlayerEntity) playerIn, Registry.ITEM.getKey(EnigmaticLegacy.theAcknowledgment));
 
-
-
-			//PatchouliAPI.instance.get
-			//PatchouliAPI.instance.
-
-			//playerIn.playSound(ModSounds.lexiconOpen, 1F, (float) (0.7 + Math.random() * 0.4));
 		}
 
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);

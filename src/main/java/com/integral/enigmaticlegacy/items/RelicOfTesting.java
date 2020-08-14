@@ -66,12 +66,13 @@ public class RelicOfTesting extends ItemBase {
 
 		SuperpositionHandler.setSpellstoneCooldown(playerIn, 0);
 
+		SuperpositionHandler.setPersistentInteger(playerIn, EnigmaticLegacy.overworldRevelationTome.persistantPointsTag, 0);
+
 		ItemStack checkTag = playerIn.inventory.offHandInventory.get(0);
 
 		if (checkTag != null)
 			playerIn.sendMessage(new StringTextComponent(checkTag.getOrCreateTag().getString()), playerIn.getUniqueID());
 
-		PatchouliHelper.markEverythingUnread();
 
 		playerIn.swingArm(handIn);
 

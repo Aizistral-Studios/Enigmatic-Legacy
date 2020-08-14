@@ -47,6 +47,7 @@ public class ExtradimensionalEye extends ItemBase {
 		if (Screen.func_231173_s_()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEye1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEye2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEye3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEye4");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEye5");
@@ -88,7 +89,7 @@ public class ExtradimensionalEye extends ItemBase {
 			ItemNBTHelper.setDouble(itemstack, "BoundX", playerIn.getPosX());
 			ItemNBTHelper.setDouble(itemstack, "BoundY", playerIn.getPosY());
 			ItemNBTHelper.setDouble(itemstack, "BoundZ", playerIn.getPosZ());
-			
+
 			ItemNBTHelper.setString(itemstack, "BoundDimension", playerIn.world.func_234923_W_().func_240901_a_().toString());
 			playerIn.swingArm(handIn);
 			return new ActionResult<>(ActionResultType.SUCCESS, itemstack);

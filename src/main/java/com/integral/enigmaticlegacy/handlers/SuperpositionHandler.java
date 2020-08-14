@@ -27,6 +27,7 @@ import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 import com.mojang.datafixers.util.Pair;
 
+import net.minecraft.advancements.Advancement;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -752,25 +753,42 @@ public class SuperpositionHandler {
 	 */
 
 	public static boolean hasAdvancement(@Nonnull ServerPlayerEntity player, @Nonnull ResourceLocation location) {
-		/*
-		 * if (player != null && location != null && player.server != null) {
-		 * PlayerAdvancements advancements = player.getAdvancements();
-		 * AdvancementManager manager = player.server.getAdvancementManager();
-		 *
-		 * if (advancements != null && manager != null) { if
-		 * (manager.getAdvancement(location) != null) return
-		 * advancements.getProgress(manager.getAdvancement(location)).isDone(); } }
-		 */
 
 		try {
-			if (player.getAdvancements().getProgress(player.server.getAdvancementManager().getAdvancement(location))
-					.isDone())
+			if (player.getAdvancements().getProgress(player.server.getAdvancementManager().getAdvancement(location)).isDone())
 				return true;
 		} catch (NullPointerException ex) {
 			// Just don't do it lol }
 		}
 
 		return false;
+	}
+
+	/**
+	 * Grant specified advancement to specified player.
+	 * Don't forget to specify!
+	 */
+
+	public static void grantAdvancement(@Nonnull ServerPlayerEntity player, @Nonnull ResourceLocation location) {
+		Advancement adv = player.server.getAdvancementManager().getAdvancement(location);
+
+		for (String criterion : player.getAdvancements().getProgress(adv).getRemaningCriteria()) {
+			player.getAdvancements().grantCriterion(adv, criterion);
+		}
+
+	}
+
+	/**
+	 * Revokes specified advancement from specified player.
+	 * Don't forget to specify!
+	 */
+
+	public static void revokeAdvancement(@Nonnull ServerPlayerEntity player, @Nonnull ResourceLocation location) {
+		Advancement adv = player.server.getAdvancementManager().getAdvancement(location);
+
+		for (String criterion : player.getAdvancements().getProgress(adv).getCompletedCriteria()) {
+			player.getAdvancements().revokeCriterion(adv, criterion);
+		}
 	}
 
 	/**
@@ -971,7 +989,6 @@ public class SuperpositionHandler {
 
 	/**
 	 * Checks whether the collection of ItemEntities contains given Item.
-	 *
 	 * @author Integral
 	 */
 
@@ -995,7 +1012,6 @@ public class SuperpositionHandler {
 			return false;
 
 		if (dropMode == 0) {
-			// TODO Expand
 			return false;
 		} else if (dropMode == 1) {
 			return player.world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY) && EnigmaticLegacy.soulCrystal.getLostCrystals(player) < maxCrystalLoss;

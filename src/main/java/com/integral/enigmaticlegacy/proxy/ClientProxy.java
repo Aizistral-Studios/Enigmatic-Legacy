@@ -3,6 +3,8 @@ package com.integral.enigmaticlegacy.proxy;
 import java.util.Map;
 import java.util.Random;
 
+import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.proxy.renderers.ShieldAuraLayer;
 
 import net.minecraft.client.Minecraft;
@@ -26,11 +28,16 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void handleItemPickup(int pickuper_id, int item_id) {
-		Entity pickuper = Minecraft.getInstance().world.getEntityByID(pickuper_id);
-		Entity entity = Minecraft.getInstance().world.getEntityByID(item_id);
+		try {
+			Entity pickuper = Minecraft.getInstance().world.getEntityByID(pickuper_id);
+			Entity entity = Minecraft.getInstance().world.getEntityByID(item_id);
 
-		Minecraft.getInstance().particles.addEffect(new ItemPickupParticle(Minecraft.getInstance().getRenderManager(), Minecraft.getInstance().getRenderTypeBuffers(), Minecraft.getInstance().world, pickuper, entity));
-		Minecraft.getInstance().world.playSound(entity.getPosX(), entity.getPosY(), entity.getPosZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, (ClientProxy.random.nextFloat() - ClientProxy.random.nextFloat()) * 1.4F + 2.0F, false);
+			Minecraft.getInstance().particles.addEffect(new ItemPickupParticle(Minecraft.getInstance().getRenderManager(), Minecraft.getInstance().getRenderTypeBuffers(), Minecraft.getInstance().world, pickuper, entity));
+			Minecraft.getInstance().world.playSound(entity.getPosX(), entity.getPosY(), entity.getPosZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, (ClientProxy.random.nextFloat() - ClientProxy.random.nextFloat()) * 1.4F + 2.0F, false);
+		} catch (Exception ex) {
+			Exception log = new Exception("Unknown error when rendering permanent item pickup", ex);
+			EnigmaticLegacy.enigmaticLogger.catching(log);
+		}
 	}
 
 	@Override
@@ -64,6 +71,9 @@ public class ClientProxy extends CommonProxy {
 		return player.world.func_234923_W_().equals(world);
 	}
 
-
+	@Override
+	public World getCentralWorld() {
+		return Minecraft.getInstance().world;
+	}
 
 }

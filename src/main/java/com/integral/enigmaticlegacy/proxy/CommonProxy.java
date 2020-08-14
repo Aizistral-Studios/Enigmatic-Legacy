@@ -36,6 +36,10 @@ public class CommonProxy {
 		return serverPlayer.getServerWorld().func_234923_W_().equals(world);
 	}
 
+	public World getCentralWorld() {
+		return SuperpositionHandler.getOverworld();
+	}
+
 	public RegistryKey<World> getOverworldKey() {
 		return World.field_234918_g_;
 	}

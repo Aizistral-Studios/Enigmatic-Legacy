@@ -1,5 +1,13 @@
 The Changelog:
 
+[Release 1.8.6]:
+
+- Fixed crash with Optifine on Forge versions past 32.0.98 when rendering Extradimensional Vessel (#44);
+- Implemented config options to adjust damage bonus stat provided by Enigmatic Amulet, as well as one to disable it's ability to summon Extradimensional Vessel. Also added option to prevent anyone besides original owner from picking up their Extradimensional Vessel (#45, #38);
+- Before gods I swear, this is the last patch I am making until 2.0 release.
+
+
+
 [Release 1.8.5]:
 
 - Scroll of Ageless Wisdom doesn't Agaless anymore;
