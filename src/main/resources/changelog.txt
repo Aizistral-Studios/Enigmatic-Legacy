@@ -1,5 +1,14 @@
 The Changelog:
 
+[Release 1.8.7]:
+
+- Guess here we patch again...
+- Code of custom triggers actually makes sense when you look at it;
+- Fixed crash when using keybind for spellstone active ability when spellstone slot is not unlocked yet (#47);
+- Fixed Curios slots not being properly unlocked when they are supposed to be. Re-entering worlds when this issue occured should also fix it (#48);
+
+
+
 [Release 1.8.6]:
 
 - Fixed crash with Optifine on Forge versions past 32.0.98 when rendering Extradimensional Vessel (#44);

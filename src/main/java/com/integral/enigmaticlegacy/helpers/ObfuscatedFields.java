@@ -22,13 +22,13 @@ public class ObfuscatedFields {
 
 	/**
 	 * Class: CreateWorldScreen.class,
-	 * Deobfuscated Name: worldName
+	 * Deobfuscated Name: worldNameField
 	 */
 	public static Field worldNameField;
 
 	/**
 	 * Class: CreateWorldScreen.class,
-	 * Deobfuscated Name: worldSeed
+	 * Deobfuscated Name: worldSeedField
 	 */
 	public static Field worldSeedField;
 
@@ -65,9 +65,8 @@ public class ObfuscatedFields {
 
 	@OnlyIn(Dist.CLIENT)
 	public static void extractClientFields() {
-
-		ObfuscatedFields.worldNameField = ObfuscationReflectionHelper.findField(CreateWorldScreen.class, "field_146330_J");
-		ObfuscatedFields.worldSeedField = ObfuscationReflectionHelper.findField(WorldOptionsScreen.class, "field_239041_o_");
+		ObfuscatedFields.worldNameField = ObfuscationReflectionHelper.findField(CreateWorldScreen.class, "field_146333_g");
+		ObfuscatedFields.worldSeedField = ObfuscationReflectionHelper.findField(WorldOptionsScreen.class, "field_239033_g_");
 	}
 
 }

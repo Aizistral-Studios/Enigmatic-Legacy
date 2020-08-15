@@ -86,6 +86,7 @@ import com.integral.enigmaticlegacy.packets.clients.PacketPlayerRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerSetlook;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketSetEntryState;
 import com.integral.enigmaticlegacy.packets.clients.PacketSlotUnlocked;
 import com.integral.enigmaticlegacy.packets.clients.PacketUpdateNotification;
 import com.integral.enigmaticlegacy.packets.clients.PacketWitherParticles;
@@ -98,6 +99,7 @@ import com.integral.enigmaticlegacy.proxy.ClientProxy;
 import com.integral.enigmaticlegacy.proxy.CommonProxy;
 import com.integral.enigmaticlegacy.proxy.renderers.ModelHandler;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
+import com.integral.enigmaticlegacy.triggers.RevelationGainTrigger;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
 
 import net.minecraft.advancements.CriteriaTriggers;
@@ -153,7 +155,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "1.8.6";
+	public static final String VERSION = "1.8.7";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -364,7 +366,9 @@ public class EnigmaticLegacy {
 		EnigmaticLegacy.soulCrystal = new SoulCrystal();
 
 		EnigmaticLegacy.theAcknowledgment = new TheAcknowledgment();
-		EnigmaticLegacy.overworldRevelationTome = new RevelationTome(Rarity.COMMON, RevelationTome.TomeType.OVERWORLD);
+		EnigmaticLegacy.overworldRevelationTome = new RevelationTome(Rarity.UNCOMMON, RevelationTome.TomeType.OVERWORLD, "tattered_tome");
+		EnigmaticLegacy.netherRevelationTome = new RevelationTome(Rarity.UNCOMMON, RevelationTome.TomeType.NETHER, "withered_tome");
+		EnigmaticLegacy.endRevelationTome = new RevelationTome(Rarity.RARE, RevelationTome.TomeType.END, "corrupted_tome");
 
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientRegistries);
@@ -455,10 +459,12 @@ public class EnigmaticLegacy {
 		EnigmaticLegacy.packetInstance.registerMessage(13, PacketAnvilField.class, PacketAnvilField::encode, PacketAnvilField::decode, PacketAnvilField::handle);
 		EnigmaticLegacy.packetInstance.registerMessage(14, PacketWitherParticles.class, PacketWitherParticles::encode, PacketWitherParticles::decode, PacketWitherParticles::handle);
 		EnigmaticLegacy.packetInstance.registerMessage(15, PacketFlameParticles.class, PacketFlameParticles::encode, PacketFlameParticles::decode, PacketFlameParticles::handle);
+		EnigmaticLegacy.packetInstance.registerMessage(16, PacketSetEntryState.class, PacketSetEntryState::encode, PacketSetEntryState::decode, PacketSetEntryState::handle);
 
 		EnigmaticLegacy.enigmaticLogger.info("Registering triggers...");
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);
 		CriteriaTriggers.register(BeheadingTrigger.INSTANCE);
+		CriteriaTriggers.register(RevelationGainTrigger.INSTANCE);
 
 		ObfuscatedFields.extractCommonFields();
 
@@ -583,6 +589,8 @@ public class EnigmaticLegacy {
 					EnigmaticLegacy.soulCrystal,
 					EnigmaticLegacy.theAcknowledgment,
 					EnigmaticLegacy.overworldRevelationTome,
+					EnigmaticLegacy.netherRevelationTome,
+					EnigmaticLegacy.endRevelationTome,
 					new GenericBlockItem(EnigmaticLegacy.massiveLamp),
 					new GenericBlockItem(EnigmaticLegacy.bigLamp),
 					new GenericBlockItem(EnigmaticLegacy.massiveShroomlamp),

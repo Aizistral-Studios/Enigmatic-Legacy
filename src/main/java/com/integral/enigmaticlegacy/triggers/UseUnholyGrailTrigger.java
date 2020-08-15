@@ -12,13 +12,18 @@ import javax.annotation.Nonnull;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.items.RevelationTome;
 
 import net.minecraft.advancements.ICriterionInstance;
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
+import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
+import net.minecraft.advancements.criterion.CriterionInstance;
+import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.loot.ConditionArrayParser;
 import net.minecraft.loot.ConditionArraySerializer;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -26,98 +31,41 @@ import net.minecraft.util.ResourceLocation;
  * @author Integral
  */
 
-public class UseUnholyGrailTrigger implements ICriterionTrigger<UseUnholyGrailTrigger.Instance> {
-    public static final ResourceLocation ID = new ResourceLocation(EnigmaticLegacy.MODID, "unholy_grail_drink");
-    public static final UseUnholyGrailTrigger INSTANCE = new UseUnholyGrailTrigger();
-    private final Map<PlayerAdvancements, PlayerTracker> playerTrackers = new HashMap<>();
+public class UseUnholyGrailTrigger extends AbstractCriterionTrigger<UseUnholyGrailTrigger.Instance> {
+	public static final ResourceLocation ID = new ResourceLocation(EnigmaticLegacy.MODID, "unholy_grail_drink");
+	public static final UseUnholyGrailTrigger INSTANCE = new UseUnholyGrailTrigger();
 
-    private UseUnholyGrailTrigger() {
-    	// Insert existential void here
-    }
+	private UseUnholyGrailTrigger() {}
 
-    @Nonnull
-    @Override
-    public ResourceLocation getId() {
-        return ID;
-    }
-
-    @Override
-    public void addListener(@Nonnull PlayerAdvancements player, @Nonnull ICriterionTrigger.Listener<UseUnholyGrailTrigger.Instance> listener) {
-        this.playerTrackers.computeIfAbsent(player, PlayerTracker::new).listeners.add(listener);
-    }
-
-    @Override
-    public void removeListener(@Nonnull PlayerAdvancements player, @Nonnull ICriterionTrigger.Listener<UseUnholyGrailTrigger.Instance> listener) {
-        PlayerTracker tracker = this.playerTrackers.get(player);
-
-        if(tracker != null) {
-            tracker.listeners.remove(listener);
-
-            if(tracker.listeners.isEmpty()) {
-                this.playerTrackers.remove(player);
-            }
-        }
-    }
-
-    @Override
-    public void removeAllListeners(@Nonnull PlayerAdvancements player) {
-        playerTrackers.remove(player);
-    }
-    
-    @Override
-	public Instance func_230307_a_(JsonObject p_230307_1_, ConditionArrayParser p_230307_2_) {
-		return new Instance();
+	@Nonnull
+	@Override
+	public ResourceLocation getId() {
+		return UseUnholyGrailTrigger.ID;
 	}
 
-    static class PlayerTracker {
-        private final PlayerAdvancements playerAdvancements;
-        final Set<ICriterionTrigger.Listener<Instance>> listeners = new HashSet<>();
+	@Nonnull
+	@Override
+	public UseUnholyGrailTrigger.Instance func_230241_b_(@Nonnull JsonObject json, @Nonnull EntityPredicate.AndPredicate playerPred, ConditionArrayParser conditions) {
+		return new UseUnholyGrailTrigger.Instance(playerPred);
+	}
 
-        PlayerTracker(PlayerAdvancements playerAdvancementsIn) {
-            this.playerAdvancements = playerAdvancementsIn;
-        }
+	public void trigger(ServerPlayerEntity player) {
+		this.func_235959_a_(player, instance -> instance.test());
+	}
 
-        public void trigger() {
-            List<ICriterionTrigger.Listener<Instance>> list = new ArrayList<>();
-
-            for(ICriterionTrigger.Listener<UseUnholyGrailTrigger.Instance> listener : this.listeners) {
-                if(listener.getCriterionInstance().test()) {
-                    list.add(listener);
-                }
-            }
-
-            for(ICriterionTrigger.Listener<UseUnholyGrailTrigger.Instance> listener : list) {
-                listener.grantCriterion(this.playerAdvancements);
-            }
-        }
-    }
-
-    public void trigger(ServerPlayerEntity player) {
-        PlayerTracker tracker = playerTrackers.get(player.getAdvancements());
-        if(tracker != null) {
-            tracker.trigger();
-        }
-    }
-
-    static class Instance implements ICriterionInstance {
-
-        Instance() {
-        }
-
-        @Nonnull
-        @Override
-        public ResourceLocation getId() {
-            return ID;
-        }
-
-        boolean test() {
-            return true;
-        }
-
-		@Override
-		public JsonObject func_230240_a_(ConditionArraySerializer p_230240_1_) {
-			return new JsonObject();
+	static class Instance extends CriterionInstance {
+		Instance(EntityPredicate.AndPredicate playerPred) {
+			super(UseUnholyGrailTrigger.ID, playerPred);
 		}
-    }
 
+		@Nonnull
+		@Override
+		public ResourceLocation getId() {
+			return UseUnholyGrailTrigger.ID;
+		}
+
+		boolean test() {
+			return true;
+		}
+	}
 }

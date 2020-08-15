@@ -11,15 +11,14 @@ import net.minecraft.item.Item.Properties;
 public class GenericBlockItem extends BlockItem {
 
 	public GenericBlockItem(Block blockIn) {
-		super(blockIn, getDefaultProperties());
-		
+		super(blockIn, GenericBlockItem.getDefaultProperties());
 		this.setRegistryName(blockIn.getRegistryName());
 	}
-	
+
 	public GenericBlockItem(Block blockIn, Properties props) {
 		super(blockIn, props);
 	}
-	
+
 	public static Properties getDefaultProperties() {
 		Properties props = new Item.Properties();
 

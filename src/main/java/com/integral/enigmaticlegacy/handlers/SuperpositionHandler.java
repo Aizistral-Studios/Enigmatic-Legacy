@@ -137,7 +137,7 @@ public class SuperpositionHandler {
 		if (handler != null) {
 			return handler.getLockedSlots().contains(id);
 		} else
-			return false;
+			return true;
 
 	}
 
@@ -152,14 +152,19 @@ public class SuperpositionHandler {
 		CuriosApi.getCuriosHelper().getCuriosHandler(entity).ifPresent(handler -> {
 
 			ICurioStacksHandler stacksHandler = handler.getCurios().get("spellstone");
-			IDynamicStackHandler soloStackHandler = stacksHandler.getStacks();
 
-			for (int i = 0; i < stacksHandler.getSlots(); i++) {
-				if (soloStackHandler.getStackInSlot(i) != null
-						&& soloStackHandler.getStackInSlot(i).getItem() instanceof ISpellstone) {
-					spellstoneStack.add(soloStackHandler.getStackInSlot(i));
-					break;
-				}
+			if (stacksHandler != null) {
+
+				IDynamicStackHandler soloStackHandler = stacksHandler.getStacks();
+
+				if (soloStackHandler != null)
+					for (int i = 0; i < stacksHandler.getSlots(); i++) {
+						if (soloStackHandler.getStackInSlot(i) != null && soloStackHandler.getStackInSlot(i).getItem() instanceof ISpellstone) {
+							spellstoneStack.add(soloStackHandler.getStackInSlot(i));
+							break;
+						}
+					}
+
 			}
 
 		});

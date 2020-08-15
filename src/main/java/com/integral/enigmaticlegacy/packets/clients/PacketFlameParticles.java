@@ -11,7 +11,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 /**
- * Packet for bursting out a bunch of dragon breath particles.
+ * Packet for bursting out a bunch of flame breath particles.
  * @author Integral
  */
 

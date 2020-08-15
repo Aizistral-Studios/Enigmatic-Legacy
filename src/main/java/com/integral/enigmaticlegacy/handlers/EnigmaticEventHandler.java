@@ -24,14 +24,17 @@ import com.integral.enigmaticlegacy.objects.CooldownMap;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
+import com.integral.enigmaticlegacy.helpers.PatchouliHelper;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketSetEntryState;
 import com.integral.enigmaticlegacy.packets.clients.PacketSlotUnlocked;
 import com.integral.enigmaticlegacy.packets.server.PacketAnvilField;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.CreateWorldScreen;
 import net.minecraft.client.gui.screen.inventory.AnvilScreen;
 import net.minecraft.client.gui.toasts.IToast;
@@ -84,6 +87,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -121,9 +125,13 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.type.capability.ICurio;
+import vazkii.patchouli.api.BookDrawScreenEvent;
+import vazkii.patchouli.client.book.gui.GuiBookLanding;
+import vazkii.patchouli.client.book.gui.button.GuiButtonBookEdit;
 
 /**
  * Generic event handler of the whole mod.
@@ -173,7 +181,8 @@ public class EnigmaticEventHandler {
 	public void onEnchantmentLevelSet(EnchantmentLevelSetEvent event) {
 		//event.setLevel(50);
 	}
-/*
+
+	/*
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onBook(BookDrawScreenEvent event) {
@@ -183,13 +192,15 @@ public class EnigmaticEventHandler {
 
 			GuiBookLanding gui = (GuiBookLanding) event.gui;
 
-			gui.rmoveButtonsIf(button -> {
-				return button instanceof GuiButtonBookEdit;
-			});
+			if (gui.book.id.equals(EnigmaticLegacy.theAcknowledgment.getRegistryName()))
+
+				gui.removeButtonsIf(button -> {
+					return button instanceof GuiButtonBookEdit;
+				});
 
 		}
 	}
-*/
+	*/
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
@@ -932,20 +943,20 @@ public class EnigmaticEventHandler {
 			 * Handlers for fixing missing Curios slots upong joining the world.
 			 */
 
-			if (!SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENABLESPELLSTONE))
+			//if (!SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENABLESPELLSTONE) || SuperpositionHandler.isSlotLocked("spellstone", player))
 				if (SuperpositionHandler.hasAdvancement(player, new ResourceLocation(EnigmaticLegacy.MODID, "main/discover_spellstone"))) {
 					CuriosApi.getSlotHelper().unlockSlotType("spellstone", event.getPlayer());
 					SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_ENABLESPELLSTONE, true);
 				}
 
-			if (!SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL))
-				if (SuperpositionHandler.hasAdvancement(player, new ResourceLocation(EnigmaticLegacy.MODID, "main/discover_spellstone"))) {
+			//if (!SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL) || SuperpositionHandler.isSlotLocked("scroll", player))
+				if (SuperpositionHandler.hasAdvancement(player, new ResourceLocation(EnigmaticLegacy.MODID, "main/discover_scroll"))) {
 					CuriosApi.getSlotHelper().unlockSlotType("scroll", event.getPlayer());
 					SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL, true);
 				}
 
-			if (!SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENABLERING))
-				if (SuperpositionHandler.hasAdvancement(player, new ResourceLocation(EnigmaticLegacy.MODID, "main/discover_spellstone"))) {
+			//if (!SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENABLERING) || SuperpositionHandler.isSlotLocked("ring", player))
+				if (SuperpositionHandler.hasAdvancement(player, new ResourceLocation(EnigmaticLegacy.MODID, "main/discover_ring"))) {
 					CuriosApi.getSlotHelper().unlockSlotType("ring", event.getPlayer());
 					SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_ENABLERING, true);
 				}
@@ -963,31 +974,35 @@ public class EnigmaticEventHandler {
 		String id = event.getAdvancement().getId().toString();
 		PlayerEntity player = event.getPlayer();
 
+		if (player instanceof ServerPlayerEntity && id.startsWith(EnigmaticLegacy.MODID+":book/")) {
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity)player) , new PacketSetEntryState(false, id.replace("book/", "")));
+		}
+
 		/*
 		 * Handler for permanently unlocking Curio slots to player once they obtain
 		 * respective advancement.
 		 */
 
 		if (id.equals(EnigmaticLegacy.MODID + ":main/discover_spellstone")) {
-			if (SuperpositionHandler.isSlotLocked("spellstone", player)) {
-				CuriosApi.getSlotHelper().unlockSlotType("spellstone", player);
+			//if (SuperpositionHandler.isSlotLocked("spellstone", player)) {
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSlotUnlocked("spellstone"));
-			}
+			//}
 
+			CuriosApi.getSlotHelper().unlockSlotType("spellstone", player);
 			SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_ENABLESPELLSTONE, true);
 		} else if (id.equals(EnigmaticLegacy.MODID + ":main/discover_scroll")) {
-			if (SuperpositionHandler.isSlotLocked("scroll", player)) {
-				CuriosApi.getSlotHelper().unlockSlotType("scroll", player);
+			//if (SuperpositionHandler.isSlotLocked("scroll", player)) {
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSlotUnlocked("scroll"));
-			}
+			//}
 
+			CuriosApi.getSlotHelper().unlockSlotType("scroll", player);
 			SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL, true);
 		} else if (id.equals(EnigmaticLegacy.MODID + ":main/discover_ring")) {
-			if (SuperpositionHandler.isSlotLocked("ring", player)) {
-				CuriosApi.getSlotHelper().unlockSlotType("ring", player);
+			//if (SuperpositionHandler.isSlotLocked("ring", player)) {
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSlotUnlocked("ring"));
-			}
+			//}
 
+			CuriosApi.getSlotHelper().unlockSlotType("ring", player);
 			SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_ENABLERING, true);
 		}
 	}
@@ -1064,8 +1079,15 @@ public class EnigmaticEventHandler {
 				String number = SuperpositionHandler.generateRandomWorldNumber();
 				String name = localizedWorld + number;
 
-				ObfuscatedFields.worldNameField.set(screen, name);
-				ObfuscatedFields.worldSeedField.set(screen.field_238934_c_, number);
+				TextFieldWidget nameWidget = (TextFieldWidget) ObfuscatedFields.worldNameField.get(screen);
+				TextFieldWidget seedWidget = (TextFieldWidget) ObfuscatedFields.worldSeedField.get(screen.field_238934_c_);
+
+				nameWidget.setText(name);
+				seedWidget.setText(number);
+
+				ObfuscatedFields.worldSeedField.set(screen, nameWidget);
+				ObfuscatedFields.worldSeedField.set(screen.field_238934_c_, seedWidget);
+
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}

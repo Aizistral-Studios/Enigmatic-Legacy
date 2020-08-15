@@ -1,12 +1,23 @@
 package com.integral.enigmaticlegacy.items;
 
+import java.util.List;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
+import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.PatchouliHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
+import com.integral.enigmaticlegacy.triggers.RevelationGainTrigger;
+import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -20,8 +31,15 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class RevelationTome extends ItemBase {
 
@@ -30,51 +48,95 @@ public class RevelationTome extends ItemBase {
 	public static final String formerReadersTag = "formerReaders";
 
 	public static enum TomeType {
-		OVERWORLD("overworld"),
-		NETHER("nether"),
-		END("end");
+		OVERWORLD("overworld"), NETHER("nether"), END("end"), GENERIC("generic");
 
-		public final String registryName;
+		public final String typeName;
+
 		private TomeType(String name) {
-			this.registryName = name;
+			this.typeName = name;
+		}
+
+		public static TomeType resolveType(@Nonnull String type) {
+			if (type.equals("overworld"))
+				return OVERWORLD;
+			else if (type.equals("nether"))
+				return NETHER;
+			else if (type.equals("end"))
+				return END;
+			else
+				return GENERIC;
 		}
 	}
 
 	public final TomeType theType;
 	public final String persistantPointsTag;
 
-	public RevelationTome(Rarity rarity, TomeType type) {
+	public RevelationTome(Rarity rarity, TomeType type, String registryName) {
 		super(ItemBase.getDefaultProperties().rarity(rarity).maxStackSize(1));
 		this.theType = type;
+		this.persistantPointsTag = "enigmaticlegacy.revelation_points_" + this.theType.typeName;
 
-		this.persistantPointsTag = "enigmaticlegacy.revelation_points_"+ this.theType.registryName;
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "revelation_tome_" + this.theType.registryName));
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, registryName));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack stack = playerIn.getHeldItem(handIn);
-		playerIn.setActiveHand(handIn);
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getHeldItem(hand);
+		player.setActiveHand(hand);
 
-		//if (playerIn instanceof ServerPlayerEntity)
-		//	System.out.println("Current " + this.theType.registryName + " Points: " + SuperpositionHandler.getPersistentInteger(playerIn, this.persistantPointsTag, 0));
+		if (!RevelationTome.havePlayerRead(player, stack)) {
+			RevelationTome.markRead(player, stack);
 
-		if (!RevelationTome.havePlayerRead(playerIn, stack)) {
-			RevelationTome.markRead(playerIn, stack);
-			int xp = ItemNBTHelper.getInt(stack, RevelationTome.xpPointsTag, Item.random.nextInt(1000));
-			int revelation = ItemNBTHelper.getInt(stack, RevelationTome.revelationPointsTag, 1);
-			int currentPoints = SuperpositionHandler.getPersistentInteger(playerIn, this.persistantPointsTag, 0);
+			if (player instanceof ServerPlayerEntity) {
+				int xp = ItemNBTHelper.getInt(stack, RevelationTome.xpPointsTag, Item.random.nextInt(1000));
+				int revelation = ItemNBTHelper.getInt(stack, RevelationTome.revelationPointsTag, 1);
+				int currentPoints = SuperpositionHandler.getPersistentInteger(player, this.persistantPointsTag, 0);
 
-			ExperienceHelper.addPlayerXP(playerIn, xp);
-			SuperpositionHandler.setPersistentInteger(playerIn, this.persistantPointsTag, currentPoints+revelation);
+				ExperienceHelper.addPlayerXP(player, xp);
+				SuperpositionHandler.setPersistentInteger(player, this.persistantPointsTag, currentPoints + revelation);
 
-			playerIn.swingArm(handIn);
+				world.playSound(null, new BlockPos(player.getPositionVec()), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1.0f, 0.9f);
+				RevelationGainTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this.theType, currentPoints + revelation);
+				RevelationGainTrigger.INSTANCE.trigger((ServerPlayerEntity) player, TomeType.GENERIC, RevelationTome.getGenericPoints(player));
+			}
+
+			player.swingArm(hand);
 			return new ActionResult<>(ActionResultType.SUCCESS, stack);
 		}
 
-
 		return new ActionResult<>(ActionResultType.PASS, stack);
 
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+		if (Screen.func_231173_s_()) {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTome1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTome2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTome3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTome4");
+		} else {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+		}
+
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+
+		if (!RevelationTome.havePlayerRead(Minecraft.getInstance().player, stack))
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTomeClick");
+		else
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.ationTomeMarkRead");
+	}
+
+	public static int getGenericPoints(PlayerEntity player) {
+		int overworldPoints = SuperpositionHandler.getPersistentInteger(player, "enigmaticlegacy.revelation_points_" + TomeType.OVERWORLD.typeName, 0);
+		int netherPoints = SuperpositionHandler.getPersistentInteger(player, "enigmaticlegacy.revelation_points_" + TomeType.NETHER.typeName, 0);
+		int endPoints = SuperpositionHandler.getPersistentInteger(player, "enigmaticlegacy.revelation_points_" + TomeType.END.typeName, 0);
+
+		//System.out.println("Overworld points: " + overworldPoints + ", Nether points: " + netherPoints + ", End points: " + endPoints);
+		//System.out.println("Generic points: " + (overworldPoints + netherPoints + endPoints));
+
+		return overworldPoints + netherPoints + endPoints;
 	}
 
 	public ItemStack createTome(int revelationPoints, int experiencePoints) {

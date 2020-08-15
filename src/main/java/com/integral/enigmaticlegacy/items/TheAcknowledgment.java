@@ -42,11 +42,11 @@ public class TheAcknowledgment extends ItemBase {
 	}
 	/*
 	public static boolean isOpen() {
-		return Registry.ITEM.getKey(EnigmaticLegacy.theAcknowledgment).equals(PatchouliAPI.instance.getOpenBookGui());
+		return EnigmaticLegacy.theAcknowledgment.getRegistryName().equals(PatchouliAPI.instance.getOpenBookGui());
 	}
 
 	public static ITextComponent getEdition() {
-		return PatchouliAPI.instance.getSubtitle(Registry.ITEM.getKey(EnigmaticLegacy.theAcknowledgment));
+		return PatchouliAPI.instance.getSubtitle(EnigmaticLegacy.theAcknowledgment.getRegistryName());
 	}
 
 	public static ITextComponent getTitle(ItemStack stack) {
@@ -67,7 +67,7 @@ public class TheAcknowledgment extends ItemBase {
 
 		if (playerIn instanceof ServerPlayerEntity) {
 			ServerPlayerEntity player = (ServerPlayerEntity) playerIn;
-			PatchouliAPI.instance.openBookGUI((ServerPlayerEntity) playerIn, Registry.ITEM.getKey(EnigmaticLegacy.theAcknowledgment));
+			PatchouliAPI.instance.openBookGUI((ServerPlayerEntity) playerIn, this.getRegistryName());
 
 		}
 
@@ -82,7 +82,9 @@ public class TheAcknowledgment extends ItemBase {
 		try {
 			tooltip.add(new StringTextComponent("").func_230529_a_(TheAcknowledgment.getEdition()).func_240699_a_(TextFormatting.DARK_PURPLE));
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			EnigmaticLegacy.enigmaticLogger.info("For whatever reason Minecraft really calls .addInformation in Item classes in the middle of THE FUCKING STARTUP.");
+			EnigmaticLegacy.enigmaticLogger.info("You can safely ignore following stacktrace, mostly there for the sake of there being.");
+			EnigmaticLegacy.enigmaticLogger.catching(ex);
 			// Just don't do it lol
 		}
 	}
