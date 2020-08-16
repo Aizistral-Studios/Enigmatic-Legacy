@@ -16,6 +16,16 @@
         ]
       }
     },
+	"has_recipe_result": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "enigmaticlegacy:mega_sponge"
+          }
+        ]
+      }
+    },
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
@@ -26,6 +36,7 @@
   "requirements": [
     [
       "has_items",
+      "has_recipe_result",
       "has_the_recipe"
     ]
   ]

@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.fabulous_scroll.name",
+    "icon": "enigmaticlegacy:fabulous_scroll",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/fabulous_scroll",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 80,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.fabulous_scroll.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:fabulous_scroll",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.fabulous_scroll.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.fabulous_scroll.page.3"
+        },
+		{
+            "type": "empty",
+			"draw_filler": false
+		}
+    ]
+}

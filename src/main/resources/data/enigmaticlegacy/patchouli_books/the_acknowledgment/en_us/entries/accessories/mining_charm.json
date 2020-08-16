@@ -1,0 +1,32 @@
+{
+    "name": "book.enigmaticlegacy.entry.mining_charm.name",
+    "icon": "enigmaticlegacy:mining_charm",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/mining_charm",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 50,
+    "pages": [
+        {
+            "type": "text",
+			"title": "meh",
+            "text": "book.enigmaticlegacy.entry.mining_charm.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:mining_charm",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.mining_charm.page.2"
+        },
+		{
+			"type": "text",
+			"text": "book.enigmaticlegacy.entry.mining_charm.page.3"
+		
+		},
+		{
+			"type": "empty",
+			"draw_filler": false
+		}
+    ]
+}

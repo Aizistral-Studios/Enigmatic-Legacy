@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.ender_ring.name",
+    "icon": "enigmaticlegacy:ender_ring",
+    "category": "enigmaticlegacy:accessories",
+    "advancement": "enigmaticlegacy:book/accessories/ender_ring",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 30,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ender_ring.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:ender_ring",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.ender_ring.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ender_ring.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

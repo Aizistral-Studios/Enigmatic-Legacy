@@ -1,0 +1,22 @@
+{
+    "name": "book.enigmaticlegacy.entry.ender_rod.name",
+    "icon": "enigmaticlegacy:ender_rod",
+    "category": "enigmaticlegacy:materials",
+	"advancement": "enigmaticlegacy:book/materials/ender_rod",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 50,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ender_rod.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:ender_rod",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.ender_rod.page.2"
+        }
+    ]
+}

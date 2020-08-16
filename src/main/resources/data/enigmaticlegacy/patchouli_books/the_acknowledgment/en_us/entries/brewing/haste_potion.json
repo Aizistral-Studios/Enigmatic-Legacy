@@ -1,0 +1,51 @@
+{
+    "name": "book.enigmaticlegacy.entry.haste_potion.name",
+    "icon": "enigmaticlegacy:common_potion#1{EnigmaticPotion:'haste'}",
+    "category": "enigmaticlegacy:brewing",
+	"advancement": "enigmaticlegacy:book/brewing/haste_potion",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 10,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.haste_potion.page.1"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:haste",
+			"index": 0,
+            "heading": "book.enigmaticlegacy.entry.haste_potion.heading.1",
+            "text": "book.enigmaticlegacy.entry.haste_potion.page.2"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:long_haste",
+			"index": 0,
+            "heading": "book.enigmaticlegacy.entry.haste_potion.heading.2",
+            "text": "book.enigmaticlegacy.entry.haste_potion.page.3"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:strong_haste",
+			"index": 0,
+            "heading": "book.enigmaticlegacy.entry.haste_potion.heading.3",
+            "text": "book.enigmaticlegacy.entry.haste_potion.page.4"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:haste",
+			"index": 1,
+            "heading": "book.enigmaticlegacy.entry.haste_potion.heading.4",
+            "text": "book.enigmaticlegacy.entry.haste_potion.page.5"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:haste",
+			"index": 2,
+            "heading": "book.enigmaticlegacy.entry.haste_potion.heading.5",
+            "text": "book.enigmaticlegacy.entry.haste_potion.page.6"
+        }
+    ]
+}

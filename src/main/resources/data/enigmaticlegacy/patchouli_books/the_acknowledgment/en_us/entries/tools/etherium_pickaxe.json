@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.etherium_pickaxe.name",
+    "icon": "enigmaticlegacy:etherium_pickaxe",
+    "category": "enigmaticlegacy:tools",
+	"advancement": "enigmaticlegacy:book/tools/etherium_pickaxe",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 10,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_pickaxe.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:etherium_pickaxe",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.etherium_pickaxe.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_pickaxe.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "name": "book.enigmaticlegacy.entry.iron_ring.name",
+    "icon": "enigmaticlegacy:iron_ring",
+    "category": "enigmaticlegacy:accessories",
+    "advancement": "enigmaticlegacy:book/accessories/iron_ring",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.iron_ring.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:iron_ring",
+            "title": " ",
+            "text": ""
+        }
+    ]
+}

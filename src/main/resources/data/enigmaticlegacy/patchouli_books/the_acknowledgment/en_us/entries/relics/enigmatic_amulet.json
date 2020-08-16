@@ -1,0 +1,39 @@
+{
+    "name": "book.enigmaticlegacy.entry.enigmatic_amulet.name",
+    "icon": "enigmaticlegacy:enigmatic_amulet",
+    "category": "enigmaticlegacy:relics",
+	"advancement": "enigmaticlegacy:book/relics/enigmatic_amulet",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.enigmatic_amulet.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "enigmaticlegacy:enigmatic_amulet",
+			"link_recipe": true,
+			"title": "book.enigmaticlegacy.entry.enigmatic_amulet.heading.1",
+            "text": "book.enigmaticlegacy.entry.enigmatic_amulet.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.enigmatic_amulet.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.enigmatic_amulet.page.4"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.enigmatic_amulet.page.5"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

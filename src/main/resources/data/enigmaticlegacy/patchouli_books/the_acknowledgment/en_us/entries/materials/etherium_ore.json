@@ -1,0 +1,31 @@
+{
+    "name": "book.enigmaticlegacy.entry.etherium_ore.name",
+    "icon": "enigmaticlegacy:etherium_ore",
+    "category": "enigmaticlegacy:materials",
+	"advancement": "enigmaticlegacy:book/materials/etherium_ore",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 20,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_ore.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "enigmaticlegacy:etherium_ore",
+			"link_recipe": true,
+            "title": "book.enigmaticlegacy.entry.etherium_ore.heading.1",
+            "text": "book.enigmaticlegacy.entry.etherium_ore.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_ore.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_ore.page.4"
+        }
+    ]
+}

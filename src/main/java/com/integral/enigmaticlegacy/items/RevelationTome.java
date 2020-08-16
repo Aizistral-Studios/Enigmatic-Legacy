@@ -125,7 +125,7 @@ public class RevelationTome extends ItemBase {
 		if (!RevelationTome.havePlayerRead(Minecraft.getInstance().player, stack))
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTomeClick");
 		else
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.ationTomeMarkRead");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTomeMarkRead");
 	}
 
 	public static int getGenericPoints(PlayerEntity player) {

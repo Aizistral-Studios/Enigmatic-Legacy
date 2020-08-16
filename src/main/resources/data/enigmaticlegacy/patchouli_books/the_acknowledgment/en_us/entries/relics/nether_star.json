@@ -1,0 +1,23 @@
+{
+    "name": "book.enigmaticlegacy.entry.nether_star.name",
+    "icon": "minecraft:nether_star",
+    "category": "enigmaticlegacy:relics",
+    "advancement": "enigmaticlegacy:incompletable",
+    "secret": true,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 30,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.nether_star.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "minecraft:nether_star",
+			"link_recipe": true,
+			"title": "book.enigmaticlegacy.entry.nether_star.heading.1",
+            "text": "book.enigmaticlegacy.entry.nether_star.page.2"
+        }
+    ]
+}

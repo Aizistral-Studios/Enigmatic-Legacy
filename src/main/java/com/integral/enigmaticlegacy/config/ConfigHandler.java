@@ -296,7 +296,7 @@ public class ConfigHandler {
     = new OmnipotentConfig.BooleanParameter(true);
 
     public static final OmnipotentConfig.IntParameter SOUL_CRYSTALS_MODE
-    = new OmnipotentConfig.IntParameter(1);
+    = new OmnipotentConfig.IntParameter(0);
 
     public static final OmnipotentConfig.IntParameter MAX_SOUL_CRYSTAL_LOSS
     = new OmnipotentConfig.IntParameter(9);

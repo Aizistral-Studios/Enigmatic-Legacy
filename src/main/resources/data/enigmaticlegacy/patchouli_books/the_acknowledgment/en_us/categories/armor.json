@@ -1,0 +1,7 @@
+{
+	"name": "book.enigmaticlegacy.category.armor.name",
+	"description": "book.enigmaticlegacy.category.armor.desc",
+	"icon": "minecraft:netherite_chestplate",
+	"sortnum": 30,
+	"secret": false
+}

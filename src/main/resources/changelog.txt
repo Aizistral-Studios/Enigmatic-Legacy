@@ -1,11 +1,25 @@
 The Changelog:
 
+[Release 2.0.0]:
+
+- Implemented The Aknowledgment, vessel of knowledge about everything in the mod... and not only;
+- Due to the former, Pachouli is now listed among mandatory dependencies*;
+- Implemented three variations of ancient tomes, each added to the loot of respective dungeons;
+- Updated loot table list of The One Box, to include nether bastion chests;
+- Some of the new loot added by the mod now also generates in those chests;
+- Altered some of the advancements that unlock recipes to player, to also require recipes of certain component items to be unlocked. Most of them now also instantly unlock the recipe when player obtains crafting result through other means;
+- Optional Soul Loss mechanic can now be enabled through config.
+
+* I know it's "Dependecy-Free" and all, but I already ended up using multiple hooks outside of generic API, and that number will likely only increase as I attempt to tweak more custom functionality into our Enigmatinomicon. Besides, I never wanted it to be optional addition in the first place.
+
+
+
 [Release 1.8.7]:
 
 - Guess here we patch again...
 - Code of custom triggers actually makes sense when you look at it;
 - Fixed crash when using keybind for spellstone active ability when spellstone slot is not unlocked yet (#47);
-- Fixed Curios slots not being properly unlocked when they are supposed to be. Re-entering worlds when this issue occured should also fix it (#48);
+- Fixed Curios slots not being properly unlocked when they are supposed to be. Re-entering worlds when this issue occured should also fix it (#48).
 
 
 

@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.xp_scroll.name",
+    "icon": "enigmaticlegacy:xp_scroll",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/xp_scroll",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 90,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.xp_scroll.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:xp_scroll",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.xp_scroll.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.xp_scroll.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.xp_scroll.page.4"
+		}
+    ]
+}

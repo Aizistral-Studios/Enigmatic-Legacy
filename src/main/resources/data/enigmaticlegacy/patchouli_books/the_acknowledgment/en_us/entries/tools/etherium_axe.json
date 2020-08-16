@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.etherium_axe.name",
+    "icon": "enigmaticlegacy:etherium_axe",
+    "category": "enigmaticlegacy:tools",
+	"advancement": "enigmaticlegacy:book/tools/etherium_axe",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 20,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_axe.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:etherium_axe",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.etherium_axe.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_axe.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

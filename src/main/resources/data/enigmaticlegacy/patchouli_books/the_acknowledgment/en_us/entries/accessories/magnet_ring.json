@@ -1,0 +1,22 @@
+{
+    "name": "book.enigmaticlegacy.entry.magnet_ring.name",
+    "icon": "enigmaticlegacy:magnet_ring",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/magnet_ring",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 10,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.magnet_ring.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:magnet_ring",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.magnet_ring.page.2"
+        }
+    ]
+}

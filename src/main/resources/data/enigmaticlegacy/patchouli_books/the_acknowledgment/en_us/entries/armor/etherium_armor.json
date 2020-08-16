@@ -1,0 +1,51 @@
+{
+    "name": "book.enigmaticlegacy.entry.etherium_armor.name",
+    "icon": "enigmaticlegacy:etherium_helmet",
+    "category": "enigmaticlegacy:armor",
+	"advancement": "enigmaticlegacy:book/armor/etherium_armor",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_armor.page.1"
+        },
+		{
+            "type": "enigmaticlegacy:armor_showcase",
+			"heading": "book.enigmaticlegacy.entry.etherium_armor.heading.1",
+			"input1": "enigmaticlegacy:etherium_helmet#1{forceDisplaySetBonus:true}",
+			"input2": "enigmaticlegacy:etherium_chestplate#1{forceDisplaySetBonus:true}",
+			"input3": "enigmaticlegacy:etherium_leggings#1{forceDisplaySetBonus:true}",
+			"input4": "enigmaticlegacy:etherium_boots#1{forceDisplaySetBonus:true}",
+			"text": "book.enigmaticlegacy.entry.etherium_armor.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_armor.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_armor.page.4"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_armor.page.5"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_armor.page.6"
+        },
+		{
+            "type": "crafting",
+            "recipe": "enigmaticlegacy:etherium_helmet",
+			"recipe2": "enigmaticlegacy:etherium_chestplate"
+        },
+		{
+            "type": "crafting",
+            "recipe": "enigmaticlegacy:etherium_leggings",
+			"recipe2": "enigmaticlegacy:etherium_boots"
+        }
+    ]
+}

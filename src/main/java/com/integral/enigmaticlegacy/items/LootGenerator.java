@@ -8,6 +8,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
@@ -42,25 +43,21 @@ public class LootGenerator extends ItemBase {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "loot_generator"));
 
+		/*
+		for (ResourceLocation table : LootTables.func_215796_a()) {
+			if (table.getPath().startsWith("chests/") && !table.getPath().startsWith("chests/village/"))
+				this.lootList.add(table);
+		}
+
+		for (ResourceLocation table : LootTables.func_215796_a()) {
+			if (table.getPath().startsWith("chests/village/"))
+				this.lootList.add(table);
+		}
+		*/
+
 		this.lootList.add(LootTables.CHESTS_SPAWN_BONUS_CHEST);
 		this.lootList.add(LootTables.CHESTS_END_CITY_TREASURE);
 		this.lootList.add(LootTables.CHESTS_SIMPLE_DUNGEON);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_WEAPONSMITH);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_TOOLSMITH);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_ARMORER);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_CARTOGRAPHER);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_MASON);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_SHEPHERD);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_BUTCHER);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_FLETCHER);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_FISHER);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_TANNERY);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_TEMPLE);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_DESERT_HOUSE);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_PLAINS_HOUSE);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_TAIGA_HOUSE);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_SNOWY_HOUSE);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_SAVANNA_HOUSE);
 		this.lootList.add(LootTables.CHESTS_ABANDONED_MINESHAFT);
 		this.lootList.add(LootTables.CHESTS_NETHER_BRIDGE);
 		this.lootList.add(LootTables.CHESTS_STRONGHOLD_LIBRARY);
@@ -78,7 +75,27 @@ public class LootGenerator extends ItemBase {
 		this.lootList.add(LootTables.CHESTS_SHIPWRECK_SUPPLY);
 		this.lootList.add(LootTables.CHESTS_SHIPWRECK_TREASURE);
 		this.lootList.add(LootTables.CHESTS_PILLAGER_OUTPOST);
-
+		this.lootList.add(LootTables.field_237380_L_);
+		this.lootList.add(LootTables.field_237381_M_);
+		this.lootList.add(LootTables.field_237382_N_);
+		this.lootList.add(LootTables.field_237383_O_);
+		this.lootList.add(LootTables.field_237384_P_);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_WEAPONSMITH);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_TOOLSMITH);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_ARMORER);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_CARTOGRAPHER);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_MASON);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_SHEPHERD);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_BUTCHER);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_FLETCHER);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_FISHER);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_TANNERY);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_TEMPLE);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_DESERT_HOUSE);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_PLAINS_HOUSE);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_TAIGA_HOUSE);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_SNOWY_HOUSE);
+		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_SAVANNA_HOUSE);
 	}
 
 	@Override
@@ -144,14 +161,16 @@ public class LootGenerator extends ItemBase {
 			return ActionResultType.SUCCESS;
 
 		if (world.getBlockState(context.getPos()).hasTileEntity()) {
-			if (world.getTileEntity(context.getPos()) instanceof ChestTileEntity) {
+			if (world.getTileEntity(context.getPos()) instanceof ChestTileEntity && player.isCrouching()) {
 				ChestTileEntity chest = (ChestTileEntity) world.getTileEntity(context.getPos());
+				Direction dir = context.getFace();
 
-				if (context.getFace() == Direction.UP) {
+				if (dir == Direction.UP) {
 					chest.setLootTable(this.lootList.get(stack.getDamage()), this.lootRandomizer.nextLong());
 					chest.fillWithLoot(player);
-				} else if (context.getFace() == Direction.DOWN) {
+				} else if (dir == Direction.DOWN && !SuperpositionHandler.hasSpellstoneCooldown(player)) {
 
+					SuperpositionHandler.setSpellstoneCooldown(player, 40);
 					HashMap<Item, Integer> lootMap = new HashMap<Item, Integer>();
 
 					for (int counter = 0; counter < 32768; counter++) {
@@ -179,7 +198,7 @@ public class LootGenerator extends ItemBase {
 
 					EnigmaticLegacy.enigmaticLogger.info("Estimated generation complete in 32768 instances, results:");
 					for (Item theItem : lootMap.keySet()) {
-						EnigmaticLegacy.enigmaticLogger.info("Item: " + theItem.getDisplayName(new ItemStack(theItem)).getUnformattedComponentText() + ", Amount: " + lootMap.get(theItem));
+						EnigmaticLegacy.enigmaticLogger.info("Item: " + theItem.getDisplayName(new ItemStack(theItem)).getString() + ", Amount: " + lootMap.get(theItem));
 					}
 
 					player.sendMessage(new TranslationTextComponent("message.enigmaticlegacy.gen_sim_complete").func_240699_a_(TextFormatting.DARK_PURPLE), player.getUniqueID());

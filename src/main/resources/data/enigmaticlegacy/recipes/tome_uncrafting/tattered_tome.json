@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "conditions": [],
+  "group": "enigmaticlegacy_tomeuncrafting",
+  "ingredients": [
+    {
+      "item": "enigmaticlegacy:tattered_tome"
+    }
+  ],
+  "result": {
+    "item": "minecraft:paper",
+    "count": 3
+  }
+}

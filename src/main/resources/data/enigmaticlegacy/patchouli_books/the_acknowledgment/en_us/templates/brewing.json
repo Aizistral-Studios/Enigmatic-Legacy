@@ -1,0 +1,50 @@
+{
+  "processor": "com.integral.enigmaticlegacy.handlers.AdvancedBrewingRecipeProcessor",
+  "components": [
+    {
+      "type": "header",
+      "text": "#heading",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "image",
+      "image": "enigmaticlegacy:textures/gui/brewing_overlay.png",
+      "x": 22,
+      "y": 14,
+      "width": 70,
+      "height": 58,
+      "u": 0,
+      "v": 0
+    },
+    {
+      "type": "item",
+      "item": "#catalyst",
+      "framed": "false",
+      "x": 49,
+      "y": 18
+    },
+    {
+      "type": "item",
+      "item": "#input",
+      "framed": "false",
+      "x": 26,
+      "y": 52
+    },
+    {
+      "type": "item",
+      "item": "#output",
+      "framed": false,
+	  "link_recipe": false,
+      "x": 72,
+      "y": 52
+    },
+    {
+      "type": "text",
+      "text": "#text",
+	  "x": 1,
+      "y": 80,
+	  "max_width": 115
+    }
+  ]
+}

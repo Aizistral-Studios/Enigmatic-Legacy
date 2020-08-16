@@ -1,12 +1,13 @@
 {
   "parent": "enigmaticlegacy:book/root",
+  "rewards": {},
   "criteria": {
     "has_items": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:unholy_grail"
+            "item": "enigmaticlegacy:enigmatic_amulet"
           }
         ]
       }

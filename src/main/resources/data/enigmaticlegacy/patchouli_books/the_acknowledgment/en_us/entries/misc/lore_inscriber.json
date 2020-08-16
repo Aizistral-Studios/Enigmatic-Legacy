@@ -1,0 +1,32 @@
+{
+    "name": "book.enigmaticlegacy.entry.lore_inscriber.name",
+    "icon": "enigmaticlegacy:lore_inscriber",
+    "category": "enigmaticlegacy:misc",
+	"advancement": "enigmaticlegacy:book/misc/lore_inscriber",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 40,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.lore_inscriber.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:lore_inscriber",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.lore_inscriber.page.2"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:lore_fragment",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.lore_inscriber.page.3"
+        },
+		{
+            "type": "empty",
+			"draw_filler": false
+        }
+    ]
+}

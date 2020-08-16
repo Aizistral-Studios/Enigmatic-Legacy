@@ -1,0 +1,21 @@
+{
+    "name": "book.enigmaticlegacy.entry.shroomlamp.name",
+    "icon": "enigmaticlegacy:massive_shroomlamp",
+    "category": "enigmaticlegacy:decorations",
+	"advancement": "enigmaticlegacy:book/decorations/shroomlamp",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 10,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.shroomlamp.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:lamps/big_shroomlamp",
+			"recipe2": "enigmaticlegacy:lamps/massive_shroomlamp"
+        }
+    ]
+}

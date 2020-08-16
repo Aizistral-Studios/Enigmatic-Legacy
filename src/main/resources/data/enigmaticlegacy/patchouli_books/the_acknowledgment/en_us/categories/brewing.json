@@ -1,0 +1,7 @@
+{
+	"name": "book.enigmaticlegacy.category.brewing.name",
+	"description": "book.enigmaticlegacy.category.brewing.desc",
+	"icon": "enigmaticlegacy:recall_potion",
+	"sortnum": 70,
+	"secret": false
+}

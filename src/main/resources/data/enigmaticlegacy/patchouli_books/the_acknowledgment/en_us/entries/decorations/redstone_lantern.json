@@ -1,0 +1,31 @@
+{
+    "name": "book.enigmaticlegacy.entry.redstone_lantern.name",
+    "icon": "enigmaticlegacy:massive_redstonelamp",
+    "category": "enigmaticlegacy:decorations",
+	"advancement": "enigmaticlegacy:book/decorations/redstone_lantern",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 20,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.redstone_lantern.page.1"
+        },
+		{
+            "type": "crafting",
+			"title": "book.enigmaticlegacy.entry.redstone_lantern.heading.1",
+			"recipe": "enigmaticlegacy:lamps/big_redstonelamp",
+			"recipe2": "enigmaticlegacy:lamps/massive_redstonelamp",
+            "text": " "
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.redstone_lantern.page.2"
+        },
+        {
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

@@ -554,8 +554,7 @@ public class SuperpositionHandler {
 
 		builder.weight(weight);
 		builder.acceptFunction(SetDamage.func_215931_a(RandomValueRange.of(damageMax, damageMin)));
-		builder.acceptFunction(
-				EnchantWithLevels.func_215895_a(RandomValueRange.of(enchantLevelMin, enchantLevelMax)).func_216059_e());
+		builder.acceptFunction(EnchantWithLevels.func_215895_a(RandomValueRange.of(enchantLevelMin, enchantLevelMax)).func_216059_e());
 
 		return builder;
 	}
@@ -579,9 +578,22 @@ public class SuperpositionHandler {
 		return lootChestList;
 	}
 
-	public static List<ResourceLocation> getFieryDungeons() {
+	public static List<ResourceLocation> getLibraries() {
+		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
+		lootChestList.add(LootTables.CHESTS_STRONGHOLD_LIBRARY);
+		lootChestList.add(LootTables.CHESTS_SHIPWRECK_MAP);
+
+		return lootChestList;
+	}
+
+	public static List<ResourceLocation> getNetherDungeons() {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
 		lootChestList.add(LootTables.CHESTS_NETHER_BRIDGE);
+		lootChestList.add(LootTables.field_237380_L_);
+		lootChestList.add(LootTables.field_237381_M_);
+		lootChestList.add(LootTables.field_237382_N_);
+		lootChestList.add(LootTables.field_237383_O_);
+		lootChestList.add(LootTables.field_237384_P_);
 
 		return lootChestList;
 	}
@@ -1008,13 +1020,9 @@ public class SuperpositionHandler {
 		return false;
 	}
 
-	@SuppressWarnings("unused")
 	public static boolean shouldPlayerDropSoulCrystal(PlayerEntity player) {
 		int dropMode = ConfigHandler.SOUL_CRYSTALS_MODE.getValue();
 		int maxCrystalLoss = ConfigHandler.MAX_SOUL_CRYSTAL_LOSS.getValue();
-
-		if (true)
-			return false;
 
 		if (dropMode == 0) {
 			return false;

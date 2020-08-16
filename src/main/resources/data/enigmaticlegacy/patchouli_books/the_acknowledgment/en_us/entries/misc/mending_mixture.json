@@ -1,0 +1,22 @@
+{
+    "name": "book.enigmaticlegacy.entry.mending_mixture.name",
+    "icon": "enigmaticlegacy:mending_mixture",
+    "category": "enigmaticlegacy:misc",
+	"advancement": "enigmaticlegacy:book/misc/mending_mixture",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 30,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.mending_mixture.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:mending_mixture",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.mending_mixture.page.2"
+        }
+    ]
+}

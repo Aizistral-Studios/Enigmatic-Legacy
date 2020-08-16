@@ -71,6 +71,7 @@ import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.RandomValueRange;
+import net.minecraft.loot.functions.CopyNbt;
 import net.minecraft.loot.functions.EnchantWithLevels;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.loot.functions.SetDamage;
@@ -754,6 +755,13 @@ public class EnigmaticEventHandler {
 		underwaterRuins.add(LootTables.CHESTS_UNDERWATER_RUIN_BIG);
 		underwaterRuins.add(LootTables.CHESTS_UNDERWATER_RUIN_SMALL);
 
+
+		LootPool overworldLiterature = SuperpositionHandler.constructLootPool("overworldLiterature", -7F, 2F,
+				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.overworldRevelationTome, 100).acceptFunction(LootFunctionRevelation.of(RandomValueRange.of(1, 3), RandomValueRange.of(50, 500))));
+		LootPool netherLiterature = SuperpositionHandler.constructLootPool("netherLiterature", -7F, 2F,
+				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.netherRevelationTome, 100).acceptFunction(LootFunctionRevelation.of(RandomValueRange.of(1, 3), RandomValueRange.of(100, 700))));
+		LootPool endLiterature = SuperpositionHandler.constructLootPool("endLiterature", -7F, 2F,
+				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.endRevelationTome, 100).acceptFunction(LootFunctionRevelation.of(RandomValueRange.of(1, 4), RandomValueRange.of(200, 1000))));
 		/*
 		 * Handlers for adding spellstones to dungeon loot.
 		 */
@@ -785,7 +793,7 @@ public class EnigmaticEventHandler {
 			modified.addPool(poolSpellstones);
 			event.setTable(modified);
 
-		} else if (SuperpositionHandler.getFieryDungeons().contains(event.getName())) {
+		} else if (SuperpositionHandler.getNetherDungeons().contains(event.getName())) {
 			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -12F, 1F, SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.magmaHeart, 100));
 
 			LootTable modified = event.getTable();
@@ -836,9 +844,13 @@ public class EnigmaticEventHandler {
 
 			LootTable modified = event.getTable();
 			modified.addPool(epic);
+
+			if (event.getName() != LootTables.CHESTS_SHIPWRECK_SUPPLY)
+				modified.addPool(overworldLiterature);
+
 			event.setTable(modified);
 
-		} else if (event.getName().equals(LootTables.CHESTS_NETHER_BRIDGE)) {
+		} else if (SuperpositionHandler.getNetherDungeons().contains(event.getName())) {
 			ItemStack fireResistancePotion = new ItemStack(Items.POTION);
 			fireResistancePotion = PotionUtils.addPotionToItemStack(fireResistancePotion, Potions.LONG_FIRE_RESISTANCE);
 
@@ -856,8 +868,13 @@ public class EnigmaticEventHandler {
 				);
 
 			LootTable modified = event.getTable();
-			modified.addPool(epic);
+
+			if (!event.getName().equals(LootTables.field_237380_L_))
+				modified.addPool(epic);
+
+			modified.addPool(netherLiterature);
 			event.setTable(modified);
+
 		} else if (event.getName().equals(LootTables.CHESTS_END_CITY_TREASURE)) {
 				LootPool epic = SuperpositionHandler.constructLootPool("epic", 1F, 2F,
 				ItemLootEntry.builder(Items.ENDER_PEARL).weight(40).acceptFunction(SetCount.builder(RandomValueRange.of(2.0F, 5F))),
@@ -878,6 +895,7 @@ public class EnigmaticEventHandler {
 
 			LootTable modified = event.getTable();
 			modified.addPool(epic);
+			modified.addPool(endLiterature);
 			event.setTable(modified);
 		}
 
@@ -885,13 +903,17 @@ public class EnigmaticEventHandler {
 		 * Handlers for adding special loot to some dungeons.
 		 */
 
-		if (event.getName().equals(LootTables.CHESTS_STRONGHOLD_LIBRARY)) {
-			LootPool special = SuperpositionHandler.constructLootPool("el_special", 2F, 2F,
+		if (SuperpositionHandler.getLibraries().contains(event.getName())) {
+			LootPool special = SuperpositionHandler.constructLootPool("el_special", 2F, 3F,
 					ItemLootEntry.builder(EnigmaticLegacy.thiccScroll).weight(20).acceptFunction(SetCount.builder(RandomValueRange.of(2F, 6F))),
 					ItemLootEntry.builder(EnigmaticLegacy.loreFragment).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(1F, 2F))));
 
+			LootPool literature = SuperpositionHandler.constructLootPool("literature", -4F, 3F,
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.overworldRevelationTome, 100).acceptFunction(LootFunctionRevelation.of(RandomValueRange.of(1, 3), RandomValueRange.of(50, 500))));
+
 			LootTable modified = event.getTable();
 			modified.addPool(special);
+			modified.addPool(literature);
 			event.setTable(modified);
 		}
 

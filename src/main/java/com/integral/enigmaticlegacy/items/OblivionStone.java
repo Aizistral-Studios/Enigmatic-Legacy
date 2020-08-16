@@ -112,7 +112,7 @@ public class OblivionStone extends ItemBase {
 							ItemStack displayStack;
 							displayStack = new ItemStack(something, 1);
 
-							list.add(new StringTextComponent(" - " + displayStack.getDisplayName().getUnformattedComponentText()).func_240699_a_(TextFormatting.GOLD));
+							list.add(new StringTextComponent(" - ").func_230529_a_(((TextComponent)displayStack.getDisplayName()).func_240699_a_(TextFormatting.GOLD)).func_240699_a_(TextFormatting.GOLD));
 						}
 					}
 				}
