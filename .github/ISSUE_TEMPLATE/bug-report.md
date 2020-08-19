@@ -10,11 +10,13 @@ assignees: Extegral
 <!--
 #### Notice
 Please reproduce all issues without any other unnecessary mods before submitting.
+If your issue involves interaction with some other mod apart from Curios and Patchouli, would be helpful if you include name and version of that mod in the list below.
 -->
 
 #### Versions (Be specific, do not write "latest"):
  * Enigmatic Legacy:
  * Curios API:
+ * Patchouli:
  * Forge:
 
 #### Description of a Bug:
