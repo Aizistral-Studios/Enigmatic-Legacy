@@ -9,12 +9,22 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
+import com.integral.enigmaticlegacy.client.models.DarkArmorModel;
+import com.integral.enigmaticlegacy.client.models.SpecialArmorModelRenderer;
+import com.integral.enigmaticlegacy.client.models.SpecialArmorModelRenderer.AnchorType;
+import com.integral.enigmaticlegacy.client.renderers.RenderTypes;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -24,6 +34,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.DamageSource;
@@ -35,6 +46,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class GolemHeart extends ItemAdvancedCurio implements ISpellstone {
+	//private static final ResourceLocation TEXTURE = new ResourceLocation(EnigmaticLegacy.MODID, "textures/models/armor/dark_armor.png");
+	public Object model;
 
 	public Multimap<Attribute, AttributeModifier> attributesDefault = HashMultimap.create();
 	public Multimap<Attribute, AttributeModifier> attributesNoArmor = HashMultimap.create();
@@ -110,7 +123,7 @@ public class GolemHeart extends ItemAdvancedCurio implements ISpellstone {
 	public void onUnequip(String identifier, int index, LivingEntity living) {
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
-			
+
 			AttributeModifierManager map = player.func_233645_dx_();
 			map.func_233785_a_(this.attributesDefault);
 			map.func_233785_a_(this.attributesNoArmor);
@@ -124,7 +137,7 @@ public class GolemHeart extends ItemAdvancedCurio implements ISpellstone {
 
 			AttributeModifierManager map = player.func_233645_dx_();
 			int armorAmount = 0;
-			
+
 			for (ItemStack stack : player.getArmorInventoryList()) {
 				if (!stack.isEmpty())
 					armorAmount++;
@@ -149,4 +162,46 @@ public class GolemHeart extends ItemAdvancedCurio implements ISpellstone {
 		}
 	}
 
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
+	}
+
+
+	/*
+	 @Override
+	 @OnlyIn(Dist.CLIENT)
+	 protected DarkArmorModel getModel() {
+
+		 if (this.model == null) {
+			 this.model = new DarkArmorModel(EquipmentSlotType.MAINHAND);
+		 }
+
+		boolean shouldUpdate = false;
+
+		for (AnchorType anchorType : AnchorType.values()) {
+
+			float offsetX = 0F, offsetY = 0F, offsetZ = 0F;
+
+			offsetX = JsonConfigHandler.getFloat(anchorType.name + "_x");
+			offsetY = JsonConfigHandler.getFloat(anchorType.name + "_y");
+			offsetZ = JsonConfigHandler.getFloat(anchorType.name + "_z");
+
+			if (SpecialArmorModelRenderer.offsetMap.getOrDefault(anchorType.name + "_x", -32768F) != offsetX || SpecialArmorModelRenderer.offsetMap.getOrDefault(anchorType.name + "_y", -32768F) != offsetY || SpecialArmorModelRenderer.offsetMap.getOrDefault(anchorType.name + "_z", -32768F) != offsetZ) {
+				SpecialArmorModelRenderer.offsetMap.put(anchorType.name + "_x", offsetX);
+				SpecialArmorModelRenderer.offsetMap.put(anchorType.name + "_y", offsetY);
+				SpecialArmorModelRenderer.offsetMap.put(anchorType.name + "_z", offsetZ);
+
+				shouldUpdate = true;
+			}
+
+		}
+
+		if (shouldUpdate)
+			this.model = new DarkArmorModel(EquipmentSlotType.MAINHAND);
+
+	     return (DarkArmorModel) this.model;
+	 }
+	 */
 }

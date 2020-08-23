@@ -345,7 +345,7 @@
 	"tooltip.enigmaticlegacy.angelBlessingCooldown": "§dСooldown: §6%1$s§6 seconds",
 	"tooltip.enigmaticlegacy.angelBlessing3": "§dPassive abilities:",
 	"tooltip.enigmaticlegacy.angelBlessing4": "§5- Immunity to fall and collision damage.",
-	"tooltip.enigmaticlegacy.angelBlessing5": "§5- Redirects any approaching projectiles away.",
+	"tooltip.enigmaticlegacy.angelBlessing5": "§5- §6%1$s§6 Chance§5 to deflect incoming projectile.",
 	"tooltip.enigmaticlegacy.angelBlessing6": "§5- Your own projectiles are greatly accelerated.",
 	
 	"tooltip.enigmaticlegacy.eyeOfNebula1": "§dActive ability:",
@@ -461,14 +461,19 @@
 	"tooltip.enigmaticlegacy.loreFragment3": "§5When done, combine with any item in §6Anvil§5",
 	"tooltip.enigmaticlegacy.loreFragment4": "§5to attach those writings to that item.",
 	
+	"tooltip.enigmaticlegacy.aoeDisabled": "§cArea effects are suppressed.",
+	
 	"tooltip.enigmaticlegacy.etheriumPickaxe1": "§5Mines blocks in §6%1$s§6x%1$s§6x%2$s§5 area.",
-	"tooltip.enigmaticlegacy.etheriumPickaxe2": "§5Hold §6Shift§5 to prevent this effect.",
+	"tooltip.enigmaticlegacy.etheriumPickaxe2": "§5Hold §6Shift§5 to suppress this effect.",
+	"tooltip.enigmaticlegacy.etheriumPickaxe3": "§5Press §6Shift+Right-Click§5 to toggle.",
 	
 	"tooltip.enigmaticlegacy.etheriumAxe1": "§5Chops wood and leaves in §6%1$s§6x%1$s§6x%1$s§5 area.",
-	"tooltip.enigmaticlegacy.etheriumAxe2": "§5Hold §6Shift§5 to prevent this effect.",
+	"tooltip.enigmaticlegacy.etheriumAxe2": "§5Hold §6Shift§5 to suppress this effect.",
+	"tooltip.enigmaticlegacy.etheriumAxe3": "§5Press §6Shift+Right-Click§5 to toggle.",
 	
 	"tooltip.enigmaticlegacy.etheriumShovel1": "§5Digs blocks in §6%1$s§6x%1$s§6x%2$s§5 area.",
-	"tooltip.enigmaticlegacy.etheriumShovel2": "§5Hold §6Shift§5 to prevent this effect.",
+	"tooltip.enigmaticlegacy.etheriumShovel2": "§5Hold §6Shift§5 to suppress this effect.",
+	"tooltip.enigmaticlegacy.etheriumShovel3": "§5Press §6Shift+Right-Click§5 to toggle.",
 	
 	"tooltip.enigmaticlegacy.etheriumSword1": "§5Pressing §6Right-Click§5 while holding it will",
 	"tooltip.enigmaticlegacy.etheriumSword2": "§5throw you in the direction opposite to",
@@ -477,7 +482,8 @@
 	
 	"tooltip.enigmaticlegacy.etheriumScythe1": "§5Harvests plants in §6%1$s§6x%1$s§6x%1$s§5 area.",
 	"tooltip.enigmaticlegacy.etheriumScythe2": "§5Tills land in §6%1$s§6x%1$s§6x1§5 area.",
-	"tooltip.enigmaticlegacy.etheriumScythe3": "§5Hold §6Shift§5 to prevent these effects.",
+	"tooltip.enigmaticlegacy.etheriumScythe3": "§5Hold §6Shift§5 to suppress these effects.",
+	"tooltip.enigmaticlegacy.etheriumScythe4": "§5Press §6Shift+Right-Click§5 to toggle.",
 	
 	"tooltip.enigmaticlegacy.oblivionStoneHoldCtrl": "§5Hold §6Ctrl§5 to see consumable items.",
 	"tooltip.enigmaticlegacy.oblivionStoneCtrlList": "§5List of consumable items:",
@@ -505,8 +511,9 @@
 	"tooltip.enigmaticlegacy.oblivionStoneModeInactive": "§6Deactivated",
 	
 	"tooltip.enigmaticlegacy.astralBreaker1": "§5Breaks blocks in §6%1$s§6x%1$s§6x%2$s§5 area.",
-	"tooltip.enigmaticlegacy.astralBreaker2": "§5Hold §6Shift§5 to prevent this effect.",
-	"tooltip.enigmaticlegacy.astralBreaker3": "§5Effective against most blocks.",
+	"tooltip.enigmaticlegacy.astralBreaker2": "§5Hold §6Shift§5 to suppress this effect.",
+	"tooltip.enigmaticlegacy.astralBreaker3": "§5Press §6Shift+Right-Click§5 to toggle.",
+	"tooltip.enigmaticlegacy.astralBreaker4": "§5Effective against most blocks.",
 	
 	"tooltip.enigmaticlegacy.enchantmentTransposer1": "§5Combine with any enchanted item in a crafting grid",
 	"tooltip.enigmaticlegacy.enchantmentTransposer2": "§5to transfer all enchantments from item to the tome.",

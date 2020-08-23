@@ -52,7 +52,6 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 		this.immunityList.add(DamageSource.FLY_INTO_WALL.damageType);
 	}
 
-
 	@Override
 	public boolean isForMortals() {
 		return ConfigHandler.ANGEL_BLESSING_ENABLED.getValue();
@@ -72,7 +71,7 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing4");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing5");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing5", TextFormatting.GOLD, ConfigHandler.ANGEL_BLESSING_DEFLECT_CHANCE.getValue().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing6");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -86,8 +85,9 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 		}
 	}
 
+	@Override
 	public void triggerActiveAbility(World world, ServerPlayerEntity player, ItemStack stack) {
-		
+
 		if (SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
@@ -102,7 +102,7 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 
 		Vector3 finalMotion = new Vector3(motionVec.x + accelerationVec.x, motionVec.y + accelerationVec.y, motionVec.z + accelerationVec.z);
 
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketPlayerMotion(finalMotion.x, finalMotion.y, finalMotion.z));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player), new PacketPlayerMotion(finalMotion.x, finalMotion.y, finalMotion.z));
 		player.setMotion(finalMotion.x, finalMotion.y, finalMotion.z);
 
 		world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
@@ -112,7 +112,7 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living) {
-
+		/*
 		List<DamagingProjectileEntity> projectileEntities = living.world.getEntitiesWithinAABB(DamagingProjectileEntity.class, new AxisAlignedBB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));
 		List<AbstractArrowEntity> arrowEntities = living.world.getEntitiesWithinAABB(AbstractArrowEntity.class, new AxisAlignedBB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));
 		List<PotionEntity> potionEntities = living.world.getEntitiesWithinAABB(PotionEntity.class, new AxisAlignedBB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));
@@ -125,7 +125,7 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 
 		for (PotionEntity entity : potionEntities)
 			this.redirect(living, entity);
-
+		*/
 	}
 
 	public void redirect(LivingEntity bearer, Entity redirected) {
@@ -162,6 +162,12 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 			redirectedProjectile.accelerationY = (redirection.y / 4.0);
 			redirectedProjectile.accelerationZ = (redirection.z / 4.0);
 		}
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
 	}
 
 }

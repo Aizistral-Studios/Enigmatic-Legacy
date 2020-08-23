@@ -145,4 +145,10 @@ public class MiningCharm extends ItemBaseCurio {
 		return atts;
 	}
 
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
+	}
+
 }

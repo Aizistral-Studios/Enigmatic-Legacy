@@ -87,6 +87,7 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 
 	}
 
+	@Override
 	public void triggerActiveAbility(World world, ServerPlayerEntity player, ItemStack stack) {
 		if (SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
@@ -112,9 +113,9 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 
 					if (world instanceof ServerWorld) {
 						ServerWorld serverworld = (ServerWorld)world;
-						
+
 						int thunderstormTime = (int) (10000 + (Math.random() * 20000));
-						
+
 						serverworld.func_241113_a_(0, thunderstormTime, true, true);
 						/*
 						info.func_230396_g_(p_230396_1_);
@@ -124,7 +125,7 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 						info.setThunderTime(thunderstormTime);
 						 */
 					}
-					
+
 					world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.NEUTRAL, 2.0F, (float) (0.7F + (Math.random() * 0.3D)));
 
 					SuperpositionHandler.setSpellstoneCooldown(player, ConfigHandler.OCEAN_STONE_COOLDOWN.getValue());
@@ -164,6 +165,12 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 		atts.put(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get(), new AttributeModifier(UUID.fromString("13faf191-bf38-4654-b369-cc1f4f1143bf"), "Swim speed bonus", ConfigHandler.OCEAN_STONE_SWIMMING_SPEED_BOOST.getValue().asMultiplier(false), AttributeModifier.Operation.MULTIPLY_BASE));
 
 		return atts;
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
 	}
 
 }

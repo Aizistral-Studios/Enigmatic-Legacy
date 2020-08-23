@@ -101,21 +101,21 @@ public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
 
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
-			
+
 
 			FoodStats stats = player.getFoodStats();
 			stats.setFoodLevel(20);
-			
+
 			// TODO Ask the God why this doesn't work
 			//((AccessorFoodStats) stats).setFoodSaturationLevel(0);
 
-			
+
 			try {
 				ObfuscatedFields.foodSaturationField.setFloat(stats, 0F);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-			 
+
 
 			if (player.getAir() < 300)
 				player.setAir(300);
@@ -152,6 +152,12 @@ public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
 			}
 		}
 
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
 	}
 
 }

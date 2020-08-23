@@ -12,6 +12,7 @@ import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.ResourceLocation;
@@ -53,6 +54,12 @@ public class EnderRing extends ItemBaseCurio {
 			// Just don't do it lol
 		}
 
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
 	}
 
 	/*

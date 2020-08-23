@@ -23,7 +23,7 @@ public class BlockMassiveLamp extends Block {
 
 	public BlockMassiveLamp(Properties properties, String registryName) {
 		super(properties.sound(SoundType.GLASS).notSolid());
-		
+
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, registryName));
 		EnigmaticLegacy.cutoutBlockRegistry.add(this);
 	}
@@ -32,23 +32,23 @@ public class BlockMassiveLamp extends Block {
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
-	
+
 	@Override
 	public List<ItemStack> getDrops(BlockState state, Builder builder) {
 		List<ItemStack> stacklist = new ArrayList<ItemStack>();
 		stacklist.add(new ItemStack(Item.getItemFromBlock(this)));
 		return stacklist;
 	}
-	
-	
+
+
 	@Override
 	public boolean isVariableOpacity() {
 		return true;
 	}
-	
+
 	@Override
 	public boolean isTransparent(BlockState state) {
 		return true;
 	}
-	
+
 }

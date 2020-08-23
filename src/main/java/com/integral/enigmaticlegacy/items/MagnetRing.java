@@ -79,8 +79,8 @@ public class MagnetRing extends ItemBaseCurio {
 				SuperpositionHandler.setEntityMotionFromVector(item, new Vector3(x, y, z), 0.45F);
 				item.setNoPickupDelay();
 
-				for (int counter = 0; counter <= 2; counter++)
-					living.world.addParticle(ParticleTypes.WITCH, item.getPosX(), item.getPosY() - item.getYOffset() + item.getHeight() / 2, item.getPosZ(), (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D);
+				//for (int counter = 0; counter <= 2; counter++)
+				//	living.world.addParticle(ParticleTypes.WITCH, item.getPosX(), item.getPosY() - item.getYOffset() + item.getHeight() / 2, item.getPosZ(), (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D);
 				pulled++;
 			}
 
@@ -92,6 +92,12 @@ public class MagnetRing extends ItemBaseCurio {
 			return false;
 
 		return true;
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
 	}
 
 }

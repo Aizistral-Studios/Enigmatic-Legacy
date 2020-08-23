@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.collect.Sets;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.IMultiblockMiningTool;
 import com.integral.enigmaticlegacy.api.items.IPerhaps;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
@@ -28,8 +29,10 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
 import net.minecraft.item.ToolItem;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -42,7 +45,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 
-public class EtheriumShovel extends ToolItem implements IPerhaps {
+public class EtheriumShovel extends ToolItem implements IPerhaps, IMultiblockMiningTool {
 
 	public static Properties integratedProperties = new Item.Properties();
 	public Set<Material> effectiveMaterials;
@@ -72,9 +75,18 @@ public class EtheriumShovel extends ToolItem implements IPerhaps {
 
 		if (Screen.func_231173_s_()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumShovel1", TextFormatting.GOLD, ConfigHandler.ETHERIUM_SHOVEL_RADIUS.getValue(), ConfigHandler.ETHERIUM_SHOVEL_DEPTH.getValue());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+
+			if (!ConfigHandler.DISABLE_AOE_SHIFT_SUPPRESSION.getValue())
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumShovel2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumShovel3");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+		}
+
+		if (!this.areaEffectsAllowed(stack)) {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.aoeDisabled");
 		}
 	}
 
@@ -86,7 +98,7 @@ public class EtheriumShovel extends ToolItem implements IPerhaps {
 	@Override
 	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-		if (entityLiving instanceof PlayerEntity && !entityLiving.isCrouching() && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && ConfigHandler.ETHERIUM_SHOVEL_RADIUS.getValue() != -1) {
+		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && ConfigHandler.ETHERIUM_SHOVEL_RADIUS.getValue() != -1) {
 
 			RayTraceResult trace = AOEMiningHelper.calcRayTrace(world, (PlayerEntity) entityLiving, RayTraceContext.FluidMode.ANY);
 
@@ -105,12 +117,28 @@ public class EtheriumShovel extends ToolItem implements IPerhaps {
 
 	@Override
 	public ActionResultType onItemUse(ItemUseContext context) {
-		return Items.DIAMOND_SHOVEL.onItemUse(context);
+		if (context.getPlayer().isCrouching())
+			return this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType();
+		else
+			return Items.DIAMOND_SHOVEL.onItemUse(context);
 	}
 
 	@Override
 	public boolean canHarvestBlock(BlockState blockIn) {
 		return Items.DIAMOND_SHOVEL.canHarvestBlock(blockIn);
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getHeldItem(hand);
+		player.setActiveHand(hand);
+
+		if (player.isCrouching()) {
+			this.toggleAreaEffects(player, stack);
+
+			return new ActionResult<>(ActionResultType.SUCCESS, stack);
+		} else
+			return super.onItemRightClick(world, player, hand);
 	}
 
 	@Override

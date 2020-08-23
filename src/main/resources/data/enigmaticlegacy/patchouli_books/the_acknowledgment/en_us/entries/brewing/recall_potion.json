@@ -7,6 +7,9 @@
     "priority": false,
     "read_by_default": false,
     "sortnum": 20,
+	"extra_recipe_mappings": {
+			"enigmaticlegacy:recall_potion": 1
+		},
     "pages": [
         {
             "type": "text",

@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.IMultiblockMiningTool;
 import com.integral.enigmaticlegacy.api.items.IPerhaps;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
@@ -31,6 +32,7 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
 import net.minecraft.item.SwordItem;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -38,13 +40,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EtheriumScythe extends SwordItem implements IPerhaps {
+public class EtheriumScythe extends SwordItem implements IPerhaps, IMultiblockMiningTool {
 
 	protected static final Map<Block, BlockState> HOE_LOOKUP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.getDefaultState(), Blocks.GRASS_PATH, Blocks.FARMLAND.getDefaultState(), Blocks.DIRT, Blocks.FARMLAND.getDefaultState(), Blocks.COARSE_DIRT, Blocks.DIRT.getDefaultState()));
 	public Set<Material> effectiveMaterials;
@@ -73,9 +76,17 @@ public class EtheriumScythe extends SwordItem implements IPerhaps {
 		if (Screen.func_231173_s_()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe1", TextFormatting.GOLD, ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe2", TextFormatting.GOLD, ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			if (!ConfigHandler.DISABLE_AOE_SHIFT_SUPPRESSION.getValue())
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe4");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+		}
+
+		if (!this.areaEffectsAllowed(stack)) {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.aoeDisabled");
 		}
 	}
 
@@ -84,44 +95,38 @@ public class EtheriumScythe extends SwordItem implements IPerhaps {
 		return ConfigHandler.ETHERIUM_TOOLS_ENABLED.getValue();
 	}
 
-	public static boolean attemptTransformLand(World world, PlayerEntity player, BlockPos blockpos, ItemStack item, Hand hand) {
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getHeldItem(hand);
+		player.setActiveHand(hand);
 
-		if (world.isAirBlock(blockpos.up())) {
-			BlockState blockstate = EtheriumScythe.HOE_LOOKUP.get(world.getBlockState(blockpos).getBlock());
-			if (blockstate != null) {
-				world.playSound(player, blockpos, SoundEvents.ITEM_HOE_TILL, SoundCategory.BLOCKS, 1.0F, 1.0F);
-				if (!world.isRemote) {
-					world.setBlockState(blockpos, blockstate, 11);
-					if (player != null) {
-						item.damageItem(1, player, (p_220043_1_) -> {
-							p_220043_1_.sendBreakAnimation(hand);
-						});
-					}
-				}
+		if (player.isCrouching()) {
+			this.toggleAreaEffects(player, stack);
 
-				return true;
-			}
-		}
-
-		return false;
+			return new ActionResult<>(ActionResultType.SUCCESS, stack);
+		} else
+			return super.onItemRightClick(world, player, hand);
 	}
 
 	@Override
 	public ActionResultType onItemUse(ItemUseContext context) {
+		if (context.getPlayer().isCrouching())
+			return this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType();
+
 		ActionResultType type = Items.DIAMOND_HOE.onItemUse(context);
 
-		if (context.getPlayer().isCrouching())
+		if (!this.areaEffectsEnabled(context.getPlayer(), context.getItem()))
 			return type;
 
 		int supRad = (ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue() - 1) / 2;
 
-		if (type == ActionResultType.SUCCESS)
+		if (type == ActionResultType.CONSUME)
 			for (int x = -supRad; x <= supRad; x++) {
 				for (int z = -supRad; z <= supRad; z++) {
 					if (x == 0 & z == 0)
 						continue;
 
-					EtheriumScythe.attemptTransformLand(context.getWorld(), context.getPlayer(), context.getPos().add(x, 0, z), context.getItem(), context.getHand());
+					Items.DIAMOND_HOE.onItemUse(new ItemUseContext(context.getPlayer(), context.getHand(), new BlockRayTraceResult(context.getHitVec().add(x, 0, z), Direction.UP, context.getPos().add(x, 0, z), context.isInside())));
 				}
 			}
 
@@ -131,7 +136,7 @@ public class EtheriumScythe extends SwordItem implements IPerhaps {
 	@Override
 	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-		if (entityLiving instanceof PlayerEntity && !entityLiving.isCrouching() && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue() != -1) {
+		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue() != -1) {
 			Direction face = Direction.UP;
 
 			AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos.add(0, (ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue() - 1) / 2, 0), this.effectiveMaterials, ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue(), ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue(), false, pos, stack, (objPos, objState) -> {

@@ -39,4 +39,5 @@ public abstract class ItemBase extends Item implements IPerhaps {
 
 		return props;
 	}
+
 }

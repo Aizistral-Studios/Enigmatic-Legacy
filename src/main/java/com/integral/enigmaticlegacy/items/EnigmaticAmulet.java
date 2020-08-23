@@ -15,6 +15,7 @@ import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -82,6 +83,12 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 			atts.put(Attributes.field_233823_f_, new AttributeModifier(UUID.fromString("cb7f55d3-685c-4f38-a497-9c13a33db5cf"), "Attack bonus", ConfigHandler.ENIGMATIC_AMULET_DAMAGE_BONUS.getValue(), AttributeModifier.Operation.ADDITION));
 
 		return atts;
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
 	}
 
 	public boolean isVesselEnabled() {

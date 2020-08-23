@@ -76,7 +76,7 @@ public class SuperMagnetRing extends MagnetRing {
 
 				if (!SuperpositionHandler.canPickStack(player, item.getItem()))
 					continue;
-				
+
 				/*
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(item.getPosX(), item.getPosY(), item.getPosZ(), 24, item.world.func_234923_W_())), new PacketPortalParticles(item.getPosX(), item.getPosY() + (item.getHeight() / 2), item.getPosZ(), 24, 0.75D, true));
 
@@ -95,6 +95,12 @@ public class SuperMagnetRing extends MagnetRing {
 	@Override
 	protected boolean canPullItem(ItemEntity item) {
 		return super.canPullItem(item);
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
 	}
 
 }

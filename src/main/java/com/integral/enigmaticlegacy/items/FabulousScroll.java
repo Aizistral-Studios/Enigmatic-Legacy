@@ -31,7 +31,7 @@ public class FabulousScroll extends HeavenScroll {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "fabulous_scroll"));
 	}
-	
+
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
@@ -48,7 +48,7 @@ public class FabulousScroll extends HeavenScroll {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 	}
-	
+
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living) {
 		if (living.world.isRemote)
@@ -56,28 +56,28 @@ public class FabulousScroll extends HeavenScroll {
 
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
-			
+
 			boolean inRange = SuperpositionHandler.isInBeaconRange(player);
-			
+
 			if (!SuperpositionHandler.isInBeaconRange(player))
-				if (Math.random() <= (baseXpConsumptionProbability*8) * ConfigHandler.HEAVEN_SCROLL_XP_COST_MODIFIER.getValue() && player.abilities.isFlying)
+				if (Math.random() <= (this.baseXpConsumptionProbability*8) * ConfigHandler.HEAVEN_SCROLL_XP_COST_MODIFIER.getValue() && player.abilities.isFlying)
 					player.giveExperiencePoints(-1);
 
 			this.handleFabulousFlight(player, inRange);
 		}
 
 	}
-	
+
 	protected void handleFabulousFlight(PlayerEntity player, boolean inRange) {
 		try {
 			if (player.experienceTotal > 0 || inRange) {
 
 				if (!player.abilities.allowFlying)
 					player.abilities.allowFlying = true;
-				
+
 				player.sendPlayerAbilities();
 				this.flyMap.put(player, 100);
-			
+
 			} else if (this.flyMap.get(player) > 1) {
 				this.flyMap.put(player, this.flyMap.get(player)-1);
 			} else if (this.flyMap.get(player) == 1) {
@@ -95,7 +95,7 @@ public class FabulousScroll extends HeavenScroll {
 			this.flyMap.put(player, 0);
 		}
 	}
-	
+
 	@Override
 	public void onUnequip(String identifier, int index, LivingEntity entityLivingBase) {
 
@@ -112,5 +112,11 @@ public class FabulousScroll extends HeavenScroll {
 
 		}
 	}
-	
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
+	}
+
 }

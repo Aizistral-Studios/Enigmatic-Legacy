@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.Random;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.client.renderers.ShieldAuraLayer;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.proxy.renderers.ShieldAuraLayer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;

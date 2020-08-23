@@ -122,6 +122,12 @@ public class EnigmaticItem extends ItemAdvancedCurio implements ISpellstone {
 		SuperpositionHandler.setSpellstoneCooldown(player, ConfigHandler.ENIGMATIC_ITEM_COOLDOWN.getValue());
 	}
 
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
+	}
+
 	private void launchWitherSkull(World world, PlayerEntity player, boolean invulnerable) {
 		world.playEvent((PlayerEntity) null, 1024, new BlockPos(player.getPositionVec()), 0);
 

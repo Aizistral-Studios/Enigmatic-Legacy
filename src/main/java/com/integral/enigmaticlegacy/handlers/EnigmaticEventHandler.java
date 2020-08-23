@@ -26,6 +26,7 @@ import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
 import com.integral.enigmaticlegacy.helpers.PatchouliHelper;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
+import com.integral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketSetEntryState;
@@ -62,6 +63,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
+import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.inventory.container.EnchantmentContainer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -76,6 +78,7 @@ import net.minecraft.loot.functions.EnchantWithLevels;
 import net.minecraft.loot.functions.SetCount;
 import net.minecraft.loot.functions.SetDamage;
 import net.minecraft.loot.functions.SetNBT;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.PotionUtils;
@@ -87,6 +90,7 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.GameRules;
@@ -127,6 +131,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
+import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.type.capability.ICurio;
@@ -156,30 +161,10 @@ public class EnigmaticEventHandler {
 	public static HashMap<PlayerEntity, String> anvilFields = new HashMap<PlayerEntity, String>();
 	public static HashMap<PlayerEntity, Boolean> hadEnigmaticAmulet = new HashMap<PlayerEntity, Boolean>();
 
-	/*
-	@SubscribeEvent
-	public void onContainerOpen(PlayerContainerEvent.Open event) {
-		if (event.getEntityLiving() instanceof ServerPlayerEntity) {
-			ServerPlayerEntity player = (ServerPlayerEntity) event.getEntityLiving();
-
-			if (event.getContainer() instanceof EnchantmentContainer && !(event.getContainer() instanceof EnigmaticEnchantmentContainer)) {
-				try {
-					player.openContainer = EnigmaticEnchantmentContainer.fromOld((EnchantmentContainer) event.getContainer(), player);
-
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-
-			System.out.println(player.openContainer.getClass());
-
-
-		}
-	}
-	*/
-
 	@SubscribeEvent
 	public void onEnchantmentLevelSet(EnchantmentLevelSetEvent event) {
+		// TODO Should come in handy someday
+
 		//event.setLevel(50);
 	}
 
@@ -188,6 +173,8 @@ public class EnigmaticEventHandler {
 	@OnlyIn(Dist.CLIENT)
 	public void onBook(BookDrawScreenEvent event) {
 		if (event.gui instanceof GuiBookLanding) {
+
+			// TODO Remember why I needed this
 
 			//System.out.println("Fired!");
 
@@ -275,7 +262,7 @@ public class EnigmaticEventHandler {
 		 */
 
 		float originalSpeed = event.getOriginalSpeed();
-		float newSpeed = originalSpeed;
+		float correctedSpeed = originalSpeed;
 
 		float miningBoost = 1.0F;
 		if (SuperpositionHandler.hasCurio(event.getPlayer(), EnigmaticLegacy.miningCharm))
@@ -283,11 +270,13 @@ public class EnigmaticEventHandler {
 
 		if (!event.getPlayer().func_233570_aj_())
 			if (SuperpositionHandler.hasCurio(event.getPlayer(), EnigmaticLegacy.heavenScroll) || SuperpositionHandler.hasCurio(event.getPlayer(), EnigmaticLegacy.fabulousScroll) || SuperpositionHandler.hasCurio(event.getPlayer(), EnigmaticLegacy.enigmaticItem)) {
-				newSpeed = newSpeed * 5F;
+				correctedSpeed = correctedSpeed * 5F;
 			}
 
-		newSpeed = newSpeed * miningBoost;
-		event.setNewSpeed(newSpeed);
+		correctedSpeed = correctedSpeed * miningBoost;
+		correctedSpeed -= event.getOriginalSpeed();
+
+		event.setNewSpeed(event.getNewSpeed() + correctedSpeed);
 	}
 
 	@SubscribeEvent
@@ -356,6 +345,11 @@ public class EnigmaticEventHandler {
 		/*
 		 * Handler for registering item's capabilities implemented in ICurio interface,
 		 * for Enigmatic Legacy's namespace specifically.
+		 *
+		 * I am aware that implementing ICurio interface on item directly is discouraged,
+		 * but I am under no obligation to give my USDA-certified organic fuck.
+		 * The code seems much more understandable overall when items hold capabilities
+		 * for thermselves.
 		 */
 
 		if (stack.getItem() instanceof ICurio && stack.getItem().getRegistryName().getNamespace().equals(EnigmaticLegacy.MODID)) {
@@ -367,7 +361,6 @@ public class EnigmaticEventHandler {
 				@Nonnull
 				@Override
 				public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-
 					return CuriosCapability.ITEM.orEmpty(cap, this.curio);
 				}
 			});
@@ -454,16 +447,53 @@ public class EnigmaticEventHandler {
 			return;
 
 		/*
-		 * Handler for immunities.
+		 * Handler for immunities and projectile deflection.
 		 */
 
 		if (event.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 
-			if (EnigmaticLegacy.etheriumChestplate.hasShield(player)) {
-				if (event.getSource().getImmediateSource() instanceof DamagingProjectileEntity || event.getSource().getImmediateSource() instanceof AbstractArrowEntity) {
+			if (event.getSource().getImmediateSource() instanceof DamagingProjectileEntity || event.getSource().getImmediateSource() instanceof AbstractArrowEntity) {
+
+				if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.angelBlessing) && Math.random() <= ConfigHandler.ANGEL_BLESSING_DEFLECT_CHANCE.getValue().asModifier(false)) {
 					event.setCanceled(true);
-					player.world.playSound(null, player.func_233580_cy_(), EnigmaticLegacy.SHIELD_TRIGGER, SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
+					Entity arrow = event.getSource().getImmediateSource();
+
+					if (!arrow.world.isRemote) {
+						CompoundNBT data = arrow.serializeNBT();
+						Entity entity = arrow.getType().create(arrow.world);
+						entity.deserializeNBT(data);
+						entity.setUniqueId(MathHelper.getRandomUUID());
+						entity.setPositionAndUpdate(arrow.getPosX(), arrow.getPosY(), arrow.getPosZ());
+						entity.setMotion(arrow.getMotion().scale(-1.0D));
+
+						entity.rotationYaw = arrow.rotationYaw + 180.0F;
+						entity.prevRotationYaw = arrow.rotationYaw + 180.0F;
+
+						if (entity instanceof AbstractArrowEntity && !(entity instanceof TridentEntity))
+							((AbstractArrowEntity) entity).setShooter(player);
+						else if (entity instanceof DamagingProjectileEntity) {
+							((DamagingProjectileEntity) entity).setShooter(player);
+
+							((DamagingProjectileEntity) entity).accelerationX = -((DamagingProjectileEntity) arrow).accelerationX;
+							((DamagingProjectileEntity) entity).accelerationY = -((DamagingProjectileEntity) arrow).accelerationY;
+							((DamagingProjectileEntity) entity).accelerationZ = -((DamagingProjectileEntity) arrow).accelerationZ;
+						}
+
+						arrow.remove();
+						arrow.forceSetPosition(0, 0, 0);
+
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 64.0D, player.world.func_234923_W_())), new PacketForceArrowRotations(arrow.getEntityId(), arrow.rotationYaw, arrow.rotationPitch, arrow.getMotion().x, arrow.getMotion().y, arrow.getMotion().z));
+
+						//player.world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.PLAYERS, 1.0F, 0.95F + (float) (Math.random() * 0.1D));
+						player.world.playSound(null, player.func_233580_cy_(), EnigmaticLegacy.DEFLECT, SoundCategory.PLAYERS, 1.0F, 0.95F + (float) (Math.random() * 0.1D));
+
+						player.world.addEntity(entity);
+					}
+
+				} else if (EnigmaticLegacy.etheriumChestplate.hasShield(player)) {
+					event.setCanceled(true);
+
 					player.world.playSound(null, player.func_233580_cy_(), EnigmaticLegacy.SHIELD_TRIGGER, SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
 				}
 			}
@@ -1087,7 +1117,7 @@ public class EnigmaticEventHandler {
 	@OnlyIn(Dist.CLIENT)
 	public void onWorldCreation(GuiScreenEvent.InitGuiEvent event) {
 
-		if (event.getGui() instanceof CreateWorldScreen && true) {
+		if (event.getGui() instanceof CreateWorldScreen && ConfigHandler.ENABLE_WORLD_NAME_RANDOMIZER.getValue()) {
 
 			/*
 			 * Handler for setting in random world name and respective seed when creating a
@@ -1104,11 +1134,14 @@ public class EnigmaticEventHandler {
 				TextFieldWidget nameWidget = (TextFieldWidget) ObfuscatedFields.worldNameField.get(screen);
 				TextFieldWidget seedWidget = (TextFieldWidget) ObfuscatedFields.worldSeedField.get(screen.field_238934_c_);
 
-				nameWidget.setText(name);
-				seedWidget.setText(number);
+				if (!nameWidget.getText().startsWith(localizedWorld) && seedWidget.getText().isEmpty()) {
 
-				ObfuscatedFields.worldSeedField.set(screen, nameWidget);
-				ObfuscatedFields.worldSeedField.set(screen.field_238934_c_, seedWidget);
+					nameWidget.setText(name);
+					seedWidget.setText(number);
+
+					ObfuscatedFields.worldSeedField.set(screen, nameWidget);
+					ObfuscatedFields.worldSeedField.set(screen.field_238934_c_, seedWidget);
+				}
 
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -1200,7 +1233,7 @@ public class EnigmaticEventHandler {
 				((CreeperEntity)event.getEntityLiving()).setAttackTarget(null);
 				//((CreeperEntity)event.getEntityLiving()).setAttackTarget(null);
 
-				// TODO Finish
+				// TODO I totally forgot what was the point of scaring creepers away from player
 
 		}
 	}
@@ -1227,7 +1260,7 @@ public class EnigmaticEventHandler {
 	 * @author Integral
 	 */
 
-	public boolean theySeeMeRollin(int lootingLevel) {
+	private boolean theySeeMeRollin(int lootingLevel) {
 		double chance = ConfigHandler.FORBIDDEN_AXE_BEHEADING_BASE.getValue().asMultiplier(false) + (ConfigHandler.FORBIDDEN_AXE_BEHEADING_BONUS.getValue().asMultiplier(false) * lootingLevel);
 
 		if (Math.random() <= chance)
@@ -1236,7 +1269,7 @@ public class EnigmaticEventHandler {
 			return false;
 	}
 
-	public boolean hadEnigmaticAmulet(PlayerEntity player) {
+	private boolean hadEnigmaticAmulet(PlayerEntity player) {
 		return EnigmaticEventHandler.hadEnigmaticAmulet.containsKey(player) ? EnigmaticEventHandler.hadEnigmaticAmulet.get(player) : false;
 	}
 

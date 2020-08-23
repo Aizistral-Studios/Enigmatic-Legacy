@@ -186,4 +186,10 @@ public class XPScroll extends ItemBaseCurio {
 		return false;
 	}
 
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
+	}
+
 }

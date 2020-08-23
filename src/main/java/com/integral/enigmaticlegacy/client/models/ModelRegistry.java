@@ -1,6 +1,8 @@
-package com.integral.enigmaticlegacy.proxy.renderers;
+package com.integral.enigmaticlegacy.client.models;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.client.renderers.PermanentItemRenderer;
+import com.integral.enigmaticlegacy.client.renderers.UltimateWitherSkullRenderer;
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
@@ -20,7 +22,7 @@ import net.minecraftforge.fml.common.Mod;
  */
 
 @OnlyIn(Dist.CLIENT)
-public final class ModelHandler {
+public final class ModelRegistry {
 
 	public static void registerModels() {
 

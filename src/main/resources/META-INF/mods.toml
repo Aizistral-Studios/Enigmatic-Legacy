@@ -1,22 +1,22 @@
 license="WTFPL"
-modLoader="javafml" #mandatory
-loaderVersion="[31,)" #mandatory (26 is current forge version)
-issueTrackerURL="https://github.com/Extegral/Enigmatic-Legacy/issues" #optional
-[[mods]] #mandatory
-modId="enigmaticlegacy" #mandatory
-version="2.0.0" #mandatory
-displayName="Enigmatic Legacy" #mandatory
-displayURL="https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy" #optional
-logoFile="EL_logo.png" #optional
-credits="Terraria and some of it's mods, for inspiring my creations functionally and visually; frdovahkick, for amazing work over some of the textures in the mod." #optional
-authors="Integral" #optional
+modLoader="javafml"
+loaderVersion="[31,)"
+issueTrackerURL="https://github.com/Extegral/Enigmatic-Legacy/issues"
+[[mods]]
+modId="enigmaticlegacy"
+version="2.1.0"
+displayName="Enigmatic Legacy
+displayURL="https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy"
+logoFile="EL_logo.png"
+credits="Terraria and some of it's mods, for inspiring my creations functionally and visually; Minecraft Dungeons, for blocks and models that make me question why we don't have anything like this in Minecraft itself; Botania and it's creator known as Vazkii, for some basic code I could conveniently borrow instead of having to re-invent the wheel; frdovahkick, for amazing work over some of the textures in the mod."
+authors="Aizistral"
 description='''
 This mod is designed to provide tools that will aid you in exploring seemingly endless reaches of Minecraft's worlds. As well as new resources, powerful gear and ancient relics - to reward you for doing so. Despite revolving around themes of arcane and mystery, Enigmatic Legacy doesn't stray too far away from what vanilla has to offer, instead attempting to expand upon it's mechanics and fill in the holes left open.
 '''
-[[dependencies.enigmaticlegacy]] #optional
-    modId="forge" #mandatory
-    mandatory=true #mandatory
-    versionRange="[32.0.67,)" #mandatory
+[[dependencies.enigmaticlegacy]]
+    modId="forge"
+    mandatory=true
+    versionRange="[32.0.67,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.enigmaticlegacy]]

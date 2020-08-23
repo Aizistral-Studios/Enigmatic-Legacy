@@ -15,6 +15,7 @@
 		{
             "type": "spotlight",
 			"item": "enigmaticlegacy:astral_dust",
+			"link_recipe": true,
             "title": "book.enigmaticlegacy.entry.astral_dust.heading.1",
             "text": "book.enigmaticlegacy.entry.astral_dust.page.2"
         }

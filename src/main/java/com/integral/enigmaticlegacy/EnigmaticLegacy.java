@@ -1,7 +1,10 @@
 package com.integral.enigmaticlegacy;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +16,9 @@ import com.integral.enigmaticlegacy.blocks.BlockBigLamp;
 import com.integral.enigmaticlegacy.blocks.BlockMassiveLamp;
 import com.integral.enigmaticlegacy.brewing.SpecialBrewingRecipe;
 import com.integral.enigmaticlegacy.brewing.ValidationBrewingRecipe;
+import com.integral.enigmaticlegacy.client.models.DarkArmorModel;
+import com.integral.enigmaticlegacy.client.models.ModelRegistry;
+import com.integral.enigmaticlegacy.client.renderers.RenderTypes;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.crafting.EnigmaticRecipeSerializers;
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
@@ -28,6 +34,7 @@ import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
 import com.integral.enigmaticlegacy.items.AstralBreaker;
 import com.integral.enigmaticlegacy.items.AstralDust;
+import com.integral.enigmaticlegacy.items.DarkArmor;
 import com.integral.enigmaticlegacy.items.EnchantmentTransposer;
 import com.integral.enigmaticlegacy.items.EnderRing;
 import com.integral.enigmaticlegacy.items.EnderRod;
@@ -80,6 +87,7 @@ import com.integral.enigmaticlegacy.items.XPScroll;
 import com.integral.enigmaticlegacy.items.generic.GenericBlockItem;
 import com.integral.enigmaticlegacy.objects.AdvancedPotion;
 import com.integral.enigmaticlegacy.packets.clients.PacketFlameParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketHandleItemPickup;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerRotations;
@@ -97,7 +105,6 @@ import com.integral.enigmaticlegacy.packets.server.PacketSpellstoneKey;
 import com.integral.enigmaticlegacy.packets.server.PacketXPScrollKey;
 import com.integral.enigmaticlegacy.proxy.ClientProxy;
 import com.integral.enigmaticlegacy.proxy.CommonProxy;
-import com.integral.enigmaticlegacy.proxy.renderers.ModelHandler;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
 import com.integral.enigmaticlegacy.triggers.RevelationGainTrigger;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
@@ -155,7 +162,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.0.0";
+	public static final String VERSION = "2.1.0";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -171,6 +178,7 @@ public class EnigmaticLegacy {
 	public static SoundEvent HHON;
 	public static SoundEvent HHOFF;
 	public static SoundEvent SHIELD_TRIGGER;
+	public static SoundEvent DEFLECT;
 
 	public static BlockMassiveLamp massiveLamp;
 	public static BlockBigLamp bigLamp;
@@ -248,6 +256,11 @@ public class EnigmaticLegacy {
 	public static RevelationTome overworldRevelationTome;
 	public static RevelationTome netherRevelationTome;
 	public static RevelationTome endRevelationTome;
+
+	public static DarkArmor darkHelmet;
+	public static DarkArmor darkChestplate;
+	public static DarkArmor darkLeggings;
+	public static DarkArmor darkBoots;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -370,6 +383,11 @@ public class EnigmaticLegacy {
 		EnigmaticLegacy.netherRevelationTome = new RevelationTome(Rarity.UNCOMMON, RevelationTome.TomeType.NETHER, "withered_tome");
 		EnigmaticLegacy.endRevelationTome = new RevelationTome(Rarity.RARE, RevelationTome.TomeType.END, "corrupted_tome");
 
+		EnigmaticLegacy.darkHelmet = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.HEAD).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "dark_helmet"));
+		EnigmaticLegacy.darkChestplate = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.CHEST).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "dark_chestplate"));
+		EnigmaticLegacy.darkLeggings = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.LEGS).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "dark_leggings"));
+		EnigmaticLegacy.darkBoots = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.FEET).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "dark_boots"));
+
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientRegistries);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::intermodStuff);
@@ -460,6 +478,7 @@ public class EnigmaticLegacy {
 		EnigmaticLegacy.packetInstance.registerMessage(14, PacketWitherParticles.class, PacketWitherParticles::encode, PacketWitherParticles::decode, PacketWitherParticles::handle);
 		EnigmaticLegacy.packetInstance.registerMessage(15, PacketFlameParticles.class, PacketFlameParticles::encode, PacketFlameParticles::decode, PacketFlameParticles::handle);
 		EnigmaticLegacy.packetInstance.registerMessage(16, PacketSetEntryState.class, PacketSetEntryState::encode, PacketSetEntryState::decode, PacketSetEntryState::handle);
+		EnigmaticLegacy.packetInstance.registerMessage(17, PacketForceArrowRotations.class, PacketForceArrowRotations::encode, PacketForceArrowRotations::decode, PacketForceArrowRotations::handle);
 
 		EnigmaticLegacy.enigmaticLogger.info("Registering triggers...");
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);
@@ -477,10 +496,11 @@ public class EnigmaticLegacy {
 
 		ObfuscatedFields.extractClientFields();
 
-		for (Block theBlock : EnigmaticLegacy.cutoutBlockRegistry)
+		for (Block theBlock : EnigmaticLegacy.cutoutBlockRegistry) {
 			RenderTypeLookup.setRenderLayer(theBlock, RenderType.getCutout());
+		}
 
-		ModelHandler.registerModels();
+		ModelRegistry.registerModels();
 
 		EnigmaticLegacy.enigmaticLogger.info("Client setup phase finished successfully.");
 	}
@@ -591,6 +611,10 @@ public class EnigmaticLegacy {
 					EnigmaticLegacy.overworldRevelationTome,
 					EnigmaticLegacy.netherRevelationTome,
 					EnigmaticLegacy.endRevelationTome,
+					//EnigmaticLegacy.darkHelmet,
+					//EnigmaticLegacy.darkChestplate,
+					//EnigmaticLegacy.darkLeggings,
+					//EnigmaticLegacy.darkBoots,
 					new GenericBlockItem(EnigmaticLegacy.massiveLamp),
 					new GenericBlockItem(EnigmaticLegacy.bigLamp),
 					new GenericBlockItem(EnigmaticLegacy.massiveShroomlamp),
@@ -610,6 +634,7 @@ public class EnigmaticLegacy {
 			EnigmaticLegacy.HHON = SuperpositionHandler.registerSound("misc.hhon");
 			EnigmaticLegacy.HHOFF = SuperpositionHandler.registerSound("misc.hhoff");
 			EnigmaticLegacy.SHIELD_TRIGGER = SuperpositionHandler.registerSound("misc.shield_trigger");
+			EnigmaticLegacy.DEFLECT = SuperpositionHandler.registerSound("misc.deflect");
 
 			EnigmaticLegacy.enigmaticLogger.info("Sounds registered successfully.");
 		}

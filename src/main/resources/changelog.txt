@@ -1,5 +1,15 @@
 The Changelog:
 
+[Release 2.1.0]:
+- Magnetic Ring's effects produce particles no longer;
+- Nerfed Angel's Blessing projectile redirection ability (#14). Now grants chance to deflect incoming projectiles instead of redirecting all of them away;
+- Tools with area of effect abilities now allow to toggle these abilities on/off by shift+right-clicking. Also addded config option that allows to disable temprorary suppression of such abilities by holding Shift;
+- Added recipe linkages for Potion of Recall and all ultimate potion types in The Aknowledgment;
+- Hopefully fixed mining speed corrections in the mod disrespecting other mods' attempts to alter it (#50);
+- Fixed multiple bugs related to integrated World Name Randomizer functionality. Also implemented client-sided config option to allow disabling it (#51);  
+- Fixed Etherium Scythe's AoE-tilling not working.
+
+
 [Release 2.0.0]:
 
 - Implemented The Aknowledgment, vessel of knowledge about everything in the mod... and not only;

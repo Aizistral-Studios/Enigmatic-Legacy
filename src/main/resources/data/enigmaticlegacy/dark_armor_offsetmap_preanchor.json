@@ -1,0 +1,20 @@
+{
+    "head_x": 0.0,
+    "head_y": -9.0,
+    "head_z": -5.0,
+	"chest_x": 0.0,
+    "chest_y": 1.0,
+    "chest_z": -3.0,
+	"arm_right_x": -1.0,
+    "arm_right_y": -2.0,
+    "arm_right_z": 0.4,
+	"arm_left_x": 2.0,
+    "arm_left_y": -2.0,
+    "arm_left_z": 0.4,
+	"leg_right_x": 1.6,
+    "leg_right_y": 7.0,
+    "leg_right_z": -3.5,
+	"leg_left_x": -1.9,
+    "leg_left_y": 12.0,
+    "leg_left_z": -0.1
+}

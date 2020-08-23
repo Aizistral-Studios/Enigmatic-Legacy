@@ -40,7 +40,7 @@ public class HeavenScroll extends ItemBaseCurio {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "heaven_scroll"));
 	}
-	
+
 	public HeavenScroll(Properties properties) {
 		super(properties);
 	}
@@ -74,24 +74,24 @@ public class HeavenScroll extends ItemBaseCurio {
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
 
-			if (Math.random() <= (baseXpConsumptionProbability * ConfigHandler.HEAVEN_SCROLL_XP_COST_MODIFIER.getValue()) & player.abilities.isFlying)
+			if (Math.random() <= (this.baseXpConsumptionProbability * ConfigHandler.HEAVEN_SCROLL_XP_COST_MODIFIER.getValue()) & player.abilities.isFlying)
 				player.giveExperiencePoints(-1);
 
 			this.handleFlight(player);
 		}
 
 	}
-	
+
 	protected void handleFlight(PlayerEntity player) {
 		try {
 			if (player.experienceTotal > 0 && SuperpositionHandler.isInBeaconRange(player)) {
 
 				if (!player.abilities.allowFlying)
 					player.abilities.allowFlying = true;
-				
+
 				player.sendPlayerAbilities();
 				this.flyMap.put(player, 100);
-			
+
 			} else if (this.flyMap.get(player) > 1) {
 				this.flyMap.put(player, this.flyMap.get(player)-1);
 			} else if (this.flyMap.get(player) == 1) {
@@ -109,7 +109,7 @@ public class HeavenScroll extends ItemBaseCurio {
 			this.flyMap.put(player, 0);
 		}
 	}
-	
+
 	@Override
 	public void onUnequip(String identifier, int index, LivingEntity entityLivingBase) {
 
@@ -125,6 +125,12 @@ public class HeavenScroll extends ItemBaseCurio {
 			this.flyMap.put(player, 0);
 
 		}
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
 	}
 
 }

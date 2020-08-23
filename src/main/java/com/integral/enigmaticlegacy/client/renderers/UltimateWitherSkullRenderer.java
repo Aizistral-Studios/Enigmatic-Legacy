@@ -1,4 +1,4 @@
-package com.integral.enigmaticlegacy.proxy.renderers;
+package com.integral.enigmaticlegacy.client.renderers;
 
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;

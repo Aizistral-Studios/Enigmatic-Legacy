@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.IMultiblockMiningTool;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.helpers.AOEMiningHelper;
@@ -20,8 +21,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Rarity;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -35,7 +40,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-public class AstralBreaker extends ItemBaseTool {
+public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool {
 
 	public AstralBreaker() {
 		super(4F, -2.8F, EnigmaticMaterials.ETHERIUM, new HashSet<>(),
@@ -48,9 +53,9 @@ public class AstralBreaker extends ItemBaseTool {
 				.func_234689_a_());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_breaker"));
 
-		this.effectiveMaterials.addAll(((EtheriumPickaxe) EnigmaticLegacy.etheriumPickaxe).effectiveMaterials);
-		this.effectiveMaterials.addAll(((EtheriumAxe) EnigmaticLegacy.etheriumAxe).effectiveMaterials);
-		this.effectiveMaterials.addAll(((EtheriumShovel) EnigmaticLegacy.etheriumShovel).effectiveMaterials);
+		this.effectiveMaterials.addAll(EnigmaticLegacy.etheriumPickaxe.effectiveMaterials);
+		this.effectiveMaterials.addAll(EnigmaticLegacy.etheriumAxe.effectiveMaterials);
+		this.effectiveMaterials.addAll(EnigmaticLegacy.etheriumShovel.effectiveMaterials);
 	}
 
 	@Override
@@ -58,11 +63,18 @@ public class AstralBreaker extends ItemBaseTool {
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.func_231173_s_()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker1", TextFormatting.GOLD, 3, 1);
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker4");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+		}
+
+		if (!this.areaEffectsAllowed(stack)) {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.aoeDisabled");
 		}
 	}
 
@@ -76,7 +88,7 @@ public class AstralBreaker extends ItemBaseTool {
 		if (!world.isRemote)
 			this.spawnFlameParticles(world, pos);
 
-		if (entityLiving instanceof PlayerEntity && !entityLiving.isCrouching() && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && ConfigHandler.ETHERIUM_PICKAXE_RADIUS.getValue() != -1) {
+		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && ConfigHandler.ETHERIUM_PICKAXE_RADIUS.getValue() != -1) {
 
 			RayTraceResult trace = AOEMiningHelper.calcRayTrace(world, (PlayerEntity) entityLiving, RayTraceContext.FluidMode.ANY);
 
@@ -94,6 +106,27 @@ public class AstralBreaker extends ItemBaseTool {
 		}
 
 		return super.onBlockDestroyed(stack, world, state, pos, entityLiving);
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getHeldItem(hand);
+		player.setActiveHand(hand);
+
+		if (player.isCrouching()) {
+			this.toggleAreaEffects(player, stack);
+
+			return new ActionResult<>(ActionResultType.SUCCESS, stack);
+		} else
+			return super.onItemRightClick(world, player, hand);
+	}
+
+	@Override
+	public ActionResultType onItemUse(ItemUseContext context) {
+		if (context.getPlayer().isCrouching())
+			return this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType();
+		else
+			return super.onItemUse(context);
 	}
 
 }

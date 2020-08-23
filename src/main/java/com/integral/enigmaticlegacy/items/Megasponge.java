@@ -88,7 +88,7 @@ public class Megasponge extends ItemBaseCurio {
 		} else {
 			try {
 				net.minecraft.util.math.BlockPos.Mutable blockpos$pooledmutableblockpos = new BlockPos.Mutable();
-				
+
 				for (int l1 = i; l1 < j; ++l1) {
 					for (int i2 = k; i2 < l; ++i2) {
 						for (int j2 = i1; j2 < j1; ++j2) {
@@ -195,6 +195,12 @@ public class Megasponge extends ItemBaseCurio {
 		}
 
 		return waterBlocks;
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
 	}
 
 }

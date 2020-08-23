@@ -1,4 +1,4 @@
-package com.integral.enigmaticlegacy.proxy.renderers;
+package com.integral.enigmaticlegacy.client.renderers;
 
 import java.util.Random;
 

@@ -76,6 +76,12 @@ public class EyeOfNebula extends ItemAdvancedCurio implements ISpellstone {
 	}
 
 	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
+	}
+
+	@Override
 	public void triggerActiveAbility(World world, ServerPlayerEntity player, ItemStack stack) {
 		if (SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;

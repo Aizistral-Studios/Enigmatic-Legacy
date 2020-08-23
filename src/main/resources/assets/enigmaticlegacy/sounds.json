@@ -15,6 +15,14 @@
       }
     ]
   },
+  "misc.deflect": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:misc/deflect",
+        "stream": false
+      }
+    ]
+  },
   "misc.shield_trigger": {
     "sounds": [
       {

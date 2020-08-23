@@ -89,4 +89,10 @@ public class MagmaHeart extends ItemAdvancedCurio implements ISpellstone {
 			living.extinguish();
 	}
 
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
+	}
+
 }

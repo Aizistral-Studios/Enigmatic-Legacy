@@ -6,6 +6,11 @@
     "secret": false,
     "priority": false,
     "read_by_default": false,
+	"extra_recipe_mappings": {
+		"enigmaticlegacy:ultimate_potion": 1,
+		"enigmaticlegacy:ultimate_potion_splash": 1,
+		"enigmaticlegacy:ultimate_potion_lingering": 1
+	},
     "sortnum": 0,
     "pages": [
         {

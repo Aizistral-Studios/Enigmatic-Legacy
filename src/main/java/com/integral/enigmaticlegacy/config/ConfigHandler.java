@@ -132,6 +132,9 @@ public class ConfigHandler {
     public static final OmnipotentConfig.DoubleParameter ANGEL_BLESSING_ACCELERATION_MODIFIER_ELYTRA
 	= new OmnipotentConfig.DoubleParameter(0.6D);
 
+    public static final OmnipotentConfig.PerhapsParameter ANGEL_BLESSING_DEFLECT_CHANCE
+    = new OmnipotentConfig.PerhapsParameter(50);
+
     public static final OmnipotentConfig.DoubleParameter GOLEM_HEART_DEFAULT_ARMOR
 	= new OmnipotentConfig.DoubleParameter(4.0D);
 
@@ -301,9 +304,6 @@ public class ConfigHandler {
     public static final OmnipotentConfig.IntParameter MAX_SOUL_CRYSTAL_LOSS
     = new OmnipotentConfig.IntParameter(9);
 
-    public static final OmnipotentConfig.DoubleParameter MAGMA_HEART_LAVAFOG_DENSITY
-    = new OmnipotentConfig.DoubleParameter(0.3D).setClientOnly();
-
     public static final OmnipotentConfig.BooleanParameter ENIGMATIC_AMULET_VESSEL_ENABLED
     = new OmnipotentConfig.BooleanParameter(true);
 
@@ -312,6 +312,18 @@ public class ConfigHandler {
 
     public static final OmnipotentConfig.DoubleParameter ENIGMATIC_AMULET_DAMAGE_BONUS
 	= new OmnipotentConfig.DoubleParameter(1.5D);
+
+    public static final OmnipotentConfig.BooleanParameter DISABLE_AOE_SHIFT_SUPPRESSION
+    = new OmnipotentConfig.BooleanParameter(false);
+
+    public static final OmnipotentConfig.BooleanParameter ENABLE_WORLD_NAME_RANDOMIZER
+    = new OmnipotentConfig.BooleanParameter(true).setClientOnly();
+
+
+
+    public static final OmnipotentConfig.DoubleParameter MAGMA_HEART_LAVAFOG_DENSITY
+    = new OmnipotentConfig.DoubleParameter(0.3D).setClientOnly();
+
 
     static {
         final ForgeConfigSpec.Builder common = new ForgeConfigSpec.Builder();
@@ -323,6 +335,11 @@ public class ConfigHandler {
         		.comment("Controls how obscured your vision is in lava when Blazing Core is equipped. Lower value equals more visibility.")
         		.translation("configGui.enigmaticlegacy.magma_heart_lava_density")
         		.defineInRange("magmaHeartLavaDensity", ConfigHandler.MAGMA_HEART_LAVAFOG_DENSITY.getValueDefault(), 0.0, 1024.0);
+
+        ConfigHandler.ENABLE_WORLD_NAME_RANDOMIZER.configObj = client
+        		.comment("Whether or not integrated World Name Randomizer should be enabled.")
+        		.translation("configGui.enigmaticlegacy.enable_world_name_randomizer")
+        		.define("enableWorldNameRandomizer", ConfigHandler.ENABLE_WORLD_NAME_RANDOMIZER.getValueDefault());
 
         client.pop();
 
@@ -497,6 +514,11 @@ public class ConfigHandler {
         		.comment("If true, only original owner of Extradimensional Vessel will be able to pick it up.")
         		.translation("configGui.enigmaticlegacy.owner_only_vessel")
         		.define("ownerOnlyVessel", ConfigHandler.OWNER_ONLY_VESSEL.getValueDefault());
+
+        ConfigHandler.DISABLE_AOE_SHIFT_SUPPRESSION.configObj = common
+        		.comment("If true, tools with area of effect abilities will not have those abilities disabled when player holds Shift (crouches).")
+        		.translation("configGui.enigmaticlegacy.disable_aoe_shift_suppression")
+        		.define("disableAOEShiftSuppression", ConfigHandler.DISABLE_AOE_SHIFT_SUPPRESSION.getValueDefault());
 
         common.pop();
 
