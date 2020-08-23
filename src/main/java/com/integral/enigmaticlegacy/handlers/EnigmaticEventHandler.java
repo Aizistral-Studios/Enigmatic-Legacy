@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.MixinEnvironment.Side;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
+import com.integral.enigmaticlegacy.gui.ExtraButton;
 import com.integral.enigmaticlegacy.gui.containers.EnigmaticEnchantmentContainer;
 import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -37,7 +38,11 @@ import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.CreateWorldScreen;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.AnvilScreen;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.screen.inventory.CreativeScreen;
+import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
@@ -90,6 +95,7 @@ import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.registry.Registry;
@@ -132,9 +138,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.PacketDistributor.TargetPoint;
 import net.minecraftforge.registries.ForgeRegistries;
+import top.theillusivec4.curios.Curios;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.type.capability.ICurio;
+import top.theillusivec4.curios.client.gui.CuriosButton;
+import top.theillusivec4.curios.client.gui.CuriosScreen;
 import vazkii.patchouli.api.BookDrawScreenEvent;
 import vazkii.patchouli.client.book.gui.GuiBookLanding;
 import vazkii.patchouli.client.book.gui.button.GuiButtonBookEdit;
@@ -189,7 +198,25 @@ public class EnigmaticEventHandler {
 		}
 	}
 	*/
+	/*
+	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
+	public void onInventoryGuiInit(GuiScreenEvent.InitGuiEvent.Post evt) {
+		Screen screen = evt.getGui();
 
+		if (screen instanceof InventoryScreen || screen instanceof CreativeScreen) {
+			ContainerScreen<?> gui = (ContainerScreen<?>) screen;
+			boolean isCreative = screen instanceof CreativeScreen;
+			Tuple<Integer, Integer> offsets = CuriosScreen.getButtonOffset(isCreative);
+			int x = offsets.getA() + 20;
+			int y = offsets.getB();
+			int size = isCreative ? 10 : 14;
+			int textureOffsetX = isCreative ? 64 : 50;
+			evt.addWidget(new ExtraButton(gui, gui.getGuiLeft() + x, gui.field_230709_l_ / 2 + y, size, size, textureOffsetX, 0, size, new ResourceLocation(Curios.MODID,
+				      "textures/gui/inventory.png")));
+		}
+	}
+	*/
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onFogRender(EntityViewRenderEvent.FogDensity event) {
