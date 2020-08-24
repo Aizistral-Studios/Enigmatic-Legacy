@@ -35,8 +35,10 @@ public class OmnipotentConfig {
 
 		@Override
 		public void reset() {
-			this.configObj.set(this.defaultValue);
-			this.configObj.save();
+			if (this.configObj != null) {
+				this.configObj.set(this.defaultValue);
+				this.configObj.save();
+			}
 		}
 
 	}
@@ -68,8 +70,10 @@ public class OmnipotentConfig {
 
 		@Override
 		public void reset() {
-			this.configObj.set(this.defaultValue);
-			this.configObj.save();
+			if (this.configObj != null) {
+				this.configObj.set(this.defaultValue);
+				this.configObj.save();
+			}
 		}
 	}
 
@@ -100,8 +104,10 @@ public class OmnipotentConfig {
 
 		@Override
 		public void reset() {
-			this.configObj.set(this.defaultValue);
-			this.configObj.save();
+			if (this.configObj != null) {
+				this.configObj.set(this.defaultValue);
+				this.configObj.save();
+			}
 		}
 	}
 
@@ -133,8 +139,10 @@ public class OmnipotentConfig {
 
 		@Override
 		public void reset() {
-			this.configObj.set(this.defaultValue.asPercentage());
-			this.configObj.save();
+			if (this.configObj != null) {
+				this.configObj.set(this.defaultValue.asPercentage());
+				this.configObj.save();
+			}
 		}
 	}
 
@@ -165,8 +173,10 @@ public class OmnipotentConfig {
 
 		@Override
 		public void reset() {
-			this.configObj.set(this.defaultValue);
-			this.configObj.save();
+			if (this.configObj != null) {
+				this.configObj.set(this.defaultValue);
+				this.configObj.save();
+			}
 		}
 
 	}

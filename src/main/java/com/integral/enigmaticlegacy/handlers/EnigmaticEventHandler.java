@@ -16,6 +16,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.gui.ExtraButton;
+import com.integral.enigmaticlegacy.gui.GenericInventoryButton;
 import com.integral.enigmaticlegacy.gui.containers.EnigmaticEnchantmentContainer;
 import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -46,6 +47,7 @@ import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.gui.widget.button.ImageButton;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.resources.I18n;
@@ -99,6 +101,7 @@ import net.minecraft.util.Tuple;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -198,6 +201,7 @@ public class EnigmaticEventHandler {
 		}
 	}
 	*/
+
 	/*
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
@@ -212,11 +216,19 @@ public class EnigmaticEventHandler {
 			int y = offsets.getB();
 			int size = isCreative ? 10 : 14;
 			int textureOffsetX = isCreative ? 64 : 50;
-			evt.addWidget(new ExtraButton(gui, gui.getGuiLeft() + x, gui.field_230709_l_ / 2 + y, size, size, textureOffsetX, 0, size, new ResourceLocation(Curios.MODID,
-				      "textures/gui/inventory.png")));
+
+			//evt.addWidget(new ExtraButton(gui, gui.getGuiLeft() + x, gui.field_230709_l_ / 2 + y, size, size, textureOffsetX, 0, size, new ResourceLocation(Curios.MODID,
+			//	      "textures/gui/inventory.png")));
+
+			evt.addWidget(new GenericInventoryButton(gui, gui.getGuiLeft() + 104 + 40, gui.field_230709_l_ / 2 - 22, 20, 18, 0, 0, 19,
+					new ResourceLocation(
+						      "enigmaticlegacy:textures/gui/ender_chest_button.png"),(button) -> {
+						    	  Minecraft.getInstance().player.sendChatMessage("Don't touch me please");
+		                }));
 		}
 	}
 	*/
+
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onFogRender(EntityViewRenderEvent.FogDensity event) {

@@ -1,5 +1,10 @@
 The Changelog:
 
+[Release 2.1.2]:
+- Fixed startup error caused by attempts to reset null config object when generating config file (#52).
+
+
+
 [Release 2.1.1]:
 - Fixed critical error on startup caused by screwed up mods.toml file.
 
