@@ -316,13 +316,28 @@ public class ConfigHandler {
     public static final OmnipotentConfig.BooleanParameter DISABLE_AOE_SHIFT_SUPPRESSION
     = new OmnipotentConfig.BooleanParameter(false);
 
+
+
     public static final OmnipotentConfig.BooleanParameter ENABLE_WORLD_NAME_RANDOMIZER
     = new OmnipotentConfig.BooleanParameter(true).setClientOnly();
 
-
-
     public static final OmnipotentConfig.DoubleParameter MAGMA_HEART_LAVAFOG_DENSITY
     = new OmnipotentConfig.DoubleParameter(0.3D).setClientOnly();
+
+    public static final OmnipotentConfig.IntParameter ECHEST_BUTTON_OFFSET_X
+    = new OmnipotentConfig.IntParameter(0).setClientOnly();
+
+    public static final OmnipotentConfig.IntParameter ECHEST_BUTTON_OFFSET_Y
+    = new OmnipotentConfig.IntParameter(0).setClientOnly();
+
+    public static final OmnipotentConfig.IntParameter ECHEST_BUTTON_OFFSET_X_CREATIVE
+    = new OmnipotentConfig.IntParameter(0).setClientOnly();
+
+    public static final OmnipotentConfig.IntParameter ECHEST_BUTTON_OFFSET_Y_CREATIVE
+    = new OmnipotentConfig.IntParameter(0).setClientOnly();
+
+    public static final OmnipotentConfig.BooleanParameter ECHEST_BUTTON_ENABLED
+    = new OmnipotentConfig.BooleanParameter(true).setClientOnly();
 
 
     static {
@@ -340,6 +355,31 @@ public class ConfigHandler {
         		.comment("Whether or not integrated World Name Randomizer should be enabled.")
         		.translation("configGui.enigmaticlegacy.enable_world_name_randomizer")
         		.define("enableWorldNameRandomizer", ConfigHandler.ENABLE_WORLD_NAME_RANDOMIZER.getValueDefault());
+
+        ConfigHandler.ECHEST_BUTTON_ENABLED.configObj = client
+        		.comment("Whether or not button for accessing Ender Chest should be added to inventory GUI when player has Ring of Ender equipped.")
+        		.translation("configGui.enigmaticlegacy.ender_chest_button_enabled")
+        		.define("enderChestButtonEnabled", ConfigHandler.ECHEST_BUTTON_ENABLED.getValueDefault());
+
+        ConfigHandler.ECHEST_BUTTON_OFFSET_X.configObj = client
+        		.comment("Allows to set offset for Ender Chest button on X axis.")
+        		.translation("configGui.enigmaticlegacy.ender_chest_button_offsetX")
+        		.defineInRange("enderChestButtonOffsetX", ConfigHandler.ECHEST_BUTTON_OFFSET_X.getValueDefault(), -32768, 32768);
+
+        ConfigHandler.ECHEST_BUTTON_OFFSET_Y.configObj = client
+        		.comment("Allows to set offset for Ender Chest button on Y axis.")
+        		.translation("configGui.enigmaticlegacy.ender_chest_button_offsetY")
+        		.defineInRange("enderChestButtonOffsetY", ConfigHandler.ECHEST_BUTTON_OFFSET_Y.getValueDefault(), -32768, 32768);
+
+        ConfigHandler.ECHEST_BUTTON_OFFSET_X_CREATIVE.configObj = client
+        		.comment("Allows to set offset for Ender Chest button on X axis, for creative inventory specifically.")
+        		.translation("configGui.enigmaticlegacy.ender_chest_button_offsetX_creative")
+        		.defineInRange("enderChestButtonOffsetXCreative", ConfigHandler.ECHEST_BUTTON_OFFSET_X_CREATIVE.getValueDefault(), -32768, 32768);
+
+        ConfigHandler.ECHEST_BUTTON_OFFSET_Y_CREATIVE.configObj = client
+        		.comment("Allows to set offset for Ender Chest button on Y axis, for creative inventory specifically.")
+        		.translation("configGui.enigmaticlegacy.ender_chest_button_offsetY_creative")
+        		.defineInRange("enderChestButtonOffsetYCreative", ConfigHandler.ECHEST_BUTTON_OFFSET_Y_CREATIVE.getValueDefault(), -32768, 32768);
 
         client.pop();
 

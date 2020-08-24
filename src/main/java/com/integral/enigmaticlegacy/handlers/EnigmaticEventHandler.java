@@ -14,9 +14,9 @@ import org.spongepowered.asm.mixin.MixinEnvironment.Side;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
-import com.integral.enigmaticlegacy.gui.ExtraButton;
-import com.integral.enigmaticlegacy.gui.GenericInventoryButton;
+import com.integral.enigmaticlegacy.gui.EnderChestInventoryButton;
 import com.integral.enigmaticlegacy.gui.containers.EnigmaticEnchantmentContainer;
 import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -34,6 +34,7 @@ import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketSetEntryState;
 import com.integral.enigmaticlegacy.packets.clients.PacketSlotUnlocked;
 import com.integral.enigmaticlegacy.packets.server.PacketAnvilField;
+import com.integral.enigmaticlegacy.packets.server.PacketEnderRingKey;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
 
 import net.minecraft.client.Minecraft;
@@ -202,32 +203,28 @@ public class EnigmaticEventHandler {
 	}
 	*/
 
-	/*
+
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onInventoryGuiInit(GuiScreenEvent.InitGuiEvent.Post evt) {
 		Screen screen = evt.getGui();
 
-		if (screen instanceof InventoryScreen || screen instanceof CreativeScreen) {
+		if (screen instanceof InventoryScreen || screen instanceof CreativeScreen || screen instanceof CuriosScreen) {
+
 			ContainerScreen<?> gui = (ContainerScreen<?>) screen;
 			boolean isCreative = screen instanceof CreativeScreen;
-			Tuple<Integer, Integer> offsets = CuriosScreen.getButtonOffset(isCreative);
-			int x = offsets.getA() + 20;
+			Tuple<Integer, Integer> offsets = EnderChestInventoryButton.getOffsets(isCreative);
+			int x = offsets.getA();
 			int y = offsets.getB();
-			int size = isCreative ? 10 : 14;
-			int textureOffsetX = isCreative ? 64 : 50;
 
-			//evt.addWidget(new ExtraButton(gui, gui.getGuiLeft() + x, gui.field_230709_l_ / 2 + y, size, size, textureOffsetX, 0, size, new ResourceLocation(Curios.MODID,
-			//	      "textures/gui/inventory.png")));
-
-			evt.addWidget(new GenericInventoryButton(gui, gui.getGuiLeft() + 104 + 40, gui.field_230709_l_ / 2 - 22, 20, 18, 0, 0, 19,
+			evt.addWidget(new EnderChestInventoryButton(gui, gui.getGuiLeft() + x, (gui.field_230709_l_ / 2 - 22) + y, 20, 18, 0, 0, 19,
 					new ResourceLocation(
 						      "enigmaticlegacy:textures/gui/ender_chest_button.png"),(button) -> {
-						    	  Minecraft.getInstance().player.sendChatMessage("Don't touch me please");
+						    	  EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketEnderRingKey(true));
 		                }));
 		}
 	}
-	*/
+
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)

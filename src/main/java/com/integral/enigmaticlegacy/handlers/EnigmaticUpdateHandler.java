@@ -64,7 +64,7 @@ public class EnigmaticUpdateHandler {
 				StringTextComponent newVerArg = new StringTextComponent(EnigmaticUpdateHandler.newestVersion);
 				newVerArg.func_240699_a_(TextFormatting.GOLD);
 
-				EnigmaticUpdateHandler.updateStatus = new TranslationTextComponent("status.enigmaticlegacy.outdated", newVerArg.getString());
+				EnigmaticUpdateHandler.updateStatus = new TranslationTextComponent("status.enigmaticlegacy.outdated", newVerArg);
 				EnigmaticUpdateHandler.updateStatus.func_240699_a_(TextFormatting.DARK_PURPLE);
 			}
 		}

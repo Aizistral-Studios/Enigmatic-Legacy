@@ -11,7 +11,6 @@ public interface IComplexParameter<ParameterType> {
 	default ParameterType setClientOnly() {
 		DistExecutor.unsafeRunWhenOn(Dist.DEDICATED_SERVER, () -> {
 			return () -> {
-				System.out.println("executed!!!!");
 				ConfigHandler.allValues.remove(this);
 			};
 		});

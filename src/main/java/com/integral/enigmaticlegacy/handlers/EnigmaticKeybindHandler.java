@@ -22,49 +22,50 @@ import net.minecraftforge.fml.network.PacketDistributor;
  */
 
 public class EnigmaticKeybindHandler {
-	
+
 	@OnlyIn(Dist.CLIENT)
 	public static boolean checkVariable;
-	
+
 	public KeyBinding enderRingKey;
 	public KeyBinding spellstoneAbilityKey;
 	public KeyBinding xpScrollKey;
-	
+
 	@OnlyIn(Dist.CLIENT)
 	public void registerKeybinds() {
 		this.enderRingKey = new KeyBinding("key.enderRing", GLFW.GLFW_KEY_I, "key.categories.enigmaticLegacy");
 		this.spellstoneAbilityKey = new KeyBinding("key.spellstoneAbility", GLFW.GLFW_KEY_K, "key.categories.enigmaticLegacy");
 		this.xpScrollKey = new KeyBinding("key.xpScroll", GLFW.GLFW_KEY_J, "key.categories.enigmaticLegacy");
-		
+
 		ClientRegistry.registerKeyBinding(this.enderRingKey);
 		ClientRegistry.registerKeyBinding(this.spellstoneAbilityKey);
 		ClientRegistry.registerKeyBinding(this.xpScrollKey);
-		
+
 	}
-	
+
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onKeyInput(TickEvent.ClientTickEvent event) {
-		
+
 		if (event.phase != TickEvent.Phase.END || !Minecraft.getInstance().isGameFocused()) {
 		      return;
 		}
-		
+
 		if (this.enderRingKey.isPressed()) {
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketEnderRingKey(true));
+			if (Minecraft.getInstance().isGameFocused())
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketEnderRingKey(true));
 		}
-		
+
 		if (this.xpScrollKey.isPressed()) {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketXPScrollKey(true));
 		}
-		
+
 		if (this.spellstoneAbilityKey.isKeyDown() && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.enigmaticItem)) {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true));
 		} else if (this.spellstoneAbilityKey.isPressed() && SuperpositionHandler.hasSpellstone(Minecraft.getInstance().player)) {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true));
 		}
-		
 
-		
+
+
 	}
 }

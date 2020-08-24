@@ -1,5 +1,11 @@
 The Changelog:
 
+[Release 2.1.3]:
+- Closing Ender Chest inventory opened by Ring of Ender is now followed by appropriate sound effect;
+- When having Ring of Ender equipped, special button is now added to inventory GUI that allows to open Ender Chest inventory. Also implemented a couple config option that allow to control existence and position of that button.
+
+
+
 [Release 2.1.2]:
 - Fixed startup error caused by attempts to reset null config object when generating config file (#52).
 
