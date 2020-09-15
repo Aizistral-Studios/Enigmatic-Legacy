@@ -53,6 +53,20 @@
 	"item.enigmaticlegacy.tattered_tome": "Tattered Tome",
 	"item.enigmaticlegacy.withered_tome": "Withered Tome",
 	"item.enigmaticlegacy.corrupted_tome": "Corrupted Tome",
+	"item.enigmaticlegacy.cursed_ring": "Ring of the Seven Curses",
+	"item.enigmaticlegacy.dark_mirror": "Twisted Mirror",
+	"item.enigmaticlegacy.earth_heart": "Heart of the Earth",
+	"item.enigmaticlegacy.twisted_core": "Twisted Heart",
+	"item.enigmaticlegacy.crying_ingot": "Crying Netherite Ingot [NYI]",
+	"item.enigmaticlegacy.crying_pickaxe": "Crying Pickaxe [NYI]",
+	"item.enigmaticlegacy.crying_axe": "Crying Axe [NYI]",
+	"item.enigmaticlegacy.crying_shovel": "Crying Shovel [NYI]",
+	"item.enigmaticlegacy.crying_hoe": "Crying Hoe [NYI]",
+	"item.enigmaticlegacy.crying_sword": "Crying Sword [NYI]",
+	"item.enigmaticlegacy.crying_helmet": "Crying Helmet [NYI]",
+	"item.enigmaticlegacy.crying_chestplate": "Crying Cuirass [NYI]",
+	"item.enigmaticlegacy.crying_leggings": "Crying Greaves [NYI]",
+	"item.enigmaticlegacy.crying_boots": "Crying Boots [NYI]",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -303,6 +317,10 @@
 	"tooltip.enigmaticlegacy.recallPotion1": "§5Returns you to your bed or §6Respawn Anchor§5",
 	"tooltip.enigmaticlegacy.recallPotion2": "§5location, or to the §6Center of The Overworld§5",
 	"tooltip.enigmaticlegacy.recallPotion3": "§5if you don't have one.",
+
+	"tooltip.enigmaticlegacy.darkMirror1": "§5Gaze into the mirror to return to your bed",
+	"tooltip.enigmaticlegacy.darkMirror2": "§5or §6Respawn Anchor§5, or to the §6Center of",
+	"tooltip.enigmaticlegacy.darkMirror3": "§6The Overworld§5 if you don't have one.",
 	
 	"tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance": "§6+%1$s §dBeheading Chance",
 	"tooltip.enigmaticlegacy.forbiddenAxe1": "§5Has a chance to behead slain monsters.",
@@ -331,10 +349,11 @@
 	"tooltip.enigmaticlegacy.fabulousScroll5": "§5Compensates mining speed penalty when flying.",
 	
 	"tooltip.enigmaticlegacy.miningCharm1": "§6+%1$s§d Mining Speed",
-	"tooltip.enigmaticlegacy.miningCharm2": "§5When you are underground and in dark,",
-	"tooltip.enigmaticlegacy.miningCharm3": "§5applies §6Night Vision§5 effect to you. This",
-	"tooltip.enigmaticlegacy.miningCharm4": "§5feature can be disabled by pressing",
-	"tooltip.enigmaticlegacy.miningCharm5": "§5the §6Right-Click§5 when holding charm.",
+	"tooltip.enigmaticlegacy.miningCharm2": "§6+%1$s§d Fortune Level",
+	"tooltip.enigmaticlegacy.miningCharm3": "§5When you are underground and in dark,",
+	"tooltip.enigmaticlegacy.miningCharm4": "§5applies §6Night Vision§5 effect to you. This",
+	"tooltip.enigmaticlegacy.miningCharm5": "§5feature can be disabled by pressing",
+	"tooltip.enigmaticlegacy.miningCharm6": "§5the §6Right-Click§5 when holding charm.",
 	"tooltip.enigmaticlegacy.miningCharmNightVision": "§dNight Vision: %1$s",
 	
 	"tooltip.enigmaticlegacy.enderRing1": "§5Allows you to remotely acess your",
@@ -441,8 +460,8 @@
 	"tooltip.enigmaticlegacy.etheriumArmorSetBonus5": "§5  most debuffs, and knocks back any creatures",
 	"tooltip.enigmaticlegacy.etheriumArmorSetBonus6": "§5  that attack you.",
 	
-	"tooltip.enigmaticlegacy.loreInscriber1": "§5Combine with §6Lore Fragment§5 in §6Anvil§5 to write",
-	"tooltip.enigmaticlegacy.loreInscriber2": "§5formatted name and lore lines to it.",
+	"tooltip.enigmaticlegacy.loreInscriber1": "§6Right-Click§5 to open §6GUI§5. Insert §6Lore Fragment§5",
+	"tooltip.enigmaticlegacy.loreInscriber2": "§5to write formatted name and lore lines to it.",
 	
 	"tooltip.enigmaticlegacy.loreInscriber3": "§5Use §d&§6[0-f]§5 to apply color formatting to any",
 	"tooltip.enigmaticlegacy.loreInscriber4": "§5following text in the name field.",
@@ -462,6 +481,7 @@
 	"tooltip.enigmaticlegacy.loreFragment4": "§5to attach those writings to that item.",
 	
 	"tooltip.enigmaticlegacy.aoeDisabled": "§cArea effects are suppressed.",
+	"tooltip.enigmaticlegacy.abilityDisabled": "§cSpecial abilities are suppressed.",
 	
 	"tooltip.enigmaticlegacy.etheriumPickaxe1": "§5Mines blocks in §6%1$s§6x%1$s§6x%2$s§5 area.",
 	"tooltip.enigmaticlegacy.etheriumPickaxe2": "§5Hold §6Shift§5 to suppress this effect.",
@@ -479,6 +499,7 @@
 	"tooltip.enigmaticlegacy.etheriumSword2": "§5throw you in the direction opposite to",
 	"tooltip.enigmaticlegacy.etheriumSword3": "§5your sight.",
 	"tooltip.enigmaticlegacy.etheriumSword4": "§5This ability has §6%1$s §6seconds§5 cooldown.",
+	"tooltip.enigmaticlegacy.etheriumSword5": "§5Press §6Shift+Right-Click§5 to suppress it.",
 	
 	"tooltip.enigmaticlegacy.etheriumScythe1": "§5Harvests plants in §6%1$s§6x%1$s§6x%1$s§5 area.",
 	"tooltip.enigmaticlegacy.etheriumScythe2": "§5Tills land in §6%1$s§6x%1$s§6x1§5 area.",
@@ -533,6 +554,34 @@
 	
 	"tooltip.enigmaticlegacy.theAknowledgment1": "§5The blinding light of revelation shall",
 	"tooltip.enigmaticlegacy.theAknowledgment2": "§5incinerate those who refuse to embrace it.",
+	
+	"tooltip.enigmaticlegacy.cursedRing1": "§5Once worn, it becomes a part of you.",
+	"tooltip.enigmaticlegacy.cursedRing2": "§4This ring will persist with you forever.",
+	"tooltip.enigmaticlegacy.cursedRing2_creative": "§6With the power of god, you can unequip it.",
+	"tooltip.enigmaticlegacy.cursedRing3": "§dSeven curses will befall whoever bears it:",
+	"tooltip.enigmaticlegacy.cursedRing4": "§5- You receive double damage from §6ANY§5 source.",
+	"tooltip.enigmaticlegacy.cursedRing5": "§5- Neutral creatures are aggresive towards you.",
+	"tooltip.enigmaticlegacy.cursedRing6": "§5- Armor is §630%§5 less effective.",
+	"tooltip.enigmaticlegacy.cursedRing7": "§5- Monsters receive §650%§5 less damage from you.",
+	"tooltip.enigmaticlegacy.cursedRing8": "§5- When on fire, you burn forever.",
+	"tooltip.enigmaticlegacy.cursedRing9": "§5- Every death tears your soul apart.",
+	"tooltip.enigmaticlegacy.cursedRing10": "§5- You suffer from incurable insomnia.",
+	"tooltip.enigmaticlegacy.cursedRing11": "§dSeven blessings will reward those who withstand:",
+	"tooltip.enigmaticlegacy.cursedRing12": "§5- §6+1§d Looting Level",
+	"tooltip.enigmaticlegacy.cursedRing13": "§5- §6+1§d Fortune Level",
+	"tooltip.enigmaticlegacy.cursedRing14": "§5- §6+400%§5 experience dropped.",
+	"tooltip.enigmaticlegacy.cursedRing15": "§5- §6+10§d Enchantment Levels§5 in §6Enchanting Table.",
+	"tooltip.enigmaticlegacy.cursedRing16": "§5- Unique drops from some creatures.",
+	"tooltip.enigmaticlegacy.cursedRing17": "§5- Functionality of §6Ring of Ender.",
+	"tooltip.enigmaticlegacy.cursedRing18": "§5- You can create and use unique relics.",
+	
+	"tooltip.enigmaticlegacy.cursedOnesOnly1": "Only those who bear the Seven Curses",
+	"tooltip.enigmaticlegacy.cursedOnesOnly2": "hold power to obtain and use this item.",
+	
+	"tooltip.enigmaticlegacy.tainted1": "§5Slightly tainted by cursed one's presence.",
+	"tooltip.enigmaticlegacy.tainted2": "§5Tainted by the touch of a cursed being.",
+	
+	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	
 	
 	
@@ -704,7 +753,7 @@
 	"book.enigmaticlegacy.entry.enigmatic_amulet.name": "Enigmatic Amulet",
 	"book.enigmaticlegacy.entry.enigmatic_amulet.heading.1": "The Amulet",
 	"book.enigmaticlegacy.entry.enigmatic_amulet.page.1": "When you first stepped into this world, you discovered this thing conveniently lying in your pockets, with no clues to where it came from, nor why it ended up in your possesion.<br2/>The vivid stone encased in it's core kept shifting, irradiated from within, as if alive - one truly charming sight to behold. After short examination, you've found an inscription carved",
-	"book.enigmaticlegacy.entry.enigmatic_amulet.page.2": "on other side, consisting of a single name: \"&4&l<playername>$(clear)\".<br2/>You tried to examine it's structure and how it could possibly be replicated, but so far with no success. It appears as if this thing does not belong to this world at all, forged and brough here by power that remains beyond",
+	"book.enigmaticlegacy.entry.enigmatic_amulet.page.2": "on other side, consisting of a single name: \"<&4><&l><playername>$(clear)\".<br2/>You tried to examine it's structure and how it could possibly be replicated, but so far with no success. It appears as if this thing does not belong to this world at all, forged and brough here by power that remains beyond",
 	"book.enigmaticlegacy.entry.enigmatic_amulet.page.3": "your understanding.<br2/>When bearing it, you feel a little stronger than you do otherwise.<br2/>It appears to be not it's only useful property, however. Should your flesh get torn asunder, unable to contain soul anymore - and the amulet opens the rift to unknown space, containing all items you would've otherwise dropped on the ground within it, including the amulet itself.",
 	"book.enigmaticlegacy.entry.enigmatic_amulet.page.4": "In place of your death you would find a thing that appears to be a key connected to that rift, one you dubbed Extradimensional Vessel. Unlike normal items, Vessel appears to be completely indestructible and indifferent to any force, besides the one of godly nature, which you just so happen to possess a fraction of.<br2/>It floats around completely inert, until you attempt to approach it and iteract with",
 	"book.enigmaticlegacy.entry.enigmatic_amulet.page.5": "it - then easily falls into your hands and breaks, releasing everything the unseen space it was linked with contained.",
@@ -715,6 +764,29 @@
 	"book.enigmaticlegacy.entry.angel_blessing.page.1": "This spellstone can be found within ruins of ancient temples, those that served purpose you know not. Figuring out the purpose of the Angel's Blessing, however, proven to be much less compicated task.<br2/>It grants you powers associated with element of the air, bending winds to blow away arrows coming at you, or saving your legs from being",
 	"book.enigmaticlegacy.entry.angel_blessing.page.2": "broken in harsh fall, or helping push you towards destination you might not be able to reach with sheer power of your muscles alone. Or all at once, if you wish.<br2/>It's active ability is most useful when you jump before using it, as momentum that spelltone generates adds up",
 	"book.enigmaticlegacy.entry.angel_blessing.page.3": "to your current velocity, thus allowing you to perform really long or high jumps.<br2/>You find it's close presence somewhat calming, for reasons you cannot explain.",
+	
+	
+	"book.enigmaticlegacy.entry.cursed_ring.name": "The Dark Ring",
+	"book.enigmaticlegacy.entry.cursed_ring.heading.1": "The Ring",
+	"book.enigmaticlegacy.entry.cursed_ring.page.1": "Another item that you unexpectedly located in your pockets, this ring however is seething with malevolent darkness, nothing like splendor and mystery of Enigmatic Amulet. Once you decide to wear it, it shall fuse with your very soul, intertwining your fates, and there's little hope to ever separate you again.<br2/>",
+	"book.enigmaticlegacy.entry.cursed_ring.page.2": "Unforgiving curses will befall whoever is brave enough to embrace this darkness. If the world didn't seem harsh enough in it's indifference, with this ring it shall turn against you, as every living being capable of attacking you will surely attempt to do so, with unbound anger and impressive persistence.",
+	"book.enigmaticlegacy.entry.cursed_ring.page.3": "Any threat you may encounter in your journey will be many times more dangerous, and any wound received will cause unimaginable pain. And as if that was not enough, any death will bring forth much greater punishment, tearing a part of your immortal soul from you.<br2/>On the other hand, in exchange for this toll paid, you will surely receive some benefits. A power that this cursed ring contains is unlike any other, and if you will manage to",
+	"book.enigmaticlegacy.entry.cursed_ring.page.4": "harness it, you may achieve feats that would be impossible to achieve otherwise, discover, create and claim relics that no other demigod can ever hope to possess.<br2/>Still, it must be a madness to willingly bring all ceaseless suffering and despair that Ring of the Seven Curses promises upon oneself. Who could possibly choose such fate?..",
+	
+	
+	"book.enigmaticlegacy.entry.earth_heart.name": "Heart of the Earth",
+	"book.enigmaticlegacy.entry.earth_heart.heading.1": "The Heart",
+	"book.enigmaticlegacy.entry.earth_heart.page.1": "Similar to how there is Heart of the Sea, an item bound with nature of endless oceans and seas covering surface of the Overworld, there is Heart of the Earth, born within it's rocky depths and encapsulating some of their raw energy. It can be found in deepest rooms and halls of dungeons deep below the Overworld's surface, lost and forgotten in smothering darkness.",
+	"book.enigmaticlegacy.entry.earth_heart.page.2": "The elemental power this heart holds bears resemblance to that stored within spellstones, but unlike latter it isn't originated from primordial chaos that spelled the beginning of all worlds, instead being born much later, slowly condensating in the earth's crust during many geological eons.",
+	"book.enigmaticlegacy.entry.earth_heart.page.3": "The resulting shape doesn't attend it's bearer and does not allow to freely channel unrefined energy stored within, but may serve as core for powerful relics requiring such energy if utilized properly.",
+	
+	
+	"book.enigmaticlegacy.entry.twisted_core.name": "Twisted Heart",
+	"book.enigmaticlegacy.entry.twisted_core.page.1": "...and thus, it was you who have chosen this fate. You have surely aknowledged what sorrow and regret this choice will cost you many times in the long journey ahead, but you still have done it. Do you even know why?<br2/>Regardless, there is no way back - only ahead, in an attempt to harness the power of great curses you are now",
+	"book.enigmaticlegacy.entry.twisted_core.page.2": "bound with. This task is hopefully not as complicated as it might seem if you can gain access to required ingredients, as curses themselves seem to actively seek new ways to spread tendrils of their corruption",
+	"book.enigmaticlegacy.entry.twisted_core.page.3": "into the world around you - they just require a little assistance from you.<br2/>As soon as you laid claim upon Heart of the Earth, you have noticed that it resonates with dark power of the ring, setting pulsations of pure energy within it slightly out of tact. This influence is hopefully not strong enough to instantly tarnish the heart, therefore rendering it unusable for regular crafing. But with small amount of carefully selected",
+	"book.enigmaticlegacy.entry.twisted_core.page.4": "arcane ingridients and a fraction of your demigod power involved, you can reinforce the link between the heart's core and curses that you bear, allowing latter to corrupt it and transform into something entirely different.<br2/>Twisted Heart is a product of this unholy ritual, an artifact incarnating part of the great curse, darker and more powerful than what Heart of the Earth used to contain.",
+	"book.enigmaticlegacy.entry.twisted_core.page.5": "It cannot be used for purposes Heart of the Earth was useful for, but it surely will have it's own applications.",
 	
 	
 	"book.enigmaticlegacy.entry.mending_mixture.name": "Mending Mixture",
@@ -728,10 +800,39 @@
 	"book.enigmaticlegacy.entry.mega_sponge.page.3": "in your backyard.<br2/>It is highly recommended that you avoid throwing this thing out into the ocean, for reasons that are likely crearly understandable.",
 	
 	
+	"book.enigmaticlegacy.entry.dark_mirror.name": "Twisted Mirror",
+	"book.enigmaticlegacy.entry.dark_mirror.page.1": "Among the most evident applications that Twisted Heart may have, there is this mirror.<br2/>It ultimately serves the same purpose as Potion of Recall that goes into it's crafting process, but instead of enderic energies diffused into drinkable form, it focuses sheer power of the curse to accomplish this.",
+	"book.enigmaticlegacy.entry.dark_mirror.page.2": "The result proves surprisingly efficient, as using this mirror takes much less time than drinking a potion, and it doesn't get consumed in the process. The teleportation is followed by considerable cooldown before you can use",
+	"book.enigmaticlegacy.entry.dark_mirror.page.3": "the mirror again, but that is surely unimportant under normal circumstances.",
+	
+	
 	"book.enigmaticlegacy.entry.lore_inscriber.name": "Inscribing Lore",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.1": "The GUI",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.2": "Color Codes",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.3": "Font Codes",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.4": "Formatted Name",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.5": "Formatted Lore",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.6": "Formatted Lore",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.7": "Formatted Lore",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.8": "Lore Attachment",
 	"book.enigmaticlegacy.entry.lore_inscriber.page.1": "The Architect's Inkwell is a wonderful tool for writing text. It can conjure colors vivid as the starlight, and symbols inscribed with it can never be erased, unless you completely destroy they surface they reside upon.<br2/>To actually make use out of it, you will first require to create Lore Fragment - special type of parchment that",
 	"book.enigmaticlegacy.entry.lore_inscriber.page.2": "perfectly fits to contain your writings.<br2/>These fragments can store the text on their own, but you can transfer the writings you inscribed upon them on virtually any other item,",
-	"book.enigmaticlegacy.entry.lore_inscriber.page.3": "conveying them to any human or demigod that may come to hold them in a way much more exquisite than primitive engravement.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.3": "conveying them to any human or demigod that may come to hold them in a way much more exquisite than primitive engravement.<br2/>Following pages contain more detailed usage instructions.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.4": "The inkwell allows to access GUI similar to the above.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.5": "Put your Lore Fragment in the input slot <&c><&l>(1)<clear>. You will then be able to spell desired name and lore in the text field <&c><&l>(3)<clear> above it.<br2/>There is a number of special formatting codes that will not be included as a part of visible text, but will instead allow to affect color/font formatting of any following writing, or specify operation that you want to perform with the text line.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.6": "If you want your text line to be added as a lore line instead of item name, prefix it with \"<&5><&l>!<clear>\". Every line of lore added has incremental index that defines it's position among other lore lines. Indexing starts with <&l>0<clear>.<br2/>If you want to replace lore line at specific index, you can specify the index after \"<&5><&l>!<clear>\" symbol. For instance, if you want to replace third lore line on the fragment with the line you're adding, prefix will",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.7": "look like \"<&5><&l>!2<clear>\".<br2/>If you want to remove the last lore line added, simply enter \"<&5><&l>-!<clear>\" in the text field. If you instead want to erase lore line at given index, specify that index right after the \"<&5><&l>-!<clear>\". For instance, if you want to erase fifth line of lore, you will have to enter \"<&5><&l>-!4<clear>\".<br2/>When you enter text line with no operational code as prefix, it will be used to rename the item.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.8": "Color and font codes, unlike operational codes, can be entered anywhere in the text field, and will apply their effect to all text that goes in the field after them. When using a color code, it will change color of all following text to the one it represents. If it is followed by another color code later, that last one will override the effect of all previous ones for everything that goes after it; this allows to use multiple colors for different words or parts of",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.9": "the text in the line. The last color code entered will always take effect over anything that follows it, until it is overriden by another color.<br2/>Font codes, on the other hand, do not override one another and thus can be stacked together with one another, and with color codes if specified after them. For instance, you can use \"<&5><&l>&4&l&o<clear>\" to create <&4><&l><&o>Dark Red + Bolded + Italic<clear> text style after it.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.10": "Font formatting holds effect until any color formatting is applied after it; any color codes that are applied later than font codes clear font formatting completely. Therefore, font formatting always must be specified after color formatting in case you wish to stack it on top of that.<br2/>Further are precise descriptions of color and font codes, that visually demonstrate their effect.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.11": "&1 - <&1>Dark Blue<clear><br/>&2 - <&2>Dark Green<clear><br/>&3 - <&3>Cyan<clear><br/>&4 - <&4>Dark Red<clear><br/>&5 - <&5>Purple<clear><br/>&6 - <&6>Orange<clear><br/>&7 - <&7>Light Gray<clear><br/>&8 - <&8>Dark Gray<clear><br/>&9 - <&9>Light Blue<clear><br/>&a - <&a>Lime<clear><br/>&b - <&b>Aquamarine<clear><br/>&c - <&c>Red<clear><br/>&d - <&d>Magenta<clear><br/>&e - <&e>Yellow<clear><br/>",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.12": "&k - <&k>Obfuscated<clear><br/>&l - <&l>Bold<clear><br/>&m - <&m>Strikethrough<clear><br/>&n - <&n>Underline<clear><br/>&o - <&o>Italic<clear><br2/>&r - Formatting Reset                                                                         <br2/><br2/><br2/><br2/>Further are certain examples that give an image of what can be achieved with formatting.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.13": "&6&lHellish Breaker",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.14": "!&5Dark and powerful.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.15": "!&5I used to rule &6The World...",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.16": "!&1&lWhy&r &2&ndo&r &3&oI&r &4&mfeel&r &6&kpain",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.17": "Once you have completed inscribing writings upon your",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.18": "Lore Fragment, you may combine it with any item in anvil, in order to transfer name and lore to that item. Doing so will always cost you exactly 4 levels of experience.<br2/>It is not neccessary that you define both custom name and lore - you can define only one of those. When attaching fragment with no custom name, original item's name will not be overwritten; when only name is present, it's lore lines will remain untouched (if present).",
 	
 	
 	"book.enigmaticlegacy.entry.extradimensional_eye.name": "Extradimensional Eye",

@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -13,8 +16,26 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ItemLoreHelper {
+
+	@OnlyIn(Dist.CLIENT)
+	public static void indicateCursedOnesOnly(List<ITextComponent> list) {
+		TextFormatting format;
+
+		if (Minecraft.getInstance().player != null) {
+			format = SuperpositionHandler.isTheCursedOne(Minecraft.getInstance().player) ? TextFormatting.GOLD : TextFormatting.DARK_RED;
+		} else {
+			format = TextFormatting.DARK_RED;
+		}
+
+
+		list.add(new TranslationTextComponent("tooltip.enigmaticlegacy.cursedOnesOnly1").func_240699_a_(format));
+		list.add(new TranslationTextComponent("tooltip.enigmaticlegacy.cursedOnesOnly2").func_240699_a_(format));
+
+	}
 
 	public static void addLocalizedString(List<ITextComponent> list, String str) {
 		list.add(new TranslationTextComponent(str));
@@ -22,23 +43,25 @@ public class ItemLoreHelper {
 
 	public static void addLocalizedString(List<ITextComponent> list, String str, @Nullable TextFormatting format, Object... values) {
 		TextComponent[] stringValues = new TextComponent[values.length];
-		
+
 		int counter = 0;
 		for (Object value : values) {
 			TextComponent comp;
-			
-			if (value instanceof TextComponent)
+
+			if (value instanceof TextComponent) {
 				comp = (TextComponent)value;
-			else
+			} else {
 				comp = new StringTextComponent(value.toString());
-			
-			if (format != null)
+			}
+
+			if (format != null) {
 				comp.func_240699_a_(format);
-			
+			}
+
 			stringValues[counter] = comp;
 			counter++;
 		}
-		
+
 		list.add(new TranslationTextComponent(str, (Object[])stringValues));
 	}
 
@@ -71,10 +94,11 @@ public class ItemLoreHelper {
 		CompoundNBT nbt = stack.getOrCreateChildTag("display");
 
 		ListNBT loreList = nbt.getList("Lore", 8);
-		if (loreList.size() - 1 >= index)
+		if (loreList.size() - 1 >= index) {
 			loreList.set(index, StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
-		else
+		} else {
 			loreList.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
+		}
 
 		nbt.put("Lore", loreList);
 
@@ -86,10 +110,11 @@ public class ItemLoreHelper {
 
 		ListNBT loreList = nbt.getList("Lore", 8);
 
-		if (index == -1 && loreList.size() > 0)
+		if (index == -1 && loreList.size() > 0) {
 			loreList.remove(loreList.size() - 1);
-		else if (loreList.size() - 1 >= index)
+		} else if (loreList.size() - 1 >= index) {
 			loreList.remove(index);
+		}
 
 		nbt.put("Lore", loreList);
 
@@ -101,10 +126,11 @@ public class ItemLoreHelper {
 
 		ListNBT loreList = nbt.getList("Lore", 8);
 
-		if (loreList.size() > 0)
+		if (loreList.size() > 0) {
 			loreList.set(loreList.size() - 1, StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
-		else
+		} else {
 			loreList.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
+		}
 
 		nbt.put("Lore", loreList);
 
@@ -137,15 +163,17 @@ public class ItemLoreHelper {
 				String index = AnvilParser.parseIndex(this.handledString);
 				this.loreIndex = Integer.parseInt(index);
 
-				if (this.loreIndex != -1)
+				if (this.loreIndex != -1) {
 					this.handledString = this.handledString.replaceFirst(index, "");
+				}
 			} else if (this.removeString) {
 				this.handledString = this.handledString.replaceFirst("-!", "");
 				String index = AnvilParser.parseIndex(this.handledString);
 				this.loreIndex = Integer.parseInt(index);
 
-				if (this.loreIndex != -1)
+				if (this.loreIndex != -1) {
 					this.handledString = this.handledString.replaceFirst(index, "");
+				}
 			}
 
 			this.handledString = AnvilParser.parseFormatting(this.handledString);
@@ -153,34 +181,34 @@ public class ItemLoreHelper {
 		}
 
 		public static AnvilParser parseField(String field) {
-
 			return new AnvilParser(field);
 		}
 
-		public static String parseFormatting(String field) {
+		private static String parseFormatting(String field) {
 			String formatter = new TranslationTextComponent("tooltip.enigmaticlegacy.paragraph").getString();
 			String subformat = new TranslationTextComponent("tooltip.enigmaticlegacy.subformat").getString();
 
 			return field.replace(subformat, formatter);
 		}
 
-		public static String parseIndex(String field) {
+		private static String parseIndex(String field) {
 			String number = "";
 			int index = -1;
 
 			for (char symbol : field.toCharArray()) {
 				if (Character.isDigit(symbol)) {
 					number = number + symbol;
-				} else
+				} else {
 					break;
+				}
 
-				if (number.length() >= 2)
+				if (number.length() >= 2) {
 					break;
+				}
 			}
 
-			if (!number.equals("")) {
+			if (!number.equals(""))
 				return number;
-			}
 
 			return "" + index;
 		}

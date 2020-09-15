@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screen.CreateWorldScreen;
 import net.minecraft.client.gui.screen.WorldOptionsScreen;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.EnchantmentContainer;
 import net.minecraft.tileentity.BeaconTileEntity;
 import net.minecraft.util.FoodStats;
@@ -66,12 +67,19 @@ public class ObfuscatedFields {
 	 */
 	public static Field cubeListField;
 
+	/**
+	 * Class: PlayerEntity.class,
+	 * Deobfuscated Name: sleepTimer
+	 */
+	public static Field sleepTimerField;
+
 	public static void extractCommonFields() {
 		try {
 			ObfuscatedFields.foodSaturationField = ObfuscationReflectionHelper.findField(FoodStats.class, "field_75125_b");
 			ObfuscatedFields.beamSegmentsField = ObfuscationReflectionHelper.findField(BeaconTileEntity.class, "field_174909_f");
 			ObfuscatedFields.tableInventoryField = ObfuscationReflectionHelper.findField(EnchantmentContainer.class, "field_75168_e");
 			ObfuscatedFields.worldPosCallableField = ObfuscationReflectionHelper.findField(EnchantmentContainer.class, "field_217006_g");
+			ObfuscatedFields.sleepTimerField = ObfuscationReflectionHelper.findField(PlayerEntity.class, "field_71076_b");
 		} catch (Exception ex) {
 			EnigmaticLegacy.enigmaticLogger.fatal("Could not extract common obfuscated fields via reflection!");
 			EnigmaticLegacy.enigmaticLogger.catching(ex);

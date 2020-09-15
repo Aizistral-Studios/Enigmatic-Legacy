@@ -77,8 +77,9 @@ public class EtheriumScythe extends SwordItem implements IPerhaps, IMultiblockMi
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe1", TextFormatting.GOLD, ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe2", TextFormatting.GOLD, ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			if (!ConfigHandler.DISABLE_AOE_SHIFT_SUPPRESSION.getValue())
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe3");
+			if (!ConfigHandler.DISABLE_AOE_SHIFT_SUPPRESSION.getValue()) {
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe3");
+			}
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe4");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -120,15 +121,17 @@ public class EtheriumScythe extends SwordItem implements IPerhaps, IMultiblockMi
 
 		int supRad = (ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue() - 1) / 2;
 
-		if (type == ActionResultType.CONSUME)
+		if (type == ActionResultType.CONSUME) {
 			for (int x = -supRad; x <= supRad; x++) {
 				for (int z = -supRad; z <= supRad; z++) {
-					if (x == 0 & z == 0)
+					if (x == 0 & z == 0) {
 						continue;
+					}
 
 					Items.DIAMOND_HOE.onItemUse(new ItemUseContext(context.getPlayer(), context.getHand(), new BlockRayTraceResult(context.getHitVec().add(x, 0, z), Direction.UP, context.getPos().add(x, 0, z), context.isInside())));
 				}
 			}
+		}
 
 		return type;
 	}

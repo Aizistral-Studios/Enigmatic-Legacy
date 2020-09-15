@@ -15,11 +15,13 @@ import javax.annotation.Nullable;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.IPerhaps;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
+import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
 import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
 import com.integral.enigmaticlegacy.objects.Vector3;
@@ -36,6 +38,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -95,7 +98,7 @@ import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 
 /**
- * The vessel and library for most most of the handling methods in the Enigmatic Legacy.
+ * The core and vessel for most most of the handling methods in the Enigmatic Legacy.
  *
  * @author Integral
  */
@@ -134,9 +137,9 @@ public class SuperpositionHandler {
 	public static boolean isSlotLocked(String id, final LivingEntity livingEntity) {
 		ICuriosItemHandler handler = CuriosApi.getCuriosHelper().getCuriosHandler(livingEntity).orElse(null);
 
-		if (handler != null) {
+		if (handler != null)
 			return handler.getLockedSlots().contains(id);
-		} else
+		else
 			return true;
 
 	}
@@ -144,7 +147,6 @@ public class SuperpositionHandler {
 	public static boolean hasSpellstone(final LivingEntity entity) {
 		return SuperpositionHandler.getSpellstone(entity) != null;
 	}
-
 
 	public static ItemStack getSpellstone(final LivingEntity entity) {
 		List<ItemStack> spellstoneStack = new ArrayList<ItemStack>();
@@ -157,13 +159,14 @@ public class SuperpositionHandler {
 
 				IDynamicStackHandler soloStackHandler = stacksHandler.getStacks();
 
-				if (soloStackHandler != null)
+				if (soloStackHandler != null) {
 					for (int i = 0; i < stacksHandler.getSlots(); i++) {
 						if (soloStackHandler.getStackInSlot(i) != null && soloStackHandler.getStackInSlot(i).getItem() instanceof ISpellstone) {
 							spellstoneStack.add(soloStackHandler.getStackInSlot(i));
 							break;
 						}
 					}
+				}
 
 			}
 
@@ -189,9 +192,8 @@ public class SuperpositionHandler {
 	@Nullable
 	public static ItemStack getCurioStack(final LivingEntity entity, final Item curio) {
 		final Optional<ImmutableTriple<String, Integer, ItemStack>> data = CuriosApi.getCuriosHelper().findEquippedCurio(curio, entity);
-		if (data.isPresent()) {
+		if (data.isPresent())
 			return data.get().getRight();
-		}
 		return null;
 	}
 
@@ -212,13 +214,16 @@ public class SuperpositionHandler {
 
 		message.size(slots);
 
-		if (!isEnabled)
+		if (!isEnabled) {
 			message.lock();
-		if (isHidden)
+		}
+		if (isHidden) {
 			message.hide();
+		}
 
-		if (icon != null)
+		if (icon != null) {
 			message.icon(icon);
+		}
 
 		InterModComms.sendTo("curios", SlotTypeMessage.REGISTER_TYPE, () -> message.build());
 
@@ -244,8 +249,7 @@ public class SuperpositionHandler {
 	 */
 
 	public static AxisAlignedBB getBoundingBoxAroundEntity(final Entity entity, final double radius) {
-		return new AxisAlignedBB(entity.getPosX() - radius, entity.getPosY() - radius, entity.getPosZ() - radius,
-				entity.getPosX() + radius, entity.getPosY() + radius, entity.getPosZ() + radius);
+		return new AxisAlignedBB(entity.getPosX() - radius, entity.getPosY() - radius, entity.getPosZ() - radius, entity.getPosX() + radius, entity.getPosY() + radius, entity.getPosZ() + radius);
 	}
 
 	/**
@@ -256,8 +260,7 @@ public class SuperpositionHandler {
 	 * @param modifier          Applied velocity modifier.
 	 */
 
-	public static void setEntityMotionFromVector(final Entity entity, final Vector3 originalPosVector,
-			final float modifier) {
+	public static void setEntityMotionFromVector(final Entity entity, final Vector3 originalPosVector, final float modifier) {
 		final Vector3 entityVector = Vector3.fromEntityCenter(entity);
 		Vector3 finalVector = originalPosVector.subtract(entityVector);
 		if (finalVector.mag() > 1.0) {
@@ -277,15 +280,13 @@ public class SuperpositionHandler {
 	 */
 
 	@Nullable
-	public static LivingEntity getObservedEntity(final PlayerEntity player, final World world, final float range,
-			final int maxDist) {
+	public static LivingEntity getObservedEntity(final PlayerEntity player, final World world, final float range, final int maxDist) {
 		LivingEntity newTarget = null;
 		Vector3 target = Vector3.fromEntityCenter(player);
 		List<LivingEntity> entities = new ArrayList<LivingEntity>();
 		for (int distance = 1; entities.size() == 0 && distance < maxDist; ++distance) {
 			target = target.add(new Vector3(player.getLookVec()).multiply(distance)).add(0.0, 0.5, 0.0);
-			entities = player.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(target.x - range,
-					target.y - range, target.z - range, target.x + range, target.y + range, target.z + range));
+			entities = player.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(target.x - range, target.y - range, target.z - range, target.x + range, target.y + range, target.z + range));
 			if (entities.contains(player)) {
 				entities.remove(player);
 			}
@@ -313,6 +314,14 @@ public class SuperpositionHandler {
 		return 0;
 	}
 
+	public static void tickSpellstoneCooldown(PlayerEntity player, int decrementedTicks) {
+		if (!player.world.isRemote) {
+			SuperpositionHandler.spellstoneCooldowns.put(player, SuperpositionHandler.getSpellstoneCooldown(player) - decrementedTicks);
+		}
+
+		return;
+	}
+
 	/**
 	 * Sets the given player's spellstone cooldown to specified value.
 	 */
@@ -320,6 +329,10 @@ public class SuperpositionHandler {
 	public static void setSpellstoneCooldown(PlayerEntity player, int cooldown) {
 		if (!player.world.isRemote) {
 			SuperpositionHandler.spellstoneCooldowns.put(player, cooldown);
+
+			for (Item spellstone : EnigmaticLegacy.spellstoneList) {
+				player.getCooldownTracker().setCooldown(spellstone, cooldown);
+			}
 		}
 
 		return;
@@ -379,8 +392,7 @@ public class SuperpositionHandler {
 	 * @return True if successfull, false otherwise.
 	 */
 
-	public static boolean validTeleport(Entity entity, double x_init, double y_init, double z_init, World world,
-			int checkAxis) {
+	public static boolean validTeleport(Entity entity, double x_init, double y_init, double z_init, World world, int checkAxis) {
 
 		int x = (int) x_init;
 		int y = (int) y_init;
@@ -392,32 +404,22 @@ public class SuperpositionHandler {
 
 			for (int counter = 0; counter <= checkAxis; counter++) {
 
-				if (!world.isAirBlock(new BlockPos(x, y + counter - 1, z))
-						& world.getBlockState(new BlockPos(x, y + counter - 1, z)).isSolid()
-						& world.isAirBlock(new BlockPos(x, y + counter, z))
-						& world.isAirBlock(new BlockPos(x, y + counter + 1, z))) {
+				if (!world.isAirBlock(new BlockPos(x, y + counter - 1, z)) & world.getBlockState(new BlockPos(x, y + counter - 1, z)).isSolid() & world.isAirBlock(new BlockPos(x, y + counter, z)) & world.isAirBlock(new BlockPos(x, y + counter + 1, z))) {
 
 					world.playSound(null, entity.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 
-					EnigmaticLegacy.packetInstance.send(
-							PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(),
-									entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())),
-							new PacketPortalParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2),
-									entity.getPosZ(), 72, 1.0F, false));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())), new PacketPortalParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2), entity.getPosZ(), 72, 1.0F, false));
 
 					if (entity instanceof ServerPlayerEntity) {
 						ServerPlayerEntity player = (ServerPlayerEntity) entity;
 						player.setPositionAndUpdate(x + 0.5, y + counter, z + 0.5);
-					} else
+					} else {
 						((LivingEntity) entity).setPositionAndUpdate(x + 0.5, y + counter, z + 0.5);
+					}
 
 					world.playSound(null, entity.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 
-					EnigmaticLegacy.packetInstance.send(
-							PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(),
-									entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())),
-							new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2),
-									entity.getPosZ(), 48, false));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())), new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2), entity.getPosZ(), 48, false));
 
 					return true;
 				}
@@ -428,32 +430,20 @@ public class SuperpositionHandler {
 
 			for (int counter = 0; counter <= checkAxis; counter++) {
 
-				if (!world.isAirBlock(new BlockPos(x, y - counter - 1, z))
-						& world.getBlockState(new BlockPos(x, y - counter - 1, z)).isSolid()
-						& world.isAirBlock(new BlockPos(x, y - counter, z))
-						& world.isAirBlock(new BlockPos(x, y - counter + 1, z))) {
+				if (!world.isAirBlock(new BlockPos(x, y - counter - 1, z)) & world.getBlockState(new BlockPos(x, y - counter - 1, z)).isSolid() & world.isAirBlock(new BlockPos(x, y - counter, z)) & world.isAirBlock(new BlockPos(x, y - counter + 1, z))) {
 
-					world.playSound(null, entity.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT,
-							SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-					EnigmaticLegacy.packetInstance.send(
-							PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(),
-									entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())),
-							new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2),
-									entity.getPosZ(), 48, false));
+					world.playSound(null, entity.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())), new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2), entity.getPosZ(), 48, false));
 
 					if (entity instanceof ServerPlayerEntity) {
 						ServerPlayerEntity player = (ServerPlayerEntity) entity;
 						player.setPositionAndUpdate(x + 0.5, y - counter, z + 0.5);
-					} else
+					} else {
 						((LivingEntity) entity).setPositionAndUpdate(x + 0.5, y - counter, z + 0.5);
+					}
 
-					world.playSound(null, entity.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT,
-							SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-					EnigmaticLegacy.packetInstance.send(
-							PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(),
-									entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())),
-							new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2),
-									entity.getPosZ(), 48, false));
+					world.playSound(null, entity.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())), new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2), entity.getPosZ(), 48, false));
 
 					return true;
 				}
@@ -484,16 +474,16 @@ public class SuperpositionHandler {
 	 * Builds standart loot pool with any amount of ItemLootEntries.
 	 */
 
-	public static LootPool constructLootPool(String poolName, float minRolls, float maxRolls,
-			@Nullable LootEntry.Builder<?>... entries) {
+	public static LootPool constructLootPool(String poolName, float minRolls, float maxRolls, @Nullable LootEntry.Builder<?>... entries) {
 
 		Builder poolBuilder = LootPool.builder();
 		poolBuilder.name(poolName);
 		poolBuilder.rolls(RandomValueRange.of(minRolls, maxRolls));
 
 		for (LootEntry.Builder<?> entry : entries) {
-			if (entry != null)
+			if (entry != null) {
 				poolBuilder.addEntry(entry);
+			}
 		}
 
 		LootPool constructedPool = poolBuilder.build();
@@ -509,8 +499,7 @@ public class SuperpositionHandler {
 	 */
 
 	@Nullable
-	public static StandaloneLootEntry.Builder<?> createOptionalLootEntry(Item item,
-			int weight, float minCount, float maxCount) {
+	public static StandaloneLootEntry.Builder<?> createOptionalLootEntry(Item item, int weight, float minCount, float maxCount) {
 
 		if (item instanceof IPerhaps) {
 			IPerhaps perhaps = (IPerhaps) item;
@@ -518,8 +507,7 @@ public class SuperpositionHandler {
 			if (!perhaps.isForMortals())
 				return null;
 		}
-		return ItemLootEntry.builder(item).weight(weight)
-				.acceptFunction(SetCount.builder(RandomValueRange.of(minCount, maxCount)));
+		return ItemLootEntry.builder(item).weight(weight).acceptFunction(SetCount.builder(RandomValueRange.of(minCount, maxCount)));
 	}
 
 	/**
@@ -528,8 +516,7 @@ public class SuperpositionHandler {
 	 */
 
 	@Nullable
-	public static StandaloneLootEntry.Builder<?> createOptionalLootEntry(Item item,
-			int weight) {
+	public static StandaloneLootEntry.Builder<?> createOptionalLootEntry(Item item, int weight) {
 
 		if (item instanceof IPerhaps) {
 			IPerhaps perhaps = (IPerhaps) item;
@@ -548,8 +535,7 @@ public class SuperpositionHandler {
 	 * @return
 	 */
 
-	public static ItemLootEntry.Builder<?> itemEntryBuilderED(Item item, int weight, float enchantLevelMin,
-			float enchantLevelMax, float damageMin, float damageMax) {
+	public static ItemLootEntry.Builder<?> itemEntryBuilderED(Item item, int weight, float enchantLevelMin, float enchantLevelMax, float damageMin, float damageMax) {
 		ItemLootEntry.Builder<?> builder = ItemLootEntry.builder(item);
 
 		builder.weight(weight);
@@ -682,9 +668,9 @@ public class SuperpositionHandler {
 			persistent = data.getCompound(PlayerEntity.PERSISTED_NBT_TAG);
 		}
 
-		if (persistent.contains(tag)) {
+		if (persistent.contains(tag))
 			return persistent.get(tag);
-		} else {
+		else {
 			persistent.put(tag, expectedValue);
 			return expectedValue;
 		}
@@ -722,7 +708,7 @@ public class SuperpositionHandler {
 
 	public static boolean getPersistentBoolean(PlayerEntity player, String tag, boolean expectedValue) {
 		INBT theTag = SuperpositionHandler.getPersistentTag(player, tag, ByteNBT.valueOf(expectedValue));
-		return theTag instanceof ByteNBT ? ((ByteNBT)theTag).getByte() != 0 : expectedValue;
+		return theTag instanceof ByteNBT ? ((ByteNBT) theTag).getByte() != 0 : expectedValue;
 	}
 
 	public static void setPersistentInteger(PlayerEntity player, String tag, int value) {
@@ -731,7 +717,7 @@ public class SuperpositionHandler {
 
 	public static int getPersistentInteger(PlayerEntity player, String tag, int expectedValue) {
 		INBT theTag = SuperpositionHandler.getPersistentTag(player, tag, IntNBT.valueOf(expectedValue));
-		return theTag instanceof IntNBT ? ((IntNBT)theTag).getInt() : expectedValue;
+		return theTag instanceof IntNBT ? ((IntNBT) theTag).getInt() : expectedValue;
 	}
 
 	/**
@@ -758,8 +744,7 @@ public class SuperpositionHandler {
 
 	public static boolean hasStoredAnvilField(PlayerEntity entity) {
 		if (EnigmaticEventHandler.anvilFields.containsKey(entity))
-			if (EnigmaticEventHandler.anvilFields.get(entity) != null
-					&& !EnigmaticEventHandler.anvilFields.get(entity).equals(""))
+			if (EnigmaticEventHandler.anvilFields.get(entity) != null && !EnigmaticEventHandler.anvilFields.get(entity).equals(""))
 				return true;
 
 		return false;
@@ -824,8 +809,7 @@ public class SuperpositionHandler {
 		number = number.concat("-");
 
 		while (number.length() < 7) {
-			number = number.concat("" + SuperpositionHandler.symbols[SuperpositionHandler.random
-					.nextInt(SuperpositionHandler.symbols.length)]);
+			number = number.concat("" + SuperpositionHandler.symbols[SuperpositionHandler.random.nextInt(SuperpositionHandler.symbols.length)]);
 		}
 
 		while (number.length() < 9) {
@@ -839,8 +823,9 @@ public class SuperpositionHandler {
 		PlayerEntity player = null;
 
 		for (PlayerEntity checkedPlayer : world.getPlayers()) {
-			if (checkedPlayer.getDisplayName().getString().equals(name))
+			if (checkedPlayer.getDisplayName().getString().equals(name)) {
 				player = checkedPlayer;
+			}
 		}
 
 		return player;
@@ -857,58 +842,57 @@ public class SuperpositionHandler {
 	 */
 
 	@OnlyIn(Dist.CLIENT)
-	public static void addPotionTooltip(List<EffectInstance> list, ItemStack itemIn, List<ITextComponent> lores,
-			float durationFactor) {
+	public static void addPotionTooltip(List<EffectInstance> list, ItemStack itemIn, List<ITextComponent> lores, float durationFactor) {
 		List<Pair<Attribute, AttributeModifier>> list1 = Lists.newArrayList();
 		if (list.isEmpty()) {
 			lores.add((new TranslationTextComponent("effect.none")).func_240699_a_(TextFormatting.GRAY));
 		} else {
-	         for(EffectInstance effectinstance : list) {
-	             IFormattableTextComponent iformattabletextcomponent = new TranslationTextComponent(effectinstance.getEffectName());
-	             Effect effect = effectinstance.getPotion();
-	             Map<Attribute, AttributeModifier> map = effect.getAttributeModifierMap();
-	             if (!map.isEmpty()) {
-	                for(Entry<Attribute, AttributeModifier> entry : map.entrySet()) {
-	                   AttributeModifier attributemodifier = entry.getValue();
-	                   AttributeModifier attributemodifier1 = new AttributeModifier(attributemodifier.getName(), effect.getAttributeModifierAmount(effectinstance.getAmplifier(), attributemodifier), attributemodifier.getOperation());
-	                   list1.add(new Pair<>(entry.getKey(), attributemodifier1));
-	                }
-	             }
+			for (EffectInstance effectinstance : list) {
+				IFormattableTextComponent iformattabletextcomponent = new TranslationTextComponent(effectinstance.getEffectName());
+				Effect effect = effectinstance.getPotion();
+				Map<Attribute, AttributeModifier> map = effect.getAttributeModifierMap();
+				if (!map.isEmpty()) {
+					for (Entry<Attribute, AttributeModifier> entry : map.entrySet()) {
+						AttributeModifier attributemodifier = entry.getValue();
+						AttributeModifier attributemodifier1 = new AttributeModifier(attributemodifier.getName(), effect.getAttributeModifierAmount(effectinstance.getAmplifier(), attributemodifier), attributemodifier.getOperation());
+						list1.add(new Pair<>(entry.getKey(), attributemodifier1));
+					}
+				}
 
-	             if (effectinstance.getAmplifier() > 0) {
-	                iformattabletextcomponent.func_240702_b_(" ").func_230529_a_(new TranslationTextComponent("potion.potency." + effectinstance.getAmplifier()));
-	             }
+				if (effectinstance.getAmplifier() > 0) {
+					iformattabletextcomponent.func_240702_b_(" ").func_230529_a_(new TranslationTextComponent("potion.potency." + effectinstance.getAmplifier()));
+				}
 
-	             if (effectinstance.getDuration() > 20) {
-	                iformattabletextcomponent.func_240702_b_(" (").func_240702_b_(EffectUtils.getPotionDurationString(effectinstance, durationFactor)).func_240702_b_(")");
-	             }
+				if (effectinstance.getDuration() > 20) {
+					iformattabletextcomponent.func_240702_b_(" (").func_240702_b_(EffectUtils.getPotionDurationString(effectinstance, durationFactor)).func_240702_b_(")");
+				}
 
-	             lores.add(iformattabletextcomponent.func_240699_a_(effect.getEffectType().getColor()));
-	          }
-	       }
+				lores.add(iformattabletextcomponent.func_240699_a_(effect.getEffectType().getColor()));
+			}
+		}
 
 		if (!list1.isEmpty()) {
-	         lores.add(StringTextComponent.field_240750_d_);
-	         lores.add((new TranslationTextComponent("potion.whenDrank")).func_240699_a_(TextFormatting.DARK_PURPLE));
+			lores.add(StringTextComponent.field_240750_d_);
+			lores.add((new TranslationTextComponent("potion.whenDrank")).func_240699_a_(TextFormatting.DARK_PURPLE));
 
-	         for(Pair<Attribute, AttributeModifier> pair : list1) {
-	            AttributeModifier attributemodifier2 = pair.getSecond();
-	            double d0 = attributemodifier2.getAmount();
-	            double d1;
-	            if (attributemodifier2.getOperation() != AttributeModifier.Operation.MULTIPLY_BASE && attributemodifier2.getOperation() != AttributeModifier.Operation.MULTIPLY_TOTAL) {
-	               d1 = attributemodifier2.getAmount();
-	            } else {
-	               d1 = attributemodifier2.getAmount() * 100.0D;
-	            }
+			for (Pair<Attribute, AttributeModifier> pair : list1) {
+				AttributeModifier attributemodifier2 = pair.getSecond();
+				double d0 = attributemodifier2.getAmount();
+				double d1;
+				if (attributemodifier2.getOperation() != AttributeModifier.Operation.MULTIPLY_BASE && attributemodifier2.getOperation() != AttributeModifier.Operation.MULTIPLY_TOTAL) {
+					d1 = attributemodifier2.getAmount();
+				} else {
+					d1 = attributemodifier2.getAmount() * 100.0D;
+				}
 
-	            if (d0 > 0.0D) {
-	               lores.add((new TranslationTextComponent("attribute.modifier.plus." + attributemodifier2.getOperation().getId(), ItemStack.DECIMALFORMAT.format(d1), new TranslationTextComponent(pair.getFirst().func_233754_c_()))).func_240699_a_(TextFormatting.BLUE));
-	            } else if (d0 < 0.0D) {
-	               d1 = d1 * -1.0D;
-	               lores.add((new TranslationTextComponent("attribute.modifier.take." + attributemodifier2.getOperation().getId(), ItemStack.DECIMALFORMAT.format(d1), new TranslationTextComponent(pair.getFirst().func_233754_c_()))).func_240699_a_(TextFormatting.DARK_RED));
-	            }
-	         }
-	      }
+				if (d0 > 0.0D) {
+					lores.add((new TranslationTextComponent("attribute.modifier.plus." + attributemodifier2.getOperation().getId(), ItemStack.DECIMALFORMAT.format(d1), new TranslationTextComponent(pair.getFirst().func_233754_c_()))).func_240699_a_(TextFormatting.BLUE));
+				} else if (d0 < 0.0D) {
+					d1 = d1 * -1.0D;
+					lores.add((new TranslationTextComponent("attribute.modifier.take." + attributemodifier2.getOperation().getId(), ItemStack.DECIMALFORMAT.format(d1), new TranslationTextComponent(pair.getFirst().func_233754_c_()))).func_240699_a_(TextFormatting.DARK_RED));
+				}
+			}
+		}
 
 	}
 
@@ -929,9 +913,8 @@ public class SuperpositionHandler {
 			allInventories.addAll(player.inventory.offHandInventory);
 
 			for (ItemStack invStack : allInventories) {
-				if (SuperpositionHandler.canMergeStacks(invStack, stack, player.inventory.getInventoryStackLimit())) {
+				if (SuperpositionHandler.canMergeStacks(invStack, stack, player.inventory.getInventoryStackLimit()))
 					return true;
-				}
 			}
 		}
 
@@ -939,8 +922,7 @@ public class SuperpositionHandler {
 	}
 
 	public static boolean canMergeStacks(ItemStack stack1, ItemStack stack2, int invStackLimit) {
-		return !stack1.isEmpty() && SuperpositionHandler.stackEqualExact(stack1, stack2) && stack1.isStackable()
-				&& stack1.getCount() < stack1.getMaxStackSize() && stack1.getCount() < invStackLimit;
+		return !stack1.isEmpty() && SuperpositionHandler.stackEqualExact(stack1, stack2) && stack1.isStackable() && stack1.getCount() < stack1.getMaxStackSize() && stack1.getCount() < invStackLimit;
 	}
 
 	/**
@@ -956,18 +938,18 @@ public class SuperpositionHandler {
 	@OnlyIn(Dist.CLIENT)
 	public static float getParticleMultiplier() {
 
-		if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.MINIMAL) {
+		if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.MINIMAL)
 			return 0.35F;
-		} else if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.DECREASED) {
+		else if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.DECREASED)
 			return 0.65F;
-		} else {
+		else
 			return 1.0F;
-		}
 
 	}
 
 	/**
 	 * Checks whether or on the player is within the range of any active beacon.
+	 * @author Integral
 	 */
 
 	@SuppressWarnings("unchecked")
@@ -976,26 +958,30 @@ public class SuperpositionHandler {
 		boolean inRange = false;
 
 		for (TileEntity tile : player.world.loadedTileEntityList) {
-			if (tile instanceof BeaconTileEntity)
-				list.add((BeaconTileEntity)tile);
+			if (tile instanceof BeaconTileEntity) {
+				list.add((BeaconTileEntity) tile);
+			}
 		}
 
-		if (list.size() > 0)
+		if (list.size() > 0) {
 			for (BeaconTileEntity beacon : list)
 				if (beacon.getLevels() > 0) {
 					try {
-						if (((List<BeaconTileEntity.BeamSegment>)ObfuscatedFields.beamSegmentsField.get(beacon)).isEmpty())
+						if (((List<BeaconTileEntity.BeamSegment>) ObfuscatedFields.beamSegmentsField.get(beacon)).isEmpty()) {
 							continue;
+						}
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
 
-					int range = (beacon.getLevels()+1)*10;
+					int range = (beacon.getLevels() + 1) * 10;
 					double distance = Math.sqrt(beacon.getPos().distanceSq(player.getPosX(), beacon.getPos().getY(), player.getPosZ(), true));
 
-					if (distance <= range)
+					if (distance <= range) {
 						inRange = true;
+					}
 				}
+		}
 
 		return inRange;
 	}
@@ -1024,13 +1010,16 @@ public class SuperpositionHandler {
 		int dropMode = ConfigHandler.SOUL_CRYSTALS_MODE.getValue();
 		int maxCrystalLoss = ConfigHandler.MAX_SOUL_CRYSTAL_LOSS.getValue();
 
-		if (dropMode == 0) {
-			return false;
-		} else if (dropMode == 1) {
-			return player.world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY) && EnigmaticLegacy.soulCrystal.getLostCrystals(player) < maxCrystalLoss;
-		} else if (dropMode == 2) {
-			return EnigmaticLegacy.soulCrystal.getLostCrystals(player) < maxCrystalLoss;
-		}
+		boolean hasCursedRing = SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing);
+		boolean canDropMore = EnigmaticLegacy.soulCrystal.getLostCrystals(player) < maxCrystalLoss;
+		boolean keepInventory = player.world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY);
+
+		if (dropMode == 0)
+			return hasCursedRing && canDropMore;
+		else if (dropMode == 1)
+			return (hasCursedRing || keepInventory) && canDropMore;
+		else if (dropMode == 2)
+			return canDropMore;
 
 		return false;
 	}
@@ -1068,9 +1057,10 @@ public class SuperpositionHandler {
 		}
 
 		if (!respawnWorld.equals(destinationWorld)) {
-			 vec2 = AdvancedSpawnLocationHelper.getValidSpawn(destinationWorld, serverPlayer);
-		} else
+			vec2 = AdvancedSpawnLocationHelper.getValidSpawn(destinationWorld, serverPlayer);
+		} else {
 			vec2 = Optional.empty();
+		}
 
 		if (vec.isPresent()) {
 			Vector3d trueVec = vec.get();
@@ -1086,5 +1076,22 @@ public class SuperpositionHandler {
 
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getPosX(), serverPlayer.getPosY(), serverPlayer.getPosZ(), 128, serverPlayer.world.func_234923_W_())), new PacketRecallParticles(serverPlayer.getPosX(), serverPlayer.getPosY() + (serverPlayer.getHeight() / 2), serverPlayer.getPosZ(), 48, false));
 	}
+
+	public static void removeAttributeMap(PlayerEntity player, Multimap<Attribute, AttributeModifier> attributes) {
+		AttributeModifierManager map = player.func_233645_dx_();
+		map.func_233785_a_(attributes);
+	}
+
+	public static void applyAttributeMap(PlayerEntity player, Multimap<Attribute, AttributeModifier> attributes) {
+		AttributeModifierManager map = player.func_233645_dx_();
+
+		map.func_233793_b_(attributes);
+	}
+
+	public static boolean isTheCursedOne(PlayerEntity player) {
+		return SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing);
+	}
+
+
 
 }

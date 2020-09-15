@@ -70,9 +70,11 @@ public class GolemHeart extends ItemAdvancedCurio implements ISpellstone {
 
 		this.resistanceList.put(DamageSource.MAGIC.damageType, () -> (float) ConfigHandler.GOLEM_HEART_VULNERABILITY_MODIFIER.getValue());
 		this.resistanceList.put(DamageSource.DRAGON_BREATH.damageType, () -> (float) ConfigHandler.GOLEM_HEART_VULNERABILITY_MODIFIER.getValue());
+
+		this.initAttributes();
 	}
 
-	public void initAttributes() {
+	private void initAttributes() {
 		this.attributesDefault.put(Attributes.field_233826_i_, new AttributeModifier(UUID.fromString("15faf191-bf21-4654-b359-cc1f4f1243bf"), "GolemHeart DAB", ConfigHandler.GOLEM_HEART_DEFAULT_ARMOR.getValue(), AttributeModifier.Operation.ADDITION));
 		this.attributesDefault.put(Attributes.field_233820_c_, new AttributeModifier(UUID.fromString("10faf191-bf21-4554-b359-cc1f4f1233bf"), "GolemHeart KR", ConfigHandler.GOLEM_HEART_KNOCKBACK_RESISTANCE.getValue().asModifier(false), AttributeModifier.Operation.ADDITION));
 
@@ -139,8 +141,9 @@ public class GolemHeart extends ItemAdvancedCurio implements ISpellstone {
 			int armorAmount = 0;
 
 			for (ItemStack stack : player.getArmorInventoryList()) {
-				if (!stack.isEmpty())
+				if (!stack.isEmpty()) {
 					armorAmount++;
+				}
 			}
 
 			if (armorAmount != 0) {

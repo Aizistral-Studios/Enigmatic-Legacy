@@ -13,7 +13,7 @@
     "announce_to_chat": true,
     "hidden": false
   },
-  "parent": "enigmaticlegacy:main/discover_ring",
+  "parent": "enigmaticlegacy:main/root",
   "criteria": {
     "spellstone": {
       "trigger": "minecraft:inventory_changed",

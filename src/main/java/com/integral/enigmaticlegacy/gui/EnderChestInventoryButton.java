@@ -60,7 +60,7 @@ public class EnderChestInventoryButton extends ImageButton {
 			}
 		}
 
-		boolean hasRing = SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.enderRing);
+		boolean hasRing = SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.enderRing) || SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.cursedRing);
 
 		if (!hasRing || !ConfigHandler.ECHEST_BUTTON_ENABLED.getValue()) {
 			this.field_230693_o_ = false;

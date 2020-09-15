@@ -5,15 +5,21 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.gui.containers.EnigmaticRepairContainerProvider;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -48,6 +54,20 @@ public class LoreInscriber extends ItemBase {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack stack = playerIn.getHeldItem(handIn);
+		playerIn.setActiveHand(handIn);
+
+		if (!worldIn.isRemote) {
+			ITextComponent name = new TranslationTextComponent("gui.enigmaticlegacy.lore_inscriber");
+
+			playerIn.openContainer(new EnigmaticRepairContainerProvider(name));
+		}
+
+		return new ActionResult<>(ActionResultType.SUCCESS, stack);
 	}
 
 }

@@ -51,6 +51,7 @@ public class EtheriumAxe extends AxeItem implements IPerhaps, IMultiblockMiningT
 		this.effectiveMaterials.add(Material.LEAVES);
 		this.effectiveMaterials.add(Material.CACTUS);
 		this.effectiveMaterials.add(Material.BAMBOO);
+		this.effectiveMaterials.add(Material.field_237214_y_);
 	}
 
 	@Override
@@ -63,8 +64,9 @@ public class EtheriumAxe extends AxeItem implements IPerhaps, IMultiblockMiningT
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumAxe1", TextFormatting.GOLD, ConfigHandler.ETHERIUM_AXE_VOLUME.getValue());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-			if (!ConfigHandler.DISABLE_AOE_SHIFT_SUPPRESSION.getValue())
+			if (!ConfigHandler.DISABLE_AOE_SHIFT_SUPPRESSION.getValue()) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumAxe2");
+			}
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumAxe3");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");

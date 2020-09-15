@@ -7,12 +7,12 @@
     }
   ],
   "pattern": [
-    "NTN",
+    "NDN",
     "IXI",
-    "GIG"
+    "GTG"
   ],
   "key": {
-    "X": {
+    "D": {
       "item": "minecraft:diamond"
     },
 	"N": {
@@ -26,6 +26,9 @@
     },
 	"T": {
       "item": "minecraft:ghast_tear"
+    },
+	"X": {
+      "item": "enigmaticlegacy:earth_heart"
     }
   },
   "result": {

@@ -10,6 +10,7 @@ import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.google.common.collect.Lists;
 import com.integral.enigmaticlegacy.api.items.IAdvancedPotionItem.PotionType;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
 import com.integral.enigmaticlegacy.blocks.BlockBigLamp;
@@ -24,6 +25,9 @@ import com.integral.enigmaticlegacy.crafting.EnigmaticRecipeSerializers;
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
+import com.integral.enigmaticlegacy.gui.containers.PortableCrafterContainer;
+import com.integral.enigmaticlegacy.gui.containers.LoreInscriberContainer;
+import com.integral.enigmaticlegacy.gui.containers.LoreInscriberScreen;
 import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticKeybindHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticUpdateHandler;
@@ -34,7 +38,11 @@ import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
 import com.integral.enigmaticlegacy.items.AstralBreaker;
 import com.integral.enigmaticlegacy.items.AstralDust;
+import com.integral.enigmaticlegacy.items.PlaceholderItem;
+import com.integral.enigmaticlegacy.items.CursedRing;
 import com.integral.enigmaticlegacy.items.DarkArmor;
+import com.integral.enigmaticlegacy.items.DarkMirror;
+import com.integral.enigmaticlegacy.items.EarthHeart;
 import com.integral.enigmaticlegacy.items.EnchantmentTransposer;
 import com.integral.enigmaticlegacy.items.EnderRing;
 import com.integral.enigmaticlegacy.items.EnderRod;
@@ -77,6 +85,7 @@ import com.integral.enigmaticlegacy.items.StorageCrystal;
 import com.integral.enigmaticlegacy.items.SuperMagnetRing;
 import com.integral.enigmaticlegacy.items.TheAcknowledgment;
 import com.integral.enigmaticlegacy.items.ThiccScroll;
+import com.integral.enigmaticlegacy.items.TwistedCore;
 import com.integral.enigmaticlegacy.items.UltimatePotionBase;
 import com.integral.enigmaticlegacy.items.UltimatePotionLingering;
 import com.integral.enigmaticlegacy.items.UltimatePotionSplash;
@@ -86,6 +95,7 @@ import com.integral.enigmaticlegacy.items.WormholePotion;
 import com.integral.enigmaticlegacy.items.XPScroll;
 import com.integral.enigmaticlegacy.items.generic.GenericBlockItem;
 import com.integral.enigmaticlegacy.objects.AdvancedPotion;
+import com.integral.enigmaticlegacy.objects.FortuneBonusModifier;
 import com.integral.enigmaticlegacy.packets.clients.PacketFlameParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketHandleItemPickup;
@@ -101,22 +111,27 @@ import com.integral.enigmaticlegacy.packets.clients.PacketWitherParticles;
 import com.integral.enigmaticlegacy.packets.server.PacketAnvilField;
 import com.integral.enigmaticlegacy.packets.server.PacketConfirmTeleportation;
 import com.integral.enigmaticlegacy.packets.server.PacketEnderRingKey;
+import com.integral.enigmaticlegacy.packets.server.PacketInkwellField;
 import com.integral.enigmaticlegacy.packets.server.PacketSpellstoneKey;
 import com.integral.enigmaticlegacy.packets.server.PacketXPScrollKey;
 import com.integral.enigmaticlegacy.proxy.ClientProxy;
 import com.integral.enigmaticlegacy.proxy.CommonProxy;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
+import com.integral.enigmaticlegacy.triggers.CursedRingEquippedTrigger;
 import com.integral.enigmaticlegacy.triggers.RevelationGainTrigger;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.gui.screen.inventory.CraftingScreen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -139,6 +154,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
+import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -152,7 +169,10 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 import vazkii.patchouli.api.PatchouliAPI;
+import net.minecraft.util.IWorldPosCallable;
 
 @Mod("enigmaticlegacy")
 public class EnigmaticLegacy {
@@ -162,7 +182,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.1.3";
+	public static final String VERSION = "2.2.0";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -179,6 +199,7 @@ public class EnigmaticLegacy {
 	public static SoundEvent HHOFF;
 	public static SoundEvent SHIELD_TRIGGER;
 	public static SoundEvent DEFLECT;
+	public static SoundEvent WRITE;
 
 	public static BlockMassiveLamp massiveLamp;
 	public static BlockBigLamp bigLamp;
@@ -262,6 +283,23 @@ public class EnigmaticLegacy {
 	public static DarkArmor darkLeggings;
 	public static DarkArmor darkBoots;
 
+	public static CursedRing cursedRing;
+	public static DarkMirror darkMirror;
+
+	public static PlaceholderItem cryingIngot;
+	public static PlaceholderItem cryingHelmet;
+	public static PlaceholderItem cryingChestplate;
+	public static PlaceholderItem cryingLeggings;
+	public static PlaceholderItem cryingBoots;
+	public static PlaceholderItem cryingPickaxe;
+	public static PlaceholderItem cryingAxe;
+	public static PlaceholderItem cryingSword;
+	public static PlaceholderItem cryingShovel;
+	public static PlaceholderItem cryingHoe;
+
+	public static EarthHeart earthHeart;
+	public static TwistedCore twistedCore;
+
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
 	public static AdvancedPotion ULTIMATE_LEAPING;
@@ -290,12 +328,22 @@ public class EnigmaticLegacy {
 	public static ItemStack universalClock;
 	public static UUID soulOfTheArchitect;
 
+	public static List<Item> spellstoneList;
+
+	public static final ContainerType<PortableCrafterContainer> PORTABLE_CRAFTER = new ContainerType<>((syncId, playerInv) -> new PortableCrafterContainer(syncId, playerInv, IWorldPosCallable.of(playerInv.player.world, playerInv.player.func_233580_cy_())));
+
+	@ObjectHolder(EnigmaticLegacy.MODID + ":enigmatic_repair_container")
+	public static final ContainerType<LoreInscriberContainer> LORE_INSCRIBER_CONTAINER = null;
+
 	private static final String PTC_VERSION = "1";
 
 	public static final CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
 	@SuppressWarnings("deprecation")
 	public EnigmaticLegacy() {
+
+		// TODO Lore Fragment copying recipe
+
 		EnigmaticLegacy.enigmaticLogger.info("Constructing mod instance...");
 
 		EnigmaticLegacy.enigmaticLegacy = this;
@@ -388,6 +436,33 @@ public class EnigmaticLegacy {
 		EnigmaticLegacy.darkLeggings = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.LEGS).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "dark_leggings"));
 		EnigmaticLegacy.darkBoots = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.FEET).setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "dark_boots"));
 
+		EnigmaticLegacy.cursedRing = new CursedRing();
+		EnigmaticLegacy.darkMirror = new DarkMirror();
+
+		EnigmaticLegacy.cryingIngot = new PlaceholderItem("crying_ingot", Rarity.RARE);
+		EnigmaticLegacy.cryingHelmet = new PlaceholderItem("crying_helmet", Rarity.RARE);
+		EnigmaticLegacy.cryingChestplate = new PlaceholderItem("crying_chestplate", Rarity.RARE);
+		EnigmaticLegacy.cryingLeggings = new PlaceholderItem("crying_leggings", Rarity.RARE);
+		EnigmaticLegacy.cryingBoots = new PlaceholderItem("crying_boots", Rarity.RARE);
+		EnigmaticLegacy.cryingPickaxe = new PlaceholderItem("crying_pickaxe", Rarity.RARE);
+		EnigmaticLegacy.cryingAxe = new PlaceholderItem("crying_axe", Rarity.RARE);
+		EnigmaticLegacy.cryingSword = new PlaceholderItem("crying_sword", Rarity.RARE);
+		EnigmaticLegacy.cryingShovel = new PlaceholderItem("crying_shovel", Rarity.RARE);
+		EnigmaticLegacy.cryingHoe = new PlaceholderItem("crying_hoe", Rarity.RARE);
+
+		EnigmaticLegacy.earthHeart = new EarthHeart();
+		EnigmaticLegacy.twistedCore = new TwistedCore();
+
+		EnigmaticLegacy.spellstoneList = Lists.newArrayList(
+				EnigmaticLegacy.angelBlessing,
+				EnigmaticLegacy.magmaHeart,
+				EnigmaticLegacy.golemHeart,
+				EnigmaticLegacy.oceanStone,
+				EnigmaticLegacy.eyeOfNebula,
+				EnigmaticLegacy.voidPearl,
+				EnigmaticLegacy.enigmaticItem
+				);
+
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientRegistries);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::intermodStuff);
@@ -420,15 +495,15 @@ public class EnigmaticLegacy {
 			ConfigHandler.CONFIG_VERSION.save();
 		}
 
-		EnigmaticLegacy.golemHeart.initAttributes();
-
 		EnigmaticLegacy.enigmaticLogger.info("Registering brewing recipes...");
 
-		if (ConfigHandler.RECALL_POTION_ENABLED.getValue())
+		if (ConfigHandler.RECALL_POTION_ENABLED.getValue()) {
 			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.AWKWARD)), Ingredient.fromItems(Items.ENDER_EYE), new ItemStack(EnigmaticLegacy.recallPotion), new ResourceLocation(EnigmaticLegacy.MODID, "recall_potion")));
+		}
 
-		if (ConfigHandler.COMMON_POTIONS_ENABLED.getValue())
+		if (ConfigHandler.COMMON_POTIONS_ENABLED.getValue()) {
 			PotionHelper.registerCommonPotions();
+		}
 
 		if (ConfigHandler.ULTIMATE_POTIONS_ENABLED.getValue()) {
 
@@ -479,12 +554,15 @@ public class EnigmaticLegacy {
 		EnigmaticLegacy.packetInstance.registerMessage(15, PacketFlameParticles.class, PacketFlameParticles::encode, PacketFlameParticles::decode, PacketFlameParticles::handle);
 		EnigmaticLegacy.packetInstance.registerMessage(16, PacketSetEntryState.class, PacketSetEntryState::encode, PacketSetEntryState::decode, PacketSetEntryState::handle);
 		EnigmaticLegacy.packetInstance.registerMessage(17, PacketForceArrowRotations.class, PacketForceArrowRotations::encode, PacketForceArrowRotations::decode, PacketForceArrowRotations::handle);
+		EnigmaticLegacy.packetInstance.registerMessage(18, PacketInkwellField.class, PacketInkwellField::encode, PacketInkwellField::decode, PacketInkwellField::handle);
 
 		EnigmaticLegacy.enigmaticLogger.info("Registering triggers...");
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);
 		CriteriaTriggers.register(BeheadingTrigger.INSTANCE);
 		CriteriaTriggers.register(RevelationGainTrigger.INSTANCE);
+		CriteriaTriggers.register(CursedRingEquippedTrigger.INSTANCE);
 
+		EnigmaticLegacy.enigmaticLogger.info("Extracting common obfuscated fields...");
 		ObfuscatedFields.extractCommonFields();
 
 		EnigmaticLegacy.enigmaticLogger.info("Common setup phase finished successfully.");
@@ -494,13 +572,16 @@ public class EnigmaticLegacy {
 		EnigmaticLegacy.enigmaticLogger.info("Initializing client setup phase...");
 		EnigmaticLegacy.keybindHandler.registerKeybinds();
 
+		EnigmaticLegacy.enigmaticLogger.info("Extracting client obfuscated fields...");
 		ObfuscatedFields.extractClientFields();
 
-		for (Block theBlock : EnigmaticLegacy.cutoutBlockRegistry) {
+		for (final Block theBlock : EnigmaticLegacy.cutoutBlockRegistry) {
 			RenderTypeLookup.setRenderLayer(theBlock, RenderType.getCutout());
 		}
 
 		ModelRegistry.registerModels();
+		ScreenManager.registerFactory(EnigmaticLegacy.PORTABLE_CRAFTER, CraftingScreen::new);
+		ScreenManager.registerFactory(EnigmaticLegacy.LORE_INSCRIBER_CONTAINER, LoreInscriberScreen::new);
 
 		EnigmaticLegacy.enigmaticLogger.info("Client setup phase finished successfully.");
 	}
@@ -508,18 +589,28 @@ public class EnigmaticLegacy {
 	private void intermodStuff(final InterModEnqueueEvent event) {
 		EnigmaticLegacy.enigmaticLogger.info("Sending messages to Curios API...");
 		SuperpositionHandler.registerCurioType("charm", 1, true, false, null);
-		SuperpositionHandler.registerCurioType("ring", 2, false, false, null);
+		SuperpositionHandler.registerCurioType("ring", 2, true, false, null);
 		SuperpositionHandler.registerCurioType("spellstone", 1, false, false, new ResourceLocation(EnigmaticLegacy.MODID, "slots/empty_spellstone_slot"));
 		SuperpositionHandler.registerCurioType("scroll", 1, false, false, new ResourceLocation(EnigmaticLegacy.MODID, "slots/empty_scroll_slot"));
 
 	}
 
-	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = EnigmaticLegacy.MODID)
+	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 	public static class RegistryEvents {
+
+		@SubscribeEvent
+		public static void registerContainers(final RegistryEvent.Register<ContainerType<?>> event) {
+			final IForgeRegistry<ContainerType<?>> registry = event.getRegistry();
+
+			registry.registerAll(
+					EnigmaticLegacy.PORTABLE_CRAFTER.setRegistryName(EnigmaticLegacy.MODID, "portable_crafter"),
+					IForgeContainerType.create(LoreInscriberContainer::new).setRegistryName(EnigmaticLegacy.MODID, "enigmatic_repair_container")
+					);
+		}
 
 		@OnlyIn(Dist.CLIENT)
 		@SubscribeEvent
-		public static void stitchTextures(TextureStitchEvent.Pre evt) {
+		public static void stitchTextures(final TextureStitchEvent.Pre evt) {
 
 			if (evt.getMap().getTextureLocation() == PlayerContainer.LOCATION_BLOCKS_TEXTURE) {
 
@@ -548,6 +639,8 @@ public class EnigmaticLegacy {
 		public static void registerItems(final RegistryEvent.Register<Item> event) {
 
 			EnigmaticLegacy.enigmaticLogger.info("Initializing items registration...");
+
+			final IForgeRegistry<Item> registry = event.getRegistry();
 
 			event.getRegistry().registerAll(
 					EnigmaticLegacy.enigmaticItem,
@@ -615,6 +708,20 @@ public class EnigmaticLegacy {
 					//EnigmaticLegacy.darkChestplate,
 					//EnigmaticLegacy.darkLeggings,
 					//EnigmaticLegacy.darkBoots,
+					EnigmaticLegacy.cursedRing,
+					EnigmaticLegacy.darkMirror,
+					/*EnigmaticLegacy.cryingIngot,
+					EnigmaticLegacy.cryingHelmet,
+					EnigmaticLegacy.cryingChestplate,
+					EnigmaticLegacy.cryingLeggings,
+					EnigmaticLegacy.cryingBoots,
+					EnigmaticLegacy.cryingPickaxe,
+					EnigmaticLegacy.cryingAxe,
+					EnigmaticLegacy.cryingSword,
+					EnigmaticLegacy.cryingShovel,
+					EnigmaticLegacy.cryingHoe,*/
+					EnigmaticLegacy.earthHeart,
+					EnigmaticLegacy.twistedCore,
 					new GenericBlockItem(EnigmaticLegacy.massiveLamp),
 					new GenericBlockItem(EnigmaticLegacy.bigLamp),
 					new GenericBlockItem(EnigmaticLegacy.massiveShroomlamp),
@@ -622,7 +729,7 @@ public class EnigmaticLegacy {
 					new GenericBlockItem(EnigmaticLegacy.massiveRedstonelamp),
 					new GenericBlockItem(EnigmaticLegacy.bigRedstonelamp)
 					/*,gemOfBinding,wormholePotion*/
-			);
+					);
 
 			EnigmaticLegacy.enigmaticLogger.info("Items registered successfully.");
 		}
@@ -635,6 +742,7 @@ public class EnigmaticLegacy {
 			EnigmaticLegacy.HHOFF = SuperpositionHandler.registerSound("misc.hhoff");
 			EnigmaticLegacy.SHIELD_TRIGGER = SuperpositionHandler.registerSound("misc.shield_trigger");
 			EnigmaticLegacy.DEFLECT = SuperpositionHandler.registerSound("misc.deflect");
+			EnigmaticLegacy.WRITE = SuperpositionHandler.registerSound("misc.write");
 
 			EnigmaticLegacy.enigmaticLogger.info("Sounds registered successfully.");
 		}
@@ -645,7 +753,7 @@ public class EnigmaticLegacy {
 		}
 
 		@SubscribeEvent
-		public static void registerBrewing(RegistryEvent.Register<Potion> event) {
+		public static void registerBrewing(final RegistryEvent.Register<Potion> event) {
 
 			EnigmaticLegacy.enigmaticLogger.info("Initializing advanced potion system...");
 
@@ -697,6 +805,15 @@ public class EnigmaticLegacy {
 		}
 
 		@SubscribeEvent
+		public static void registerLootModifiers(final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
+			final IForgeRegistry<GlobalLootModifierSerializer<?>> registry = event.getRegistry();
+
+			registry.registerAll(
+					new FortuneBonusModifier.Serializer().setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "cursed_fortune_bonus"))
+					);
+		}
+
+		@SubscribeEvent
 		public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> event) {
 			EnigmaticLegacy.enigmaticLogger.info("Initializing entities registration...");
 
@@ -711,18 +828,19 @@ public class EnigmaticLegacy {
 
 			EnigmaticLegacy.enigmaticLogger.info("Entities registered successfully.");
 		}
+
 	}
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
-	public void onColorInit(net.minecraftforge.client.event.ColorHandlerEvent.Item event) {
+	public void onColorInit(final net.minecraftforge.client.event.ColorHandlerEvent.Item event) {
 		EnigmaticLegacy.enigmaticLogger.info("Initializing colors registration...");
 
 		event.getItemColors().register((stack, color) -> {
 			if (PotionHelper.isAdvancedPotion(stack))
 				return color > 0 ? -1 : PotionHelper.getColor(stack);
 
-			return color > 0 ? -1 : PotionUtils.getColor(stack);
+				return color > 0 ? -1 : PotionUtils.getColor(stack);
 		}, EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.commonPotionLingering);
 
 		EnigmaticLegacy.enigmaticLogger.info("Colors registered successfully.");

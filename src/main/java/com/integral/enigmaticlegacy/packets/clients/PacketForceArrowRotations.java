@@ -17,16 +17,20 @@ import net.minecraftforge.fml.network.NetworkEvent;
 public class PacketForceArrowRotations {
 
 	private int entityID;
-	private double motionX, motionY, motionZ;
+	private double motionX, motionY, motionZ, posX, posY, posZ;
 	private float rotationYaw;
 	private float rotationPitch;
 
-	public PacketForceArrowRotations(int entityID, float rotationYaw, float rotationPitch, double x, double y, double z) {
+	public PacketForceArrowRotations(int entityID, float rotationYaw, float rotationPitch, double vecX, double vecY, double vecZ, double posX, double posY, double posZ) {
+		this.entityID = entityID;
 		this.rotationYaw = rotationYaw;
 		this.rotationPitch = rotationPitch;
-		this.motionX = x;
-		this.motionY = y;
-		this.motionZ = x;
+		this.motionX = vecX;
+		this.motionY = vecY;
+		this.motionZ = vecZ;
+		this.posX = posX;
+		this.posY = posY;
+		this.posZ = posZ;
 	}
 
 	public static void encode(PacketForceArrowRotations msg, PacketBuffer buf) {
@@ -36,10 +40,13 @@ public class PacketForceArrowRotations {
 		buf.writeDouble(msg.motionX);
 		buf.writeDouble(msg.motionY);
 		buf.writeDouble(msg.motionZ);
+		buf.writeDouble(msg.posX);
+		buf.writeDouble(msg.posY);
+		buf.writeDouble(msg.posZ);
 	}
 
 	public static PacketForceArrowRotations decode(PacketBuffer buf) {
-		return new PacketForceArrowRotations(buf.readInt(), buf.readFloat(), buf.readFloat(), buf.readDouble(), buf.readDouble(), buf.readDouble());
+		return new PacketForceArrowRotations(buf.readInt(), buf.readFloat(), buf.readFloat(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble());
 	}
 
 	public static void handle(PacketForceArrowRotations msg, Supplier<NetworkEvent.Context> ctx) {
@@ -49,6 +56,9 @@ public class PacketForceArrowRotations {
 			Entity arrow = theWorld.getEntityByID(msg.entityID);
 
 			if (arrow != null) {
+				arrow.addTag("enigmaticlegacy.redirected");
+
+				arrow.setPositionAndUpdate(msg.posX, msg.posY, msg.posZ);
 				arrow.setMotion(msg.motionX, msg.motionY, msg.motionZ);
 				arrow.rotationYaw = msg.rotationYaw;
 				arrow.prevRotationYaw = msg.rotationYaw;

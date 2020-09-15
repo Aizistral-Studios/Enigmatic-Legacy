@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.UseAction;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -74,6 +75,11 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public World getCentralWorld() {
 		return Minecraft.getInstance().world;
+	}
+
+	@Override
+	public UseAction getVisualBlockAction() {
+		return UseAction.BLOCK;
 	}
 
 }

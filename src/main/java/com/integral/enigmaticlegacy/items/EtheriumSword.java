@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.IMultiblockMiningTool;
 import com.integral.enigmaticlegacy.api.items.IPerhaps;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
@@ -19,6 +20,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.item.Rarity;
 import net.minecraft.item.SwordItem;
 import net.minecraft.util.ActionResult;
@@ -35,8 +37,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-public class EtheriumSword extends SwordItem implements IPerhaps {
-
+public class EtheriumSword extends SwordItem implements IPerhaps, IMultiblockMiningTool {
 	public CooldownMap etheriumSwordCooldowns = new CooldownMap();
 
 	public EtheriumSword() {
@@ -53,8 +54,14 @@ public class EtheriumSword extends SwordItem implements IPerhaps {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword4", TextFormatting.GOLD, ConfigHandler.ETHERIUM_SWORD_COOLDOWN.getValue() / 20F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword5");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+		}
+
+		if (!this.areaEffectsAllowed(stack)) {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.abilityDisabled");
 		}
 	}
 
@@ -65,19 +72,25 @@ public class EtheriumSword extends SwordItem implements IPerhaps {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getHeldItem(hand);
+
 		if (hand == Hand.OFF_HAND)
 			return new ActionResult<>(ActionResultType.PASS, player.getHeldItem(hand));
 
-		if (!this.etheriumSwordCooldowns.hasCooldown(player)) {
-			if (!player.world.isRemote) {
+		if (player.isCrouching()) {
+			this.toggleAreaEffects(player, stack);
+
+			return new ActionResult<>(ActionResultType.SUCCESS, stack);
+		} else if (!player.world.isRemote) {
+			if (!player.getCooldownTracker().hasCooldown(this) && this.areaEffectsEnabled(player, stack)) {
 				Vector3 look = new Vector3(player.getLookVec());
 				Vector3 dir = look.multiply(1D);
 
 				this.knockBack(player, 1.0F, dir.x, dir.z);
 				world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_SKELETON_SHOOT, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
 
-				this.etheriumSwordCooldowns.put(player, ConfigHandler.ETHERIUM_SWORD_COOLDOWN.getValue());
-				
+				player.getCooldownTracker().setCooldown(this, ConfigHandler.ETHERIUM_SWORD_COOLDOWN.getValue());
+
 				player.setActiveHand(hand);
 				return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
 			}
@@ -87,6 +100,14 @@ public class EtheriumSword extends SwordItem implements IPerhaps {
 		return new ActionResult<>(ActionResultType.PASS, player.getHeldItem(hand));
 	}
 
+	@Override
+	public ActionResultType onItemUse(ItemUseContext context) {
+		if (context.getPlayer().isCrouching())
+			return this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType();
+		else
+			return super.onItemUse(context);
+	}
+
 	public void knockBack(PlayerEntity entityIn, float strength, double xRatio, double zRatio) {
 		entityIn.isAirBorne = true;
 		Vector3d vec3d = new Vector3d(0D, 0D, 0D);
@@ -94,7 +115,7 @@ public class EtheriumSword extends SwordItem implements IPerhaps {
 
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entityIn), new PacketPlayerMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.func_233570_aj_() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z));
 		entityIn.setMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.func_233570_aj_() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z);
-		
+
 	}
 
 }

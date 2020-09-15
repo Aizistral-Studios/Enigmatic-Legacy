@@ -4,6 +4,7 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.UseAction;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -50,6 +51,10 @@ public class CommonProxy {
 
 	public RegistryKey<World> getEndKey() {
 		return World.field_234920_i_;
+	}
+
+	public UseAction getVisualBlockAction() {
+		return UseAction.BOW;
 	}
 
 }

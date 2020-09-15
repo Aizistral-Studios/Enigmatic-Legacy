@@ -57,8 +57,8 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 		this.setRegistryName(EnigmaticLegacy.MODID, "the_acknowledgment");
 
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(Attributes.field_233823_f_, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Weapon modifier", 4.5, AttributeModifier.Operation.ADDITION));
-		builder.put(Attributes.field_233825_h_, new AttributeModifier(Item.ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.1, AttributeModifier.Operation.ADDITION));
+		builder.put(Attributes.field_233823_f_, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Weapon modifier", 3.5, AttributeModifier.Operation.ADDITION));
+		builder.put(Attributes.field_233825_h_, new AttributeModifier(Item.ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.1F, AttributeModifier.Operation.ADDITION));
 		this.attributes = builder.build();
 	}
 

@@ -1,8 +1,28 @@
 The Changelog:
 
+[Release 2.2.0]:
+- Angel's Blessing now actually redirects projectiles through ProjectileImpactEvent handler instead of cloning them in LivingAttackEvent;
+- Due to the previous, a bug is fixed where redirected tridents for some reason were unable to deal damage;
+- The Architect's Inkwell now has it's own GUI for name/lore editing on Lore Fragments. Doing has no experience cost, unlike previously used Anvil operations;
+- Expanded Inkwell's entry in The Acknowledgment to include overall guide on how to use operational and formatting codes;
+- Made use of vanilla cooldown tracker to visually display cooldown on spellstone's active abilities and ability of Etherium Broadsword;
+- Special ability of Etherium Broadsword can now be suppressed in a fashion similar to AOE mining abilities of other tools (#53);
+- Fixed bug with Tile Entities bound to block being completely ignored when spawning block drops (#56);
+- Fixed bug with NullPointerException being thrown whenever attempting to alter The Acknowledgment read/unread entry state while viewedEntries data is not generated yet by Patchouli;
+- Fixed Etherium Axe/Astral Breaker being inefficient against warped/crimson stems and their derivative blocks (#59);
+- Hopefully fixed possibility of gaining extreme velocities when using Angel's Blessing with Elytra (#65);
+- Fixed Night Vision effect from items that provide it not being properly removed if player has Blazing Core equipped (#61);
+- Nerfed attack damage of The Acknowledgment (#63);
+- Implemented Ring of the Seven Curses, Twisted Mirror, Heart of the Earth and Twisted Heart;
+- Ring slots are now unlocked by default, since Ring of the Seven Curses is guaranteed to be available to player right off the start;
+- Charm of the Treasure Hunter now provides +1 Fortune Level instead of +1 Luck. Changed it's recipe to require Heart of the Earth;
+- Spellstones are now generally more rare.
+
+
+
 [Release 2.1.3]:
 - Closing Ender Chest inventory opened by Ring of Ender is now followed by appropriate sound effect;
-- When having Ring of Ender equipped, special button is now added to inventory GUI that allows to open Ender Chest inventory. Also implemented a couple config option that allow to control existence and position of that button.
+- When having Ring of Ender equipped, special button is now added to inventory GUI that allows to open Ender Chest inventory. Also implemented a couple config options that allow to control existence and position of that button.
 
 
 
@@ -20,7 +40,7 @@ The Changelog:
 - Magnetic Ring's effects produce particles no longer;
 - Nerfed Angel's Blessing projectile redirection ability (#14). Now grants chance to deflect incoming projectiles instead of redirecting all of them away;
 - Tools with area of effect abilities now allow to toggle these abilities on/off by shift+right-clicking. Also addded config option that allows to disable temporary suppression of such abilities by holding Shift;
-- Added recipe linkages for Potion of Recall and all ultimate potion types in The Aknowledgment;
+- Added recipe linkages for Potion of Recall and all ultimate potion types in The Acknowledgment;
 - Hopefully fixed mining speed corrections in the mod disrespecting other mods' attempts to alter it (#50);
 - Fixed multiple bugs related to integrated World Name Randomizer functionality. Also implemented client-sided config option to allow disabling it (#51);  
 - Fixed Etherium Scythe's AoE-tilling not working.
@@ -29,8 +49,8 @@ The Changelog:
 
 [Release 2.0.0]:
 
-- Implemented The Aknowledgment, vessel of knowledge about everything in the mod... and not only;
-- Due to the former, Pachouli is now listed among mandatory dependencies*;
+- Implemented The Acknowledgment, vessel of knowledge about everything in the mod... and not only;
+- Due to the former, Patchouli is now listed among mandatory dependencies*;
 - Implemented three variations of ancient tomes, each added to the loot of respective dungeons;
 - Updated loot table list of The One Box, to include nether bastion chests;
 - Some of the new loot added by the mod now also generates in those chests;

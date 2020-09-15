@@ -100,6 +100,8 @@ public class RevelationTome extends ItemBase {
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayerEntity) player, TomeType.GENERIC, RevelationTome.getGenericPoints(player));
 			}
 
+			// TODO Fire generic toast specifying amount of experience and revelation points player have gotten from reading tome
+
 			player.swingArm(hand);
 			return new ActionResult<>(ActionResultType.SUCCESS, stack);
 		}

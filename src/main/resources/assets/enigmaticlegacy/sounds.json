@@ -33,5 +33,16 @@
         "stream": false
       }
     ]
+  },
+  "misc.write": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:misc/write1",
+        "stream": false
+      }, {
+        "name": "enigmaticlegacy:misc/write2",
+        "stream": false
+      }
+    ]
   }
 }

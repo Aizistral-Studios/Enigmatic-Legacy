@@ -26,6 +26,9 @@ public class PatchouliHelper {
 		BookEntry entry = theBook.contents.entries.get(entryLocation);
 		BookData data = PersistentData.data.getBookData(theBook);
 
+		if (data == null || data.viewedEntries == null || entry == null || entry.getId() == null)
+			return;
+
 		if (read && !data.viewedEntries.contains(entry.getId().toString())) {
 			data.viewedEntries.add(entry.getId().toString());
 			entry.markReadStateDirty();

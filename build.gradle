@@ -20,7 +20,7 @@ mixin {
     add sourceSets.main, "enigmaticlegacy.refmap.json"
 }
 
-version = '1.0'
+version = '2.0'
 group = 'com.integral.enigmaticlegacy'
 archivesBaseName = 'EnigmaticLegacy-smv'
 
@@ -34,6 +34,7 @@ minecraft {
 	
 	runs {
         client {
+			properties 'fml.earlyprogresswindow': 'false'
             workingDirectory project.file('run')
 
             // Recommended logging data for a userdev environment
@@ -41,6 +42,8 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+
+			args '-Xmx', '3G'
 
             mods {
                 enigmaticlegacy {
@@ -96,8 +99,8 @@ repositories {
 	jcenter()
     mavenCentral()
 	flatDir {
-        dirs 'deps'
-    }
+       dirs 'deps'
+   }
 }
 
 dependencies {
@@ -114,12 +117,12 @@ dependencies {
 	
 	//compileOnly files('ofstuff2.jar')
 
-    compile fg.deobf('top.theillusivec4.curios:curios:FORGE-1.16.1-3.0-beta4')
+    compile fg.deobf('top.theillusivec4.curios:curios:FORGE-1.16.1-3.0.0.2')
 	//compile files('C:/Stuff/curios-FORGE-1.14.4-1.0-deobf.jar')
 	//compile files('C:/Stuff/curios-FORGE-1.16.1-3.0-beta4-deobf.jar')
+	compile fg.deobf('generic:decorativeblocks:1.16.1-1.4')
 	
-	compileOnly fg.deobf("vazkii.patchouli:Patchouli:1.16-39:api")
-    runtimeOnly fg.deobf("vazkii.patchouli:Patchouli:1.16-39")
+    compile fg.deobf("vazkii.patchouli:Patchouli:1.16-39")
 
 }
 

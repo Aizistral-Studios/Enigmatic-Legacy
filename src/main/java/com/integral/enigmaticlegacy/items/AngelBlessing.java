@@ -96,9 +96,10 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 
 		if (player.isElytraFlying()) {
 			accelerationVec = accelerationVec.multiply(ConfigHandler.ANGEL_BLESSING_ACCELERATION_MODIFIER_ELYTRA.getValue());
-			accelerationVec = accelerationVec.multiply(1 / (motionVec.mag() * 2.25D));
-		} else
+			accelerationVec = accelerationVec.multiply(1 / (Math.max(0.15D, motionVec.mag()) * 2.25D));
+		} else {
 			accelerationVec = accelerationVec.multiply(ConfigHandler.ANGEL_BLESSING_ACCELERATION_MODIFIER.getValue());
+		}
 
 		Vector3 finalMotion = new Vector3(motionVec.x + accelerationVec.x, motionVec.y + accelerationVec.y, motionVec.z + accelerationVec.z);
 
@@ -125,7 +126,7 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 
 		for (PotionEntity entity : potionEntities)
 			this.redirect(living, entity);
-		*/
+		 */
 	}
 
 	public void redirect(LivingEntity bearer, Entity redirected) {
@@ -153,8 +154,9 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 			}
 
 			redirected.setMotion(redirected.getMotion().x * 1.75D, redirected.getMotion().y * 1.75D, redirected.getMotion().z * 1.75D);
-		} else
+		} else {
 			redirected.setMotion(redirection.x, redirection.y, redirection.z);
+		}
 
 		if (redirected instanceof DamagingProjectileEntity) {
 			DamagingProjectileEntity redirectedProjectile = (DamagingProjectileEntity) redirected;

@@ -6,6 +6,8 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.gui.containers.EnigmaticRepairContainerProvider;
+import com.integral.enigmaticlegacy.gui.containers.PortableCrafterContainerProvider;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.PatchouliHelper;
@@ -27,6 +29,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -73,6 +76,19 @@ public class RelicOfTesting extends ItemBase {
 		if (checkTag != null)
 			playerIn.sendMessage(new StringTextComponent(checkTag.getOrCreateTag().getString()), playerIn.getUniqueID());
 
+		/*
+		if(!worldIn.isRemote) {
+		    ITextComponent name = null;
+
+		    if(itemstack.hasDisplayName()) {
+		        name = itemstack.getDisplayName();
+		    } else {
+		        name = new TranslationTextComponent(this.getTranslationKey());
+		    }
+
+		    playerIn.openContainer(new PortableCrafterContainerProvider(name));
+		}
+		*/
 
 		playerIn.swingArm(handIn);
 

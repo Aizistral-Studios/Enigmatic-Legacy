@@ -59,18 +59,20 @@ public class MiningCharm extends ItemBaseCurio {
 		TranslationTextComponent mode = new TranslationTextComponent("tooltip.enigmaticlegacy.enabled");
 
 		if (ItemNBTHelper.verifyExistance(stack, "nightVisionEnabled"))
-			if (!ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true))
+			if (!ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
 				mode = new TranslationTextComponent("tooltip.enigmaticlegacy.disabled");
+			}
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.func_231173_s_()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm1", TextFormatting.GOLD, ConfigHandler.MINING_CHARM_BREAK_BOOST.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm2", TextFormatting.GOLD, 1);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm4");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm5");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm6");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -83,8 +85,9 @@ public class MiningCharm extends ItemBaseCurio {
 		if (player.getActivePotionEffect(Effects.NIGHT_VISION) != null) {
 			EffectInstance effect = player.getActivePotionEffect(Effects.NIGHT_VISION);
 
-			if (effect.getDuration() == (duration - 1))
+			if (effect.getDuration() <= (duration - 1)) {
 				player.removePotionEffect(Effects.NIGHT_VISION);
+			}
 
 		}
 	}
@@ -128,8 +131,9 @@ public class MiningCharm extends ItemBaseCurio {
 
 	@Override
 	public void onUnequip(String identifier, int index, LivingEntity living) {
-		if (living instanceof PlayerEntity)
+		if (living instanceof PlayerEntity) {
 			this.removeNightVisionEffect((PlayerEntity) living, this.nightVisionDuration);
+		}
 	}
 
 	@Override
@@ -137,8 +141,9 @@ public class MiningCharm extends ItemBaseCurio {
 
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
-		if (ConfigHandler.MINING_CHARM_BONUS_LUCK.getValue())
-			atts.put(Attributes.field_233828_k_, new AttributeModifier(UUID.fromString("03c3c89d-7037-4b42-880f-b146bcb64d2e"), "Fortune bonus", 1, AttributeModifier.Operation.ADDITION));
+		if (ConfigHandler.MINING_CHARM_BONUS_LUCK.getValue()) {
+			//atts.put(Attributes.field_233828_k_, new AttributeModifier(UUID.fromString("03c3c89d-7037-4b42-880f-b146bcb64d2e"), "Luck bonus", 1, AttributeModifier.Operation.ADDITION));
+		}
 
 		atts.put(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(UUID.fromString("08c3c83d-7137-4b42-880f-b146bcb64d2e"), "Reach bonus", ConfigHandler.MINING_CHARM_REACH_BOOST.getValue(), AttributeModifier.Operation.ADDITION));
 
