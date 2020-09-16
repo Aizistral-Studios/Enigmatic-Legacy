@@ -13,6 +13,8 @@ import javax.annotation.Nullable;
 
 import org.spongepowered.asm.mixin.MixinEnvironment.Side;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.config.JsonConfigHandler;
@@ -24,6 +26,7 @@ import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper.AnvilParser;
 import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
 import com.integral.enigmaticlegacy.objects.CooldownMap;
+import com.integral.enigmaticlegacy.objects.DimensionalPosition;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
@@ -165,7 +168,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
-import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -206,7 +208,7 @@ public class EnigmaticEventHandler {
 	public static List<IToast> scheduledToasts = new ArrayList<IToast>();
 	public static Random theySeeMeRollin = new Random();
 	public static HashMap<PlayerEntity, String> anvilFields = new HashMap<PlayerEntity, String>();
-	public static HashMap<PlayerEntity, Boolean> hadEnigmaticAmulet = new HashMap<PlayerEntity, Boolean>();
+	public static Multimap<PlayerEntity, Item> postmortalPossession = ArrayListMultimap.create();
 
 	@SubscribeEvent
 	public void onEnchantmentLevelSet(EnchantmentLevelSetEvent event) {
@@ -365,11 +367,15 @@ public class EnigmaticEventHandler {
 		event.setNewSpeed(event.getNewSpeed() + correctedSpeed);
 	}
 
+	// TODO This seems to have been removed in 1.16.2. Investigate
+
+	/*
 	@SubscribeEvent
 	public void onBlockDropsHarvest(HarvestDropsEvent event) {
 		// Oh my god it happens!
 		// System.out.println("Event fired!");
 	}
+	 */
 
 	@SubscribeEvent
 	public void onHarvestCheck(PlayerEvent.HarvestCheck event) {
@@ -504,25 +510,24 @@ public class EnigmaticEventHandler {
 			ServerPlayerEntity player = (ServerPlayerEntity) event.getEntityLiving();
 
 			/*
-			 * Updates Enigmatic Amulet possession status for LivingDropsEvent.
+			 * Updates Enigmatic Amulet/Scroll of Postmortal Recall possession status for LivingDropsEvent.
 			 */
 
-			EnigmaticEventHandler.hadEnigmaticAmulet.put(player, SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticAmulet) || SuperpositionHandler.hasItem(player, EnigmaticLegacy.enigmaticAmulet));
+			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticAmulet) || SuperpositionHandler.hasItem(player, EnigmaticLegacy.enigmaticAmulet)) {
+				postmortalPossession.put(player, EnigmaticLegacy.enigmaticAmulet);
+			}
 
+			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.escapeScroll)) {
+				postmortalPossession.put(player, EnigmaticLegacy.escapeScroll);
 
-			/*
-			 * Handler for Scroll of Postmortal Recall.
-			 */
+				if (!player.world.isRemote) {
+					ItemStack tomeStack = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.escapeScroll);
+					PermanentItemEntity droppedTomeStack = new PermanentItemEntity(player.world, player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), tomeStack.copy());
+					droppedTomeStack.setPickupDelay(10);
+					player.world.addEntity(droppedTomeStack);
 
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.escapeScroll) & !player.world.isRemote) {
-				ItemStack tomeStack = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.escapeScroll);
-				PermanentItemEntity droppedTomeStack = new PermanentItemEntity(player.world, player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), tomeStack.copy());
-				droppedTomeStack.setPickupDelay(10);
-				player.world.addEntity(droppedTomeStack);
-
-				tomeStack.shrink(1);
-
-				SuperpositionHandler.backToSpawn(player);
+					tomeStack.shrink(1);
+				}
 			}
 
 		}
@@ -961,20 +966,43 @@ public class EnigmaticEventHandler {
 		event.setDroppedExperience(event.getDroppedExperience() + bonusExp);
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onLivingDrops(LivingDropsEvent event) {
 
 		if (event.getEntityLiving() instanceof ServerPlayerEntity) {
 			ServerPlayerEntity player = (ServerPlayerEntity) event.getEntityLiving();
-			Boolean droppedCrystal = false;
+			boolean droppedCrystal = false;
+			boolean hadEscapeScroll = this.hadEscapeScroll(player);
+
+			DimensionalPosition dimPoint = hadEscapeScroll ? SuperpositionHandler.getRespawnPoint(player) : new DimensionalPosition(player.getPosX(), player.getPosY(), player.getPosZ(), player.world);
+
+			if (hadEscapeScroll) {
+				player.world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 128, player.world.func_234923_W_())), new PacketPortalParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 100, 1.25F, false));
+
+
+
+				for (ItemEntity dropIt : event.getDrops()) {
+					ItemEntity alternativeDrop = new ItemEntity(dimPoint.world, dimPoint.posX, dimPoint.posY, dimPoint.posZ, dropIt.getItem());
+					alternativeDrop.setPositionAndUpdate(dimPoint.posX, dimPoint.posY, dimPoint.posZ);
+					alternativeDrop.setMotion(theySeeMeRollin.nextDouble()-0.5, theySeeMeRollin.nextDouble()-0.5, theySeeMeRollin.nextDouble()-0.5);
+					dimPoint.world.addEntity(alternativeDrop);
+					dropIt.setItem(ItemStack.EMPTY);
+				}
+
+				event.getDrops().clear();
+
+				dimPoint.world.playSound(null, new BlockPos(dimPoint.posX, dimPoint.posY, dimPoint.posZ), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(dimPoint.posX, dimPoint.posY, dimPoint.posZ, 128, dimPoint.world.func_234923_W_())), new PacketRecallParticles(dimPoint.posX, dimPoint.posY, dimPoint.posZ, 48, false));
+			}
 
 			if (this.hadEnigmaticAmulet(player) && !event.getDrops().isEmpty() && EnigmaticLegacy.enigmaticAmulet.isVesselEnabled()) {
 				ItemStack soulCrystal = SuperpositionHandler.shouldPlayerDropSoulCrystal(player) ? EnigmaticLegacy.soulCrystal.createCrystalFrom(player) : null;
 				ItemStack storageCrystal = EnigmaticLegacy.storageCrystal.storeDropsOnCrystal(event.getDrops(), player, soulCrystal);
-				PermanentItemEntity droppedStorageCrystal = new PermanentItemEntity(player.world, player.getPosX(), player.getPosY() + 1.5, player.getPosZ(), storageCrystal);
+				PermanentItemEntity droppedStorageCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), storageCrystal);
 				droppedStorageCrystal.setOwnerId(player.getUniqueID());
-				player.world.addEntity(droppedStorageCrystal);
-				EnigmaticLegacy.enigmaticLogger.info("Summoned Extradimensional Storage Crystal for " + player.getGameProfile().getName() + " at X: " + player.getPosX() + ", Y: " + player.getPosY() + ", Z: " + player.getPosZ());
+				dimPoint.world.addEntity(droppedStorageCrystal);
+				EnigmaticLegacy.enigmaticLogger.info("Summoned Extradimensional Storage Crystal for " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
 				event.getDrops().clear();
 
 				if (soulCrystal != null) {
@@ -983,10 +1011,10 @@ public class EnigmaticEventHandler {
 
 			} else if (SuperpositionHandler.shouldPlayerDropSoulCrystal(player)) {
 				ItemStack soulCrystal = EnigmaticLegacy.soulCrystal.createCrystalFrom(player);
-				PermanentItemEntity droppedSoulCrystal = new PermanentItemEntity(player.world, player.getPosX(), player.getPosY() + 1.5, player.getPosZ(), soulCrystal);
+				PermanentItemEntity droppedSoulCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), soulCrystal);
 				droppedSoulCrystal.setOwnerId(player.getUniqueID());
-				player.world.addEntity(droppedSoulCrystal);
-				EnigmaticLegacy.enigmaticLogger.info("Teared Soul Crystal from " + player.getGameProfile().getName() + " at X: " + player.getPosX() + ", Y: " + player.getPosY() + ", Z: " + player.getPosZ());
+				dimPoint.world.addEntity(droppedSoulCrystal);
+				EnigmaticLegacy.enigmaticLogger.info("Teared Soul Crystal from " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
 
 				droppedCrystal = true;
 			}
@@ -999,6 +1027,9 @@ public class EnigmaticEventHandler {
 				SuperpositionHandler.revokeAdvancement(player, soulLossAdvancement);
 			}
 
+			postmortalPossession.removeAll(player);
+
+			return;
 		}
 
 
@@ -1601,7 +1632,11 @@ public class EnigmaticEventHandler {
 	}
 
 	private boolean hadEnigmaticAmulet(PlayerEntity player) {
-		return EnigmaticEventHandler.hadEnigmaticAmulet.containsKey(player) ? EnigmaticEventHandler.hadEnigmaticAmulet.get(player) : false;
+		return EnigmaticEventHandler.postmortalPossession.containsKey(player) ? EnigmaticEventHandler.postmortalPossession.containsEntry(player, EnigmaticLegacy.enigmaticAmulet) : false;
+	}
+
+	private boolean hadEscapeScroll(PlayerEntity player) {
+		return EnigmaticEventHandler.postmortalPossession.containsKey(player) ? EnigmaticEventHandler.postmortalPossession.containsEntry(player, EnigmaticLegacy.escapeScroll) : false;
 	}
 
 

@@ -327,10 +327,10 @@
 	"tooltip.enigmaticlegacy.forbiddenAxe2": "§5Each level of Looting applied adds§6 +%1$s§5",
 	"tooltip.enigmaticlegacy.forbiddenAxe3": "§5to the overall beheading chance.",
 	
-	"tooltip.enigmaticlegacy.escapeTome1": "§5When you die, returns you to your bed or §6Respawn",
-	"tooltip.enigmaticlegacy.escapeTome2": "§6Anchor§5 location, or to the §6Center of The Overworld§5",
-	"tooltip.enigmaticlegacy.escapeTome3": "§5if you don't have one - but itself remains at the",
-	"tooltip.enigmaticlegacy.escapeTome4": "§5location of your death.",
+	"tooltip.enigmaticlegacy.escapeTome1": "§5When you die, returns your items to your bed or",
+	"tooltip.enigmaticlegacy.escapeTome2": "§6Respawn Anchor§5 location, or to the §6Center of",
+	"tooltip.enigmaticlegacy.escapeTome3": "§6The Overworld§5 if you don't have one - but itself",
+	"tooltip.enigmaticlegacy.escapeTome4": "§5remains at the location of your death.",
 	
 	"tooltip.enigmaticlegacy.superMagnetRing1": "§5Instantly collects any dropped items",
 	"tooltip.enigmaticlegacy.superMagnetRing2": "§5within §6%1$s§6 blocks§5 radius.",
@@ -991,8 +991,8 @@
 	
 	"book.enigmaticlegacy.entry.escape_scroll.name": "Postmortal Will",
 	"book.enigmaticlegacy.entry.escape_scroll.page.1": "Though death has proven to be only a temporary inconvenience for a demigod like you, sometimes this inconveniece takes great toll.<br/>Much greater than you would like to pay - depending on where you die, your precious gear, forged from finest materials and collected from all corners of the Overworld, can be lost to Oblivion or incredibly difficult to recover.",
-	"book.enigmaticlegacy.entry.escape_scroll.page.2": "This scroll is an ensurance against such happening.<br2/>It cannot protect it's bearer from death, but should their life be taken, the body will be taken back to the respawn point, across any distances",
-	"book.enigmaticlegacy.entry.escape_scroll.page.3": "and dimensions, right before they release their last breath. The scroll itself will remain where it's bearer was killed, but unlike items you would normally drop, it will not burn, or fall into the Void where you might've met your demise, or vanish into nothingness if you leave it unattended for too long.<br2/>Only the hand of demigod, though not neccessarily yours alone, can ever claim it back.",
+	"book.enigmaticlegacy.entry.escape_scroll.page.2": "This scroll is an ensurance against such happening.<br2/>It cannot protect it's bearer from death, but should their life be taken, whatever they would drop in place of their death will instead be taken",
+	"book.enigmaticlegacy.entry.escape_scroll.page.3": "back to the respawn point, across any distances and dimensions. The scroll itself will remain where it's bearer was killed, but unlike items you would normally drop, it will not burn, or fall into the Void where you might've met your demise, or vanish into nothingness if you leave it unattended for too long.<br2/>Only the hand of demigod, though not neccessarily yours alone, can ever claim it back.",
 	
 	
 	"book.enigmaticlegacy.entry.ender_ring.name": "Ring of Ender",

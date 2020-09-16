@@ -1,5 +1,10 @@
 The Changelog:
 
+[Release 2.2.1]:
+- Changed Scroll of Postmortal Recall mechanic to teleport player's dropped items to their respawn point, instead of teleporting themselves. Fixes crash when recalling after being killed by neutral mob (#66).
+
+
+
 [Release 2.2.0]:
 - Angel's Blessing now actually redirects projectiles through ProjectileImpactEvent handler instead of cloning them in LivingAttackEvent;
 - Due to the previous, a bug is fixed where redirected tridents for some reason were unable to deal damage;

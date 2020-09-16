@@ -24,6 +24,7 @@ import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
 import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
+import com.integral.enigmaticlegacy.objects.DimensionalPosition;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
@@ -1040,7 +1041,7 @@ public class SuperpositionHandler {
 		return SuperpositionHandler.getWorld(EnigmaticLegacy.proxy.getEndKey());
 	}
 
-	public static void backToSpawn(ServerPlayerEntity serverPlayer) {
+	public static ServerWorld backToSpawn(ServerPlayerEntity serverPlayer) {
 		RegistryKey<World> respawnDimension = AdvancedSpawnLocationHelper.getPlayerRespawnDimension(serverPlayer);
 		ServerWorld respawnWorld = SuperpositionHandler.getWorld(respawnDimension);
 
@@ -1075,6 +1076,43 @@ public class SuperpositionHandler {
 		serverPlayer.world.playSound(null, serverPlayer.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getPosX(), serverPlayer.getPosY(), serverPlayer.getPosZ(), 128, serverPlayer.world.func_234923_W_())), new PacketRecallParticles(serverPlayer.getPosX(), serverPlayer.getPosY() + (serverPlayer.getHeight() / 2), serverPlayer.getPosZ(), 48, false));
+		
+		return destinationWorld;
+	}
+	
+	public static DimensionalPosition getRespawnPoint(ServerPlayerEntity serverPlayer) {
+		RegistryKey<World> respawnDimension = AdvancedSpawnLocationHelper.getPlayerRespawnDimension(serverPlayer);
+		ServerWorld respawnWorld = SuperpositionHandler.getWorld(respawnDimension);
+
+		Optional<Vector3d> currentDimensionRespawnCoords = AdvancedSpawnLocationHelper.getValidSpawn(respawnWorld, serverPlayer);
+		Optional<Vector3d> destinationDimensionRespawnCoords;
+
+		ServerWorld destinationWorld = currentDimensionRespawnCoords.isPresent() ? respawnWorld : serverPlayer.server.func_241755_D_();
+
+		if (!respawnWorld.equals(destinationWorld)) {
+			destinationDimensionRespawnCoords = AdvancedSpawnLocationHelper.getValidSpawn(destinationWorld, serverPlayer);
+		} else {
+			destinationDimensionRespawnCoords = Optional.empty();
+		}
+
+		Vector3d trueVec;
+
+		if (currentDimensionRespawnCoords.isPresent()) {
+			trueVec = currentDimensionRespawnCoords.get();
+		} else if (destinationDimensionRespawnCoords.isPresent()) {
+			trueVec = destinationDimensionRespawnCoords.get();
+		} else {
+			/* TODO Spawning player at the world's center involves a lot of collision checks, which we can't do
+			 * without actually teleporting the player. Investigate on possible workarounds. */
+			trueVec = new Vector3d(destinationWorld.func_241135_u_().getX() + 0.5, destinationWorld.func_241135_u_().getY() + 0.5, destinationWorld.func_241135_u_().getZ() + 0.5);
+
+			while (!destinationWorld.getBlockState(new BlockPos(trueVec)).isAir(destinationWorld, new BlockPos(trueVec)) && trueVec.y < 255.0D) {
+				trueVec = trueVec.add(0, 1D, 0);
+			}
+
+		}
+
+		return new DimensionalPosition(trueVec.x, trueVec.y, trueVec.z, destinationWorld);
 	}
 
 	public static void removeAttributeMap(PlayerEntity player, Multimap<Attribute, AttributeModifier> attributes) {
