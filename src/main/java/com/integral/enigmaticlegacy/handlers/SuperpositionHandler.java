@@ -743,14 +743,6 @@ public class SuperpositionHandler {
 
 	}
 
-	public static boolean hasStoredAnvilField(PlayerEntity entity) {
-		if (EnigmaticEventHandler.anvilFields.containsKey(entity))
-			if (EnigmaticEventHandler.anvilFields.get(entity) != null && !EnigmaticEventHandler.anvilFields.get(entity).equals(""))
-				return true;
-
-		return false;
-	}
-
 	/**
 	 * Checks whether or not player has completed specified advancement.
 	 */
@@ -1076,10 +1068,10 @@ public class SuperpositionHandler {
 		serverPlayer.world.playSound(null, serverPlayer.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getPosX(), serverPlayer.getPosY(), serverPlayer.getPosZ(), 128, serverPlayer.world.func_234923_W_())), new PacketRecallParticles(serverPlayer.getPosX(), serverPlayer.getPosY() + (serverPlayer.getHeight() / 2), serverPlayer.getPosZ(), 48, false));
-		
+
 		return destinationWorld;
 	}
-	
+
 	public static DimensionalPosition getRespawnPoint(ServerPlayerEntity serverPlayer) {
 		RegistryKey<World> respawnDimension = AdvancedSpawnLocationHelper.getPlayerRespawnDimension(serverPlayer);
 		ServerWorld respawnWorld = SuperpositionHandler.getWorld(respawnDimension);

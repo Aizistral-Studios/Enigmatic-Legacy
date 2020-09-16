@@ -14,30 +14,30 @@ import net.minecraftforge.fml.network.NetworkEvent;
  */
 
 public class PacketAnvilField {
-	
+
 	private String field;
 
-	  public PacketAnvilField(String field) {
-	    this.field = field;
-	  }
+	public PacketAnvilField(String field) {
+		this.field = field;
+	}
 
-	  public static void encode(PacketAnvilField msg, PacketBuffer buf) {
-	     buf.writeString(msg.field);
-	  }
+	public static void encode(PacketAnvilField msg, PacketBuffer buf) {
+		buf.writeString(msg.field);
+	}
 
-	  public static PacketAnvilField decode(PacketBuffer buf) {
-	    return new PacketAnvilField(buf.readString(128));
-	 }
-	  
-	  public static void handle(PacketAnvilField msg, Supplier<NetworkEvent.Context> ctx) {
+	public static PacketAnvilField decode(PacketBuffer buf) {
+		return new PacketAnvilField(buf.readString(128));
+	}
 
-		    ctx.get().enqueueWork(() -> {
-		      ServerPlayerEntity playerServ = ctx.get().getSender();
-		      
-		      EnigmaticEventHandler.anvilFields.put(playerServ, msg.field);	 
-		      
-		    });
-		    ctx.get().setPacketHandled(true);
-	  }
+	public static void handle(PacketAnvilField msg, Supplier<NetworkEvent.Context> ctx) {
+
+		ctx.get().enqueueWork(() -> {
+			ServerPlayerEntity playerServ = ctx.get().getSender();
+
+			//EnigmaticEventHandler.anvilFields.put(playerServ, msg.field);
+
+		});
+		ctx.get().setPacketHandled(true);
+	}
 
 }

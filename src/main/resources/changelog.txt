@@ -1,5 +1,10 @@
 The Changelog:
 
+[Release 2.3.0]:
+- Intermediate 1.16.2 port. No further support for this version in specific will be provided.
+
+
+
 [Release 2.2.1]:
 - Changed Scroll of Postmortal Recall mechanic to teleport player's dropped items to their respawn point, instead of teleporting themselves. Fixes crash when recalling after being killed by neutral mob (#66).
 

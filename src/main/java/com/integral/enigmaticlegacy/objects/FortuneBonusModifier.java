@@ -77,5 +77,10 @@ public class FortuneBonusModifier extends LootModifier {
 		public FortuneBonusModifier read(ResourceLocation location, JsonObject object, ILootCondition[] conditions) {
 			return new FortuneBonusModifier(conditions);
 		}
+
+		@Override
+		public JsonObject write(FortuneBonusModifier instance) {
+			return this.makeConditions(instance.conditions);
+		}
 	}
 }

@@ -94,7 +94,7 @@ public class AOEMiningHelper {
 
 			int exp = state.getExpDrop(world, pos, fortuneLevel, silkLevel);
 			if (exp > 0 && world instanceof ServerWorld) {
-				state.getBlock().dropXpOnBlockBreak(world, pos, exp);
+				state.getBlock().dropXpOnBlockBreak((ServerWorld) world, pos, exp);
 			}
 		}
 	}

@@ -19,6 +19,7 @@ import net.minecraft.inventory.container.RepairContainer;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.CRenameItemPacket;
+import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
@@ -95,18 +96,18 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	}
 
 	/**
-	* update the crafting window inventory with the items in the list
-	*/
+	 * update the crafting window inventory with the items in the list
+	 */
 	@Override
 	public void sendAllContents(Container containerToSend, NonNullList<ItemStack> itemsList) {
 		this.sendSlotContents(containerToSend, 0, containerToSend.getSlot(0).getStack());
 	}
 
 	/**
-	* Sends two ints to the client-side Container. Used for furnace burning time, smelting progress, brewing progress,
-	* and enchanting level. Normally the first int identifies which variable to update, and the second contains the new
-	* value. Both are truncated to shorts in non-local SMP.
-	*/
+	 * Sends two ints to the client-side Container. Used for furnace burning time, smelting progress, brewing progress,
+	 * and enchanting level. Normally the first int identifies which variable to update, and the second contains the new
+	 * value. Both are truncated to shorts in non-local SMP.
+	 */
 	@Override
 	public void sendWindowProperty(Container containerIn, int varToUpdate, int newValue) {
 	}
@@ -142,7 +143,7 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 
 	@Override
 	protected void func_230451_b_(MatrixStack matrixStack, int x, int y) {
-		this.field_230712_o_.func_238422_b_(matrixStack, this.field_230704_d_, 52F, 13F, 4210752);
+		this.field_230712_o_.func_243248_b(matrixStack, this.field_230704_d_, 52F, 13F, 4210752);
 		//this.field_230712_o_.func_238422_b_(matrixStack, this.playerInventory.getDisplayName(), JsonConfigHandler.getFloat("playerInvX"), JsonConfigHandler.getFloat("playerInvY"), 4210752);
 
 		RenderSystem.disableBlend();
@@ -169,7 +170,7 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 			}
 
 		}
-		*/
+		 */
 	}
 
 	public void func_230452_b_(MatrixStack p_230452_1_, int p_230452_2_, int p_230452_3_, float p_230452_4_) {
@@ -177,9 +178,9 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	}
 
 	/**
-	* Sends the contents of an inventory slot to the client-side Container. This doesn't have to match the actual
-	* contents of that slot.
-	*/
+	 * Sends the contents of an inventory slot to the client-side Container. This doesn't have to match the actual
+	 * contents of that slot.
+	 */
 	@Override
 	public void sendSlotContents(Container containerToSend, int slotInd, ItemStack stack) {
 		if (slotInd == 0) {

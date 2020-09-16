@@ -207,7 +207,6 @@ public class EnigmaticEventHandler {
 	public static CooldownMap deferredToast = new CooldownMap();
 	public static List<IToast> scheduledToasts = new ArrayList<IToast>();
 	public static Random theySeeMeRollin = new Random();
-	public static HashMap<PlayerEntity, String> anvilFields = new HashMap<PlayerEntity, String>();
 	public static Multimap<PlayerEntity, Item> postmortalPossession = ArrayListMultimap.create();
 
 	@SubscribeEvent
