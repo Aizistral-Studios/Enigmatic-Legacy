@@ -8,6 +8,7 @@ import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.world.World;
@@ -76,6 +77,10 @@ public class CommonProxy {
 			return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUUID(playerID);
 		else
 			return null;
+	}
+
+	public void pushRevelationToast(ItemStack renderedStack, int xp, int knowledge) {
+		// NO-OP
 	}
 
 }

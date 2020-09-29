@@ -4,7 +4,7 @@ loaderVersion="[31,)"
 issueTrackerURL="https://github.com/Extegral/Enigmatic-Legacy/issues"
 [[mods]]
 modId="enigmaticlegacy"
-version="2.5.0"
+version="2.5.1"
 displayName="Enigmatic Legacy"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy"
 logoFile="EL_logo.png"
@@ -16,7 +16,7 @@ This mod is designed to provide tools that will aid you in exploring seemingly e
 [[dependencies.enigmaticlegacy]]
     modId="forge"
     mandatory=true
-    versionRange="[34.0.7,)"
+    versionRange="[34,)"
     ordering="NONE"
     side="BOTH"
 [[dependencies.enigmaticlegacy]]

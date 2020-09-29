@@ -1,10 +1,10 @@
 # Enigmatic Legacy [![](http://cf.way2muchnoise.eu/versions/enigmatic-legacy.svg)](https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy) [![](http://cf.way2muchnoise.eu/full_enigmatic-legacy_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy/files)
 
-**Current Version:** 2.5.0
+**Current Version:** 2.5.1
 
 **Minecraft Version:** 1.16.3
 
-**Forge Version:** 34.0.7 or later.
+**Forge Version:** 34.0.0 or later.
 
 **Dependencies:** CuriosAPI-Forge 1.16.3-4.0.2.0 or later; Patchouli 1.16-42 or later.
 

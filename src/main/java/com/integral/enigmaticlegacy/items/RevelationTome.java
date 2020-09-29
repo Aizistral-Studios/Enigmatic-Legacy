@@ -112,11 +112,8 @@ public class RevelationTome extends ItemBase {
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this.theType, currentPoints + revelation);
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayerEntity) player, TomeType.GENERIC, RevelationTome.getGenericPoints(player));
 			} else {
-				ToastGui gui = Minecraft.getInstance().getToastGui();
-				gui.add(new RevelationTomeToast(stack, xp, revelation));
+				EnigmaticLegacy.proxy.pushRevelationToast(stack, xp, revelation);
 			}
-
-			// TODO Fire generic toast specifying amount of experience and revelation points player have gotten from reading tome
 
 			player.swingArm(hand);
 			return new ActionResult<>(ActionResultType.SUCCESS, stack);

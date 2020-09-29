@@ -1,12 +1,17 @@
 The Changelog:
 
-[Release 2.5.0]
+[Release 2.5.1]:
+- Fixed crash on server startup (#75).
+
+
+
+[Release 2.5.0]:
 - Fixed Astral Breaker recipe not being disabled by it's config option (#72);
 - Implemented config option that allows to disable Ring of the Seven Curses from being granted to players upon first world visit (#67);
 - Ancient tomes can now be used as furnace fuel (#68);
 - Upon reading an ancient tome there's now a special toast indicating how much experience and knowledge points it granted;
 - Scrapped custom implementation of Fortune/Looting bonuses in favor of one now provided by Curios API;
-- Neutral mobs angered by Ring of the Seven Curses now exclude tamed animals, player-constructed Iron Golems and bees;
+- Neutral mobs angered by Ring of the Seven Curses now exclude tamed animals, player-constructed Iron Golems and bees (#69);
 - Decreased the range in which neutral mobs are rendered hostile towards bearers of Ring of the Seven Curses from 32 blocks radius to 24;
 - Implemented two new enchantments for crossbows, Sharpshooter and Ceaseless (merged from Armorless & More);
 - Implemented Scroll of a Thousand Curses, Emblem of Bloodstained Valor and Curse of Nemesis (#70);
