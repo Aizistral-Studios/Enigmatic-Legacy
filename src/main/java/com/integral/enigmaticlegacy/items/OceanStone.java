@@ -62,10 +62,10 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone2");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone3");
+			//ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStoneCooldown", TextFormatting.GOLD, ((ConfigHandler.OCEAN_STONE_COOLDOWN.getValue())) / 20.0F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
@@ -105,39 +105,40 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 				 * ((xpCostBase+(Math.random()*xpCostBase))*ConfigHandler.
 				 * OCEAN_STONE_XP_COST_MODIFIER.getValue())); paybackReceived = true; } else
 				 */ if (player.experienceTotal >= this.xpCostBase * 2) {
-					player.giveExperiencePoints((int) -((this.xpCostBase + (Math.random() * this.xpCostBase)) * ConfigHandler.OCEAN_STONE_XP_COST_MODIFIER.getValue()));
-					paybackReceived = true;
-				}
+					 player.giveExperiencePoints((int) -((this.xpCostBase + (Math.random() * this.xpCostBase)) * ConfigHandler.OCEAN_STONE_XP_COST_MODIFIER.getValue()));
+					 paybackReceived = true;
+				 }
 
-				if (paybackReceived) {
+				 if (paybackReceived) {
 
-					if (world instanceof ServerWorld) {
-						ServerWorld serverworld = (ServerWorld)world;
+					 if (world instanceof ServerWorld) {
+						 ServerWorld serverworld = (ServerWorld) world;
 
-						int thunderstormTime = (int) (10000 + (Math.random() * 20000));
+						 int thunderstormTime = (int) (10000 + (Math.random() * 20000));
 
-						serverworld.func_241113_a_(0, thunderstormTime, true, true);
-						/*
-						info.func_230396_g_(p_230396_1_);
-						info.setRaining(true);
-						info.setThundering(true);
-						info.setRainTime(thunderstormTime);
-						info.setThunderTime(thunderstormTime);
-						 */
-					}
+						 serverworld.func_241113_a_(0, thunderstormTime, true, true);
+						 /*
+							info.func_230396_g_(p_230396_1_);
+							info.setRaining(true);
+							info.setThundering(true);
+							info.setRainTime(thunderstormTime);
+							info.setThunderTime(thunderstormTime);
+						  */
+					 }
 
-					world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.NEUTRAL, 2.0F, (float) (0.7F + (Math.random() * 0.3D)));
+					 world.playSound(null, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.NEUTRAL, 2.0F, (float) (0.7F + (Math.random() * 0.3D)));
 
-					SuperpositionHandler.setSpellstoneCooldown(player, ConfigHandler.OCEAN_STONE_COOLDOWN.getValue());
-				}
+					 SuperpositionHandler.setSpellstoneCooldown(player, ConfigHandler.OCEAN_STONE_COOLDOWN.getValue());
+				 }
 
 			}
 	}
 
 	@Override
 	public void onUnequip(String identifier, int index, LivingEntity living) {
-		if (living instanceof PlayerEntity)
+		if (living instanceof PlayerEntity) {
 			EnigmaticLegacy.miningCharm.removeNightVisionEffect((PlayerEntity) living, this.nightVisionDuration);
+		}
 	}
 
 	@Override
@@ -159,7 +160,6 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 
 	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier) {
-
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
 		atts.put(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get(), new AttributeModifier(UUID.fromString("13faf191-bf38-4654-b369-cc1f4f1143bf"), "Swim speed bonus", ConfigHandler.OCEAN_STONE_SWIMMING_SPEED_BOOST.getValue().asMultiplier(false), AttributeModifier.Operation.MULTIPLY_BASE));
@@ -170,6 +170,11 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public boolean canRender(String identifier, int index, LivingEntity living) {
+		return false;
+	}
+
+	@Override
+	public boolean showAttributesTooltip(String identifier) {
 		return false;
 	}
 

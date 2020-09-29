@@ -4,6 +4,7 @@
 	"version": 2,
 	"creative_tab": "enigmaticCreativeTab",
 	"use_blocky_font": false,
+	"filler_texture": "enigmaticlegacy:textures/gui/page_filler.png",
 	"book_texture": "enigmaticlegacy:textures/gui/the_acknowledgment.png",
 	"model": "enigmaticlegacy:the_acknowledgment",
 	"dont_generate_book": true,

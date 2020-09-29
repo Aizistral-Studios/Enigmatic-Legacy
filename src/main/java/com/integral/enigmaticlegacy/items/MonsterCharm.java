@@ -41,11 +41,12 @@ public class MonsterCharm extends ItemBaseCurio {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.monsterCharm1", TextFormatting.GOLD, ConfigHandler.MONSTER_CHARM_UNDEAD_DAMAGE.getValue().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.monsterCharm2", TextFormatting.GOLD, ConfigHandler.MONSTER_CHARM_AGGRESSIVE_DAMAGE.getValue().asPercentage() + "%");
-			if (ConfigHandler.MONSTER_CHARM_BONUS_LOOTING.getValue())
+			if (ConfigHandler.MONSTER_CHARM_BONUS_LOOTING.getValue()) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.monsterCharm3");
+			}
 			if (ConfigHandler.MONSTER_CHARM_DOUBLE_XP.getValue()) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.monsterCharm4");
@@ -59,6 +60,11 @@ public class MonsterCharm extends ItemBaseCurio {
 	@OnlyIn(Dist.CLIENT)
 	public boolean canRender(String identifier, int index, LivingEntity living) {
 		return false;
+	}
+
+	@Override
+	public int getLootingBonus(String identifier, LivingEntity livingEntity, ItemStack curio, int index) {
+		return super.getLootingBonus(identifier, livingEntity, curio, index) + 1;
 	}
 
 }

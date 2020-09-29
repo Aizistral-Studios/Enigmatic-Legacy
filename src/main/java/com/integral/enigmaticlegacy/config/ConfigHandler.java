@@ -12,7 +12,7 @@ public class ConfigHandler {
 	public static List<IComplexParameter<?>> allValues = new ArrayList<IComplexParameter<?>>();
 
 	public static final ForgeConfigSpec.ConfigValue<String> CONFIG_VERSION;
-	public static final String CURRENT_VERSION = "1.1";
+	public static final String CURRENT_VERSION = "1.2";
 	public static final String ZERO_VERSION = "0.0";
 
 	public static final OmnipotentConfig.IntParameter MAGNET_RING_RANGE
@@ -151,7 +151,7 @@ public class ConfigHandler {
 	= new OmnipotentConfig.PerhapsParameter(25);
 
 	public static final OmnipotentConfig.PerhapsParameter GOLEM_HEART_EXPLOSION_RESISTANCE
-	= new OmnipotentConfig.PerhapsParameter(40);
+	= new OmnipotentConfig.PerhapsParameter(50);
 
 	public static final OmnipotentConfig.DoubleParameter GOLEM_HEART_VULNERABILITY_MODIFIER
 	= new OmnipotentConfig.DoubleParameter(2.0D);
@@ -199,7 +199,13 @@ public class ConfigHandler {
 	= new OmnipotentConfig.DoubleParameter(4.0D);
 
 	public static final OmnipotentConfig.PerhapsParameter VOID_PEARL_UNDEAD_PROBABILITY
-	= new OmnipotentConfig.PerhapsParameter(15);
+	= new OmnipotentConfig.PerhapsParameter(35);
+
+	public static final OmnipotentConfig.DoubleParameter CURSED_RING_PAIN_MULTIPLIER
+	= new OmnipotentConfig.DoubleParameter(2.0D);
+
+	public static final OmnipotentConfig.DoubleParameter CURSED_RING_DAMAGE_MULTIPLIER
+	= new OmnipotentConfig.DoubleParameter(0.5D);
 
 
 	public static final OmnipotentConfig.BooleanParameter ANGEL_BLESSING_ENABLED
@@ -295,6 +301,9 @@ public class ConfigHandler {
 	public static final OmnipotentConfig.BooleanParameter ENCHANTMENT_TRANSPOSER_ENABLED
 	= new OmnipotentConfig.BooleanParameter(true);
 
+	public static final OmnipotentConfig.BooleanParameter CURSED_RING_ENABLED
+	= new OmnipotentConfig.BooleanParameter(true);
+
 	public static final OmnipotentConfig.BooleanParameter BONUS_WOOL_RECIPES_ENABLED
 	= new OmnipotentConfig.BooleanParameter(true);
 
@@ -315,6 +324,9 @@ public class ConfigHandler {
 
 	public static final OmnipotentConfig.BooleanParameter DISABLE_AOE_SHIFT_SUPPRESSION
 	= new OmnipotentConfig.BooleanParameter(false);
+
+	public static final OmnipotentConfig.BooleanParameter RETRIGGER_RECIPE_UNLOCKS
+	= new OmnipotentConfig.BooleanParameter(true);
 
 
 
@@ -339,12 +351,20 @@ public class ConfigHandler {
 	public static final OmnipotentConfig.BooleanParameter ECHEST_BUTTON_ENABLED
 	= new OmnipotentConfig.BooleanParameter(true).setClientOnly();
 
+	public static final OmnipotentConfig.BooleanParameter TRAITOR_BAR
+	= new OmnipotentConfig.BooleanParameter(false).setClientOnly();
+
 
 	static {
 		final ForgeConfigSpec.Builder common = new ForgeConfigSpec.Builder();
 		final ForgeConfigSpec.Builder client = new ForgeConfigSpec.Builder();
 
 		client.comment("Some more different stuff").push("Generic Config");
+
+		ConfigHandler.TRAITOR_BAR.configObj = client
+				.comment("Flips the parabolic function bearing responsibility for heat bar rendering when temporary fire resistance from Blazing Core is active. Instead of default behavior, it will start decreasing slowly, but will expotentially speed up the closer to the end it is. This is a purely visual effect - raw fire immunity time provided stays unchanged.")
+				.translation("configGui.enigmaticlegacy.enable_traitor_bar")
+				.define("traitorBarEnabled", ConfigHandler.TRAITOR_BAR.getValueDefault());
 
 		ConfigHandler.MAGMA_HEART_LAVAFOG_DENSITY.configObj = client
 				.comment("Controls how obscured your vision is in lava when Blazing Core is equipped. Lower value equals more visibility.")
@@ -540,6 +560,11 @@ public class ConfigHandler {
 				.translation("configGui.enigmaticlegacy.enchantment_transposer_enabled")
 				.define("enchantmentTransposerEnabled", ConfigHandler.ENCHANTMENT_TRANSPOSER_ENABLED.getValueDefault());
 
+		ConfigHandler.CURSED_RING_ENABLED.configObj = common
+				.comment("Whether or not Ring of the Seven Curses should be enabled.")
+				.translation("configGui.enigmaticlegacy.cursed_ring_enabled")
+				.define("cursedRingEnabled", ConfigHandler.CURSED_RING_ENABLED.getValueDefault());
+
 		ConfigHandler.BONUS_WOOL_RECIPES_ENABLED.configObj = common
 				.comment("Whether or not bonus recipes for wool dyeing should be enabled.")
 				.translation("configGui.enigmaticlegacy.bonus_wool_recipes_enabled")
@@ -559,6 +584,11 @@ public class ConfigHandler {
 				.comment("If true, tools with area of effect abilities will not have those abilities disabled when player holds Shift (crouches).")
 				.translation("configGui.enigmaticlegacy.disable_aoe_shift_suppression")
 				.define("disableAOEShiftSuppression", ConfigHandler.DISABLE_AOE_SHIFT_SUPPRESSION.getValueDefault());
+
+		ConfigHandler.RETRIGGER_RECIPE_UNLOCKS.configObj = common
+				.comment("If true, Enigmatic Legacy will cycle through each player's recipe book and trigger 'minecraft:recipe_unlocked' criterion trigger for everything that they have unlocked upon player joining the world.")
+				.translation("configGui.enigmaticlegacy.retrigger_recipe_unlocks")
+				.define("retriggerRecipeUnlocks", ConfigHandler.RETRIGGER_RECIPE_UNLOCKS.getValueDefault());
 
 		common.pop();
 
@@ -595,6 +625,16 @@ public class ConfigHandler {
 		common.pop();
 
 		common.comment("Various options that affect individual items").push("Balance Options");
+
+		ConfigHandler.CURSED_RING_DAMAGE_MULTIPLIER.configObj = common
+				.comment("Any damage bearers of the Ring of the Seven Curses deal to monsters will be multiplied by this value.")
+				.translation("configGui.enigmaticlegacy.cursed_ring_damage_multiplier")
+				.defineInRange("cursedRingDamageMultiplier", ConfigHandler.CURSED_RING_DAMAGE_MULTIPLIER.getValueDefault(), 0, 32768);
+
+		ConfigHandler.CURSED_RING_PAIN_MULTIPLIER.configObj = common
+				.comment("Any damage received by bearers of the Ring of the Seven Curses will be multiplied by this value.")
+				.translation("configGui.enigmaticlegacy.cursed_ring_pain_multiplier")
+				.defineInRange("cursedRingPainMultiplier", ConfigHandler.CURSED_RING_PAIN_MULTIPLIER.getValueDefault(), 0, 32768);
 
 		ConfigHandler.ENIGMATIC_AMULET_DAMAGE_BONUS.configObj = common
 				.comment("The damage bonus stat provided by Enigmatic Amulet.")

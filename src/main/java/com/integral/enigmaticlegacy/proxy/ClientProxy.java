@@ -1,11 +1,14 @@
 package com.integral.enigmaticlegacy.proxy;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.client.renderers.ShieldAuraLayer;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -26,6 +29,20 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 public class ClientProxy extends CommonProxy {
 
 	private static final Random random = new Random();
+	protected final HashMap<PlayerEntity, TransientPlayerData> clientTransientPlayerData;
+
+	public ClientProxy() {
+		super();
+		this.clientTransientPlayerData = new HashMap<>();
+	}
+
+	@Override
+	public HashMap<PlayerEntity, TransientPlayerData> getTransientPlayerData(boolean clientOnly) {
+		if (clientOnly)
+			return this.clientTransientPlayerData;
+		else
+			return this.commonTransientPlayerData;
+	}
 
 	@Override
 	public void handleItemPickup(int pickuper_id, int item_id) {
@@ -80,6 +97,14 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public UseAction getVisualBlockAction() {
 		return UseAction.BLOCK;
+	}
+
+	@Override
+	public PlayerEntity getPlayer(UUID playerID) {
+		if (Minecraft.getInstance().world != null)
+			return Minecraft.getInstance().world.getPlayerByUuid(playerID);
+		else
+			return null;
 	}
 
 }

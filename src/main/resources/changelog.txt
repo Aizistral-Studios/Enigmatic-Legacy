@@ -1,7 +1,35 @@
 The Changelog:
 
+[Release 2.5.0]
+- Fixed Astral Breaker recipe not being disabled by it's config option (#72);
+- Implemented config option that allows to disable Ring of the Seven Curses from being granted to players upon first world visit (#67);
+- Ancient tomes can now be used as furnace fuel (#68);
+- Upon reading an ancient tome there's now a special toast indicating how much experience and knowledge points it granted;
+- Scrapped custom implementation of Fortune/Looting bonuses in favor of one now provided by Curios API;
+- Neutral mobs angered by Ring of the Seven Curses now exclude tamed animals, player-constructed Iron Golems and bees;
+- Decreased the range in which neutral mobs are rendered hostile towards bearers of Ring of the Seven Curses from 32 blocks radius to 24;
+- Implemented two new enchantments for crossbows, Sharpshooter and Ceaseless (merged from Armorless & More);
+- Implemented Scroll of a Thousand Curses, Emblem of Bloodstained Valor and Curse of Nemesis (#70);
+- Corrected wording of a couple advancements to better correspond to possible means of aquiring them;
+- Fixed The Acknowledgment content not loading properly when some of the mod's brewing recipes are disabled through config (#74);
+- Addressed some obscure wording and inconsistent text coloring in item tooltips;
+- Pearl of the Void now only applies Withering through direct attacks;
+- Heart of the Golem's vulnerability to magic damage now includes damage from withering. Explosion protection trait is increased to 50% resistance by default, but is only provided with no armor equipped;
+- Will of the Ocean's damage reduction against underwater creatures no longer includes drowned, to ensure consistency with vanilla logic;
+- Blazing Core now provides only temporary immunity to lava;
+- Pearl of the Void now provides complete immunity to any status effects. Removed it's trait that prevents hunger from affecting the bearer. Chance of death prevention is buffed from 15% to 35%;
+- Resistance to magic damage of Eye of Nebula now includes withering damage;
+- Etherium Armor set bonus no longer provides debuff immunity;
+- Slightly overhauled texture of Charm of the Treasure Hunter;
+- Implemented config options that allow to adjust dealt and received damage multipliers that bearers of the Ring of the Seven Curses are affected by;
+- Disabled attribute tooltip on Will of the Ocean due to being redundant;
+- Enigmatic Legacy now automatically triggers "minecraft:recipe_unlocked" trigger for every recipe player has unlocked when they join the world. Required due to some recipes in the mod requiring certain parent recipes to be unlocked, and new recipes added may never have this condition fulfilled. Also should be a good practice overall;
+- Raised the Config Version to 1.2.
+
+
+
 [Release 2.4.0]:
-- Initial 1.16.3 port.
+- Initial 1.16.3 port. Should be backwards compatible with 1.16.2 but don't blame me if stuff breaks if you run it there.
 
 
 

@@ -33,8 +33,8 @@ public class EnderChestInventoryButton extends ImageButton {
 	}
 
 	@Override
-	public void func_230431_b_(@Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		this.field_230693_o_ = true;
+	public void renderButton(@Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+		this.active = true;
 
 		if (this.parentGui instanceof InventoryScreen || this.parentGui instanceof CuriosScreen) {
 			boolean lastVisible = this.isRecipeBookVisible;
@@ -47,7 +47,7 @@ public class EnderChestInventoryButton extends ImageButton {
 
 			if (lastVisible != this.isRecipeBookVisible) {
 				Tuple<Integer, Integer> offsets = EnderChestInventoryButton.getOffsets(false);
-				this.setPosition(this.parentGui.getGuiLeft() + offsets.getA(), (this.parentGui.field_230709_l_ / 2 - 22) + offsets.getB());
+				this.setPosition(this.parentGui.getGuiLeft() + offsets.getA(), (this.parentGui.height / 2 - 22) + offsets.getB());
 			}
 
 		} else if (this.parentGui instanceof CreativeScreen) {
@@ -55,7 +55,7 @@ public class EnderChestInventoryButton extends ImageButton {
 			boolean isInventoryTab = gui.getSelectedTabIndex() == ItemGroup.INVENTORY.getIndex();
 
 			if (!isInventoryTab) {
-				this.field_230693_o_ = false;
+				this.active = false;
 				return;
 			}
 		}
@@ -63,11 +63,11 @@ public class EnderChestInventoryButton extends ImageButton {
 		boolean hasRing = SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.enderRing) || SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.cursedRing);
 
 		if (!hasRing || !ConfigHandler.ECHEST_BUTTON_ENABLED.getValue()) {
-			this.field_230693_o_ = false;
+			this.active = false;
 			return;
 		}
 
-		super.func_230431_b_(matrixStack, mouseX, mouseY, partialTicks);
+		super.renderButton(matrixStack, mouseX, mouseY, partialTicks);
 	}
 
 	public static Tuple<Integer, Integer> getOffsets(boolean creative) {

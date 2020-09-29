@@ -101,7 +101,7 @@ public class LootGenerator extends ItemBase {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGenerator1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGenerator2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
@@ -119,7 +119,7 @@ public class LootGenerator extends ItemBase {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGeneratorCurrent");
 
-		list.add(new StringTextComponent("" + this.lootList.get(stack.getDamage())).func_240699_a_(TextFormatting.GOLD));
+		list.add(new StringTextComponent("" + this.lootList.get(stack.getDamage())).mergeStyle(TextFormatting.GOLD));
 	}
 
 	@Override
@@ -201,7 +201,7 @@ public class LootGenerator extends ItemBase {
 						EnigmaticLegacy.enigmaticLogger.info("Item: " + theItem.getDisplayName(new ItemStack(theItem)).getString() + ", Amount: " + lootMap.get(theItem));
 					}
 
-					player.sendMessage(new TranslationTextComponent("message.enigmaticlegacy.gen_sim_complete").func_240699_a_(TextFormatting.DARK_PURPLE), player.getUniqueID());
+					player.sendMessage(new TranslationTextComponent("message.enigmaticlegacy.gen_sim_complete").mergeStyle(TextFormatting.DARK_PURPLE), player.getUniqueID());
 
 				} else {
 					chest.clear();

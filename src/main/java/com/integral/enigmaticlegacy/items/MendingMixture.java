@@ -35,7 +35,7 @@ public class MendingMixture extends ItemBase {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.mendingMixture1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.mendingMixture2");
 		} else {

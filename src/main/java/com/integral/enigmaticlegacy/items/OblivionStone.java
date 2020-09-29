@@ -45,7 +45,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class OblivionStone extends ItemBase {
 
 	public OblivionStone() {
-		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.RARE).func_234689_a_());
+		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.RARE).isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "oblivion_stone"));
 	}
 
@@ -60,7 +60,7 @@ public class OblivionStone extends ItemBase {
 
 		//LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone2");
@@ -83,7 +83,7 @@ public class OblivionStone extends ItemBase {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone14");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone15");
 
-		} else if (Screen.func_231172_r_()) {
+		} else if (Screen.hasControlDown()) {
 
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneCtrlList");
 			if (stack.hasTag()) {
@@ -99,7 +99,7 @@ public class OblivionStone extends ItemBase {
 							ItemStack displayStack;
 							displayStack = new ItemStack(something, 1);
 
-							list.add(new StringTextComponent(" - ").func_230529_a_(((TextComponent)displayStack.getDisplayName()).func_240699_a_(TextFormatting.GOLD)).func_240699_a_(TextFormatting.GOLD));
+							list.add(new StringTextComponent(" - ").append(((TextComponent)displayStack.getDisplayName()).mergeStyle(TextFormatting.GOLD)).mergeStyle(TextFormatting.GOLD));
 						}
 						counter++;
 					}
@@ -112,7 +112,7 @@ public class OblivionStone extends ItemBase {
 							ItemStack displayStack;
 							displayStack = new ItemStack(something, 1);
 
-							list.add(new StringTextComponent(" - ").func_230529_a_(((TextComponent)displayStack.getDisplayName()).func_240699_a_(TextFormatting.GOLD)).func_240699_a_(TextFormatting.GOLD));
+							list.add(new StringTextComponent(" - ").append(((TextComponent)displayStack.getDisplayName()).mergeStyle(TextFormatting.GOLD)).mergeStyle(TextFormatting.GOLD));
 						}
 					}
 				}
@@ -142,7 +142,7 @@ public class OblivionStone extends ItemBase {
 		int mode = ItemNBTHelper.getInt(stack, "ConsumptionMode", 0);
 
 		if (player.isCrouching()) {
-			world.playSound(null, player.func_233580_cy_(), ItemNBTHelper.getBoolean(stack, "IsActive", true) ? EnigmaticLegacy.HHOFF : EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.getPosition(), ItemNBTHelper.getBoolean(stack, "IsActive", true) ? EnigmaticLegacy.HHOFF : EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			ItemNBTHelper.setBoolean(stack, "IsActive", !ItemNBTHelper.getBoolean(stack, "IsActive", true));
 		} else {
 			if (mode >= 0 && mode < 2)
@@ -150,7 +150,7 @@ public class OblivionStone extends ItemBase {
 			else
 				ItemNBTHelper.setInt(stack, "ConsumptionMode", 0);
 
-			world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 		}
 
 		player.swingArm(hand);

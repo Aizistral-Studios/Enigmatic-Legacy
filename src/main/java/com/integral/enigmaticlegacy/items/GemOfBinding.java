@@ -36,7 +36,7 @@ public class GemOfBinding extends ItemBase {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.gemOfBinding1");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -62,7 +62,7 @@ public class GemOfBinding extends ItemBase {
 			ItemNBTHelper.setString(itemstack, "BoundPlayer", player.getDisplayName().getString());
 			ItemNBTHelper.setUUID(itemstack, "BoundUUID", player.getUniqueID());
 
-			worldIn.playSound(null, player.func_233580_cy_(), SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
+			worldIn.playSound(null, player.getPosition(), SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 
 			player.swingArm(hand);
 			return new ActionResult<>(ActionResultType.SUCCESS, itemstack);

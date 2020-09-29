@@ -65,7 +65,7 @@ public class MiningCharm extends ItemBaseCurio {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm1", TextFormatting.GOLD, ConfigHandler.MINING_CHARM_BREAK_BOOST.getValue().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm2", TextFormatting.GOLD, 1);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
@@ -100,7 +100,7 @@ public class MiningCharm extends ItemBaseCurio {
 				PlayerEntity player = (PlayerEntity) living;
 				ItemStack stack = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.miningCharm);
 
-				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) && player.getPosY() < 50 && !player.world.func_234923_W_().func_240901_a_().toString().equals("minecraft:the_nether") && !player.world.func_234923_W_().func_240901_a_().toString().equals("minecraft:the_end") && !player.areEyesInFluid(FluidTags.WATER) && !player.world.canBlockSeeSky(player.func_233580_cy_()) && player.world.getNeighborAwareLightSubtracted(player.func_233580_cy_(), 0) <= 8) {
+				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) && player.getPosY() < 50 && !player.world.func_234923_W_().func_240901_a_().toString().equals("minecraft:the_nether") && !player.world.func_234923_W_().func_240901_a_().toString().equals("minecraft:the_end") && !player.areEyesInFluid(FluidTags.WATER) && !player.world.canBlockSeeSky(player.getPosition()) && player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0) <= 8) {
 
 					player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
 				} else {
@@ -117,10 +117,10 @@ public class MiningCharm extends ItemBaseCurio {
 
 		if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
 			ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", false);
-			world.playSound(null, player.func_233580_cy_(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.getPosition(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 		} else {
 			ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", true);
-			world.playSound(null, player.func_233580_cy_(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.getPosition(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 		}
 
 		player.swingArm(handIn);
@@ -154,6 +154,11 @@ public class MiningCharm extends ItemBaseCurio {
 	@OnlyIn(Dist.CLIENT)
 	public boolean canRender(String identifier, int index, LivingEntity living) {
 		return false;
+	}
+
+	@Override
+	public int getFortuneBonus(String identifier, LivingEntity livingEntity, ItemStack curio, int index) {
+		return super.getFortuneBonus(identifier, livingEntity, curio, index) + 1;
 	}
 
 }

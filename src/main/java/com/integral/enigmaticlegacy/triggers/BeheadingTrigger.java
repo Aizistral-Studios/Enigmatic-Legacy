@@ -43,12 +43,12 @@ public class BeheadingTrigger extends AbstractCriterionTrigger<BeheadingTrigger.
 
 	@Nonnull
 	@Override
-	public BeheadingTrigger.Instance func_230241_b_(@Nonnull JsonObject json, @Nonnull EntityPredicate.AndPredicate playerPred, ConditionArrayParser conditions) {
+	public BeheadingTrigger.Instance deserializeTrigger(@Nonnull JsonObject json, @Nonnull EntityPredicate.AndPredicate playerPred, ConditionArrayParser conditions) {
 		return new BeheadingTrigger.Instance(playerPred);
 	}
 
 	public void trigger(ServerPlayerEntity player) {
-		this.func_235959_a_(player, instance -> instance.test());
+		this.triggerListeners(player, instance -> instance.test());
 	}
 
 	static class Instance extends CriterionInstance {

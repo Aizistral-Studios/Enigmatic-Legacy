@@ -32,7 +32,7 @@ public class IronRing extends ItemBaseCurio {
 	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier) {
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
-		atts.put(Attributes.field_233826_i_, new AttributeModifier(UUID.fromString("51faf191-bf72-4654-b349-cc1f4f1143bf"), "Armor bonus", 1.0, AttributeModifier.Operation.ADDITION));
+		atts.put(Attributes.ARMOR, new AttributeModifier(UUID.fromString("51faf191-bf72-4654-b349-cc1f4f1143bf"), "Armor bonus", 1.0, AttributeModifier.Operation.ADDITION));
 
 		return atts;
 	}

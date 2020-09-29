@@ -49,7 +49,7 @@ public class EtheriumPickaxe extends ItemBaseTool implements IMultiblockMiningTo
 				.defaultMaxDamage((int) (EnigmaticMaterials.ETHERIUM.getMaxUses() * 1.5))
 				.addToolType(ToolType.PICKAXE, EnigmaticMaterials.ETHERIUM.getHarvestLevel())
 				.rarity(Rarity.RARE)
-				.func_234689_a_());
+				.isBurnable());
 
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_pickaxe"));
 
@@ -68,7 +68,7 @@ public class EtheriumPickaxe extends ItemBaseTool implements IMultiblockMiningTo
 		if (ConfigHandler.ETHERIUM_PICKAXE_RADIUS.getValue() == -1)
 			return;
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumPickaxe1", TextFormatting.GOLD, ConfigHandler.ETHERIUM_PICKAXE_RADIUS.getValue(), ConfigHandler.ETHERIUM_PICKAXE_DEPTH.getValue());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 

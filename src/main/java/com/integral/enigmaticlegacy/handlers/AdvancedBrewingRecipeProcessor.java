@@ -47,10 +47,11 @@ public class AdvancedBrewingRecipeProcessor implements IComponentProcessor {
 	@Override
 	public void setup(IVariableProvider variables) {
 
-		String recipeId = variables.get("recipe").asString();
+		ResourceLocation recipeId = new ResourceLocation(variables.get("recipe").asString());
 		int index = variables.get("index").asNumber().intValue();
 
-		this.recipe = AbstractBrewingRecipe.recipeMap.get(new ResourceLocation(recipeId)).get(index);
+
+		this.recipe = AbstractBrewingRecipe.recipeMap.containsKey(recipeId) ? AbstractBrewingRecipe.recipeMap.get(recipeId).get(index) : AbstractBrewingRecipe.EMPTY_RECIPE;
 	}
 
 	@Override
@@ -59,25 +60,23 @@ public class AdvancedBrewingRecipeProcessor implements IComponentProcessor {
 		if (this.recipe instanceof SpecialBrewingRecipe) {
 			SpecialBrewingRecipe special = (SpecialBrewingRecipe) this.recipe;
 
-			if (key.startsWith("catalyst")) {
+			if (key.startsWith("catalyst"))
 				return IVariable.wrapList(AdvancedBrewingRecipeProcessor.wrapStackList(special.getIngredient().getMatchingStacks()));
-			} else if (key.startsWith("input")) {
+			else if (key.startsWith("input"))
 				return IVariable.wrapList(AdvancedBrewingRecipeProcessor.wrapStackList(special.getInput().getMatchingStacks()));
-			} else if (key.startsWith("output")) {
+			else if (key.startsWith("output"))
 				return IVariable.from(special.getOutput());
-			}
 
 		} else if (this.recipe instanceof ComplexBrewingRecipe) {
 			ComplexBrewingRecipe complex = (ComplexBrewingRecipe) this.recipe;
 			HashMap<Ingredient, Ingredient> processingMappings = complex.getProcessingMappings();
 
-			if (key.startsWith("catalyst")) {
+			if (key.startsWith("catalyst"))
 				return IVariable.wrapList(AdvancedBrewingRecipeProcessor.wrapIngredientSet(processingMappings.values()));
-			} else if (key.startsWith("input")) {
+			else if (key.startsWith("input"))
 				return IVariable.wrapList(AdvancedBrewingRecipeProcessor.wrapIngredientSet(processingMappings.keySet()));
-			} else if (key.startsWith("output")) {
+			else if (key.startsWith("output"))
 				return IVariable.from(complex.getOutput());
-			}
 
 		}
 		return null;

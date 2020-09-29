@@ -22,7 +22,7 @@ public class DarkArmor extends ItemBaseArmor {
 	public final String TEXTURE = EnigmaticLegacy.MODID + ":textures/models/armor/dark_armor.png";
 
 	public DarkArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
-		super(materialIn, slot, ItemBaseArmor.getDefaultProperties().rarity(Rarity.RARE).func_234689_a_().group(null));
+		super(materialIn, slot, ItemBaseArmor.getDefaultProperties().rarity(Rarity.RARE).isBurnable().group(null));
 	}
 
 	@Override

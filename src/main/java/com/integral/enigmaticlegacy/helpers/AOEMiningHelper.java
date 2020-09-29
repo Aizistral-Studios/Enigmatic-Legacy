@@ -84,7 +84,7 @@ public class AOEMiningHelper {
 
 		boolean validHarvest = !checkHarvestLevel || player.getHeldItemMainhand().canHarvestBlock(state);
 		boolean isEffective = effectiveOn.contains(state.getBlock()) || effectiveMaterials.contains(state.getMaterial());
-		boolean witherImmune = BlockTags.WITHER_IMMUNE.func_230235_a_(state.getBlock());
+		boolean witherImmune = BlockTags.WITHER_IMMUNE.contains(state.getBlock());
 
 		if (validHarvest && isEffective && !witherImmune) {
 			world.destroyBlock(pos, false);

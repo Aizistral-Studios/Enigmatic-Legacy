@@ -63,7 +63,7 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
@@ -106,7 +106,7 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player), new PacketPlayerMotion(finalMotion.x, finalMotion.y, finalMotion.z));
 		player.setMotion(finalMotion.x, finalMotion.y, finalMotion.z);
 
-		world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
+		world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
 
 		SuperpositionHandler.setSpellstoneCooldown(player, ConfigHandler.ANGEL_BLESSING_COOLDOWN.getValue());
 	}

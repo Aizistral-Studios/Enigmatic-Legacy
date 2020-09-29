@@ -28,7 +28,7 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    mappings channel: 'snapshot', version: '20200514-1.16'
+    mappings channel: 'snapshot', version: '20200723-1.16.1'
     
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 	
@@ -108,7 +108,7 @@ repositories {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.3-34.0.7'
+    minecraft 'net.minecraftforge:forge:1.16.3-34.1.0'
 
 	compile 'org.spongepowered:mixin:0.8.1-SNAPSHOT'
 	
@@ -120,8 +120,8 @@ dependencies {
     annotationProcessor 'org.ow2.asm:asm-util:7.2'
 	
 	// These are 1.16.3 dependencies
-	//compile fg.deobf('generic:decorativeblocks:1.16.1-1.4')
-	compile fg.deobf('top.theillusivec4.curios:curios-forge:1.16.3-4.0.1.0')
+	compile fg.deobf('generic:decorativeblocks:1.16.1-1.4')
+	compile fg.deobf('top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0')
     compile fg.deobf("vazkii.patchouli:Patchouli:1.16-42")
 	
 	// These are 1.16.2 dependencies

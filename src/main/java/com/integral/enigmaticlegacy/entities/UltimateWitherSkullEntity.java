@@ -115,7 +115,7 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 	*/
 	@Override
 	public float getExplosionResistance(Explosion explosionIn, IBlockReader worldIn, BlockPos pos, BlockState blockStateIn, FluidState p_180428_5_, float p_180428_6_) {
-		return this.isSkullInvulnerable() && !BlockTags.WITHER_IMMUNE.func_230235_a_(blockStateIn.getBlock()) ? Math.min(0.8F, p_180428_6_) : p_180428_6_;
+		return this.isSkullInvulnerable() && !BlockTags.WITHER_IMMUNE.contains(blockStateIn.getBlock()) ? Math.min(0.8F, p_180428_6_) : p_180428_6_;
 	}
 	
 

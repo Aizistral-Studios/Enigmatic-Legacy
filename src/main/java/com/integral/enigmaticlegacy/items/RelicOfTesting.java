@@ -52,7 +52,7 @@ public class RelicOfTesting extends ItemBase {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.relicOfTesting1");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -73,8 +73,9 @@ public class RelicOfTesting extends ItemBase {
 
 		ItemStack checkTag = playerIn.inventory.offHandInventory.get(0);
 
-		if (checkTag != null)
+		if (checkTag != null) {
 			playerIn.sendMessage(new StringTextComponent(checkTag.getOrCreateTag().getString()), playerIn.getUniqueID());
+		}
 
 		/*
 		if(!worldIn.isRemote) {
@@ -88,7 +89,7 @@ public class RelicOfTesting extends ItemBase {
 
 		    playerIn.openContainer(new PortableCrafterContainerProvider(name));
 		}
-		*/
+		 */
 
 		playerIn.swingArm(handIn);
 
@@ -105,8 +106,9 @@ public class RelicOfTesting extends ItemBase {
 				return arg instanceof PlayerEntity ? SuperpositionHandler.hasCurio(arg, EnigmaticLegacy.enigmaticAmulet) : false;
 			}, 6.0F, 1.0D, 1.2D, EntityPredicates.CAN_AI_TARGET::test));
 
-			if (creeper.getAttackTarget() == entity)
+			if (creeper.getAttackTarget() == entity) {
 				creeper.setAttackTarget(null);
+			}
 		}
 	}
 

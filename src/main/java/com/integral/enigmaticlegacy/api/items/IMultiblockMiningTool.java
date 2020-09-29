@@ -15,9 +15,8 @@ public interface IMultiblockMiningTool {
 	}
 
 	default boolean areaEffectsAllowed(ItemStack stack) {
-		if (stack.getItem() instanceof IMultiblockMiningTool) {
+		if (stack.getItem() instanceof IMultiblockMiningTool)
 			return ItemNBTHelper.getBoolean(stack, "MultiblockEffectsEnabled", true);
-		}
 
 		return false;
 	}
@@ -27,8 +26,9 @@ public interface IMultiblockMiningTool {
 		if (stack.getItem() instanceof IMultiblockMiningTool) {
 			ItemNBTHelper.setBoolean(stack, "MultiblockEffectsEnabled", true);
 
-			if (!player.world.isRemote)
-				player.world.playSound(null, player.func_233580_cy_(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+			if (!player.world.isRemote) {
+				player.world.playSound(null, player.getPosition(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+			}
 		}
 
 	}
@@ -37,17 +37,19 @@ public interface IMultiblockMiningTool {
 		if (stack.getItem() instanceof IMultiblockMiningTool) {
 			ItemNBTHelper.setBoolean(stack, "MultiblockEffectsEnabled", false);
 
-			if (!player.world.isRemote)
-				player.world.playSound(null, player.func_233580_cy_(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+			if (!player.world.isRemote) {
+				player.world.playSound(null, player.getPosition(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+			}
 		}
 	}
 
 	default void toggleAreaEffects(PlayerEntity player, ItemStack stack) {
 		if (stack.getItem() instanceof IMultiblockMiningTool) {
-			if (this.areaEffectsAllowed(stack))
+			if (this.areaEffectsAllowed(stack)) {
 				this.disableAreaEffects(player, stack);
-			else
+			} else {
 				this.enableAreaEffects(player, stack);
+			}
 		}
 	}
 

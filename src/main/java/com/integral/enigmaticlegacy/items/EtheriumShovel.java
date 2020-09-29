@@ -55,7 +55,7 @@ public class EtheriumShovel extends ToolItem implements IPerhaps, IMultiblockMin
 				.getDefaultProperties().defaultMaxDamage((int) (EnigmaticMaterials.ETHERIUM.getMaxUses() * 1.5))
 				.addToolType(ToolType.SHOVEL, EnigmaticMaterials.ETHERIUM.getHarvestLevel())
 				.rarity(Rarity.RARE)
-				.func_234689_a_());
+				.isBurnable());
 
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_shovel"));
 
@@ -73,7 +73,7 @@ public class EtheriumShovel extends ToolItem implements IPerhaps, IMultiblockMin
 		if (ConfigHandler.ETHERIUM_SHOVEL_RADIUS.getValue() == -1)
 			return;
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumShovel1", TextFormatting.GOLD, ConfigHandler.ETHERIUM_SHOVEL_RADIUS.getValue(), ConfigHandler.ETHERIUM_SHOVEL_DEPTH.getValue());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 

@@ -41,6 +41,7 @@ public class EyeOfNebula extends ItemAdvancedCurio implements ISpellstone {
 
 		this.resistanceList.put(DamageSource.MAGIC.getDamageType(), () -> ConfigHandler.EYE_OF_NEBULA_MAGIC_RESISTANCE.getValue().asModifierInverted());
 		this.resistanceList.put(DamageSource.DRAGON_BREATH.getDamageType(), () -> ConfigHandler.EYE_OF_NEBULA_MAGIC_RESISTANCE.getValue().asModifierInverted());
+		this.resistanceList.put(DamageSource.WITHER.getDamageType(), () -> ConfigHandler.EYE_OF_NEBULA_MAGIC_RESISTANCE.getValue().asModifierInverted());
 	}
 
 	@Override
@@ -54,7 +55,7 @@ public class EyeOfNebula extends ItemAdvancedCurio implements ISpellstone {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
@@ -98,13 +99,13 @@ public class EyeOfNebula extends ItemAdvancedCurio implements ISpellstone {
 
 			dir = targetPos.add(dir);
 
-			world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+			world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 128, player.world.func_234923_W_())), new PacketPortalParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 72, 1.0F, false));
 
 			player.setPositionAndUpdate(dir.x, target.getPosY() + 0.25D, dir.z);
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player), new PacketPlayerSetlook(target.getPosX(), target.getPosY() - 1.0D + (target.getHeight() / 2), target.getPosZ()));
 
-			world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+			world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 128, player.world.func_234923_W_())), new PacketRecallParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 24, false));
 
 			SuperpositionHandler.setSpellstoneCooldown(player, ConfigHandler.EYE_OF_NEBULA_COOLDOWN.getValue());

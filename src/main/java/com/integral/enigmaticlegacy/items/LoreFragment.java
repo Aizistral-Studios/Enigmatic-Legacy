@@ -32,7 +32,7 @@ public class LoreFragment extends ItemBase {
 		if (!stack.getOrCreateChildTag("display").getString("Name").equals("") || stack.getOrCreateChildTag("display").getList("Lore", 8).size() != 0)
 			return;
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.loreFragment1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.loreFragment2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");

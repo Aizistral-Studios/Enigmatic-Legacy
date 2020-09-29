@@ -41,14 +41,14 @@ public class EtheriumSword extends SwordItem implements IPerhaps, IMultiblockMin
 	public CooldownMap etheriumSwordCooldowns = new CooldownMap();
 
 	public EtheriumSword() {
-		super(EnigmaticMaterials.ETHERIUM, 6, -2.6F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).func_234689_a_());
+		super(EnigmaticMaterials.ETHERIUM, 6, -2.6F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_sword"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword3");
@@ -87,7 +87,7 @@ public class EtheriumSword extends SwordItem implements IPerhaps, IMultiblockMin
 				Vector3 dir = look.multiply(1D);
 
 				this.knockBack(player, 1.0F, dir.x, dir.z);
-				world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_SKELETON_SHOOT, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
+				world.playSound(null, player.getPosition(), SoundEvents.ENTITY_SKELETON_SHOOT, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
 
 				player.getCooldownTracker().setCooldown(this, ConfigHandler.ETHERIUM_SWORD_COOLDOWN.getValue());
 
@@ -113,8 +113,8 @@ public class EtheriumSword extends SwordItem implements IPerhaps, IMultiblockMin
 		Vector3d vec3d = new Vector3d(0D, 0D, 0D);
 		Vector3d vec3d1 = (new Vector3d(xRatio, 0.0D, zRatio)).normalize().scale(strength);
 
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entityIn), new PacketPlayerMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.func_233570_aj_() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z));
-		entityIn.setMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.func_233570_aj_() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z);
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entityIn), new PacketPlayerMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z));
+		entityIn.setMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z);
 
 	}
 

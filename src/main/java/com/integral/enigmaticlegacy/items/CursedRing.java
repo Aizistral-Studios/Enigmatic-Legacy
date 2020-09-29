@@ -23,6 +23,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.passive.BeeEntity;
+import net.minecraft.entity.passive.GolemEntity;
+import net.minecraft.entity.passive.IronGolemEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
@@ -38,19 +42,15 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class CursedRing extends ItemBaseCurio {
 
-	private final double angerRange = 32F;
-	public Multimap<Attribute, AttributeModifier> attributesDefault = HashMultimap.create();
+	private final double angerRange = 24F;
+	public final Multimap<Attribute, AttributeModifier> attributesDefault = HashMultimap.create();
 
 	public CursedRing() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "cursed_ring"));
 
-		this.initAttributes();
-	}
-
-	private void initAttributes() {
-		this.attributesDefault.put(Attributes.field_233826_i_, new AttributeModifier(UUID.fromString("457d0ac3-69e4-482f-b636-22e0802da6bd"), "enigmaticlegacy:armor_modifier", -0.3F, AttributeModifier.Operation.MULTIPLY_TOTAL));
-		this.attributesDefault.put(Attributes.field_233827_j_, new AttributeModifier(UUID.fromString("95e70d83-3d50-4241-a835-996e1ef039bb"), "enigmaticlegacy:armor_toughness_modifier", -0.3F, AttributeModifier.Operation.MULTIPLY_TOTAL));
+		this.attributesDefault.put(Attributes.ARMOR, new AttributeModifier(UUID.fromString("457d0ac3-69e4-482f-b636-22e0802da6bd"), "enigmaticlegacy:armor_modifier", -0.3F, AttributeModifier.Operation.MULTIPLY_TOTAL));
+		this.attributesDefault.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(UUID.fromString("95e70d83-3d50-4241-a835-996e1ef039bb"), "enigmaticlegacy:armor_toughness_modifier", -0.3F, AttributeModifier.Operation.MULTIPLY_TOTAL));
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class CursedRing extends ItemBaseCurio {
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing4");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing5");
@@ -97,13 +97,16 @@ public class CursedRing extends ItemBaseCurio {
 		return false;
 	}
 
-	/*
+
 	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier) {
 		return this.attributesDefault;
 	}
-	 */
 
+	@Override
+	public boolean showAttributesTooltip(String identifier) {
+		return false;
+	}
 
 	@Override
 	public boolean canUnequip(String identifier, LivingEntity living) {
@@ -120,9 +123,7 @@ public class CursedRing extends ItemBaseCurio {
 
 	@Override
 	public void onUnequip(String identifier, int index, LivingEntity entityLivingBase) {
-		if (entityLivingBase instanceof PlayerEntity) {
-			SuperpositionHandler.removeAttributeMap((PlayerEntity) entityLivingBase, this.attributesDefault);
-		}
+		// NO-OP
 	}
 
 	@Override
@@ -155,17 +156,43 @@ public class CursedRing extends ItemBaseCurio {
 			if (entity instanceof IAngerable) {
 				IAngerable neutral = (IAngerable) entity;
 
+				if (neutral instanceof TameableEntity) {
+					if (((TameableEntity)neutral).isTamed()) {
+						continue;
+					}
+				} else if (neutral instanceof IronGolemEntity) {
+					if (((IronGolemEntity)neutral).isPlayerCreated()) {
+						continue;
+					}
+				} else if (neutral instanceof BeeEntity) {
+					continue;
+				}
+
 				if (!living.equals(neutral.getAttackTarget())) {
 					neutral.setAttackTarget(living);
 				}
 			}
 		}
 
-		SuperpositionHandler.applyAttributeMap(player, this.attributesDefault);
 	}
 
 	public double getAngerRange() {
 		return this.angerRange;
+	}
+
+	@Override
+	public boolean isForMortals() {
+		return ConfigHandler.CURSED_RING_ENABLED.getValue();
+	}
+
+	@Override
+	public int getFortuneBonus(String identifier, LivingEntity livingEntity, ItemStack curio, int index) {
+		return super.getFortuneBonus(identifier, livingEntity, curio, index) + 1;
+	}
+
+	@Override
+	public int getLootingBonus(String identifier, LivingEntity livingEntity, ItemStack curio, int index) {
+		return super.getLootingBonus(identifier, livingEntity, curio, index) + 1;
 	}
 
 }

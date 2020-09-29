@@ -53,7 +53,7 @@ public class EtheriumScythe extends SwordItem implements IPerhaps, IMultiblockMi
 	public Set<Material> effectiveMaterials;
 
 	public EtheriumScythe() {
-		super(EnigmaticMaterials.ETHERIUM, 3, -2.0F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).func_234689_a_());
+		super(EnigmaticMaterials.ETHERIUM, 3, -2.0F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_scythe"));
 
 		this.effectiveMaterials = Sets.newHashSet();
@@ -73,7 +73,7 @@ public class EtheriumScythe extends SwordItem implements IPerhaps, IMultiblockMi
 		if (ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue() == -1)
 			return;
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe1", TextFormatting.GOLD, ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe2", TextFormatting.GOLD, ConfigHandler.ETHERIUM_SCYTHE_VOLUME.getValue());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");

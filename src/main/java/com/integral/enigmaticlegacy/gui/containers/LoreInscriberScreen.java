@@ -35,7 +35,7 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 
 	public LoreInscriberScreen(LoreInscriberContainer p_i51103_1_, PlayerInventory p_i51103_2_, ITextComponent p_i51103_3_) {
 		this(p_i51103_1_, p_i51103_2_, p_i51103_3_, LoreInscriberScreen.ANVIL_RESOURCE);
-		this.field_238742_p_ = 60;
+		this.titleX = 60;
 	}
 
 	private LoreInscriberScreen(LoreInscriberContainer p_i232291_1_, PlayerInventory p_i232291_2_, ITextComponent p_i232291_3_, ResourceLocation p_i232291_4_) {
@@ -44,53 +44,53 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	}
 
 	protected void func_230453_j_() {
-		this.field_230706_i_.keyboardListener.enableRepeatEvents(true);
-		int i = (this.field_230708_k_ - this.xSize) / 2;
-		int j = (this.field_230709_l_ - this.ySize) / 2;
-		this.nameField = new TextFieldWidget(this.field_230712_o_, i + 55, j + 30, 95, 12, new TranslationTextComponent("container.repair"));
+		this.minecraft.keyboardListener.enableRepeatEvents(true);
+		int i = (this.width - this.xSize) / 2;
+		int j = (this.height - this.ySize) / 2;
+		this.nameField = new TextFieldWidget(this.font, i + 55, j + 30, 95, 12, new TranslationTextComponent("container.repair"));
 		this.nameField.setCanLoseFocus(false);
 		this.nameField.setTextColor(-1);
 		this.nameField.setDisabledTextColour(-1);
 		this.nameField.setEnableBackgroundDrawing(false);
 		this.nameField.setMaxStringLength(128);
 		this.nameField.setResponder(this::renameResponder);
-		this.field_230705_e_.add(this.nameField);
+		this.children.add(this.nameField);
 		this.setFocusedDefault(this.nameField);
 	}
 
 	@Override
-	protected void func_231160_c_() {
-		super.func_231160_c_();
+	protected void init() {
+		super.init();
 		this.func_230453_j_();
 		this.container.addListener(this);
 	}
 
 	@Override
-	public void func_231164_f_() {
-		super.func_231164_f_();
+	public void onClose() {
+		super.onClose();
 		this.container.removeListener(this);
-		this.field_230706_i_.keyboardListener.enableRepeatEvents(false);
+		this.minecraft.keyboardListener.enableRepeatEvents(false);
 	}
 
 	@Override
-	public void func_230430_a_(MatrixStack matrixStack, int x, int y, float partialTicksIGuess) {
-		this.func_230446_a_(matrixStack);
-		super.func_230430_a_(matrixStack, x, y, partialTicksIGuess);
+	public void render(MatrixStack matrixStack, int x, int y, float partialTicksIGuess) {
+		this.renderBackground(matrixStack);
+		super.render(matrixStack, x, y, partialTicksIGuess);
 		RenderSystem.disableBlend();
 		this.func_230452_b_(matrixStack, x, y, partialTicksIGuess);
 		this.func_230459_a_(matrixStack, x, y);
 	}
 
 	@Override
-	protected void func_230450_a_(MatrixStack p_230450_1_, float p_230450_2_, int p_230450_3_, int p_230450_4_) {
+	protected void drawGuiContainerBackgroundLayer(MatrixStack p_230450_1_, float p_230450_2_, int p_230450_3_, int p_230450_4_) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.field_230706_i_.getTextureManager().bindTexture(this.field_238817_A_);
-		int i = (this.field_230708_k_ - this.xSize) / 2;
-		int j = (this.field_230709_l_ - this.ySize) / 2;
-		this.func_238474_b_(p_230450_1_, i, j, 0, 0, this.xSize, this.ySize);
-		this.func_238474_b_(p_230450_1_, i + 52, j + 26, 0, this.ySize + (this.container.getSlot(0).getHasStack() ? 0 : 16), 102, 16);
+		this.minecraft.getTextureManager().bindTexture(this.field_238817_A_);
+		int i = (this.width - this.xSize) / 2;
+		int j = (this.height - this.ySize) / 2;
+		this.blit(p_230450_1_, i, j, 0, 0, this.xSize, this.ySize);
+		this.blit(p_230450_1_, i + 52, j + 26, 0, this.ySize + (this.container.getSlot(0).getHasStack() ? 0 : 16), 102, 16);
 		if (this.container.getSlot(0).getHasStack() && !this.container.getSlot(1).getHasStack()) {
-			this.func_238474_b_(p_230450_1_, i + 71, j + 49, this.xSize, 0, 28, 21);
+			this.blit(p_230450_1_, i + 71, j + 49, this.xSize, 0, 28, 21);
 		}
 
 	}
@@ -113,19 +113,19 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	}
 
 	@Override
-	public void func_231152_a_(Minecraft p_231152_1_, int p_231152_2_, int p_231152_3_) {
+	public void resize(Minecraft p_231152_1_, int p_231152_2_, int p_231152_3_) {
 		String s = this.nameField.getText();
-		this.func_231158_b_(p_231152_1_, p_231152_2_, p_231152_3_);
+		this.init(p_231152_1_, p_231152_2_, p_231152_3_);
 		this.nameField.setText(s);
 	}
 
 	@Override
-	public boolean func_231046_a_(int p_231046_1_, int p_231046_2_, int p_231046_3_) {
+	public boolean keyPressed(int p_231046_1_, int p_231046_2_, int p_231046_3_) {
 		if (p_231046_1_ == 256) {
-			this.field_230706_i_.player.closeScreen();
+			this.minecraft.player.closeScreen();
 		}
 
-		return !this.nameField.func_231046_a_(p_231046_1_, p_231046_2_, p_231046_3_) && !this.nameField.canWrite() ? super.func_231046_a_(p_231046_1_, p_231046_2_, p_231046_3_) : true;
+		return !this.nameField.keyPressed(p_231046_1_, p_231046_2_, p_231046_3_) && !this.nameField.canWrite() ? super.keyPressed(p_231046_1_, p_231046_2_, p_231046_3_) : true;
 	}
 
 	private void renameResponder(String input) {
@@ -142,9 +142,9 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	}
 
 	@Override
-	protected void func_230451_b_(MatrixStack matrixStack, int x, int y) {
-		this.field_230712_o_.func_243248_b(matrixStack, this.field_230704_d_, 52F, 13F, 4210752);
-		//this.field_230712_o_.func_238422_b_(matrixStack, this.playerInventory.getDisplayName(), JsonConfigHandler.getFloat("playerInvX"), JsonConfigHandler.getFloat("playerInvY"), 4210752);
+	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
+		this.font.func_243248_b(matrixStack, this.title, 52F, 13F, 4210752);
+		//this.font.func_238422_b_(matrixStack, this.playerInventory.getDisplayName(), JsonConfigHandler.getFloat("playerInvX"), JsonConfigHandler.getFloat("playerInvY"), 4210752);
 
 		RenderSystem.disableBlend();
 		/*
@@ -153,7 +153,7 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 			int j = 8453920;
 			boolean flag = true;
 			String s = I18n.format("container.repair.cost", i);
-			if (i >= 40 && !this.field_230706_i_.player.abilities.isCreativeMode) {
+			if (i >= 40 && !this.minecraft.player.abilities.isCreativeMode) {
 				s = I18n.format("container.repair.expensive");
 				j = 16736352;
 			} else if (!this.container.getSlot(2).getHasStack()) {
@@ -163,10 +163,10 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 			}
 
 			if (flag) {
-				int k = this.xSize - 8 - this.field_230712_o_.getStringWidth(s) - 2;
+				int k = this.xSize - 8 - this.font.getStringWidth(s) - 2;
 				int l = 69;
 				AbstractGui.func_238467_a_(p_230451_1_, k - 2, 67, this.xSize - 8, 79, 1325400064);
-				this.field_230712_o_.func_238405_a_(p_230451_1_, s, k, 69.0F, j);
+				this.font.func_238405_a_(p_230451_1_, s, k, 69.0F, j);
 			}
 
 		}
@@ -174,7 +174,7 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	}
 
 	public void func_230452_b_(MatrixStack p_230452_1_, int p_230452_2_, int p_230452_3_, float p_230452_4_) {
-		this.nameField.func_230430_a_(p_230452_1_, p_230452_2_, p_230452_3_, p_230452_4_);
+		this.nameField.render(p_230452_1_, p_230452_2_, p_230452_3_, p_230452_4_);
 	}
 
 	/**
@@ -186,7 +186,7 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 		if (slotInd == 0) {
 			this.nameField.setText(stack.isEmpty() ? "" : stack.getDisplayName().getString());
 			this.nameField.setEnabled(!stack.isEmpty());
-			this.func_231035_a_(this.nameField);
+			this.setListener(this.nameField);
 		}
 
 	}

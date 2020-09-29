@@ -41,7 +41,7 @@ import net.minecraft.entity.item.ItemEntity;
 public class StorageCrystal extends ItemBase implements IPermanentCrystal {
 
 	public StorageCrystal() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).func_234689_a_().group(null));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isBurnable().group(null));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "storage_crystal"));
 	}
 	

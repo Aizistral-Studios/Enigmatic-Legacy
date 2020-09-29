@@ -50,7 +50,7 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 				.addToolType(ToolType.SHOVEL, EnigmaticMaterials.ETHERIUM.getHarvestLevel())
 				.defaultMaxDamage(4000)
 				.rarity(Rarity.EPIC)
-				.func_234689_a_());
+				.isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_breaker"));
 
 		this.effectiveMaterials.addAll(EnigmaticLegacy.etheriumPickaxe.effectiveMaterials);
@@ -61,7 +61,7 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker1", TextFormatting.GOLD, 3, 1);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker2");
@@ -85,8 +85,9 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 	@Override
 	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-		if (!world.isRemote)
+		if (!world.isRemote) {
 			this.spawnFlameParticles(world, pos);
+		}
 
 		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && ConfigHandler.ETHERIUM_PICKAXE_RADIUS.getValue() != -1) {
 
@@ -127,6 +128,11 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 			return this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType();
 		else
 			return super.onItemUse(context);
+	}
+
+	@Override
+	public boolean isForMortals() {
+		return ConfigHandler.ASTRAL_BREAKER_ENABLED.getValue();
 	}
 
 }

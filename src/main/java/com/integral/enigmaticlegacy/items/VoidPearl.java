@@ -40,7 +40,7 @@ public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
 	public DamageSource theDarkness;
 
 	public VoidPearl() {
-		super(ItemAdvancedCurio.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).func_234689_a_());
+		super(ItemAdvancedCurio.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "void_pearl"));
 
 		this.immunityList.add(DamageSource.DROWN.damageType);
@@ -67,15 +67,16 @@ public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearlCooldown", TextFormatting.GOLD, ((ConfigHandler.VOID_PEARL_COOLDOWN.getValue())) / 20.0F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl3");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl4");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl5");
+			// These lines describe hunger negation trait that was removed since Release 2.5.0
+			//ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl4");
+			//ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl5");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl6");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl7");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl8");
@@ -102,6 +103,7 @@ public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
 
+			/*
 
 			FoodStats stats = player.getFoodStats();
 			stats.setFoodLevel(20);
@@ -116,18 +118,27 @@ public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
 				ex.printStackTrace();
 			}
 
+			 */
 
-			if (player.getAir() < 300)
+			if (player.getAir() < 300) {
 				player.setAir(300);
+			}
+
+			if (player.isBurning()) {
+				player.extinguish();
+			}
+
+			player.clearActivePotions();
 
 			if (player.ticksExisted % 10 == 0) {
 				List<LivingEntity> entities = living.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(player.getPosX() - ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.getPosY() - ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.getPosZ() - ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.getPosX() + ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.getPosY() + ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.getPosZ() + ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue()));
 
-				if (entities.contains(player))
+				if (entities.contains(player)) {
 					entities.remove(player);
+				}
 
 				for (LivingEntity victim : entities) {
-					if (victim.world.getNeighborAwareLightSubtracted(victim.func_233580_cy_(), 0) < 3) {
+					if (victim.world.getNeighborAwareLightSubtracted(victim.getPosition(), 0) < 3) {
 
 						if (victim instanceof PlayerEntity) {
 							PlayerEntity playerVictim = (PlayerEntity) victim;
@@ -139,7 +150,7 @@ public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
 
 						//if (player.ticksExisted % 20 == 0) {
 						victim.attackEntityFrom(this.theDarkness, (float) ConfigHandler.VOID_PEARL_BASE_DARKNESS_DAMAGE.getValue());
-						living.world.playSound(null, victim.func_233580_cy_(), SoundEvents.ENTITY_PHANTOM_BITE, SoundCategory.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
+						living.world.playSound(null, victim.getPosition(), SoundEvents.ENTITY_PHANTOM_BITE, SoundCategory.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
 						//}
 
 						victim.addPotionEffect(new EffectInstance(Effects.WITHER, 80, 1, false, true));

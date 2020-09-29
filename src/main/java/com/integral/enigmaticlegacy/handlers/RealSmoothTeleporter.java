@@ -30,14 +30,12 @@ public class RealSmoothTeleporter implements ITeleporter {
 			return entity;
 		} else
 			return repositionEntity.apply(false);
-
-		// TODO Applying supplied function for players causes crash in Forge code. Report to their repository
 	}
 
 	private void fireTriggers(ServerWorld p_213846_1_, ServerPlayerEntity player) {
 		RegistryKey<World> registrykey = p_213846_1_.func_234923_W_();
 		RegistryKey<World> registrykey1 = player.world.func_234923_W_();
-		CriteriaTriggers.CHANGED_DIMENSION.func_233551_a_(player, registrykey, registrykey1);
+		CriteriaTriggers.CHANGED_DIMENSION.testForAll(player, registrykey, registrykey1);
 	}
 
 }

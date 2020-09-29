@@ -58,7 +58,7 @@ public class LoreInscriberContainer extends Container {
 	private String unparsedInputField;
 
 	public LoreInscriberContainer(int syncID, PlayerInventory playerInv, PacketBuffer extraData) {
-		this(syncID, playerInv, IWorldPosCallable.of(playerInv.player.world, playerInv.player.func_233580_cy_()));
+		this(syncID, playerInv, IWorldPosCallable.of(playerInv.player.world, playerInv.player.getPosition()));
 	}
 
 	private LoreInscriberContainer(int p_i50102_1_, PlayerInventory p_i50102_2_, IWorldPosCallable p_i50102_3_) {
@@ -226,7 +226,7 @@ public class LoreInscriberContainer extends Container {
 		this.craftSlotsInv.setInventorySlotContents(0, ItemStack.EMPTY);
 
 		if (!player.world.isRemote)
-			player.world.playSound(null, player.func_233580_cy_(), EnigmaticLegacy.WRITE, SoundCategory.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
+			player.world.playSound(null, player.getPosition(), EnigmaticLegacy.WRITE, SoundCategory.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 
 		return stack;
 	}

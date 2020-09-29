@@ -31,7 +31,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class EtheriumArmor extends ItemBaseArmor {
 
 	public EtheriumArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
-		super(materialIn, slot, ItemBaseArmor.getDefaultProperties().rarity(Rarity.RARE).func_234689_a_());
+		super(materialIn, slot, ItemBaseArmor.getDefaultProperties().rarity(Rarity.RARE).isBurnable());
 	}
 
 	public boolean hasShield(@Nonnull PlayerEntity player) {
@@ -50,15 +50,16 @@ public class EtheriumArmor extends ItemBaseArmor {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		if (Screen.func_231173_s_()) {
-			if (stack.getItem().equals(EnigmaticLegacy.etheriumHelmet))
+		if (Screen.hasShiftDown()) {
+			if (stack.getItem().equals(EnigmaticLegacy.etheriumHelmet)) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumHelmet1");
-			else if (stack.getItem().equals(EnigmaticLegacy.etheriumChestplate))
+			} else if (stack.getItem().equals(EnigmaticLegacy.etheriumChestplate)) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumChestplate1");
-			else if (stack.getItem().equals(EnigmaticLegacy.etheriumLeggings))
+			} else if (stack.getItem().equals(EnigmaticLegacy.etheriumLeggings)) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumLeggings1");
-			else if (stack.getItem().equals(EnigmaticLegacy.etheriumBoots))
+			} else if (stack.getItem().equals(EnigmaticLegacy.etheriumBoots)) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumBoots1");
+			}
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -70,11 +71,13 @@ public class EtheriumArmor extends ItemBaseArmor {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus4", TextFormatting.GOLD, ConfigHandler.ETHERIUM_ARMOR_SHIELD_REDUCTION.getValue().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus5");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus6");
+
+			//ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus6");
 		}
 
-		if (stack.isEnchanted())
+		if (stack.isEnchanted()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		}
 
 	}
 

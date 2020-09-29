@@ -60,7 +60,7 @@ public class XPScroll extends ItemBaseCurio {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome3");
@@ -107,19 +107,19 @@ public class XPScroll extends ItemBaseCurio {
 
 			if (ItemNBTHelper.getBoolean(stack, "AbsorptionMode", true)) {
 				ItemNBTHelper.setBoolean(stack, "AbsorptionMode", false);
-				world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			} else {
 				ItemNBTHelper.setBoolean(stack, "AbsorptionMode", true);
-				world.playSound(null, player.func_233580_cy_(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		} else {
 
 			if (ItemNBTHelper.getBoolean(stack, "IsActive", false)) {
 				ItemNBTHelper.setBoolean(stack, "IsActive", false);
-				world.playSound(null, player.func_233580_cy_(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.getPosition(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			} else {
 				ItemNBTHelper.setBoolean(stack, "IsActive", true);
-				world.playSound(null, player.func_233580_cy_(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.getPosition(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 

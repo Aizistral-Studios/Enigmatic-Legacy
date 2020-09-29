@@ -1,0 +1,22 @@
+{
+    "name": "book.enigmaticlegacy.entry.berserk_emblem.name",
+    "icon": "enigmaticlegacy:berserk_emblem",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/berserk_emblem",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 45,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.berserk_emblem.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:berserk_emblem",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.berserk_emblem.page.2"
+        }
+    ]
+}

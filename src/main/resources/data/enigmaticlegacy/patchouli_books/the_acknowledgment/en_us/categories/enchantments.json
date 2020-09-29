@@ -1,0 +1,7 @@
+{
+	"name": "book.enigmaticlegacy.category.enchantments.name",
+	"description": "book.enigmaticlegacy.category.enchantments.desc",
+	"icon": "minecraft:enchanted_book",
+	"sortnum": 80,
+	"secret": false
+}

@@ -77,7 +77,7 @@ public class DarkMirror extends ItemBase implements ICursed {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.darkMirror1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.darkMirror2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.darkMirror3");

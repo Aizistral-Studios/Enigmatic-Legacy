@@ -67,6 +67,8 @@
 	"item.enigmaticlegacy.crying_chestplate": "Crying Cuirass [NYI]",
 	"item.enigmaticlegacy.crying_leggings": "Crying Greaves [NYI]",
 	"item.enigmaticlegacy.crying_boots": "Crying Boots [NYI]",
+	"item.enigmaticlegacy.cursed_scroll": "Scroll of a Thousand Curses",
+	"item.enigmaticlegacy.berserk_emblem": "Emblem of Bloodstained Valor",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -143,6 +145,10 @@
 	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_weakness": "Lingering Potion of Weakness",
 	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_slow_falling": "Lingering Potion of Slow Falling",
 	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_haste": "Lingering Potion of Haste",
+	
+	"enchantment.enigmaticlegacy.nemesis_curse": "Curse of Nemesis",
+	"enchantment.enigmaticlegacy.sharpshooter": "Sharpshooter",
+	"enchantment.enigmaticlegacy.ceaseless": "Ceaseless",
 
 	"curios.identifier.scroll": "Arcane Scroll",
 	"curios.identifier.spellstone": "Spellstone",
@@ -171,6 +177,9 @@
 	"enigmaticlegacy.toasts.slotUnlocked.title": "%1$s are unlocked!",
 	"enigmaticlegacy.toasts.slotUnlocked.text1": "You can now equip them",
 	"enigmaticlegacy.toasts.slotUnlocked.text2": "within Curios inventory.",
+	
+	"enigmaticlegacy.toasts.revelationTome.title": "+%1$s Experience",
+	"enigmaticlegacy.toasts.revelationTome.text": "+%1$s Knowledge Points",
 	
 	"enigmaticlegacy.curiotype.ring": "Rings",
 	"enigmaticlegacy.curiotype.charm": "Charms",
@@ -209,7 +218,7 @@
 	"advancement.enigmaticlegacy:heavenScroll.desc": "Find or create Gift of the Heaven",
 	
 	"advancement.enigmaticlegacy:voidPearl": "Hope Fades",
-	"advancement.enigmaticlegacy:voidPearl.desc": "Find or create Pearl of the Void",
+	"advancement.enigmaticlegacy:voidPearl.desc": "Claim the Pearl of the Void",
 	
 	"advancement.enigmaticlegacy:forbiddenAxe": "Fearsome Vengeance",
 	"advancement.enigmaticlegacy:forbiddenAxe.desc": "Behead an enemy using Axe of Executioner",
@@ -240,6 +249,9 @@
 	
 	"advancement.enigmaticlegacy:loreInscriber": "Lore Writer",
 	"advancement.enigmaticlegacy:loreInscriber.desc": "Obtain the Architect's Inkwell",
+	
+	"advancement.enigmaticlegacy:burnTheTome": "How Dare You",
+	"advancement.enigmaticlegacy:burnTheTome.desc": "Try and use ancient tome as a furnace fuel",
 
 	"tooltip.enigmaticlegacy.holdShift": "§5Hold §6Shift§5 to see details.",
 	
@@ -364,22 +376,22 @@
 	"tooltip.enigmaticlegacy.angelBlessingCooldown": "§dСooldown: §6%1$s§6 seconds",
 	"tooltip.enigmaticlegacy.angelBlessing3": "§dPassive abilities:",
 	"tooltip.enigmaticlegacy.angelBlessing4": "§5- Immunity to fall and collision damage.",
-	"tooltip.enigmaticlegacy.angelBlessing5": "§5- §6%1$s§6 Chance§5 to deflect incoming projectile.",
+	"tooltip.enigmaticlegacy.angelBlessing5": "§5- §6%1$s§d Chance§5 to deflect incoming projectile.",
 	"tooltip.enigmaticlegacy.angelBlessing6": "§5- Your own projectiles are greatly accelerated.",
 	
 	"tooltip.enigmaticlegacy.eyeOfNebula1": "§dActive ability:",
 	"tooltip.enigmaticlegacy.eyeOfNebula2": "§6- Teleports you behind creature you are looking at.",
 	"tooltip.enigmaticlegacy.eyeOfNebulaCooldown": "§dСooldown: §6%1$s§6 seconds",
 	"tooltip.enigmaticlegacy.eyeOfNebula3": "§dPassive abilities:",
-	"tooltip.enigmaticlegacy.eyeOfNebula4": "§5- §6%1$s§6 Magic Damage Resistance.",
-	"tooltip.enigmaticlegacy.eyeOfNebula5": "§5- §6%1$s§6 Chance§5 to teleport away from any attack.",
+	"tooltip.enigmaticlegacy.eyeOfNebula4": "§5- §6%1$s§d Magic Damage Resistance.",
+	"tooltip.enigmaticlegacy.eyeOfNebula5": "§5- §6%1$s§d Chance§5 to teleport away from any attack.",
 	
 	"tooltip.enigmaticlegacy.oceanStone1": "§dActive ability:",
-	"tooltip.enigmaticlegacy.oceanStone2": "§6- Starts thunderstorm, at the significant cost of your",
-	"tooltip.enigmaticlegacy.oceanStone3": "§6  experience.",
+	"tooltip.enigmaticlegacy.oceanStone2": "§6- Starts thunderstorm, at great cost of experience.",
+	"tooltip.enigmaticlegacy.oceanStone3": "§6  ",
 	"tooltip.enigmaticlegacy.oceanStoneCooldown": "§dСooldown: §6%1$s§6 seconds",
 	"tooltip.enigmaticlegacy.oceanStone4": "§dPassive abilities:",
-	"tooltip.enigmaticlegacy.oceanStone5": "§5- §6%1$s§6 Damage Resistance§5 against underwater creatures.",
+	"tooltip.enigmaticlegacy.oceanStone5": "§5- §6%1$s§d Damage Resistance§5 against underwater creatures.",
 	"tooltip.enigmaticlegacy.oceanStone6": "§5- You no longer need air to breathe underwater.",
 	"tooltip.enigmaticlegacy.oceanStone7": "§5- Provides §6Night Vision§5 effect when in water.",
 	"tooltip.enigmaticlegacy.oceanStone8": "§5- Greatly increased swimming speed.",
@@ -388,23 +400,24 @@
 	"tooltip.enigmaticlegacy.magmaHeart2": "§4- Absent.",
 	"tooltip.enigmaticlegacy.magmaHeartCooldown": "§dСooldown: §6%1$s§6 seconds",
 	"tooltip.enigmaticlegacy.magmaHeart3": "§dPassive abilities:",
-	"tooltip.enigmaticlegacy.magmaHeart4": "§5- Immunity to fire and lava.",
-	"tooltip.enigmaticlegacy.magmaHeart5": "§5- Extinguishes you when on fire.",
+	"tooltip.enigmaticlegacy.magmaHeart4": "§5- Immunity to fire.",
+	"tooltip.enigmaticlegacy.magmaHeart5": "§5- Temporary immunity to lava.",
 	"tooltip.enigmaticlegacy.magmaHeart6": "§5- Burns those who attack you in melee.",
 	"tooltip.enigmaticlegacy.magmaHeart7": "§5- Heavily improved visibility in lava.",
 	"tooltip.enigmaticlegacy.magmaHeart8": "§5- Any status effects applied to you tick",
-	"tooltip.enigmaticlegacy.magmaHeart9": "§5  down twice as fast.",
+	"tooltip.enigmaticlegacy.magmaHeart9": "§5  down twice as fast, except §6Fire Resistance§5.",
+	"tooltip.enigmaticlegacy.magmaHeart10": "§5- §6Fire Resistance§5 lasts twice as long.",
 	
 	"tooltip.enigmaticlegacy.golemHeart1": "§dActive ability:",
 	"tooltip.enigmaticlegacy.golemHeart2": "§4- Absent.",
 	"tooltip.enigmaticlegacy.golemHeartCooldown": "§dСooldown: §6%1$s§6 seconds",
 	"tooltip.enigmaticlegacy.golemHeart3": "§dPassive abilities:",
-	"tooltip.enigmaticlegacy.golemHeart4": "§5- §6+%1$s§6 Armor Points.",
+	"tooltip.enigmaticlegacy.golemHeart4": "§5- §6+%1$s§d Armor Points.",
 	"tooltip.enigmaticlegacy.golemHeart5": "§5- If nothing is equipped in armor slots, instead",
-	"tooltip.enigmaticlegacy.golemHeart6": "§5  gain §6+%1$s§6 Armor Points§5 and §6+%2$s§6 Armor Toughness.",
-	"tooltip.enigmaticlegacy.golemHeart7": "§5- §6%1$s§6 Knockback Resistance.",
-	"tooltip.enigmaticlegacy.golemHeart8": "§5- §6%1$s§6 Melee Damage Resistance.",
-	"tooltip.enigmaticlegacy.golemHeart9": "§5- §6%1$s§6 Explosion Damage Resistance.",
+	"tooltip.enigmaticlegacy.golemHeart6": "§5  gain §6+%1$s§d Armor Points§5, §6+%2$s§d Armor Toughness,",
+	"tooltip.enigmaticlegacy.golemHeart7": "§5  and §6+%1$s§d Explosion Damage Resistance.",
+	"tooltip.enigmaticlegacy.golemHeart8": "§5- §6%1$s§d Melee Damage Resistance.",
+	"tooltip.enigmaticlegacy.golemHeart9": "§5- §6%1$s§d Knockback Resistance.",
 	"tooltip.enigmaticlegacy.golemHeart10": "§5- Immunity to pressure and pricking damage.",
 	"tooltip.enigmaticlegacy.golemHeart11": "§5- You are vulnerable to §6Magic Damage.",
 	
@@ -415,16 +428,16 @@
 	"tooltip.enigmaticlegacy.voidPearl4": "§5- You experience no hunger, but regenerate",
 	"tooltip.enigmaticlegacy.voidPearl5": "§5  at much slower rate.",
 	"tooltip.enigmaticlegacy.voidPearl6": "§5- You no longer need air to breathe.",
-	"tooltip.enigmaticlegacy.voidPearl7": "§5- Damaging debuffs heal you instead.",
+	"tooltip.enigmaticlegacy.voidPearl7": "§5- Immunity to any status effects.",
 	"tooltip.enigmaticlegacy.voidPearl8": "§5- Your attacks inflict §6Withering.",
 	"tooltip.enigmaticlegacy.voidPearl9": "§5- Any living creatures nearby you, if they",
 	"tooltip.enigmaticlegacy.voidPearl10": "§5  are exposed to darkness, receive massive",
 	"tooltip.enigmaticlegacy.voidPearl11": "§5  damage and heavy debuffs.",
-	"tooltip.enigmaticlegacy.voidPearl12": "§5- §6%1$s§6 Chance§5 that otherwise lethal damage",
+	"tooltip.enigmaticlegacy.voidPearl12": "§5- §6%1$s§d Chance§5 that otherwise lethal damage",
 	"tooltip.enigmaticlegacy.voidPearl13": "§5  won't kill you.",
 	
-	"tooltip.enigmaticlegacy.monsterCharm1": "§6+%1$s§6 Damage§5 against undead creatures.",
-	"tooltip.enigmaticlegacy.monsterCharm2": "§6+%1$s§6 Damage§5 against other agressive creatures.",
+	"tooltip.enigmaticlegacy.monsterCharm1": "§6+%1$s§d Damage§5 against undead creatures.",
+	"tooltip.enigmaticlegacy.monsterCharm2": "§6+%1$s§d Damage§5 against other aggressive creatures.",
 	"tooltip.enigmaticlegacy.monsterCharm3": "§6+1 §dLooting Level",
 	"tooltip.enigmaticlegacy.monsterCharm4": "§5Slain monsters drop double as much experience.",
 	
@@ -456,9 +469,9 @@
 	"tooltip.enigmaticlegacy.etheriumArmorSetBonus1": "§dSet Bonus:",
 	"tooltip.enigmaticlegacy.etheriumArmorSetBonus2": "§5- When your health drops below §6%1$s§5, generates",
 	"tooltip.enigmaticlegacy.etheriumArmorSetBonus3": "§5  powerful shield that reflects most projectiles,",
-	"tooltip.enigmaticlegacy.etheriumArmorSetBonus4": "§5  provides §6%1$s§6 Damage Resistance§5, immunity to",
-	"tooltip.enigmaticlegacy.etheriumArmorSetBonus5": "§5  most debuffs, and knocks back any creatures",
-	"tooltip.enigmaticlegacy.etheriumArmorSetBonus6": "§5  that attack you.",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus4": "§5  provides §6%1$s§6 Damage Resistance§5, and knocks",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus5": "§5  back any creatures attack you.",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus6": "§5  ",
 	
 	"tooltip.enigmaticlegacy.loreInscriber1": "§6Right-Click§5 to open §6GUI§5. Insert §6Lore Fragment§5",
 	"tooltip.enigmaticlegacy.loreInscriber2": "§5to write formatted name and lore lines to it.",
@@ -555,6 +568,19 @@
 	"tooltip.enigmaticlegacy.theAknowledgment1": "§5The blinding light of revelation shall",
 	"tooltip.enigmaticlegacy.theAknowledgment2": "§5incinerate those who refuse to embrace it.",
 	
+	"tooltip.enigmaticlegacy.cursed_scroll1": "§6+%1$s §dAttack Damage",
+	"tooltip.enigmaticlegacy.cursed_scroll2": "§6+%1$s §dMining Speed",
+	"tooltip.enigmaticlegacy.cursed_scroll3": "§6+%1$s §dHealth Regeneration",
+	"tooltip.enigmaticlegacy.cursed_scroll4": "§5These traits are multiplied by total amount of",
+	"tooltip.enigmaticlegacy.cursed_scroll5": "§5curses that all items of your equipment bear.",
+	
+	"tooltip.enigmaticlegacy.berserk_emblem1": "§6+%1$s §dAttack Damage",
+	"tooltip.enigmaticlegacy.berserk_emblem2": "§6+%1$s §dAttack Speed",
+	"tooltip.enigmaticlegacy.berserk_emblem3": "§6+%1$s §dSprinting Speed",
+	"tooltip.enigmaticlegacy.berserk_emblem4": "§6+%1$s §dDamage Resistance",
+	"tooltip.enigmaticlegacy.berserk_emblem5": "§5These traits are multiplied by how many percents",
+	"tooltip.enigmaticlegacy.berserk_emblem6": "§5of your health pool you're currently missing.",
+	
 	"tooltip.enigmaticlegacy.cursedRing1": "§5Once worn, it becomes a part of you.",
 	"tooltip.enigmaticlegacy.cursedRing2": "§4This ring will persist with you forever.",
 	"tooltip.enigmaticlegacy.cursedRing2_creative": "§6With the power of god, you can unequip it.",
@@ -569,8 +595,8 @@
 	"tooltip.enigmaticlegacy.cursedRing11": "§dSeven blessings will reward those who withstand:",
 	"tooltip.enigmaticlegacy.cursedRing12": "§5- §6+1§d Looting Level",
 	"tooltip.enigmaticlegacy.cursedRing13": "§5- §6+1§d Fortune Level",
-	"tooltip.enigmaticlegacy.cursedRing14": "§5- §6+400%§5 experience dropped.",
-	"tooltip.enigmaticlegacy.cursedRing15": "§5- §6+10§d Enchantment Levels§5 in §6Enchanting Table.",
+	"tooltip.enigmaticlegacy.cursedRing14": "§5- §6+400%§5 §dExperience§5 dropped.",
+	"tooltip.enigmaticlegacy.cursedRing15": "§5- §6+10§d Enchanting Power§5 in §6Enchanting Table.",
 	"tooltip.enigmaticlegacy.cursedRing16": "§5- Unique drops from some creatures.",
 	"tooltip.enigmaticlegacy.cursedRing17": "§5- Functionality of §6Ring of Ender.",
 	"tooltip.enigmaticlegacy.cursedRing18": "§5- You can create and use unique relics.",
@@ -582,7 +608,10 @@
 	"tooltip.enigmaticlegacy.tainted2": "§5Tainted by the touch of a cursed being.",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
-	
+	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",
+	"gui.enigmaticlegacy.blazing_core_bar_offsetX": "0",
+	"gui.enigmaticlegacy.blazing_core_bar_offsetY": "0",
+	"gui.enigmaticlegacy.blazing_core__COMMENT": "Two strings above allow to move heat bar title by defining offsetX and offsetY to any positive or negative integers. This might be required for certain localizations more than for others depending on amount of symbols title takes takes to be spelled. You can, alternatively, leave title empty if you can't think of a solution that would look good, so that it just won't be rendered. Four symbols or less fit perfectly without any corrections. The string you read currently is just a commentary for localizators - you need not to translate it.",
 	
 	
 	"book.enigmaticlegacy.category.accessories.name": "Accessories",
@@ -621,9 +650,48 @@
 	"book.enigmaticlegacy.category.misc.desc": "Some knowledge proves to be extremely difficult to categorize. At times it ceases to be worth any effort at all.<br2/>There is some romance in leaving papers and scrolls stockpiled at the table, however, with no structure or order to them. Greatness is often born through what appears as sheer chaos.",
 	
 	
+	"book.enigmaticlegacy.category.enchantments.name": "Enchantments",
+	"book.enigmaticlegacy.category.enchantments.desc": "Enchanting is a great form of art on itself. Different masters seek different approaches to executing it, and ultimately - there's no telling whichever approach is the most effective, and whether even there is one.<br2/>Just as in other arts, there are keystones that make up the foundation of any and all enchanting schools, ones you'll have to learn anyhow.",
+	
+	
+	
+	
+	
+	
+	"book.enigmaticlegacy.entry.berserk_emblem.name": "Mark of the Berserk",
+	"book.enigmaticlegacy.entry.berserk_emblem.page.1": "It's no surprise how many fear death, for death lies in the center of web of all terrors. But for those who chose to bear the great curse, fear is unforgivable weakness.<br2/>With the power of Twisted Heart, as well as all seven curses combined, you can forge this emblem. It will help you flip the tables in your favor - the closer you'd stand to the",
+	"book.enigmaticlegacy.entry.berserk_emblem.page.2": "brim of imminent demise, the greater fury and courage will fulfill you, forcing to fight your way out no matter the circumstances, until the last breath.",
+	
+	
+	"book.enigmaticlegacy.entry.cursed_scroll.name": "Scroll of Curses",
+	"book.enigmaticlegacy.entry.cursed_scroll.page.1": "At times curses can take form similar to that of enchantments, with a only couple differences. Unlike normal enchantments, once they are bound to item, there's seemingly no way to get rid of them while keeping the item itself. Hopefully, regular enchanting techniques which you use yourself cannot accidentally produce such curses - but you may come",
+	"book.enigmaticlegacy.entry.cursed_scroll.page.2": "across items bearing them when exploring ancient ruins and dungeons.<br2/>Their effects vary, but none are quite beneficial - any cursed enchantment presents significant drawback to using",
+	"book.enigmaticlegacy.entry.cursed_scroll.page.3": "the item that bears it. Under normal circumstances, they would be just an annoyance for you to avoid. However, now that you bear Ring of the Seven Curses, there are ways you can manipulate them and even benefit from them, unnaccessible to others.<br2/>This scroll, being infused with concentrated wickedness of the Twisted Heart, presents one such possibility. For every curse that every item of your equipment bears, it boosts",
+	"book.enigmaticlegacy.entry.cursed_scroll.page.4": "your attack damage, mining speed and regenerational powers of any kind. The effect is sure neglegible with only one or two curses, but if you are not afraid to take a little more, it can add up to enormous power.<br2/>The equipment that affects this scroll includes armor, items in both hands, and any wearables alike charms or rings, including even this same scroll itself when it is equipped.",
+	
 	
 	"book.enigmaticlegacy.entry.iron_ring.name": "Iron Ring",
 	"book.enigmaticlegacy.entry.iron_ring.page.1": "Quite simple in it's design, this thing could've been forged even by the most casual blacksmith, not to mention a demigod alike you.<br2/>This ring is only useful as all it takes to create is some mundane iron. It might not save you from being beheaded, but can protect one of your fingers from being cut off someday... Perhaps.",
+	
+	
+	"book.enigmaticlegacy.entry.ceaseless_enchantment.name": "Ceaseless",
+	"book.enigmaticlegacy.entry.ceaseless_enchantment.heading.1": "The Enchantment",
+	"book.enigmaticlegacy.entry.ceaseless_enchantment.page.1": "Another possible crossbow enchantment, fairly useful in it's simplicity.<br2/>It's effects are basically identical to that of Infinity enchantment on bows. With this enchantment on your crossbow, regular arrows from your inventory will not be consumed when shooting them, so that you won't have to worry about restocking your supply.<br2/>",
+	"book.enigmaticlegacy.entry.ceaseless_enchantment.page.2": "It does only work on regular arrows, however - tipped arrows or fireworks are not affected by Ceaseless enchantment, and will be used up as normal.",
+	"book.enigmaticlegacy.entry.ceaseless_enchantment.page.3": "Sharpshooter does only affect arrows - it will not increase damage of fireworks, for instance.<br2/>Furthermore, it cannot be combined with Multishot or Piercing.",
+	
+	
+	"book.enigmaticlegacy.entry.sharpshooter_enchantment.name": "Sharpshooter",
+	"book.enigmaticlegacy.entry.sharpshooter_enchantment.heading.1": "The Enchantment",
+	"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.1": "One of possible crossbow enchantments, this one stands among the most useful.<br2/>It increases the damage that arrows shot with the crossbow deal, somewhat similar to Power on bows. The difference here, however, is that unlike bows, arrows infused with power of this enchantment will always deal same amount of damage, instead of it varying to some",
+	"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.2": "degree. The exact formula of resulting damage value can be spelled as following: <&l>6 + (3 * [<&5>Sharpshooter Level<&0>])$(clear).<br2/>This means that at maximum level of V that this enchantment can have, your arrows will deal stable total of 21 damage each.<br2/>",
+	"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.3": "Sharpshooter does only affect arrows - it will not increase damage of fireworks, for instance.<br2/>Furthermore, it cannot be combined with Multishot or Piercing.",
+	
+	
+	"book.enigmaticlegacy.entry.curse_of_nemesis.name": "Curse of Nemesis",
+	"book.enigmaticlegacy.entry.curse_of_nemesis.heading.1": "The Curse",
+	"book.enigmaticlegacy.entry.curse_of_nemesis.page.1": "One of the less known cursed enchantments, this one is more curious and obscure than others.<br2/>It can only be encountered on melee weapons, alike swords or axes. Should you directly attack with the weapon that bears Curses of Nemesis, you will receive around 25 percents of the damage you dealt back upon yourself.<br2/>",
+	"book.enigmaticlegacy.entry.curse_of_nemesis.page.2": "However, no matter how devastating your blows will be, this curse can never kill you.<br2/>It will eventually leave you with just a sliver of health remaining, but something else will have to take this sliver for you to finally die.",
 	
 	
 	"book.enigmaticlegacy.entry.soul_loss.name": "Loss of Soul",

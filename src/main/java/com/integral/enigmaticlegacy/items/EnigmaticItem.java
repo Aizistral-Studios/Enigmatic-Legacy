@@ -39,7 +39,7 @@ public class EnigmaticItem extends ItemAdvancedCurio implements ISpellstone {
 	public HashMap<PlayerEntity, Boolean> flightMap = new HashMap<PlayerEntity, Boolean>();
 
 	public EnigmaticItem() {
-		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC).func_234689_a_());
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC).isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_item"));
 
 		this.immunityList.add(DamageSource.FALL.damageType);
@@ -64,7 +64,7 @@ public class EnigmaticItem extends ItemAdvancedCurio implements ISpellstone {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticItem1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticItem2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");

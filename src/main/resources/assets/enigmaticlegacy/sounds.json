@@ -23,6 +23,14 @@
       }
     ]
   },
+  "misc.learn": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:misc/learn",
+        "stream": false
+      }
+    ]
+  },
   "misc.shield_trigger": {
     "sounds": [
       {

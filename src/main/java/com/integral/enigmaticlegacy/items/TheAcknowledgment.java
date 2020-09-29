@@ -57,8 +57,8 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 		this.setRegistryName(EnigmaticLegacy.MODID, "the_acknowledgment");
 
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(Attributes.field_233823_f_, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Weapon modifier", 3.5, AttributeModifier.Operation.ADDITION));
-		builder.put(Attributes.field_233825_h_, new AttributeModifier(Item.ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.1F, AttributeModifier.Operation.ADDITION));
+		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Weapon modifier", 3.5, AttributeModifier.Operation.ADDITION));
+		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(Item.ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.1F, AttributeModifier.Operation.ADDITION));
 		this.attributes = builder.build();
 	}
 
@@ -114,7 +114,7 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theAknowledgment1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theAknowledgment2");
 		} else {
@@ -122,7 +122,7 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 		}
 
 		try {
-			//list.add(new StringTextComponent("").func_230529_a_(TheAcknowledgment.getEdition()).func_240699_a_(TextFormatting.DARK_PURPLE));
+			//list.add(new StringTextComponent("").append(TheAcknowledgment.getEdition()).mergeStyle(TextFormatting.DARK_PURPLE));
 		} catch (Exception ex) {
 			EnigmaticLegacy.enigmaticLogger.info("For whatever reason Minecraft really calls .addInformation in Item classes in the middle of THE FUCKING STARTUP.");
 			EnigmaticLegacy.enigmaticLogger.info("You can safely ignore following stacktrace, mostly there for the sake of there being.");

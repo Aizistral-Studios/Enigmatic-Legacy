@@ -12,12 +12,15 @@ import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.PatchouliHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
+import com.integral.enigmaticlegacy.objects.RevelationTomeToast;
 import com.integral.enigmaticlegacy.triggers.RevelationGainTrigger;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.toasts.ToastGui;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
@@ -46,6 +49,7 @@ public class RevelationTome extends ItemBase {
 	public static final String revelationPointsTag = "revelationPoints";
 	public static final String xpPointsTag = "xpPoints";
 	public static final String formerReadersTag = "formerReaders";
+	public static final String lastHolderTag = "lastHolder";
 
 	public static enum TomeType {
 		OVERWORLD("overworld"), NETHER("nether"), END("end"), GENERIC("generic");
@@ -80,6 +84,14 @@ public class RevelationTome extends ItemBase {
 	}
 
 	@Override
+	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		if (entityIn instanceof ServerPlayerEntity) {
+			ItemNBTHelper.setUUID(stack, lastHolderTag, entityIn.getUniqueID());
+		}
+
+	}
+
+	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 		ItemStack stack = player.getHeldItem(hand);
 		player.setActiveHand(hand);
@@ -87,17 +99,21 @@ public class RevelationTome extends ItemBase {
 		if (!RevelationTome.havePlayerRead(player, stack)) {
 			RevelationTome.markRead(player, stack);
 
+			int xp = ItemNBTHelper.getInt(stack, RevelationTome.xpPointsTag, Item.random.nextInt(1000));
+			int revelation = ItemNBTHelper.getInt(stack, RevelationTome.revelationPointsTag, 1);
+
 			if (player instanceof ServerPlayerEntity) {
-				int xp = ItemNBTHelper.getInt(stack, RevelationTome.xpPointsTag, Item.random.nextInt(1000));
-				int revelation = ItemNBTHelper.getInt(stack, RevelationTome.revelationPointsTag, 1);
 				int currentPoints = SuperpositionHandler.getPersistentInteger(player, this.persistantPointsTag, 0);
 
 				ExperienceHelper.addPlayerXP(player, xp);
 				SuperpositionHandler.setPersistentInteger(player, this.persistantPointsTag, currentPoints + revelation);
 
-				world.playSound(null, new BlockPos(player.getPositionVec()), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.PLAYERS, 1.0f, 0.9f);
+				world.playSound(null, new BlockPos(player.getPositionVec()), EnigmaticLegacy.LEARN, SoundCategory.PLAYERS, 0.75f, 1.0f);
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this.theType, currentPoints + revelation);
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayerEntity) player, TomeType.GENERIC, RevelationTome.getGenericPoints(player));
+			} else {
+				ToastGui gui = Minecraft.getInstance().getToastGui();
+				gui.add(new RevelationTomeToast(stack, xp, revelation));
 			}
 
 			// TODO Fire generic toast specifying amount of experience and revelation points player have gotten from reading tome
@@ -113,7 +129,7 @@ public class RevelationTome extends ItemBase {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTome1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTome2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTome3");
@@ -124,10 +140,11 @@ public class RevelationTome extends ItemBase {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (!RevelationTome.havePlayerRead(Minecraft.getInstance().player, stack))
+		if (!RevelationTome.havePlayerRead(Minecraft.getInstance().player, stack)) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTomeClick");
-		else
+		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTomeMarkRead");
+		}
 	}
 
 	public static int getGenericPoints(PlayerEntity player) {
@@ -177,6 +194,11 @@ public class RevelationTome extends ItemBase {
 		list.add(StringNBT.valueOf(player.getGameProfile().getName()));
 		nbt.put(RevelationTome.formerReadersTag, list);
 		tome.setTag(nbt);
+	}
+
+	@Override
+	public int getBurnTime(ItemStack itemStack) {
+		return 400;
 	}
 
 }

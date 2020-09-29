@@ -26,12 +26,12 @@ public class CursedRingEquippedTrigger extends AbstractCriterionTrigger<CursedRi
 
 	@Nonnull
 	@Override
-	public CursedRingEquippedTrigger.Instance func_230241_b_(@Nonnull JsonObject json, @Nonnull EntityPredicate.AndPredicate playerPred, ConditionArrayParser conditions) {
+	public CursedRingEquippedTrigger.Instance deserializeTrigger(@Nonnull JsonObject json, @Nonnull EntityPredicate.AndPredicate playerPred, ConditionArrayParser conditions) {
 		return new CursedRingEquippedTrigger.Instance(playerPred);
 	}
 
 	public void trigger(ServerPlayerEntity player) {
-		this.func_235959_a_(player, instance -> instance.test());
+		this.triggerListeners(player, instance -> instance.test());
 	}
 
 	static class Instance extends CriterionInstance {

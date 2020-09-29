@@ -34,10 +34,10 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal {
 	//public Multimap<Attribute, AttributeModifier> playerAttributes = HashMultimap.create();
 
 	public SoulCrystal() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).func_234689_a_().group(null));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isBurnable().group(null));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "soul_crystal"));
 
-		//this.attributesDefault.put(Attributes.field_233818_a_, new AttributeModifier(UUID.fromString("66a2aa2d-7e3c-4af4-882f-bd2b2ded8e7b"), "Lost Soul Health Modifier", -0.1F, AttributeModifier.Operation.MULTIPLY_TOTAL));
+		//this.attributesDefault.put(Attributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("66a2aa2d-7e3c-4af4-882f-bd2b2ded8e7b"), "Lost Soul Health Modifier", -0.1F, AttributeModifier.Operation.MULTIPLY_TOTAL));
 	}
 
 	public ItemStack createCrystalFrom(PlayerEntity player) {
@@ -80,26 +80,26 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal {
 
 	public void applyPlayerSoulMap(PlayerEntity player) {
 		Multimap<Attribute, AttributeModifier> soulMap = this.getOrCreateSoulMap(player);
-		AttributeModifierManager attributeManager = player.func_233645_dx_();
-		attributeManager.func_233793_b_(soulMap);
+		AttributeModifierManager attributeManager = player.getAttributeManager();
+		attributeManager.reapplyModifiers(soulMap);
 	}
 
 	public void updatePlayerSoulMap(PlayerEntity player) {
 		Multimap<Attribute, AttributeModifier> soulMap = this.getOrCreateSoulMap(player);
-		AttributeModifierManager attributeManager = player.func_233645_dx_();
+		AttributeModifierManager attributeManager = player.getAttributeManager();
 
 		// Removes former attributes
-		attributeManager.func_233785_a_(soulMap);
+		attributeManager.removeModifiers(soulMap);
 
 		soulMap.clear();
 
 		int lostFragments = SuperpositionHandler.getPersistentInteger(player, "enigmaticlegacy.lostsoulfragments", 0);
 
 		if (lostFragments > 0)
-			soulMap.put(Attributes.field_233818_a_, new AttributeModifier(UUID.fromString("66a2aa2d-7e3c-4af4-882f-bd2b2ded8e7b"), "Lost Soul Health Modifier", -0.1F * lostFragments, AttributeModifier.Operation.MULTIPLY_TOTAL));
+			soulMap.put(Attributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("66a2aa2d-7e3c-4af4-882f-bd2b2ded8e7b"), "Lost Soul Health Modifier", -0.1F * lostFragments, AttributeModifier.Operation.MULTIPLY_TOTAL));
 
 		// Applies new attributes
-		attributeManager.func_233793_b_(soulMap);
+		attributeManager.reapplyModifiers(soulMap);
 
 		this.attributeDispatcher.put(player, soulMap);
 	}

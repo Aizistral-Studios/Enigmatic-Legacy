@@ -41,7 +41,7 @@ public class EnderRing extends ItemBaseCurio {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enderRing1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enderRing2");
 		} else {

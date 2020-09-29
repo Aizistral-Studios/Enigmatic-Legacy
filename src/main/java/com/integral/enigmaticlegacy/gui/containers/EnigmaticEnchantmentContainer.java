@@ -87,7 +87,7 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 			 */
 			@Override
 			public boolean isItemValid(ItemStack stack) {
-				return net.minecraftforge.common.Tags.Items.GEMS_LAPIS.func_230235_a_(stack.getItem());
+				return net.minecraftforge.common.Tags.Items.GEMS_LAPIS.contains(stack.getItem());
 			}
 		});
 

@@ -31,7 +31,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ForbiddenAxe extends SwordItem implements IPerhaps {
 
 	public ForbiddenAxe() {
-		super(EnigmaticMaterials.FORBIDDENAXE, 6, -2.4F, ItemBaseTool.getDefaultProperties().defaultMaxDamage(2000).rarity(Rarity.EPIC).func_234689_a_());
+		super(EnigmaticMaterials.FORBIDDENAXE, 6, -2.4F, ItemBaseTool.getDefaultProperties().defaultMaxDamage(2000).rarity(Rarity.EPIC).isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "forbidden_axe"));
 	}
 
@@ -43,7 +43,7 @@ public class ForbiddenAxe extends SwordItem implements IPerhaps {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe2", TextFormatting.GOLD, ConfigHandler.FORBIDDEN_AXE_BEHEADING_BONUS.getValue().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe3");

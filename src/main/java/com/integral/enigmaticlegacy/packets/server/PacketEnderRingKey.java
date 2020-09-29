@@ -51,7 +51,7 @@ public class PacketEnderRingKey {
 						super.onContainerClosed(playerIn);
 
 						if (!playerIn.world.isRemote) {
-							playerIn.world.playSound(null, playerServ.func_233580_cy_(), SoundEvents.BLOCK_ENDER_CHEST_CLOSE, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+							playerIn.world.playSound(null, playerServ.getPosition(), SoundEvents.BLOCK_ENDER_CHEST_CLOSE, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 						}
 					}
 				};
@@ -62,7 +62,7 @@ public class PacketEnderRingKey {
 				playerServ.openContainer = container;
 				net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.player.PlayerContainerEvent.Open(playerServ, playerServ.openContainer));
 
-				playerServ.world.playSound(null, playerServ.func_233580_cy_(), SoundEvents.BLOCK_ENDER_CHEST_OPEN, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+				playerServ.world.playSound(null, playerServ.getPosition(), SoundEvents.BLOCK_ENDER_CHEST_OPEN, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
 			}
 		});

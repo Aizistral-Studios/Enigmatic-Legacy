@@ -32,8 +32,8 @@ public class ItemLoreHelper {
 		}
 
 
-		list.add(new TranslationTextComponent("tooltip.enigmaticlegacy.cursedOnesOnly1").func_240699_a_(format));
-		list.add(new TranslationTextComponent("tooltip.enigmaticlegacy.cursedOnesOnly2").func_240699_a_(format));
+		list.add(new TranslationTextComponent("tooltip.enigmaticlegacy.cursedOnesOnly1").mergeStyle(format));
+		list.add(new TranslationTextComponent("tooltip.enigmaticlegacy.cursedOnesOnly2").mergeStyle(format));
 
 	}
 
@@ -55,7 +55,7 @@ public class ItemLoreHelper {
 			}
 
 			if (format != null) {
-				comp.func_240699_a_(format);
+				comp.mergeStyle(format);
 			}
 
 			stringValues[counter] = comp;

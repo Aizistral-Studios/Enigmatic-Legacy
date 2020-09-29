@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 public class EtheriumIngot extends ItemBase {
 
 	public EtheriumIngot() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.RARE).func_234689_a_());
+		super(ItemBase.getDefaultProperties().rarity(Rarity.RARE).isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_ingot"));
 	}
 

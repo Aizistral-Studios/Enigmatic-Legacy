@@ -32,10 +32,10 @@ public class MagmaHeart extends ItemAdvancedCurio implements ISpellstone {
 	public List<String> nemesisList = new ArrayList<String>();
 
 	public MagmaHeart() {
-		super(ItemAdvancedCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).func_234689_a_());
+		super(ItemAdvancedCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "magma_heart"));
 
-		this.immunityList.add(DamageSource.LAVA.damageType);
+		//this.immunityList.add(DamageSource.LAVA.damageType);
 		this.immunityList.add(DamageSource.IN_FIRE.damageType);
 		this.immunityList.add(DamageSource.ON_FIRE.damageType);
 		this.immunityList.add(DamageSource.HOT_FLOOR.damageType);
@@ -58,7 +58,7 @@ public class MagmaHeart extends ItemAdvancedCurio implements ISpellstone {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
@@ -71,6 +71,7 @@ public class MagmaHeart extends ItemAdvancedCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart7");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart8");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart9");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart10");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -85,8 +86,9 @@ public class MagmaHeart extends ItemAdvancedCurio implements ISpellstone {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living) {
-		if (living.isBurning())
+		if (living.isBurning()) {
 			living.extinguish();
+		}
 	}
 
 	@Override

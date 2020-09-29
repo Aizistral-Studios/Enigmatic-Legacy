@@ -33,7 +33,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class UnholyGrail extends ItemBase {
 
 	public UnholyGrail() {
-		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).func_234689_a_());
+		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "unholy_grail"));
 	}
 
@@ -45,7 +45,7 @@ public class UnholyGrail extends ItemBase {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.unholyGrail1");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");

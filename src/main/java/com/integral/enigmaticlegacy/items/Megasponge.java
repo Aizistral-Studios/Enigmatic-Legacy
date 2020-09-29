@@ -63,7 +63,7 @@ public class Megasponge extends ItemBaseCurio {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.megaSponge1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.megaSponge2");
 		} else {
@@ -154,7 +154,7 @@ public class Megasponge extends ItemBaseCurio {
 
 						doomedWaterBlocks.clear();
 
-						player.world.playSound(null, player.func_233580_cy_(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+						player.world.playSound(null, player.getPosition(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 64, player.world.func_234923_W_())), new PacketPortalParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 40, 1.0D, false));
 						this.cooldownMap.put(player, 20);
 

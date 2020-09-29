@@ -1,6 +1,10 @@
 package com.integral.enigmaticlegacy.proxy;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -12,6 +16,16 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class CommonProxy {
+
+	protected final HashMap<PlayerEntity, TransientPlayerData> commonTransientPlayerData;
+
+	public CommonProxy() {
+		this.commonTransientPlayerData = new HashMap<>();
+	}
+
+	public HashMap<PlayerEntity, TransientPlayerData> getTransientPlayerData(boolean clientOnly) {
+		return this.commonTransientPlayerData;
+	}
 
 	public void handleItemPickup(int pickuper_id, int item_id) {
 		// Insert existential void here
@@ -55,6 +69,13 @@ public class CommonProxy {
 
 	public UseAction getVisualBlockAction() {
 		return UseAction.BOW;
+	}
+
+	public PlayerEntity getPlayer(UUID playerID) {
+		if (ServerLifecycleHooks.getCurrentServer() != null)
+			return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUUID(playerID);
+		else
+			return null;
 	}
 
 }

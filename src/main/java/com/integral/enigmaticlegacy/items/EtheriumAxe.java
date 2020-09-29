@@ -43,7 +43,7 @@ public class EtheriumAxe extends AxeItem implements IPerhaps, IMultiblockMiningT
 	public Set<Material> effectiveMaterials;
 
 	public EtheriumAxe() {
-		super(EnigmaticMaterials.ETHERIUM, 10, -3.2F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).func_234689_a_());
+		super(EnigmaticMaterials.ETHERIUM, 10, -3.2F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_axe"));
 
 		this.effectiveMaterials = Sets.newHashSet();
@@ -51,7 +51,7 @@ public class EtheriumAxe extends AxeItem implements IPerhaps, IMultiblockMiningT
 		this.effectiveMaterials.add(Material.LEAVES);
 		this.effectiveMaterials.add(Material.CACTUS);
 		this.effectiveMaterials.add(Material.BAMBOO);
-		this.effectiveMaterials.add(Material.field_237214_y_);
+		this.effectiveMaterials.add(Material.NETHER_WOOD);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class EtheriumAxe extends AxeItem implements IPerhaps, IMultiblockMiningT
 		if (ConfigHandler.ETHERIUM_AXE_VOLUME.getValue() == -1)
 			return;
 
-		if (Screen.func_231173_s_()) {
+		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumAxe1", TextFormatting.GOLD, ConfigHandler.ETHERIUM_AXE_VOLUME.getValue());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
