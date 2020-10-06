@@ -57,6 +57,10 @@ public class LoreInscriberContainer extends Container {
 	private static final Logger LOGGER = LogManager.getLogger();
 	private String unparsedInputField;
 
+	public LoreInscriberContainer(int syncID, PlayerInventory playerInv) {
+		this(syncID, playerInv, IWorldPosCallable.of(playerInv.player.world, playerInv.player.getPosition()));
+	}
+
 	public LoreInscriberContainer(int syncID, PlayerInventory playerInv, PacketBuffer extraData) {
 		this(syncID, playerInv, IWorldPosCallable.of(playerInv.player.world, playerInv.player.getPosition()));
 	}
@@ -131,8 +135,9 @@ public class LoreInscriberContainer extends Container {
 						return 0;
 					}
 				});
-			} else
+			} else {
 				this.addSlot(new Slot(playerInv, k, 8 + k * 18, 142));
+			}
 		}
 
 	}
@@ -159,7 +164,7 @@ public class LoreInscriberContainer extends Container {
 		this.field_234644_e_.consume((p_234647_2_, p_234647_3_) -> {
 			this.clearContainer(playerIn, p_234647_2_, this.field_234643_d_);
 		});
-		*/
+		 */
 	}
 
 	/**
@@ -194,13 +199,11 @@ public class LoreInscriberContainer extends Container {
 			itemstack = itemstack1.copy();
 			if (index != 0 && index != 1) {
 				if (index >= 2 && index < 38) {
-					if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+					if (!this.mergeItemStack(itemstack1, 0, 1, false))
 						return ItemStack.EMPTY;
-					}
 				}
-			} else if (!this.mergeItemStack(itemstack1, 2, 38, false)) {
+			} else if (!this.mergeItemStack(itemstack1, 2, 38, false))
 				return ItemStack.EMPTY;
-			}
 
 			if (itemstack1.isEmpty()) {
 				slot.putStack(ItemStack.EMPTY);
@@ -208,9 +211,8 @@ public class LoreInscriberContainer extends Container {
 				slot.onSlotChanged();
 			}
 
-			if (itemstack1.getCount() == itemstack.getCount()) {
+			if (itemstack1.getCount() == itemstack.getCount())
 				return ItemStack.EMPTY;
-			}
 
 			slot.onTake(playerIn, itemstack1);
 		}
@@ -225,8 +227,9 @@ public class LoreInscriberContainer extends Container {
 	protected ItemStack claimResult(PlayerEntity player, ItemStack stack) {
 		this.craftSlotsInv.setInventorySlotContents(0, ItemStack.EMPTY);
 
-		if (!player.world.isRemote)
+		if (!player.world.isRemote) {
 			player.world.playSound(null, player.getPosition(), EnigmaticLegacy.WRITE, SoundCategory.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
+		}
 
 		return stack;
 	}
@@ -244,12 +247,14 @@ public class LoreInscriberContainer extends Container {
 			if (StringUtils.isBlank(this.unparsedInputField)) {
 				if (input.hasDisplayName()) {
 					output.clearCustomName();
-				} else
+				} else {
 					output = ItemStack.EMPTY;
+				}
 			} else if (!this.unparsedInputField.equals(input.getDisplayName().getString())) {
 				this.unleashAnvilParser(output);
-			} else
+			} else {
 				output = ItemStack.EMPTY;
+			}
 
 			this.craftResultInv.setInventorySlotContents(0, output);
 			this.detectAndSendChanges();
@@ -268,10 +273,11 @@ public class LoreInscriberContainer extends Container {
 		ItemLoreHelper.AnvilParser parser = ItemLoreHelper.AnvilParser.parseField(this.unparsedInputField);
 		if (!parser.getFormattedString().equals("") || parser.shouldRemoveString()) {
 			if (parser.isLoreString()) {
-				if (parser.getLoreIndex() != -1)
+				if (parser.getLoreIndex() != -1) {
 					ItemLoreHelper.setLoreString(itemstack, parser.getFormattedString(), parser.getLoreIndex());
-				else
+				} else {
 					ItemLoreHelper.addLoreString(itemstack, parser.getFormattedString());
+				}
 			} else if (parser.shouldRemoveString()) {
 				ItemLoreHelper.removeLoreString(itemstack, parser.getLoreIndex());
 			} else {

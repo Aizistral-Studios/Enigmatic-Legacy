@@ -83,4 +83,8 @@ public class CommonProxy {
 		// NO-OP
 	}
 
+	public void initConfig() {
+
+	}
+
 }

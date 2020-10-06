@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.gui.containers.EnigmaticRepairContainerProvider;
+import com.integral.enigmaticlegacy.gui.containers.LoreInscriberContainerProvider;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
@@ -64,7 +64,7 @@ public class LoreInscriber extends ItemBase {
 		if (!worldIn.isRemote) {
 			ITextComponent name = new TranslationTextComponent("gui.enigmaticlegacy.lore_inscriber");
 
-			playerIn.openContainer(new EnigmaticRepairContainerProvider(name));
+			playerIn.openContainer(new LoreInscriberContainerProvider(name));
 		}
 
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);

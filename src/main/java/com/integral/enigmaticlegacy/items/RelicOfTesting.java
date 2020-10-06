@@ -6,13 +6,15 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.gui.containers.EnigmaticRepairContainerProvider;
+import com.integral.enigmaticlegacy.config.UltimaTestConfig;
+import com.integral.enigmaticlegacy.gui.containers.LoreInscriberContainerProvider;
 import com.integral.enigmaticlegacy.gui.containers.PortableCrafterContainerProvider;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.PatchouliHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -77,6 +79,11 @@ public class RelicOfTesting extends ItemBase {
 			playerIn.sendMessage(new StringTextComponent(checkTag.getOrCreateTag().getString()), playerIn.getUniqueID());
 		}
 
+		if (!worldIn.isRemote) {
+
+			playerIn.sendMessage(new StringTextComponent("VALUE1: " + UltimaTestConfig.getDurability), playerIn.getUniqueID());
+
+		}
 		/*
 		if(!worldIn.isRemote) {
 		    ITextComponent name = null;
@@ -110,6 +117,16 @@ public class RelicOfTesting extends ItemBase {
 				creeper.setAttackTarget(null);
 			}
 		}
+
+		/*
+
+		if (world.isRemote) {
+			if (UltimaTestConfig.fovOverride.getValue() != Minecraft.getInstance().gameSettings.fov) {
+				Minecraft.getInstance().gameSettings.fov = UltimaTestConfig.fovOverride.getValue();
+			}
+		}
+
+		 */
 	}
 
 	/*

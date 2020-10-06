@@ -1,5 +1,12 @@
 The Changelog:
 
+[Release 2.5.2]:
+- Fixed Heart of Creation crashing the server when attempting to use it's active ability (why nobody reported this?);
+- Fixed active abilities of spellstones not having any cooldown at all (okay, but THIS?..)
+- Fixed The Architect's Inkwell crashing the server when attempting to open it's GUI (#76);
+
+
+
 [Release 2.5.1]:
 - Fixed crash on server startup (#75).
 

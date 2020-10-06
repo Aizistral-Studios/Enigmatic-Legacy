@@ -7,39 +7,39 @@ package com.integral.enigmaticlegacy.objects;
  */
 
 public class Perhaps {
-	
+
 	private int probability;
-	
+
 	public Perhaps(int probability) {
 		this.probability = probability;
 	}
-	
+
 	public int asPercentage() {
-		return probability;
+		return this.probability;
 	}
-	
+
 	public double asMultiplier(boolean baseOne) {
 		if (baseOne)
-			return 1.0D + (this.probability/100D);
+			return 1.0D + (this.probability / 100D);
 		else
-			return this.probability/100D;
-		 
+			return this.probability / 100D;
+
 	}
-	
+
 	public double asMultiplierInverted() {
-		return 1.0D - (this.probability/100D);
+		return 1.0D - (this.probability / 100D);
 	}
-	
+
 	public float asModifier(boolean baseOne) {
 		if (baseOne)
-			return 1.0F + (this.probability/100F);
+			return 1.0F + (this.probability / 100F);
 		else
-			return this.probability/100F;
-		 
+			return this.probability / 100F;
+
 	}
-	
+
 	public float asModifierInverted() {
-			return 1.0F - (this.probability/100F);
+		return 1.0F - (this.probability / 100F);
 	}
 
 }

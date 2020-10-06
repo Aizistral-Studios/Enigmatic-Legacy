@@ -1,5 +1,6 @@
 package com.integral.enigmaticlegacy;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import com.integral.enigmaticlegacy.client.models.DarkArmorModel;
 import com.integral.enigmaticlegacy.client.models.ModelRegistry;
 import com.integral.enigmaticlegacy.client.renderers.RenderTypes;
 import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.UltimaTestConfig;
 import com.integral.enigmaticlegacy.crafting.EnigmaticRecipeSerializers;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 import com.integral.enigmaticlegacy.enchantments.NemesisCurseEnchantment;
@@ -174,6 +176,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -189,7 +192,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.5.1";
+	public static final String VERSION = "2.5.2";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -362,6 +365,11 @@ public class EnigmaticLegacy {
 		enigmaticLogger.info("Constructing mod instance...");
 
 		enigmaticLegacy = this;
+
+
+		//UltimaTestConfig ultimateTestConfig = new UltimaTestConfig();
+		//ultimateTestConfig.preInit();
+
 
 		enigmaticHandler = new EnigmaticEventHandler();
 		keybindHandler = new EnigmaticKeybindHandler();

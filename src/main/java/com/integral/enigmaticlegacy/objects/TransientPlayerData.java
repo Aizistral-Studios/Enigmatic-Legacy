@@ -64,7 +64,7 @@ public class TransientPlayerData {
 	private final PlayerEntity player;
 	private int fireImmunityTimer;
 	private int fireImmunityTimerCap;
-	private int spellstoneCooldown;
+	public int spellstoneCooldown;
 	private int fireImmunityTimerLast;
 
 	public boolean needsSync = false;
@@ -133,6 +133,7 @@ public class TransientPlayerData {
 
 		if (this.spellstoneCooldown != newValue) {
 			this.needsSync = true;
+			this.spellstoneCooldown = newValue;
 
 			for (Item spellstone : EnigmaticLegacy.spellstoneList) {
 				this.player.getCooldownTracker().setCooldown(spellstone, this.spellstoneCooldown);

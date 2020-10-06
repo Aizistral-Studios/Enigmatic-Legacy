@@ -87,7 +87,6 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 
 	@Override
 	public void triggerActiveAbility(World world, ServerPlayerEntity player, ItemStack stack) {
-
 		if (SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 

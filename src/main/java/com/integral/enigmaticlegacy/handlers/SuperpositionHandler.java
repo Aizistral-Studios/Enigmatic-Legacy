@@ -310,7 +310,7 @@ public class SuperpositionHandler {
 
 	public static void tickSpellstoneCooldown(PlayerEntity player, int decrementedTicks) {
 		TransientPlayerData data = TransientPlayerData.get(player);
-		data.setSpellstoneCooldown(data.getSpellstoneCooldown()-decrementedTicks);
+		data.spellstoneCooldown = data.getSpellstoneCooldown()-decrementedTicks;
 
 		return;
 	}

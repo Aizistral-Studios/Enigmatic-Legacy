@@ -15,6 +15,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Explosion;
+import net.minecraft.world.ExplosionContext;
 import net.minecraft.world.World;
 
 public class WitherExplosion extends Explosion {
@@ -31,18 +32,18 @@ public class WitherExplosion extends Explosion {
 	private final float size;
 
 	public WitherExplosion(World worldIn, Entity exploderIn, double xIn, double yIn, double zIn, float sizeIn, boolean causesFireIn, Mode modeIn) {
-		super(worldIn, exploderIn, xIn, yIn, zIn, sizeIn, causesFireIn, modeIn);
+		super(worldIn, exploderIn, (DamageSource)null, (ExplosionContext)null, xIn, yIn, zIn, sizeIn, causesFireIn, modeIn);
 
 		this.world = worldIn;
-	      this.exploder = exploderIn;
-	      this.size = sizeIn;
-	      this.x = xIn;
-	      this.y = yIn;
-	      this.z = zIn;
-	      this.causesFire = causesFireIn;
-	      this.mode = modeIn;
-	      DamageSource.causeExplosionDamage(this);
-	      new Vector3d(this.x, this.y, this.z);
+		this.exploder = exploderIn;
+		this.size = sizeIn;
+		this.x = xIn;
+		this.y = yIn;
+		this.z = zIn;
+		this.causesFire = causesFireIn;
+		this.mode = modeIn;
+		DamageSource.causeExplosionDamage(this);
+		new Vector3d(this.x, this.y, this.z);
 	}
 
 	@Override

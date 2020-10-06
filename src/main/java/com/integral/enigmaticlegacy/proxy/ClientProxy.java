@@ -116,4 +116,9 @@ public class ClientProxy extends CommonProxy {
 		gui.add(new RevelationTomeToast(renderedStack, xp, knowledge));
 	}
 
+	@Override
+	public void initConfig() {
+		super.initConfig();
+	}
+
 }
