@@ -4,7 +4,7 @@ loaderVersion="[31,)"
 issueTrackerURL="https://github.com/Extegral/Enigmatic-Legacy/issues"
 [[mods]]
 modId="enigmaticlegacy"
-version="2.5.2"
+version="2.5.3"
 displayName="Enigmatic Legacy"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy"
 logoFile="EL_logo.png"
