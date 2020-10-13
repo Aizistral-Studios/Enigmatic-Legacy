@@ -2,7 +2,7 @@
 name: Feature Request
 about: Suggestions for new items, features and whatnot
 title: ''
-labels: enhancement
+labels: enhancement, awaits review
 assignees: Extegral
 
 ---
