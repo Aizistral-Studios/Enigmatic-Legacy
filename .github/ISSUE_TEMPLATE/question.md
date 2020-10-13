@@ -2,7 +2,7 @@
 name: Question
 about: Ask a question about something unobvious in mod or related to it
 title: ''
-labels: question
+labels: question, awaits review
 assignees: Extegral
 
 ---
