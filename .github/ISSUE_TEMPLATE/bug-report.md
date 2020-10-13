@@ -2,7 +2,7 @@
 name: Bug Report
 about: Crashes, errors or unintended behaviour
 title: ''
-labels: bug
+labels: bug, awaits review
 assignees: Extegral
 
 ---
