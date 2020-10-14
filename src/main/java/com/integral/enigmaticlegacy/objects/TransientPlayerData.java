@@ -1,12 +1,10 @@
 package com.integral.enigmaticlegacy.objects;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
+import com.integral.enigmaticlegacy.items.MagmaHeart;
 import com.integral.enigmaticlegacy.packets.clients.PacketSyncTransientData;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,7 +14,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class TransientPlayerData {
 
@@ -100,7 +97,7 @@ public class TransientPlayerData {
 
 		double coolFiller;
 
-		if (ConfigHandler.TRAITOR_BAR.getValue()) {
+		if (MagmaHeart.traitorBar.getValue()) {
 			coolFiller = SuperpositionHandler.parabolicFunction(0, this.fireImmunityTimerCap - this.getFireDiff(), (double)this.fireImmunityTimerLast+(double)difference);
 		} else {
 			coolFiller = SuperpositionHandler.flippedParabolicFunction(0, this.fireImmunityTimerCap - this.getFireDiff(), (double)this.fireImmunityTimerLast+(double)difference);

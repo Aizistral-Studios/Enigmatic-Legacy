@@ -1,21 +1,22 @@
 package com.integral.enigmaticlegacy.items;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
+import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -30,22 +31,12 @@ import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import vazkii.patchouli.api.PatchouliAPI;
-import vazkii.patchouli.client.base.PersistentData;
-import vazkii.patchouli.client.base.PersistentData.DataHolder.BookData;
-import vazkii.patchouli.client.book.BookCategory;
-import vazkii.patchouli.client.book.BookEntry;
-import vazkii.patchouli.common.book.Book;
-import vazkii.patchouli.common.book.BookRegistry;
 
 public class TheAcknowledgment extends ItemBase implements IVanishable {
 
@@ -89,6 +80,11 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 	}
 
 	@Override
+	public int getItemEnchantability(ItemStack stack) {
+		return 24;
+	}
+
+	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
 
 		if (slot.equals(EquipmentSlotType.MAINHAND))
@@ -109,6 +105,26 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 		}
 
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);
+	}
+
+	@Override
+	public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+		Map<Enchantment, Integer> list = EnchantmentHelper.getEnchantments(book);
+
+		if (list.size() == 1 && list.containsKey(Enchantments.BANE_OF_ARTHROPODS))
+			return true;
+		else
+			return super.isBookEnchantable(stack, book);
+	}
+
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return true;
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		return enchantment == Enchantments.BANE_OF_ARTHROPODS || super.canApplyAtEnchantingTable(stack, enchantment);
 	}
 
 	@Override

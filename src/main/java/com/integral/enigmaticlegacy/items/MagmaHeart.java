@@ -6,17 +6,18 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
-import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
+import com.integral.omniconfig.Configuration;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.DamageSource;
@@ -28,6 +29,49 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class MagmaHeart extends ItemAdvancedCurio implements ISpellstone {
+	public static Omniconfig.IntParameter spellstoneCooldown;
+	public static Omniconfig.DoubleParameter damageFeedback;
+	public static Omniconfig.IntParameter ignitionFeedback;
+
+	public static Omniconfig.DoubleParameter lavafogDensity;
+	public static Omniconfig.BooleanParameter traitorBar;
+
+	@SubscribeConfig(receiveClient = true)
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("BlazingCore");
+
+		if (builder.config.getSidedType() != Configuration.SidedConfigType.CLIENT) {
+
+			spellstoneCooldown = builder
+					.comment("Active ability cooldown for Blazing Core. Measured in ticks. 20 ticks equal to 1 second.")
+					.getInt("Cooldown", 0);
+
+			damageFeedback = builder
+					.comment("How much fire-based damage instantly receives any creature that attacks bearer of the Blazing Core.")
+					.max(512)
+					.getDouble("DamageFeedback", 4.0);
+
+			ignitionFeedback = builder
+					.comment("How how many seconds any creature that attacks bearer of the Blazing Core will be set on fire.")
+					.max(512)
+					.getInt("IgnitionFeedback", 4);
+
+		} else {
+
+			lavafogDensity = builder
+					.comment("Controls how obscured your vision is in lava when Blazing Core is equipped. Lower value equals more visibility.")
+					.max(1024)
+					.clientOnly()
+					.getDouble("LavaDensity", 0.3);
+
+			traitorBar = builder
+					.comment("Flips the parabolic function bearing responsibility for heat bar rendering when temporary fire resistance from Blazing Core is active. Instead of default behavior, it will start decreasing slowly, but will expotentially speed up the closer to the end it is. This is a purely visual effect - raw fire immunity time provided stays unchanged.")
+					.clientOnly()
+					.getBoolean("TraitorBarEnabled", false);
+		}
+
+		builder.popPrefix();
+	}
 
 	public List<String> nemesisList = new ArrayList<String>();
 
@@ -48,11 +92,6 @@ public class MagmaHeart extends ItemAdvancedCurio implements ISpellstone {
 	}
 
 	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.MAGMA_HEART_ENABLED.getValue();
-	}
-
-	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
@@ -62,7 +101,7 @@ public class MagmaHeart extends ItemAdvancedCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeartCooldown", TextFormatting.GOLD, ((ConfigHandler.BLAZING_CORE_COOLDOWN.getValue())) / 20.0F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeartCooldown", TextFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart4");

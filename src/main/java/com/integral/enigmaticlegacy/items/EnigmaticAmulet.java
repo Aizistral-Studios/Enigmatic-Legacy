@@ -8,10 +8,13 @@ import javax.annotation.Nullable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -29,6 +32,29 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EnigmaticAmulet extends ItemBaseCurio {
+	public static Omniconfig.DoubleParameter damageBonus;
+	public static Omniconfig.BooleanParameter vesselEnabled;
+	public static Omniconfig.BooleanParameter ownerOnlyVessel;
+
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("EnigmaticAmulet");
+
+		damageBonus = builder
+				.comment("The damage bonus stat provided by Enigmatic Amulet.")
+				.minMax(32768)
+				.getDouble("DamageBonus", 1.5);
+
+		vesselEnabled = builder
+				.comment("Whether or not Enigmatic Amulet should be summoning Extradimensional Vessel on owner's death.")
+				.getBoolean("enigmaticAmuletVesselEnabled", true);
+
+		ownerOnlyVessel = builder
+				.comment("If true, only original owner of Extradimensional Vessel will be able to pick it up.")
+				.getBoolean("ownerOnlyVessel", false);
+
+		builder.popPrefix();
+	}
 
 	public EnigmaticAmulet() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).isBurnable());
@@ -79,8 +105,9 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
 		//atts.put(Attributes.ARMOR, new AttributeModifier(UUID.fromString("50faf191-bf78-4654-b349-cc1f4f1143bf"), "Armor bonus", 2.0, AttributeModifier.Operation.ADDITION));
-		if (ConfigHandler.ENIGMATIC_AMULET_DAMAGE_BONUS.getValue() != 0)
-			atts.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(UUID.fromString("cb7f55d3-685c-4f38-a497-9c13a33db5cf"), "Attack bonus", ConfigHandler.ENIGMATIC_AMULET_DAMAGE_BONUS.getValue(), AttributeModifier.Operation.ADDITION));
+		if (damageBonus.getValue() != 0) {
+			atts.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(UUID.fromString("cb7f55d3-685c-4f38-a497-9c13a33db5cf"), "Attack bonus", damageBonus.getValue(), AttributeModifier.Operation.ADDITION));
+		}
 
 		return atts;
 	}
@@ -92,11 +119,11 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	}
 
 	public boolean isVesselEnabled() {
-		return ConfigHandler.ENIGMATIC_AMULET_VESSEL_ENABLED.getValue();
+		return vesselEnabled.getValue();
 	}
 
 	public boolean isVesselOwnerOnly() {
-		return ConfigHandler.OWNER_ONLY_VESSEL.getValue();
+		return ownerOnlyVessel.getValue();
 	}
 
 }

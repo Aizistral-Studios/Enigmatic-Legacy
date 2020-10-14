@@ -8,12 +8,13 @@ import javax.annotation.Nullable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
-import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.integral.enigmaticlegacy.triggers.CursedRingEquippedTrigger;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
@@ -23,24 +24,39 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.monster.EndermanEntity;
 import net.minecraft.entity.passive.BeeEntity;
-import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class CursedRing extends ItemBaseCurio {
+	public static Omniconfig.DoubleParameter painMultiplier;
+	public static Omniconfig.DoubleParameter monsterDamageMultiplier;
+
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("CursedRing");
+
+		painMultiplier = builder
+				.comment("Any damage received by bearers of the Ring of the Seven Curses will be multiplied by this value.")
+				.getDouble("PainMultiplier", 2.0);
+
+		monsterDamageMultiplier = builder
+				.comment("Any damage bearers of the Ring of the Seven Curses deal to monsters will be multiplied by this value.")
+				.getDouble("DamageMultiplier", 0.5);
+
+		builder.popPrefix();
+	}
 
 	private final double angerRange = 24F;
 	public final Multimap<Attribute, AttributeModifier> attributesDefault = HashMultimap.create();
@@ -128,6 +144,7 @@ public class CursedRing extends ItemBaseCurio {
 
 	@Override
 	public void onEquip(String identifier, int index, LivingEntity entityLivingBase) {
+		// TODO Use Curios trigger for this
 		if (entityLivingBase instanceof ServerPlayerEntity) {
 			CursedRingEquippedTrigger.INSTANCE.trigger((ServerPlayerEntity) entityLivingBase);
 		}
@@ -143,18 +160,26 @@ public class CursedRing extends ItemBaseCurio {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living) {
-		if (living.world.isRemote || !(living instanceof PlayerEntity))
+	public void curioTick(String identifier, int index, LivingEntity livingPlayer) {
+		if (livingPlayer.world.isRemote || !(livingPlayer instanceof PlayerEntity))
 			return;
 
-		PlayerEntity player = (PlayerEntity) living;
+		PlayerEntity player = (PlayerEntity) livingPlayer;
+		List<LivingEntity> genericMobs = livingPlayer.world.getEntitiesWithinAABB(LivingEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, this.angerRange));
+		List<EndermanEntity> endermen = livingPlayer.world.getEntitiesWithinAABB(EndermanEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, this.angerRange+8));
 
-		List<LivingEntity> genericMobs = living.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(living.getPosX() - this.angerRange, living.getPosY() - this.angerRange, living.getPosZ() - this.angerRange, living.getPosX() + this.angerRange, living.getPosY() + this.angerRange, living.getPosZ() + this.angerRange));
+		for (EndermanEntity enderman : endermen) {
+			if (random.nextDouble() <= 0.002) {
+				if (enderman.teleportToEntity(player) && player.canEntityBeSeen(enderman)) {
+					enderman.setAttackTarget(player);
+				}
+			}
 
-		for (LivingEntity entity : genericMobs) {
+		}
 
-			if (entity instanceof IAngerable) {
-				IAngerable neutral = (IAngerable) entity;
+		for (LivingEntity checkedEntity : genericMobs) {
+			if (checkedEntity instanceof IAngerable) {
+				IAngerable neutral = (IAngerable) checkedEntity;
 
 				if (neutral instanceof TameableEntity) {
 					if (((TameableEntity)neutral).isTamed()) {
@@ -168,8 +193,12 @@ public class CursedRing extends ItemBaseCurio {
 					continue;
 				}
 
-				if (!living.equals(neutral.getAttackTarget())) {
-					neutral.setAttackTarget(living);
+				if (!livingPlayer.equals(neutral.getAttackTarget())) {
+					if (player.canEntityBeSeen(checkedEntity) || player.getDistance(checkedEntity) <= 4.0F) {
+						neutral.setAttackTarget(player);
+					} else {
+						continue;
+					}
 				}
 			}
 		}
@@ -178,11 +207,6 @@ public class CursedRing extends ItemBaseCurio {
 
 	public double getAngerRange() {
 		return this.angerRange;
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.CURSED_RING_ENABLED.getValue();
 	}
 
 	@Override

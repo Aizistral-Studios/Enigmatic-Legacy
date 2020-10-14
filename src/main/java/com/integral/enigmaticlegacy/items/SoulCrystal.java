@@ -8,7 +8,6 @@ import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.IPermanentCrystal;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -16,7 +15,6 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
@@ -31,7 +29,6 @@ import net.minecraft.world.World;
 public class SoulCrystal extends ItemBase implements IPermanentCrystal {
 
 	public HashMap<PlayerEntity, Multimap<Attribute, AttributeModifier>> attributeDispatcher = new HashMap<PlayerEntity, Multimap<Attribute, AttributeModifier>>();
-	//public Multimap<Attribute, AttributeModifier> playerAttributes = HashMultimap.create();
 
 	public SoulCrystal() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isBurnable().group(null));
@@ -95,8 +92,9 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal {
 
 		int lostFragments = SuperpositionHandler.getPersistentInteger(player, "enigmaticlegacy.lostsoulfragments", 0);
 
-		if (lostFragments > 0)
+		if (lostFragments > 0) {
 			soulMap.put(Attributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("66a2aa2d-7e3c-4af4-882f-bd2b2ded8e7b"), "Lost Soul Health Modifier", -0.1F * lostFragments, AttributeModifier.Operation.MULTIPLY_TOTAL));
+		}
 
 		// Applies new attributes
 		attributeManager.reapplyModifiers(soulMap);

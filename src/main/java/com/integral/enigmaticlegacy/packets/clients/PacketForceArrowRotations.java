@@ -3,7 +3,6 @@ package com.integral.enigmaticlegacy.packets.clients;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.PacketBuffer;

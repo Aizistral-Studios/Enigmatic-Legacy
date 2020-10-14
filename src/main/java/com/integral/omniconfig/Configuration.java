@@ -24,19 +24,22 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.concurrent.locks.LockSupport;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.locks.LockSupport;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.annotation.Nullable;
 
 import com.electronwill.nightconfig.core.file.FileWatcher;
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.ImmutableSet;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
-import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 /**
@@ -73,6 +76,20 @@ public class Configuration {
 		CLIENT,
 		SERVER,
 		COMMON;
+
+		public boolean isSided() {
+			return this != COMMON;
+		}
+
+		@Nullable
+		public Dist getDist() {
+			if (this == CLIENT)
+				return Dist.CLIENT;
+			else if (this == SERVER)
+				return Dist.DEDICATED_SERVER;
+			else
+				return null;
+		}
 	}
 
 	public static final String CATEGORY_GENERAL = "general";
@@ -84,10 +101,11 @@ public class Configuration {
 	private static final String CONFIG_VERSION_MARKER = "@CONFIG_VERSION";
 	private static final Pattern CONFIG_START = Pattern.compile("START: \"([^\\\"]+)\"");
 	private static final Pattern CONFIG_END = Pattern.compile("END: \"([^\\\"]+)\"");
-	public static final CharMatcher allowedProperties = CharMatcher.JAVA_LETTER_OR_DIGIT.or(CharMatcher.anyOf(ALLOWED_CHARS));
+	public static final CharMatcher allowedProperties = CharMatcher.javaLetterOrDigit().or(CharMatcher.anyOf(ALLOWED_CHARS));
 	private static Configuration PARENT = null;
 
 	public boolean isOverloading = false;
+	private boolean pushSynchronized = false;
 
 	private File file;
 
@@ -106,6 +124,8 @@ public class Configuration {
 	private VersioningPolicy versioningPolicy = VersioningPolicy.DISMISSIVE;
 	private boolean firstLoadPassed = false;
 	private boolean terminateNonInvokedKeys = false;
+
+	protected ConfigBeholder associatedBeholder = null;
 
 	static {
 		NEW_LINE = System.getProperty("line.separator");
@@ -145,6 +165,26 @@ public class Configuration {
 
 	public Configuration(File file, boolean caseSensitiveCustomCategories) {
 		this(file, null, caseSensitiveCustomCategories);
+	}
+
+	public void pushSynchronized(boolean value) {
+		this.pushSynchronized = value;
+	}
+
+	private String pullSynchronized() {
+		String was = this.pushSynchronized ? "yes" : "no";
+		this.pushSynchronized = false;
+		return was;
+	}
+
+	private String getSynchronizedComment() {
+		String comment = "";
+
+		if (!this.sidedType.isSided()) {
+			comment =  ", synchronized: " + this.pullSynchronized();
+		}
+
+		return comment;
 	}
 
 	public SidedConfigType getSidedType() {
@@ -888,7 +928,7 @@ public class Configuration {
 										break;
 									}
 									if (currentCat == null)
-										throw new RuntimeException(String.format("Config file corrupt, attepted to close to many categories '%s:%d'", this.fileName, lineNum));
+										throw new RuntimeException(String.format("Config file corrupt, attempted to close to many categories '%s:%d'", this.fileName, lineNum));
 									currentCat = currentCat.parent;
 									break;
 
@@ -1026,29 +1066,56 @@ public class Configuration {
 	}
 
 	public synchronized void load() {
-		this.isOverloading = true;
+		this.executeSided(() -> {
+			this.isOverloading = true;
 
-		try {
-			this.loadFile();
-		} catch (Throwable e) {
-			File fileBak = new File(this.file.getAbsolutePath() + "_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".errored");
-			EnigmaticLegacy.enigmaticLogger.error("An exception occurred while loading config file %s. This file will be renamed to %s " + "and a new config file will be generated.", this.file.getName(), fileBak.getName());
-			e.printStackTrace();
+			/*
+			 * Force thread to wait a little before actually processing file, because saving
+			 * it takes measurable time and ConfigBeholder may have triggered in the middle
+			 * of process of writing file to disk, possibly causing invalid reading results
+			 * if we hurry around too much with it.
+			 */
 
-			this.file.renameTo(fileBak);
-			this.loadFile();
-		}
+			LockSupport.parkNanos(10000);
 
-		this.isOverloading = false;
+			try {
+				this.loadFile();
+			} catch (Throwable e) {
+				File fileBak = new File(this.file.getAbsolutePath() + "_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".errored");
+				EnigmaticLegacy.enigmaticLogger.error("An exception occurred while loading config file %s. This file will be renamed to %s " + "and a new config file will be generated.", this.file.getName(), fileBak.getName());
+				e.printStackTrace();
+
+				this.file.renameTo(fileBak);
+				this.loadFile();
+			}
+
+			// Just in case
+			if (this.associatedBeholder != null) {
+				this.associatedBeholder.lastCall = System.currentTimeMillis();
+			}
+
+			this.isOverloading = false;
+		});
 	}
 
 	public synchronized void save() {
-		this.isOverloading = true;
+		this.executeSided(() -> {
+			this.isOverloading = true;
 
-		this.saveFile();
+			this.saveFile();
 
-		LockSupport.parkNanos(5000);
-		this.isOverloading = false;
+			/*
+			 * Convince the beholder that it was just used before ceasing
+			 * the overloading status. Prevents it from instantly triggering
+			 * on changes produced and saved in code and not manually by user.
+			 */
+
+			if (this.associatedBeholder != null) {
+				this.associatedBeholder.lastCall = System.currentTimeMillis();
+			}
+
+			this.isOverloading = false;
+		});
 	}
 
 	private void saveFile() {
@@ -1106,8 +1173,9 @@ public class Configuration {
 
 	private void save(BufferedWriter out) throws IOException {
 		for (ConfigCategory cat : this.categories.values()) {
-			if (!cat.initialized && this.terminateNonInvokedKeys)
-				return;
+			if (!cat.initialized && this.terminateNonInvokedKeys) {
+				continue;
+			}
 
 			if (!cat.isChild()) {
 				cat.write(out, 0);
@@ -1254,7 +1322,7 @@ public class Configuration {
 		try {
 			PARENT = new Configuration(new File(FMLPaths.CONFIGDIR.get().toFile().getCanonicalFile(), "global.cfg"));
 		} catch (IOException e) {
-			throw new RuntimeException("Something broker", e);
+			throw new RuntimeException("Something broken", e);
 		}
 		PARENT.load();
 	}
@@ -1459,7 +1527,7 @@ public class Configuration {
 		Property prop = this.get(category, name, defaultValue);
 		prop.setLanguageKey(langKey);
 		prop.setValidationPattern(pattern);
-		prop.comment = comment + " [default: " + defaultValue + "]";
+		prop.comment = comment + " [default: " + defaultValue + this.getSynchronizedComment() + "]";
 		return prop.getString();
 	}
 
@@ -1492,7 +1560,7 @@ public class Configuration {
 		Property prop = this.get(category, name, defaultValue);
 		prop.setValidValues(validValues);
 		prop.setLanguageKey(langKey);
-		prop.comment = comment + " [default: " + defaultValue + "]";
+		prop.comment = comment + " [default: " + defaultValue + this.getSynchronizedComment() + "]";
 		return prop.getString();
 	}
 
@@ -1535,7 +1603,7 @@ public class Configuration {
 		Property prop = this.get(category, name, defaultValue);
 		prop.setLanguageKey(langKey);
 		prop.setValidValues(validValues);
-		prop.comment = comment + " [default: " + prop.getDefault() + "]";
+		prop.comment = comment + " [default: " + prop.getDefault() + this.getSynchronizedComment() + "]";
 		return prop.getStringList();
 	}
 
@@ -1565,7 +1633,7 @@ public class Configuration {
 	public boolean getBoolean(String name, String category, boolean defaultValue, String comment, String langKey) {
 		Property prop = this.get(category, name, defaultValue);
 		prop.setLanguageKey(langKey);
-		prop.comment = comment + " [default: " + defaultValue + "]";
+		prop.comment = comment + " [default: " + defaultValue + this.getSynchronizedComment() + "]";
 		return prop.getBoolean(defaultValue);
 	}
 
@@ -1599,14 +1667,15 @@ public class Configuration {
 	public int getInt(String name, String category, int defaultValue, int minValue, int maxValue, String comment, String langKey) {
 		Property prop = this.get(category, name, defaultValue);
 		prop.setLanguageKey(langKey);
-		prop.comment = comment + " [range: " + minValue + " ~ " + maxValue + ", default: " + defaultValue + "]";
+
+		prop.comment = comment + " [range: " + minValue + " ~ " + maxValue + ", default: " + defaultValue + this.getSynchronizedComment() + "]";
 		prop.setMinValue(minValue);
 		prop.setMaxValue(maxValue);
 		return prop.getInt(defaultValue) < minValue ? minValue : (prop.getInt(defaultValue) > maxValue ? maxValue : prop.getInt(defaultValue));
 	}
 
 	/**
-	 * Creates a float property.
+	 * Creates a double property.
 	 *
 	 * @param name Name of the property.
 	 * @param category Category of the property.
@@ -1614,14 +1683,14 @@ public class Configuration {
 	 * @param minValue Minimum value of the property.
 	 * @param maxValue Maximum value of the property.
 	 * @param comment A brief description what the property does.
-	 * @return The value of the new float property.
+	 * @return The value of the new double property.
 	 */
-	public float getFloat(String name, String category, float defaultValue, float minValue, float maxValue, String comment) {
-		return this.getFloat(name, category, defaultValue, minValue, maxValue, comment, name);
+	public double getDouble(String name, String category, double defaultValue, double minValue, double maxValue, String comment) {
+		return this.getDouble(name, category, defaultValue, minValue, maxValue, comment, name);
 	}
 
 	/**
-	 * Creates a float property.
+	 * Creates a double property.
 	 *
 	 * @param name Name of the property.
 	 * @param category Category of the property.
@@ -1630,18 +1699,21 @@ public class Configuration {
 	 * @param maxValue Maximum value of the property.
 	 * @param comment A brief description what the property does.
 	 * @param langKey A language key used for localization of GUIs
-	 * @return The value of the new float property.
+	 * @return The value of the new double property.
 	 */
-	public float getFloat(String name, String category, float defaultValue, float minValue, float maxValue, String comment, String langKey) {
-		Property prop = this.get(category, name, Float.toString(defaultValue), name);
+	public double getDouble(String name, String category, double defaultValue, double minValue, double maxValue, String comment, String langKey) {
+		Property prop = this.get(category, name, defaultValue);
 		prop.setLanguageKey(langKey);
-		prop.comment = comment + " [range: " + minValue + " ~ " + maxValue + ", default: " + defaultValue + "]";
+		prop.comment = comment + " [range: " + minValue + " ~ " + maxValue + ", default: " + defaultValue + this.getSynchronizedComment() + "]";
 		prop.setMinValue(minValue);
 		prop.setMaxValue(maxValue);
 		try {
-			return Float.parseFloat(prop.getString()) < minValue ? minValue : (Float.parseFloat(prop.getString()) > maxValue ? maxValue : Float.parseFloat(prop.getString()));
+			return Double.parseDouble(prop.getString()) < minValue ? minValue : (Double.parseDouble(prop.getString()) > maxValue ? maxValue : Double.parseDouble(prop.getString()));
 		} catch (Exception e) {
-			e.printStackTrace();
+			EnigmaticLegacy.enigmaticLogger.warn("Invalid value specified for '" + name + "' in category '" + category + "': " + prop.getString());
+			EnigmaticLegacy.enigmaticLogger.warn("Default value will be used: " + defaultValue);
+			EnigmaticLegacy.enigmaticLogger.warn("Stacktrace: ");
+			EnigmaticLegacy.enigmaticLogger.catching(e);
 		}
 		return defaultValue;
 	}
@@ -1651,19 +1723,34 @@ public class Configuration {
 	}
 
 	public void attachBeholder() {
-		try {
-			FileWatcher.defaultInstance().addWatch(this.getConfigFile(), new ConfigBeholder(this, Thread.currentThread().getContextClassLoader()));
-		} catch (IOException ex) {
-			throw new RuntimeException("Couldn't watch config file", ex);
-		}
+		this.executeSided(() -> {
+			try {
+				this.associatedBeholder = new ConfigBeholder(this, Thread.currentThread().getContextClassLoader());
+				FileWatcher.defaultInstance().addWatch(this.getConfigFile(), this.associatedBeholder);
+			} catch (IOException ex) {
+				throw new RuntimeException("Couldn't watch config file", ex);
+			}
+		});
 	}
 
 	public void detachBeholder() {
-		FileWatcher.defaultInstance().removeWatch(this.getConfigFile());
+		this.executeSided(() -> {
+			FileWatcher.defaultInstance().removeWatch(this.getConfigFile());
+		});
 	}
 
 	public void attachOverloadingAction(Consumer<Configuration> action) {
-		this.overloadingAction = action;
+		this.executeSided(() -> {
+			this.overloadingAction = action;
+		});
+	}
+
+	private void executeSided(Runnable run) {
+		if (this.sidedType.isSided()) {
+			DistExecutor.unsafeRunWhenOn(this.sidedType.getDist(), () -> { return run; });
+		} else {
+			run.run();
+		}
 	}
 
 	/**
@@ -1680,15 +1767,25 @@ public class Configuration {
 	private static class ConfigBeholder implements Runnable {
 		private final Configuration config;
 		private final ClassLoader realClassLoader;
+		private long lastCall;
 
-		ConfigBeholder(final Configuration config, ClassLoader classLoader) {
+		protected ConfigBeholder(final Configuration config, ClassLoader classLoader) {
 			this.config = config;
 			this.realClassLoader = classLoader;
+			this.lastCall = System.currentTimeMillis();
 		}
 
 		@Override
 		public void run() {
-			if (!this.config.isOverloading) {
+
+			/*
+			 * Additional layer of ensurance agains excessive reloads by checking out when beholder
+			 * was called the last time. Realistically, config files should not be updated any more
+			 * often than once in 1/5 of a second, so gotta do the trick.
+			 */
+
+			if (!this.config.isOverloading && System.currentTimeMillis() - this.lastCall >= 200) {
+				this.lastCall = System.currentTimeMillis();
 				Thread.currentThread().setContextClassLoader(this.realClassLoader);
 
 				System.out.println("File just got changed: " + this.config.getConfigFile());
@@ -1697,6 +1794,7 @@ public class Configuration {
 				if (this.config.overloadingAction != null) {
 					this.config.overloadingAction.accept(this.config);
 				}
+
 			}
 		}
 	}

@@ -1,42 +1,28 @@
 package com.integral.enigmaticlegacy.items;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.IPermanentCrystal;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.AttributeModifierManager;
-import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraft.entity.item.ItemEntity;
 
 public class StorageCrystal extends ItemBase implements IPermanentCrystal {
 

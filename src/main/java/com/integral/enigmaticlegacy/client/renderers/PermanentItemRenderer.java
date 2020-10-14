@@ -2,7 +2,6 @@ package com.integral.enigmaticlegacy.client.renderers;
 
 import java.util.Random;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.IPermanentCrystal;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -16,7 +15,6 @@ import net.minecraft.client.renderer.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

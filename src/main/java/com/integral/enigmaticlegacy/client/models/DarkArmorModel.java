@@ -1,17 +1,11 @@
 package com.integral.enigmaticlegacy.client.models;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.client.models.SpecialArmorModelRenderer.AnchorType;
-import com.integral.enigmaticlegacy.items.DarkArmor;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.inventory.EquipmentSlotType;
 
 public class DarkArmorModel extends GenericArmorModel {

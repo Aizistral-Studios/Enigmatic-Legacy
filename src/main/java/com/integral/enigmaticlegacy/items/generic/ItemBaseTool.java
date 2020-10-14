@@ -5,7 +5,6 @@ import java.util.Set;
 
 import com.google.common.collect.Sets;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.api.items.IPerhaps;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 
 import net.minecraft.block.Block;
@@ -18,7 +17,7 @@ import net.minecraft.item.Rarity;
 import net.minecraft.item.ToolItem;
 import net.minecraftforge.common.ToolType;
 
-public abstract class ItemBaseTool extends ToolItem implements IPerhaps {
+public abstract class ItemBaseTool extends ToolItem {
 
 	public Set<Material> effectiveMaterials;
 	public ItemStack defaultInstance;
@@ -39,20 +38,14 @@ public abstract class ItemBaseTool extends ToolItem implements IPerhaps {
 	}
 
 	@Override
-	public boolean isForMortals() {
-		return true;
-	}
-
-	@Override
 	public boolean canHarvestBlock(BlockState blockIn) {
 		int i = this.getTier().getHarvestLevel();
 
 		if (this.getToolTypes(this.defaultInstance).contains(blockIn.getHarvestTool())) {
-			if (blockIn.getHarvestTool() == ToolType.PICKAXE) {
+			if (blockIn.getHarvestTool() == ToolType.PICKAXE)
 				return i >= blockIn.getHarvestLevel();
-			} else {
+			else
 				return true;
-			}
 		}
 
 		Material material = blockIn.getMaterial();

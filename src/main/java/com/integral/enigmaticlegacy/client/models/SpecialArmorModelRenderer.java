@@ -1,25 +1,10 @@
 package com.integral.enigmaticlegacy.client.models;
 
-import com.integral.enigmaticlegacy.config.JsonConfigHandler;
-import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import it.unimi.dsi.fastutil.objects.ObjectList;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.client.renderer.model.Model;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.vector.Matrix3f;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.math.vector.Vector4f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 

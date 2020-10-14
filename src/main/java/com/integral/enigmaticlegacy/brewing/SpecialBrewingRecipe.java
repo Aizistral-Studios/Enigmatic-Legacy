@@ -1,7 +1,5 @@
 package com.integral.enigmaticlegacy.brewing;
 
-import java.util.HashMap;
-
 import javax.annotation.Nonnull;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
@@ -11,7 +9,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.brewing.IBrewingRecipe;
 
 /**
  * Variation of brewing recipe sensitive to NBT of input stack.

@@ -5,25 +5,26 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
-import net.minecraft.entity.projectile.PotionEntity;
 import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.entity.projectile.WitherSkullEntity;
 import net.minecraft.item.ItemStack;
@@ -32,7 +33,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -41,6 +41,36 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
+	public static Omniconfig.IntParameter spellstoneCooldown;
+	public static Omniconfig.DoubleParameter accelerationModifier;
+	public static Omniconfig.DoubleParameter accelerationModifierElytra;
+	public static Omniconfig.PerhapsParameter deflectChance;
+
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("AngelBlessing");
+
+		spellstoneCooldown = builder
+				.comment("Active ability cooldown for Angel's Blessing. Measured in ticks. 20 ticks equal to 1 second.")
+				.getInt("Cooldown", 40);
+
+		accelerationModifier = builder
+				.comment("Acceleration modifier for active ability of Angel's Blessing. The greater it is, the more momentum you will gain.")
+				.max(256)
+				.getDouble("AccelerationModifier", 1.0);
+
+		accelerationModifierElytra = builder
+				.comment("Separate acceleration modifier for active ability of Angel's Blessing when player is flying with Elytra.")
+				.max(256)
+				.getDouble("AccelerationModifierElytra", 0.6);
+
+		deflectChance = builder
+				.comment("Chance to deflect projectile when having Angel's Blessing equipped. Measured in percents.")
+				.max(100)
+				.getPerhaps("DeflectChance", 50);
+
+		builder.popPrefix();
+	}
 
 	protected double range = 4.0D;
 
@@ -53,11 +83,6 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 	}
 
 	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.ANGEL_BLESSING_ENABLED.getValue();
-	}
-
-	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
@@ -67,11 +92,11 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessingCooldown", TextFormatting.GOLD, ((ConfigHandler.ANGEL_BLESSING_COOLDOWN.getValue())) / 20.0F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessingCooldown", TextFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing4");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing5", TextFormatting.GOLD, ConfigHandler.ANGEL_BLESSING_DEFLECT_CHANCE.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing5", TextFormatting.GOLD, deflectChance.getValue().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing6");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -94,10 +119,10 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 		Vector3 motionVec = new Vector3(player.getMotion());
 
 		if (player.isElytraFlying()) {
-			accelerationVec = accelerationVec.multiply(ConfigHandler.ANGEL_BLESSING_ACCELERATION_MODIFIER_ELYTRA.getValue());
+			accelerationVec = accelerationVec.multiply(accelerationModifierElytra.getValue());
 			accelerationVec = accelerationVec.multiply(1 / (Math.max(0.15D, motionVec.mag()) * 2.25D));
 		} else {
-			accelerationVec = accelerationVec.multiply(ConfigHandler.ANGEL_BLESSING_ACCELERATION_MODIFIER.getValue());
+			accelerationVec = accelerationVec.multiply(accelerationModifier.getValue());
 		}
 
 		Vector3 finalMotion = new Vector3(motionVec.x + accelerationVec.x, motionVec.y + accelerationVec.y, motionVec.z + accelerationVec.z);
@@ -107,7 +132,7 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 
 		world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
 
-		SuperpositionHandler.setSpellstoneCooldown(player, ConfigHandler.ANGEL_BLESSING_COOLDOWN.getValue());
+		SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
 	}
 
 	@Override

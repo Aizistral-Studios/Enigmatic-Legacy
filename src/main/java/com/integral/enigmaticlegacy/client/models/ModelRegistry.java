@@ -1,6 +1,5 @@
 package com.integral.enigmaticlegacy.client.models;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.client.renderers.PermanentItemRenderer;
 import com.integral.enigmaticlegacy.client.renderers.UltimateWitherSkullRenderer;
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
@@ -11,10 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.Mod;
 
 /**
  * Separate handler for registering entities' models.

@@ -1,25 +1,18 @@
 package com.integral.enigmaticlegacy.gui.containers;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.packets.server.PacketInkwellField;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.AbstractRepairContainer;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.IContainerListener;
-import net.minecraft.inventory.container.RepairContainer;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.play.client.CRenameItemPacket;
-import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;

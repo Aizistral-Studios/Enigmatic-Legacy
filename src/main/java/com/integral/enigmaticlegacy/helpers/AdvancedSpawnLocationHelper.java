@@ -8,7 +8,6 @@ import javax.annotation.Nullable;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.player.SpawnLocationHelper;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.math.BlockPos;
@@ -24,7 +23,7 @@ import net.minecraft.world.server.ServerWorld;
 
 /**
  * For whatever reason my workspace keeps throwing error when I try to extend SpawnLocationHelper.
- * TODO Investigate
+ * TODO Use access transformer to access required methods from SpawnLocationHelper
  */
 
 public class AdvancedSpawnLocationHelper {

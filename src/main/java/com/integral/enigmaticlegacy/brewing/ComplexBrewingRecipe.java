@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.brewing.IBrewingRecipe;
 
 /**
  * A recipe with one output and any amount of input-ingredient pairs.

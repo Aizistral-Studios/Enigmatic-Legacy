@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.IAdvancedPotionItem;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
@@ -29,7 +28,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -42,11 +40,6 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 		super(ItemBase.getDefaultProperties().rarity(rarity).maxStackSize(1).group(EnigmaticLegacy.enigmaticPotionTab));
 
 		this.potionType = type;
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return this.potionType == PotionType.COMMON ? ConfigHandler.COMMON_POTIONS_ENABLED.getValue() : ConfigHandler.ULTIMATE_POTIONS_ENABLED.getValueDefault();
 	}
 
 	@Override
@@ -122,9 +115,8 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 		}
 
 		if (playerentity == null || !playerentity.abilities.isCreativeMode) {
-			if (stack.isEmpty()) {
+			if (stack.isEmpty())
 				return new ItemStack(Items.GLASS_BOTTLE);
-			}
 
 			if (playerentity != null) {
 				playerentity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));

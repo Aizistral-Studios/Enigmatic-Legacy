@@ -41,7 +41,7 @@ public class BerserkEmblem extends ItemBaseCurio {
 		float missingHealthPool = SuperpositionHandler.getMissingHealthPool(player);
 
 		attributesDefault.put(Attributes.ATTACK_SPEED, new AttributeModifier(UUID.fromString("ec62548c-5b26-401e-83fd-693e4aafa532"), "enigmaticlegacy:attack_speed_modifier", missingHealthPool, AttributeModifier.Operation.MULTIPLY_BASE));
-		attributesDefault.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(UUID.fromString("f4ece564-d2c0-40d2-a96a-dc68b493137c"), "enigmaticlegacy:speed_modifier", player.isSprinting() ? missingHealthPool/2F : 0F, AttributeModifier.Operation.MULTIPLY_BASE));
+		attributesDefault.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(UUID.fromString("f4ece564-d2c0-40d2-a96a-dc68b493137c"), "enigmaticlegacy:speed_modifier", missingHealthPool/2F, AttributeModifier.Operation.MULTIPLY_BASE));
 
 		return attributesDefault;
 	}

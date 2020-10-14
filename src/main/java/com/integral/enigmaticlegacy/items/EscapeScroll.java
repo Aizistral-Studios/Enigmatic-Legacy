@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 
@@ -25,11 +24,6 @@ public class EscapeScroll extends ItemBaseCurio {
 	public EscapeScroll() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.RARE).maxStackSize(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "escape_scroll"));
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.ESCAPE_SCROLL_ENABLED.getValue();
 	}
 
 	@Override

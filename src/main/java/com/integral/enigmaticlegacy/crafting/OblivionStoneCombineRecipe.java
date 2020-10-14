@@ -5,7 +5,8 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
+import com.integral.enigmaticlegacy.items.OblivionStone;
 
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
@@ -43,9 +44,9 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 
 			if (!checkedItemStack.isEmpty()) {
 				if (checkedItemStack.getItem() == EnigmaticLegacy.oblivionStone) {
-					if (voidStone == null)
+					if (voidStone == null) {
 						voidStone = checkedItemStack;
-					else
+					} else
 						return ItemStack.EMPTY;
 				} else {
 					stackList.add(checkedItemStack);
@@ -63,7 +64,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 			ListNBT arr = nbt.getList("SupersolidID", 8);
 			int counter = 0;
 
-			if (arr.size() >= ConfigHandler.OBLIVION_STONE_HARDCAP.getValue())
+			if (arr.size() >= OblivionStone.itemHardcap.getValue())
 				return null;
 
 			for (INBT s_uncast : arr) {
@@ -106,9 +107,9 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 
 			if (!checkedItemStack.isEmpty()) {
 				if (checkedItemStack.getItem() == EnigmaticLegacy.oblivionStone) {
-					if (voidStone == null)
+					if (voidStone == null) {
 						voidStone = checkedItemStack;
-					else
+					} else
 						return false;
 				} else {
 					stackList.add(checkedItemStack);
@@ -126,7 +127,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 			ListNBT arr = nbt.getList("SupersolidID", 8);
 			int counter = 0;
 
-			if (arr.size() >= ConfigHandler.OBLIVION_STONE_HARDCAP.getValue())
+			if (arr.size() >= OblivionStone.itemHardcap.getValue())
 				return false;
 
 			for (INBT s_uncast : arr) {
@@ -140,16 +141,16 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 
 			return true;
 
-		} else if (voidStone != null && stackList.size() == 0) {
+		} else if (voidStone != null && stackList.size() == 0)
 			return true;
-		} else
+		else
 			return false;
 	}
 
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(CraftingInventory inv) {
 		NonNullList<ItemStack> nonnulllist = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
-	    return nonnulllist;
+		return nonnulllist;
 	}
 
 	@Override

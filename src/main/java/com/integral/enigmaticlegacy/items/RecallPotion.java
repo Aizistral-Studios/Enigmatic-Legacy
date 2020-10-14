@@ -1,22 +1,15 @@
 package com.integral.enigmaticlegacy.items;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
-import com.integral.enigmaticlegacy.handlers.RealSmoothTeleporter;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
-import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
-import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
@@ -29,19 +22,11 @@ import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.Dimension;
-import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 public class RecallPotion extends ItemBase {
 
@@ -63,11 +48,6 @@ public class RecallPotion extends ItemBase {
 	}
 
 	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.RECALL_POTION_ENABLED.getValue();
-	}
-
-	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
 		PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
 
@@ -79,9 +59,8 @@ public class RecallPotion extends ItemBase {
 		if (player == null || !player.abilities.isCreativeMode) {
 			stack.shrink(1);
 
-			if (stack.isEmpty()) {
+			if (stack.isEmpty())
 				return new ItemStack(Items.GLASS_BOTTLE);
-			}
 
 			if (player != null) {
 				player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));

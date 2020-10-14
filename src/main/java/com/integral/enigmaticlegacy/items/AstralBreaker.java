@@ -6,13 +6,16 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.IMultiblockMiningTool;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseTool;
 import com.integral.enigmaticlegacy.packets.clients.PacketFlameParticles;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.Screen;
@@ -41,6 +44,26 @@ import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool {
+	public static Omniconfig.IntParameter miningRadius;
+	public static Omniconfig.IntParameter miningDepth;
+
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("AstralBreaker");
+
+		miningRadius = builder
+				.comment("The radius of Astral Breaker AOE mining. Set to -1 to disable the feature.")
+				.min(-1)
+				.max(128-1)
+				.getInt("MiningRadius", 3);
+
+		miningDepth = builder
+				.comment("The depth of Astral Breaker AOE mining.")
+				.max(128-1)
+				.getInt("MiningDepth", 1);
+
+		builder.popPrefix();
+	}
 
 	public AstralBreaker() {
 		super(4F, -2.8F, EnigmaticMaterials.ETHERIUM, new HashSet<>(),
@@ -62,7 +85,7 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker1", TextFormatting.GOLD, 3, 1);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker1", TextFormatting.GOLD, miningRadius.getValue(), miningDepth.getValue());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker3");
@@ -89,7 +112,7 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 			this.spawnFlameParticles(world, pos);
 		}
 
-		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && ConfigHandler.ETHERIUM_PICKAXE_RADIUS.getValue() != -1) {
+		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && miningRadius.getValue() != -1) {
 
 			RayTraceResult trace = AOEMiningHelper.calcRayTrace(world, (PlayerEntity) entityLiving, RayTraceContext.FluidMode.ANY);
 
@@ -97,7 +120,7 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 				BlockRayTraceResult blockTrace = (BlockRayTraceResult) trace;
 				Direction face = blockTrace.getFace();
 
-				AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos, this.effectiveMaterials, 3, 1, true, pos, stack, (objPos, objState) -> {
+				AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos, this.effectiveMaterials, miningRadius.getValue(), miningDepth.getValue(), true, pos, stack, (objPos, objState) -> {
 
 					stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(MobEntity.getSlotForItemStack(stack)));
 					this.spawnFlameParticles(world, objPos);
@@ -128,11 +151,6 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 			return this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType();
 		else
 			return super.onItemUse(context);
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.ASTRAL_BREAKER_ENABLED.getValue();
 	}
 
 }

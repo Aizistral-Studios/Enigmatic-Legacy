@@ -1,27 +1,32 @@
 package com.integral.enigmaticlegacy.handlers;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.generic.ConfigurableItem;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.IPerhaps;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
-import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
 import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
 import com.integral.enigmaticlegacy.objects.DimensionalPosition;
@@ -29,6 +34,8 @@ import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
+import com.integral.omniconfig.Configuration;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.advancements.Advancement;
@@ -38,6 +45,7 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.ParticleStatus;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -46,7 +54,6 @@ import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.player.SpawnLocationHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.ItemLootEntry;
@@ -66,6 +73,7 @@ import net.minecraft.nbt.IntNBT;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectUtils;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.BeaconTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.RegistryKey;
@@ -73,10 +81,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
@@ -84,19 +90,19 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.forgespi.language.ModFileScanData;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotTypeMessage;
-import top.theillusivec4.curios.api.type.ISlotType;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
@@ -468,13 +474,9 @@ public class SuperpositionHandler {
 
 	@Nullable
 	public static StandaloneLootEntry.Builder<?> createOptionalLootEntry(Item item, int weight, float minCount, float maxCount) {
+		if (!OmniconfigHandler.isItemEnabled(item))
+			return null;
 
-		if (item instanceof IPerhaps) {
-			IPerhaps perhaps = (IPerhaps) item;
-
-			if (!perhaps.isForMortals())
-				return null;
-		}
 		return ItemLootEntry.builder(item).weight(weight).acceptFunction(SetCount.builder(RandomValueRange.of(minCount, maxCount)));
 	}
 
@@ -967,8 +969,8 @@ public class SuperpositionHandler {
 	}
 
 	public static boolean shouldPlayerDropSoulCrystal(PlayerEntity player) {
-		int dropMode = ConfigHandler.SOUL_CRYSTALS_MODE.getValue();
-		int maxCrystalLoss = ConfigHandler.MAX_SOUL_CRYSTAL_LOSS.getValue();
+		int dropMode = OmniconfigHandler.soulCrystalsMode.getValue();
+		int maxCrystalLoss = OmniconfigHandler.maxSoulCrystalLoss.getValue();
 
 		boolean hasCursedRing = SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing);
 		boolean canDropMore = EnigmaticLegacy.soulCrystal.getLostCrystals(player) < maxCrystalLoss;
@@ -1061,8 +1063,10 @@ public class SuperpositionHandler {
 		} else if (destinationDimensionRespawnCoords.isPresent()) {
 			trueVec = destinationDimensionRespawnCoords.get();
 		} else {
-			/* TODO Spawning player at the world's center involves a lot of collision checks, which we can't do
-			 * without actually teleporting the player. Investigate on possible workarounds. */
+			/*
+			 * TODO Spawning player at the world's center involves a lot of collision checks, which we can't do
+			 * without actually teleporting the player. Investigate on possible workarounds.
+			 */
 			trueVec = new Vector3d(destinationWorld.func_241135_u_().getX() + 0.5, destinationWorld.func_241135_u_().getY() + 0.5, destinationWorld.func_241135_u_().getZ() + 0.5);
 
 			while (!destinationWorld.getBlockState(new BlockPos(trueVec)).isAir(destinationWorld, new BlockPos(trueVec)) && trueVec.y < 255.0D) {
@@ -1193,5 +1197,117 @@ public class SuperpositionHandler {
 			return false;
 	}
 
+	public static boolean areWeDedicatedServer() {
+		return FMLEnvironment.dist == Dist.DEDICATED_SERVER;
+	}
+
+	/**
+	 * Are we a remote server for specified player. Always true if we are
+	 * a dedicated server; also true if we are integrated one but provided player
+	 * does not host us.
+	 * @param player Player in question
+	 */
+
+	public static boolean areWeRemoteServer(PlayerEntity player) {
+		if (areWeDedicatedServer())
+			return true;
+		else
+			return player.getServer() != null && !player.getServer().isServerOwner(player.getGameProfile());
+	}
+
+	public static void executeOnServer(Consumer<MinecraftServer> action) {
+		if (ServerLifecycleHooks.getCurrentServer() != null) {
+			action.accept(ServerLifecycleHooks.getCurrentServer());
+		}
+	}
+
+	public static List<ModFileScanData.AnnotationData> retainAnnotations(String modid, Class<?> annotationClass) {
+		ModFileScanData modFileInfo = ModList.get().getModFileById(modid).getFile().getScanResult();
+		List<ModFileScanData.AnnotationData> list = new ArrayList<>();
+
+		for (ModFileScanData.AnnotationData annotation : modFileInfo.getAnnotations()) {
+			if (annotation.getAnnotationType().getClassName().equals(annotationClass.getName())) {
+				list.add(annotation);
+			}
+		}
+
+		return list;
+	}
+
+	public static List<ModFileScanData.AnnotationData> retainConfigurableItemAnnotations(String modid) {
+		return retainAnnotations(modid, ConfigurableItem.class);
+	}
+
+	public static List<ModFileScanData.AnnotationData> retainConfigHolderAnnotations(String modid) {
+		return retainAnnotations(modid, SubscribeConfig.class);
+	}
+
+	public static void dispatchWrapperToHolders(String modid, OmniconfigWrapper wrapper) {
+		for (ModFileScanData.AnnotationData annotationData : retainConfigHolderAnnotations(modid)) {
+			try {
+				Class<?> retainerClass = Class.forName(annotationData.getClassType().getClassName());
+				String methodName = annotationData.getMemberName().split("\\(")[0];
+
+				boolean receiveClient;
+
+				if (annotationData.getAnnotationData().get("receiveClient") != null) {
+					receiveClient = (boolean) annotationData.getAnnotationData().get("receiveClient");
+				} else {
+					receiveClient = SubscribeConfig.defaultReceiveClient;
+				}
+
+				Method method = retainerClass.getDeclaredMethod(methodName, OmniconfigWrapper.class);
+
+				if (wrapper.config.getSidedType() != Configuration.SidedConfigType.CLIENT || receiveClient) {
+					method.invoke(null, wrapper);
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+	}
+
+	public static Multimap<String, Field> retainAccessibilityGeneratorMap(String modid) {
+		final Multimap<String, Field> accessibilityGeneratorMap = HashMultimap.create();
+
+		for (ModFileScanData.AnnotationData annotationData : retainConfigurableItemAnnotations(modid)) {
+			try {
+				Class<?> retainerClass = Class.forName(annotationData.getClassType().getClassName());
+				String itemName = (String) annotationData.getAnnotationData().get("value");
+				String fieldName = annotationData.getMemberName();
+
+				Field field = retainerClass.getDeclaredField(fieldName);
+				if (!itemName.isEmpty()) {
+					accessibilityGeneratorMap.put(itemName, field);
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		return accessibilityGeneratorMap;
+	}
+
+	public static boolean hasAntiInsectAcknowledgement(PlayerEntity player) {
+		List<ItemStack> heldItems = Lists.newArrayList(player.getHeldItemMainhand(), player.getHeldItemOffhand());
+
+		for (ItemStack held : heldItems) {
+			if (held != null && held.getItem() == EnigmaticLegacy.theAcknowledgment) {
+				if (EnchantmentHelper.getEnchantmentLevel(Enchantments.BANE_OF_ARTHROPODS, held) > 0)
+					return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static boolean isStaringAt(PlayerEntity player, LivingEntity living) {
+		Vector3d vector3d = player.getLook(1.0F).normalize();
+		Vector3d vector3d1 = new Vector3d(living.getPosX() - player.getPosX(), living.getPosYEye() - player.getPosYEye(), living.getPosZ() - player.getPosZ());
+		double d0 = vector3d1.length();
+		vector3d1 = vector3d1.normalize();
+		double d1 = vector3d.dotProduct(vector3d1);
+		return d1 > 1.0D - 0.025D / d0 ? player.canEntityBeSeen(living) : false;
+	}
 
 }

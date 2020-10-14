@@ -8,8 +8,6 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 
 public class SharpshooterEnchantment extends Enchantment {

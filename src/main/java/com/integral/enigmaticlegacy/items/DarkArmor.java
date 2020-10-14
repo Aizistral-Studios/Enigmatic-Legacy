@@ -9,7 +9,6 @@ import com.integral.enigmaticlegacy.items.generic.ItemBaseArmor;
 
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.ItemStack;

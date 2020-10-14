@@ -1,19 +1,12 @@
 package com.integral.enigmaticlegacy.helpers;
 
 import java.util.List;
-import java.util.Random;
 
-import com.google.common.collect.Lists;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.ICrossbowUser;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.FireworkRocketEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -21,9 +14,6 @@ import net.minecraft.item.ArrowItem;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;

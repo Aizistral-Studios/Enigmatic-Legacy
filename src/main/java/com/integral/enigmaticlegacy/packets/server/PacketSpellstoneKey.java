@@ -2,16 +2,8 @@ package com.integral.enigmaticlegacy.packets.server;
 
 import java.util.function.Supplier;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.items.AngelBlessing;
-import com.integral.enigmaticlegacy.items.EnigmaticItem;
-import com.integral.enigmaticlegacy.items.EyeOfNebula;
-import com.integral.enigmaticlegacy.items.GolemHeart;
-import com.integral.enigmaticlegacy.items.MagmaHeart;
-import com.integral.enigmaticlegacy.items.OceanStone;
-import com.integral.enigmaticlegacy.items.VoidPearl;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;

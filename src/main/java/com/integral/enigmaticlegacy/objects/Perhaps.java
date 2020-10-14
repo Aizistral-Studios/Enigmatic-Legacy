@@ -1,5 +1,9 @@
 package com.integral.enigmaticlegacy.objects;
 
+import java.util.Random;
+
+import com.integral.enigmaticlegacy.items.EyeOfNebula;
+
 /**
  * A percentage-based value that can be converted into factor,
  * or 1.0 + factor in case it's required.
@@ -8,10 +12,15 @@ package com.integral.enigmaticlegacy.objects;
 
 public class Perhaps {
 
+	private static final Random theySeeMeRollin = new Random();
 	private int probability;
 
 	public Perhaps(int probability) {
 		this.probability = probability;
+	}
+
+	public boolean roll() {
+		return Math.random() <= this.asMultiplier(false);
 	}
 
 	public int asPercentage() {

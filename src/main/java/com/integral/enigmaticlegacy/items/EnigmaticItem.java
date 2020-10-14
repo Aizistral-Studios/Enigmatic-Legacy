@@ -1,13 +1,15 @@
 package com.integral.enigmaticlegacy.items;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -15,6 +17,8 @@ import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketWitherParticles;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -24,6 +28,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -35,6 +40,18 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public class EnigmaticItem extends ItemAdvancedCurio implements ISpellstone {
+	public static Omniconfig.IntParameter spellstoneCooldown;
+
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("EnigmaticItem");
+
+		spellstoneCooldown = builder
+				.comment("Active ability cooldown for Heart of Creation. Measured in ticks. 20 ticks equal to 1 second.")
+				.getInt("Cooldown", 3);
+
+		builder.popPrefix();
+	}
 
 	public HashMap<PlayerEntity, Boolean> flightMap = new HashMap<PlayerEntity, Boolean>();
 
@@ -68,7 +85,7 @@ public class EnigmaticItem extends ItemAdvancedCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticItem1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticItem2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticItemCooldown", TextFormatting.GOLD, ConfigHandler.ENIGMATIC_ITEM_COOLDOWN.getValue() / 20F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticItemCooldown", TextFormatting.GOLD, spellstoneCooldown.getValue() / 20F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticItem3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticItem4");
@@ -85,11 +102,19 @@ public class EnigmaticItem extends ItemAdvancedCurio implements ISpellstone {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity entityLivingBase) {
-		if (entityLivingBase.isBurning())
-			entityLivingBase.extinguish();
+	public void curioTick(String identifier, int index, LivingEntity living) {
+		if (living.isBurning()) {
+			living.extinguish();
+		}
 
-		entityLivingBase.clearActivePotions();
+		List<EffectInstance> effects = new ArrayList<EffectInstance>(living.getActivePotionEffects());
+
+		for (EffectInstance effect : effects) {
+			if (!effect.getPotion().isBeneficial()) {
+				living.removePotionEffect(effect.getPotion());
+			}
+		}
+
 	}
 
 	public void handleEnigmaticFlight(final PlayerEntity player) {
@@ -119,7 +144,7 @@ public class EnigmaticItem extends ItemAdvancedCurio implements ISpellstone {
 			return;
 
 		this.launchWitherSkull(world, player, Item.random.nextDouble() <= 0.25);
-		SuperpositionHandler.setSpellstoneCooldown(player, ConfigHandler.ENIGMATIC_ITEM_COOLDOWN.getValue());
+		SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
 	}
 
 	@Override
@@ -134,8 +159,9 @@ public class EnigmaticItem extends ItemAdvancedCurio implements ISpellstone {
 		Vector3 look = new Vector3(player.getLookVec()).multiply(1, 0, 1);
 
 		double playerRot = Math.toRadians(player.rotationYaw + 90);
-		if (look.x == 0 && look.z == 0)
+		if (look.x == 0 && look.z == 0) {
 			look = new Vector3(Math.cos(playerRot), 0, Math.sin(playerRot));
+		}
 
 		look = look.normalize().multiply(-2);
 
@@ -149,8 +175,9 @@ public class EnigmaticItem extends ItemAdvancedCurio implements ISpellstone {
 		double rot = mod * Math.PI / 4D - Math.PI / 2D;
 
 		Vector3 axis1 = axis.multiply(div * 3.5D + 5D).rotate(rot, look);
-		if (axis1.y < 0)
+		if (axis1.y < 0) {
 			axis1 = axis1.multiply(1, -1, 1);
+		}
 
 		Vector3 end = pl.add(axis1);
 

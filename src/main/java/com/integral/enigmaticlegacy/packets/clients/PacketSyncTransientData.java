@@ -4,10 +4,6 @@ import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 

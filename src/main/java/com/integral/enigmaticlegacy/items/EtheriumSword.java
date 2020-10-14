@@ -5,15 +5,18 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.IMultiblockMiningTool;
 import com.integral.enigmaticlegacy.api.items.IPerhaps;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseTool;
 import com.integral.enigmaticlegacy.objects.CooldownMap;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -37,7 +40,19 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-public class EtheriumSword extends SwordItem implements IPerhaps, IMultiblockMiningTool {
+public class EtheriumSword extends SwordItem implements IMultiblockMiningTool {
+	public static Omniconfig.IntParameter cooldown;
+
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("EtheriumSword");
+
+		cooldown = builder
+				.comment("Cooldown of Etherium Broadsword ability. Measured in ticks.")
+				.getInt("Cooldown", 40);
+
+		builder.popPrefix();
+	}
 	public CooldownMap etheriumSwordCooldowns = new CooldownMap();
 
 	public EtheriumSword() {
@@ -53,7 +68,7 @@ public class EtheriumSword extends SwordItem implements IPerhaps, IMultiblockMin
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword4", TextFormatting.GOLD, ConfigHandler.ETHERIUM_SWORD_COOLDOWN.getValue() / 20F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword4", TextFormatting.GOLD, cooldown.getValue() / 20F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword5");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -63,11 +78,6 @@ public class EtheriumSword extends SwordItem implements IPerhaps, IMultiblockMin
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.abilityDisabled");
 		}
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.ETHERIUM_TOOLS_ENABLED.getValue();
 	}
 
 	@Override
@@ -89,7 +99,7 @@ public class EtheriumSword extends SwordItem implements IPerhaps, IMultiblockMin
 				this.knockBack(player, 1.0F, dir.x, dir.z);
 				world.playSound(null, player.getPosition(), SoundEvents.ENTITY_SKELETON_SHOOT, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
 
-				player.getCooldownTracker().setCooldown(this, ConfigHandler.ETHERIUM_SWORD_COOLDOWN.getValue());
+				player.getCooldownTracker().setCooldown(this, cooldown.getValue());
 
 				player.setActiveHand(hand);
 				return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));

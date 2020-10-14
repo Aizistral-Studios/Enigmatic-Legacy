@@ -1,9 +1,8 @@
 package com.integral.enigmaticlegacy.gui.containers;
 
-import java.util.Map;
-
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,9 +10,6 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.LoreFragment;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftResultInventory;
@@ -23,19 +19,10 @@ import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.api.distmarker.Dist;
-import org.apache.commons.lang3.StringUtils;
 
 public class LoreInscriberContainer extends Container {
 	protected final IInventory craftResultInv = new CraftResultInventory();

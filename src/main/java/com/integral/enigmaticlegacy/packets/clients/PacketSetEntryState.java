@@ -1,15 +1,10 @@
 package com.integral.enigmaticlegacy.packets.clients;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.helpers.PatchouliHelper;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.settings.ParticleStatus;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkEvent;
 

@@ -26,6 +26,34 @@
 		{
             "type": "text",
             "text": "book.enigmaticlegacy.entry.cursed_ring.page.4"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.5"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.6"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.7"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.8"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.9"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.10"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.11"
         }
     ]
 }

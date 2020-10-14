@@ -1,7 +1,7 @@
 package com.integral.enigmaticlegacy.api.items;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,7 +11,7 @@ import net.minecraft.util.SoundCategory;
 public interface IMultiblockMiningTool {
 
 	default boolean areaEffectsEnabled(PlayerEntity player, ItemStack stack) {
-		return this.areaEffectsAllowed(stack) && (!player.isCrouching() || ConfigHandler.DISABLE_AOE_SHIFT_SUPPRESSION.getValue());
+		return this.areaEffectsAllowed(stack) && (!player.isCrouching() || OmniconfigHandler.disableAOEShiftSuppression.getValue());
 	}
 
 	default boolean areaEffectsAllowed(ItemStack stack) {

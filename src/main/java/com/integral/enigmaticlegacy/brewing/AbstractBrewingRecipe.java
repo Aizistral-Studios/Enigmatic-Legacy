@@ -4,17 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.helpers.PotionHelper;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.potion.Potions;
-import net.minecraftforge.common.brewing.IBrewingRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.brewing.IBrewingRecipe;
 
 public abstract class AbstractBrewingRecipe implements IBrewingRecipe {
 

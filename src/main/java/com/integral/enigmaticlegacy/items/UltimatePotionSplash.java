@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.IAdvancedPotionItem;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
@@ -25,7 +24,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
@@ -45,11 +43,6 @@ public class UltimatePotionSplash extends ItemBase implements IAdvancedPotionIte
 	@Override
 	public String getTranslationKey(ItemStack stack) {
 		return this.getTranslationKey() + ".effect." + PotionHelper.getAdvancedPotion(stack).getId();
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return this.potionType == PotionType.COMMON ? ConfigHandler.COMMON_POTIONS_ENABLED.getValue() : ConfigHandler.ULTIMATE_POTIONS_ENABLED.getValueDefault();
 	}
 
 	@Override

@@ -8,18 +8,20 @@ import javax.annotation.Nullable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
@@ -39,17 +41,32 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class MiningCharm extends ItemBaseCurio {
+	public static Omniconfig.PerhapsParameter breakSpeedBonus;
+	public static Omniconfig.DoubleParameter reachDistanceBonus;
+	//public static EnigmaConfig.BooleanParameter bonusFortuneEnabled;
+
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("MiningCharm");
+
+		breakSpeedBonus = builder
+				.comment("Mining speed boost granted by Charm of Treasure Hunter. Defined as percentage.")
+				.max(1000)
+				.getPerhaps("BreakSpeed", 30);
+
+		reachDistanceBonus = builder
+				.comment("Additional block reach granted by Charm of Treasure Hunter.")
+				.max(16)
+				.getDouble("ReachDistance", 2.15);
+
+		builder.popPrefix();
+	}
 
 	public final int nightVisionDuration = 210;
 
 	public MiningCharm() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.RARE));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "mining_charm"));
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.MINING_CHARM_ENABLED.getValue();
 	}
 
 	@Override
@@ -66,7 +83,7 @@ public class MiningCharm extends ItemBaseCurio {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm1", TextFormatting.GOLD, ConfigHandler.MINING_CHARM_BREAK_BOOST.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm1", TextFormatting.GOLD, breakSpeedBonus.getValue().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm2", TextFormatting.GOLD, 1);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm3");
@@ -141,11 +158,7 @@ public class MiningCharm extends ItemBaseCurio {
 
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
-		if (ConfigHandler.MINING_CHARM_BONUS_LUCK.getValue()) {
-			//atts.put(Attributes.field_233828_k_, new AttributeModifier(UUID.fromString("03c3c89d-7037-4b42-880f-b146bcb64d2e"), "Luck bonus", 1, AttributeModifier.Operation.ADDITION));
-		}
-
-		atts.put(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(UUID.fromString("08c3c83d-7137-4b42-880f-b146bcb64d2e"), "Reach bonus", ConfigHandler.MINING_CHARM_REACH_BOOST.getValue(), AttributeModifier.Operation.ADDITION));
+		atts.put(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(UUID.fromString("08c3c83d-7137-4b42-880f-b146bcb64d2e"), "Reach bonus", reachDistanceBonus.getValue(), AttributeModifier.Operation.ADDITION));
 
 		return atts;
 	}

@@ -1,8 +1,3 @@
-/**
- * This software is provided under the terms of the Minecraft Forge Public
- * License v1.0.
- */
-
 package com.integral.omniconfig;
 
 import static com.integral.omniconfig.Configuration.COMMENT_SEPARATOR;
@@ -13,7 +8,6 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -321,6 +315,7 @@ public class ConfigCategory implements Map<String, Property>
 			else
 			{
 				char type = prop.getType().getID();
+				//System.out.println("Property: " + propName + ", value: " + prop.getString());
 				this.write(out, pad1, String.valueOf(type), ":", propName, "=", prop.getString());
 			}
 		}

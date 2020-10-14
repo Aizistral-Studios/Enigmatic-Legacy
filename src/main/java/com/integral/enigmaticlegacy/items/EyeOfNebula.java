@@ -1,12 +1,14 @@
 package com.integral.enigmaticlegacy.items;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
@@ -14,6 +16,8 @@ import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerSetlook;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
@@ -34,19 +38,53 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public class EyeOfNebula extends ItemAdvancedCurio implements ISpellstone {
+	public static Omniconfig.IntParameter spellstoneCooldown;
+	public static Omniconfig.PerhapsParameter dodgeProbability;
+	public static Omniconfig.DoubleParameter dodgeRange;
+	public static Omniconfig.DoubleParameter phaseRange;
+	public static Omniconfig.PerhapsParameter magicResistance;
+
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("EyeOfNebula");
+
+		spellstoneCooldown = builder
+				.comment("Active ability cooldown for Eye of the Nebula. Measured in ticks. 20 ticks equal to 1 second.")
+				.getInt("Cooldown", 60);
+
+		dodgeProbability = builder
+				.comment("Probability for Eye of the Nebula to teleport it's bearer from any attack without receiving any damage. Defined as percentage.")
+				.max(100)
+				.getPerhaps("DodgeChance", 15);
+
+		dodgeRange = builder
+				.comment("Range in which Eye of the Nebula searches for a position to teleport it's bearer to when dodging the attack.")
+				.min(1)
+				.max(128)
+				.getDouble("DodgeRange", 16);
+
+		phaseRange = builder
+				.comment("Range in which Eye of the Nebula can reach an entity when using it's active ability.")
+				.min(1)
+				.max(128)
+				.getDouble("PhaseRange", 32);
+
+		magicResistance = builder
+				.comment("Magic Damage resistance provided by Eye of the Nebula. Defined as percentage.")
+				.max(100)
+				.getPerhaps("MagicResistance", 65);
+
+		builder.popPrefix();
+	}
 
 	public EyeOfNebula() {
 		super(ItemAdvancedCurio.getDefaultProperties().rarity(Rarity.EPIC));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "eye_of_nebula"));
 
-		this.resistanceList.put(DamageSource.MAGIC.getDamageType(), () -> ConfigHandler.EYE_OF_NEBULA_MAGIC_RESISTANCE.getValue().asModifierInverted());
-		this.resistanceList.put(DamageSource.DRAGON_BREATH.getDamageType(), () -> ConfigHandler.EYE_OF_NEBULA_MAGIC_RESISTANCE.getValue().asModifierInverted());
-		this.resistanceList.put(DamageSource.WITHER.getDamageType(), () -> ConfigHandler.EYE_OF_NEBULA_MAGIC_RESISTANCE.getValue().asModifierInverted());
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.EYE_OF_NEBULA_ENABLED.getValue();
+		Supplier<Float> magicResistanceSupplier = () -> magicResistance.getValue().asModifierInverted();
+		this.resistanceList.put(DamageSource.MAGIC.getDamageType(), magicResistanceSupplier);
+		this.resistanceList.put(DamageSource.DRAGON_BREATH.getDamageType(), magicResistanceSupplier);
+		this.resistanceList.put(DamageSource.WITHER.getDamageType(), magicResistanceSupplier);
 	}
 
 	@Override
@@ -59,11 +97,11 @@ public class EyeOfNebula extends ItemAdvancedCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebulaCooldown", TextFormatting.GOLD, ((ConfigHandler.EYE_OF_NEBULA_COOLDOWN.getValue())) / 20.0F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebulaCooldown", TextFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula3");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula4", TextFormatting.GOLD, ConfigHandler.EYE_OF_NEBULA_MAGIC_RESISTANCE.getValue().asPercentage() + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula5", TextFormatting.GOLD, ConfigHandler.EYE_OF_NEBULA_DODGE_PROBABILITY.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula4", TextFormatting.GOLD, magicResistance.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula5", TextFormatting.GOLD, dodgeProbability.getValue().asPercentage() + "%");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -87,7 +125,7 @@ public class EyeOfNebula extends ItemAdvancedCurio implements ISpellstone {
 		if (SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
-		LivingEntity target = SuperpositionHandler.getObservedEntity(player, world, 3.0F, (int) ConfigHandler.EYE_OF_NEBULA_PHASE_RANGE.getValue());
+		LivingEntity target = SuperpositionHandler.getObservedEntity(player, world, 3.0F, (int) phaseRange.getValue());
 
 		if (target != null) {
 			Vector3 targetPos = Vector3.fromEntityCenter(target);
@@ -108,7 +146,7 @@ public class EyeOfNebula extends ItemAdvancedCurio implements ISpellstone {
 			world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 128, player.world.func_234923_W_())), new PacketRecallParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 24, false));
 
-			SuperpositionHandler.setSpellstoneCooldown(player, ConfigHandler.EYE_OF_NEBULA_COOLDOWN.getValue());
+			SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
 		}
 
 	}

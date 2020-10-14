@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
@@ -23,7 +22,6 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -47,11 +45,6 @@ public class HastePotion extends ItemBase {
 	}
 
 	@Override
-	public boolean isForMortals() {
-		return false;
-	}
-
-	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		SuperpositionHandler.addPotionTooltip(this.effectList, stack, list, 1.0F);
@@ -68,15 +61,15 @@ public class HastePotion extends ItemBase {
 			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
 		}
 
-		if (!worldIn.isRemote && player != null)
+		if (!worldIn.isRemote && player != null) {
 			for (EffectInstance instance : this.effectList) {
 				player.addPotionEffect(new EffectInstance(instance));
 			}
+		}
 
 		if (player == null || !player.abilities.isCreativeMode) {
-			if (stack.isEmpty()) {
+			if (stack.isEmpty())
 				return new ItemStack(Items.GLASS_BOTTLE);
-			}
 
 			if (player != null) {
 				player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));

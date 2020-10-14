@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
@@ -39,11 +38,6 @@ public class EnchantmentTransposer extends ItemBase {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.ENCHANTMENT_TRANSPOSER_ENABLED.getValue();
 	}
 
 }

@@ -4,11 +4,8 @@ import java.lang.reflect.Field;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
-import cpw.mods.modlauncher.api.INameMappingService;
 import net.minecraft.client.gui.screen.CreateWorldScreen;
 import net.minecraft.client.gui.screen.WorldOptionsScreen;
-import net.minecraft.client.renderer.RenderTypeLookup;
-import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.EnchantmentContainer;
 import net.minecraft.tileentity.BeaconTileEntity;

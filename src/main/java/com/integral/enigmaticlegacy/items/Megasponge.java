@@ -6,11 +6,13 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
-import com.integral.enigmaticlegacy.objects.CooldownMap;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -29,7 +31,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ITag.INamedTag;
-import net.minecraft.tags.Tag;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -44,17 +45,23 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public class Megasponge extends ItemBaseCurio {
+	public static Omniconfig.IntParameter radius;
 
-	public CooldownMap cooldownMap = new CooldownMap();
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("Megasponge");
+
+		radius = builder
+				.comment("Radius in which Exptrapolated Megaspong absorbs water. Default 4 equals to vanilla sponge")
+				.max(128)
+				.getInt("Radius", 4);
+
+		builder.popPrefix();
+	}
 
 	public Megasponge() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "mega_sponge"));
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.MEGASPONGE_ENABLED.getValue();
 	}
 
 	@Override
@@ -83,9 +90,9 @@ public class Megasponge extends ItemBaseCurio {
 
 		BlockPos pos = null;
 
-		if (!player.world.isAreaLoaded(i, k, i1, j, l, j1)) {
+		if (!player.world.isAreaLoaded(i, k, i1, j, l, j1))
 			return null;
-		} else {
+		else {
 			try {
 				net.minecraft.util.math.BlockPos.Mutable blockpos$pooledmutableblockpos = new BlockPos.Mutable();
 
@@ -114,9 +121,7 @@ public class Megasponge extends ItemBaseCurio {
 		if (living instanceof PlayerEntity & !living.world.isRemote) {
 			PlayerEntity player = (PlayerEntity) living;
 
-			this.cooldownMap.tick(living);
-
-			if (!this.cooldownMap.hasCooldown(player)) {
+			if (!player.getCooldownTracker().hasCooldown(this)) {
 				List<BlockPos> doomedWaterBlocks = new ArrayList<BlockPos>();
 				BlockPos initialPos = this.getCollidedWater(FluidTags.WATER, player);
 				BlockState initialState = initialPos != null ? player.world.getBlockState(initialPos) : null;
@@ -128,7 +133,7 @@ public class Megasponge extends ItemBaseCurio {
 						List<BlockPos> processedBlocks = new ArrayList<BlockPos>();
 						processedBlocks.add(initialPos);
 
-						for (int counter = 0; counter <= ConfigHandler.EXTRAPOLATED_MEGASPONGE_RADIUS.getValue(); counter++) {
+						for (int counter = 0; counter <= radius.getValue(); counter++) {
 							List<BlockPos> outputBlocks = new ArrayList<BlockPos>();
 
 							for (BlockPos checkedPos : processedBlocks) {
@@ -149,14 +154,15 @@ public class Megasponge extends ItemBaseCurio {
 
 						processedBlocks.clear();
 
-						for (BlockPos exterminatedBlock : doomedWaterBlocks)
+						for (BlockPos exterminatedBlock : doomedWaterBlocks) {
 							this.absorbWaterBlock(exterminatedBlock, player.world.getBlockState(exterminatedBlock), player.world);
+						}
 
 						doomedWaterBlocks.clear();
 
 						player.world.playSound(null, player.getPosition(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 64, player.world.func_234923_W_())), new PacketPortalParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 40, 1.0D, false));
-						this.cooldownMap.put(player, 20);
+						player.getCooldownTracker().setCooldown(this, 20);
 
 					}
 

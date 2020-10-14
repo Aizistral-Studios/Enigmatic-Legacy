@@ -1,28 +1,22 @@
 package com.integral.enigmaticlegacy;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Lists;
+import com.integral.enigmaticlegacy.api.generic.ConfigurableItem;
 import com.integral.enigmaticlegacy.api.items.IAdvancedPotionItem.PotionType;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
 import com.integral.enigmaticlegacy.blocks.BlockBigLamp;
 import com.integral.enigmaticlegacy.blocks.BlockMassiveLamp;
 import com.integral.enigmaticlegacy.brewing.SpecialBrewingRecipe;
 import com.integral.enigmaticlegacy.brewing.ValidationBrewingRecipe;
-import com.integral.enigmaticlegacy.client.models.DarkArmorModel;
 import com.integral.enigmaticlegacy.client.models.ModelRegistry;
-import com.integral.enigmaticlegacy.client.renderers.RenderTypes;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
-import com.integral.enigmaticlegacy.config.UltimaTestConfig;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.crafting.EnigmaticRecipeSerializers;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 import com.integral.enigmaticlegacy.enchantments.NemesisCurseEnchantment;
@@ -30,9 +24,9 @@ import com.integral.enigmaticlegacy.enchantments.SharpshooterEnchantment;
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
-import com.integral.enigmaticlegacy.gui.containers.PortableCrafterContainer;
 import com.integral.enigmaticlegacy.gui.containers.LoreInscriberContainer;
 import com.integral.enigmaticlegacy.gui.containers.LoreInscriberScreen;
+import com.integral.enigmaticlegacy.gui.containers.PortableCrafterContainer;
 import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticKeybindHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticUpdateHandler;
@@ -44,7 +38,6 @@ import com.integral.enigmaticlegacy.items.AngelBlessing;
 import com.integral.enigmaticlegacy.items.AstralBreaker;
 import com.integral.enigmaticlegacy.items.AstralDust;
 import com.integral.enigmaticlegacy.items.BerserkEmblem;
-import com.integral.enigmaticlegacy.items.PlaceholderItem;
 import com.integral.enigmaticlegacy.items.CursedRing;
 import com.integral.enigmaticlegacy.items.CursedScroll;
 import com.integral.enigmaticlegacy.items.DarkArmor;
@@ -84,6 +77,7 @@ import com.integral.enigmaticlegacy.items.MiningCharm;
 import com.integral.enigmaticlegacy.items.MonsterCharm;
 import com.integral.enigmaticlegacy.items.OblivionStone;
 import com.integral.enigmaticlegacy.items.OceanStone;
+import com.integral.enigmaticlegacy.items.PlaceholderItem;
 import com.integral.enigmaticlegacy.items.RecallPotion;
 import com.integral.enigmaticlegacy.items.RelicOfTesting;
 import com.integral.enigmaticlegacy.items.RevelationTome;
@@ -128,6 +122,7 @@ import com.integral.enigmaticlegacy.triggers.CursedRingEquippedTrigger;
 import com.integral.enigmaticlegacy.triggers.RevelationGainTrigger;
 import com.integral.enigmaticlegacy.triggers.RevelationTomeBurntTrigger;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
+import com.integral.omniconfig.packets.PacketSyncOptions;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
@@ -155,6 +150,7 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
@@ -168,21 +164,16 @@ import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
-import vazkii.patchouli.api.PatchouliAPI;
-import net.minecraft.util.IWorldPosCallable;
 
 @Mod("enigmaticlegacy")
 public class EnigmaticLegacy {
@@ -192,7 +183,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.5.3";
+	public static final String VERSION = "2.6.0";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -219,100 +210,99 @@ public class EnigmaticLegacy {
 	public static BlockMassiveLamp massiveRedstonelamp;
 	public static BlockBigLamp bigRedstonelamp;
 
-	public static EnigmaticItem enigmaticItem;
-	public static XPScroll xpScroll;
-	public static EnigmaticAmulet enigmaticAmulet;
-	public static MagnetRing magnetRing;
-	public static ExtradimensionalEye extradimensionalEye;
-	public static RelicOfTesting relicOfTesting;
-	public static RecallPotion recallPotion;
-	public static ForbiddenAxe forbiddenAxe;
-	public static EscapeScroll escapeScroll;
-	public static HeavenScroll heavenScroll;
-	public static SuperMagnetRing superMagnetRing;
-	public static GolemHeart golemHeart;
-	public static Megasponge megaSponge;
-	public static UnholyGrail unholyGrail;
-	public static EyeOfNebula eyeOfNebula;
-	public static MagmaHeart magmaHeart;
-	public static VoidPearl voidPearl;
-	public static OceanStone oceanStone;
-	public static AngelBlessing angelBlessing;
-	public static MonsterCharm monsterCharm;
-	public static MiningCharm miningCharm;
-	public static EnderRing enderRing;
-	public static MendingMixture mendingMixture;
-	public static LootGenerator lootGenerator;
-	public static ThiccScroll thiccScroll;
-	public static IronRing ironRing;
-	public static HastePotion hastePotionDefault;
-	public static HastePotion hastePotionExtended;
-	public static HastePotion hastePotionEmpowered;
-	public static HastePotion hastePotionExtendedEmpowered;
-	public static EtheriumOre etheriumOre;
-	public static EtheriumIngot etheriumIngot;
-	public static UltimatePotionBase ultimatePotionBase;
-	public static UltimatePotionSplash ultimatePotionSplash;
-	public static UltimatePotionLingering ultimatePotionLingering;
-	public static UltimatePotionBase commonPotionBase;
-	public static UltimatePotionSplash commonPotionSplash;
-	public static UltimatePotionLingering commonPotionLingering;
+	@ConfigurableItem("") public static EnigmaticItem enigmaticItem;
+	@ConfigurableItem("Scroll of Ageless Wisdom") public static XPScroll xpScroll;
+	@ConfigurableItem("Enigmatic Amulet") public static EnigmaticAmulet enigmaticAmulet;
+	@ConfigurableItem("Magnet Ring") public static MagnetRing magnetRing;
+	@ConfigurableItem("Extradimensional Eye") public static ExtradimensionalEye extradimensionalEye;
+	@ConfigurableItem("") public static RelicOfTesting relicOfTesting;
+	@ConfigurableItem("Potion of Recall") public static RecallPotion recallPotion;
+	@ConfigurableItem("Axe of Executioner") public static ForbiddenAxe forbiddenAxe;
+	@ConfigurableItem("Scroll of Postmortal Recall") public static EscapeScroll escapeScroll;
+	@ConfigurableItem("Gift of the Heaven") public static HeavenScroll heavenScroll;
+	@ConfigurableItem("Ring of Dislocation") public static SuperMagnetRing superMagnetRing;
+	@ConfigurableItem("Heart of the Golem") public static GolemHeart golemHeart;
+	@ConfigurableItem("Megasponge") public static Megasponge megaSponge;
+	@ConfigurableItem("Unholy Grail") public static UnholyGrail unholyGrail;
+	@ConfigurableItem("Eye of Nebula") public static EyeOfNebula eyeOfNebula;
+	@ConfigurableItem("Blazing Core") public static MagmaHeart magmaHeart;
+	@ConfigurableItem("Pearl of the Void") public static VoidPearl voidPearl;
+	@ConfigurableItem("Will of the Ocean") public static OceanStone oceanStone;
+	@ConfigurableItem("Angel's Blessing") public static AngelBlessing angelBlessing;
+	@ConfigurableItem("Emblem of Monster Slayer") public static MonsterCharm monsterCharm;
+	@ConfigurableItem("Charm of Treasure Hunter") public static MiningCharm miningCharm;
+	@ConfigurableItem("Ring of Ender") public static EnderRing enderRing;
+	@ConfigurableItem("Mending Mixture") public static MendingMixture mendingMixture;
+	@ConfigurableItem("") public static LootGenerator lootGenerator;
+	@ConfigurableItem("Blank Scroll") public static ThiccScroll thiccScroll;
+	@ConfigurableItem("Iron Ring") public static IronRing ironRing;
+	@ConfigurableItem("") public static HastePotion hastePotionDefault;
+	@ConfigurableItem("") public static HastePotion hastePotionExtended;
+	@ConfigurableItem("") public static HastePotion hastePotionEmpowered;
+	@ConfigurableItem("") public static HastePotion hastePotionExtendedEmpowered;
+	@ConfigurableItem("Etherium Ore") public static EtheriumOre etheriumOre;
+	@ConfigurableItem("Etherium Ingot") public static EtheriumIngot etheriumIngot;
+	@ConfigurableItem("Ultimate Potions") public static UltimatePotionBase ultimatePotionBase;
+	@ConfigurableItem("Ultimate Potions") public static UltimatePotionSplash ultimatePotionSplash;
+	@ConfigurableItem("Ultimate Potions") public static UltimatePotionLingering ultimatePotionLingering;
+	@ConfigurableItem("Common Potions") public static UltimatePotionBase commonPotionBase;
+	@ConfigurableItem("Common Potions") public static UltimatePotionSplash commonPotionSplash;
+	@ConfigurableItem("Common Potions") public static UltimatePotionLingering commonPotionLingering;
 
-	public static EtheriumArmor etheriumHelmet;
-	public static EtheriumArmor etheriumChestplate;
-	public static EtheriumArmor etheriumLeggings;
-	public static EtheriumArmor etheriumBoots;
+	@ConfigurableItem("Etherium Armor") public static EtheriumArmor etheriumHelmet;
+	@ConfigurableItem("Etherium Armor") public static EtheriumArmor etheriumChestplate;
+	@ConfigurableItem("Etherium Armor") public static EtheriumArmor etheriumLeggings;
+	@ConfigurableItem("Etherium Armor") public static EtheriumArmor etheriumBoots;
 
-	public static EtheriumPickaxe etheriumPickaxe;
-	public static EtheriumAxe etheriumAxe;
-	public static EtheriumShovel etheriumShovel;
-	public static EtheriumSword etheriumSword;
-	public static EtheriumScythe etheriumScythe;
+	@ConfigurableItem("Etherium Pickaxe") public static EtheriumPickaxe etheriumPickaxe;
+	@ConfigurableItem("Etherium Warxe") public static EtheriumAxe etheriumAxe;
+	@ConfigurableItem("Etherium Shovel") public static EtheriumShovel etheriumShovel;
+	@ConfigurableItem("Etherium Broadsword") public static EtheriumSword etheriumSword;
+	@ConfigurableItem("Etherium Scythe") public static EtheriumScythe etheriumScythe;
 
-	public static AstralDust astralDust;
-	public static LoreInscriber loreInscriber;
-	public static LoreFragment loreFragment;
-	public static EnderRod enderRod;
+	@ConfigurableItem("Astral Dust") public static AstralDust astralDust;
+	@ConfigurableItem("The Architect's Inkwell") public static LoreInscriber loreInscriber;
+	@ConfigurableItem("Lore Fragment") public static LoreFragment loreFragment;
+	@ConfigurableItem("Ender Rod") public static EnderRod enderRod;
 
-	public static AstralBreaker astralBreaker;
-	public static OblivionStone oblivionStone;
-	public static EnchantmentTransposer enchantmentTransposer;
+	@ConfigurableItem("Astral Breaker") public static AstralBreaker astralBreaker;
+	@ConfigurableItem("Keystone of The Oblivion") public static OblivionStone oblivionStone;
+	@ConfigurableItem("Tome of Hungering Knowledge") public static EnchantmentTransposer enchantmentTransposer;
 
-	public static GemOfBinding gemOfBinding;
-	public static WormholePotion wormholePotion;
-	public static FabulousScroll fabulousScroll;
-	public static StorageCrystal storageCrystal;
-	public static SoulCrystal soulCrystal;
+	@ConfigurableItem("Gem of Binding") public static GemOfBinding gemOfBinding;
+	@ConfigurableItem("Wormhole Potion") public static WormholePotion wormholePotion;
+	@ConfigurableItem("Grace of the Creator") public static FabulousScroll fabulousScroll;
+	@ConfigurableItem("") public static StorageCrystal storageCrystal;
+	@ConfigurableItem("") public static SoulCrystal soulCrystal;
 
-	public static TheAcknowledgment theAcknowledgment;
-	public static RevelationTome overworldRevelationTome;
-	public static RevelationTome netherRevelationTome;
-	public static RevelationTome endRevelationTome;
+	@ConfigurableItem("The Acknowledgment") public static TheAcknowledgment theAcknowledgment;
+	@ConfigurableItem("Tattered Tome") public static RevelationTome overworldRevelationTome;
+	@ConfigurableItem("Withered Tome") public static RevelationTome netherRevelationTome;
+	@ConfigurableItem("Corrupted Tome") public static RevelationTome endRevelationTome;
 
-	public static DarkArmor darkHelmet;
-	public static DarkArmor darkChestplate;
-	public static DarkArmor darkLeggings;
-	public static DarkArmor darkBoots;
+	@ConfigurableItem("Dark Armor") public static DarkArmor darkHelmet;
+	@ConfigurableItem("Dark Armor") public static DarkArmor darkChestplate;
+	@ConfigurableItem("Dark Armor") public static DarkArmor darkLeggings;
+	@ConfigurableItem("Dark Armor") public static DarkArmor darkBoots;
 
-	public static CursedRing cursedRing;
-	public static DarkMirror darkMirror;
+	@ConfigurableItem("Ring of the Seven Curses") public static CursedRing cursedRing;
+	@ConfigurableItem("Twisted Mirror") public static DarkMirror darkMirror;
 
-	public static PlaceholderItem cryingIngot;
-	public static PlaceholderItem cryingHelmet;
-	public static PlaceholderItem cryingChestplate;
-	public static PlaceholderItem cryingLeggings;
-	public static PlaceholderItem cryingBoots;
-	public static PlaceholderItem cryingPickaxe;
-	public static PlaceholderItem cryingAxe;
-	public static PlaceholderItem cryingSword;
-	public static PlaceholderItem cryingShovel;
-	public static PlaceholderItem cryingHoe;
+	@ConfigurableItem("Crying Netherite Ingot") public static PlaceholderItem cryingIngot;
+	@ConfigurableItem("Crying Netherite Armor") public static PlaceholderItem cryingHelmet;
+	@ConfigurableItem("Crying Netherite Armor") public static PlaceholderItem cryingChestplate;
+	@ConfigurableItem("Crying Netherite Armor") public static PlaceholderItem cryingLeggings;
+	@ConfigurableItem("Crying Netherite Armor") public static PlaceholderItem cryingBoots;
+	@ConfigurableItem("Crying Netherite Pickaxe") public static PlaceholderItem cryingPickaxe;
+	@ConfigurableItem("Crying Netherite Axe") public static PlaceholderItem cryingAxe;
+	@ConfigurableItem("Crying Netherite Sword") public static PlaceholderItem cryingSword;
+	@ConfigurableItem("Crying Netherite Shovel") public static PlaceholderItem cryingShovel;
+	@ConfigurableItem("Crying Netherite Hoe") public static PlaceholderItem cryingHoe;
 
-	public static CursedScroll cursedScroll;
-	public static BerserkEmblem berserkEmblem;
-
-	public static EarthHeart earthHeart;
-	public static TwistedCore twistedCore;
+	@ConfigurableItem("Scroll of a Thousand Curses") public static CursedScroll cursedScroll;
+	@ConfigurableItem("Emblem of Bloodstained Valor") public static BerserkEmblem berserkEmblem;
+	@ConfigurableItem("Heart of the Earth") public static EarthHeart earthHeart;
+	@ConfigurableItem("Twisted Heart") public static TwistedCore twistedCore;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -336,7 +326,6 @@ public class EnigmaticLegacy {
 	public static AdvancedPotion ULTIMATE_HASTE;
 
 	public static AdvancedPotion EMPTY;
-
 	public static AdvancedPotion testingPotion;
 
 	public static SharpshooterEnchantment sharpshooterEnchantment;
@@ -360,16 +349,11 @@ public class EnigmaticLegacy {
 	@SuppressWarnings("deprecation")
 	public EnigmaticLegacy() {
 
-		// TODO Lore Fragment copying recipe
-
 		enigmaticLogger.info("Constructing mod instance...");
 
 		enigmaticLegacy = this;
 
-
-		//UltimaTestConfig ultimateTestConfig = new UltimaTestConfig();
-		//ultimateTestConfig.preInit();
-
+		OmniconfigHandler.initialize();
 
 		enigmaticHandler = new EnigmaticEventHandler();
 		keybindHandler = new EnigmaticKeybindHandler();
@@ -506,9 +490,6 @@ public class EnigmaticLegacy {
 		MinecraftForge.EVENT_BUS.register(keybindHandler);
 		MinecraftForge.EVENT_BUS.register(new EnigmaticUpdateHandler());
 
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ConfigHandler.COMMON, "enigmatic-legacy-common.toml");
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT, "enigmatic-legacy-client.toml");
-
 		enigmaticLogger.info("Mod instance constructed successfully.");
 	}
 
@@ -516,35 +497,20 @@ public class EnigmaticLegacy {
 
 		enigmaticLogger.info("Initializing load completion phase...");
 
-		enigmaticLogger.info("Checking config version...");
-
-		if (!ConfigHandler.CONFIG_VERSION.get().equals(ConfigHandler.CURRENT_VERSION)) {
-			enigmaticLogger.info("Config version seems to be outdated. Expected version: " + ConfigHandler.CURRENT_VERSION + ", presented version: " + ConfigHandler.CONFIG_VERSION.get());
-			enigmaticLogger.info("Full reset of config file will now be executed. Any user-made changes are, unfortunately, erased along.");
-			ConfigHandler.resetConfig();
-
-			ConfigHandler.CONFIG_VERSION.set(ConfigHandler.CURRENT_VERSION);
-			ConfigHandler.CONFIG_VERSION.save();
-
-			enigmaticLogger.info("Config file reset was successfully executed.");
-		}
-
 		enigmaticLogger.info("Registering brewing recipes...");
 
-		if (ConfigHandler.RECALL_POTION_ENABLED.getValue()) {
+		if (OmniconfigHandler.isItemEnabled(recallPotion)) {
 			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.AWKWARD)), Ingredient.fromItems(Items.ENDER_EYE), new ItemStack(recallPotion), new ResourceLocation(MODID, "recall_potion")));
 		}
 
-		if (ConfigHandler.COMMON_POTIONS_ENABLED.getValue()) {
+		if (OmniconfigHandler.isItemEnabled(commonPotionBase)) {
 			PotionHelper.registerCommonPotions();
 		}
 
-		if (ConfigHandler.ULTIMATE_POTIONS_ENABLED.getValue()) {
-
+		if (OmniconfigHandler.isItemEnabled(ultimatePotionBase)) {
 			PotionHelper.registerBasicUltimatePotions();
 			PotionHelper.registerSplashUltimatePotions();
 			PotionHelper.registerLingeringUltimatePotions();
-
 		}
 
 		BrewingRecipeRegistry.addRecipe(new ValidationBrewingRecipe(Ingredient.fromItems(hastePotionExtendedEmpowered, recallPotion, ultimatePotionLingering, commonPotionLingering), null));
@@ -590,6 +556,7 @@ public class EnigmaticLegacy {
 		packetInstance.registerMessage(17, PacketForceArrowRotations.class, PacketForceArrowRotations::encode, PacketForceArrowRotations::decode, PacketForceArrowRotations::handle);
 		packetInstance.registerMessage(18, PacketInkwellField.class, PacketInkwellField::encode, PacketInkwellField::decode, PacketInkwellField::handle);
 		packetInstance.registerMessage(19, PacketSyncTransientData.class, PacketSyncTransientData::encode, PacketSyncTransientData::decode, PacketSyncTransientData::handle);
+		packetInstance.registerMessage(20, PacketSyncOptions.class, PacketSyncOptions::encode, PacketSyncOptions::decode, PacketSyncOptions::handle);
 
 		enigmaticLogger.info("Registering triggers...");
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);

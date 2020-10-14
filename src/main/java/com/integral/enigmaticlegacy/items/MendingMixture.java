@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
@@ -25,11 +24,6 @@ public class MendingMixture extends ItemBase {
 	public MendingMixture() {
 		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).containerItem(Items.GLASS_BOTTLE));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "mending_mixture"));
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.MENDING_MIXTURE_ENABLED.getValue();
 	}
 
 	@Override

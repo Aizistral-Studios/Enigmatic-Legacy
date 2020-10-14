@@ -1,7 +1,6 @@
 package com.integral.enigmaticlegacy.brewing;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
 
 /**

@@ -8,11 +8,14 @@ import javax.annotation.Nullable;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
@@ -35,11 +38,40 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.ServerWorldInfo;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
+	public static Omniconfig.IntParameter spellstoneCooldown;
+	public static Omniconfig.PerhapsParameter swimminSpeedBoost;
+	public static Omniconfig.PerhapsParameter underwaterCreaturesResistance;
+	public static Omniconfig.DoubleParameter xpCostModifier;
+
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("OceanStone");
+
+		spellstoneCooldown = builder
+				.comment("Active ability cooldown for Will of the Ocean. Measured in ticks. 20 ticks equal to 1 second.")
+				.getInt("Cooldown", 600);
+
+		swimminSpeedBoost = builder
+				.comment("Swimming speed boost provided by Will of the Ocean. Defined as percentage.")
+				.max(1000)
+				.getPerhaps("SwimBoost", 200);
+
+		underwaterCreaturesResistance = builder
+				.comment("Damage resistance against underwater creatures provided by Will of the Ocean. Defined as percentage.")
+				.max(100)
+				.getPerhaps("UnderwaterCreaturesResistance", 40);
+
+		xpCostModifier = builder
+				.comment("Multiplier for experience consumption by active ability of Will of the Ocean.")
+				.max(1000)
+				.getDouble("XPCostModifier", 1.0);
+
+		builder.popPrefix();
+	}
 
 	public final int xpCostBase = 150;
 	public final int nightVisionDuration = 210;
@@ -49,11 +81,6 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ocean_stone"));
 
 		this.immunityList.add(DamageSource.DROWN.damageType);
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.OCEAN_STONE_ENABLED.getValue();
 	}
 
 	@Override
@@ -67,10 +94,10 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone2");
 			//ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStoneCooldown", TextFormatting.GOLD, ((ConfigHandler.OCEAN_STONE_COOLDOWN.getValue())) / 20.0F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStoneCooldown", TextFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone4");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone5", TextFormatting.GOLD, ConfigHandler.OCEAN_STONE_UNDERWATER_CREATURES_RESISTANCE.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone5", TextFormatting.GOLD, underwaterCreaturesResistance.getValue().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone6");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone7");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone8");
@@ -105,7 +132,7 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 				 * ((xpCostBase+(Math.random()*xpCostBase))*ConfigHandler.
 				 * OCEAN_STONE_XP_COST_MODIFIER.getValue())); paybackReceived = true; } else
 				 */ if (player.experienceTotal >= this.xpCostBase * 2) {
-					 player.giveExperiencePoints((int) -((this.xpCostBase + (Math.random() * this.xpCostBase)) * ConfigHandler.OCEAN_STONE_XP_COST_MODIFIER.getValue()));
+					 player.giveExperiencePoints((int) -((this.xpCostBase + (Math.random() * this.xpCostBase)) * xpCostModifier.getValue()));
 					 paybackReceived = true;
 				 }
 
@@ -128,7 +155,7 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 
 					 world.playSound(null, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.NEUTRAL, 2.0F, (float) (0.7F + (Math.random() * 0.3D)));
 
-					 SuperpositionHandler.setSpellstoneCooldown(player, ConfigHandler.OCEAN_STONE_COOLDOWN.getValue());
+					 SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
 				 }
 
 			}
@@ -162,7 +189,7 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier) {
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
-		atts.put(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get(), new AttributeModifier(UUID.fromString("13faf191-bf38-4654-b369-cc1f4f1143bf"), "Swim speed bonus", ConfigHandler.OCEAN_STONE_SWIMMING_SPEED_BOOST.getValue().asMultiplier(false), AttributeModifier.Operation.MULTIPLY_BASE));
+		atts.put(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get(), new AttributeModifier(UUID.fromString("13faf191-bf38-4654-b369-cc1f4f1143bf"), "Swim speed bonus", swimminSpeedBoost.getValue().asMultiplier(false), AttributeModifier.Operation.MULTIPLY_BASE));
 
 		return atts;
 	}

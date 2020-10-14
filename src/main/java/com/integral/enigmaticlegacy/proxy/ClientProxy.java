@@ -7,27 +7,22 @@ import java.util.UUID;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.client.renderers.ShieldAuraLayer;
-import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.objects.RevelationTomeToast;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.toasts.ToastGui;
 import net.minecraft.client.particle.ItemPickupParticle;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class ClientProxy extends CommonProxy {
 

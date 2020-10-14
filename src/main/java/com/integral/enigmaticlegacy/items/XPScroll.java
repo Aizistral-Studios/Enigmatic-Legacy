@@ -5,12 +5,15 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
@@ -34,6 +37,21 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class XPScroll extends ItemBaseCurio {
+	public static Omniconfig.DoubleParameter xpCollectionRange;
+
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("XPScroll");
+
+		xpCollectionRange = builder
+				.comment("Range in which Scroll of Ageless Wisdom collects experience orbs when active.")
+				.min(1)
+				.max(128)
+				.getDouble("CollectionRange", 16.0);
+
+		builder.popPrefix();
+	}
+
 	public final int xpPortion = 5;
 
 	public XPScroll() {
@@ -42,21 +60,17 @@ public class XPScroll extends ItemBaseCurio {
 	}
 
 	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.XP_SCROLL_ENABLED.getValue();
-	}
-
-	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		TranslationTextComponent cMode;
-		if (!ItemNBTHelper.getBoolean(stack, "IsActive", false))
+		if (!ItemNBTHelper.getBoolean(stack, "IsActive", false)) {
 			cMode = new TranslationTextComponent("tooltip.enigmaticlegacy.xpTomeDeactivated");
-		else if (ItemNBTHelper.getBoolean(stack, "AbsorptionMode", true))
+		} else if (ItemNBTHelper.getBoolean(stack, "AbsorptionMode", true)) {
 			cMode = new TranslationTextComponent("tooltip.enigmaticlegacy.xpTomeAbsorption");
-		else
+		} else {
 			cMode = new TranslationTextComponent("tooltip.enigmaticlegacy.xpTomeExtraction");
+		}
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -73,7 +87,7 @@ public class XPScroll extends ItemBaseCurio {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome9");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome10");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome11", TextFormatting.GOLD, (int) ConfigHandler.XP_SCROLL_COLLECTION_RANGE.getValue());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome11", TextFormatting.GOLD, (int) xpCollectionRange.getValue());
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -123,8 +137,9 @@ public class XPScroll extends ItemBaseCurio {
 			}
 		}
 
-		if (swing)
+		if (swing) {
 			player.swingArm(hand);
+		}
 
 	}
 
@@ -170,10 +185,11 @@ public class XPScroll extends ItemBaseCurio {
 
 		}
 
-		List<ExperienceOrbEntity> orbs = world.getEntitiesWithinAABB(ExperienceOrbEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, ConfigHandler.XP_SCROLL_COLLECTION_RANGE.getValue()));
+		List<ExperienceOrbEntity> orbs = world.getEntitiesWithinAABB(ExperienceOrbEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, xpCollectionRange.getValue()));
 		for (ExperienceOrbEntity processed : orbs) {
-			if (!processed.isAlive())
+			if (!processed.isAlive()) {
 				continue;
+			}
 
 			player.xpCooldown = 0;
 			processed.onCollideWithPlayer(player);

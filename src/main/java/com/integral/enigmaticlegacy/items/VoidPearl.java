@@ -6,13 +6,14 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
-import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
 import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
-import com.integral.enigmaticlegacy.mixin.AccessorFoodStats;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
@@ -24,7 +25,6 @@ import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.FoodStats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -36,6 +36,54 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
+	public static Omniconfig.IntParameter spellstoneCooldown;
+	public static Omniconfig.DoubleParameter baseDarknessDamage;
+	public static Omniconfig.DoubleParameter regenerationDemodifier;
+	public static Omniconfig.DoubleParameter shadowRange;
+	public static Omniconfig.PerhapsParameter undeadProbability;
+	public static Omniconfig.IntParameter witheringTime;
+	public static Omniconfig.IntParameter witheringLevel;
+
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("VoidPearl");
+
+		spellstoneCooldown = builder
+				.comment("Active ability cooldown for Pearl of the Void. Measured in ticks. 20 ticks equal to 1 second.")
+				.getInt("Cooldown", 0);
+
+		baseDarknessDamage = builder
+				.comment("Base damage dealt by Darkness every half a second, when it devours a creature in proximity of bearer of the pearl.")
+				.max(1000)
+				.getDouble("BaseDarknessDamage", 4.0);
+
+		regenerationDemodifier = builder
+				.comment("Modifier for slowing down player's regeneration when bearing the pearl. This includes natural regeneration, as well as artificial healing effects that work over time. The greater it is, the slower player will regenerate.")
+				.max(1000)
+				.getDouble("RegenerationModifier", 1.0);
+
+		shadowRange = builder
+				.comment("Range in which Pearl of the Void will force darkness to devour living creatures.")
+				.max(128)
+				.getDouble("ShadowRange", 16.0);
+
+		undeadProbability = builder
+				.comment("Chance for Pearl of the Void to prevent it's bearer death from receiving lethal amout of damage. Defined as percentage.")
+				.max(100)
+				.getPerhaps("UndeadChance", 35);
+
+		witheringTime = builder
+				.comment("Amout of ticks for which bearer of the pearl will apply Withering effect to entities they attack. 20 ticks equals to 1 second.")
+				.getInt("WitheringTime", 100);
+
+		witheringLevel = builder
+				.comment("Level of Withering that bearer of the pearl will apply to entitities they attack.")
+				.max(3)
+				.getInt("WitheringLevel", 2);
+
+		builder.popPrefix();
+	}
+
 	public List<String> healList = new ArrayList<String>();
 	public DamageSource theDarkness;
 
@@ -57,11 +105,6 @@ public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
 	}
 
 	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.VOID_PEARL_ENABLED.getValue();
-	}
-
-	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
@@ -71,10 +114,10 @@ public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearlCooldown", TextFormatting.GOLD, ((ConfigHandler.VOID_PEARL_COOLDOWN.getValue())) / 20.0F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearlCooldown", TextFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl3");
-			// These lines describe hunger negation trait that was removed since Release 2.5.0
+			// These lines describe hunger negation trait that was removed since release 2.5.0
 			//ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl4");
 			//ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl5");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl6");
@@ -83,7 +126,7 @@ public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl9");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl10");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl11");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl12", TextFormatting.GOLD, ConfigHandler.VOID_PEARL_UNDEAD_PROBABILITY.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl12", TextFormatting.GOLD, undeadProbability.getValue().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl13");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -131,7 +174,7 @@ public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
 			player.clearActivePotions();
 
 			if (player.ticksExisted % 10 == 0) {
-				List<LivingEntity> entities = living.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(player.getPosX() - ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.getPosY() - ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.getPosZ() - ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.getPosX() + ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.getPosY() + ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue(), player.getPosZ() + ConfigHandler.VOID_PEARL_SHADOW_RANGE.getValue()));
+				List<LivingEntity> entities = living.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(player.getPosX() - shadowRange.getValue(), player.getPosY() - shadowRange.getValue(), player.getPosZ() - shadowRange.getValue(), player.getPosX() + shadowRange.getValue(), player.getPosY() + shadowRange.getValue(), player.getPosZ() + shadowRange.getValue()));
 
 				if (entities.contains(player)) {
 					entities.remove(player);
@@ -149,7 +192,7 @@ public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
 						}
 
 						//if (player.ticksExisted % 20 == 0) {
-						victim.attackEntityFrom(this.theDarkness, (float) ConfigHandler.VOID_PEARL_BASE_DARKNESS_DAMAGE.getValue());
+						victim.attackEntityFrom(this.theDarkness, (float) baseDarknessDamage.getValue());
 						living.world.playSound(null, victim.getPosition(), SoundEvents.ENTITY_PHANTOM_BITE, SoundCategory.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
 						//}
 

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
@@ -22,7 +21,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -34,11 +32,6 @@ public class ExtradimensionalEye extends ItemBase {
 	public ExtradimensionalEye() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON).maxStackSize(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "extradimensional_eye"));
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.EXTRADIMENSIONAL_EYE_ENABLED.getValue();
 	}
 
 	@Override
@@ -62,22 +55,24 @@ public class ExtradimensionalEye extends ItemBase {
 			String boundDimensionName = null;
 			String dimensionID = ItemNBTHelper.getString(stack, "BoundDimension", "minecraft:overworld");
 
-			if (dimensionID.equals("minecraft:overworld"))
+			if (dimensionID.equals("minecraft:overworld")) {
 				boundDimensionName = "tooltip.enigmaticlegacy.overworld";
-			else if (dimensionID.equals("minecraft:the_nether"))
+			} else if (dimensionID.equals("minecraft:the_nether")) {
 				boundDimensionName = "tooltip.enigmaticlegacy.nether";
-			else if (dimensionID.equals("minecraft:the_end"))
+			} else if (dimensionID.equals("minecraft:the_end")) {
 				boundDimensionName = "tooltip.enigmaticlegacy.end";
+			}
 
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEyeLocation");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEyeX", TextFormatting.GOLD, ItemNBTHelper.getInt(stack, "BoundX", 0));
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEyeY", TextFormatting.GOLD, ItemNBTHelper.getInt(stack, "BoundY", 0));
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEyeZ", TextFormatting.GOLD, ItemNBTHelper.getInt(stack, "BoundZ", 0));
-			if (boundDimensionName != null)
+			if (boundDimensionName != null) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEyeDimension", null, new TranslationTextComponent(boundDimensionName));
-			else
+			} else {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEyeDimension", TextFormatting.GOLD, dimensionID);
+			}
 		}
 	}
 

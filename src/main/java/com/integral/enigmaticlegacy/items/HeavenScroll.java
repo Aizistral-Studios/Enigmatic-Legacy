@@ -1,17 +1,18 @@
 package com.integral.enigmaticlegacy.items;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
-import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -19,12 +20,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
-import net.minecraft.item.Item.Properties;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.tileentity.BeaconTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -32,6 +29,18 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class HeavenScroll extends ItemBaseCurio {
+	public static Omniconfig.DoubleParameter xpCostModifier;
+
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("HeavenScroll");
+
+		xpCostModifier = builder
+				.comment("Multiplier for experience consumption by Gift of the Heaven.")
+				.getDouble("XPCostModifier", 1.0);
+
+		builder.popPrefix();
+	}
 
 	public HashMap<PlayerEntity, Integer> flyMap = new HashMap<PlayerEntity, Integer>();
 	public final double baseXpConsumptionProbability = 0.025D/2D;
@@ -43,11 +52,6 @@ public class HeavenScroll extends ItemBaseCurio {
 
 	public HeavenScroll(Properties properties) {
 		super(properties);
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.HEAVEN_SCROLL_ENABLED.getValue();
 	}
 
 	@Override
@@ -74,8 +78,9 @@ public class HeavenScroll extends ItemBaseCurio {
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
 
-			if (Math.random() <= (this.baseXpConsumptionProbability * ConfigHandler.HEAVEN_SCROLL_XP_COST_MODIFIER.getValue()) & player.abilities.isFlying)
+			if (Math.random() <= (this.baseXpConsumptionProbability * xpCostModifier.getValue()) && player.abilities.isFlying) {
 				player.giveExperiencePoints(-1);
+			}
 
 			this.handleFlight(player);
 		}
@@ -86,8 +91,9 @@ public class HeavenScroll extends ItemBaseCurio {
 		try {
 			if (player.experienceTotal > 0 && SuperpositionHandler.isInBeaconRange(player)) {
 
-				if (!player.abilities.allowFlying)
+				if (!player.abilities.allowFlying) {
 					player.abilities.allowFlying = true;
+				}
 
 				player.sendPlayerAbilities();
 				this.flyMap.put(player, 100);

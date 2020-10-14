@@ -262,7 +262,7 @@
 	"tooltip.enigmaticlegacy.enigmaticItem4": "§5- Immunity to suffocation, falling, collision,",
 	"tooltip.enigmaticlegacy.enigmaticItem5": "§5  pressure, hunger, void, pricking, fire and",
 	"tooltip.enigmaticlegacy.enigmaticItem6": "§5  lava damage.",
-	"tooltip.enigmaticlegacy.enigmaticItem7": "§5- Immunity to most status effects.",
+	"tooltip.enigmaticlegacy.enigmaticItem7": "§5- Immunity to most debuffs.",
 	"tooltip.enigmaticlegacy.enigmaticItem8": "§5- Grants you an ability to fly.",
 	"tooltip.enigmaticlegacy.enigmaticItem9": "§5- Compensates mining speed penalty when flying.",
 	"tooltip.enigmaticlegacy.enigmaticItem10": "§5- You are immortal while having it equipped",
@@ -576,7 +576,7 @@
 	
 	"tooltip.enigmaticlegacy.berserk_emblem1": "§6+%1$s §dAttack Damage",
 	"tooltip.enigmaticlegacy.berserk_emblem2": "§6+%1$s §dAttack Speed",
-	"tooltip.enigmaticlegacy.berserk_emblem3": "§6+%1$s §dSprinting Speed",
+	"tooltip.enigmaticlegacy.berserk_emblem3": "§6+%1$s §dMovement Speed",
 	"tooltip.enigmaticlegacy.berserk_emblem4": "§6+%1$s §dDamage Resistance",
 	"tooltip.enigmaticlegacy.berserk_emblem5": "§5These traits are multiplied by how many percents",
 	"tooltip.enigmaticlegacy.berserk_emblem6": "§5of your health pool you're currently missing.",
@@ -836,10 +836,17 @@
 	
 	"book.enigmaticlegacy.entry.cursed_ring.name": "The Dark Ring",
 	"book.enigmaticlegacy.entry.cursed_ring.heading.1": "The Ring",
-	"book.enigmaticlegacy.entry.cursed_ring.page.1": "Another item that you unexpectedly located in your pockets, this ring however is seething with malevolent darkness, nothing like splendor and mystery of Enigmatic Amulet. Once you decide to wear it, it shall fuse with your very soul, intertwining your fates, and there's little hope to ever separate you again.<br2/>",
-	"book.enigmaticlegacy.entry.cursed_ring.page.2": "Unforgiving curses will befall whoever is brave enough to embrace this darkness. If the world didn't seem harsh enough in it's indifference, with this ring it shall turn against you, as every living being capable of attacking you will surely attempt to do so, with unbound anger and impressive persistence.",
-	"book.enigmaticlegacy.entry.cursed_ring.page.3": "Any threat you may encounter in your journey will be many times more dangerous, and any wound received will cause unimaginable pain. And as if that was not enough, any death will bring forth much greater punishment, tearing a part of your immortal soul from you.<br2/>On the other hand, in exchange for this toll paid, you will surely receive some benefits. A power that this cursed ring contains is unlike any other, and if you will manage to",
-	"book.enigmaticlegacy.entry.cursed_ring.page.4": "harness it, you may achieve feats that would be impossible to achieve otherwise, discover, create and claim relics that no other demigod can ever hope to possess.<br2/>Still, it must be a madness to willingly bring all ceaseless suffering and despair that Ring of the Seven Curses promises upon oneself. Who could possibly choose such fate?..",
+	"book.enigmaticlegacy.entry.cursed_ring.page.1": "Another item that you unexpectedly located in your pockets, this ring however is seething with malevolent darkness, nothing like splendor and mystery of Enigmatic Amulet. Once you decide to wear it, it shall fuse with your very soul, intertwining your fates, and there's little hope to ever separate you again...<br/>Even in death.",
+	"book.enigmaticlegacy.entry.cursed_ring.page.2": "Seven unforgiving curses will befall whoever is brave enough to embrace this darkness. Granted the commitment that wearing this ring casts upon such unlucky soul, it would be worth listing exactly what they are:<br2/><&l>The First Curse$(clear) will make your suffering unbearable,",
+	"book.enigmaticlegacy.entry.cursed_ring.page.3": "by causing you to experience twice the harm and twice the pain from anything that hurts you. Scars will turn into wounds, and wounds will turn into severe, if not instantly lethal trauma.<br2/><&l>The Second Curse$(clear) causes most creatures that are normally indefferent towards you, unless provoked, to always act as if you are the greatest threat around. Perhaps, they aren't quite unright in this assumption",
+	"book.enigmaticlegacy.entry.cursed_ring.page.4": "even? If distance that separates you from them is short enough, their senses will give you out to them even if they can't directly see you at the moment.<br2/><&l>The Third Curse$(clear) causes any armor you bear to be significantly less effective against any damage it is supposed to absorb, being about 30 percents less tough and resistant.<br2/><&l>The Fourth Curse$(clear) diminishes",
+	"book.enigmaticlegacy.entry.cursed_ring.page.5": "your strength against anything that is considered a monster-like being, which means almost against anything that will be willing to hurt you in this world.<br2/><&l>The Fifth Curse$(clear) allows you to experience what perpetually burning in hellfire would feel like. Should you be set on fire, that fire will never go out on itself, incinerating your flesh and boiling your blood until there's nothing more to incinerate and boil.",
+	"book.enigmaticlegacy.entry.cursed_ring.page.6": "You can still save yourself from it by extinguishing that fire with water, for instance, which will be a very helpful solution until you consider taking a journey to The Nether.<br2/><&l>The Sixth Curse$(clear) tears a fragment of your soul from you on every death, causing you to have progressively less health with every such fragment lost. Those fragments are hopefully not lost forever - they will remain in place of your",
+	"book.enigmaticlegacy.entry.cursed_ring.page.7": "demise, and once you approach them, they will fuse back with your soul, restoring your lost health back.<br2/><&l>The Seventh Curse$(clear) will cause you to loose your sleep in the night, rendering you unable to let it go past you any quicker than it usually does by just giving yourself in to less cruel and disturbing world of dreams. You can still lay in bed like normal, and use it to set place considered your home for",
+	"book.enigmaticlegacy.entry.cursed_ring.page.8": "instance, but doing so will not allow you to skip the night along with all threats that lurk in it's darkness.<br2/>On the other hand, in exchange for this toll paid, you will surely receive some profits. These are so called <&l>\"Seven Blessings\"$(clear), which promise to reward anyone who chooses to bear the ring with equal benefits in exchange for all the suffering they are about to put themselves through. Don't let yourself be fooled,",
+	"book.enigmaticlegacy.entry.cursed_ring.page.9": "however; while power some of those blessings provide is surely tempting to possess, it won't make up for even 1/10th of all tolls you will have to pay for it, and it might be too late to reconsider once you discover that through practice rather than bare theory. <br2/>Exact list of those blessings is probably known to you already, so it's not worth outlining it here. The only thing probably worth mentioning is that they act",
+	"book.enigmaticlegacy.entry.cursed_ring.page.10": "exactly the same as curses do, being permanent traits that right away come along with the ring once it is worn, and cannot be taken away from the bearer as much as curses cannot.<br2/>To be said in conclusion, a power that this cursed ring contains is unlike any other, and if you will manage to harness it, you may achieve feats that would be impossible to achieve otherwise, discover, create and claim relics that",
+	"book.enigmaticlegacy.entry.cursed_ring.page.11": "no other demigod can ever hope to possess.<br2/>Still, it must be a madness to willingly bring all ceaseless suffering and despair that Ring of the Seven Curses promises upon oneself. Who could possibly choose such fate?..",
 	
 	
 	"book.enigmaticlegacy.entry.earth_heart.name": "Heart of the Earth",
@@ -869,9 +876,9 @@
 	
 	
 	"book.enigmaticlegacy.entry.dark_mirror.name": "Twisted Mirror",
-	"book.enigmaticlegacy.entry.dark_mirror.page.1": "Among the most evident applications that Twisted Heart may have, there is this mirror.<br2/>It ultimately serves the same purpose as Potion of Recall that goes into it's crafting process, but instead of enderic energies diffused into drinkable form, it focuses sheer power of the curse to accomplish this.",
-	"book.enigmaticlegacy.entry.dark_mirror.page.2": "The result proves surprisingly efficient, as using this mirror takes much less time than drinking a potion, and it doesn't get consumed in the process. The teleportation is followed by considerable cooldown before you can use",
-	"book.enigmaticlegacy.entry.dark_mirror.page.3": "the mirror again, but that is surely unimportant under normal circumstances.",
+	"book.enigmaticlegacy.entry.dark_mirror.page.1": "Among the most evident applications that Twisted Heart may have, there is this mirror.<br2/>First and foremost, you can use it to look at yourself while regretting your once made decision to bear the ring. It also serves the same purpose as Potion of Recall that goes into it's crafting process, but instead of enderic energies diffused",
+	"book.enigmaticlegacy.entry.dark_mirror.page.2": "into drinkable form, it focuses sheer power of the curse to accomplish this.<br2/>The result proves surprisingly efficient, as using this mirror takes much less time than drinking a potion, and it",
+	"book.enigmaticlegacy.entry.dark_mirror.page.3": "doesn't get consumed in the process. The teleportation is followed by considerable cooldown before you can use the mirror again, but that is surely unimportant under normal circumstances.",
 	
 	
 	"book.enigmaticlegacy.entry.lore_inscriber.name": "Inscribing Lore",

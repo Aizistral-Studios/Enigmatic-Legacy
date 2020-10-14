@@ -5,7 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
@@ -16,7 +16,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
-import net.minecraft.item.Item.Properties;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
@@ -60,8 +59,9 @@ public class FabulousScroll extends HeavenScroll {
 			boolean inRange = SuperpositionHandler.isInBeaconRange(player);
 
 			if (!SuperpositionHandler.isInBeaconRange(player))
-				if (Math.random() <= (this.baseXpConsumptionProbability*8) * ConfigHandler.HEAVEN_SCROLL_XP_COST_MODIFIER.getValue() && player.abilities.isFlying)
+				if (Math.random() <= (this.baseXpConsumptionProbability*8) * xpCostModifier.getValue() && player.abilities.isFlying) {
 					player.giveExperiencePoints(-1);
+				}
 
 			this.handleFabulousFlight(player, inRange);
 		}
@@ -72,8 +72,9 @@ public class FabulousScroll extends HeavenScroll {
 		try {
 			if (player.experienceTotal > 0 || inRange) {
 
-				if (!player.abilities.allowFlying)
+				if (!player.abilities.allowFlying) {
 					player.abilities.allowFlying = true;
+				}
 
 				player.sendPlayerAbilities();
 				this.flyMap.put(player, 100);

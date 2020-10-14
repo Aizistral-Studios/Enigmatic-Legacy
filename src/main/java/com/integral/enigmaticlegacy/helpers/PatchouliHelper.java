@@ -6,7 +6,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import vazkii.patchouli.client.base.PersistentData;
 import vazkii.patchouli.client.base.PersistentData.DataHolder.BookData;
-import vazkii.patchouli.client.book.BookCategory;
 import vazkii.patchouli.client.book.BookEntry;
 import vazkii.patchouli.common.book.Book;
 import vazkii.patchouli.common.book.BookRegistry;

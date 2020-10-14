@@ -1,29 +1,15 @@
 package com.integral.enigmaticlegacy.triggers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import javax.annotation.Nonnull;
 
-import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.items.RevelationTome;
 
-import net.minecraft.advancements.ICriterionInstance;
-import net.minecraft.advancements.ICriterionTrigger;
-import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.loot.ConditionArraySerializer;
-import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 
 /**

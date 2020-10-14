@@ -10,10 +10,13 @@ import javax.annotation.Nullable;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -43,15 +46,29 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class OblivionStone extends ItemBase {
+	public static Omniconfig.IntParameter itemSoftcap;
+	public static Omniconfig.IntParameter itemHardcap;
+
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("OblivionStone");
+
+		itemSoftcap = builder
+				.comment("Soft cap for Keystone of The Oblivion. When it's reached, the list view seen in it's Ctrl tooltip will be fixed at this amount of items, and become chaotic and unreadable. Required since monitors are not infinitely large these days.")
+				.min(1)
+				.getInt("Softcap", 25);
+
+		itemHardcap = builder
+				.comment("Hard cap for Keystone of The Oblivion. When it's reached, you will no longer be able to add new items to it's list via crafting. Required to prevent potential perfomance issues with ridiculously large lists.")
+				.min(1)
+				.getInt("Hardcap", 100);
+
+		builder.popPrefix();
+	}
 
 	public OblivionStone() {
 		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.RARE).isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "oblivion_stone"));
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.OBLIVION_STONE_ENABLED.getValue();
 	}
 
 	@Override
@@ -91,7 +108,7 @@ public class OblivionStone extends ItemBase {
 				ListNBT arr = nbt.getList("SupersolidID", 8);
 				int counter = 0;
 
-				if (arr.size() <= ConfigHandler.OBLIVION_STONE_SOFTCAP.getValue()) {
+				if (arr.size() <= itemSoftcap.getValue()) {
 					for (INBT s_uncast : arr) {
 						String s = ((StringNBT) s_uncast).getString();
 						Item something = ForgeRegistries.ITEMS.getValue(new ResourceLocation(s));
@@ -104,7 +121,7 @@ public class OblivionStone extends ItemBase {
 						counter++;
 					}
 				} else {
-					for (int s = 0; s < ConfigHandler.OBLIVION_STONE_SOFTCAP.getValue(); s++) {
+					for (int s = 0; s < itemSoftcap.getValue(); s++) {
 						int randomID = Item.random.nextInt(arr.size());
 						Item something = ForgeRegistries.ITEMS.getValue(new ResourceLocation(((StringNBT) arr.get(randomID)).getString()));
 
@@ -129,8 +146,9 @@ public class OblivionStone extends ItemBase {
 
 		if (ItemNBTHelper.getBoolean(stack, "IsActive", true)) {
 			mode = new TranslationTextComponent("tooltip.enigmaticlegacy.oblivionStoneMode" + ItemNBTHelper.getInt(stack, "ConsumptionMode", 0));
-		} else
+		} else {
 			mode = new TranslationTextComponent("tooltip.enigmaticlegacy.oblivionStoneModeInactive");
+		}
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneModeDesc", null, mode);
 	}
@@ -145,10 +163,11 @@ public class OblivionStone extends ItemBase {
 			world.playSound(null, player.getPosition(), ItemNBTHelper.getBoolean(stack, "IsActive", true) ? EnigmaticLegacy.HHOFF : EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			ItemNBTHelper.setBoolean(stack, "IsActive", !ItemNBTHelper.getBoolean(stack, "IsActive", true));
 		} else {
-			if (mode >= 0 && mode < 2)
+			if (mode >= 0 && mode < 2) {
 				ItemNBTHelper.setInt(stack, "ConsumptionMode", mode + 1);
-			else
+			} else {
 				ItemNBTHelper.setInt(stack, "ConsumptionMode", 0);
+			}
 
 			world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 		}
@@ -182,8 +201,9 @@ public class OblivionStone extends ItemBase {
 		for (int slot = 0; slot < player.inventory.mainInventory.size(); slot++) {
 			if (!player.inventory.mainInventory.get(slot).isEmpty()) {
 				filledStacks += 1;
-				if (player.inventory.mainInventory.get(slot).getItem() != EnigmaticLegacy.oblivionStone)
+				if (player.inventory.mainInventory.get(slot).getItem() != EnigmaticLegacy.oblivionStone) {
 					stackMap.put(slot, player.inventory.mainInventory.get(slot));
+				}
 			}
 		}
 
@@ -195,8 +215,9 @@ public class OblivionStone extends ItemBase {
 				String str = ((StringNBT) sID).getString();
 
 				for (int slot : stackMap.keySet()) {
-					if (stackMap.get(slot).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation(str)))
+					if (stackMap.get(slot).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation(str))) {
 						player.inventory.setInventorySlotContents(slot, ItemStack.EMPTY);
+					}
 				}
 				cycleCounter++;
 			}
@@ -209,8 +230,9 @@ public class OblivionStone extends ItemBase {
 				Multimap<Integer, Integer> stackSizeMultimap = ArrayListMultimap.create();
 
 				for (int slot : stackMap.keySet()) {
-					if (stackMap.get(slot).getItem() != ForgeRegistries.ITEMS.getValue(new ResourceLocation(str)))
+					if (stackMap.get(slot).getItem() != ForgeRegistries.ITEMS.getValue(new ResourceLocation(str))) {
 						localStackMap.remove(slot);
+					}
 				}
 
 				for (int slot : localStackMap.keySet()) {
@@ -238,8 +260,9 @@ public class OblivionStone extends ItemBase {
 					Multimap<Integer, Integer> stackSizeMultimap = ArrayListMultimap.create();
 
 					for (int slot : stackMap.keySet()) {
-						if (stackMap.get(slot).getItem() != ForgeRegistries.ITEMS.getValue(new ResourceLocation(str)))
+						if (stackMap.get(slot).getItem() != ForgeRegistries.ITEMS.getValue(new ResourceLocation(str))) {
 							localStackMap.remove(slot);
+						}
 					}
 
 					for (int slot : localStackMap.keySet()) {

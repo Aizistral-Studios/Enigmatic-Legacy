@@ -2,8 +2,7 @@ package com.integral.enigmaticlegacy.objects;
 
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.api.items.IPerhaps;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 
 import net.minecraft.item.Item;
 import net.minecraft.util.JSONUtils;
@@ -20,48 +19,45 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 
 public class EnabledCondition implements ICondition {
-    private static final ResourceLocation ID = new ResourceLocation(EnigmaticLegacy.MODID, "is_enabled");
-    private final ResourceLocation item;
+	private static final ResourceLocation ID = new ResourceLocation(EnigmaticLegacy.MODID, "is_enabled");
+	private final ResourceLocation item;
 
-    public EnabledCondition(ResourceLocation item) {
-        this.item = item;
-    }
+	public EnabledCondition(ResourceLocation item) {
+		this.item = item;
+	}
 
-    @Override
-    public ResourceLocation getID() {
-        return ID;
-    }
+	@Override
+	public ResourceLocation getID() {
+		return ID;
+	}
 
-    @Override
-    public boolean test() {
-        Item item = ForgeRegistries.ITEMS.getValue(this.item);
-        
-        if (item == null)
-        	return false;
-        
-        if (this.item.toString().equals(EnigmaticLegacy.MODID + ":bonuswoolrecipes"))
-        	return ConfigHandler.BONUS_WOOL_RECIPES_ENABLED.getValue();
-        
-        return !(item instanceof IPerhaps) || ((IPerhaps) item).isForMortals();
-    }
+	@Override
+	public boolean test() {
+		Item item = ForgeRegistries.ITEMS.getValue(this.item);
 
-    public static class Serializer implements IConditionSerializer<EnabledCondition> {
-        public static final Serializer INSTANCE = new Serializer();
+		if (this.item.toString().equals(EnigmaticLegacy.MODID + ":bonuswoolrecipes"))
+			return OmniconfigHandler.bonusWoolRecipesEnabled.getValue();
+		else
+			return OmniconfigHandler.isItemEnabled(item);
+	}
 
-        @Override
-        public void write(JsonObject json, EnabledCondition value) {
-            json.addProperty("item", value.item.toString());
-        }
+	public static class Serializer implements IConditionSerializer<EnabledCondition> {
+		public static final Serializer INSTANCE = new Serializer();
 
-        @Override
-        public EnabledCondition read(JsonObject json) {
-            return new EnabledCondition(new ResourceLocation(JSONUtils.getString(json, "item")));
-        }
+		@Override
+		public void write(JsonObject json, EnabledCondition value) {
+			json.addProperty("item", value.item.toString());
+		}
 
-        @Override
-        public ResourceLocation getID() {
-            return EnabledCondition.ID;
-        }
-    }
+		@Override
+		public EnabledCondition read(JsonObject json) {
+			return new EnabledCondition(new ResourceLocation(JSONUtils.getString(json, "item")));
+		}
+
+		@Override
+		public ResourceLocation getID() {
+			return EnabledCondition.ID;
+		}
+	}
 }
 

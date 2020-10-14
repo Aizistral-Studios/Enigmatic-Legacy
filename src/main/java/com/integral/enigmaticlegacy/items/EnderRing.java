@@ -5,9 +5,12 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
+import com.integral.omniconfig.Configuration;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
@@ -21,18 +24,53 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import top.theillusivec4.curios.api.CuriosApi;
 
 public class EnderRing extends ItemBaseCurio {
+	public static Omniconfig.BooleanParameter inventoryButtonEnabled;
+	public static Omniconfig.IntParameter buttonOffsetX;
+	public static Omniconfig.IntParameter buttonOffsetY;
+	public static Omniconfig.IntParameter buttonOffsetXCreative;
+	public static Omniconfig.IntParameter buttonOffsetYCreative;
+
+	@SubscribeConfig(receiveClient = true)
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("EnderChest");
+
+		if (builder.config.getSidedType() != Configuration.SidedConfigType.CLIENT) {
+			// NO-OP
+		} else {
+
+			inventoryButtonEnabled = builder
+					.comment("Whether or not button for accessing Ender Chest should be added to inventory GUI when player has Ring of Ender equipped.")
+					.getBoolean("ButtonEnabled", true);
+
+			buttonOffsetX = builder
+					.comment("Allows to set offset for Ender Chest button on X axis.")
+					.minMax(32768)
+					.getInt("ButtonOffsetX", 0);
+
+			buttonOffsetY = builder
+					.comment("Allows to set offset for Ender Chest button on Y axis.")
+					.minMax(32768)
+					.getInt("ButtonOffsetY", 0);
+
+			buttonOffsetXCreative = builder
+					.comment("Allows to set offset for Ender Chest button on X axis, for creative inventory specifically.")
+					.minMax(32768)
+					.getInt("ButtonOffsetXCreative", 0);
+
+			buttonOffsetYCreative = builder
+					.comment("Allows to set offset for Ender Chest button on Y axis, for creative inventory specifically.")
+					.minMax(32768)
+					.getInt("ButtonOffsetYCreative", 0);
+		}
+
+		builder.popPrefix();
+	}
 
 	public EnderRing() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ender_ring"));
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.ENDER_RING_ENABLED.getValue();
 	}
 
 	@Override

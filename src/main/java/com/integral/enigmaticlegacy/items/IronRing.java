@@ -5,7 +5,6 @@ import java.util.UUID;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 
 import net.minecraft.entity.LivingEntity;
@@ -15,18 +14,12 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import top.theillusivec4.curios.api.CuriosApi;
 
 public class IronRing extends ItemBaseCurio {
 
 	public IronRing() {
 		super(ItemBaseCurio.getDefaultProperties());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "iron_ring"));
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.IRON_RING_ENABLED.getValue();
 	}
 
 	@Override

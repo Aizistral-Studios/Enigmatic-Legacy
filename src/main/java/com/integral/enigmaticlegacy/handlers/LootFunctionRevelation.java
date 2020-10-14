@@ -1,25 +1,15 @@
 package com.integral.enigmaticlegacy.handlers;
 
-import java.util.Random;
-
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.items.RevelationTome;
 
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.IRandomRange;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootFunction;
 import net.minecraft.loot.LootFunctionType;
-import net.minecraft.loot.RandomRanges;
 import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.loot.functions.EnchantWithLevels;
 import net.minecraft.loot.functions.ILootFunction;
-import net.minecraft.loot.functions.LootFunctionManager;
-import net.minecraft.util.JSONUtils;
 
 public class LootFunctionRevelation implements ILootFunction {
 	private final IRandomRange randomPoints;

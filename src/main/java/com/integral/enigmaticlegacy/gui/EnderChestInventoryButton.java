@@ -3,9 +3,9 @@ package com.integral.enigmaticlegacy.gui;
 import javax.annotation.Nonnull;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
-import com.integral.enigmaticlegacy.config.JsonConfigHandler;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.items.EnderRing;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
@@ -17,8 +17,6 @@ import net.minecraft.client.gui.widget.button.ImageButton;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 public class EnderChestInventoryButton extends ImageButton {
@@ -62,7 +60,7 @@ public class EnderChestInventoryButton extends ImageButton {
 
 		boolean hasRing = SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.enderRing) || SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.cursedRing);
 
-		if (!hasRing || !ConfigHandler.ECHEST_BUTTON_ENABLED.getValue()) {
+		if (!hasRing || !EnderRing.inventoryButtonEnabled.getValue()) {
 			this.active = false;
 			return;
 		}
@@ -71,8 +69,8 @@ public class EnderChestInventoryButton extends ImageButton {
 	}
 
 	public static Tuple<Integer, Integer> getOffsets(boolean creative) {
-		int x = creative ? 170 + ConfigHandler.ECHEST_BUTTON_OFFSET_X_CREATIVE.getValue() : 150 + ConfigHandler.ECHEST_BUTTON_OFFSET_X.getValue();
-		int y = creative ? -41 + ConfigHandler.ECHEST_BUTTON_OFFSET_Y_CREATIVE.getValue() : 0 + ConfigHandler.ECHEST_BUTTON_OFFSET_Y.getValue();
+		int x = creative ? 170 + EnderRing.buttonOffsetXCreative.getValue() : 150 + EnderRing.buttonOffsetX.getValue();
+		int y = creative ? -41 + EnderRing.buttonOffsetYCreative.getValue() : 0 + EnderRing.buttonOffsetY.getValue();
 
 		return new Tuple<>(x, y);
 	}

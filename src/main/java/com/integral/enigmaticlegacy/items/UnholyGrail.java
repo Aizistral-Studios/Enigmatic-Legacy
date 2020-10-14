@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
@@ -35,11 +34,6 @@ public class UnholyGrail extends ItemBase {
 	public UnholyGrail() {
 		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "unholy_grail"));
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return ConfigHandler.UNHOLY_GRAIL_ENABLED.getValue();
 	}
 
 	@Override

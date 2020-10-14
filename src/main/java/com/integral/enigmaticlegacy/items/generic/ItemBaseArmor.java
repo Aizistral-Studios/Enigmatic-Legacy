@@ -4,12 +4,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.api.items.IPerhaps;
-import com.integral.enigmaticlegacy.config.ConfigHandler;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,14 +16,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.LazyValue;
-import net.minecraft.util.text.*;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 
 @SuppressWarnings("deprecation")
-public abstract class ItemBaseArmor extends ArmorItem implements IPerhaps {
+public abstract class ItemBaseArmor extends ArmorItem {
 
 	private final LazyValue<BipedModel<?>> model;
 
@@ -62,11 +56,6 @@ public abstract class ItemBaseArmor extends ArmorItem implements IPerhaps {
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
 		return EnigmaticLegacy.MODID + ":textures/models/armor/unseen_armor.png";
-	}
-
-	@Override
-	public boolean isForMortals() {
-		return true;
 	}
 
 	public boolean hasFullSet(@Nonnull PlayerEntity player) {

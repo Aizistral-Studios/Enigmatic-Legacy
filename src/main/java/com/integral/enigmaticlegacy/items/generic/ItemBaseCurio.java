@@ -18,8 +18,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
 public abstract class ItemBaseCurio extends ItemBase implements ICurio {
