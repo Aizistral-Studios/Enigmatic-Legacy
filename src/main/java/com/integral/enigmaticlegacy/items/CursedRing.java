@@ -165,6 +165,10 @@ public class CursedRing extends ItemBaseCurio {
 			return;
 
 		PlayerEntity player = (PlayerEntity) livingPlayer;
+
+		if (player.isCreative())
+			return;
+
 		List<LivingEntity> genericMobs = livingPlayer.world.getEntitiesWithinAABB(LivingEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, this.angerRange));
 		List<EndermanEntity> endermen = livingPlayer.world.getEntitiesWithinAABB(EndermanEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, this.angerRange+8));
 

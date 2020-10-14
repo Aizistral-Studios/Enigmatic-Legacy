@@ -1,5 +1,11 @@
 The Changelog:
 
+[Release 2.6.1]:
+- Fixed variety of crashes that may have been caused by non-assigned config property in item class of Emblem of Monster Slayer (#85);
+- Neutral mobs no longer anger against players with Ring of the Seven Curses equipped when they are in creative mode.
+
+
+
 [Release 2.6.0]:
 - Brand new config implementation, ported right from 1.7.10 versions of Forge, with a lot of polishing and fancy wrapping on top of it. Notice that new config files have '.omniconf' extension; old '.toml' are not generated and not loaded anymore;
 - Among particularly noticeable improvements, most options in common file are now automatically synchronized from server to client;
@@ -12,7 +18,7 @@ The Changelog:
 - Neutral mobs no longer anger against players who bear Ring of the Seven Curses, unless there is a direct line of sight between them and the player, aka don't see players through walls anymore. Well, most of the time. They can still see the cursed players regardless of obstacles if the distance separating the player from them is below 4 blocks (#81);
 - Endermen generally follow the abovementioned rule, but sometimes they might randomly disregard it and teleport behind unsuspecting player seemingly out of nowhere (#81);
 - +1 Joke in Twisted Mirror entry in The Acknowledgment (#81);
-- Significantly expanded The Acknowledgment entry on Ring of the Seven Curses, to provided explanation on how every curse works. Many players have found some of them unclear, like insomnia for instance, so that should be now adressed. Blessings did not receive as much attention, but it's now mentioned that they come along with the ring as permanent traits, similar to how curses do.
+- Significantly expanded The Acknowledgment entry on Ring of the Seven Curses, to provided explanation on how every curse works. Many players have found some of them unclear, like insomnia for instance, so that should be now addressed. Blessings did not receive as much attention, but it's now mentioned that they come along with the ring as permanent traits, similar to how curses do.
 
 
 

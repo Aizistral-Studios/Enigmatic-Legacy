@@ -39,7 +39,7 @@ public class MonsterCharm extends ItemBaseCurio {
 				.max(1000)
 				.getPerhaps("UndeadDamage", 25);
 
-		undeadDamageBonus = builder
+		hostileDamageBonus = builder
 				.comment("Damage bonus against agressive creatures for Emblem of Monster Slayer. Defined as percentage.")
 				.max(1000)
 				.getPerhaps("HostileDamage", 10);

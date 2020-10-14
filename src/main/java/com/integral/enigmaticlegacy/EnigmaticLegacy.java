@@ -157,6 +157,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -183,7 +184,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.6.0";
+	public static final String VERSION = "2.6.1";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -494,7 +495,6 @@ public class EnigmaticLegacy {
 	}
 
 	private void onLoadComplete(final FMLLoadCompleteEvent event) {
-
 		enigmaticLogger.info("Initializing load completion phase...");
 
 		enigmaticLogger.info("Registering brewing recipes...");
