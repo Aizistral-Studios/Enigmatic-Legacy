@@ -58,7 +58,7 @@ public class OmniconfigHandler {
 
 
 	public static void initialize() {
-		OmniconfigWrapper configBuilder = OmniconfigWrapper.setupBuilder("enigmaticlegacy-common", true, "2.0");
+		OmniconfigWrapper configBuilder = OmniconfigWrapper.setupBuilder("enigmaticlegacy-common", true, "2.1");
 		configBuilder.pushVersioningPolicy(Configuration.VersioningPolicy.AGGRESSIVE);
 		configBuilder.pushTerminateNonInvokedKeys(true);
 

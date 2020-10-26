@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Random;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -27,8 +28,8 @@ import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
-import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
-import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
+import com.integral.enigmaticlegacy.items.TheAcknowledgment;
+import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.integral.enigmaticlegacy.objects.DimensionalPosition;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.enigmaticlegacy.objects.Vector3;
@@ -47,6 +48,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -83,6 +85,8 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
@@ -131,7 +135,7 @@ public class SuperpositionHandler {
 				IDynamicStackHandler soloStackHandler = stacksHandler.getStacks();
 
 				for (int i = 0; i < stacksHandler.getSlots(); i++) {
-					if (soloStackHandler.getStackInSlot(i) != null && soloStackHandler.getStackInSlot(i).getItem() instanceof ItemAdvancedCurio) {
+					if (soloStackHandler.getStackInSlot(i) != null && soloStackHandler.getStackInSlot(i).getItem() instanceof ItemSpellstoneCurio) {
 						stackList.add(soloStackHandler.getStackInSlot(i));
 					}
 				}
@@ -303,6 +307,34 @@ public class SuperpositionHandler {
 			newTarget = entities.get(0);
 		}
 		return newTarget;
+	}
+
+	@Nullable
+	public static <T extends LivingEntity> T getClosestEntity(List<? extends T> entities, Predicate<LivingEntity> predicate, double x, double y, double z) {
+		double d0 = -1.0D;
+		T t = null;
+
+		for (T t1 : entities) {
+			if (predicate.test(t1)) {
+				double d1 = t1.getDistanceSq(x, y, z);
+				if (d0 == -1.0D || d1 < d0) {
+					d0 = d1;
+					t = t1;
+				}
+			}
+		}
+
+		return t;
+	}
+
+	public static boolean doesObserveEntity(PlayerEntity player, LivingEntity entity) {
+		Vector3d vector3d = player.getLook(1.0F).normalize();
+		Vector3d vector3d1 = new Vector3d(entity.getPosX() - player.getPosX(), entity.getPosYEye() - player.getPosYEye(), entity.getPosZ() - player.getPosZ());
+		double d0 = vector3d1.length();
+		vector3d1 = vector3d1.normalize();
+		double d1 = vector3d.dotProduct(vector3d1);
+
+		return d1 > 1.0D - 0.025D / d0 ? player.canEntityBeSeen(entity) : false;
 	}
 
 
@@ -487,13 +519,9 @@ public class SuperpositionHandler {
 
 	@Nullable
 	public static StandaloneLootEntry.Builder<?> createOptionalLootEntry(Item item, int weight) {
+		if (!OmniconfigHandler.isItemEnabled(item))
+			return null;
 
-		if (item instanceof IPerhaps) {
-			IPerhaps perhaps = (IPerhaps) item;
-
-			if (!perhaps.isForMortals())
-				return null;
-		}
 		return ItemLootEntry.builder(item).weight(weight);
 	}
 
@@ -538,6 +566,16 @@ public class SuperpositionHandler {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
 		lootChestList.add(LootTables.CHESTS_STRONGHOLD_LIBRARY);
 		lootChestList.add(LootTables.CHESTS_SHIPWRECK_MAP);
+
+		return lootChestList;
+	}
+
+	public static List<ResourceLocation> getBastionChests() {
+		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
+		lootChestList.add(LootTables.field_237380_L_);
+		lootChestList.add(LootTables.field_237381_M_);
+		lootChestList.add(LootTables.field_237382_N_);
+		lootChestList.add(LootTables.field_237383_O_);
 
 		return lootChestList;
 	}
@@ -914,7 +952,6 @@ public class SuperpositionHandler {
 	 * @author Integral
 	 */
 
-	@SuppressWarnings("unchecked")
 	public static boolean isInBeaconRange(PlayerEntity player) {
 		List<BeaconTileEntity> list = new ArrayList<BeaconTileEntity>();
 		boolean inRange = false;
@@ -929,7 +966,7 @@ public class SuperpositionHandler {
 			for (BeaconTileEntity beacon : list)
 				if (beacon.getLevels() > 0) {
 					try {
-						if (((List<BeaconTileEntity.BeamSegment>) ObfuscatedFields.beamSegmentsField.get(beacon)).isEmpty()) {
+						if (beacon.beamSegments.isEmpty()) {
 							continue;
 						}
 					} catch (Exception ex) {
@@ -1105,6 +1142,10 @@ public class SuperpositionHandler {
 			if (enchantment.isCurse() && enchantments.get(enchantment) > 0) {
 				totalCurses+=1;
 			}
+		}
+
+		if (stack.getItem() == EnigmaticLegacy.cursedRing) {
+			totalCurses+=7;
 		}
 
 		return totalCurses;
@@ -1292,7 +1333,7 @@ public class SuperpositionHandler {
 		List<ItemStack> heldItems = Lists.newArrayList(player.getHeldItemMainhand(), player.getHeldItemOffhand());
 
 		for (ItemStack held : heldItems) {
-			if (held != null && held.getItem() == EnigmaticLegacy.theAcknowledgment) {
+			if (held != null && held.getItem() instanceof TheAcknowledgment) {
 				if (EnchantmentHelper.getEnchantmentLevel(Enchantments.BANE_OF_ARTHROPODS, held) > 0)
 					return true;
 			}
@@ -1308,6 +1349,19 @@ public class SuperpositionHandler {
 		vector3d1 = vector3d1.normalize();
 		double d1 = vector3d.dotProduct(vector3d1);
 		return d1 > 1.0D - 0.025D / d0 ? player.canEntityBeSeen(living) : false;
+	}
+
+	public static double getRandomNegative() {
+		return (Math.random()-0.5)*2.0;
+	}
+
+	public static String minimizeNumber(double num) {
+		int intg = (int)num;
+	
+		if (num - intg == 0)
+			return "" + intg;
+		else
+			return "" + num;
 	}
 
 }

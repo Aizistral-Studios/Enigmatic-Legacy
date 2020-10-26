@@ -31,6 +31,7 @@ import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -39,26 +40,29 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import vazkii.patchouli.api.PatchouliAPI;
 
 public class TheAcknowledgment extends ItemBase implements IVanishable {
-
 	private final Multimap<Attribute, AttributeModifier> attributes;
+	private static final ResourceLocation bookID = new ResourceLocation(EnigmaticLegacy.MODID, "the_acknowledgment");
 
-	public TheAcknowledgment() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1));
-
-		this.setRegistryName(EnigmaticLegacy.MODID, "the_acknowledgment");
+	protected TheAcknowledgment(Properties props, String name, double attackDamage, double attackSpeed) {
+		super(props);
+		this.setRegistryName(EnigmaticLegacy.MODID, name);
 
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Weapon modifier", 3.5, AttributeModifier.Operation.ADDITION));
-		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(Item.ATTACK_SPEED_MODIFIER, "Weapon modifier", -2.1F, AttributeModifier.Operation.ADDITION));
+		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Weapon modifier", attackDamage, AttributeModifier.Operation.ADDITION));
+		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(Item.ATTACK_SPEED_MODIFIER, "Weapon modifier", attackSpeed, AttributeModifier.Operation.ADDITION));
 		this.attributes = builder.build();
 	}
 
+	public TheAcknowledgment() {
+		this(getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1), bookID.getPath(), 3.5, -2.1);
+	}
+
 	public static boolean isOpen() {
-		return EnigmaticLegacy.theAcknowledgment.getRegistryName().equals(PatchouliAPI.instance.getOpenBookGui());
+		return bookID.equals(PatchouliAPI.instance.getOpenBookGui());
 	}
 
 	public static ITextComponent getEdition() {
-		return PatchouliAPI.instance.getSubtitle(EnigmaticLegacy.theAcknowledgment.getRegistryName());
+		return PatchouliAPI.instance.getSubtitle(bookID);
 	}
 
 	public static ITextComponent getTitle(ItemStack stack) {
@@ -100,8 +104,7 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 
 		if (playerIn instanceof ServerPlayerEntity) {
 			ServerPlayerEntity player = (ServerPlayerEntity) playerIn;
-			PatchouliAPI.instance.openBookGUI((ServerPlayerEntity) playerIn, this.getRegistryName());
-
+			PatchouliAPI.instance.openBookGUI((ServerPlayerEntity) playerIn, bookID);
 		}
 
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);
@@ -131,8 +134,8 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theAknowledgment1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theAknowledgment2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theAcknowledgment1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theAcknowledgment2");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -140,9 +143,6 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 		try {
 			//list.add(new StringTextComponent("").append(TheAcknowledgment.getEdition()).mergeStyle(TextFormatting.DARK_PURPLE));
 		} catch (Exception ex) {
-			EnigmaticLegacy.enigmaticLogger.info("For whatever reason Minecraft really calls .addInformation in Item classes in the middle of THE FUCKING STARTUP.");
-			EnigmaticLegacy.enigmaticLogger.info("You can safely ignore following stacktrace, mostly there for the sake of there being.");
-			EnigmaticLegacy.enigmaticLogger.catching(ex);
 			// Just don't do it lol
 		}
 	}

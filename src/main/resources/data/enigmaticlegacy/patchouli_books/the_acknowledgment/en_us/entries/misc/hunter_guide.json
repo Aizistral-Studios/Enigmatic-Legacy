@@ -1,0 +1,26 @@
+{
+    "name": "book.enigmaticlegacy.entry.hunter_guide.name",
+    "icon": "enigmaticlegacy:hunter_guide",
+    "category": "enigmaticlegacy:misc",
+	"advancement": "enigmaticlegacy:book/misc/hunter_guide",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 70,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.hunter_guide.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:hunter_guide",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.hunter_guide.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.hunter_guide.page.3"
+        }
+    ]
+}

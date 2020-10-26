@@ -14,7 +14,7 @@
         },
 		{
             "type": "spotlight",
-			"item": "minecraft:crossbow#1{Enchantments:[{lvl:5s,id:'enigmaticlegacy:ceaseless'}]}",
+			"item": "minecraft:crossbow#1{Enchantments:[{lvl:1s,id:'enigmaticlegacy:ceaseless'}]}",
 			"link_recipe": false,
 			"title": "book.enigmaticlegacy.entry.ceaseless_enchantment.heading.1",
             "text": "book.enigmaticlegacy.entry.ceaseless_enchantment.page.2"

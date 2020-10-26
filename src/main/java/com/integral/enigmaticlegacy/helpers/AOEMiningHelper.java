@@ -7,6 +7,7 @@ import java.util.function.BiConsumer;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Sets;
+import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.enigmaticlegacy.objects.Vector3;
 
 import net.minecraft.block.Block;
@@ -99,21 +100,8 @@ public class AOEMiningHelper {
 		}
 	}
 
-	/** Copy-pasted from "Item.rayTrace" which is protected static, making it unusable in my own static helper methods.*/
 	public static BlockRayTraceResult calcRayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidMode fluidMode) {
-		float f = player.rotationPitch;
-		float f1 = player.rotationYaw;
-		Vector3d vector3d = player.getEyePosition(1.0F);
-		float f2 = MathHelper.cos(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
-		float f3 = MathHelper.sin(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
-		float f4 = -MathHelper.cos(-f * ((float) Math.PI / 180F));
-		float f5 = MathHelper.sin(-f * ((float) Math.PI / 180F));
-		float f6 = f3 * f4;
-		float f7 = f2 * f4;
-		double d0 = player.getAttribute(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get()).getValue();
-		;
-		Vector3d vector3d1 = vector3d.add(f6 * d0, f5 * d0, f7 * d0);
-		return worldIn.rayTraceBlocks(new RayTraceContext(vector3d, vector3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, player));
+		return ItemBase.rayTrace(worldIn, player, fluidMode);
 	}
 
 	public static Vector3 calcRayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidMode fluidMode, double distance) {

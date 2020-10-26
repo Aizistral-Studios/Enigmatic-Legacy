@@ -1,5 +1,32 @@
 The Changelog:
 
+[Release 2.7.0]:
+- Added option to client config that allows to turn off mod update notifications;
+- Slightly overhauled texture of Extradimensional Vessel;
+- Ring of the Seven Curses is now accounted for as item with 7 curses by Scroll of a Thousand Curses (#84);
+- Scroll of a Thousand Curses and Emblem of Bloodstained Valor now have an indication of current total traits they provide when equipped;
+- Scroll of a Thousand Curses now provides +7% mining speed boost by default for every curse;
+- Config option for disabling Enigmatic Amulet now actually disables it from being gifted to players upon entering the world (#86);
+- Most items in the mod can now be enchanted with Curse of Vanishing. Many couldn't be before;
+- Most wearables can now be enchanted with Curse of Binding through Anvil;
+- Chance of Netherite Scrap dropping from Piglin Brutes is nerfed from 50% to 20%, and from Wither Skeletons from 20% to 7% when player bears Ring of the Seven Curses;
+- Fixed bug where players bearing Ring of the Seven Curses were able to deal full damage to monsters when using crossbow with Sharpshooter enchantment;
+- Enigmatic Amulet that player receives when entring the world for the first time will now have randomly chosen one out of seven possible colors, with each color having it's own bonus trait. Amulets that existed before this update will have their color rerolled based on owner's username (#28);
+- Ring of The Seven curses no longer angers neutral mobs if bearer is in Spectator mode;
+- Ceaseless enchantment no longer demands an arrow in the inventory to shoot basic arrows. Also there is config option to make it required as it was;
+- Bees are once again angered agaist bearers of Ring of the Seven Curses by default, in view of Guide to Animal Companionship with it's ability to counter that being introduced;
+- Will of the Ocean now includes functionality of Aqua Affinity enchantment, does prevent air bar from rendering and negates gravity affecting player underwater;
+- Scrapped most of reflection in favor of access transformations;
+- Most numerical parameters affecting Ring of the Seven Curses and related items are now exposed as config variables;
+- Implemented six new items: Guide to Animal Companionship, Guide to Feral Hunt, The Twist, The Forbidden Fruit, Potion of Redemption and Nefarious Essence;
+- Added The Acknowledgment entry which provides a bit of lore about ancient tomes [Tattered/Withered/Corrupted], as well as a glimpse into their purpose;
+- Removed Chineese and Russian localization. Old files are still stored in lang directory with "[OUTDATED]" suffix, in case they will be of any use to whoever might decide to help us updating those localizations, but so far they were not touched for a long time and the amount of changes brough to the mod in the meantime rendered them horribly broken;
+- Fixed completely black "Heat" title above heat bar rendered by Blazing Core. Okay I'm not even gonna ask anymore why nobody reports this stuff;
+- Permanent item entites, which include Extradimensional Vessels and Soul Crystals, can no longer be moved between dimensions. Also added log output to indicate when they are removed due to being attacked by absolute damage source or whatever other reason, to simplify investigation on potential future bug reports related to them;
+- Common config version raised to 2.1.
+
+
+
 [Release 2.6.1]:
 - Fixed variety of crashes that may have been caused by non-assigned config property in item class of Emblem of Monster Slayer (#85);
 - Neutral mobs no longer anger against players with Ring of the Seven Curses equipped when they are in creative mode.

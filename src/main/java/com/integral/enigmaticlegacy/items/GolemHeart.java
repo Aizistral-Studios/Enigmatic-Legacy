@@ -14,7 +14,7 @@ import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
-import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
+import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
@@ -37,7 +37,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class GolemHeart extends ItemAdvancedCurio implements ISpellstone {
+public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 	public static Omniconfig.IntParameter spellstoneCooldown;
 	public static Omniconfig.DoubleParameter defaultArmorBonus;
 	public static Omniconfig.DoubleParameter superArmorBonus;
@@ -102,7 +102,7 @@ public class GolemHeart extends ItemAdvancedCurio implements ISpellstone {
 	public Multimap<Attribute, AttributeModifier> attributesNoArmor = HashMultimap.create();
 
 	public GolemHeart() {
-		super(ItemAdvancedCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
+		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "golem_heart"));
 
 		this.immunityList.add(DamageSource.CACTUS.damageType);

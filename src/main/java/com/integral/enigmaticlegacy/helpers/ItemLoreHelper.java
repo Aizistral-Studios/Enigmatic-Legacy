@@ -37,6 +37,10 @@ public class ItemLoreHelper {
 
 	}
 
+	public static void addLocalizedFormattedString(List<ITextComponent> list, String str, TextFormatting format) {
+		list.add(new TranslationTextComponent(str).mergeStyle(format));
+	}
+
 	public static void addLocalizedString(List<ITextComponent> list, String str) {
 		list.add(new TranslationTextComponent(str));
 	}

@@ -82,8 +82,8 @@ public class CommonProxy {
 		// NO-OP
 	}
 
-	public void initConfig() {
-
+	public void initEntityRendering() {
+		// NO-OP
 	}
 
 }

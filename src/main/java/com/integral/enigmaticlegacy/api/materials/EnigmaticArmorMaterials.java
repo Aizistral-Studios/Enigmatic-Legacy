@@ -12,7 +12,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 
 public enum EnigmaticArmorMaterials implements IArmorMaterial {
-	ETHERIUM(EnigmaticLegacy.MODID + ":etherium", 132, new int[] { 4, 7, 9, 4 }, 24, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 4F, () -> {
+	ETHERIUM(EnigmaticLegacy.MODID + ":etherium", 132, new int[] { 4, 7, 9, 4 }, 24, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 4F, 0, () -> {
 		return Ingredient.fromItems(EnigmaticLegacy.etheriumIngot);
 	});
 
@@ -24,8 +24,9 @@ public enum EnigmaticArmorMaterials implements IArmorMaterial {
 	private final SoundEvent soundEvent;
 	private final float toughness;
 	private final LazyValue<Ingredient> repairMaterial;
+	private final float knockbackResistance;
 
-	EnigmaticArmorMaterials(String name, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness, Supplier<Ingredient> repairMaterial) {
+	EnigmaticArmorMaterials(String name, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness, float knockbackResistance, Supplier<Ingredient> repairMaterial) {
 		this.name = name;
 		this.maxDamageFactor = maxDamageFactor;
 		this.damageReductionAmountArray = damageReductionAmountArray;
@@ -33,6 +34,7 @@ public enum EnigmaticArmorMaterials implements IArmorMaterial {
 		this.soundEvent = soundEvent;
 		this.toughness = toughness;
 		this.repairMaterial = new LazyValue<>(repairMaterial);
+		this.knockbackResistance = knockbackResistance;
 	}
 
 	@Override
@@ -73,7 +75,6 @@ public enum EnigmaticArmorMaterials implements IArmorMaterial {
 
 	@Override
 	public float getKnockbackResistance() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.knockbackResistance;
 	}
 }

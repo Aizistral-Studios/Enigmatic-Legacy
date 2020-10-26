@@ -17,6 +17,8 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class CursedShapedRecipe extends ShapedRecipe {
 
+	// TODO We need one custom recipe handler for all our mod stuff
+
 	public CursedShapedRecipe(ResourceLocation idIn, String groupIn, int recipeWidthIn, int recipeHeightIn, NonNullList<Ingredient> recipeItemsIn, ItemStack recipeOutputIn) {
 		super(idIn, groupIn, recipeWidthIn, recipeHeightIn, recipeItemsIn, recipeOutputIn);
 	}

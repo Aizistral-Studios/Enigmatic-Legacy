@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.items.ForbiddenFruit;
 import com.integral.enigmaticlegacy.items.MagmaHeart;
 import com.integral.enigmaticlegacy.packets.clients.PacketSyncTransientData;
 
@@ -16,6 +17,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public class TransientPlayerData {
+
+	// TODO Wrap variables into param objects
 
 	public static TransientPlayerData get(PlayerEntity player) {
 		boolean clientOnly = player.world.isRemote;
@@ -63,6 +66,7 @@ public class TransientPlayerData {
 	private int fireImmunityTimerCap;
 	public int spellstoneCooldown;
 	private int fireImmunityTimerLast;
+	public Boolean consumedForbiddenFruit;
 
 	public boolean needsSync = false;
 
@@ -138,6 +142,10 @@ public class TransientPlayerData {
 		}
 	}
 
+	public Boolean getConsumedForbiddenFruit() {
+		return this.consumedForbiddenFruit != null ? this.consumedForbiddenFruit : (this.consumedForbiddenFruit = SuperpositionHandler.getPersistentBoolean(this.player, ForbiddenFruit.consumedFruitTag, false));
+	}
+
 	public PlayerEntity getPlayer() {
 		return this.player;
 	}
@@ -148,6 +156,7 @@ public class TransientPlayerData {
 		buf.writeInt(data.fireImmunityTimer);
 		buf.writeInt(data.fireImmunityTimerCap);
 		buf.writeInt(data.fireImmunityTimerLast);
+		buf.writeBoolean(data.getConsumedForbiddenFruit());
 
 		return buf;
 	}
@@ -158,6 +167,7 @@ public class TransientPlayerData {
 		int fireImmunityTimer = buf.readInt();
 		int fireImmunityTimerCap = buf.readInt();
 		int fireImmunityTimerLast = buf.readInt();
+		boolean consumedForbiddenFruit = buf.readBoolean();
 
 		PlayerEntity player = EnigmaticLegacy.proxy.getPlayer(playerID);
 
@@ -167,6 +177,7 @@ public class TransientPlayerData {
 			data.fireImmunityTimer = fireImmunityTimer;
 			data.fireImmunityTimerCap = fireImmunityTimerCap;
 			data.fireImmunityTimerLast = fireImmunityTimerLast;
+			data.consumedForbiddenFruit = consumedForbiddenFruit;
 
 			return data;
 		}

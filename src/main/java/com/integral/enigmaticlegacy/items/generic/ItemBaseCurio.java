@@ -1,5 +1,7 @@
 package com.integral.enigmaticlegacy.items.generic;
 
+import java.util.Map;
+
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
@@ -11,6 +13,10 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -22,10 +28,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
-public abstract class ItemBaseCurio extends ItemBase implements ICurio {
+public abstract class ItemBaseCurio extends ItemBase implements ICurio, IVanishable {
 
 	public ItemBaseCurio() {
-		this(ItemBaseCurio.getDefaultProperties());
+		this(getDefaultProperties());
 	}
 
 	public ItemBaseCurio(Properties props) {
@@ -87,32 +93,42 @@ public abstract class ItemBaseCurio extends ItemBase implements ICurio {
 	}
 
 	@Override
-    @OnlyIn(Dist.CLIENT)
-    public abstract boolean canRender(String identifier, int index, LivingEntity living);
+	public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+		Map<Enchantment, Integer> list = EnchantmentHelper.getEnchantments(book);
+
+		if (list.size() == 1 && list.containsKey(Enchantments.BINDING_CURSE))
+			return true;
+		else
+			return super.isBookEnchantable(stack, book);
+	}
 
 	@Override
-    @OnlyIn(Dist.CLIENT)
-    public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity living, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+	@OnlyIn(Dist.CLIENT)
+	public abstract boolean canRender(String identifier, int index, LivingEntity living);
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity living, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (this.canRender(identifier, index, living))
 			return;
 
 		BipedModel<LivingEntity> model = this.getModel();
-        model.setRotationAngles(living, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-        model.setLivingAnimations(living, limbSwing, limbSwingAmount, partialTicks);
-        RenderHelper.followBodyRotations(living, model);
-        IVertexBuilder vertexBuilder = ItemRenderer.getBuffer(renderTypeBuffer, model.getRenderType(this.getTexture()), false, false);
-        model.render(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-    }
+		model.setRotationAngles(living, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+		model.setLivingAnimations(living, limbSwing, limbSwingAmount, partialTicks);
+		RenderHelper.followBodyRotations(living, model);
+		IVertexBuilder vertexBuilder = ItemRenderer.getBuffer(renderTypeBuffer, model.getRenderType(this.getTexture()), false, false);
+		model.render(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+	}
 
-    @Nullable
-    @OnlyIn(Dist.CLIENT)
-    protected BipedModel<LivingEntity> getModel() {
+	@Nullable
+	@OnlyIn(Dist.CLIENT)
+	protected BipedModel<LivingEntity> getModel() {
 		return null;
 	}
 
-    @OnlyIn(Dist.CLIENT)
-    @Nullable
-    protected ResourceLocation getTexture() {
-    	return null;
-    }
+	@OnlyIn(Dist.CLIENT)
+	@Nullable
+	protected ResourceLocation getTexture() {
+		return null;
+	}
 }

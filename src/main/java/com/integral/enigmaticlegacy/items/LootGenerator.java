@@ -14,6 +14,7 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -34,7 +35,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class LootGenerator extends ItemBase {
+public class LootGenerator extends ItemBase implements IVanishable {
 
 	public Random lootRandomizer = new Random();
 	public List<ResourceLocation> lootList = new ArrayList<ResourceLocation>();
@@ -53,7 +54,7 @@ public class LootGenerator extends ItemBase {
 			if (table.getPath().startsWith("chests/village/"))
 				this.lootList.add(table);
 		}
-		*/
+		 */
 
 		this.lootList.add(LootTables.CHESTS_SPAWN_BONUS_CHEST);
 		this.lootList.add(LootTables.CHESTS_END_CITY_TREASURE);

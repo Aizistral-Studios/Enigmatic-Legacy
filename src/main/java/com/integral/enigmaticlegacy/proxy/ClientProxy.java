@@ -6,7 +6,12 @@ import java.util.Random;
 import java.util.UUID;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.client.renderers.PermanentItemRenderer;
 import com.integral.enigmaticlegacy.client.renderers.ShieldAuraLayer;
+import com.integral.enigmaticlegacy.client.renderers.UltimateWitherSkullRenderer;
+import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
+import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
+import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 import com.integral.enigmaticlegacy.objects.RevelationTomeToast;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 
@@ -14,6 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.toasts.ToastGui;
 import net.minecraft.client.particle.ItemPickupParticle;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -22,6 +28,7 @@ import net.minecraft.util.RegistryKey;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 public class ClientProxy extends CommonProxy {
@@ -73,6 +80,13 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
+	public void initEntityRendering() {
+		RenderingRegistry.registerEntityRenderingHandler(PermanentItemEntity.TYPE, renderManager -> new PermanentItemRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
+		RenderingRegistry.registerEntityRenderingHandler(EnigmaticPotionEntity.TYPE, renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
+		RenderingRegistry.registerEntityRenderingHandler(UltimateWitherSkullEntity.TYPE, UltimateWitherSkullRenderer::new);
+	}
+
+	@Override
 	public void loadComplete(FMLLoadCompleteEvent event) {
 		this.initAuxiliaryRender();
 	}
@@ -109,11 +123,6 @@ public class ClientProxy extends CommonProxy {
 	public void pushRevelationToast(ItemStack renderedStack, int xp, int knowledge) {
 		ToastGui gui = Minecraft.getInstance().getToastGui();
 		gui.add(new RevelationTomeToast(renderedStack, xp, knowledge));
-	}
-
-	@Override
-	public void initConfig() {
-		super.initConfig();
 	}
 
 }

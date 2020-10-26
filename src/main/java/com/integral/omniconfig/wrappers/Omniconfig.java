@@ -76,11 +76,12 @@ public class Omniconfig {
 
 	public static class BooleanParameter extends GenericParameter {
 		private boolean defaultValue;
-		private boolean value = false;
+		private boolean value;
 
 		public BooleanParameter(boolean defaultValue) {
 			super();
 			this.defaultValue = defaultValue;
+			this.value = this.defaultValue;
 		}
 
 		public boolean getDefaultValue() {
@@ -122,15 +123,21 @@ public class Omniconfig {
 			}
 		}
 
+		@Override
+		public String toString() {
+			return Boolean.toString(this.value);
+		}
+
 	}
 
 	public static class StringParameter extends GenericParameter {
 		private String defaultValue;
-		private String value = "undefinedValue";
+		private String value;
 
 		public StringParameter(String defaultValue) {
 			super();
 			this.defaultValue = defaultValue;
+			this.value = this.defaultValue;
 		}
 
 		public String getDefaultValue() {
@@ -168,17 +175,23 @@ public class Omniconfig {
 			this.value = value;
 		}
 
+		@Override
+		public String toString() {
+			return super.toString();
+		}
+
 	}
 
 	public static class IntParameter extends GenericParameter {
 		private int defaultValue;
-		private int value = 0;
+		private int value;
 		private int minValue = 0;
 		private int maxValue = STANDART_INTEGER_LIMIT;
 
 		public IntParameter(int defaultValue) {
 			super();
 			this.defaultValue = defaultValue;
+			this.value = this.defaultValue;
 		}
 
 		public int getDefaultValue() {
@@ -237,17 +250,23 @@ public class Omniconfig {
 			}
 		}
 
+		@Override
+		public String toString() {
+			return Integer.toString(this.value);
+		}
+
 	}
 
 	public static class DoubleParameter extends GenericParameter {
 		private double defaultValue;
-		private double value = 0;
+		private double value;
 		private double minValue = 0;
 		private double maxValue = STANDART_INTEGER_LIMIT;
 
 		public DoubleParameter(double defaultValue) {
 			super();
 			this.defaultValue = defaultValue;
+			this.value = this.defaultValue;
 		}
 
 		public double getDefaultValue() {
@@ -306,17 +325,23 @@ public class Omniconfig {
 			}
 		}
 
+		@Override
+		public String toString() {
+			return Double.toString(this.value);
+		}
+
 	}
 
 	public static class PerhapsParameter extends GenericParameter {
 		private Perhaps defaultValue;
-		private Perhaps value = new Perhaps(0);
+		private Perhaps value;
 		private int minValue = 0;
 		private int maxValue = 100;
 
 		public PerhapsParameter(int defaultValue) {
 			super();
 			this.defaultValue = new Perhaps(defaultValue);
+			this.value = this.defaultValue;
 		}
 
 		public Perhaps getDefaultValue() {
@@ -375,6 +400,11 @@ public class Omniconfig {
 			} catch (Exception e) {
 				this.logGenericParserError(value);
 			}
+		}
+
+		@Override
+		public String toString() {
+			return this.valueToString();
 		}
 
 	}

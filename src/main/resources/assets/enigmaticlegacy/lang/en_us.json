@@ -69,6 +69,13 @@
 	"item.enigmaticlegacy.crying_boots": "Crying Boots [NYI]",
 	"item.enigmaticlegacy.cursed_scroll": "Scroll of a Thousand Curses",
 	"item.enigmaticlegacy.berserk_emblem": "Emblem of Bloodstained Valor",
+	"item.enigmaticlegacy.the_twist": "The Twist",
+	"item.enigmaticlegacy.evil_essence": "Nefarious Essence",
+	"item.enigmaticlegacy.animal_guide": "Guide to Animal Companionship",
+	"item.enigmaticlegacy.hunter_guide": "Guide to Feral Hunt",
+	"item.enigmaticlegacy.guardian_heart": "Heart of the Guardian",
+	"item.enigmaticlegacy.forbidden_fruit": "The Forbidden Fruit",
+	"item.enigmaticlegacy.antiforbidden_potion": "Potion of Redemption",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -302,6 +309,14 @@
 	"tooltip.enigmaticlegacy.enigmaticAmuletShift3": "§6Vessel§5 that safely stores your items, soul",
 	"tooltip.enigmaticlegacy.enigmaticAmuletShift4": "§5crystals and experience.",
 	"tooltip.enigmaticlegacy.enigmaticAmuletShift5": "§5Approach the vessel to regain what was lost.",
+	
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierRED": "§6+%1$s §dAttack Damage",
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierAQUA": "§6+15% §dSprinting Speed",
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierVIOLET": "§6+15% §dDeflect Chance",
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierMAGENTA": "§6-25% §dGravity",
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierGREEN": "§6+25% §dMining Speed",
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierBLACK": "§6+15% §dLifesteal",
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierBLUE": "§6+25% §dSwimming Speed",
 
 
 	"tooltip.enigmaticlegacy.magnetRing1": "§5Attracts items within §6%1$s§6 blocks§5 radius.",
@@ -394,7 +409,9 @@
 	"tooltip.enigmaticlegacy.oceanStone5": "§5- §6%1$s§d Damage Resistance§5 against underwater creatures.",
 	"tooltip.enigmaticlegacy.oceanStone6": "§5- You no longer need air to breathe underwater.",
 	"tooltip.enigmaticlegacy.oceanStone7": "§5- Provides §6Night Vision§5 effect when in water.",
-	"tooltip.enigmaticlegacy.oceanStone8": "§5- Greatly increased swimming speed.",
+	"tooltip.enigmaticlegacy.oceanStone8": "§5- Provides effects of §6Aqua Affinity§5 enchantment.",
+	"tooltip.enigmaticlegacy.oceanStone9": "§5- Negates gravity when underwater.",
+	"tooltip.enigmaticlegacy.oceanStone10": "§5- Greatly increased swimming speed.",
 	
 	"tooltip.enigmaticlegacy.magmaHeart1": "§dActive ability:",
 	"tooltip.enigmaticlegacy.magmaHeart2": "§4- Absent.",
@@ -565,14 +582,18 @@
 	"tooltip.enigmaticlegacy.revelationTomeClick": "§6Click to study it.",
 	"tooltip.enigmaticlegacy.revelationTomeMarkRead": "§cYou have already read this tome.",
 	
-	"tooltip.enigmaticlegacy.theAknowledgment1": "§5The blinding light of revelation shall",
-	"tooltip.enigmaticlegacy.theAknowledgment2": "§5incinerate those who refuse to embrace it.",
+	"tooltip.enigmaticlegacy.theAcknowledgment1": "§5The blinding light of revelation shall",
+	"tooltip.enigmaticlegacy.theAcknowledgment2": "§5incinerate those who refuse to embrace it.",
 	
 	"tooltip.enigmaticlegacy.cursed_scroll1": "§6+%1$s §dAttack Damage",
 	"tooltip.enigmaticlegacy.cursed_scroll2": "§6+%1$s §dMining Speed",
 	"tooltip.enigmaticlegacy.cursed_scroll3": "§6+%1$s §dHealth Regeneration",
 	"tooltip.enigmaticlegacy.cursed_scroll4": "§5These traits are multiplied by total amount of",
 	"tooltip.enigmaticlegacy.cursed_scroll5": "§5curses that all items of your equipment bear.",
+	"tooltip.enigmaticlegacy.cursed_scroll6": "§dCurrent traits:",
+	"tooltip.enigmaticlegacy.cursed_scroll7": "§6+%1$s §dAttack Damage",
+	"tooltip.enigmaticlegacy.cursed_scroll8": "§6+%1$s §dMining Speed",
+	"tooltip.enigmaticlegacy.cursed_scroll9": "§6+%1$s §dHealth Regeneration",
 	
 	"tooltip.enigmaticlegacy.berserk_emblem1": "§6+%1$s §dAttack Damage",
 	"tooltip.enigmaticlegacy.berserk_emblem2": "§6+%1$s §dAttack Speed",
@@ -580,23 +601,29 @@
 	"tooltip.enigmaticlegacy.berserk_emblem4": "§6+%1$s §dDamage Resistance",
 	"tooltip.enigmaticlegacy.berserk_emblem5": "§5These traits are multiplied by how many percents",
 	"tooltip.enigmaticlegacy.berserk_emblem6": "§5of your health pool you're currently missing.",
+	"tooltip.enigmaticlegacy.berserk_emblem7": "§dCurrent traits:",
+	"tooltip.enigmaticlegacy.berserk_emblem8": "§6+%1$s §dAttack Damage",
+	"tooltip.enigmaticlegacy.berserk_emblem9": "§6+%1$s §dAttack Speed",
+	"tooltip.enigmaticlegacy.berserk_emblem10": "§6+%1$s §dMovement Speed",
+	"tooltip.enigmaticlegacy.berserk_emblem11": "§6+%1$s §dDamage Resistance",
 	
 	"tooltip.enigmaticlegacy.cursedRing1": "§5Once worn, it becomes a part of you.",
 	"tooltip.enigmaticlegacy.cursedRing2": "§4This ring will persist with you forever.",
 	"tooltip.enigmaticlegacy.cursedRing2_creative": "§6With the power of god, you can unequip it.",
 	"tooltip.enigmaticlegacy.cursedRing3": "§dSeven curses will befall whoever bears it:",
 	"tooltip.enigmaticlegacy.cursedRing4": "§5- You receive double damage from §6ANY§5 source.",
+	"tooltip.enigmaticlegacy.cursedRing4_alt": "§5- You receive §6%1$s§5 damage from §6ANY§5 source.",
 	"tooltip.enigmaticlegacy.cursedRing5": "§5- Neutral creatures are aggresive towards you.",
-	"tooltip.enigmaticlegacy.cursedRing6": "§5- Armor is §630%§5 less effective.",
-	"tooltip.enigmaticlegacy.cursedRing7": "§5- Monsters receive §650%§5 less damage from you.",
+	"tooltip.enigmaticlegacy.cursedRing6": "§5- Armor is §6%1$s§5 less effective.",
+	"tooltip.enigmaticlegacy.cursedRing7": "§5- Monsters receive §6%1$s§5 less damage from you.",
 	"tooltip.enigmaticlegacy.cursedRing8": "§5- When on fire, you burn forever.",
 	"tooltip.enigmaticlegacy.cursedRing9": "§5- Every death tears your soul apart.",
 	"tooltip.enigmaticlegacy.cursedRing10": "§5- You suffer from incurable insomnia.",
 	"tooltip.enigmaticlegacy.cursedRing11": "§dSeven blessings will reward those who withstand:",
-	"tooltip.enigmaticlegacy.cursedRing12": "§5- §6+1§d Looting Level",
-	"tooltip.enigmaticlegacy.cursedRing13": "§5- §6+1§d Fortune Level",
-	"tooltip.enigmaticlegacy.cursedRing14": "§5- §6+400%§5 §dExperience§5 dropped.",
-	"tooltip.enigmaticlegacy.cursedRing15": "§5- §6+10§d Enchanting Power§5 in §6Enchanting Table.",
+	"tooltip.enigmaticlegacy.cursedRing12": "§5- §6+%1$s§d Looting Level",
+	"tooltip.enigmaticlegacy.cursedRing13": "§5- §6+%1$s§d Fortune Level",
+	"tooltip.enigmaticlegacy.cursedRing14": "§5- §6+%1$s§5 §dExperience§5 dropped.",
+	"tooltip.enigmaticlegacy.cursedRing15": "§5- §6+%1$s§d Enchanting Power§5 in §6Enchanting Table.",
 	"tooltip.enigmaticlegacy.cursedRing16": "§5- Unique drops from some creatures.",
 	"tooltip.enigmaticlegacy.cursedRing17": "§5- Functionality of §6Ring of Ender.",
 	"tooltip.enigmaticlegacy.cursedRing18": "§5- You can create and use unique relics.",
@@ -606,6 +633,49 @@
 	
 	"tooltip.enigmaticlegacy.tainted1": "§5Slightly tainted by cursed one's presence.",
 	"tooltip.enigmaticlegacy.tainted2": "§5Tainted by the touch of a cursed being.",
+	
+	"tooltip.enigmaticlegacy.theTwist1": "§5On a path to take it all away,",
+	"tooltip.enigmaticlegacy.theTwist2": "§5there can be no better way of knowing...",
+	"tooltip.enigmaticlegacy.theTwist3": "§5Against bosses and players:",
+	"tooltip.enigmaticlegacy.theTwist4": "§dAlteration of the §6Fourth Curse§5:",
+	"tooltip.enigmaticlegacy.theTwist5": "§5- Always deals it's full damage.",
+	"tooltip.enigmaticlegacy.theTwist6": "§6+§6%1$s§d Damage§5 against bosses and players.",
+	"tooltip.enigmaticlegacy.theTwist7": "§6+§6%1$s§d Knockback§5",
+	
+	"tooltip.enigmaticlegacy.animalGuide1": "§5While in your inventory, your attacks can't",
+	"tooltip.enigmaticlegacy.animalGuide2": "§5deal damage to animals.",
+	"tooltip.enigmaticlegacy.animalGuide3": "§6Hoglins§5 around you are rendered passive.",
+	"tooltip.enigmaticlegacy.animalGuide4": "§dAlteration of the §6Second Curse§d:",
+	"tooltip.enigmaticlegacy.animalGuide5": "§5- Wolves and bees stay neutral towards you.",
+	
+	"tooltip.enigmaticlegacy.hunterGuide1": "§5While in your inventory, all damage your pets",
+	"tooltip.enigmaticlegacy.hunterGuide2": "§5receive within §6%1$s§6 blocks§5 from you is redirected",
+	"tooltip.enigmaticlegacy.hunterGuide3": "§5upon you.",
+	"tooltip.enigmaticlegacy.hunterGuide4": "§5If §6Guide to Animal Companionship§5 is also",
+	"tooltip.enigmaticlegacy.hunterGuide5": "§5possessed, redirected damage is reduced by §6%1$s§5.",
+	
+	"tooltip.enigmaticlegacy.guardianHeart1": "§5While in inventory, §6Guardians§5 within §6%1$s§6 blocks",
+	"tooltip.enigmaticlegacy.guardianHeart2": "§5from you are rendered neutral towards you",
+	"tooltip.enigmaticlegacy.guardianHeart3": "§5and will target nearby monsters.",
+	"tooltip.enigmaticlegacy.guardianHeart4": "§5While on hotbar, casting your sight upon the",
+	"tooltip.enigmaticlegacy.guardianHeart5": "§5monster within §6%1$s§6 blocks§5 from you causes it to",
+	"tooltip.enigmaticlegacy.guardianHeart6": "§5become temporarily enraged, gaining greater",
+	"tooltip.enigmaticlegacy.guardianHeart7": "§5strength and switching target to other closest",
+	"tooltip.enigmaticlegacy.guardianHeart8": "§5monster within §6%1$s§6 blocks§5 from it.",
+	"tooltip.enigmaticlegacy.guardianHeart9": "§5Other monsters within this radius will",
+	"tooltip.enigmaticlegacy.guardianHeart10": "§5instantly prioritize attacking enraged monster.",
+	"tooltip.enigmaticlegacy.guardianHeart11": "§6Some monsters are immune to being enraged.",
+	"tooltip.enigmaticlegacy.guardianHeart12": "§5This ability has §6%1$s§6 seconds§5 cooldown.",
+	
+	"tooltip.enigmaticlegacy.forbiddenFruit1": "§5After consuming the fruit you shall never",
+	"tooltip.enigmaticlegacy.forbiddenFruit2": "§5experience hunger again, but any form of",
+	"tooltip.enigmaticlegacy.forbiddenFruit3": "§5regeneration will have §6%1$s§5 weaker effect.",
+	
+	"tooltip.enigmaticlegacy.antiforbiddenPotion1": "§5Allows you to atone for the sin committed",
+	"tooltip.enigmaticlegacy.antiforbiddenPotion2": "§5by tasting §6The Forbidden Fruit§5.",
+	
+	"tooltip.enigmaticlegacy.evilEssence1": "§5Embodies raw, unrefined energy teared out",
+	"tooltip.enigmaticlegacy.evilEssence2": "§5from the §6Wither§5's soul.",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",
@@ -627,7 +697,7 @@
 	
 	
 	"book.enigmaticlegacy.category.tools.name": "Tools & Weapons",
-	"book.enigmaticlegacy.category.tools.desc": "Even demigods oftenly cannot easily unleash their creational and destructional powers, unless they have proper tool in their hands.<br2/>Swords are no different from any other tool - they are created to serve their purpose, and they silently obey their design. It just so happened that their purpose is to shed blood.",
+	"book.enigmaticlegacy.category.tools.desc": "Even demigods often cannot easily unleash their creational and destructional powers, unless they have proper tool in their hands.<br2/>Swords are no different from any other tool - they are created to serve their purpose, and they silently obey their design. It just so happened that their purpose is to shed blood.",
 	
 	
 	"book.enigmaticlegacy.category.armor.name": "Armor",
@@ -753,7 +823,7 @@
 	
 	"book.enigmaticlegacy.entry.unholy_grail.name": "Unholy Grail",
 	"book.enigmaticlegacy.entry.unholy_grail.heading.1": "The Grail",
-	"book.enigmaticlegacy.entry.unholy_grail.page.1": "After aknowledging so many legends about it, you were surprised to discover this relic just lying around in the midst of nameless ruins. Lost among worthless garbage and trinkets - as if there was nothing special to it.<br2/>It has proven to be just as useless as you did expect  from those legends, however. The Grail is always filled",
+	"book.enigmaticlegacy.entry.unholy_grail.page.1": "After acknowledging so many legends about it, you were surprised to discover this relic just lying around in the midst of nameless ruins. Lost among worthless garbage and trinkets - as if there was nothing special to it.<br2/>It has proven to be just as useless as you did expect  from those legends, however. The Grail is always filled",
 	"book.enigmaticlegacy.entry.unholy_grail.page.2": "with water, no matter how much you drink from it, it would remain just as full as it was. But that water has a bitter taste of ashes, and is tainted and poisonous. Depending on how much you drink before realizing that, it will either leave you in heavily diseased state, or just kill after a short while.",
 	"book.enigmaticlegacy.entry.unholy_grail.page.3": "Might still be worth to keep it around as a unique trophy.",
 	
@@ -815,7 +885,7 @@
 	"book.enigmaticlegacy.entry.enigmatic_item.heading.1": "The Spellstone",
 	"book.enigmaticlegacy.entry.enigmatic_item.page.1": "Powers of this stone are so vast and overwhelming, that they appear to have never been indeded to be possessed by a demigod.<br2/>It grants you ultimate protection from most enviromental threats. Most hostile beings will still target you and be able to hurt you, but their attempts to take your life shall never be successful",
 	"book.enigmaticlegacy.entry.enigmatic_item.page.2": "should the spellstone remain in your possession - you cannot be slain. No matter how close you will stand to the verge of death, nothing will ever have power to push you over.<br2/>Despite bearing name 'Heart of Creation', it also grants you among the most ultimate means",
-	"book.enigmaticlegacy.entry.enigmatic_item.page.3": "to sow destruction, raining down devastation skulls similar to those summoned by the Wither.<br2/>These will also target any entities you might happen to stare at, quickly obliterating most of whoever you might choose to unleash your wrath upon.",
+	"book.enigmaticlegacy.entry.enigmatic_item.page.3": "to sow destruction, raining down devastating skulls similar to those summoned by the Wither.<br2/>These will also target any entities you might happen to stare at, quickly obliterating most of whoever you might choose to unleash your wrath upon.",
 	
 	
 	"book.enigmaticlegacy.entry.enigmatic_amulet.name": "Enigmatic Amulet",
@@ -857,7 +927,7 @@
 	
 	
 	"book.enigmaticlegacy.entry.twisted_core.name": "Twisted Heart",
-	"book.enigmaticlegacy.entry.twisted_core.page.1": "...and thus, it was you who have chosen this fate. You have surely aknowledged what sorrow and regret this choice will cost you many times in the long journey ahead, but you still have done it. Do you even know why?<br2/>Regardless, there is no way back - only ahead, in an attempt to harness the power of great curses you are now",
+	"book.enigmaticlegacy.entry.twisted_core.page.1": "...and thus, it was you who have chosen this fate. You have surely acknowledged what sorrow and regret this choice will cost you many times in the long journey ahead, but you still have done it. Do you even know why?<br2/>Regardless, there is no way back - only ahead, in an attempt to harness the power of great curses you are now",
 	"book.enigmaticlegacy.entry.twisted_core.page.2": "bound with. This task is hopefully not as complicated as it might seem if you can gain access to required ingredients, as curses themselves seem to actively seek new ways to spread tendrils of their corruption",
 	"book.enigmaticlegacy.entry.twisted_core.page.3": "into the world around you - they just require a little assistance from you.<br2/>As soon as you laid claim upon Heart of the Earth, you have noticed that it resonates with dark power of the ring, setting pulsations of pure energy within it slightly out of tact. This influence is hopefully not strong enough to instantly tarnish the heart, therefore rendering it unusable for regular crafing. But with small amount of carefully selected",
 	"book.enigmaticlegacy.entry.twisted_core.page.4": "arcane ingridients and a fraction of your demigod power involved, you can reinforce the link between the heart's core and curses that you bear, allowing latter to corrupt it and transform into something entirely different.<br2/>Twisted Heart is a product of this unholy ritual, an artifact incarnating part of the great curse, darker and more powerful than what Heart of the Earth used to contain.",
@@ -954,11 +1024,65 @@
 	"book.enigmaticlegacy.entry.astral_dust.page.2": "beauty of it's single instant.<br2/>The arcane power that it holds might be immense, but it requires to be carefully treated and molded to be useful in a constructive way. As time goes by, however, there is no doubt you will discover many possible applications it can have.",
 	
 	
+	"book.enigmaticlegacy.entry.evil_essence.name": "Nefarious Essence",
+	"book.enigmaticlegacy.entry.evil_essence.heading.1": "The Essence",
+	"book.enigmaticlegacy.entry.evil_essence.page.1": "While the Nether Star is a core of Wither's physical vessel, this substance is a manifestation of pure energy of it's seemingly indestructible and perpetual soul. A tiny fraction of that energy, but it sure has immeasurable potential in your hands.<br2/>It seems to have strange connection to your own cursed being, which is why you were",
+	"book.enigmaticlegacy.entry.evil_essence.page.2": "able to obtain this essence in the first place. It draws closer to you as you approach, as lf bent by desire to latch onto you. Perhaps, you could allow it to do so?... No, what a dumb idea that would be.<br2/>But one thing is beyond questioning - this matter contains tremendous amounts",
+	"book.enigmaticlegacy.entry.evil_essence.page.3": "of dark, twisted power, that you just so happen to be capable of harnessing. You will surely find something to do about it.",
+	
+	
+	"book.enigmaticlegacy.entry.forbidden_fruit.name": "The Forbidden Fruit",
+	"book.enigmaticlegacy.entry.forbidden_fruit.heading.1": "The Fruit",
+	"book.enigmaticlegacy.entry.forbidden_fruit.page.1": "A rare relic that can be located among the treasures of ancient Bastions' remnants in the Nether, this fruit at first glance appears as nothing you could possibly want to bite. That appearance is not deceptive indeed - it has a horrendous taste of ash and rot, spiced up by exquisite oily bitterness. If you somehow can bear the screaming of your flavor receptors and",
+	"book.enigmaticlegacy.entry.forbidden_fruit.page.2": "consume it all, immediate effects are very likely to very kill you, so better prepare beforehand to cure your heavily diseased state somehow before there's no body left to cure.<br2/>After immediate toxical influence ceases, however, long-term effects come into",
+	"book.enigmaticlegacy.entry.forbidden_fruit.page.3": "play. You will forever cease to experience hunger in any form, and therefore will be rendered unable to consume most regular types of food. Though this effect might seem beneficial, the price for it is permanent feeling of unsaturation and significantly slowed down health regeneration in any of it's forms.<br2/>Be aware that once the fruit is consumed, there is no way to reverse those effects - they will persist upon you",
+	"book.enigmaticlegacy.entry.forbidden_fruit.page.4": "even in death, alike a sin that cannot be atoned.<br2/>Make your choices wisely.",
+	
+	
+	"book.enigmaticlegacy.entry.guardian_heart.name": "Heart of the Guardian",
+	"book.enigmaticlegacy.entry.guardian_heart.heading.1": "The Heart",
+	"book.enigmaticlegacy.entry.guardian_heart.page.1": "Ocean Monuments, along with countless Guardians that patrol them within and outside, stand among the greatest mysteries of this world.<br/>And themselves Guardians present a lot more immediate interest than submerged halls and corridors, filled with nothing but water and darkness apart from those protecting this abandoned domain.",
+	"book.enigmaticlegacy.entry.guardian_heart.page.2": "This relic seems to be a living heart, teared from the body of one of the Elder Guardians, which in turn seem to be particularly ancient and powerful variation of guardian species. They could sense you approaching their home long before you even submerged yourself under the ocean's surface where it was located,",
+	"book.enigmaticlegacy.entry.guardian_heart.page.3": "and have repeatedly cursed you with almost completely disability to break blocks, thus effectively preventing you from breaking your way into the walls of the monument and carving your own path among them.<br2/>This heart appears to be the source of their senses and power that allowed to cast such curse on you. It resonates with the twisted energies of Ring of the Seven Curses, which was why you",
+	"book.enigmaticlegacy.entry.guardian_heart.page.4": "were able to obtain it alive and intact.<br2/>With Heart of the Guardian at your disposal, regular Guardians are not only rendered neutral towards you, but also prioritize dispatching potential threats close enough to you, monsters and alike. Reason of such respect remains a mystery, but perhaps the power of the heart has much greater connection to them and influence on their minds than Elder Guardians",
+	"book.enigmaticlegacy.entry.guardian_heart.page.5": "who possess such hearts, especially granted that it's now empowered by Seven Curses that you bear. This assumption however raises many unanswered questions about origins of those hearts, as well as origin of Guardians themselves.<br2/>Another heart's ability is that when you carry it around on your hotbar or hold in your hand, turning your sight upon the monster close enough to you will cause the heart to",
+	"book.enigmaticlegacy.entry.guardian_heart.page.6": "conjure a curse which will befall that monster. Normally it doesn't seem capable of producing powerful curses, as even Elder Guardians themselves couldn't do much more with it's power to you than just slow you down. But sheer power of the Seven Curses infuses heart with much greater ability, so instead of mild debuff the mind of affected monster will be manipulated and forced to turn against one of it's kind, while body will be temprorarily",
+	"book.enigmaticlegacy.entry.guardian_heart.page.7": "empowered to aid in such betrayal. Monsters surrounding enraged one will also be affected by the curse, forced to forget what they were doing and turn against the one it befell.<br2/>It should be noted that primary target of the curse will return to regular state of mind after having killed whoever it was forced to attack. Same goes for monsters that turn against cursed one - if they succeed in slaying it,",
+	"book.enigmaticlegacy.entry.guardian_heart.page.8": "they will return to their normal monster activities, with those activities likely being trying to kill you. Active ability of the heart will not work at all if monster you choose to turn your sight upon doesn't have any other monsters it could see within close proximity.<br2/>This ability has considerable cooldown, so don't expect it alone will save you from crowd of Zombie Piglins chasing you - better put as much distance.",
+	"book.enigmaticlegacy.entry.guardian_heart.page.9": "as you can between yourself and them while they are busy resolving inner conflict in their group.",
+	
+	
+	"book.enigmaticlegacy.entry.animal_guide.name": "Animal Tamer's Guide",
+	"book.enigmaticlegacy.entry.animal_guide.page.1": "If you seek to befriend lovely fauna of the Overworld, this comprehensive guide will certainly help you in doing so. It will help you learn how to avoid accidentally hurting your animal friends when busy fighting something much less friendly, and many ways to earn their loyalty and respect.<br2/>It's difficult to remember hundreds of pages filled",
+	"book.enigmaticlegacy.entry.animal_guide.page.2": "with careful reasearch and outlining details on the topic however, so better carry it around with yourself, just in case you will need to look up a thing or two real quick.",
+	
+	
+	"book.enigmaticlegacy.entry.hunter_guide.name": "Hunter's Guide",
+	"book.enigmaticlegacy.entry.hunter_guide.page.1": "Another comprehensive guide, this one will help you learn how to hunt side-by-side with beastly companions that you might have tamed. You are probably already aware that despite all loyalty and courage they are capable of showing in battle, animals are much less sentient than you and aren't capable of developing complex combat techniques and effectively",
+	"book.enigmaticlegacy.entry.hunter_guide.page.2": "dodging unoubvious attack patterns.<br2/>This book outlines many unique approaches to combat that you can learn as their master, which will allow you to take hits they normally would on",
+	"book.enigmaticlegacy.entry.hunter_guide.page.3": "yourself, saving them from being slain by attacks stronger than they can bear.<br2/>Hopefully your means of defense are much more elaborate and effective, and you can heal yourself much quicker in battle with use potions for instance.",
+	
+	
+	"book.enigmaticlegacy.entry.the_twist.name": "The Twist",
+	"book.enigmaticlegacy.entry.the_twist.page.1": "Knowledge is the power. Very literally sometimes as this book proves.<br2/>The nefarious essence of the Wither's soul does allow you to twist and corrupt physical embodiment of the knowledge vessel that you look at the pages of right now. The result doesn't affect the internal contents much - The Twist will serve much the same purpose",
+	"book.enigmaticlegacy.entry.the_twist.page.2": "as The Acknowledgemnt, allowing you to access your knowledge of this world's greatest mysteries, just wrapped into a different cover.<br2/>The true twist comes from it's less scholastic purpose,",
+	"book.enigmaticlegacy.entry.the_twist.page.3": "specifically from abilities it has as weapon rather than book. Attacking with it deals heavy damage and even heavier knockback, which combined with hight attack speed allows for truly devastating series of strikes.<br2/>Being infused with essence of the curse and empowered with energy of the Wither's being, this relic draws power from the Ring of the Seven Curses, allowing you to overcome effects of the Second Curse",
+	"book.enigmaticlegacy.entry.the_twist.page.4": "if you choose it as your weapon, always dealing it's full damage to monsters, just as any other creatures.<br2/>Furthermore, that essence eagerly eats into vessels and souls of higher beings, burning and tearing them apart, and higher beings just so happen to conveniently include demigods, as much as the Wither itself.",
+	
+	
+	"book.enigmaticlegacy.entry.ancient_tomes.name": "Ancient Tomes",
+	"book.enigmaticlegacy.entry.ancient_tomes.heading.1": "The Tome",
+	"book.enigmaticlegacy.entry.ancient_tomes.page.1": "In many corners of three greatest worlds, you can happen across these tomes. They are very ancient examples of literature, and one of the few that endure until present days, despite all ruin and erasure that befell them over centuries preceeding your advent.<br2/>Piecing together what little knowledge persists among their",
+	"book.enigmaticlegacy.entry.ancient_tomes.page.2": "pages is a feat unlike any other; hopefully though, it's a lot easier with mind and power of a demigod.<br2/>Unfortunately, it doesn't so often happen that that knowledge is practically usable. More often these works contain folklore and artistic descriptions of the world and",
+	"book.enigmaticlegacy.entry.ancient_tomes.page.3": "it's vast history, which are unlikely to help you conquer it, albeit probably making it more worth conquering in the first place. It's no easy task to seek pure truth in them, but with enough examples collected you should be able to significantly expand your knowledge of all worlds, uncovering many mysteries you couldn't have solved otherwise.<br2/>You might also discover multiple clues that would lead you to legendary relics and",
+	"book.enigmaticlegacy.entry.ancient_tomes.page.4": "other objects of power you might be interested to claim, but may not know where to seek them yet.",
+	
+	
 	"book.enigmaticlegacy.entry.ancient_debris.name": "Ancient Debris",
 	"book.enigmaticlegacy.entry.ancient_debris.heading.1": "The Debris",
 	"book.enigmaticlegacy.entry.ancient_debris.page.1": "Deep within the Nether's crust, there lies an ancient debris.<br2/>It's origin isn't known exactly. Fragments of lore you came across quite precisely describe the process of refining it and expected properties of material that  can be obtained through doing so, but leave no clues to where  it could've come from. Though geological history of",
 	"book.enigmaticlegacy.entry.ancient_debris.page.2": "the Nether is a mystery in it's own right, how something as unusual as those debris ended up in that history is even more of an enigma.<br2/>Much more than in that history, however, you are interested in laying your hands on the actual sample of debris itself.",
-	"book.enigmaticlegacy.entry.ancient_debris.page.3": "From what you have aknowledged, it might be a key to forging metal that superceeds hardness of a diamond, which for many former eons remained the most durable material both humans and demigods had to work with.",
+	"book.enigmaticlegacy.entry.ancient_debris.page.3": "From what you have acknowledged, it might be a key to forging metal that superceeds hardness of a diamond, which for many former eons remained the most durable material both humans and demigods had to work with.",
 	
 	
 	"book.enigmaticlegacy.entry.redstone_lantern.name": "Redstone Lantern",
@@ -1013,7 +1137,7 @@
 	
 	"book.enigmaticlegacy.entry.etherium_armor.name": "Etherium Armor",
 	"book.enigmaticlegacy.entry.etherium_armor.heading.1": "The Armor Set",
-	"book.enigmaticlegacy.entry.etherium_armor.page.1": "Surely, it didn't take you too long to guess than newfound power of etherium might come in handy in an attempt of forging the ultimate armor. Etherium armor might not be truly ultimate, yet by far it surpassess anything you can create or lay claim upon.<br2/>One of it's first notable properties is that should you equip it and bear on your",
+	"book.enigmaticlegacy.entry.etherium_armor.page.1": "Surely, it didn't take you too long to guess that newfound power of etherium might come in handy in an attempt of forging the ultimate armor. Etherium armor might not be truly ultimate, yet by far it surpassess anything you can create or lay claim upon.<br2/>One of it's first notable properties is that should you equip it and bear on your",
 	"book.enigmaticlegacy.entry.etherium_armor.page.2": "body, the armor itself becomes completely invisible and feels much less of a burden to carry than armor forged from mundane metals. Until something attempts to interact with you or that armor, it's actually possible to entirely forget you even carry it, that's how unnoticable is it's weight for one who bears it.",
 	"book.enigmaticlegacy.entry.etherium_armor.page.3": "That ease, however, doesn't mean it's worse at absorbing enemy attacks. It superceeds even netherite armor it how extremely hard it is to penetrate. More than that, it also is unimaginably durable - even the most crushing blows barely leave a scratch on it's surface.<br2/>And as if that wasn't enough, individual armor pieces seem to resonate with one another, urging to unleash the metal's inner energy.",
 	"book.enigmaticlegacy.entry.etherium_armor.page.4": "Should you carry all four pieces simultaneously, and that resonation achieves it's peak, finally being able to manifest itself into powerful shield woven out of sheer energy, protecting it's bearer from most projectiles, significantly weakening attacks that it isn't capable of blocking completely, and knocking back whoever attempts to execute these attacks.<br2/>That shield, however, takes a lot of energy to sustain.",
@@ -1022,7 +1146,7 @@
 	
 	
 	"book.enigmaticlegacy.entry.xp_scroll.name": "Wisdom Storage",
-	"book.enigmaticlegacy.entry.xp_scroll.page.1": "The ethereal substance known as experience oftenly is quite difficult and inconvenient to handle. Though yourself you possess ability to absorb any amount of it, what you do not possess is a possibility to effectively distribute it afterwads.<br2/>The more you absorb and withold at once, the greater amount arts like enchanting",
+	"book.enigmaticlegacy.entry.xp_scroll.page.1": "The ethereal substance known as experience often is quite difficult and inconvenient to handle. Though yourself you possess ability to absorb any amount of it, what you do not possess is a possibility to effectively distribute it afterwads.<br2/>The more you absorb and withold at once, the greater amount arts like enchanting",
 	"book.enigmaticlegacy.entry.xp_scroll.page.2": "consume to be performed, at times getting unimaginably wasteful. Even more irritating, once your physical shell gets torn apart, most of your experience simply vanishes, leaving only insignificant morsels left behind.",
 	"book.enigmaticlegacy.entry.xp_scroll.page.3": "Should you lay your hands on this magnificent scroll, however, and that frustration will finally come to an end.<br2/>It can quickly and easily absorb your experience, witholding it until you choose to claim it back. Scroll of Ageless Wisdom allows to precisely control how much is tranferred back and forth, thus enabling you to manage your precious experience as effectively as you wish, as experience stored in scroll",
 	"book.enigmaticlegacy.entry.xp_scroll.page.4": "does not count towards your own total. Just by looking at it, you can conveniently estimate how much experience it stores at any given time.<br2/>While it is active and carried among your other accessories, this scroll also absorbs any experience clumps that might be dropped in large area around you.",
@@ -1041,7 +1165,7 @@
 	
 	
 	"book.enigmaticlegacy.entry.mining_charm.name": "Miner's Dream",
-	"book.enigmaticlegacy.entry.mining_charm.page.1": "Most of this world's valuable metals and minerals are hidden deep below it's surface. Because of that, you oftenly find yourself in need to spend countless hours in damp, cold and dark underground, digging seemingly endless tunnels in search of resources you require.<br2/>This charm may not spare you the burden of having to go",
+	"book.enigmaticlegacy.entry.mining_charm.page.1": "Most of this world's valuable metals and minerals are hidden deep below it's surface. Because of that, you often find yourself in need to spend countless hours in damp, cold and dark underground, digging seemingly endless tunnels in search of resources you require.<br2/>This charm may not spare you the burden of having to go",
 	"book.enigmaticlegacy.entry.mining_charm.page.2": "through it, but at least it can make those hours slightly less dark and boringly long. It grants powers that would make any miner jealous, allowing you to tear blocks apart significantly faster than you could otherwise, see in dark",
 	"book.enigmaticlegacy.entry.mining_charm.page.3": "as clearly as in daylight, and be able to reach things with your pickaxe from much further away.<br2/>It might also shift the odds just a bit in your favor in your search of treasures... probably. Maybe that part was only rumors, after all.",
 	

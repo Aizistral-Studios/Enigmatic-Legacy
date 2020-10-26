@@ -11,7 +11,7 @@ import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
-import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
+import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
@@ -35,7 +35,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
+public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 	public static Omniconfig.IntParameter spellstoneCooldown;
 	public static Omniconfig.DoubleParameter baseDarknessDamage;
 	public static Omniconfig.DoubleParameter regenerationDemodifier;
@@ -88,7 +88,7 @@ public class VoidPearl extends ItemAdvancedCurio implements ISpellstone {
 	public DamageSource theDarkness;
 
 	public VoidPearl() {
-		super(ItemAdvancedCurio.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isBurnable());
+		super(ItemSpellstoneCurio.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "void_pearl"));
 
 		this.immunityList.add(DamageSource.DROWN.damageType);

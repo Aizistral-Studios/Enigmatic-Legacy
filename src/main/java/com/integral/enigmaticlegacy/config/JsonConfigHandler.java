@@ -27,6 +27,10 @@ public class JsonConfigHandler {
 		}
 	}
 
+	public static int getInt(String key) {
+		return (int)getFloat(key);
+	}
+
 	public static float getFloat(String key) {
 		try {
 			final InputStreamReader reader = new InputStreamReader(Objects.requireNonNull(new FileInputStream(getConfigFile())), StandardCharsets.UTF_8);

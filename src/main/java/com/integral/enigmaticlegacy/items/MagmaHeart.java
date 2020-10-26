@@ -9,7 +9,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
-import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
+import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class MagmaHeart extends ItemAdvancedCurio implements ISpellstone {
+public class MagmaHeart extends ItemSpellstoneCurio implements ISpellstone {
 	public static Omniconfig.IntParameter spellstoneCooldown;
 	public static Omniconfig.DoubleParameter damageFeedback;
 	public static Omniconfig.IntParameter ignitionFeedback;
@@ -76,7 +76,7 @@ public class MagmaHeart extends ItemAdvancedCurio implements ISpellstone {
 	public List<String> nemesisList = new ArrayList<String>();
 
 	public MagmaHeart() {
-		super(ItemAdvancedCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).isBurnable());
+		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).isBurnable());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "magma_heart"));
 
 		//this.immunityList.add(DamageSource.LAVA.damageType);

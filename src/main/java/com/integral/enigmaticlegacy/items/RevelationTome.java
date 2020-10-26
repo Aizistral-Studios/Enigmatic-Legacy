@@ -16,6 +16,7 @@ import com.integral.enigmaticlegacy.triggers.RevelationGainTrigger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -37,7 +38,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class RevelationTome extends ItemBase {
+public class RevelationTome extends ItemBase implements IVanishable {
 
 	public static final String revelationPointsTag = "revelationPoints";
 	public static final String xpPointsTag = "xpPoints";

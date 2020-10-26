@@ -12,6 +12,7 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -25,7 +26,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class DarkMirror extends ItemBase implements ICursed {
+public class DarkMirror extends ItemBase implements ICursed, IVanishable {
 
 	public DarkMirror() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.RARE).maxStackSize(1));

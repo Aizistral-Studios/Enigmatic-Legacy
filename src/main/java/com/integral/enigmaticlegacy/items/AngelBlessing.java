@@ -11,7 +11,7 @@ import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
-import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
+import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
 import com.integral.omniconfig.wrappers.Omniconfig;
@@ -40,7 +40,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
+public class AngelBlessing extends ItemSpellstoneCurio  {
 	public static Omniconfig.IntParameter spellstoneCooldown;
 	public static Omniconfig.DoubleParameter accelerationModifier;
 	public static Omniconfig.DoubleParameter accelerationModifierElytra;
@@ -75,7 +75,7 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 	protected double range = 4.0D;
 
 	public AngelBlessing() {
-		super(ItemAdvancedCurio.getDefaultProperties().rarity(Rarity.RARE));
+		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.RARE));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "angel_blessing"));
 
 		this.immunityList.add(DamageSource.FALL.damageType);

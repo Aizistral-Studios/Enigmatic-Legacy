@@ -15,7 +15,6 @@ import com.integral.enigmaticlegacy.blocks.BlockBigLamp;
 import com.integral.enigmaticlegacy.blocks.BlockMassiveLamp;
 import com.integral.enigmaticlegacy.brewing.SpecialBrewingRecipe;
 import com.integral.enigmaticlegacy.brewing.ValidationBrewingRecipe;
-import com.integral.enigmaticlegacy.client.models.ModelRegistry;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.crafting.EnigmaticRecipeSerializers;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
@@ -32,9 +31,10 @@ import com.integral.enigmaticlegacy.handlers.EnigmaticKeybindHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticUpdateHandler;
 import com.integral.enigmaticlegacy.handlers.OneSpecialHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
+import com.integral.enigmaticlegacy.items.AnimalGuide;
+import com.integral.enigmaticlegacy.items.AntiforbiddenPotion;
 import com.integral.enigmaticlegacy.items.AstralBreaker;
 import com.integral.enigmaticlegacy.items.AstralDust;
 import com.integral.enigmaticlegacy.items.BerserkEmblem;
@@ -57,14 +57,18 @@ import com.integral.enigmaticlegacy.items.EtheriumPickaxe;
 import com.integral.enigmaticlegacy.items.EtheriumScythe;
 import com.integral.enigmaticlegacy.items.EtheriumShovel;
 import com.integral.enigmaticlegacy.items.EtheriumSword;
+import com.integral.enigmaticlegacy.items.EvilEssence;
 import com.integral.enigmaticlegacy.items.ExtradimensionalEye;
 import com.integral.enigmaticlegacy.items.EyeOfNebula;
 import com.integral.enigmaticlegacy.items.FabulousScroll;
 import com.integral.enigmaticlegacy.items.ForbiddenAxe;
+import com.integral.enigmaticlegacy.items.ForbiddenFruit;
 import com.integral.enigmaticlegacy.items.GemOfBinding;
 import com.integral.enigmaticlegacy.items.GolemHeart;
+import com.integral.enigmaticlegacy.items.GuardianHeart;
 import com.integral.enigmaticlegacy.items.HastePotion;
 import com.integral.enigmaticlegacy.items.HeavenScroll;
+import com.integral.enigmaticlegacy.items.HunterGuide;
 import com.integral.enigmaticlegacy.items.IronRing;
 import com.integral.enigmaticlegacy.items.LootGenerator;
 import com.integral.enigmaticlegacy.items.LoreFragment;
@@ -85,6 +89,7 @@ import com.integral.enigmaticlegacy.items.SoulCrystal;
 import com.integral.enigmaticlegacy.items.StorageCrystal;
 import com.integral.enigmaticlegacy.items.SuperMagnetRing;
 import com.integral.enigmaticlegacy.items.TheAcknowledgment;
+import com.integral.enigmaticlegacy.items.TheTwist;
 import com.integral.enigmaticlegacy.items.ThiccScroll;
 import com.integral.enigmaticlegacy.items.TwistedCore;
 import com.integral.enigmaticlegacy.items.UltimatePotionBase;
@@ -98,6 +103,7 @@ import com.integral.enigmaticlegacy.items.generic.GenericBlockItem;
 import com.integral.enigmaticlegacy.objects.AdvancedPotion;
 import com.integral.enigmaticlegacy.packets.clients.PacketFlameParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
+import com.integral.enigmaticlegacy.packets.clients.PacketGenericParticleEffect;
 import com.integral.enigmaticlegacy.packets.clients.PacketHandleItemPickup;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerRotations;
@@ -157,7 +163,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.extensions.IForgeContainerType;
@@ -184,7 +189,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.6.1";
+	public static final String VERSION = "2.7.0";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -304,6 +309,14 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Emblem of Bloodstained Valor") public static BerserkEmblem berserkEmblem;
 	@ConfigurableItem("Heart of the Earth") public static EarthHeart earthHeart;
 	@ConfigurableItem("Twisted Heart") public static TwistedCore twistedCore;
+
+	@ConfigurableItem("Heart of the Guardian") public static GuardianHeart guardianHeart;
+	@ConfigurableItem("The Twist") public static TheTwist theTwist;
+	@ConfigurableItem("Nefarious Essence") public static EvilEssence evilEssence;
+	@ConfigurableItem("Guite to Animal Companionship") public static AnimalGuide animalGuide;
+	@ConfigurableItem("Guide to Feral Hunt") public static HunterGuide hunterGuide;
+	@ConfigurableItem("Forbidden Fruit") public static ForbiddenFruit forbiddenFruit;
+	@ConfigurableItem("") public static AntiforbiddenPotion antiforbiddenPotion;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -460,7 +473,13 @@ public class EnigmaticLegacy {
 
 		cursedScroll = new CursedScroll();
 		berserkEmblem = new BerserkEmblem();
-
+		guardianHeart = new GuardianHeart();
+		theTwist = new TheTwist();
+		evilEssence = new EvilEssence();
+		forbiddenFruit = new ForbiddenFruit();
+		antiforbiddenPotion = new AntiforbiddenPotion();
+		animalGuide = new AnimalGuide();
+		hunterGuide = new HunterGuide();
 		earthHeart = new EarthHeart();
 		twistedCore = new TwistedCore();
 
@@ -557,6 +576,7 @@ public class EnigmaticLegacy {
 		packetInstance.registerMessage(18, PacketInkwellField.class, PacketInkwellField::encode, PacketInkwellField::decode, PacketInkwellField::handle);
 		packetInstance.registerMessage(19, PacketSyncTransientData.class, PacketSyncTransientData::encode, PacketSyncTransientData::decode, PacketSyncTransientData::handle);
 		packetInstance.registerMessage(20, PacketSyncOptions.class, PacketSyncOptions::encode, PacketSyncOptions::decode, PacketSyncOptions::handle);
+		packetInstance.registerMessage(21, PacketGenericParticleEffect.class, PacketGenericParticleEffect::encode, PacketGenericParticleEffect::decode, PacketGenericParticleEffect::handle);
 
 		enigmaticLogger.info("Registering triggers...");
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);
@@ -565,24 +585,20 @@ public class EnigmaticLegacy {
 		CriteriaTriggers.register(CursedRingEquippedTrigger.INSTANCE);
 		CriteriaTriggers.register(RevelationTomeBurntTrigger.INSTANCE);
 
-		enigmaticLogger.info("Extracting common obfuscated fields...");
-		ObfuscatedFields.extractCommonFields();
-
 		enigmaticLogger.info("Common setup phase finished successfully.");
 	}
 
 	private void clientRegistries(final FMLClientSetupEvent event) {
 		enigmaticLogger.info("Initializing client setup phase...");
 		keybindHandler.registerKeybinds();
-
-		enigmaticLogger.info("Extracting client obfuscated fields...");
-		ObfuscatedFields.extractClientFields();
+		enigmaticAmulet.registerVariants();
 
 		for (final Block theBlock : cutoutBlockRegistry) {
 			RenderTypeLookup.setRenderLayer(theBlock, RenderType.getCutout());
 		}
 
-		ModelRegistry.registerModels();
+		proxy.initEntityRendering();
+
 		ScreenManager.registerFactory(PORTABLE_CRAFTER, CraftingScreen::new);
 		ScreenManager.registerFactory(LORE_INSCRIBER_CONTAINER, LoreInscriberScreen::new);
 
@@ -591,6 +607,7 @@ public class EnigmaticLegacy {
 
 	private void intermodStuff(final InterModEnqueueEvent event) {
 		enigmaticLogger.info("Sending messages to Curios API...");
+		//SuperpositionHandler.registerCurioType("curio", 1, true, false, null);
 		SuperpositionHandler.registerCurioType("charm", 1, true, false, null);
 		SuperpositionHandler.registerCurioType("ring", 2, true, false, null);
 		SuperpositionHandler.registerCurioType("spellstone", 1, false, false, new ResourceLocation(MODID, "slots/empty_spellstone_slot"));
@@ -727,6 +744,13 @@ public class EnigmaticLegacy {
 					twistedCore,
 					cursedScroll,
 					berserkEmblem,
+					guardianHeart,
+					theTwist,
+					evilEssence,
+					animalGuide,
+					hunterGuide,
+					forbiddenFruit,
+					antiforbiddenPotion,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),
@@ -832,14 +856,14 @@ public class EnigmaticLegacy {
 		public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> event) {
 			enigmaticLogger.info("Initializing entities registration...");
 
-			event.getRegistry().register(EntityType.Builder.<PermanentItemEntity>create(PermanentItemEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new PermanentItemEntity(PermanentItemEntity.TYPE, world)).setUpdateInterval(2).setShouldReceiveVelocityUpdates(true).build("").setRegistryName(new ResourceLocation(MODID, "permanent_item_entity")));
+			event.getRegistry().register(EntityType.Builder.<PermanentItemEntity>create(PermanentItemEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new PermanentItemEntity(PermanentItemEntity.TYPE, world)).setUpdateInterval(2).setShouldReceiveVelocityUpdates(true).build(MODID+":permanent_item_entity").setRegistryName(new ResourceLocation(MODID, "permanent_item_entity")));
 
-			event.getRegistry().register(EntityType.Builder.<EnigmaticPotionEntity>create(EnigmaticPotionEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new EnigmaticPotionEntity(EnigmaticPotionEntity.TYPE, world)).setUpdateInterval(10).setShouldReceiveVelocityUpdates(true).build("").setRegistryName(new ResourceLocation(MODID, "enigmatic_potion_entity")));
+			event.getRegistry().register(EntityType.Builder.<EnigmaticPotionEntity>create(EnigmaticPotionEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new EnigmaticPotionEntity(EnigmaticPotionEntity.TYPE, world)).setUpdateInterval(10).setShouldReceiveVelocityUpdates(true).build(MODID+":enigmatic_potion_entity").setRegistryName(new ResourceLocation(MODID, "enigmatic_potion_entity")));
 
 			event.getRegistry().register(EntityType.Builder.<UltimateWitherSkullEntity>create(UltimateWitherSkullEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new UltimateWitherSkullEntity(UltimateWitherSkullEntity.TYPE, world))
 					//.setUpdateInterval(1)
 					//.setShouldReceiveVelocityUpdates(true)
-					.build("").setRegistryName(new ResourceLocation(MODID, "ultimate_wither_skull_entity")));
+					.build(MODID+":ultimate_wither_skull_entity").setRegistryName(new ResourceLocation(MODID, "ultimate_wither_skull_entity")));
 
 			enigmaticLogger.info("Entities registered successfully.");
 		}

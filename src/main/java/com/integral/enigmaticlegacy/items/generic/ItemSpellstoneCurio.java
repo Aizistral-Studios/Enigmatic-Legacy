@@ -5,16 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Supplier;
 
-public abstract class ItemAdvancedCurio extends ItemBaseCurio {
+import com.integral.enigmaticlegacy.api.items.ISpellstone;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+
+import net.minecraft.enchantment.IVanishable;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+
+public abstract class ItemSpellstoneCurio extends ItemBaseCurio implements ISpellstone {
 
 	public List<String> immunityList = new ArrayList<String>();
 	public HashMap<String, Supplier<Float>> resistanceList = new HashMap<String, Supplier<Float>>();
 
-	public ItemAdvancedCurio() {
-		this(ItemAdvancedCurio.getDefaultProperties());
+	public ItemSpellstoneCurio() {
+		this(ItemSpellstoneCurio.getDefaultProperties());
 	}
 
-	public ItemAdvancedCurio(Properties props) {
+	public ItemSpellstoneCurio(Properties props) {
 		super(props);
 	}
 
@@ -32,6 +41,11 @@ public abstract class ItemAdvancedCurio extends ItemBaseCurio {
 
 	public static Properties getDefaultProperties() {
 		return ItemBaseCurio.getDefaultProperties();
+	}
+
+	@Override
+	public boolean canEquip(String identifier, LivingEntity living) {
+		return super.canEquip(identifier, living) && SuperpositionHandler.getSpellstone(living) == null;
 	}
 
 }

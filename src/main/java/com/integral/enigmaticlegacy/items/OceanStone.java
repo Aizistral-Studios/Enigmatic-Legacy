@@ -10,19 +10,23 @@ import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
+import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
-import com.integral.enigmaticlegacy.items.generic.ItemAdvancedCurio;
+import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
+import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -40,36 +44,44 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeMod;
 
-public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
+public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	public static Omniconfig.IntParameter spellstoneCooldown;
 	public static Omniconfig.PerhapsParameter swimminSpeedBoost;
 	public static Omniconfig.PerhapsParameter underwaterCreaturesResistance;
 	public static Omniconfig.DoubleParameter xpCostModifier;
+	public static Omniconfig.BooleanParameter preventOxygenBarRender;
 
-	@SubscribeConfig
+	@SubscribeConfig(receiveClient = true)
 	public static void onConfig(OmniconfigWrapper builder) {
 		builder.pushPrefix("OceanStone");
+		if (builder.config.getSidedType() != Configuration.SidedConfigType.CLIENT) {
+			spellstoneCooldown = builder
+					.comment("Active ability cooldown for Will of the Ocean. Measured in ticks. 20 ticks equal to 1 second.")
+					.getInt("Cooldown", 600);
 
-		spellstoneCooldown = builder
-				.comment("Active ability cooldown for Will of the Ocean. Measured in ticks. 20 ticks equal to 1 second.")
-				.getInt("Cooldown", 600);
+			swimminSpeedBoost = builder
+					.comment("Swimming speed boost provided by Will of the Ocean. Defined as percentage.")
+					.max(1000)
+					.getPerhaps("SwimBoost", 200);
 
-		swimminSpeedBoost = builder
-				.comment("Swimming speed boost provided by Will of the Ocean. Defined as percentage.")
-				.max(1000)
-				.getPerhaps("SwimBoost", 200);
+			underwaterCreaturesResistance = builder
+					.comment("Damage resistance against underwater creatures provided by Will of the Ocean. Defined as percentage.")
+					.max(100)
+					.getPerhaps("UnderwaterCreaturesResistance", 40);
 
-		underwaterCreaturesResistance = builder
-				.comment("Damage resistance against underwater creatures provided by Will of the Ocean. Defined as percentage.")
-				.max(100)
-				.getPerhaps("UnderwaterCreaturesResistance", 40);
+			xpCostModifier = builder
+					.comment("Multiplier for experience consumption by active ability of Will of the Ocean.")
+					.max(1000)
+					.getDouble("XPCostModifier", 1.0);
+		} else {
+			builder.popPrefix();
 
-		xpCostModifier = builder
-				.comment("Multiplier for experience consumption by active ability of Will of the Ocean.")
-				.max(1000)
-				.getDouble("XPCostModifier", 1.0);
-
+			preventOxygenBarRender = builder
+					.comment("Whether or not oxygen bar should pe prevented from rendering if Will of the Ocean or Pearl of the Void is equipped.")
+					.getBoolean("SuppressUnneccessaryOxygenRender", true);
+		}
 		builder.popPrefix();
 	}
 
@@ -77,10 +89,18 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 	public final int nightVisionDuration = 210;
 
 	public OceanStone() {
-		super(ItemAdvancedCurio.getDefaultProperties().rarity(Rarity.RARE));
+		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.RARE));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ocean_stone"));
 
 		this.immunityList.add(DamageSource.DROWN.damageType);
+	}
+
+	private Multimap<Attribute, AttributeModifier> createAttributeMap(PlayerEntity player) {
+		Multimap<Attribute, AttributeModifier> attributesDefault = HashMultimap.create();
+
+		attributesDefault.put(ForgeMod.ENTITY_GRAVITY.get(), new AttributeModifier(UUID.fromString("79e1cc36-fb4e-4c7d-802b-583b8d90648a"), EnigmaticLegacy.MODID+":gravity_bonus", player.areEyesInFluid(FluidTags.WATER) ? -1.0F : 0F, AttributeModifier.Operation.MULTIPLY_TOTAL));
+
+		return attributesDefault;
 	}
 
 	@Override
@@ -101,6 +121,8 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone6");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone7");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone8");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone9");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone10");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -165,6 +187,7 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 	public void onUnequip(String identifier, int index, LivingEntity living) {
 		if (living instanceof PlayerEntity) {
 			EnigmaticLegacy.miningCharm.removeNightVisionEffect((PlayerEntity) living, this.nightVisionDuration);
+			living.getAttributeManager().removeModifiers(this.createAttributeMap((PlayerEntity)living));
 		}
 	}
 
@@ -181,6 +204,8 @@ public class OceanStone extends ItemAdvancedCurio implements ISpellstone {
 				} else {
 					EnigmaticLegacy.miningCharm.removeNightVisionEffect(player, this.nightVisionDuration);
 				}
+
+				player.getAttributeManager().reapplyModifiers(this.createAttributeMap(player));
 			}
 
 	}

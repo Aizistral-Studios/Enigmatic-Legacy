@@ -8,6 +8,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
+import com.integral.enigmaticlegacy.items.generic.ItemBasePotion;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.gui.screen.Screen;
@@ -28,10 +29,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class RecallPotion extends ItemBase {
+public class RecallPotion extends ItemBasePotion {
 
 	public RecallPotion() {
-		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.RARE));
+		super(getDefaultProperties().maxStackSize(1).rarity(Rarity.RARE));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "recall_potion"));
 	}
 
@@ -48,51 +49,15 @@ public class RecallPotion extends ItemBase {
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-		PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
-
+	public void onConsumed(World worldIn, PlayerEntity player, ItemStack potion) {
 		if (player instanceof ServerPlayerEntity) {
-			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
 			SuperpositionHandler.backToSpawn((ServerPlayerEntity)player);
 		}
-
-		if (player == null || !player.abilities.isCreativeMode) {
-			stack.shrink(1);
-
-			if (stack.isEmpty())
-				return new ItemStack(Items.GLASS_BOTTLE);
-
-			if (player != null) {
-				player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
-			}
-		}
-
-		return stack;
 	}
 
 	@Override
-	public int getUseDuration(ItemStack stack) {
-		return 32;
-	}
-
-	@Override
-	public UseAction getUseAction(ItemStack stack) {
-		return UseAction.DRINK;
-	}
-
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if (EnigmaticLegacy.proxy.isInVanillaDimension(playerIn)) {
-			playerIn.setActiveHand(handIn);
-			return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
-		} else
-			return new ActionResult<>(ActionResultType.PASS, playerIn.getHeldItem(handIn));
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
-		return true;
+	public boolean canDrink(World world, PlayerEntity player, ItemStack potion) {
+		return EnigmaticLegacy.proxy.isInVanillaDimension(player);
 	}
 
 }

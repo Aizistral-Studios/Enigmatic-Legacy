@@ -1,0 +1,35 @@
+{
+    "name": "book.enigmaticlegacy.entry.ancient_tomes.name",
+    "icon": "enigmaticlegacy:tattered_tome",
+    "category": "enigmaticlegacy:world",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 20,
+	"extra_recipe_mappings": {
+		"enigmaticlegacy:tattered_tome": 1,
+		"enigmaticlegacy:withered_tome": 1,
+		"enigmaticlegacy:corrupted_tome": 1
+	},
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ancient_tomes.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "enigmaticlegacy:tattered_tome",
+			"link_recipe": false,
+			"title": "book.enigmaticlegacy.entry.ancient_tomes.heading.1",
+            "text": "book.enigmaticlegacy.entry.ancient_tomes.page.2"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ancient_tomes.page.3"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ancient_tomes.page.4"
+        }
+    ]
+}

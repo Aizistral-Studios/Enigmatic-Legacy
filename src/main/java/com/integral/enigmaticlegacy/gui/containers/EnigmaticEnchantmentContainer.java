@@ -3,8 +3,6 @@ package com.integral.enigmaticlegacy.gui.containers;
 import java.util.List;
 import java.util.Random;
 
-import com.integral.enigmaticlegacy.helpers.ObfuscatedFields;
-
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentData;
@@ -49,9 +47,9 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 	public int[] worldClue = new int[] { -1, -1, -1 };
 
 	public static EnigmaticEnchantmentContainer fromOld(EnchantmentContainer oldContainer, PlayerEntity player) throws IllegalArgumentException, IllegalAccessException {
-		EnigmaticEnchantmentContainer newContainer = new EnigmaticEnchantmentContainer(oldContainer.windowId, player.inventory, (IWorldPosCallable) ObfuscatedFields.worldPosCallableField.get(oldContainer));
+		EnigmaticEnchantmentContainer newContainer = new EnigmaticEnchantmentContainer(oldContainer.windowId, player.inventory, oldContainer.worldPosCallable);
 
-		newContainer.tableInventory = (IInventory) ObfuscatedFields.tableInventoryField.get(oldContainer);
+		newContainer.tableInventory = oldContainer.tableInventory;
 		newContainer.enchantLevels = oldContainer.enchantLevels;
 		newContainer.enchantClue = oldContainer.enchantClue;
 		newContainer.worldClue = oldContainer.worldClue;
@@ -184,11 +182,11 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 		ItemStack itemstack = this.tableInventory.getStackInSlot(0);
 		ItemStack itemstack1 = this.tableInventory.getStackInSlot(1);
 		int i = id + 1;
-		if ((itemstack1.isEmpty() || itemstack1.getCount() < i) && !playerIn.abilities.isCreativeMode) {
+		if ((itemstack1.isEmpty() || itemstack1.getCount() < i) && !playerIn.abilities.isCreativeMode)
 			return false;
-		} else if (this.enchantLevels[id] <= 0 || itemstack.isEmpty() || (playerIn.experienceLevel < i || playerIn.experienceLevel < this.enchantLevels[id]) && !playerIn.abilities.isCreativeMode) {
+		else if (this.enchantLevels[id] <= 0 || itemstack.isEmpty() || (playerIn.experienceLevel < i || playerIn.experienceLevel < this.enchantLevels[id]) && !playerIn.abilities.isCreativeMode)
 			return false;
-		} else {
+		else {
 			this.field_217006_g.consume((p_217003_6_, p_217003_7_) -> {
 				ItemStack itemstack2 = itemstack;
 				List<EnchantmentData> list = this.getEnchantmentList(itemstack, id, this.enchantLevels[id]);
@@ -291,21 +289,17 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 			if (index == 0) {
-				if (!this.mergeItemStack(itemstack1, 2, 38, true)) {
+				if (!this.mergeItemStack(itemstack1, 2, 38, true))
 					return ItemStack.EMPTY;
-				}
 			} else if (index == 1) {
-				if (!this.mergeItemStack(itemstack1, 2, 38, true)) {
+				if (!this.mergeItemStack(itemstack1, 2, 38, true))
 					return ItemStack.EMPTY;
-				}
 			} else if (itemstack1.getItem() == Items.LAPIS_LAZULI) {
-				if (!this.mergeItemStack(itemstack1, 1, 2, true)) {
+				if (!this.mergeItemStack(itemstack1, 1, 2, true))
 					return ItemStack.EMPTY;
-				}
 			} else {
-				if (this.inventorySlots.get(0).getHasStack() || !this.inventorySlots.get(0).isItemValid(itemstack1)) {
+				if (this.inventorySlots.get(0).getHasStack() || !this.inventorySlots.get(0).isItemValid(itemstack1))
 					return ItemStack.EMPTY;
-				}
 
 				ItemStack itemstack2 = itemstack1.copy();
 				itemstack2.setCount(1);
@@ -319,9 +313,8 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 				slot.onSlotChanged();
 			}
 
-			if (itemstack1.getCount() == itemstack.getCount()) {
+			if (itemstack1.getCount() == itemstack.getCount())
 				return ItemStack.EMPTY;
-			}
 
 			slot.onTake(playerIn, itemstack1);
 		}

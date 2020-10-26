@@ -3,6 +3,7 @@ package com.integral.enigmaticlegacy.helpers;
 import java.util.List;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 
 import net.minecraft.entity.ICrossbowUser;
 import net.minecraft.entity.LivingEntity;
@@ -46,10 +47,10 @@ public class CrossbowHelper {
 		}
 	}
 
-	public static boolean hasAmmo(LivingEntity entityIn, ItemStack stack) {
+	public static boolean hasAmmo(LivingEntity entityIn, ItemStack weaponStack) {
 		int requestedAmmo = 1;
 		boolean isCreative = entityIn instanceof PlayerEntity && ((PlayerEntity) entityIn).abilities.isCreativeMode;
-		ItemStack itemstack = entityIn.findAmmo(stack);
+		ItemStack itemstack = entityIn.findAmmo(weaponStack);
 		ItemStack itemstack1 = itemstack.copy();
 
 		for (int k = 0; k < requestedAmmo; ++k) {
@@ -57,12 +58,14 @@ public class CrossbowHelper {
 				itemstack = itemstack1.copy();
 			}
 
-			if (itemstack.isEmpty() && isCreative) {
-				itemstack = new ItemStack(Items.ARROW);
-				itemstack1 = itemstack.copy();
+			if (itemstack.isEmpty()) {
+				if (isCreative || (EnigmaticEnchantmentHelper.hasCeaselessEnchantment(weaponStack) && CeaselessEnchantment.allowNoArrow.getValue())) {
+					itemstack = new ItemStack(Items.ARROW);
+					itemstack1 = itemstack.copy();
+				}
 			}
 
-			if (!CrossbowHelper.tryCharge(entityIn, stack, (itemstack.getItem().getClass() == ArrowItem.class && EnigmaticEnchantmentHelper.hasCeaselessEnchantment(stack)) ? itemstack.copy() : itemstack, k > 0, isCreative))
+			if (!CrossbowHelper.tryCharge(entityIn, weaponStack, (itemstack.getItem().getClass() == ArrowItem.class && EnigmaticEnchantmentHelper.hasCeaselessEnchantment(weaponStack)) ? itemstack.copy() : itemstack, k > 0, isCreative))
 				return false;
 		}
 

@@ -8,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
 public class EnderRod extends ItemBase {
 
 	public EnderRod() {
-		super(ItemBase.getDefaultProperties());
+		super(getDefaultProperties());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ender_rod"));
 	}
 

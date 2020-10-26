@@ -4,7 +4,11 @@ import java.net.URL;
 import java.util.Scanner;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.packets.clients.PacketUpdateNotification;
+import com.integral.omniconfig.Configuration;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -19,11 +23,26 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 /**
  * Some code is still borrowed from Tainted Magic update handler.
- * Hope that's not illegal.
  * @author Integral
  */
 
 public class EnigmaticUpdateHandler {
+	public static Omniconfig.BooleanParameter notificationsEnabled;
+
+	@SubscribeConfig(receiveClient = true)
+	public static void onConfig(OmniconfigWrapper builder) {
+
+		if (builder.config.getSidedType() != Configuration.SidedConfigType.CLIENT) {
+			// NO-OP
+		} else {
+
+			notificationsEnabled = builder
+					.comment("Whether or not Enigmatic Legacy should show notification in chat when new mod update is available.")
+					.getBoolean("UpdateHandlerEnabled", true);
+
+		}
+	}
+
 	private static String currentVersion = EnigmaticLegacy.VERSION + " " + EnigmaticLegacy.RELEASE_TYPE;
 	private static String newestVersion;
 	public static TranslationTextComponent updateStatus = null;
@@ -33,8 +52,9 @@ public class EnigmaticUpdateHandler {
 	@SubscribeEvent
 	public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
 
-		if (event.getPlayer() instanceof ServerPlayerEntity)
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> ((ServerPlayerEntity)event.getPlayer())), new PacketUpdateNotification());
+		if (event.getPlayer() instanceof ServerPlayerEntity) {
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> ((ServerPlayerEntity)event.getPlayer())), new PacketUpdateNotification());
+		}
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -42,7 +62,10 @@ public class EnigmaticUpdateHandler {
 		if (!EnigmaticUpdateHandler.show)
 			return;
 
-		player.sendMessage(EnigmaticUpdateHandler.updateStatus, player.getUniqueID());
+		if (notificationsEnabled.getValue()) {
+			player.sendMessage(EnigmaticUpdateHandler.updateStatus, player.getUniqueID());
+		}
+
 		EnigmaticUpdateHandler.show = false;
 
 	}

@@ -28,8 +28,10 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.registries.ObjectHolder;
@@ -61,6 +63,7 @@ public class PermanentItemEntity extends Entity {
 		this(PermanentItemEntity.TYPE, worldIn);
 		this.setPosition(x, y <= 0 ? 1 : y, z);
 		this.rotationYaw = this.rand.nextFloat() * 360.0F;
+		this.setInvulnerable(true);
 
 		this.setNoGravity(true);
 	}
@@ -123,7 +126,15 @@ public class PermanentItemEntity extends Entity {
 				this.remove();
 			}
 
+			// Portal Cooldown
+			this.field_242273_aw = Short.MAX_VALUE;
+
 		}
+	}
+
+	@Override
+	public Entity changeDimension(ServerWorld server, ITeleporter teleporter) {
+		return null;
 	}
 
 	@Override
@@ -132,11 +143,18 @@ public class PermanentItemEntity extends Entity {
 			return false;
 
 		if (source.isDamageAbsolute()) {
+			EnigmaticLegacy.enigmaticLogger.warn("[WARN] Attacked permanent item entity with absolute DamageSource: " + source);
 			this.remove();
-			return false;
+			return true;
 		} else
 			return false;
 
+	}
+
+	@Override
+	public void remove() {
+		EnigmaticLegacy.enigmaticLogger.warn("[WARN] Removing Permanent Item Entity: " + this);
+		super.remove();
 	}
 
 	@Override
@@ -195,10 +213,11 @@ public class PermanentItemEntity extends Entity {
 			boolean isPlayerOwner = player.getUniqueID().equals(this.getOwnerId());
 			boolean allowPickUp = false;
 
-			if (item instanceof StorageCrystal && (isPlayerOwner || !EnigmaticLegacy.enigmaticAmulet.isVesselOwnerOnly()))
+			if (item instanceof StorageCrystal && (isPlayerOwner || !EnigmaticLegacy.enigmaticAmulet.isVesselOwnerOnly())) {
 				allowPickUp = true;
-			else if (item instanceof SoulCrystal && isPlayerOwner)
+			} else if (item instanceof SoulCrystal && isPlayerOwner) {
 				allowPickUp = true;
+			}
 
 			if (allowPickUp) {
 
@@ -216,7 +235,7 @@ public class PermanentItemEntity extends Entity {
 						droppedSoulCrystal.setOwnerId(this.getOwnerId());
 						this.world.addEntity(droppedSoulCrystal);
 					}
-					*/
+					 */
 
 				} else if (item instanceof SoulCrystal) {
 					if (!EnigmaticLegacy.soulCrystal.retrieveSoulFromCrystal(player, itemstack))

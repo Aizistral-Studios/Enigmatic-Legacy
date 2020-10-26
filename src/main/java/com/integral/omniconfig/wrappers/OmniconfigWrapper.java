@@ -175,6 +175,10 @@ public class OmniconfigWrapper {
 		return this;
 	}
 
+	public String getCurrentCategory() {
+		return this.currentCategory;
+	}
+
 	public OmniconfigWrapper pushOverloadingAction(Consumer<Configuration> action) {
 		this.config.attachOverloadingAction(action);
 		return this;

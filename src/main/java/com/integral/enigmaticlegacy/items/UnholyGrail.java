@@ -11,6 +11,7 @@ import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -29,7 +30,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class UnholyGrail extends ItemBase {
+public class UnholyGrail extends ItemBase implements IVanishable {
 
 	public UnholyGrail() {
 		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isBurnable());
