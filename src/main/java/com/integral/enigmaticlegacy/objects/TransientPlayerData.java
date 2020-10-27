@@ -66,7 +66,7 @@ public class TransientPlayerData {
 	private int fireImmunityTimerCap;
 	public int spellstoneCooldown;
 	private int fireImmunityTimerLast;
-	public Boolean consumedForbiddenFruit;
+	private Boolean consumedForbiddenFruit;
 
 	public boolean needsSync = false;
 
@@ -144,6 +144,10 @@ public class TransientPlayerData {
 
 	public Boolean getConsumedForbiddenFruit() {
 		return this.consumedForbiddenFruit != null ? this.consumedForbiddenFruit : (this.consumedForbiddenFruit = SuperpositionHandler.getPersistentBoolean(this.player, ForbiddenFruit.consumedFruitTag, false));
+	}
+	
+	public void setConsumedForbiddenFruit(Boolean consumedForbiddenFruit){
+		this.consumedForbiddenFruit = consumedForbiddenFruit;
 	}
 
 	public PlayerEntity getPlayer() {
