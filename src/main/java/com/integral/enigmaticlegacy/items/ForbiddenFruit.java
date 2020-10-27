@@ -80,12 +80,12 @@ public class ForbiddenFruit extends ItemBaseFood implements IVanishable {
 	}
 
 	public boolean haveConsumedFruit(PlayerEntity player) {
-		return TransientPlayerData.get(player).consumedForbiddenFruit.booleanValue();
+		return TransientPlayerData.get(player).getConsumedForbiddenFruit();
 	}
 
 	public void defineConsumedFruit(PlayerEntity player, boolean consumedOrNot) {
 		SuperpositionHandler.setPersistentBoolean(player, consumedFruitTag, consumedOrNot);
-		TransientPlayerData.get(player).consumedForbiddenFruit = consumedOrNot;
+		TransientPlayerData.get(player).setConsumedForbiddenFruit(consumedOrNot);
 	}
 
 	@Override
