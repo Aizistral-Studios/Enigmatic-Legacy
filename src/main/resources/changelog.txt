@@ -1,5 +1,11 @@
 The Changelog:
 
+[Release 2.7.1]:
+- Fixed Forbidden Fruit checks crashing players on server if two or more are within render distance of one another (thanks Flynatol, #92);
+- Hopefully fixed Ceaseless enchantment still requiring arrow in inventory to work.
+
+
+
 [Release 2.7.0]:
 - Added option to client config that allows to turn off mod update notifications;
 - Slightly overhauled texture of Extradimensional Vessel;

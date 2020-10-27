@@ -27,13 +27,13 @@ public class CrossbowHelper {
 
 	public static final String sharpshooterTagPrefix = EnigmaticLegacy.MODID+":sharpshot:";
 
-	public static boolean tryCharge(LivingEntity living, ItemStack crossbow, ItemStack ammo, boolean bonusCycles, boolean isCreative) {
+	public static boolean tryCharge(LivingEntity living, ItemStack crossbow, ItemStack ammo, boolean bonusCycles, boolean isCreative, boolean noAmmoRequired) {
 		if (ammo.isEmpty())
 			return false;
 		else {
 			boolean creativeUsingArrows = isCreative && ammo.getItem() instanceof ArrowItem;
 			ItemStack itemstack;
-			if (!creativeUsingArrows && !isCreative && !bonusCycles) {
+			if (!creativeUsingArrows && !isCreative && !bonusCycles && !noAmmoRequired) {
 				itemstack = ammo.split(1);
 				if (ammo.isEmpty() && living instanceof PlayerEntity) {
 					((PlayerEntity) living).inventory.deleteStack(ammo);
@@ -50,6 +50,7 @@ public class CrossbowHelper {
 	public static boolean hasAmmo(LivingEntity entityIn, ItemStack weaponStack) {
 		int requestedAmmo = 1;
 		boolean isCreative = entityIn instanceof PlayerEntity && ((PlayerEntity) entityIn).abilities.isCreativeMode;
+		boolean noAmmoRequired = EnigmaticEnchantmentHelper.hasCeaselessEnchantment(weaponStack) && CeaselessEnchantment.allowNoArrow.getValue();
 		ItemStack itemstack = entityIn.findAmmo(weaponStack);
 		ItemStack itemstack1 = itemstack.copy();
 
@@ -59,13 +60,13 @@ public class CrossbowHelper {
 			}
 
 			if (itemstack.isEmpty()) {
-				if (isCreative || (EnigmaticEnchantmentHelper.hasCeaselessEnchantment(weaponStack) && CeaselessEnchantment.allowNoArrow.getValue())) {
+				if (isCreative || noAmmoRequired) {
 					itemstack = new ItemStack(Items.ARROW);
 					itemstack1 = itemstack.copy();
 				}
 			}
 
-			if (!CrossbowHelper.tryCharge(entityIn, weaponStack, (itemstack.getItem().getClass() == ArrowItem.class && EnigmaticEnchantmentHelper.hasCeaselessEnchantment(weaponStack)) ? itemstack.copy() : itemstack, k > 0, isCreative))
+			if (!CrossbowHelper.tryCharge(entityIn, weaponStack, (itemstack.getItem().getClass() == ArrowItem.class && EnigmaticEnchantmentHelper.hasCeaselessEnchantment(weaponStack)) ? itemstack.copy() : itemstack, k > 0, isCreative, noAmmoRequired))
 				return false;
 		}
 
