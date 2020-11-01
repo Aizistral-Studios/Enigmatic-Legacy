@@ -1,5 +1,15 @@
 The Changelog:
 
+[Release 2.7.2]:
+- Fixed Ceaseless enchantment STILL requiring arrow in inventory to work, once and for all;
+- Fixed arrows shot with Ceaseless enchantment being perfectly pickapable from the ground like nobody's business;
+- Creative tab of Enigmatic Legacy now contains all color variations of Enigmatic Amulet;
+- Renamed some of the config options for Enigmatic Amulet for the sake of case consistency;
+- Added config option to allow simultaneously equipping multiple Enigmatic Amulets (if player somehow has more than one charm slot);
+- Added config option to allow simultaneously equipping multiple spellstones if they are different items (if player somehow has more than one spellstone slot).
+
+
+
 [Release 2.7.1]:
 - Fixed Forbidden Fruit checks crashing players on server if two or more are within render distance of one another (thanks Flynatol, #92);
 - Hopefully fixed Ceaseless enchantment still requiring arrow in inventory to work.

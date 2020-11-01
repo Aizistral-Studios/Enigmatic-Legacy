@@ -16,6 +16,7 @@ import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
+import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.gui.EnderChestInventoryButton;
@@ -291,7 +292,7 @@ public class EnigmaticEventHandler {
 					CrossbowHelper.fireProjectiles(event.getWorld(), event.getPlayer(), event.getHand(), itemstack, CrossbowItem.func_220013_l(itemstack), 1.0F);
 					CrossbowItem.setCharged(itemstack, false);
 					event.setCancellationResult(ActionResultType.CONSUME);
-				} else if (!event.getPlayer().findAmmo(itemstack).isEmpty()) {
+				} else if (!event.getPlayer().findAmmo(itemstack).isEmpty() || (CeaselessEnchantment.allowNoArrow.getValue() && EnigmaticEnchantmentHelper.hasCeaselessEnchantment(itemstack))) {
 					if (!CrossbowItem.isCharged(itemstack)) {
 						((CrossbowItem) Items.CROSSBOW).isLoadingStart = false;
 						((CrossbowItem) Items.CROSSBOW).isLoadingMiddle = false;

@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.function.Supplier;
 
+import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.omniconfig.wrappers.Omniconfig;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.LivingEntity;
@@ -15,6 +18,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public abstract class ItemSpellstoneCurio extends ItemBaseCurio implements ISpellstone {
+	public static Omniconfig.BooleanParameter multiequip;
+
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("Spellstones");
+
+		multiequip = builder.comment("Whether or not it should be allowed to equip multiple spellstones if they are different items," + " granted player somehow gets more than one spellstone slot.").getBoolean("Multiequip", false);
+
+		builder.popPrefix();
+	}
 
 	public List<String> immunityList = new ArrayList<String>();
 	public HashMap<String, Supplier<Float>> resistanceList = new HashMap<String, Supplier<Float>>();
@@ -45,7 +58,10 @@ public abstract class ItemSpellstoneCurio extends ItemBaseCurio implements ISpel
 
 	@Override
 	public boolean canEquip(String identifier, LivingEntity living) {
-		return super.canEquip(identifier, living) && SuperpositionHandler.getSpellstone(living) == null;
+		if (multiequip.getValue()) {
+			return super.canEquip(identifier, living);
+		} else
+			return super.canEquip(identifier, living) && SuperpositionHandler.getSpellstone(living) == null;
 	}
 
 }

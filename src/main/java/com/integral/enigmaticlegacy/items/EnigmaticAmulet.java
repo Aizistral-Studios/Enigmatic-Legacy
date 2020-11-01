@@ -30,9 +30,11 @@ import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BowItem;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -47,6 +49,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	public static Omniconfig.BooleanParameter vesselEnabled;
 	public static Omniconfig.BooleanParameter ownerOnlyVessel;
 	public static Omniconfig.BooleanParameter seededColorGen;
+	public static Omniconfig.BooleanParameter multiequip;
 	public static final String amuletColorTag = "AssignedColor";
 	public static final String amuletInscriptionTag = "Inscription";
 
@@ -61,15 +64,20 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 		vesselEnabled = builder
 				.comment("Whether or not Enigmatic Amulet should be summoning Extradimensional Vessel on owner's death.")
-				.getBoolean("enigmaticAmuletVesselEnabled", true);
+				.getBoolean("EnigmaticAmuletVesselEnabled", true);
 
 		ownerOnlyVessel = builder
 				.comment("If true, only original owner of Extradimensional Vessel will be able to pick it up.")
-				.getBoolean("ownerOnlyVessel", false);
+				.getBoolean("OwnerOnlyVessel", false);
 
 		seededColorGen = builder
 				.comment("If true, color of Enigmatic Amulet will be assigned using player's name as seed for generating it, instead of randomly - so that every player will always receive one specific color.")
-				.getBoolean("seededColorGen", false);
+				.getBoolean("SeededColorGen", false);
+		
+		multiequip = builder
+				.comment("Whether or not it should be possible to equip multiple Enigmatic Amulets, "
+						+ "granted player somehow gets more than one charm slot.")
+				.getBoolean("Multiequip", false);
 
 		builder.popPrefix();
 	}
@@ -167,6 +175,13 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		ItemModelsProperties.func_239418_a_(this, new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet_color"), (stack, world, entity) -> {
 			return ItemNBTHelper.getFloat(stack, amuletColorTag, 0F);
 		});
+	}
+	
+	@Override
+	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+		for (AmuletColor color : AmuletColor.values()) {
+			items.add(this.setColor(new ItemStack(this), color));
+		}
 	}
 
 
@@ -277,6 +292,15 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 				map.reapplyModifiers(this.getCurrentModifiers(amulet, player));
 			}
 		}
+	}
+	
+	@Override
+	public boolean canEquip(String identifier, LivingEntity living) {
+		// TODO Looks like @TheIllusiveC4 forgot to provide us some more context again
+		if (multiequip.getValue()) {
+			return true;
+		} else
+			return super.canEquip(identifier, living);
 	}
 
 	@Override

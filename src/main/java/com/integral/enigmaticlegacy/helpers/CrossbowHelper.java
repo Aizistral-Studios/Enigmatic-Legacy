@@ -27,13 +27,13 @@ public class CrossbowHelper {
 
 	public static final String sharpshooterTagPrefix = EnigmaticLegacy.MODID+":sharpshot:";
 
-	public static boolean tryCharge(LivingEntity living, ItemStack crossbow, ItemStack ammo, boolean bonusCycles, boolean isCreative, boolean noAmmoRequired) {
+	public static boolean tryCharge(LivingEntity living, ItemStack crossbow, ItemStack ammo, boolean bonusCycles, boolean isCreative) {
 		if (ammo.isEmpty())
 			return false;
 		else {
 			boolean creativeUsingArrows = isCreative && ammo.getItem() instanceof ArrowItem;
 			ItemStack itemstack;
-			if (!creativeUsingArrows && !isCreative && !bonusCycles && !noAmmoRequired) {
+			if (!creativeUsingArrows && !isCreative && !bonusCycles) {
 				itemstack = ammo.split(1);
 				if (ammo.isEmpty() && living instanceof PlayerEntity) {
 					((PlayerEntity) living).inventory.deleteStack(ammo);
@@ -50,7 +50,6 @@ public class CrossbowHelper {
 	public static boolean hasAmmo(LivingEntity entityIn, ItemStack weaponStack) {
 		int requestedAmmo = 1;
 		boolean isCreative = entityIn instanceof PlayerEntity && ((PlayerEntity) entityIn).abilities.isCreativeMode;
-		boolean noAmmoRequired = EnigmaticEnchantmentHelper.hasCeaselessEnchantment(weaponStack) && CeaselessEnchantment.allowNoArrow.getValue();
 		ItemStack itemstack = entityIn.findAmmo(weaponStack);
 		ItemStack itemstack1 = itemstack.copy();
 
@@ -60,13 +59,13 @@ public class CrossbowHelper {
 			}
 
 			if (itemstack.isEmpty()) {
-				if (isCreative || noAmmoRequired) {
+				if (isCreative || (EnigmaticEnchantmentHelper.hasCeaselessEnchantment(weaponStack) && CeaselessEnchantment.allowNoArrow.getValue())) {
 					itemstack = new ItemStack(Items.ARROW);
 					itemstack1 = itemstack.copy();
 				}
 			}
 
-			if (!CrossbowHelper.tryCharge(entityIn, weaponStack, (itemstack.getItem().getClass() == ArrowItem.class && EnigmaticEnchantmentHelper.hasCeaselessEnchantment(weaponStack)) ? itemstack.copy() : itemstack, k > 0, isCreative, noAmmoRequired))
+			if (!CrossbowHelper.tryCharge(entityIn, weaponStack, (itemstack.getItem().getClass() == ArrowItem.class && EnigmaticEnchantmentHelper.hasCeaselessEnchantment(weaponStack)) ? itemstack.copy() : itemstack, k > 0, isCreative))
 				return false;
 		}
 
@@ -102,12 +101,12 @@ public class CrossbowHelper {
 				projectileentity = new FireworkRocketEntity(worldIn, projectile, shooter, shooter.getPosX(), shooter.getPosYEye() - 0.15F, shooter.getPosZ(), true);
 			} else {
 				projectileentity = CrossbowItem.createArrow(worldIn, shooter, crossbow, projectile);
-				if (isCreativeMode || projectileAngle != 0.0F || EnigmaticEnchantmentHelper.hasSharpshooterEnchantment(crossbow)) {
-					((AbstractArrowEntity) projectileentity).pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
-
-					if (EnigmaticEnchantmentHelper.hasSharpshooterEnchantment(crossbow)) {
-						((AbstractArrowEntity) projectileentity).addTag(CrossbowHelper.sharpshooterTagPrefix + EnigmaticEnchantmentHelper.getSharpshooterLevel(crossbow));
-					}
+				if (isCreativeMode || projectileAngle != 0.0F || EnigmaticEnchantmentHelper.hasCeaselessEnchantment(crossbow)) {
+					((AbstractArrowEntity) projectileentity).pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;	
+				}
+				
+				if (EnigmaticEnchantmentHelper.hasSharpshooterEnchantment(crossbow)) {
+					((AbstractArrowEntity) projectileentity).addTag(CrossbowHelper.sharpshooterTagPrefix + EnigmaticEnchantmentHelper.getSharpshooterLevel(crossbow));
 				}
 			}
 
