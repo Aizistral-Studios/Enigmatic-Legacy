@@ -299,7 +299,6 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 	@Override
 	public boolean canEquip(String identifier, LivingEntity living) {
-		// TODO Looks like @TheIllusiveC4 forgot to provide us some more context again
 		if (multiequip.getValue())
 			return true;
 		else

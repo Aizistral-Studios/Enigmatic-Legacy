@@ -769,7 +769,6 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void attachCapabilities(AttachCapabilitiesEvent<ItemStack> evt) {
-
 		ItemStack stack = evt.getObject();
 
 		/*
@@ -780,6 +779,13 @@ public class EnigmaticEventHandler {
 		 * but I am under no obligation to give my USDA-certified organic fuck.
 		 * The code seems much more understandable overall when items present capabilities
 		 * for thermselves.
+		 *
+		 * TODO Okay now we need to somehow withold the ItemStack reference
+		 * Nah, I think I will just instantiate ICurio in attachment event solely to proxy
+		 * needed calls to underlying itemclass with subinterface providing stack-sensitive
+		 * methods.
+		 *
+		 * Insisting on bad design choices since 2016!
 		 */
 
 		if (stack.getItem() instanceof ICurio && stack.getItem().getRegistryName().getNamespace().equals(EnigmaticLegacy.MODID)) {
