@@ -14,7 +14,7 @@ import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
-import com.integral.enigmaticlegacy.items.EnigmaticAmulet.AmuletColor;
+import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
@@ -30,6 +30,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BowItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
@@ -73,7 +74,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		seededColorGen = builder
 				.comment("If true, color of Enigmatic Amulet will be assigned using player's name as seed for generating it, instead of randomly - so that every player will always receive one specific color.")
 				.getBoolean("SeededColorGen", false);
-		
+
 		multiequip = builder
 				.comment("Whether or not it should be possible to equip multiple Enigmatic Amulets, "
 						+ "granted player somehow gets more than one charm slot.")
@@ -124,7 +125,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	public boolean ifHasColor(PlayerEntity player, AmuletColor color) {
 		ItemStack enigmaticAmulet = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.enigmaticAmulet);
 
-		if (enigmaticAmulet != null && EnigmaticLegacy.enigmaticAmulet.getColor(enigmaticAmulet) == color)
+		if ((enigmaticAmulet != null) && (EnigmaticLegacy.enigmaticAmulet.getColor(enigmaticAmulet) == color))
 			return true;
 		else
 			return false;
@@ -135,21 +136,21 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	}
 
 	public ItemStack setColor(ItemStack amulet, AmuletColor color) {
-		if (amulet != null && amulet.getItem().equals(this)) {
+		if ((amulet != null) && amulet.getItem().equals(this)) {
 			ItemNBTHelper.setFloat(amulet, amuletColorTag, color.colorVar);
 		}
 		return amulet;
 	}
 
 	public ItemStack setRandomColor(ItemStack amulet) {
-		if (amulet != null && amulet.getItem().equals(this)) {
+		if ((amulet != null) && amulet.getItem().equals(this)) {
 			ItemNBTHelper.setFloat(amulet, amuletColorTag, AmuletColor.getRandomColor().colorVar);
 		}
 		return amulet;
 	}
 
 	public ItemStack setSeededColor(ItemStack amulet) {
-		if (amulet != null && amulet.getItem().equals(this)) {
+		if ((amulet != null) && amulet.getItem().equals(this)) {
 			String name = ItemNBTHelper.getString(amulet, "Inscription", "Herobrine");
 			long hash = name.hashCode();
 
@@ -159,7 +160,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	}
 
 	public ItemStack setInscription(ItemStack amulet, String name) {
-		if (amulet != null && amulet.getItem().equals(this)) {
+		if ((amulet != null) && amulet.getItem().equals(this)) {
 			ItemNBTHelper.setString(amulet, "Inscription", name);
 		}
 		return amulet;
@@ -176,11 +177,13 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 			return ItemNBTHelper.getFloat(stack, amuletColorTag, 0F);
 		});
 	}
-	
+
 	@Override
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		for (AmuletColor color : AmuletColor.values()) {
-			items.add(this.setColor(new ItemStack(this), color));
+		if (group == EnigmaticLegacy.enigmaticTab) {
+			for (AmuletColor color : AmuletColor.values()) {
+				items.add(this.setColor(new ItemStack(this), color));
+			}
 		}
 	}
 
@@ -293,13 +296,13 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 			}
 		}
 	}
-	
+
 	@Override
 	public boolean canEquip(String identifier, LivingEntity living) {
 		// TODO Looks like @TheIllusiveC4 forgot to provide us some more context again
-		if (multiequip.getValue()) {
+		if (multiequip.getValue())
 			return true;
-		} else
+		else
 			return super.canEquip(identifier, living);
 	}
 

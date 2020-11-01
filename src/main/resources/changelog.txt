@@ -1,5 +1,10 @@
 The Changelog:
 
+[Release 2.7.3]:
+- Defeated the invasion of Enigmatic Amulets (#95).
+
+
+
 [Release 2.7.2]:
 - Fixed Ceaseless enchantment STILL requiring arrow in inventory to work, once and for all;
 - Fixed arrows shot with Ceaseless enchantment being perfectly pickapable from the ground like nobody's business;
