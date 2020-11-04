@@ -33,12 +33,10 @@ public class CommonProxy {
 
 	public void loadComplete(FMLLoadCompleteEvent event) {
 		// Insert existential void here
-
 	}
 
 	public void initAuxiliaryRender() {
 		// Insert existential void here
-
 	}
 
 	public boolean isInVanillaDimension(PlayerEntity player) {

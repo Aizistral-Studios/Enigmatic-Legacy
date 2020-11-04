@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.Range;
+
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
@@ -24,6 +26,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.potion.Potions;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -151,7 +154,6 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 			FoodStats stats = player.getFoodStats();
 			stats.setFoodLevel(20);
 
-			// TODO Ask the God why this doesn't work
 			//((AccessorFoodStats) stats).setFoodSaturationLevel(0);
 
 
@@ -171,7 +173,15 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 				player.extinguish();
 			}
 
-			player.clearActivePotions();
+			for (EffectInstance effect : player.getActivePotionEffects()) {
+				if (effect.getPotion() == Effects.NIGHT_VISION) {
+					if (effect.getDuration() >= EnigmaticLegacy.miningCharm.nightVisionDuration-2 && effect.getDuration() <= EnigmaticLegacy.miningCharm.nightVisionDuration) {
+						continue;
+					}
+				}
+
+				player.removePotionEffect(effect.getPotion());
+			}
 
 			if (player.ticksExisted % 10 == 0) {
 				List<LivingEntity> entities = living.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(player.getPosX() - shadowRange.getValue(), player.getPosY() - shadowRange.getValue(), player.getPosZ() - shadowRange.getValue(), player.getPosX() + shadowRange.getValue(), player.getPosY() + shadowRange.getValue(), player.getPosZ() + shadowRange.getValue()));

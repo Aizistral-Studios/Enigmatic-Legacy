@@ -1,8 +1,11 @@
 {
   "required": true,
-  "compatibilityLevel": "JAVA_8",
   "package": "com.integral.enigmaticlegacy.mixin",
-  "mixins": [],
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "enigmaticlegacy.refmap.json",
+  "mixins": [
+	"MixinEnchantmentContainer"
+  ],
   "client": [],
   "injectors": {
     "defaultRequire": 1

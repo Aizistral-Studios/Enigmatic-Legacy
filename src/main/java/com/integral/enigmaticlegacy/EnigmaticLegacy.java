@@ -20,6 +20,9 @@ import com.integral.enigmaticlegacy.crafting.EnigmaticRecipeSerializers;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 import com.integral.enigmaticlegacy.enchantments.NemesisCurseEnchantment;
 import com.integral.enigmaticlegacy.enchantments.SharpshooterEnchantment;
+import com.integral.enigmaticlegacy.enchantments.SlayerEnchantment;
+import com.integral.enigmaticlegacy.enchantments.TorrentEnchantment;
+import com.integral.enigmaticlegacy.enchantments.WrathEnchantment;
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
@@ -189,7 +192,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.7.3";
+	public static final String VERSION = "2.8.0";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -345,6 +348,9 @@ public class EnigmaticLegacy {
 	public static SharpshooterEnchantment sharpshooterEnchantment;
 	public static CeaselessEnchantment ceaselessEnchantment;
 	public static NemesisCurseEnchantment nemesisCurseEnchantment;
+	public static TorrentEnchantment torrentEnchantment;
+	public static WrathEnchantment wrathEnchantment;
+	public static SlayerEnchantment slayerEnchantment;
 
 	public static ItemStack universalClock;
 	public static UUID soulOfTheArchitect;
@@ -486,6 +492,9 @@ public class EnigmaticLegacy {
 		sharpshooterEnchantment = new SharpshooterEnchantment(EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND);
 		ceaselessEnchantment = new CeaselessEnchantment(EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND);
 		nemesisCurseEnchantment = new NemesisCurseEnchantment(EquipmentSlotType.MAINHAND);
+		torrentEnchantment = new TorrentEnchantment(EquipmentSlotType.MAINHAND);
+		wrathEnchantment = new WrathEnchantment(EquipmentSlotType.MAINHAND);
+		slayerEnchantment = new SlayerEnchantment(EquipmentSlotType.MAINHAND);
 
 		spellstoneList = Lists.newArrayList(
 				angelBlessing,
@@ -841,7 +850,10 @@ public class EnigmaticLegacy {
 			registry.registerAll(
 					sharpshooterEnchantment,
 					ceaselessEnchantment,
-					nemesisCurseEnchantment);
+					nemesisCurseEnchantment,
+					torrentEnchantment,
+					wrathEnchantment,
+					slayerEnchantment);
 
 		}
 

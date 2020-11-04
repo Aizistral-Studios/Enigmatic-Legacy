@@ -80,6 +80,9 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 
 		this.immunityList.add(DamageSource.FALL.damageType);
 		this.immunityList.add(DamageSource.FLY_INTO_WALL.damageType);
+
+		this.resistanceList.put(DamageSource.WITHER.damageType, () -> 2F);
+		this.resistanceList.put(DamageSource.OUT_OF_WORLD.damageType, () -> 2F);
 	}
 
 	@Override
@@ -98,6 +101,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing4");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing5", TextFormatting.GOLD, deflectChance.getValue().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing6");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing7");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}

@@ -1,0 +1,23 @@
+{
+    "name": "book.enigmaticlegacy.entry.torrent_enchantment.name",
+    "icon": "minecraft:enchanted_book",
+    "category": "enigmaticlegacy:enchantments",
+	"advancement": "enigmaticlegacy:book/enchantments/generic",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 40,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.torrent_enchantment.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "minecraft:trident#1{Enchantments:[{lvl:5s,id:'enigmaticlegacy:torrent'}]}",
+			"link_recipe": false,
+			"title": "book.enigmaticlegacy.entry.torrent_enchantment.heading.1",
+            "text": "book.enigmaticlegacy.entry.torrent_enchantment.page.2"
+        }
+    ]
+}

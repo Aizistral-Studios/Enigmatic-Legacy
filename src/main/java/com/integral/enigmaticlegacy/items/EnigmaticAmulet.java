@@ -1,6 +1,7 @@
 package com.integral.enigmaticlegacy.items;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
@@ -28,6 +29,9 @@ import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
+import net.minecraft.entity.monster.HoglinEntity;
+import net.minecraft.entity.monster.piglin.PiglinEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BowItem;
 import net.minecraft.item.Item;
@@ -295,6 +299,27 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 				map.reapplyModifiers(this.getCurrentModifiers(amulet, player));
 			}
 		}
+
+		// TODO Figure out how to stop piglins from angering against players
+		// Perhaps Mixin will come in handy in such quest
+
+		/*
+		if (!(living instanceof PlayerEntity) || living.world.isRemote)
+			return;
+
+		PlayerEntity player = (PlayerEntity) living;
+
+		List<PiglinEntity> piglins = player.world.getEntitiesWithinAABB(PiglinEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, 24));
+
+		for (PiglinEntity piglin : piglins) {
+			System.out.println("Event happening!");
+			if (piglin.getBrain().hasMemory(MemoryModuleType.NEAREST_PLAYERS)) {
+				List<PlayerEntity> list = piglin.getBrain().getMemory(MemoryModuleType.NEAREST_PLAYERS).orElse(null);
+				list.remove(player);
+			}
+		}
+
+		 */
 	}
 
 	@Override

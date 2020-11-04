@@ -1,17 +1,16 @@
 buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://dist.creeper.host/Sponge/maven' }
         jcenter()
         mavenCentral()
-        maven { url = 'https://dist.creeper.host/Sponge/maven' }
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
-		classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+'
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
-// Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
@@ -38,13 +37,9 @@ minecraft {
 			properties 'mixin.env.disableRefMap': 'true'
             workingDirectory project.file('run')
 
-            // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
 
-            // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-
-			args '-Xmx', '3G'
 
             mods {
                 enigmaticlegacy {
@@ -69,25 +64,6 @@ minecraft {
                 }
             }
         }
-
-        data {
-			properties 'mixin.env.disableRefMap': 'true'
-            workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-
-            args '--mod', 'enigmaticlegacy', '--all', '--output', file('src/generated/resources/')
-
-            mods {
-                enigmaticlegacy {
-                    source sourceSets.main
-                }
-            }
-        }
     }
 }
 
@@ -99,6 +75,17 @@ repositories {
 	maven {  url = "https://maven.theillusivec4.top/" } // curios
 	maven {  url = "https://maven.blamejared.com/" } // patchouli
 	maven {  url = "https://repo.spongepowered.org/maven" }
+    maven {
+        url "https://dvs1.progwml6.com/files/maven/"
+    }
+    maven {
+        name "yarn2mcp"
+        url "https://maven.tterrag.com/"
+    }
+	maven {
+		name = "Modmuss"
+		url = "https://maven.modmuss50.me/"
+	}
 	jcenter()
     mavenCentral()
 	flatDir {
@@ -108,10 +95,7 @@ repositories {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.16.3-34.1.35'
-
-	compile 'org.spongepowered:mixin:0.8.1-SNAPSHOT'
-	
-	annotationProcessor 'org.spongepowered:mixin:0.8'
+    annotationProcessor 'org.spongepowered:mixin:0.8'
     annotationProcessor 'com.google.code.gson:gson:2.8.0'
     annotationProcessor 'com.google.guava:guava:21.0'
     annotationProcessor 'org.ow2.asm:asm-tree:7.2'

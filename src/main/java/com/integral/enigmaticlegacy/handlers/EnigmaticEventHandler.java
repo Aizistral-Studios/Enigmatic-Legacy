@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
@@ -48,6 +50,7 @@ import com.integral.enigmaticlegacy.objects.CooldownMap;
 import com.integral.enigmaticlegacy.objects.DamageSourceNemesisCurse;
 import com.integral.enigmaticlegacy.objects.DimensionalPosition;
 import com.integral.enigmaticlegacy.objects.Perhaps;
+import com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
@@ -82,9 +85,18 @@ import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.ai.brain.Brain;
+import net.minecraft.entity.ai.brain.BrainUtil;
 import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
+import net.minecraft.entity.ai.brain.schedule.Activity;
+import net.minecraft.entity.ai.brain.task.FindInteractionAndLookTargetTask;
+import net.minecraft.entity.ai.brain.task.ForgetAttackTargetTask;
+import net.minecraft.entity.ai.brain.task.LookAtEntityTask;
+import net.minecraft.entity.ai.brain.task.SupplementedTask;
+import net.minecraft.entity.ai.brain.task.Task;
 import net.minecraft.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
@@ -118,8 +130,10 @@ import net.minecraft.entity.monster.WitherSkeletonEntity;
 import net.minecraft.entity.monster.ZoglinEntity;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.monster.ZombifiedPiglinEntity;
+import net.minecraft.entity.monster.piglin.AbstractPiglinEntity;
 import net.minecraft.entity.monster.piglin.PiglinBruteEntity;
 import net.minecraft.entity.monster.piglin.PiglinEntity;
+import net.minecraft.entity.monster.piglin.PiglinTasks;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -192,6 +206,7 @@ import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -208,6 +223,7 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 import static com.integral.enigmaticlegacy.EnigmaticLegacy.*;
+import static com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack.getRegisteredMeleeAttack;
 
 /**
  * Generic event handler of the whole mod.
@@ -1117,13 +1133,58 @@ public class EnigmaticEventHandler {
 			PlayerEntity player = (PlayerEntity) event.getSource().getImmediateSource();
 
 			if (EnigmaticLegacy.enigmaticAmulet.ifHasColor(player, AmuletColor.BLACK)) {
-				player.heal(event.getAmount() * 0.15F);
+				player.heal(event.getAmount() * 0.1F);
 			}
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onEntityAttacked(AttackEntityEvent event) {
+		if (!event.getPlayer().world.isRemote) {
+			RegisteredMeleeAttack.registerAttack(event.getPlayer());
 		}
 	}
 
 	@SubscribeEvent
 	public void onEntityHurt(LivingHurtEvent event) {
+
+		// TODO The priorities are messed up as fuck. We gotta do something about it.
+
+		//DamageSource.WITHER
+		/*
+		 * Ideally fixed numerical increases should come first, then percentage alterations,
+		 * and the last in order - handlers that use the event for notification purpose, doing
+		 * something other with it than altering damage dealt.
+		 */
+
+		if (event.getSource().getTrueSource() instanceof LivingEntity) {
+			LivingEntity attacker = (LivingEntity) event.getSource().getTrueSource();
+			Entity immediateSource = event.getSource().getImmediateSource();
+
+			if (immediateSource instanceof TridentEntity || immediateSource instanceof LivingEntity) {
+				ItemStack mainhandStack = ItemStack.EMPTY;
+				if (immediateSource instanceof TridentEntity) {
+					if (((TridentEntity)immediateSource).thrownStack != null) {
+						mainhandStack = ((TridentEntity)immediateSource).thrownStack;
+					}
+				} else {
+					if (((LivingEntity)immediateSource).getHeldItemMainhand() != null) {
+						mainhandStack = ((LivingEntity)immediateSource).getHeldItemMainhand();
+					}
+				}
+
+				int torrentLevel = 0;
+				int wrathLevel = 0;
+
+				if ((torrentLevel = EnchantmentHelper.getEnchantmentLevel(torrentEnchantment, mainhandStack)) > 0) {
+					event.setAmount(event.getAmount() + torrentEnchantment.bonusDamageByCreature(attacker, event.getEntityLiving(), torrentLevel));
+				}
+
+				if ((wrathLevel = EnchantmentHelper.getEnchantmentLevel(wrathEnchantment, mainhandStack)) > 0) {
+					event.setAmount(event.getAmount() + wrathEnchantment.bonusDamageByCreature(attacker, event.getEntityLiving(), wrathLevel));
+				}
+			}
+		}
 
 		if (event.getSource().getImmediateSource() instanceof AbstractArrowEntity) {
 			AbstractArrowEntity arrow = (AbstractArrowEntity) event.getSource().getImmediateSource();
@@ -1153,8 +1214,9 @@ public class EnigmaticEventHandler {
 			}
 
 			if (player.getHeldItemMainhand() != null) {
+				ItemStack mainhandStack = player.getHeldItemMainhand();
 
-				if (player.getHeldItemMainhand().getItem() == EnigmaticLegacy.theTwist) {
+				if (mainhandStack.getItem() == EnigmaticLegacy.theTwist) {
 					if (SuperpositionHandler.isTheCursedOne(player)) {
 						if (!event.getEntityLiving().isNonBoss() || event.getEntityLiving() instanceof PlayerEntity) {
 							event.setAmount(event.getAmount()*TheTwist.bossDamageBonus.getValue().asModifier(true));
@@ -1164,28 +1226,17 @@ public class EnigmaticEventHandler {
 					}
 				}
 
-				if (EnigmaticEnchantmentHelper.hasNemesisCurseEnchantment(player.getHeldItemMainhand())) {
+				int slayerLevel = 0;
+				if ((slayerLevel = EnchantmentHelper.getEnchantmentLevel(slayerEnchantment, mainhandStack)) > 0) {
+					event.setAmount(event.getAmount() + slayerEnchantment.bonusDamageByCreature(player, event.getEntityLiving(), slayerLevel));
+				}
+
+				if (EnigmaticEnchantmentHelper.hasNemesisCurseEnchantment(mainhandStack)) {
 					float supposedDamage = event.getAmount()*0.35F;
 
 					player.attackEntityFrom(new DamageSourceNemesisCurse(event.getEntityLiving()), supposedDamage);
 				}
 			}
-		}
-
-		if (event.getSource().getTrueSource() instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
-
-			float damageBoost = 0F;
-
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.berserkEmblem)) {
-				damageBoost += event.getAmount()*(SuperpositionHandler.getMissingHealthPool(player)*(float)BerserkEmblem.attackDamage.getValue());
-			}
-
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedScroll)) {
-				damageBoost += event.getAmount()*(CursedScroll.damageBoost.getValue().asModifier()*SuperpositionHandler.getCurseAmount(player));
-			}
-
-			event.setAmount(event.getAmount()+damageBoost);
 		}
 
 
@@ -1200,21 +1251,20 @@ public class EnigmaticEventHandler {
 			if (advancedCurios.size() > 0) {
 				for (ItemStack advancedCurioStack : advancedCurios) {
 					ItemSpellstoneCurio advancedCurio = (ItemSpellstoneCurio) advancedCurioStack.getItem();
+					CreatureEntity trueSource = event.getSource().getTrueSource() instanceof CreatureEntity ? (CreatureEntity)event.getSource().getTrueSource() : null;
 
-					if (advancedCurio.resistanceList.containsKey(event.getSource().damageType)) {
-
-						if (event.getSource().damageType.startsWith("explosion") && advancedCurio == EnigmaticLegacy.golemHeart && SuperpositionHandler.hasAnyArmor(player)) {
-							// NO-OP
-						} else {
-							event.setAmount(event.getAmount() * advancedCurio.resistanceList.get(event.getSource().damageType).get());
-						}
+					if (event.getSource().damageType.startsWith("explosion") && advancedCurio == EnigmaticLegacy.golemHeart && SuperpositionHandler.hasAnyArmor(player)) {
+						continue;
+					} else if (advancedCurio == magmaHeart && trueSource != null && (trueSource.getCreatureAttribute() == CreatureAttribute.WATER || trueSource instanceof DrownedEntity)) {
+						event.setAmount(event.getAmount() * 2F);
+					} else if (advancedCurio == eyeOfNebula && player.isInWater()) {
+						event.setAmount(event.getAmount() * 2F);
+					} else if (advancedCurio == oceanStone && trueSource != null && (trueSource.getCreatureAttribute() == CreatureAttribute.WATER || trueSource instanceof DrownedEntity)) {
+						event.setAmount(event.getAmount() * OceanStone.underwaterCreaturesResistance.getValue().asModifierInverted());
 					}
 
-					if (advancedCurio == EnigmaticLegacy.oceanStone && event.getSource().getTrueSource() instanceof LivingEntity) {
-						LivingEntity attacker = (LivingEntity)event.getSource().getTrueSource();
-						if (attacker.getCreatureAttribute() == CreatureAttribute.WATER) {
-							event.setAmount(event.getAmount() * OceanStone.underwaterCreaturesResistance.getValue().asModifierInverted());
-						}
+					if (advancedCurio.resistanceList.containsKey(event.getSource().damageType)) {
+						event.setAmount(event.getAmount() * advancedCurio.resistanceList.get(event.getSource().damageType).get());
 					}
 				}
 			}
@@ -1305,6 +1355,23 @@ public class EnigmaticEventHandler {
 			}
 		}
 
+		if (event.getSource().getTrueSource() instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
+			Entity immediateSource = event.getSource().getImmediateSource();
+
+			float damageBoost = 0F;
+
+			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.berserkEmblem)) {
+				damageBoost += event.getAmount()*(SuperpositionHandler.getMissingHealthPool(player)*(float)BerserkEmblem.attackDamage.getValue());
+			}
+
+			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedScroll)) {
+				damageBoost += event.getAmount()*(CursedScroll.damageBoost.getValue().asModifier()*SuperpositionHandler.getCurseAmount(player));
+			}
+
+			event.setAmount(event.getAmount()+damageBoost);
+		}
+
 		if (event.getEntityLiving() instanceof TameableEntity) {
 			TameableEntity pet = (TameableEntity) event.getEntityLiving();
 
@@ -1391,7 +1458,6 @@ public class EnigmaticEventHandler {
 
 		EnigmaticLegacy.soulCrystal.updatePlayerSoulMap(newPlayer);
 	}
-
 	@SubscribeEvent
 	public void entityJoinWorld(EntityJoinWorldEvent event) {
 		Entity entity = event.getEntity();
@@ -1404,6 +1470,24 @@ public class EnigmaticEventHandler {
 
 		if (entity instanceof CreatureEntity && ((CreatureEntity)entity).getCreatureAttribute() == CreatureAttribute.ARTHROPOD) {
 			((CreatureEntity)entity).goalSelector.addGoal(3, new AvoidEntityGoal<>((CreatureEntity)entity, PlayerEntity.class, (targetEntity) -> targetEntity instanceof PlayerEntity && SuperpositionHandler.hasAntiInsectAcknowledgement((PlayerEntity)targetEntity), 6, 1, 1.3, EntityPredicates.CAN_AI_TARGET::test));
+		}
+		if (entity instanceof PiglinEntity) {
+
+			//((PiglinEntity)entity).goalSelector.addGoal(3, new AvoidEntityGoal<>((CreatureEntity)entity, PlayerEntity.class, (targetEntity) -> targetEntity instanceof PlayerEntity && SuperpositionHandler.hasAntiInsectAcknowledgement((PlayerEntity)targetEntity), 6, 1, 1.3, EntityPredicates.CAN_AI_TARGET::test));
+
+			/*
+			((PiglinEntity)entity).getBrain().func_233698_a_(Activity.CORE, 0, ImmutableList.<Task<? super PiglinEntity>>of(new ForgetAttackTargetTask<>(AbstractPiglinEntity::func_242337_eM, (piglin) -> {
+				Optional<LivingEntity> optional = BrainUtil.func_233864_a_(((PiglinEntity)entity), MemoryModuleType.ANGRY_AT);
+				Optional<PlayerEntity> optional2 = piglin.getBrain().getMemory(MemoryModuleType.NEAREST_TARGETABLE_PLAYER_NOT_WEARING_GOLD);
+				if (optional.isPresent())
+					return optional;
+				else if (optional2.isPresent())
+					return optional2;
+
+				return Optional.empty();
+
+			})));
+			 */
 		}
 
 	}
@@ -2094,17 +2178,6 @@ public class EnigmaticEventHandler {
 
 			}
 
-			/*
-			if (event.getEntityLiving() instanceof HoglinEntity) {
-				if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide)) {
-					HoglinEntity hoglin = (HoglinEntity) event.getEntityLiving();
-					System.out.println("Alas here we are: " + hoglin);
-					//hoglin.getBrain().setMemory(MemoryModuleType.PACIFIED, true);
-					//hoglin.goalSelector.addGoal(1, new G);
-					hoglin.setAttackTarget(null);
-				}
-			}
-			 */
 		}
 	}
 

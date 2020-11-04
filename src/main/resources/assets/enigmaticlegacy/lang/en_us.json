@@ -156,6 +156,9 @@
 	"enchantment.enigmaticlegacy.nemesis_curse": "Curse of Nemesis",
 	"enchantment.enigmaticlegacy.sharpshooter": "Sharpshooter",
 	"enchantment.enigmaticlegacy.ceaseless": "Ceaseless",
+	"enchantment.enigmaticlegacy.torrent": "Torrent",
+	"enchantment.enigmaticlegacy.wrath": "Wrath",
+	"enchantment.enigmaticlegacy.slayer": "Slayer",
 
 	"curios.identifier.scroll": "Arcane Scroll",
 	"curios.identifier.spellstone": "Spellstone",
@@ -315,7 +318,7 @@
 	"tooltip.enigmaticlegacy.enigmaticAmuletModifierVIOLET": "§6+15% §dDeflect Chance",
 	"tooltip.enigmaticlegacy.enigmaticAmuletModifierMAGENTA": "§6-25% §dGravity",
 	"tooltip.enigmaticlegacy.enigmaticAmuletModifierGREEN": "§6+25% §dMining Speed",
-	"tooltip.enigmaticlegacy.enigmaticAmuletModifierBLACK": "§6+15% §dLifesteal",
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierBLACK": "§6+10% §dLifesteal",
 	"tooltip.enigmaticlegacy.enigmaticAmuletModifierBLUE": "§6+25% §dSwimming Speed",
 
 
@@ -393,6 +396,7 @@
 	"tooltip.enigmaticlegacy.angelBlessing4": "§5- Immunity to fall and collision damage.",
 	"tooltip.enigmaticlegacy.angelBlessing5": "§5- §6%1$s§d Chance§5 to deflect incoming projectile.",
 	"tooltip.enigmaticlegacy.angelBlessing6": "§5- Your own projectiles are greatly accelerated.",
+	"tooltip.enigmaticlegacy.angelBlessing7": "§5- You are vulnerable to §6Withering§5 and §6Void Damage.",
 	
 	"tooltip.enigmaticlegacy.eyeOfNebula1": "§dActive ability:",
 	"tooltip.enigmaticlegacy.eyeOfNebula2": "§6- Teleports you behind creature you are looking at.",
@@ -400,6 +404,7 @@
 	"tooltip.enigmaticlegacy.eyeOfNebula3": "§dPassive abilities:",
 	"tooltip.enigmaticlegacy.eyeOfNebula4": "§5- §6%1$s§d Magic Damage Resistance.",
 	"tooltip.enigmaticlegacy.eyeOfNebula5": "§5- §6%1$s§d Chance§5 to teleport away from any attack.",
+	"tooltip.enigmaticlegacy.eyeOfNebula6": "§5- When in water, you are vulnerable to ANY damage.",
 	
 	"tooltip.enigmaticlegacy.oceanStone1": "§dActive ability:",
 	"tooltip.enigmaticlegacy.oceanStone2": "§6- Starts thunderstorm, at great cost of experience.",
@@ -412,6 +417,7 @@
 	"tooltip.enigmaticlegacy.oceanStone8": "§5- Provides effects of §6Aqua Affinity§5 enchantment.",
 	"tooltip.enigmaticlegacy.oceanStone9": "§5- Negates gravity when underwater.",
 	"tooltip.enigmaticlegacy.oceanStone10": "§5- Greatly increased swimming speed.",
+	"tooltip.enigmaticlegacy.oceanStone11": "§5- You are vulnerable to §6Fire Damage.",
 	
 	"tooltip.enigmaticlegacy.magmaHeart1": "§dActive ability:",
 	"tooltip.enigmaticlegacy.magmaHeart2": "§4- Absent.",
@@ -424,6 +430,7 @@
 	"tooltip.enigmaticlegacy.magmaHeart8": "§5- Any status effects applied to you tick",
 	"tooltip.enigmaticlegacy.magmaHeart9": "§5  down twice as fast, except §6Fire Resistance§5.",
 	"tooltip.enigmaticlegacy.magmaHeart10": "§5- §6Fire Resistance§5 lasts twice as long.",
+	"tooltip.enigmaticlegacy.magmaHeart11": "§5- You are vulnerable to underwater creatures.",
 	
 	"tooltip.enigmaticlegacy.golemHeart1": "§dActive ability:",
 	"tooltip.enigmaticlegacy.golemHeart2": "§4- Absent.",
@@ -762,6 +769,25 @@
 	"book.enigmaticlegacy.entry.curse_of_nemesis.heading.1": "The Curse",
 	"book.enigmaticlegacy.entry.curse_of_nemesis.page.1": "One of the less known cursed enchantments, this one is more curious and obscure than others.<br2/>It can only be encountered on melee weapons, alike swords or axes. Should you directly attack with the weapon that bears Curses of Nemesis, you will receive around 25 percents of the damage you dealt back upon yourself.<br2/>",
 	"book.enigmaticlegacy.entry.curse_of_nemesis.page.2": "However, no matter how devastating your blows will be, this curse can never kill you.<br2/>It will eventually leave you with just a sliver of health remaining, but something else will have to take this sliver for you to finally die.",
+	
+	
+	"book.enigmaticlegacy.entry.wrath_enchantment.name": "Wrath",
+	"book.enigmaticlegacy.entry.wrath_enchantment.heading.1": "The Enchantment",
+	"book.enigmaticlegacy.entry.wrath_enchantment.page.1": "An enchantment exclusive to tridents, this one is very similar to effect Sharpness has on swords and axes, increasing damage your trident can deal against any foe in general. It works both when trident is used as a melee weapon and when it is thrown as a projectile.<br2/>Damage increase this enchantment offers is",
+	"book.enigmaticlegacy.entry.wrath_enchantment.page.2": "noticeably better than that of Sharpness however, as it provides +1.25 damage per level of enchantment applied.<br2/>This enchantment falls under the same category as Impaling and Torrent, therefore being mutually exclusive with them.",
+	
+	
+	"book.enigmaticlegacy.entry.torrent_enchantment.name": "Torrent",
+	"book.enigmaticlegacy.entry.torrent_enchantment.heading.1": "The Enchantment",
+	"book.enigmaticlegacy.entry.torrent_enchantment.page.1": "This enchantment does increase damage your trident deals against both entities that are immune to fire (like Blazes or Zombified Piglins) and creatures which are sensitive to water (like Endermen).<br2/>Exact damage increase against matching creatures is +2.5 damage per level of enchantment, identical to that of Smite against undead.",
+	"book.enigmaticlegacy.entry.torrent_enchantment.page.2": "Also this enchantment falls under the same category as Impaling and Wrath, therefore being mutually exclusive with them.",
+	
+	
+	"book.enigmaticlegacy.entry.slayer_enchantment.name": "Slayer",
+	"book.enigmaticlegacy.entry.slayer_enchantment.heading.1": "The Enchantment",
+	"book.enigmaticlegacy.entry.slayer_enchantment.page.1": "Another enchantment that allows you to increase damage of your sword or axe, it resides in same category as Sharpness, Smite or Bane of Arthropods, therefore being mutually exclusive with all of those.<br2/>It increases any damage your weapon deals against anything classified as monster. The exact damage increase is +1.5,",
+	"book.enigmaticlegacy.entry.slayer_enchantment.page.2": "multiplied by the level of enchantment itself, which is noticeably less than +2.5 increase you will get from Smite against undead for instance. However, it is still a very solid choice among it's counterparts, since monsters do conveniently include almost anything that you have to fight back against, while undead",
+	"book.enigmaticlegacy.entry.slayer_enchantment.page.3": "are much less all-encompassing category, not to mention arthropods covered by Bane of Arthropods.<br2/>Additionally, monsters attacked by a weapon with this enchantment are briefly slowed down.",
 	
 	
 	"book.enigmaticlegacy.entry.soul_loss.name": "Loss of Soul",

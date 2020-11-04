@@ -93,6 +93,12 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ocean_stone"));
 
 		this.immunityList.add(DamageSource.DROWN.damageType);
+
+		this.resistanceList.put(DamageSource.IN_FIRE.damageType, () -> 2F);
+		this.resistanceList.put(DamageSource.ON_FIRE.damageType, () -> 2F);
+		this.resistanceList.put(DamageSource.LAVA.damageType, () -> 2F);
+		this.resistanceList.put(DamageSource.HOT_FLOOR.damageType, () -> 2F);
+		this.resistanceList.put("fireball", () -> 2F);
 	}
 
 	private Multimap<Attribute, AttributeModifier> createAttributeMap(PlayerEntity player) {
@@ -123,6 +129,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone8");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone9");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone10");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone11");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}

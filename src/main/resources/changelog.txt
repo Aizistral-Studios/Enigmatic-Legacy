@@ -1,5 +1,15 @@
 The Changelog:
 
+[Release 2.8.0]:
+- Pearl of the Void no longer clears Night Vision effects provided by Charm of the Treasure Hunter and Will of the Ocean (#100);
+- Black Enigmatic Amulet nerfed to provide only 10% Lifesteal, instead of previous 15%;
+- Will of the Ocean once again reduces damage from Drowned, because go screw yourself vanilla logic;
+- Added elemental vulnerabilities to Angel's Blessing, Will of the Ocean, Blazing Core and Eye of Nebula (#71);
+- At long last, finally properly set up the Mixin connection for further use;
+- Implemented three new enchantments: Slayer, Torrent and Wrath;
+- Removed wrong third page in The Acknowledgment entry of Ceaseless enchantment;
+- The Acknowledgment edition raised to 4.
+
 [Release 2.7.3]:
 - Defeated the invasion of Enigmatic Amulets (#95).
 

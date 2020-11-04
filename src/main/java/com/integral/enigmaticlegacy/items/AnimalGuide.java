@@ -58,6 +58,8 @@ public class AnimalGuide extends ItemBase implements IVanishable {
 
 		PlayerEntity player = (PlayerEntity) entityIn;
 
+		// TODO Use Mixin for this
+
 		List<HoglinEntity> hoglins = entityIn.world.getEntitiesWithinAABB(HoglinEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, 24));
 
 		for (HoglinEntity hoglin : hoglins)

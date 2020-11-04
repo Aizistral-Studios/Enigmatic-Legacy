@@ -70,6 +70,7 @@ public class PacketFlameParticles {
 			}
 
 		});
+
 		ctx.get().setPacketHandled(true);
 	}
 

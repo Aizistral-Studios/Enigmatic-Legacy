@@ -111,6 +111,7 @@ public class MagmaHeart extends ItemSpellstoneCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart8");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart9");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart10");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart11");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
