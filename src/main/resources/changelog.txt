@@ -10,6 +10,8 @@ The Changelog:
 - Removed wrong third page in The Acknowledgment entry of Ceaseless enchantment;
 - The Acknowledgment edition raised to 4.
 
+
+
 [Release 2.7.3]:
 - Defeated the invasion of Enigmatic Amulets (#95).
 
