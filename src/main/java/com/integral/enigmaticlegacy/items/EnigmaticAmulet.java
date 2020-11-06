@@ -300,26 +300,6 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 			}
 		}
 
-		// TODO Figure out how to stop piglins from angering against players
-		// Perhaps Mixin will come in handy in such quest
-
-		/*
-		if (!(living instanceof PlayerEntity) || living.world.isRemote)
-			return;
-
-		PlayerEntity player = (PlayerEntity) living;
-
-		List<PiglinEntity> piglins = player.world.getEntitiesWithinAABB(PiglinEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, 24));
-
-		for (PiglinEntity piglin : piglins) {
-			System.out.println("Event happening!");
-			if (piglin.getBrain().hasMemory(MemoryModuleType.NEAREST_PLAYERS)) {
-				List<PlayerEntity> list = piglin.getBrain().getMemory(MemoryModuleType.NEAREST_PLAYERS).orElse(null);
-				list.remove(player);
-			}
-		}
-
-		 */
 	}
 
 	@Override

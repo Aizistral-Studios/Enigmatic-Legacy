@@ -235,7 +235,8 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 		}
 	}
 
-	private List<EnchantmentData> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
+	@Override
+	public List<EnchantmentData> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
 		this.rand.setSeed(this.xpSeed.get() + enchantSlot);
 		List<EnchantmentData> list = EnchantmentHelper.buildEnchantmentList(this.rand, stack, level, false);
 		if (stack.getItem() == Items.BOOK && list.size() > 1) {

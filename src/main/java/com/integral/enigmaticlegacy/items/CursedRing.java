@@ -25,6 +25,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -63,6 +64,8 @@ public class CursedRing extends ItemBaseCurio {
 	public static Omniconfig.DoubleParameter endermenRandomportFrequency;
 	public static Omniconfig.BooleanParameter saveTheBees;
 
+	public static Omniconfig.BooleanParameter ultraHardcore;
+
 	@SubscribeConfig
 	public static void onConfig(OmniconfigWrapper builder) {
 		String prevCategory = builder.getCurrentCategory();
@@ -98,6 +101,11 @@ public class CursedRing extends ItemBaseCurio {
 		enchantingBonus = builder
 				.comment("How much additional Enchanting Power ring provides in Enchanting Table.")
 				.getInt("EnchantingBonus", 10);
+
+		ultraHardcore = builder
+				.comment("If true, Ring of the Seven Curses will be equipped into player's ring slot right away when "
+						+ "entering a new world, instead of just being added to their inventory.")
+				.getBoolean("UltraHardcode", false);
 
 
 
@@ -241,6 +249,11 @@ public class CursedRing extends ItemBaseCurio {
 
 	public boolean isItemDeathPersistent(ItemStack stack) {
 		return stack.getItem().equals(this) || stack.getItem().equals(EnigmaticLegacy.enigmaticAmulet);
+	}
+
+	@Override
+	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		// TODO Dirty self-equipping tricks
 	}
 
 	@Override

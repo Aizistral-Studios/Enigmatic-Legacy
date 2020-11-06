@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:enchanter_pearl"
+    }
+  ],
+  "pattern": [
+    " G ",
+    "EXE",
+    "POP"
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:emerald"
+    },
+	"X": {
+      "item": "minecraft:ender_pearl"
+    },
+	"P": {
+      "item": "minecraft:blaze_powder"
+    },
+	"O": {
+      "item": "minecraft:crying_obsidian"
+    },
+	"E": {
+      "item": "enigmaticlegacy:evil_essence"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:enchanter_pearl"
+  }
+}

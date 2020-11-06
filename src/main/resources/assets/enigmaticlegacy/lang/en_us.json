@@ -76,6 +76,9 @@
 	"item.enigmaticlegacy.guardian_heart": "Heart of the Guardian",
 	"item.enigmaticlegacy.forbidden_fruit": "The Forbidden Fruit",
 	"item.enigmaticlegacy.antiforbidden_potion": "Potion of Redemption",
+	"item.enigmaticlegacy.enchanter_pearl": "Enchanter's Pearl",
+	"item.enigmaticlegacy.cursed_stone": "Unholy Stone",
+	"item.enigmaticlegacy.gem_ring": "Exquisite Ring",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -684,6 +687,25 @@
 	"tooltip.enigmaticlegacy.evilEssence1": "§5Embodies raw, unrefined energy teared out",
 	"tooltip.enigmaticlegacy.evilEssence2": "§5from the §6Wither§5's soul.",
 	
+	"tooltip.enigmaticlegacy.gemRing1": "§5Renders §6Piglins§5 neutral when worn.",
+	
+	"tooltip.enigmaticlegacy.enchanterPearl1": "§5While equipped or in your inventory, you",
+	"tooltip.enigmaticlegacy.enchanterPearl2": "§5receive greater amount and power of",
+	"tooltip.enigmaticlegacy.enchanterPearl3": "§5enchantments when using §6Enchanting Table.",
+	"tooltip.enigmaticlegacy.enchanterPearl4": "§5Enchanting has chance to produce both",
+	"tooltip.enigmaticlegacy.enchanterPearl5": "§5curses and treasure enchantments.",
+	"tooltip.enigmaticlegacy.enchanterPearl6": "§5You do not require §6Lapis Lazuli§5 to enchant.",
+	
+	"tooltip.enigmaticlegacy.cursedStone1": "§5If you die in the §6Nether§5, in the middle of",
+	"tooltip.enigmaticlegacy.cursedStone2": "§5sufficiently large lava lake with this stone",
+	"tooltip.enigmaticlegacy.cursedStone3": "§5in your inventory, §6Ring of the Seven Curses",
+	"tooltip.enigmaticlegacy.cursedStone4": "§5will be permanently destroyed, along with",
+	"tooltip.enigmaticlegacy.cursedStone5": "§5one of your §6Soul Crystals.",
+	"tooltip.enigmaticlegacy.cursedStone6": "§4This cannot be undone.",
+	
+	"tooltip.enigmaticlegacy.soulCrystal1": "§6Right-Click§5 to absorb the crystal and",
+	"tooltip.enigmaticlegacy.soulCrystal2": "§5restore one of your lost §6Soul Crystals.",
+	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",
 	"gui.enigmaticlegacy.blazing_core_bar_offsetX": "0",
@@ -1199,6 +1221,28 @@
 	"book.enigmaticlegacy.entry.magnet_ring.name": "Magnetic Ring",
 	"book.enigmaticlegacy.entry.magnet_ring.page.1": "Despite simplicity of it's design, Magnetic Ring already holds some arcane power.<br2/>Perhaps not the one that defies creation itself, yet still quite useful - whatever thing might be lying on the ground around you, this ring will bring it towards you, sparing you the labor of walking to it and picking it  up yourself.",
 	"book.enigmaticlegacy.entry.magnet_ring.page.2": "One of it's notable properties is that items you might attempt to throw away will refuse to leave you, instantly attempting to re-enter your inventory, unless you willingly supress the ring's power.",
+	
+	
+	"book.enigmaticlegacy.entry.gem_ring.name": "Exquisite Ring",
+	"book.enigmaticlegacy.entry.gem_ring.page.1": "A bit more work and about as much of precious gold, and you can reforge mundane iron ring into much shinier and fancier form.<br2/>The only notable property of this accessory, apart from being all shiny and golden, is that it has effect on Piglins similar to wearing gold armor - they will respect you a bit more when seeing this",
+	"book.enigmaticlegacy.entry.gem_ring.page.2": "preciousness on your finger, and won't try to kill as soon as you enter their field of view.",
+	
+	
+	"book.enigmaticlegacy.entry.enchanter_pearl.name": "Enchanter's Pearl",
+	"book.enigmaticlegacy.entry.enchanter_pearl.page.1": "Among many ways you can harness the power of Wither's soul, there is this truly precious pearl, capable of breaking the limits you usually have to cope with when working with Enchanting Table.<br2/>First, it allows you to once and for all forget about having to run to the table twice anytime you want to enchant something, only",
+	"book.enigmaticlegacy.entry.enchanter_pearl.page.2": "because you forgot to bring some Lapis with you the first time. Instead of using Lapis Lazuli, the pearl draws power from within the Ring of the Seven Curses to use it as catalyzer for enchanting process. As a result, the",
+	"book.enigmaticlegacy.entry.enchanter_pearl.page.3": "amount and power of enchantments you will be getting when enchanting anything are significantly higher on average than with normal enchanting.<br2/>This proccess also allows to achieve what was thought to be impossible before - produce unique treasure enchantments on your gear, such as Mending, right within that Enchanting Table of yours. Unfortunately, there also is a chance you will get some curses instead,",
+	"book.enigmaticlegacy.entry.enchanter_pearl.page.4": "which you normally wouldn't have gotten, so this latter ability is somewhat of a double-edged sword.",
+	
+	
+	"book.enigmaticlegacy.entry.cursed_stone.name": "Destruction of the Ring",
+	"book.enigmaticlegacy.entry.cursed_stone.page.1": "Ever since you have chosen to bear the Ring of the Seven Curses, you pondered the possibility of getting rid of it - if not to actually do this, then at least to be aware if it exists. Though materials it is forged from are by no measure indestructible, physical incarnation of the ring is just a mere fraction of it's metaphysical power and nature. Tendrils of it's corruption",
+	"book.enigmaticlegacy.entry.cursed_stone.page.2": "reach deep within your soul, intertwining your immortal being with entity of the ring itself, and thus all curses and blessings it yields.<br2/>This connection between you is exactly what makes it so",
+	"book.enigmaticlegacy.entry.cursed_stone.page.3": "persistent, inseparatable from you even in death. As much as to certain extent you are able to draw and harness power from within the ring, the ring is capable of drawing power from within you in order to reinforce it's physical form, as well as the link tightly holding that form on your finger. The only thing it seems to remain barely susceptible to would appear to be extreme heat, but that connection ensures it cannot be permanently destroyed without",
+	"book.enigmaticlegacy.entry.cursed_stone.page.4": "your own body being destroyed just as permanently. And since you apparently possess the ability to create and inhabit new vessel after destruction of the old one, the ring does either.<br2/>However, now that you defeated the Wither and harvested sheer essence of it's corrupted soul, the possibility to surmount such obstacle revealed itself. The Unholy Stone symbolizes the connection between you and Ring of the Seven Curses,",
+	"book.enigmaticlegacy.entry.cursed_stone.page.5": "manifested and exposed in somewhat fragile physical form for as long as you keep the stone close to you. This allows you to exploit ring's only vulnerability, by willingly meeting your demise in specific, somewhat ritualistic manner.<br2/>With this stone at your disposal, travel to the dimension of blazing heat and lost souls, known as the Nether. Wander amongst it's blasted, twisted landscape,",
+	"book.enigmaticlegacy.entry.cursed_stone.page.6": "climbing cliffs and ledges to look down from them - until you discover an ocean of seeting lava beneath your feet, as vast and deep as you can find. Hold your breath for a while, before releasing it for the last time, and leap into the midst of blazing ocean below, letting your body drown into the molten rock and be consumed by fire.<br2/>Should everything be executed correctly, the ring shall melt and be destroyed forever.",
+	"book.enigmaticlegacy.entry.cursed_stone.page.7": "The liberation from it's chains doesn't come cheap, however - it is only possible because you expose part of your soul entangled with it through the Unholy Stone. In order for this ritual to be successful, that part must be destroyed first, otherwise it would simply not be possible. But at least with this sacrifice made you will never see that cursed ring again... unless of course it would turn out there was more than one in your world, which is not very likely.",
 	
 	
 	"book.enigmaticlegacy.entry.heaven_scroll.name": "Gift of the Heaven",

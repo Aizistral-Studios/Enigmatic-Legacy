@@ -147,11 +147,7 @@ public class LoreInscriberContainer extends Container {
 	@Override
 	public void onContainerClosed(PlayerEntity playerIn) {
 		super.onContainerClosed(playerIn);
-		/*
-		this.field_234644_e_.consume((p_234647_2_, p_234647_3_) -> {
-			this.clearContainer(playerIn, p_234647_2_, this.field_234643_d_);
-		});
-		 */
+		this.clearContainer(playerIn, playerIn.world, this.craftSlotsInv);
 	}
 
 	/**

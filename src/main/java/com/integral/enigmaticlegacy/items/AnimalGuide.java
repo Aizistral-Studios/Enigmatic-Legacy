@@ -57,20 +57,6 @@ public class AnimalGuide extends ItemBase implements IVanishable {
 			return;
 
 		PlayerEntity player = (PlayerEntity) entityIn;
-
-		// TODO Use Mixin for this
-
-		List<HoglinEntity> hoglins = entityIn.world.getEntitiesWithinAABB(HoglinEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, 24));
-
-		for (HoglinEntity hoglin : hoglins)
-			if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide)) {
-				if (hoglin.getAttackTarget() == player || hoglin.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).orElse(null) == player) {
-					hoglin.setAttackTarget(null);
-					hoglin.getBrain().setMemory(MemoryModuleType.ATTACK_TARGET, Optional.empty());
-					hoglin.getBrain().setMemory(MemoryModuleType.PACIFIED, true);
-				}
-			}
-
 	}
 
 }

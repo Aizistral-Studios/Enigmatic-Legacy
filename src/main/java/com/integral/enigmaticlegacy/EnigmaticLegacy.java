@@ -43,9 +43,11 @@ import com.integral.enigmaticlegacy.items.AstralDust;
 import com.integral.enigmaticlegacy.items.BerserkEmblem;
 import com.integral.enigmaticlegacy.items.CursedRing;
 import com.integral.enigmaticlegacy.items.CursedScroll;
+import com.integral.enigmaticlegacy.items.CursedStone;
 import com.integral.enigmaticlegacy.items.DarkArmor;
 import com.integral.enigmaticlegacy.items.DarkMirror;
 import com.integral.enigmaticlegacy.items.EarthHeart;
+import com.integral.enigmaticlegacy.items.EnchanterPearl;
 import com.integral.enigmaticlegacy.items.EnchantmentTransposer;
 import com.integral.enigmaticlegacy.items.EnderRing;
 import com.integral.enigmaticlegacy.items.EnderRod;
@@ -67,6 +69,7 @@ import com.integral.enigmaticlegacy.items.FabulousScroll;
 import com.integral.enigmaticlegacy.items.ForbiddenAxe;
 import com.integral.enigmaticlegacy.items.ForbiddenFruit;
 import com.integral.enigmaticlegacy.items.GemOfBinding;
+import com.integral.enigmaticlegacy.items.GemRing;
 import com.integral.enigmaticlegacy.items.GolemHeart;
 import com.integral.enigmaticlegacy.items.GuardianHeart;
 import com.integral.enigmaticlegacy.items.HastePotion;
@@ -192,7 +195,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.8.0";
+	public static final String VERSION = "2.9.0";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -320,6 +323,10 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Guide to Feral Hunt") public static HunterGuide hunterGuide;
 	@ConfigurableItem("Forbidden Fruit") public static ForbiddenFruit forbiddenFruit;
 	@ConfigurableItem("") public static AntiforbiddenPotion antiforbiddenPotion;
+
+	@ConfigurableItem("Exquisite Ring") public static GemRing gemRing;
+	@ConfigurableItem("Unholy Stone") public static CursedStone cursedStone;
+	@ConfigurableItem("Enchanter's Pearl") public static EnchanterPearl enchanterPearl;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -488,6 +495,10 @@ public class EnigmaticLegacy {
 		hunterGuide = new HunterGuide();
 		earthHeart = new EarthHeart();
 		twistedCore = new TwistedCore();
+
+		gemRing = new GemRing();
+		cursedStone = new CursedStone();
+		enchanterPearl = new EnchanterPearl();
 
 		sharpshooterEnchantment = new SharpshooterEnchantment(EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND);
 		ceaselessEnchantment = new CeaselessEnchantment(EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND);
@@ -760,6 +771,9 @@ public class EnigmaticLegacy {
 					hunterGuide,
 					forbiddenFruit,
 					antiforbiddenPotion,
+					gemRing,
+					cursedStone,
+					enchanterPearl,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),

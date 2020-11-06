@@ -11,6 +11,7 @@ import net.minecraft.enchantment.EnchantmentType;
 import net.minecraft.enchantment.ImpalingEnchantment;
 import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.ResourceLocation;
@@ -43,7 +44,7 @@ public class TorrentEnchantment extends Enchantment {
 	}
 
 	public float bonusDamageByCreature(LivingEntity attacker, LivingEntity living, int level) {
-		float calculated = (living.isImmuneToFire() || living.isWaterSensitive()) ? level * 2.5F : 0F;
+		float calculated = (living.isImmuneToFire() || living.isWaterSensitive() || living instanceof EnderDragonEntity) ? level * 2.5F : 0F;
 		calculated*= getRegisteredAttackStregth(attacker);
 
 		return calculated;

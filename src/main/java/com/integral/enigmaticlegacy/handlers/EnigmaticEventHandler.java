@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -69,6 +71,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.CreateWorldScreen;
@@ -142,6 +145,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -177,6 +181,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.GameRules;
+import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
@@ -219,7 +224,11 @@ import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.CuriosCapability;
+import top.theillusivec4.curios.api.event.DropRulesEvent;
 import top.theillusivec4.curios.api.type.capability.ICurio;
+import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
+import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
+import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 import static com.integral.enigmaticlegacy.EnigmaticLegacy.*;
@@ -232,7 +241,6 @@ import static com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack.getRegi
 
 @Mod.EventBusSubscriber(modid = EnigmaticLegacy.MODID)
 public class EnigmaticEventHandler {
-
 	private static final String NBT_KEY_FIRSTJOIN = "enigmaticlegacy.firstjoin";
 	private static final String NBT_KEY_CURSEDGIFT = "enigmaticlegacy.cursedgift";
 	private static final String NBT_KEY_ENABLESPELLSTONE = "enigmaticlegacy.spellstones_enabled";
@@ -849,6 +857,74 @@ public class EnigmaticEventHandler {
 
 		}
 
+	}
+
+	@SubscribeEvent
+	public void onCurioDrops(DropRulesEvent event) {
+		if (event.getEntityLiving() instanceof ServerPlayerEntity) {
+			ServerPlayerEntity player = (ServerPlayerEntity) event.getEntityLiving();
+
+			if (SuperpositionHandler.hasItem(player, cursedStone) && player.world.func_234923_W_() == proxy.getNetherKey()) {
+				BlockPos deathPos = player.getPosition();
+
+				if (this.isThereLava(player.world, deathPos)) {
+					BlockPos surfacePos = deathPos;
+
+					while (true) {
+						BlockPos nextAbove = surfacePos.add(0, 1, 0);
+						if (this.isThereLava(player.world, nextAbove)) {
+							surfacePos = nextAbove;
+							continue;
+						} else {
+							break;
+						}
+					}
+
+					boolean confirmLavaPool = true;
+
+					for(int i = -3; i <= 2; ++i) {
+						final int fi = i;
+
+						boolean checkArea = BlockPos.getAllInBox(surfacePos.add(-3, i, -3), surfacePos.add(3, i, 3))
+								.map(blockPos -> {
+									if (fi <= 0)
+										return this.isThereLava(player.world, blockPos);
+									else
+										return player.world.isAirBlock(blockPos) || this.isThereLava(player.world, blockPos);
+								})
+								.reduce((prevResult, nextElement) -> {
+									return prevResult && nextElement;
+								}).orElse(false);
+
+						confirmLavaPool = confirmLavaPool && checkArea;
+					}
+
+					if (confirmLavaPool) {
+						// System.out.println("Lava pool confirmed!");
+						// TODO Access transform this someday
+						for(List<ItemStack> list : ImmutableList.of(player.inventory.mainInventory, player.inventory.armorInventory, player.inventory.offHandInventory)) {
+							for(ItemStack itemstack : list) {
+								if (!itemstack.isEmpty() && itemstack.getItem() == cursedStone) {
+									itemstack.setCount(0);
+								}
+							}
+						}
+
+						event.addOverride(stack -> stack != null && stack.getItem() == cursedRing, DropRule.DESTROY);
+						soulCrystal.setLostCrystals(player, soulCrystal.getLostCrystals(player)+1);
+						player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_WITHER_DEATH, SoundCategory.PLAYERS, 1.0F, 0.5F);
+					}
+				}
+			}
+		}
+	}
+
+	private boolean isThereLava(World world, BlockPos pos) {
+		FluidState fluidState = world.getBlockState(pos).getFluidState();
+		if (fluidState != null && fluidState.isTagged(FluidTags.LAVA) && fluidState.isSource())
+			return true;
+		else
+			return false;
 	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -1910,7 +1986,7 @@ public class EnigmaticEventHandler {
 
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
 		if (!(event.getPlayer() instanceof ServerPlayerEntity))
 			return;
@@ -1959,15 +2035,41 @@ public class EnigmaticEventHandler {
 
 			if (OmniconfigHandler.isItemEnabled(EnigmaticLegacy.cursedRing))
 				if (!SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_CURSEDGIFT)) {
-					ItemStack cursedRing = new ItemStack(EnigmaticLegacy.cursedRing);
+					ItemStack cursedRingStack = new ItemStack(EnigmaticLegacy.cursedRing);
 
-					if (player.inventory.getStackInSlot(7).isEmpty()) {
-						player.inventory.setInventorySlotContents(7, cursedRing);
-					} else {
-						if (!player.inventory.addItemStackToInventory(cursedRing)) {
-							ItemEntity dropRing = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), cursedRing);
-							player.world.addEntity(dropRing);
+					if (!CursedRing.ultraHardcore.getValue()) {
+						if (player.inventory.getStackInSlot(7).isEmpty()) {
+							player.inventory.setInventorySlotContents(7, cursedRingStack);
+						} else {
+							if (!player.inventory.addItemStackToInventory(cursedRingStack)) {
+								ItemEntity dropRing = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), cursedRingStack);
+								player.world.addEntity(dropRing);
+							}
 						}
+					} else {
+						CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(handler -> {
+							if (!player.world.isRemote) {
+								Map<String, ICurioStacksHandler> curios = handler.getCurios();
+
+								for (Map.Entry<String, ICurioStacksHandler> entry : curios.entrySet()) {
+									IDynamicStackHandler stackHandler = entry.getValue().getStacks();
+
+									for (int i = 0; i < stackHandler.getSlots(); i++) {
+										ItemStack present = stackHandler.getStackInSlot(i);
+										Set<String> tags = CuriosApi.getCuriosHelper().getCurioTags(cursedRing);
+										String id = entry.getKey();
+
+										if (present.isEmpty() && (tags.contains(id) || tags.contains("curio")) && cursedRing
+												.canEquip(id, player)) {
+											stackHandler.setStackInSlot(i, cursedRingStack);
+											//cursedRing.onEquip(id, i, player);
+											cursedRing.playRightClickEquipSound(player);
+										}
+									}
+								}
+
+							}
+						});
 					}
 
 					SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_CURSEDGIFT, true);
@@ -2143,6 +2245,8 @@ public class EnigmaticEventHandler {
 		if (event.getPlayer() != null && !event.getPlayer().world.isRemote) {
 			if (event.getInventory().count(EnigmaticLegacy.enchantmentTransposer) == 1 && event.getCrafting().getItem() == Items.ENCHANTED_BOOK) {
 				event.getPlayer().world.playSound(null, event.getPlayer().getPosition(), SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
+			} else if (event.getCrafting().getItem() == cursedStone) {
+				event.getPlayer().world.playSound(null, event.getPlayer().getPosition(), SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 			}
 		}
 

@@ -1,6 +1,7 @@
 package com.integral.enigmaticlegacy.items;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import com.google.common.collect.HashMultimap;
@@ -8,8 +9,13 @@ import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.IPermanentCrystal;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
+import com.integral.enigmaticlegacy.objects.Vector3;
+import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -25,17 +31,27 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 public class SoulCrystal extends ItemBase implements IPermanentCrystal, IVanishable {
 
 	public HashMap<PlayerEntity, Multimap<Attribute, AttributeModifier>> attributeDispatcher = new HashMap<PlayerEntity, Multimap<Attribute, AttributeModifier>>();
 
 	public SoulCrystal() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isBurnable().group(null));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isBurnable().group(EnigmaticLegacy.enigmaticTab));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "soul_crystal"));
+	}
 
-		//this.attributesDefault.put(Attributes.MAX_HEALTH, new AttributeModifier(UUID.fromString("66a2aa2d-7e3c-4af4-882f-bd2b2ded8e7b"), "Lost Soul Health Modifier", -0.1F, AttributeModifier.Operation.MULTIPLY_TOTAL));
+	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+		if (Screen.hasShiftDown()) {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.soulCrystal1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.soulCrystal2");
+		} else {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
+		}
 	}
 
 	public ItemStack createCrystalFrom(PlayerEntity player) {
@@ -50,7 +66,10 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, IVanisha
 
 		if (lostFragments > 0) {
 			this.setLostCrystals(player, lostFragments - 1);
-			player.world.playSound(null, new BlockPos(player.getPositionVec()), SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+
+			if (!player.world.isRemote) {
+				player.world.playSound(null, new BlockPos(player.getPositionVec()), SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			}
 
 			return true;
 		} else
@@ -109,6 +128,11 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, IVanisha
 		player.setActiveHand(hand);
 
 		if (this.retrieveSoulFromCrystal(player, stack)) {
+			Vector3 playerCenter = Vector3.fromEntityCenter(player);
+			if (!player.world.isRemote) {
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(playerCenter.x, playerCenter.y, playerCenter.z, 64, player.world.func_234923_W_())), new PacketRecallParticles(playerCenter.x, playerCenter.y, playerCenter.z, 48, false));
+			}
+
 			player.swingArm(hand);
 			stack.setCount(0);
 			return new ActionResult<>(ActionResultType.SUCCESS, stack);

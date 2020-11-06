@@ -56,8 +56,10 @@ import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.loot.ItemLootEntry;
 import net.minecraft.loot.LootEntry;
 import net.minecraft.loot.LootPool;
@@ -1357,11 +1359,54 @@ public class SuperpositionHandler {
 
 	public static String minimizeNumber(double num) {
 		int intg = (int)num;
-	
+
 		if (num - intg == 0)
 			return "" + intg;
 		else
 			return "" + num;
+	}
+
+	/**
+	 * Merges enchantments from mergeFrom onto input ItemStack, with exact same
+	 * rules as vanilla Anvil when used in Survival Mode.
+	 * @param input
+	 * @param mergeFrom
+	 * @return Copy of input ItemStack with new enchantments merged from mergeFrom
+	 */
+
+	public static ItemStack mergeEnchantments(ItemStack input, ItemStack mergeFrom) {
+		ItemStack returnedStack = input.copy();
+		Map<Enchantment, Integer> inputEnchants = EnchantmentHelper.getEnchantments(returnedStack);
+		Map<Enchantment, Integer> mergedEnchants = EnchantmentHelper.getEnchantments(mergeFrom);
+
+		for(Enchantment mergedEnchant : mergedEnchants.keySet()) {
+			if (mergedEnchant != null) {
+				int inputEnchantLevel = inputEnchants.getOrDefault(mergedEnchant, 0);
+				int mergedEnchantLevel = mergedEnchants.get(mergedEnchant);
+				mergedEnchantLevel = inputEnchantLevel == mergedEnchantLevel ? mergedEnchantLevel + 1 : Math.max(mergedEnchantLevel, inputEnchantLevel);
+				boolean compatible = mergedEnchant.canApply(input);
+				if (input.getItem() == Items.ENCHANTED_BOOK) {
+					compatible = true;
+				}
+
+				for(Enchantment originalEnchant : inputEnchants.keySet()) {
+					if (originalEnchant != mergedEnchant && !mergedEnchant.isCompatibleWith(originalEnchant)) {
+						compatible = false;
+					}
+				}
+
+				if (compatible) {
+					if (mergedEnchantLevel > mergedEnchant.getMaxLevel()) {
+						mergedEnchantLevel = mergedEnchant.getMaxLevel();
+					}
+
+					inputEnchants.put(mergedEnchant, mergedEnchantLevel);
+				}
+			}
+		}
+
+		EnchantmentHelper.setEnchantments(inputEnchants, returnedStack);
+		return returnedStack;
 	}
 
 }

@@ -1,5 +1,20 @@
 The Changelog:
 
+[Release 2.9.0]:
+- Fixed bug where contents of the inventory of The Architect's Inkwell vanished upon closing it;
+- Most accessories are now legitimately enchantable with Curse of Binding. This time for sure!;
+- Torrent enchantment is now effective against Ender Dragon;
+- Listed Soul Crystal in mod's creative tab, and added tooltip to it indicating it can be used to restore lost crystals by right-clicking with it. Using the crystal as item now also produces particle effect identical to absorption of it's entity form;
+- Changed license reference in mods.toml to prompt new license there;
+- This and all subsequent modfile releases now include full copy The Copybruh License document;
+- Implemented Enchanter's Pearl, Exquisite Ring and Unholy Stone;
+- Changed the implementation of Guide to Animal Companionship to render Hoglins neutral to new one made through Mixin;
+- Implemented config option that allows to make it so that the Ring of the Seven Curses will be automatically equipped into one of the player's ring slots when they enter the world for the first time, instead of just being added to their inventory;
+- Rollback to previous version of AdvancedSpawnLocationHelper, because new one breaks badly when trying to teleport player to world's spawn point for some reason;
+- The Acknowledgment edition raised to 5.
+
+
+
 [Release 2.8.0]:
 - Pearl of the Void no longer clears Night Vision effects provided by Charm of the Treasure Hunter and Will of the Ocean (#100);
 - Black Enigmatic Amulet nerfed to provide only 10% Lifesteal, instead of previous 15%;

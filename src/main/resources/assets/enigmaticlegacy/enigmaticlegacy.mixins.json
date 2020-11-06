@@ -4,7 +4,10 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "enigmaticlegacy.refmap.json",
   "mixins": [
-	"MixinEnchantmentContainer"
+	"MixinEnchantmentContainer",
+	"MixinPiglinMobsSensor",
+	"MixinHoglinTasks",
+	"MixinEnchantment"
   ],
   "client": [],
   "injectors": {

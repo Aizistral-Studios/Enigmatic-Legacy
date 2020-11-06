@@ -11,11 +11,15 @@
           }
         ]
       }
+    },
+    "is_cursed_one": {
+      "trigger": "enigmaticlegacy:equip_cursed_ring"
     }
   },
   "requirements": [
     [
-      "has_items"
+      "has_items",
+	  "is_cursed_one"
     ]
   ]
 }
