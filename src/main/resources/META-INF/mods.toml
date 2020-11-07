@@ -1,39 +1,39 @@
-license="The Copybruh License, I Advent"
+license="${mod_license}"
 modLoader="javafml"
 loaderVersion="[31,)"
-issueTrackerURL="https://github.com/Extegral/Enigmatic-Legacy/issues"
+issueTrackerURL="${issue_tracker_url}"
 [[mods]]
-modId="enigmaticlegacy"
-version="2.9.0"
-displayName="Enigmatic Legacy"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy"
-logoFile="EL_logo.png"
-credits="Terraria and some of it's mods, for inspiring my creations functionally and visually; Minecraft Dungeons, for blocks and models that make me question why we don't have anything like this in Minecraft itself; Botania and it's creator known as Vazkii, for some basic code I could conveniently borrow instead of having to re-invent the wheel; frdovahkick, for amazing work over some of the textures in the mod."
-authors="Aizistral"
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+displayURL="${mod_url}"
+logoFile="${mod_icon}"
+credits="${mod_credits}"
+authors="${mod_author}"
 description='''
-This mod is designed to provide tools that will aid you in exploring seemingly endless reaches of Minecraft's worlds. As well as new resources, powerful gear and ancient relics - to reward you for doing so. Despite revolving around themes of arcane and mystery, Enigmatic Legacy doesn't stray too far away from what vanilla has to offer, instead attempting to expand upon it's mechanics and fill in the holes left open.
+${mod_description}
 '''
-[[dependencies.enigmaticlegacy]]
+[[dependencies.${mod_id}]]
     modId="forge"
     mandatory=true
-    versionRange="[33,)"
+    versionRange="${dep_forge}"
     ordering="NONE"
     side="BOTH"
-[[dependencies.enigmaticlegacy]]
+[[dependencies.${mod_id}]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.16.2,)"
+    versionRange="${dep_minecraft}"
     ordering="NONE"
     side="BOTH"
-[[dependencies.enigmaticlegacy]]
+[[dependencies.${mod_id}]]
     modId="curios"
     mandatory=true
-    versionRange="[1.16.3-4.0.2.0,)"
+    versionRange="${dep_curios}"
     ordering="NONE"
     side="BOTH"
-[[dependencies.enigmaticlegacy]]
+[[dependencies.${mod_id}]]
     modId="patchouli"
     mandatory=true
-    versionRange="[1.16-42,)"
+    versionRange="${dep_patchouli}"
     ordering="NONE"
     side="BOTH"

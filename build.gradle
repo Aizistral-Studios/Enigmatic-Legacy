@@ -2,32 +2,49 @@ buildscript {
     repositories {
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url = 'https://dist.creeper.host/Sponge/maven' }
+        maven { url 'https://plugins.gradle.org/m2/' }
         jcenter()
         mavenCentral()
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+'
+		classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
+
+println("Applying plugins...")
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'com.matthewprenger.cursegradle'
 
 mixin {
+	println("Specifying refmaps for Mixin...")
     add sourceSets.main, "enigmaticlegacy.refmap.json"
 }
 
-version = '2.0'
-group = 'com.integral.enigmaticlegacy'
-archivesBaseName = 'EnigmaticLegacy-smv'
+println("Specifying project version/group/archivesBaseName...")
+version = "${mod_version}"
+group = "${mod_group}"
+archivesBaseName = "${mod_archives_name}"
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+println("Specifying Java compatibility...")
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+println("Java Installation Data:")
+println(" - Java Version: " + System.getProperty('java.version'))
+println(" - JVM Version: " + System.getProperty('java.vm.version'))
+println(" - Vendor: " + System.getProperty('java.vendor'))
+println(" - OS Archetype: " + System.getProperty('os.arch'))
+
 minecraft {
-    mappings channel: 'snapshot', version: '20200723-1.16.1'
+	println("Specifying MCP mappings...")
+    mappings channel: 'snapshot', version: "${version_mcp}"
+	println("Specifying Access Transformer configuration...")	
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 	
 	runs {
@@ -38,7 +55,6 @@ minecraft {
             workingDirectory project.file('run')
 
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -52,10 +68,7 @@ minecraft {
 			properties 'mixin.env.disableRefMap': 'true'
             workingDirectory project.file('run')
 
-            // Recommended logging data for a userdev environment
             property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
 
             mods {
@@ -68,33 +81,25 @@ minecraft {
 }
 
 sourceSets.main.resources {
-    srcDir 'src/generated/resources'
+    // NO-OP
 }
 
 repositories {
+	println("Specifying repositories...")	
+	flatDir {  dirs 'deps' }
 	maven {  url = "https://maven.theillusivec4.top/" } // curios
 	maven {  url = "https://maven.blamejared.com/" } // patchouli
-	maven {  url = "https://repo.spongepowered.org/maven" }
-    maven {
-        url "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        name "yarn2mcp"
-        url "https://maven.tterrag.com/"
-    }
-	maven {
-		name = "Modmuss"
-		url = "https://maven.modmuss50.me/"
-	}
-	jcenter()
-    mavenCentral()
-	flatDir {
-       dirs 'deps'
-   }
+	maven {  url = "https://repo.spongepowered.org/maven" } // mixin
+    maven {	 url "https://dvs1.progwml6.com/files/maven/" } // no idea
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.3-34.1.35'
+	println("Processing dependencies...")	
+
+	// Minecraft & Forge
+    minecraft "net.minecraftforge:forge:${version_forge}"
+   
+	// Mixin
     annotationProcessor 'org.spongepowered:mixin:0.8'
     annotationProcessor 'com.google.code.gson:gson:2.8.0'
     annotationProcessor 'com.google.guava:guava:21.0'
@@ -103,7 +108,6 @@ dependencies {
     annotationProcessor 'org.ow2.asm:asm-util:7.2'
 	
 	// These are 1.16.3 dependencies
-	//compile fg.deobf('generic:Soulbound:1.16.x-1.1.0')
 	compile fg.deobf('generic:decorativeblocks:1.16.1-1.4')
 	compile fg.deobf('top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0')
     compile fg.deobf("vazkii.patchouli:Patchouli:1.16.2-47")
@@ -119,29 +123,99 @@ dependencies {
 
 }
 
-// Example for how to get properties into the manifest for reading by the runtime..
+
 jar {
+	println("Processing manifest...")	
+
     manifest {
         attributes([
-            "Specification-Title": "enigmaticlegacy",
-            "Specification-Vendor": "Aizistral",
-            "Specification-Version": "1", // We are version 1 of ourselves
-            "Implementation-Title": project.name,
-            "Implementation-Version": "${version}",
-            "Implementation-Vendor" :"Aizistral",
+            "Specification-Title": "${mod_name}",
+            "Specification-Vendor": "${mod_author}",
+            "Specification-Version": "${mod_version}",
+            "Implementation-Title": "${mod_name}",
+            "Implementation-Version": "${mod_version}",
+            "Implementation-Vendor" :"${mod_author}",
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            "MixinConnector": "com.integral.enigmaticlegacy.MixinConnector"
+            "MixinConnector": "${project.group}.MixinConnector"
         ])
     }
 }
 
-// Example configuration to allow publishing using the maven-publish task
-// This is the preferred method to reobfuscate your jar file
+processResources {
+	println("Processing resources...")
+	
+	println("Specifying The Acknowledgment version in book.json...")	
+	filesMatching('data/enigmaticlegacy/patchouli_books/the_acknowledgment/book.json') {
+        filter {
+			// Bold of you to assume I know how to inflate with Gradle
+            it.replaceAll("~the_acknowledgment_edition", findProperty('the_acknowledgment_edition') ?: 'invalid_edition')
+        }
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+		println("Inflating mods.toml...")	
+	
+		// Replace properties in mods.toml with ones derived from settings.gradle
+        include 'META-INF/mods.toml'
+        expand 'mod_license': mod_license, 
+		'mod_version': project.version, 
+		'mod_id' : mod_id, 
+		'mod_name': mod_name, 
+		'mod_url': mod_url, 
+		'mod_author': mod_author, 
+		'mod_description': mod_description, 
+		'mod_icon': mod_icon, 
+		'issue_tracker_url': issue_tracker_url, 
+		'mod_credits': mod_credits, 
+		'dep_forge': dep_forge, 
+		'dep_minecraft': dep_minecraft, 
+		'dep_patchouli': dep_patchouli, 
+		'dep_curios': dep_curios
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'META-INF/mods.toml'
+    }
+
+    from("${project.projectDir}/docs") {
+		println("Including documentation...")	
+		// Include a license and changelog into build .jar
+        include 'changelog.html'
+        include 'LICENSE'
+    }
+}
+
+curseforge {
+
+    project {
+		println("Pushing CurseGradle specifications for project ID: ${curse_id}")	
+	
+		// Specified as cmd argument
+        apiKey = findProperty('curseKey') ?: 0
+        
+		id = "${curse_id}"
+        releaseType = "${curse_release}"
+        changelogType = 'html'
+        changelog = file('docs/changelog.html')
+		
+		relations {
+			requiredDependency 'curios'
+			requiredDependency 'patchouli'
+		}
+		
+        //addArtifact(sourcesJar)
+        //addArtifact(apiJar)
+    }
+}
+
+
 jar.finalizedBy('reobfJar') 
-// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
 //publish.dependsOn('reobfJar')
 
 publishing {
+
+	// TODO This needs some work
+
     publications {
         mavenJava(MavenPublication) {
             artifact jar

@@ -1,0 +1,520 @@
+<h3><b>The Changelog:</b></h3><br/>
+
+<h5><b>[Release 2.9.0]:</b></h5>
+<p>
+&nbsp;- Fixed bug where contents of the inventory of The Architect's Inkwell vanished upon closing it;<br/>
+&nbsp;- Most accessories are now legitimately enchantable with Curse of Binding. This time for sure!;<br/>
+&nbsp;- Torrent enchantment is now effective against Ender Dragon;<br/>
+&nbsp;- Listed Soul Crystal in mod's creative tab, and added tooltip to it indicating it can be used to restore lost crystals by right-clicking with it. Using the crystal as item now also produces particle effect identical to absorption of it's entity form;<br/>
+&nbsp;- Changed license reference in mods.toml to prompt new license there;<br/>
+&nbsp;- This and all subsequent modfile releases now include full copy The Copybruh License document;<br/>
+&nbsp;- Implemented Enchanter's Pearl, Exquisite Ring and Unholy Stone;<br/>
+&nbsp;- Changed the implementation of Guide to Animal Companionship to render Hoglins neutral to new one made through Mixin;<br/>
+&nbsp;- Implemented config option that allows to make it so that the Ring of the Seven Curses will be automatically equipped into one of the player's ring slots when they enter the world for the first time, instead of just being added to their inventory;<br/>
+&nbsp;- Rollback to previous version of AdvancedSpawnLocationHelper, because new one breaks badly when trying to teleport player to world's spawn point for some reason;<br/>
+&nbsp;- The Acknowledgment edition raised to 5.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.8.0]:</b></h5>
+<p>
+&nbsp;- Pearl of the Void no longer clears Night Vision effects provided by Charm of the Treasure Hunter and Will of the Ocean (#100);<br/>
+&nbsp;- Black Enigmatic Amulet nerfed to provide only 10% Lifesteal, instead of previous 15%;<br/>
+&nbsp;- Will of the Ocean once again reduces damage from Drowned, because go screw yourself vanilla logic;<br/>
+&nbsp;- Added elemental vulnerabilities to Angel's Blessing, Will of the Ocean, Blazing Core and Eye of Nebula (#71);<br/>
+&nbsp;- At long last, finally properly set up the Mixin connection for further use;<br/>
+&nbsp;- Implemented three new enchantments: Slayer, Torrent and Wrath;<br/>
+&nbsp;- Removed wrong third page in The Acknowledgment entry of Ceaseless enchantment;<br/>
+&nbsp;- The Acknowledgment edition raised to 4.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.7.3]:</b></h5>
+<p>
+&nbsp;- Defeated the invasion of Enigmatic Amulets (#95).<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.7.2]:</b></h5>
+<p>
+&nbsp;- Fixed Ceaseless enchantment STILL requiring arrow in inventory to work, once and for all;<br/>
+&nbsp;- Fixed arrows shot with Ceaseless enchantment being perfectly pickapable from the ground like nobody's business;<br/>
+&nbsp;- Creative tab of Enigmatic Legacy now contains all color variations of Enigmatic Amulet;<br/>
+&nbsp;- Renamed some of the config options for Enigmatic Amulet for the sake of case consistency;<br/>
+&nbsp;- Added config option to allow simultaneously equipping multiple Enigmatic Amulets (if player somehow has more than one charm slot);<br/>
+&nbsp;- Added config option to allow simultaneously equipping multiple spellstones if they are different items (if player somehow has more than one spellstone slot).<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.7.1]:</b></h5>
+<p>
+&nbsp;- Fixed Forbidden Fruit checks crashing players on server if two or more are within render distance of one another (thanks Flynatol, #92);<br/>
+&nbsp;- Hopefully fixed Ceaseless enchantment still requiring arrow in inventory to work.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.7.0]:</b></h5>
+<p>
+&nbsp;- Added option to client config that allows to turn off mod update notifications;<br/>
+&nbsp;- Slightly overhauled texture of Extradimensional Vessel;<br/>
+&nbsp;- Ring of the Seven Curses is now accounted for as item with 7 curses by Scroll of a Thousand Curses (#84);<br/>
+&nbsp;- Scroll of a Thousand Curses and Emblem of Bloodstained Valor now have an indication of current total traits they provide when equipped;<br/>
+&nbsp;- Scroll of a Thousand Curses now provides +7% mining speed boost by default for every curse;<br/>
+&nbsp;- Config option for disabling Enigmatic Amulet now actually disables it from being gifted to players upon entering the world (#86);<br/>
+&nbsp;- Most items in the mod can now be enchanted with Curse of Vanishing. Many couldn't be before;<br/>
+&nbsp;- Most wearables can now be enchanted with Curse of Binding through Anvil;<br/>
+&nbsp;- Chance of Netherite Scrap dropping from Piglin Brutes is nerfed from 50% to 20%, and from Wither Skeletons from 20% to 7% when player bears Ring of the Seven Curses;<br/>
+&nbsp;- Fixed bug where players bearing Ring of the Seven Curses were able to deal full damage to monsters when using crossbow with Sharpshooter enchantment;<br/>
+&nbsp;- Enigmatic Amulet that player receives when entring the world for the first time will now have randomly chosen one out of seven possible colors, with each color having it's own bonus trait. Amulets that existed before this update will have their color rerolled based on owner's username (#28);<br/>
+&nbsp;- Ring of The Seven curses no longer angers neutral mobs if bearer is in Spectator mode;<br/>
+&nbsp;- Ceaseless enchantment no longer demands an arrow in the inventory to shoot basic arrows. Also there is config option to make it required as it was;<br/>
+&nbsp;- Bees are once again angered agaist bearers of Ring of the Seven Curses by default, in view of Guide to Animal Companionship with it's ability to counter that being introduced;<br/>
+&nbsp;- Will of the Ocean now includes functionality of Aqua Affinity enchantment, does prevent air bar from rendering and negates gravity affecting player underwater;<br/>
+&nbsp;- Scrapped most of reflection in favor of access transformations;<br/>
+&nbsp;- Most numerical parameters affecting Ring of the Seven Curses and related items are now exposed as config variables;<br/>
+&nbsp;- Implemented six new items: Guide to Animal Companionship, Guide to Feral Hunt, The Twist, The Forbidden Fruit, Potion of Redemption and Nefarious Essence;<br/>
+&nbsp;- Added The Acknowledgment entry which provides a bit of lore about ancient tomes [Tattered/Withered/Corrupted], as well as a glimpse into their purpose;<br/>
+&nbsp;- Removed Chineese and Russian localization. Old files are still stored in lang directory with "[OUTDATED]" suffix, in case they will be of any use to whoever might decide to help us updating those localizations, but so far they were not touched for a long time and the amount of changes brough to the mod in the meantime rendered them horribly broken;<br/>
+&nbsp;- Fixed completely black "Heat" title above heat bar rendered by Blazing Core. Okay I'm not even gonna ask anymore why nobody reports this stuff;<br/>
+&nbsp;- Permanent item entites, which include Extradimensional Vessels and Soul Crystals, can no longer be moved between dimensions. Also added log output to indicate when they are removed due to being attacked by absolute damage source or whatever other reason, to simplify investigation on potential future bug reports related to them;<br/>
+&nbsp;- Common config version raised to 2.1.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.6.1]:</b></h5>
+<p>
+&nbsp;- Fixed variety of crashes that may have been caused by non-assigned config property in item class of Emblem of Monster Slayer (#85);<br/>
+&nbsp;- Neutral mobs no longer anger against players with Ring of the Seven Curses equipped when they are in creative mode.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.6.0]:</b></h5>
+<p>
+&nbsp;- Brand new config implementation, ported right from 1.7.10 versions of Forge, with a lot of polishing and fancy wrapping on top of it. Notice that new config files have '.omniconf' extension; old '.toml' are not generated and not loaded anymore;<br/>
+&nbsp;- Among particularly noticeable improvements, most options in common file are now automatically synchronized from server to client;<br/>
+&nbsp;- Accessibility config options for most items are now generated and handled mostly automatically;<br/>
+&nbsp;- Astral Breaker's AOE mining now has respective config options;<br/>
+&nbsp;- Heart of Creation now provides immunity only to debuffs instead of all status effects (#17);<br/>
+&nbsp;- Spiders now drop strings instead of slime balls with Ring of the Seven Curses equipped, as was initially intended;<br/>
+&nbsp;- Emblem of Bloodstained Valor now increases movement speed regardless of whether or not the player is sprinting (#81);<br/>
+&nbsp;- The Acknowledgment is now enchantable, but solely with Bane of Arthropods (#81);<br/>
+&nbsp;- Neutral mobs no longer anger against players who bear Ring of the Seven Curses, unless there is a direct line of sight between them and the player, aka don't see players through walls anymore. Well, most of the time. They can still see the cursed players regardless of obstacles if the distance separating the player from them is below 4 blocks (#81);<br/>
+&nbsp;- Endermen generally follow the abovementioned rule, but sometimes they might randomly disregard it and teleport behind unsuspecting player seemingly out of nowhere (#81);<br/>
+&nbsp;- +1 Joke in Twisted Mirror entry in The Acknowledgment (#81);<br/>
+&nbsp;- Significantly expanded The Acknowledgment entry on Ring of the Seven Curses, to provided explanation on how every curse works. Many players have found some of them unclear, like insomnia for instance, so that should be now addressed. Blessings did not receive as much attention, but it's now mentioned that they come along with the ring as permanent traits, similar to how curses do.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.5.3]:</b></h5>
+<p>
+&nbsp;- Removed unintended overrides of vanilla loot tables that someone forgot to delete (totally not me) (#80).<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.5.2]:</b></h5>
+<p>
+&nbsp;- Fixed Heart of Creation crashing the server when attempting to use it's active ability (why nobody reported this?);<br/>
+&nbsp;- Fixed active abilities of spellstones not having any cooldown at all (okay, but THIS?..);<br/>
+&nbsp;- Fixed The Architect's Inkwell crashing the server when attempting to open it's GUI (#76).<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.5.1]:</b></h5>
+<p>
+&nbsp;- Fixed crash on server startup (#75).<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.5.0]:</b></h5>
+<p>
+&nbsp;- Fixed Astral Breaker recipe not being disabled by it's config option (#72);<br/>
+&nbsp;- Implemented config option that allows to disable Ring of the Seven Curses from being granted to players upon first world visit (#67);<br/>
+&nbsp;- Ancient tomes can now be used as furnace fuel (#68);<br/>
+&nbsp;- Upon reading an ancient tome there's now a special toast indicating how much experience and knowledge points it granted;<br/>
+&nbsp;- Scrapped custom implementation of Fortune/Looting bonuses in favor of one now provided by Curios API;<br/>
+&nbsp;- Neutral mobs angered by Ring of the Seven Curses now exclude tamed animals, player-constructed Iron Golems and bees (#69);<br/>
+&nbsp;- Decreased the range in which neutral mobs are rendered hostile towards bearers of Ring of the Seven Curses from 32 blocks radius to 24;<br/>
+&nbsp;- Implemented two new enchantments for crossbows, Sharpshooter and Ceaseless (merged from Armorless & More);<br/>
+&nbsp;- Implemented Scroll of a Thousand Curses, Emblem of Bloodstained Valor and Curse of Nemesis (#70);<br/>
+&nbsp;- Corrected wording of a couple advancements to better correspond to possible means of aquiring them;<br/>
+&nbsp;- Fixed The Acknowledgment content not loading properly when some of the mod's brewing recipes are disabled through config (#74);<br/>
+&nbsp;- Addressed some obscure wording and inconsistent text coloring in item tooltips;<br/>
+&nbsp;- Pearl of the Void now only applies Withering through direct attacks;<br/>
+&nbsp;- Heart of the Golem's vulnerability to magic damage now includes damage from withering. Explosion protection trait is increased to 50% resistance by default, but is only provided with no armor equipped;<br/>
+&nbsp;- Will of the Ocean's damage reduction against underwater creatures no longer includes drowned, to ensure consistency with vanilla logic;<br/>
+&nbsp;- Blazing Core now provides only temporary immunity to lava;<br/>
+&nbsp;- Pearl of the Void now provides complete immunity to any status effects. Removed it's trait that prevents hunger from affecting the bearer. Chance of death prevention is buffed from 15% to 35%;<br/>
+&nbsp;- Resistance to magic damage of Eye of Nebula now includes withering damage;<br/>
+&nbsp;- Etherium Armor set bonus no longer provides debuff immunity;<br/>
+&nbsp;- Slightly overhauled texture of Charm of the Treasure Hunter;<br/>
+&nbsp;- Implemented config options that allow to adjust dealt and received damage multipliers that bearers of the Ring of the Seven Curses are affected by;<br/>
+&nbsp;- Disabled attribute tooltip on Will of the Ocean due to being redundant;<br/>
+&nbsp;- Enigmatic Legacy now automatically triggers "minecraft:recipe_unlocked" trigger for every recipe player has unlocked when they join the world. Required due to some recipes in the mod requiring certain parent recipes to be unlocked, and new recipes added may never have this condition fulfilled. Also should be a good practice overall;<br/>
+&nbsp;- Raised the Config Version to 1.2.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.4.0]:</b></h5>
+<p>
+&nbsp;- Initial 1.16.3 port. Should be backwards compatible with 1.16.2 but don't blame me if stuff breaks if you run it there.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.3.0]:</b></h5>
+<p>
+&nbsp;- Intermediate 1.16.2 port. No further support for this version in specific will be provided.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.2.1]:</b></h5>
+<p>
+&nbsp;- Changed Scroll of Postmortal Recall mechanic to teleport player's dropped items to their respawn point, instead of teleporting themselves. Fixes crash when recalling after being killed by neutral mob (#66).<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.2.0]:</b></h5>
+<p>
+&nbsp;- Angel's Blessing now actually redirects projectiles through ProjectileImpactEvent handler instead of cloning them in LivingAttackEvent;<br/>
+&nbsp;- Due to the previous, a bug is fixed where redirected tridents for some reason were unable to deal damage;<br/>
+&nbsp;- The Architect's Inkwell now has it's own GUI for name/lore editing on Lore Fragments. Doing has no experience cost, unlike previously used Anvil operations;<br/>
+&nbsp;- Expanded Inkwell's entry in The Acknowledgment to include overall guide on how to use operational and formatting codes;<br/>
+&nbsp;- Made use of vanilla cooldown tracker to visually display cooldown on spellstone's active abilities and ability of Etherium Broadsword;<br/>
+&nbsp;- Special ability of Etherium Broadsword can now be suppressed in a fashion similar to AOE mining abilities of other tools (#53);<br/>
+&nbsp;- Fixed bug with Tile Entities bound to block being completely ignored when spawning block drops (#56);<br/>
+&nbsp;- Fixed bug with NullPointerException being thrown whenever attempting to alter The Acknowledgment read/unread entry state while viewedEntries data is not generated yet by Patchouli;<br/>
+&nbsp;- Fixed Etherium Axe/Astral Breaker being inefficient against warped/crimson stems and their derivative blocks (#59);<br/>
+&nbsp;- Hopefully fixed possibility of gaining extreme velocities when using Angel's Blessing with Elytra (#65);<br/>
+&nbsp;- Fixed Night Vision effect from items that provide it not being properly removed if player has Blazing Core equipped (#61);<br/>
+&nbsp;- Nerfed attack damage of The Acknowledgment (#63);<br/>
+&nbsp;- Implemented Ring of the Seven Curses, Twisted Mirror, Heart of the Earth and Twisted Heart;<br/>
+&nbsp;- Ring slots are now unlocked by default, since Ring of the Seven Curses is guaranteed to be available to player right off the start;<br/>
+&nbsp;- Charm of the Treasure Hunter now provides +1 Fortune Level instead of +1 Luck. Changed it's recipe to require Heart of the Earth;<br/>
+&nbsp;- Spellstones are now generally more rare.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.1.3]:</b></h5>
+<p>
+&nbsp;- Closing Ender Chest inventory opened by Ring of Ender is now followed by appropriate sound effect;<br/>
+&nbsp;- When having Ring of Ender equipped, special button is now added to inventory GUI that allows to open Ender Chest inventory. Also implemented a couple config options that allow to control existence and position of that button.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.1.2]:</b></h5>
+<p>
+&nbsp;- Fixed startup error caused by attempts to reset null config object when generating config file (#52).<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.1.1]:</b></h5>
+<p>
+&nbsp;- Fixed critical error on startup caused by screwed up mods.toml file.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.1.0]:</b></h5>
+<p>
+&nbsp;- Magnetic Ring's effects produce particles no longer;<br/>
+&nbsp;- Nerfed Angel's Blessing projectile redirection ability (#14). Now grants chance to deflect incoming projectiles instead of redirecting all of them away;<br/>
+&nbsp;- Tools with area of effect abilities now allow to toggle these abilities on/off by shift+right-clicking. Also addded config option that allows to disable temporary suppression of such abilities by holding Shift;<br/>
+&nbsp;- Added recipe linkages for Potion of Recall and all ultimate potion types in The Acknowledgment;<br/>
+&nbsp;- Hopefully fixed mining speed corrections in the mod disrespecting other mods' attempts to alter it (#50);<br/>
+&nbsp;- Fixed multiple bugs related to integrated World Name Randomizer functionality. Also implemented client-sided config option to allow disabling it (#51);  
+&nbsp;- Fixed Etherium Scythe's AoE-tilling not working.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.0.0]:</b></h5>
+<p>
+&nbsp;- Implemented The Acknowledgment, vessel of knowledge about everything in the mod... and not only;<br/>
+&nbsp;- Due to the former, Patchouli is now listed among mandatory dependencies*;<br/>
+&nbsp;- Implemented three variations of ancient tomes, each added to the loot of respective dungeons;<br/>
+&nbsp;- Updated loot table list of The One Box, to include nether bastion chests;<br/>
+&nbsp;- Some of the new loot added by the mod now also generates in those chests;<br/>
+&nbsp;- Altered some of the advancements that unlock recipes to player, to also require recipes of certain component items to be unlocked. Most of them now also instantly unlock the recipe when player obtains crafting result through other means;<br/>
+&nbsp;- Optional Soul Loss mechanic can now be enabled through config.<br/><br/>
+* I know it's "Dependecy-Free" and all, but I already ended up using multiple hooks outside of generic API, and that number will likely only increase as I attempt to tweak more custom functionality into our Enigmatinomicon. Besides, I never wanted it to be optional addition in the first place.<br/>
+<p/><br/><br/>
+
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.8.7]:</b></h5>
+<p>
+&nbsp;- Guess here we patch again...<br/>
+&nbsp;- Code of custom triggers actually makes sense when you look at it;<br/>
+&nbsp;- Fixed crash when using keybind for spellstone active ability when spellstone slot is not unlocked yet (#47);<br/>
+&nbsp;- Fixed Curios slots not being properly unlocked when they are supposed to be. Re-entering worlds when this issue occured should also fix it (#48).<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.8.6]:</b></h5>
+<p>
+&nbsp;- Fixed crash with Optifine on Forge versions past 32.0.98 when rendering Extradimensional Vessel (#44);<br/>
+&nbsp;- Implemented config options to adjust damage bonus stat provided by Enigmatic Amulet, as well as one to disable it's ability to summon Extradimensional Vessel. Also added option to prevent anyone besides original owner from picking up their Extradimensional Vessel (#45, #38);<br/>
+&nbsp;- Before gods I swear, this is the last patch I am making until 2.0 release.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.8.5]:</b></h5>
+<p>
+&nbsp;- Scroll of Ageless Wisdom doesn't Agaless anymore;<br/>
+&nbsp;- Fixed dedicated server crash when attempting to generate config files (#41);<br/>
+&nbsp;- Potion of Recall and Scroll of Postmortal Recall are now capable of teleporting player across vanilla dimensions. Improved their algorithm to correctly seek respawn point in case player has no valid bed/anchor location. Their description also got altered to indicate the fact that they are capable of working with Respawn Anchors;<br/>
+&nbsp;- Attempted to overhaul texture of The Architect's Inkwell. I really hope I didn't make it look worse than it did before.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.8.4]:</b></h5>
+<p>
+&nbsp;- Fixed item names not displaying correctly in list of consumable items of Keystone of The Oblivion (#40);<br/>
+&nbsp;- Altered recipe of Emblem of Monster Slayer, to involve some new items from Nether Update (#37);<br/>
+&nbsp;- Buffed armor toughness values of etherium armor from +2.5 on each piece to +4.0, to surpass those of netherite armor;<br/>
+&nbsp;- The One Box now looks a bit more like a box. Also doesn't prest anymore.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.8.3]:</b></h5>
+<p>
+&nbsp;- A little overhaul of mod's logo and updated description in mods.toml;<br/>
+&nbsp;- Entirely removed sound and particle effects produced by Ring of Dislocation;<br/>
+&nbsp;- Implemented new mechanic for Enigmatic Amulet, outlined in it's Shift-tooltip. Removed +2 armor stat bonus from it;<br/>
+&nbsp;- Added lamps and encased lamps, with three variations being available;<br/>
+&nbsp;- PermanentItemEntities created by some items upon player's death will now spawn at y=0 if player dies further below in the Void. Also, they are now visible from up to 64 blocks away;<br/>
+&nbsp;- Technically completed soul loss mechanic. Will remain disabled, however, until implementation of in-game guidebook where details about it will be outlined for affected players;<br/>
+&nbsp;- Axe of Executioner now takes two Netherite Ingots to be created, instead of iron ones previously used; 
+&nbsp;- Following items are now immune to fire and lava, similar to netherite gear: etherium ore, ingots, armor, tools and weapons, Astral Breaker, Enigmatic Amulet, Heart of Creation, Axe of Executioner, Blazing Core, Keystone of The Oblivion, Unholy Grail, Void Pearl;<br/>
+&nbsp;- Blazing Core now significantly improves visibility when submerged in lava, among it's other abilities.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.8.2]:</b></h5>
+<p>
+&nbsp;- Fixed dedicated server crashing when attempting to use active abilities of spellstones (#33).<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.8.1]:</b></h5>
+<p>
+&nbsp;- Fallback to classical reflection via ObfuscationReflectionHelper;<br/>
+&nbsp;- Void Pearl now once again nullifies saturation values;<br/>
+&nbsp;- Implemented functionality of World Name Randomizer (as if someone asked for it);<br/>
+&nbsp;- Gift of the Heaven now only works within the range of active beacon. Experience cost halved;<br/>
+&nbsp;- Implemented Grace of the Creator, as direct upgrade from Gift of the Heaven;<br/>
+&nbsp;- Mending Mixture now takes ghast tear to be created;<br/>
+&nbsp;- Wither Skulls summoned by Heart of Creation now home in on observed entity. Also, new animation for indicating stronger skulls;<br/>
+&nbsp;- Implemented null check in LootingLevelEvent event listener, to prevent potential issues (#31);<br/>
+&nbsp;- Etherium Pickaxe and Astral Breaker are now effective against shulker boxes.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.8.0]:</b></h5>
+<p>
+&nbsp;- Initial 1.16.1 port;<br/>
+&nbsp;- Lots of code rewriting and optimizations;<br/>
+&nbsp;- Failed attempts to make use of Mixin.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.7.0]:</b></h5>
+<p>
+&nbsp;- Initial 1.15.2 port;<br/>
+&nbsp;- Reduced amount of particles produced by Astral Breaker.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.6.4]:</b></h5>
+<p>
+&nbsp;- Fixed side violation on dedicated servers caused by Eye of the Nebula (#15);<br/>
+&nbsp;- Unequipping Heart of Creation and Gift of the Heaven no longer causes flight to be disabled while in Creative Mode (#16);<br/>
+&nbsp;- Removed excessive log output in BlockDropsHarvest event handler (#20);<br/>
+&nbsp;- Astral Breaker and Dislocation Ring now respect client particle settings (#26).<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.6.3]:</b></h5>
+<p>
+&nbsp;- Added simplified Chinese translation (thanks to LyricaPrismriver) #21.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.6.2]:</b></h5>
+<p>
+&nbsp;- Magnetic Ring and Dislocation Ring now respect Demagnetize.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.6.1]:</b></h5>
+<p>
+&nbsp;- Removed Universal Clock HUD. Now available as a separate mod: https://www.curseforge.com/minecraft/mc-mods/universal-clock-hud
+
+
+
+<h5><b>[Release 1.6.0]:</b></h5>
+<p>
+&nbsp;- Implemeted global changelog. Included as part of the mod file;<br/>
+&nbsp;- Implemeted Tome of Hungering Knowledge.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.5.3]:</b></h5>
+<p>
+&nbsp;- Reclassified most sound events played by mod from neutral to players category;<br/>
+&nbsp;- Lowered mining speed bonus provided by Charm of the Treasure Hunter to 30% (from previous 50%), to prevent players from gaining instamine on stone and similar blocks when using Diamond Pickaxe with Efficiency V;<br/>
+&nbsp;- Increased light tolerance of Charm of the Treasure Hunters, so that it's not affected by weaker light sources, like lit Redstone Ore or Redstone Torch. Now works in light levels of 8 and below;<br/>
+&nbsp;- Angel's Blessing now accelerates player's own projectiles (instead of slowing them down);<br/>
+&nbsp;- Will of the Ocean is no longer capable of consuming experience from Scroll of Ageless Wisdom when one is equipped;<br/>
+&nbsp;- Universal Clock HUD is now handled in RenderGameOverlayEvent.Post to avoid being overlapped by other elements, like vignette. Likely will soon be moved into a separate mod;<br/>
+&nbsp;- Config versioning system is changed to also reset all values upon updating from versions of the mod that didn't have it implemented yet;<br/>
+&nbsp;- Config version is changed to 1.1.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.5.2]:</b></h5>
+<p>
+&nbsp;- Implemented config option that allow to make Universal Clock HUD only displayed in fullscreen mode;<br/>
+&nbsp;- Fixed overwriting any stack in targeted slot when adding Enigmatic Amulet to player's inventory.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.5.1]:</b></h5>
+<p>
+&nbsp;- Implemented Universal Clock HUD and a bunch of client-sided config options for it.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.5.0]:</b></h5>
+<p>
+&nbsp;- [DELETED].<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.4.2]:</b></h5>
+<p>
+&nbsp;- Fixed player crashing on server upon equipping Pearl of the Void.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.4.1]:</b></h5>
+<p>
+&nbsp;- [DELETED].<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.4.0]:</b></h5>
+<p>
+&nbsp;- Changed the way Charm of the Treasure Hunter and Will of the Ocean apply Night Vision effect to ultimately prevent rendering issues. Deprecated related config options;<br/>
+&nbsp;- Changed the wording of Etherium Armor tooltip. Since obviously it remains unobvious for some people out there;<br/>
+&nbsp;- Implemented Astral Breaker;<br/>
+&nbsp;- Implemented Keystone of The Oblivion;<br/>
+&nbsp;- Optimized capabilities registration for curios;<br/>
+&nbsp;- Changed the way of collecting experience orbs by Scroll of Ageless Wisdom, now calls .onCollideWithPlayer() method similarly to Dislocation Ring;<br/>
+&nbsp;- Implemented bonus recipes for more effective wool dyeing.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.3.4]:</b></h5>
+<p>
+&nbsp;- Fixed generating tridents within every single chest in underwater ruins;<br/>
+&nbsp;- Fixed receiving Fearsome Vengeance advancement when beheading a Wither Skeleton ordinarily, without holding Axe of Executioner;<br/>
+&nbsp;- Fixed dupe with Dislocation Ring (critical in multiplayer);<br/>
+&nbsp;- Implemented config option for inverting Shift behaviour of Magnetic Ring and Dislocation Ring;<br/>
+&nbsp;- Implemented config options for controlling the duration of Night Vision effect applied by Charm of the Treasure Hunter and Will of the Ocean.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.3.3]:</b></h5>
+<p>
+&nbsp;- Fixed crash with LivingExperienceDropEvent handler;<br/>
+&nbsp;- Magnetic Ring and Dislocation Ring no longer work if player cannot pick up attracted/teleported items due to having their inventory full.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.3.2]:</b></h5>
+<p>
+&nbsp;- Angel's Blessing is no longer capable of redirecting Wither skulls;<br/>
+&nbsp;- Wither Skulls shot by Heart of Creation now explode after existing for 20 seconds. They are also no longer removed upon world reloading, do not destroy blocks that are supposed to be indestructible and raytrace for target within 128 blocks distance, instead of previous 64;<br/>
+&nbsp;- Etherium Scythe can now till dirt and grass blocks in 3x3x1 area;<br/>
+&nbsp;- Added Ice, Packed Ice and Glass to the list of effective materials for Etherium Pickaxe;<br/>
+&nbsp;- Added config option to disable generation of Etherium Ore as dungeon loot in End Cities;<br/>
+&nbsp;- Replaced temporary texture of The Architect's Inkwell.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.3.1]:</b></h5>
+<p>
+&nbsp;- Fixed server crash upon any player opening Anvil (issue #6).<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.3.0]:</b></h5>
+<p>
+&nbsp;- Increased attack cooldown of Axe of Executioner to that of a regular sword;<br/>
+&nbsp;- Implemented Etherium, alongside with tools and armor made of it;<br/>
+&nbsp;- Implemented The Architect's Inkwell and Lore Fragment;<br/>
+&nbsp;- Implemented proper exception handling in onPlayerJoin event (related to issue #5);<br/>
+&nbsp;- Expanded immunity list of Heart of Creation and added active ability, also changed it's tooltip to have more correct wording and be more similar to other spellstones;<br/>
+&nbsp;- Heart of Creation and Gift of the Heaven now compensate mining speed penalty while in the air;<br/>
+&nbsp;- All curios in the mod changed so that player cannot equip duplicate trinkets. Mainly affects rings;<br/>
+&nbsp;- Significant optimizational changes into functional implementation of config;<br/>
+&nbsp;- A bunch of new config options;<br/>
+&nbsp;- Implemented config versioning;<br/>
+&nbsp;- Added some new advancements;<br/>
+&nbsp;- Added Russian localization.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.2.2]:</b></h5>
+<p>
+&nbsp;- Fixed broken code of PacketHandleItemPickup.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.2.1]:</b></h5>
+<p>
+&nbsp;- Updated to Forge 28.1.0.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.2.0]:</b></h5>
+<p>
+&nbsp;- Implemented advanced potions and related Astral Dust;<br/>
+&nbsp;- Potions of Haste are merged into advanced potion system instead of being presented as separate items;<br/>
+&nbsp;- The One Box now has the ability to simulate loot generation in 32768 instances, printing the results to log file;<br/>
+&nbsp;- Changed Scroll of Postmortal Recall to create newly implemented PermanentItemEntity instead of regular dropped item;<br/>
+&nbsp;- Fixed inevitable crash when on server startup with the mod, due to attempts to use client-only classes on server side (issue #2);<br/>
+&nbsp;- Fixed crash caused by renamed method for getting persistent entity NBT (issue #3);<br/>
+&nbsp;- Implemented update notifications;<br/>
+&nbsp;- Additional logger output;<br/>
+&nbsp;- Overall cleanup.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.1.0]:</b></h5>
+<p>
+&nbsp;- Fixed Mending Mixture recipe returning empty glass bottles. Now repair recipe it is used in does this;<br/>
+&nbsp;- Pearl of the Void no longer harms other bearers of the pearl;<br/>
+&nbsp;- Will of the Ocean will now consume experience from Scroll of Ageless Wisdom, if player has one equipped and if there is enough experience stored in it;<br/>
+&nbsp;- Removed ability to open Ender Chest inventory by simply right-clicking with Ring of Ender, without equipping it and using keybind;<br/>
+&nbsp;- Fixed fatal error appearing when player dies while /gamerule keepInventory is set to true;<br/>
+&nbsp;- Some cleanup in lore functions;<br/>
+&nbsp;- Implemented config file;<br/>
+&nbsp;- Default cooldown of active ability of Eye of Nebula increased to 3 seconds;<br/>
+&nbsp;- Default cooldown of active ability of Angel's Blessing increased to 2 seconds;<br/>
+&nbsp;- Default mining speed boost from Charm of Treasure Hunter decreased to 50%.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.0.1]:</b></h5>
+<p>
+&nbsp;- Changed effects of Recall Potion and Scroll of Postmortal Recall so that they will return player to obsidian platform if they are in the End;<br/>
+&nbsp;- Fixed bug with Extradimensional Eye not checking the dimension it is bound to;<br/>
+&nbsp;- Fixed bug with players loosing unlocked Curio slots upon death;<br/>
+&nbsp;- Attempt to fix new dungeon loot not generating in some cases.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 1.0.0]:</b></h5>
+<p>
+&nbsp;- Initial release.<br/>
+<p/><br/><br/>

@@ -31,3 +31,8 @@ Users
 deps/Soulbound*
 multiuser_args.txt
 old_enigmatic_desc.txt
+old_changelog.txt
+
+*.bat
+!gradlew.bat
+!updateResources.bat
