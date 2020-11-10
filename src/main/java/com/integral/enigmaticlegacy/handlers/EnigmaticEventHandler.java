@@ -2,6 +2,7 @@ package com.integral.enigmaticlegacy.handlers;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +29,9 @@ import com.integral.enigmaticlegacy.helpers.CrossbowHelper;
 import com.integral.enigmaticlegacy.helpers.EnigmaticEnchantmentHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
+import com.integral.enigmaticlegacy.helpers.OverlayPositionHelper;
+import com.integral.enigmaticlegacy.helpers.OverlayPositionHelper.AnchorPoint;
+import com.integral.enigmaticlegacy.helpers.OverlayPositionHelper.OverlayPosition;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
 import com.integral.enigmaticlegacy.items.BerserkEmblem;
@@ -74,6 +78,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.CreateWorldScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.AnvilScreen;
@@ -180,6 +185,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -233,6 +239,7 @@ import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 import static com.integral.enigmaticlegacy.EnigmaticLegacy.*;
 import static com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack.getRegisteredMeleeAttack;
+import static com.integral.enigmaticlegacy.config.JsonConfigHandler.*;
 
 /**
  * Generic event handler of the whole mod.
@@ -467,6 +474,7 @@ public class EnigmaticEventHandler {
 
 				mc.getTextureManager().bindTexture(AbstractGui.GUI_ICONS_LOCATION);
 			}
+
 		}
 	}
 
@@ -2182,43 +2190,6 @@ public class EnigmaticEventHandler {
 						widget.setMaxStringLength(64);
 					}
 
-				}
-
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-
-		}
-	}
-
-	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
-	public void onWorldCreation(GuiScreenEvent.InitGuiEvent event) {
-
-		if (event.getGui() instanceof CreateWorldScreen && OmniconfigHandler.enableWorldNameRandomizer.getValue()) {
-
-			/*
-			 * Handler for setting in random world name and respective seed when creating a
-			 * new world.
-			 */
-
-			CreateWorldScreen screen = (CreateWorldScreen) event.getGui();
-
-			try {
-				String localizedWorld = I18n.format("world.enigmaticlegacy.name");
-				String number = SuperpositionHandler.generateRandomWorldNumber();
-				String name = localizedWorld + number;
-
-				TextFieldWidget nameWidget = screen.worldNameField;
-				TextFieldWidget seedWidget = screen.field_238934_c_.field_239033_g_;
-
-				if (!nameWidget.getText().startsWith(localizedWorld) && seedWidget.getText().isEmpty()) {
-
-					nameWidget.setText(name);
-					seedWidget.setText(number);
-
-					screen.worldNameField = nameWidget;
-					screen.field_238934_c_.field_239033_g_ = seedWidget;
 				}
 
 			} catch (Exception ex) {

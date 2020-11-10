@@ -1,0 +1,1 @@
+gradlew -PUPDATE_MAPPINGS=20200723-1.16.1 -PUPDATE_MAPPINGS_CHANNEL=snapshot updateMappings --stacktrace

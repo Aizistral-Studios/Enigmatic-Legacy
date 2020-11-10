@@ -42,7 +42,10 @@ import net.minecraft.item.Rarity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.EntityPredicates;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -52,6 +55,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
+import top.theillusivec4.curios.api.CuriosApi;
 
 public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 	public static Omniconfig.IntParameter abilityRange;
@@ -213,6 +217,18 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 				monster.setRevengeTarget(otherMonster);
 			}
 		}
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		int ringSlots = CuriosApi.getSlotHelper().getSlotsForType(playerIn, "ring");
+
+		if (ringSlots <= 2) {
+			// TODO Remove in release
+			CuriosApi.getSlotHelper().growSlotType("ring", playerIn);
+			return new ActionResult<ItemStack>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+		}
+		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 
 }

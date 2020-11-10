@@ -6,6 +6,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.EnchantmentContainer;
 import net.minecraft.inventory.container.RepairContainer;
 import net.minecraft.inventory.container.Slot;
@@ -25,6 +26,7 @@ import java.util.List;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -33,9 +35,29 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 @Mixin(EnchantmentContainer.class)
 public class MixinEnchantmentContainer {
+	/*
+	@Redirect(at = @At("INVOKE"), method = "shadows.apotheosis.ench.table.ApothEnchantContainer.enchantItem(Lnet/minecraft/entity/player/PlayerEntity;I)Z", expect = 0, require = 0, remap = false)
+	public boolean onApotheosisEnchantRedirect(EnchantmentContainer container, PlayerEntity player, int clickedID) {
+		System.out.println("Container instance: " + container.getClass());
+		return false;
+	}
 
-	@Inject(at = @At("HEAD"), method = "enchantItem", cancellable = true)
-	public void onEnchantedItem(PlayerEntity player, int clickedID, CallbackInfoReturnable<Boolean> info) {
+	@Inject(at = @At("INVOKE_ASSIGN"), method = "enchantItem*", cancellable = true, remap = false)
+	private void onApotheosisEnchantInvokeAssign(PlayerEntity player, int clickedID, CallbackInfoReturnable<Boolean> info) {
+		System.out.println("This instance: " + this.getClass());
+	}
+
+	@Inject(at = @At("INVOKE"), method = "enchantItem*", cancellable = true, remap = false)
+	private void onApotheosisEnchantInvoke(PlayerEntity player, int clickedID, CallbackInfoReturnable<Boolean> info) {
+		System.out.println("This instance: " + this.getClass());
+	}
+	 */
+
+	@Inject(at = @At("INVOKE"), method = "net.minecraft.inventory.container.EnchantmentContainer.enchantItem(Lnet/minecraft/entity/player/PlayerEntity;I)Z", cancellable = true)
+	private void onEnchantedItem(PlayerEntity player, int clickedID, CallbackInfoReturnable<Boolean> info) {
+
+		System.out.println("This instance: " + this.getClass());
+
 		if (EnchantmentContainer.class.isInstance(this)) {
 			// Evaluating expression promts error assuming incompatible types,
 			// so we need to forget our own class to avoid alerting the compiler
@@ -77,7 +99,7 @@ public class MixinEnchantmentContainer {
 									}
 								}
 
-								enchantedItem = SuperpositionHandler.mergeEnchantments(enchantedItem, doubleRoll);
+								enchantedItem = SuperpositionHandler.mergeEnchantments(enchantedItem, doubleRoll, false, false);
 								container.tableInventory.setInventorySlotContents(0, enchantedItem);
 
 								player.addStat(Stats.ENCHANT_ITEM);

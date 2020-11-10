@@ -109,8 +109,12 @@ dependencies {
 	
 	// These are 1.16.3 dependencies
 	compile fg.deobf('generic:decorativeblocks:1.16.1-1.4')
+	compile fg.deobf('generic:WorldNameRandomizer:FORGE-1.16.4-v1.1.1')
 	compile fg.deobf('top.theillusivec4.curios:curios-forge:1.16.3-4.0.2.0')
     compile fg.deobf("vazkii.patchouli:Patchouli:1.16.2-47")
+    compile fg.deobf("vazkii.patchouli:Patchouli:1.16.2-47")
+    //compile fg.deobf("generic:Apotheosis:1.16.3-4.4.1")
+    //compile fg.deobf("generic:Placebo:1.16.3-4.3.3")
 	
 	// These are 1.16.2 dependencies
 	//compile fg.deobf('top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.1')
@@ -208,6 +212,17 @@ curseforge {
     }
 }
 
+
+
+task updateResources() {
+    // NO-OP
+}
+
+tasks.updateResources.dependsOn processResources
+
+tasks.withType(JavaCompile) {
+    options.failOnError(true)
+}
 
 jar.finalizedBy('reobfJar') 
 //publish.dependsOn('reobfJar')

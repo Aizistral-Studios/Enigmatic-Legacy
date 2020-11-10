@@ -247,6 +247,7 @@ public class PermanentItemEntity extends Entity {
 				player.onItemPickup(this, i);
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.func_234923_W_())), new PacketHandleItemPickup(player.getEntityId(), this.getEntityId()));
 
+				EnigmaticLegacy.enigmaticLogger.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
 				this.remove();
 				itemstack.setCount(0);
 
@@ -257,6 +258,7 @@ public class PermanentItemEntity extends Entity {
 
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.func_234923_W_())), new PacketHandleItemPickup(player.getEntityId(), this.getEntityId()));
 
+					EnigmaticLegacy.enigmaticLogger.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
 					this.remove();
 					itemstack.setCount(i);
 				}

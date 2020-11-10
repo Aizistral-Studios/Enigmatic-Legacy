@@ -1371,10 +1371,11 @@ public class SuperpositionHandler {
 	 * rules as vanilla Anvil when used in Survival Mode.
 	 * @param input
 	 * @param mergeFrom
+	 * @param overmerge Shifts the rules of merging so that they make more sense with Apotheosis compat
 	 * @return Copy of input ItemStack with new enchantments merged from mergeFrom
 	 */
 
-	public static ItemStack mergeEnchantments(ItemStack input, ItemStack mergeFrom) {
+	public static ItemStack mergeEnchantments(ItemStack input, ItemStack mergeFrom, boolean overmerge, boolean onlyTreasure) {
 		ItemStack returnedStack = input.copy();
 		Map<Enchantment, Integer> inputEnchants = EnchantmentHelper.getEnchantments(returnedStack);
 		Map<Enchantment, Integer> mergedEnchants = EnchantmentHelper.getEnchantments(mergeFrom);
@@ -1383,9 +1384,16 @@ public class SuperpositionHandler {
 			if (mergedEnchant != null) {
 				int inputEnchantLevel = inputEnchants.getOrDefault(mergedEnchant, 0);
 				int mergedEnchantLevel = mergedEnchants.get(mergedEnchant);
-				mergedEnchantLevel = inputEnchantLevel == mergedEnchantLevel ? mergedEnchantLevel + 1 : Math.max(mergedEnchantLevel, inputEnchantLevel);
+
+				if (!overmerge) {
+					mergedEnchantLevel = inputEnchantLevel == mergedEnchantLevel ? (mergedEnchantLevel + 1 > mergedEnchant.getMaxLevel() ? mergedEnchant.getMaxLevel() : mergedEnchantLevel + 1) : Math.max(mergedEnchantLevel, inputEnchantLevel);
+				} else {
+					mergedEnchantLevel = inputEnchantLevel > 0 ? Math.max(mergedEnchantLevel, inputEnchantLevel) + 1 : Math.max(mergedEnchantLevel, inputEnchantLevel);
+					mergedEnchantLevel = Math.min(mergedEnchantLevel, 10);
+				}
+
 				boolean compatible = mergedEnchant.canApply(input);
-				if (input.getItem() == Items.ENCHANTED_BOOK) {
+				if (input.getItem() instanceof EnchantedBookItem) {
 					compatible = true;
 				}
 
@@ -1396,11 +1404,9 @@ public class SuperpositionHandler {
 				}
 
 				if (compatible) {
-					if (mergedEnchantLevel > mergedEnchant.getMaxLevel()) {
-						mergedEnchantLevel = mergedEnchant.getMaxLevel();
+					if (!onlyTreasure || mergedEnchant.isTreasureEnchantment() || mergedEnchant.isCurse()) {
+						inputEnchants.put(mergedEnchant, mergedEnchantLevel);
 					}
-
-					inputEnchants.put(mergedEnchant, mergedEnchantLevel);
 				}
 			}
 		}

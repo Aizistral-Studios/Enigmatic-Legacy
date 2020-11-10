@@ -24,6 +24,7 @@ public class EnchanterPearl extends ItemBase implements ICursed {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enchanterPearl1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enchanterPearl2");

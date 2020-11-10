@@ -24,6 +24,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.eventbus.api.Cancelable;
 
 public class EnderRing extends ItemBaseCurio {
 	public static Omniconfig.BooleanParameter inventoryButtonEnabled;

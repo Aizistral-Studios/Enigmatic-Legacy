@@ -195,7 +195,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.9.0";
+	public static final String VERSION = "2.9.1";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -327,6 +327,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Exquisite Ring") public static GemRing gemRing;
 	@ConfigurableItem("Unholy Stone") public static CursedStone cursedStone;
 	@ConfigurableItem("Enchanter's Pearl") public static EnchanterPearl enchanterPearl;
+	@ConfigurableItem("Fruit of Ascension") public static PlaceholderItem trueNotchApple;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -499,6 +500,7 @@ public class EnigmaticLegacy {
 		gemRing = new GemRing();
 		cursedStone = new CursedStone();
 		enchanterPearl = new EnchanterPearl();
+		trueNotchApple = new PlaceholderItem("true_notch_apple", Rarity.EPIC);
 
 		sharpshooterEnchantment = new SharpshooterEnchantment(EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND);
 		ceaselessEnchantment = new CeaselessEnchantment(EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND);
@@ -627,11 +629,11 @@ public class EnigmaticLegacy {
 
 	private void intermodStuff(final InterModEnqueueEvent event) {
 		enigmaticLogger.info("Sending messages to Curios API...");
-		//SuperpositionHandler.registerCurioType("curio", 1, true, false, null);
 		SuperpositionHandler.registerCurioType("charm", 1, true, false, null);
 		SuperpositionHandler.registerCurioType("ring", 2, true, false, null);
 		SuperpositionHandler.registerCurioType("spellstone", 1, false, false, new ResourceLocation(MODID, "slots/empty_spellstone_slot"));
 		SuperpositionHandler.registerCurioType("scroll", 1, false, false, new ResourceLocation(MODID, "slots/empty_scroll_slot"));
+		SuperpositionHandler.registerCurioType("curio", -1, true, false, null);
 
 	}
 
@@ -774,6 +776,7 @@ public class EnigmaticLegacy {
 					gemRing,
 					cursedStone,
 					enchanterPearl,
+					trueNotchApple,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),
