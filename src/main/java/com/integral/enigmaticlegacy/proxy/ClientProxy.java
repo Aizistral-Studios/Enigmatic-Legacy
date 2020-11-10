@@ -97,12 +97,12 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public boolean isInVanillaDimension(PlayerEntity player) {
-		return player.world.func_234923_W_().equals(this.getOverworldKey()) || player.world.func_234923_W_().equals(this.getNetherKey()) || player.world.func_234923_W_().equals(this.getEndKey());
+		return player.world.getDimensionKey().equals(this.getOverworldKey()) || player.world.getDimensionKey().equals(this.getNetherKey()) || player.world.getDimensionKey().equals(this.getEndKey());
 	}
 
 	@Override
 	public boolean isInDimension(PlayerEntity player, RegistryKey<World> world) {
-		return player.world.func_234923_W_().equals(world);
+		return player.world.getDimensionKey().equals(world);
 	}
 
 	@Override

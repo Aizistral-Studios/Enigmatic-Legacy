@@ -17,6 +17,8 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public abstract class ItemSpellstoneCurio extends ItemBaseCurio implements ISpellstone {
 	public static Omniconfig.BooleanParameter multiequip;
 

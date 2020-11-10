@@ -18,6 +18,8 @@ import net.minecraft.world.Explosion;
 import net.minecraft.world.ExplosionContext;
 import net.minecraft.world.World;
 
+import net.minecraft.world.Explosion.Mode;
+
 public class WitherExplosion extends Explosion {
 
 	private final boolean causesFire;

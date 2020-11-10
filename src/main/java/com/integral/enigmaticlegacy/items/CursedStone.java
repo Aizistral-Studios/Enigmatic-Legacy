@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class CursedStone extends ItemBase implements ICursed {
 
 	public CursedStone() {
-		super(getDefaultProperties().rarity(Rarity.EPIC).isBurnable().maxStackSize(1));
+		super(getDefaultProperties().rarity(Rarity.EPIC).isImmuneToFire().maxStackSize(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "cursed_stone"));
 	}
 

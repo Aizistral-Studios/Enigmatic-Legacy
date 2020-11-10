@@ -68,7 +68,7 @@ public class EtheriumScythe extends SwordItem implements IMultiblockMiningTool {
 	public Set<Material> effectiveMaterials;
 
 	public EtheriumScythe() {
-		super(EnigmaticMaterials.ETHERIUM, 3, -2.0F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).isBurnable());
+		super(EnigmaticMaterials.ETHERIUM, 3, -2.0F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).isImmuneToFire());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_scythe"));
 
 		this.effectiveMaterials = Sets.newHashSet();

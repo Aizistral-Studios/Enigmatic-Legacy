@@ -56,7 +56,7 @@ public class EtheriumSword extends SwordItem implements IMultiblockMiningTool {
 	public CooldownMap etheriumSwordCooldowns = new CooldownMap();
 
 	public EtheriumSword() {
-		super(EnigmaticMaterials.ETHERIUM, 6, -2.6F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).isBurnable());
+		super(EnigmaticMaterials.ETHERIUM, 6, -2.6F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).isImmuneToFire());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_sword"));
 	}
 

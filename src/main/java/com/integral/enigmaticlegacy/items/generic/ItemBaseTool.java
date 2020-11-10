@@ -17,6 +17,8 @@ import net.minecraft.item.Rarity;
 import net.minecraft.item.ToolItem;
 import net.minecraftforge.common.ToolType;
 
+import net.minecraft.item.Item.Properties;
+
 public abstract class ItemBaseTool extends ToolItem {
 
 	public Set<Material> effectiveMaterials;

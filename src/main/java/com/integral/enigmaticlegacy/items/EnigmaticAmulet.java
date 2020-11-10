@@ -171,13 +171,13 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	}
 
 	public EnigmaticAmulet() {
-		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).isBurnable());
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).isImmuneToFire());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet"));
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public void registerVariants() {
-		ItemModelsProperties.func_239418_a_(this, new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet_color"), (stack, world, entity) -> {
+		ItemModelsProperties.registerProperty(this, new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet_color"), (stack, world, entity) -> {
 			return ItemNBTHelper.getFloat(stack, amuletColorTag, 0F);
 		});
 	}

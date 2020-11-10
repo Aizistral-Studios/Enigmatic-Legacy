@@ -86,7 +86,7 @@ public class ExtradimensionalEye extends ItemBase implements IVanishable {
 			ItemNBTHelper.setDouble(itemstack, "BoundY", playerIn.getPosY());
 			ItemNBTHelper.setDouble(itemstack, "BoundZ", playerIn.getPosZ());
 
-			ItemNBTHelper.setString(itemstack, "BoundDimension", playerIn.world.func_234923_W_().func_240901_a_().toString());
+			ItemNBTHelper.setString(itemstack, "BoundDimension", playerIn.world.getDimensionKey().getLocation().toString());
 			playerIn.swingArm(handIn);
 			return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
 		}

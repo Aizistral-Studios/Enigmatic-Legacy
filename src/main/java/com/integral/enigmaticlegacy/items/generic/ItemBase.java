@@ -15,6 +15,8 @@ import net.minecraft.util.text.TextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
+import net.minecraft.item.Item.Properties;
+
 public abstract class ItemBase extends Item {
 	protected boolean isPlaceholder;
 

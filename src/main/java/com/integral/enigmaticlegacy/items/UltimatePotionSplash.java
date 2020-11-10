@@ -31,6 +31,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import com.integral.enigmaticlegacy.api.items.IAdvancedPotionItem.PotionType;
+
 public class UltimatePotionSplash extends ItemBase implements IAdvancedPotionItem {
 	public PotionType potionType;
 

@@ -45,7 +45,7 @@ public class TransientPlayerData {
 
 	public void syncToClients(float blockRadius) {
 		PlayerEntity player = this.getPlayer();
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), blockRadius, player.world.func_234923_W_())), new PacketSyncTransientData(this));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), blockRadius, player.world.getDimensionKey())), new PacketSyncTransientData(this));
 	}
 
 	public void syncToPlayer() {

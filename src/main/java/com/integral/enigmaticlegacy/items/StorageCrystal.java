@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 public class StorageCrystal extends ItemBase implements IPermanentCrystal, IVanishable {
 
 	public StorageCrystal() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isBurnable().group(null));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isImmuneToFire().group(null));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "storage_crystal"));
 	}
 

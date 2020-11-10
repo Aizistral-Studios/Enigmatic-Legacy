@@ -39,6 +39,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import vazkii.patchouli.api.PatchouliAPI;
 
+import net.minecraft.item.Item.Properties;
+
 public class TheAcknowledgment extends ItemBase implements IVanishable {
 	private final Multimap<Attribute, AttributeModifier> attributes;
 	private static final ResourceLocation bookID = new ResourceLocation(EnigmaticLegacy.MODID, "the_acknowledgment");

@@ -50,7 +50,7 @@ public class EtheriumArmor extends ItemBaseArmor {
 	}
 
 	public EtheriumArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
-		super(materialIn, slot, ItemBaseArmor.getDefaultProperties().rarity(Rarity.RARE).isBurnable());
+		super(materialIn, slot, ItemBaseArmor.getDefaultProperties().rarity(Rarity.RARE).isImmuneToFire());
 	}
 
 	public boolean hasShield(@Nonnull PlayerEntity player) {

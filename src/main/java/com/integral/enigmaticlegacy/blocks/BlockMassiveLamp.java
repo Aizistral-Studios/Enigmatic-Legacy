@@ -14,6 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext.Builder;
 import net.minecraft.util.ResourceLocation;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockMassiveLamp extends Block {
 
 	public BlockMassiveLamp(Properties properties, String registryName) {

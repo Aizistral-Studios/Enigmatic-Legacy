@@ -45,12 +45,12 @@ public class LootGenerator extends ItemBase implements IVanishable {
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "loot_generator"));
 
 		/*
-		for (ResourceLocation table : LootTables.func_215796_a()) {
+		for (ResourceLocation table : LootTables.getReadOnlyLootTables()) {
 			if (table.getPath().startsWith("chests/") && !table.getPath().startsWith("chests/village/"))
 				this.lootList.add(table);
 		}
 
-		for (ResourceLocation table : LootTables.func_215796_a()) {
+		for (ResourceLocation table : LootTables.getReadOnlyLootTables()) {
 			if (table.getPath().startsWith("chests/village/"))
 				this.lootList.add(table);
 		}
@@ -76,11 +76,11 @@ public class LootGenerator extends ItemBase implements IVanishable {
 		this.lootList.add(LootTables.CHESTS_SHIPWRECK_SUPPLY);
 		this.lootList.add(LootTables.CHESTS_SHIPWRECK_TREASURE);
 		this.lootList.add(LootTables.CHESTS_PILLAGER_OUTPOST);
-		this.lootList.add(LootTables.field_237380_L_);
-		this.lootList.add(LootTables.field_237381_M_);
-		this.lootList.add(LootTables.field_237382_N_);
-		this.lootList.add(LootTables.field_237383_O_);
-		this.lootList.add(LootTables.field_237384_P_);
+		this.lootList.add(LootTables.BASTION_TREASURE);
+		this.lootList.add(LootTables.BASTION_OTHER);
+		this.lootList.add(LootTables.BASTION_BRIDGE);
+		this.lootList.add(LootTables.BASTION_HOGLIN_STABLE);
+		this.lootList.add(LootTables.RUINED_PORTAL);
 		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_WEAPONSMITH);
 		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_TOOLSMITH);
 		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_ARMORER);

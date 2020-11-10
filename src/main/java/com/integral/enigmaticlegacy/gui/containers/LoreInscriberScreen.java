@@ -22,21 +22,21 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer> implements IContainerListener {
-	private ResourceLocation field_238817_A_;
+	private ResourceLocation guiTexture;
 	private static final ResourceLocation ANVIL_RESOURCE = new ResourceLocation(EnigmaticLegacy.MODID, "textures/gui/inkwell_gui.png");
 	private TextFieldWidget nameField;
 
-	public LoreInscriberScreen(LoreInscriberContainer p_i51103_1_, PlayerInventory p_i51103_2_, ITextComponent p_i51103_3_) {
-		this(p_i51103_1_, p_i51103_2_, p_i51103_3_, LoreInscriberScreen.ANVIL_RESOURCE);
+	public LoreInscriberScreen(LoreInscriberContainer container, PlayerInventory playerInventory, ITextComponent title) {
+		this(container, playerInventory, title, LoreInscriberScreen.ANVIL_RESOURCE);
 		this.titleX = 60;
 	}
 
-	private LoreInscriberScreen(LoreInscriberContainer p_i232291_1_, PlayerInventory p_i232291_2_, ITextComponent p_i232291_3_, ResourceLocation p_i232291_4_) {
-		super(p_i232291_1_, p_i232291_2_, p_i232291_3_);
-		this.field_238817_A_ = p_i232291_4_;
+	private LoreInscriberScreen(LoreInscriberContainer container, PlayerInventory playerInventory, ITextComponent title, ResourceLocation guiTexture) {
+		super(container, playerInventory, title);
+		this.guiTexture = guiTexture;
 	}
 
-	protected void func_230453_j_() {
+	protected void initFields() {
 		this.minecraft.keyboardListener.enableRepeatEvents(true);
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2;
@@ -54,7 +54,7 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	@Override
 	protected void init() {
 		super.init();
-		this.func_230453_j_();
+		this.initFields();
 		this.container.addListener(this);
 	}
 
@@ -70,20 +70,20 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 		this.renderBackground(matrixStack);
 		super.render(matrixStack, x, y, partialTicksIGuess);
 		RenderSystem.disableBlend();
-		this.func_230452_b_(matrixStack, x, y, partialTicksIGuess);
-		this.func_230459_a_(matrixStack, x, y);
+		this.renderNameField(matrixStack, x, y, partialTicksIGuess);
+		this.renderHoveredTooltip(matrixStack, x, y);
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack p_230450_1_, float p_230450_2_, int p_230450_3_, int p_230450_4_) {
+	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bindTexture(this.field_238817_A_);
+		this.minecraft.getTextureManager().bindTexture(this.guiTexture);
 		int i = (this.width - this.xSize) / 2;
 		int j = (this.height - this.ySize) / 2;
-		this.blit(p_230450_1_, i, j, 0, 0, this.xSize, this.ySize);
-		this.blit(p_230450_1_, i + 52, j + 26, 0, this.ySize + (this.container.getSlot(0).getHasStack() ? 0 : 16), 102, 16);
+		this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
+		this.blit(matrixStack, i + 52, j + 26, 0, this.ySize + (this.container.getSlot(0).getHasStack() ? 0 : 16), 102, 16);
 		if (this.container.getSlot(0).getHasStack() && !this.container.getSlot(1).getHasStack()) {
-			this.blit(p_230450_1_, i + 71, j + 49, this.xSize, 0, 28, 21);
+			this.blit(matrixStack, i + 71, j + 49, this.xSize, 0, 28, 21);
 		}
 
 	}
@@ -106,19 +106,19 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	}
 
 	@Override
-	public void resize(Minecraft p_231152_1_, int p_231152_2_, int p_231152_3_) {
+	public void resize(Minecraft minecraft, int width, int height) {
 		String s = this.nameField.getText();
-		this.init(p_231152_1_, p_231152_2_, p_231152_3_);
+		this.init(minecraft, width, height);
 		this.nameField.setText(s);
 	}
 
 	@Override
-	public boolean keyPressed(int p_231046_1_, int p_231046_2_, int p_231046_3_) {
-		if (p_231046_1_ == 256) {
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+		if (keyCode == 256) {
 			this.minecraft.player.closeScreen();
 		}
 
-		return !this.nameField.keyPressed(p_231046_1_, p_231046_2_, p_231046_3_) && !this.nameField.canWrite() ? super.keyPressed(p_231046_1_, p_231046_2_, p_231046_3_) : true;
+		return !this.nameField.keyPressed(keyCode, scanCode, modifiers) && !this.nameField.canWrite() ? super.keyPressed(keyCode, scanCode, modifiers) : true;
 	}
 
 	private void renameResponder(String input) {
@@ -158,16 +158,16 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 			if (flag) {
 				int k = this.xSize - 8 - this.font.getStringWidth(s) - 2;
 				int l = 69;
-				AbstractGui.func_238467_a_(p_230451_1_, k - 2, 67, this.xSize - 8, 79, 1325400064);
-				this.font.func_238405_a_(p_230451_1_, s, k, 69.0F, j);
+				AbstractGui.fill(matrixStack, k - 2, 67, this.xSize - 8, 79, 1325400064);
+				this.font.drawStringWithShadow(matrixStack, s, k, 69.0F, j);
 			}
 
 		}
 		 */
 	}
 
-	public void func_230452_b_(MatrixStack p_230452_1_, int p_230452_2_, int p_230452_3_, float p_230452_4_) {
-		this.nameField.render(p_230452_1_, p_230452_2_, p_230452_3_, p_230452_4_);
+	public void renderNameField(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+		this.nameField.render(matrixStack, mouseX, mouseY, partialTicks);
 	}
 
 	/**

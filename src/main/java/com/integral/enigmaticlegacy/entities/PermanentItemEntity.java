@@ -242,10 +242,10 @@ public class PermanentItemEntity extends Entity {
 						return;
 				}
 
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY() + (this.getHeight() / 2), this.getPosZ(), 64, player.world.func_234923_W_())), new PacketRecallParticles(this.getPosX(), this.getPosY() + (this.getHeight() / 2), this.getPosZ(), 48, false));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY() + (this.getHeight() / 2), this.getPosZ(), 64, player.world.getDimensionKey())), new PacketRecallParticles(this.getPosX(), this.getPosY() + (this.getHeight() / 2), this.getPosZ(), 48, false));
 
 				player.onItemPickup(this, i);
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.func_234923_W_())), new PacketHandleItemPickup(player.getEntityId(), this.getEntityId()));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.getDimensionKey())), new PacketHandleItemPickup(player.getEntityId(), this.getEntityId()));
 
 				EnigmaticLegacy.enigmaticLogger.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
 				this.remove();
@@ -256,7 +256,7 @@ public class PermanentItemEntity extends Entity {
 				if (itemstack.isEmpty()) {
 					player.onItemPickup(this, i);
 
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.func_234923_W_())), new PacketHandleItemPickup(player.getEntityId(), this.getEntityId()));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.getDimensionKey())), new PacketHandleItemPickup(player.getEntityId(), this.getEntityId()));
 
 					EnigmaticLegacy.enigmaticLogger.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
 					this.remove();
@@ -270,8 +270,8 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public float func_234272_a_(float p_234272_1_) {
-		return (this.getAge() + p_234272_1_) / 20.0F + this.hoverStart;
+	public float getItemHover(float partialTicks) {
+		return (this.getAge() + partialTicks) / 20.0F + this.hoverStart;
 	}
 
 	@Override
@@ -310,8 +310,8 @@ public class PermanentItemEntity extends Entity {
 		return this.owner;
 	}
 
-	public void setOwnerId(@Nullable UUID p_200217_1_) {
-		this.owner = p_200217_1_;
+	public void setOwnerId(@Nullable UUID ownerId) {
+		this.owner = ownerId;
 	}
 
 	@Nullable
@@ -319,8 +319,8 @@ public class PermanentItemEntity extends Entity {
 		return this.thrower;
 	}
 
-	public void setThrowerId(@Nullable UUID p_200216_1_) {
-		this.thrower = p_200216_1_;
+	public void setThrowerId(@Nullable UUID throwerId) {
+		this.thrower = throwerId;
 	}
 
 	@OnlyIn(Dist.CLIENT)

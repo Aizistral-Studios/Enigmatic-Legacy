@@ -28,6 +28,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
+import net.minecraft.item.Item.Properties;
+import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
+import top.theillusivec4.curios.api.type.capability.ICurio.RenderHelper;
+
 public abstract class ItemBaseCurio extends ItemBase implements ICurio, IVanishable {
 
 	public ItemBaseCurio() {

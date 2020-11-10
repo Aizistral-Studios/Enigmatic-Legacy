@@ -416,7 +416,7 @@ public class SuperpositionHandler {
 
 					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())), new PacketPortalParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2), entity.getPosZ(), 72, 1.0F, false));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ(), 128, entity.world.getDimensionKey())), new PacketPortalParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2), entity.getPosZ(), 72, 1.0F, false));
 
 					if (entity instanceof ServerPlayerEntity) {
 						ServerPlayerEntity player = (ServerPlayerEntity) entity;
@@ -427,7 +427,7 @@ public class SuperpositionHandler {
 
 					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())), new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2), entity.getPosZ(), 48, false));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ(), 128, entity.world.getDimensionKey())), new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2), entity.getPosZ(), 48, false));
 
 					return true;
 				}
@@ -441,7 +441,7 @@ public class SuperpositionHandler {
 				if (!world.isAirBlock(new BlockPos(x, y - counter - 1, z)) & world.getBlockState(new BlockPos(x, y - counter - 1, z)).isSolid() & world.isAirBlock(new BlockPos(x, y - counter, z)) & world.isAirBlock(new BlockPos(x, y - counter + 1, z))) {
 
 					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())), new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2), entity.getPosZ(), 48, false));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ(), 128, entity.world.getDimensionKey())), new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2), entity.getPosZ(), 48, false));
 
 					if (entity instanceof ServerPlayerEntity) {
 						ServerPlayerEntity player = (ServerPlayerEntity) entity;
@@ -451,7 +451,7 @@ public class SuperpositionHandler {
 					}
 
 					world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ(), 128, entity.world.func_234923_W_())), new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2), entity.getPosZ(), 48, false));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getPosX(), entity.getPosY(), entity.getPosZ(), 128, entity.world.getDimensionKey())), new PacketRecallParticles(entity.getPosX(), entity.getPosY() + (entity.getHeight() / 2), entity.getPosZ(), 48, false));
 
 					return true;
 				}
@@ -535,8 +535,8 @@ public class SuperpositionHandler {
 	 * @return
 	 */
 
-	public static ItemLootEntry.Builder<?> itemEntryBuilderED(Item item, int weight, float enchantLevelMin, float enchantLevelMax, float damageMin, float damageMax) {
-		ItemLootEntry.Builder<?> builder = ItemLootEntry.builder(item);
+	public static StandaloneLootEntry.Builder<?> itemEntryBuilderED(Item item, int weight, float enchantLevelMin, float enchantLevelMax, float damageMin, float damageMax) {
+		StandaloneLootEntry.Builder<?> builder = ItemLootEntry.builder(item);
 
 		builder.weight(weight);
 		builder.acceptFunction(SetDamage.func_215931_a(RandomValueRange.of(damageMax, damageMin)));
@@ -574,10 +574,10 @@ public class SuperpositionHandler {
 
 	public static List<ResourceLocation> getBastionChests() {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
-		lootChestList.add(LootTables.field_237380_L_);
-		lootChestList.add(LootTables.field_237381_M_);
-		lootChestList.add(LootTables.field_237382_N_);
-		lootChestList.add(LootTables.field_237383_O_);
+		lootChestList.add(LootTables.BASTION_TREASURE);
+		lootChestList.add(LootTables.BASTION_OTHER);
+		lootChestList.add(LootTables.BASTION_BRIDGE);
+		lootChestList.add(LootTables.BASTION_HOGLIN_STABLE);
 
 		return lootChestList;
 	}
@@ -585,11 +585,11 @@ public class SuperpositionHandler {
 	public static List<ResourceLocation> getNetherDungeons() {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
 		lootChestList.add(LootTables.CHESTS_NETHER_BRIDGE);
-		lootChestList.add(LootTables.field_237380_L_);
-		lootChestList.add(LootTables.field_237381_M_);
-		lootChestList.add(LootTables.field_237382_N_);
-		lootChestList.add(LootTables.field_237383_O_);
-		lootChestList.add(LootTables.field_237384_P_);
+		lootChestList.add(LootTables.BASTION_TREASURE);
+		lootChestList.add(LootTables.BASTION_OTHER);
+		lootChestList.add(LootTables.BASTION_BRIDGE);
+		lootChestList.add(LootTables.BASTION_HOGLIN_STABLE);
+		lootChestList.add(LootTables.RUINED_PORTAL);
 
 		return lootChestList;
 	}
@@ -888,10 +888,10 @@ public class SuperpositionHandler {
 				}
 
 				if (d0 > 0.0D) {
-					lores.add((new TranslationTextComponent("attribute.modifier.plus." + attributemodifier2.getOperation().getId(), ItemStack.DECIMALFORMAT.format(d1), new TranslationTextComponent(pair.getFirst().func_233754_c_()))).mergeStyle(TextFormatting.BLUE));
+					lores.add((new TranslationTextComponent("attribute.modifier.plus." + attributemodifier2.getOperation().getId(), ItemStack.DECIMALFORMAT.format(d1), new TranslationTextComponent(pair.getFirst().getAttributeName()))).mergeStyle(TextFormatting.BLUE));
 				} else if (d0 < 0.0D) {
 					d1 = d1 * -1.0D;
-					lores.add((new TranslationTextComponent("attribute.modifier.take." + attributemodifier2.getOperation().getId(), ItemStack.DECIMALFORMAT.format(d1), new TranslationTextComponent(pair.getFirst().func_233754_c_()))).mergeStyle(TextFormatting.DARK_RED));
+					lores.add((new TranslationTextComponent("attribute.modifier.take." + attributemodifier2.getOperation().getId(), ItemStack.DECIMALFORMAT.format(d1), new TranslationTextComponent(pair.getFirst().getAttributeName()))).mergeStyle(TextFormatting.DARK_RED));
 				}
 			}
 		}
@@ -1047,7 +1047,7 @@ public class SuperpositionHandler {
 
 		serverPlayer.world.playSound(null, serverPlayer.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getPosX(), serverPlayer.getPosY(), serverPlayer.getPosZ(), 128, serverPlayer.world.func_234923_W_())), new PacketPortalParticles(serverPlayer.getPosX(), serverPlayer.getPosY() + (serverPlayer.getHeight() / 2), serverPlayer.getPosZ(), 100, 1.25F, false));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getPosX(), serverPlayer.getPosY(), serverPlayer.getPosZ(), 128, serverPlayer.world.getDimensionKey())), new PacketPortalParticles(serverPlayer.getPosX(), serverPlayer.getPosY() + (serverPlayer.getHeight() / 2), serverPlayer.getPosZ(), 100, 1.25F, false));
 
 		Optional<Vector3d> vec = AdvancedSpawnLocationHelper.getValidSpawn(respawnWorld, serverPlayer);
 		Optional<Vector3d> vec2;
@@ -1075,7 +1075,7 @@ public class SuperpositionHandler {
 
 		serverPlayer.world.playSound(null, serverPlayer.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getPosX(), serverPlayer.getPosY(), serverPlayer.getPosZ(), 128, serverPlayer.world.func_234923_W_())), new PacketRecallParticles(serverPlayer.getPosX(), serverPlayer.getPosY() + (serverPlayer.getHeight() / 2), serverPlayer.getPosZ(), 48, false));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getPosX(), serverPlayer.getPosY(), serverPlayer.getPosZ(), 128, serverPlayer.world.getDimensionKey())), new PacketRecallParticles(serverPlayer.getPosX(), serverPlayer.getPosY() + (serverPlayer.getHeight() / 2), serverPlayer.getPosZ(), 48, false));
 
 		return destinationWorld;
 	}
@@ -1106,7 +1106,7 @@ public class SuperpositionHandler {
 			 * TODO Spawning player at the world's center involves a lot of collision checks, which we can't do
 			 * without actually teleporting the player. Investigate on possible workarounds.
 			 */
-			trueVec = new Vector3d(destinationWorld.func_241135_u_().getX() + 0.5, destinationWorld.func_241135_u_().getY() + 0.5, destinationWorld.func_241135_u_().getZ() + 0.5);
+			trueVec = new Vector3d(destinationWorld.getSpawnPoint().getX() + 0.5, destinationWorld.getSpawnPoint().getY() + 0.5, destinationWorld.getSpawnPoint().getZ() + 0.5);
 
 			while (!destinationWorld.getBlockState(new BlockPos(trueVec)).isAir(destinationWorld, new BlockPos(trueVec)) && trueVec.y < 255.0D) {
 				trueVec = trueVec.add(0, 1D, 0);

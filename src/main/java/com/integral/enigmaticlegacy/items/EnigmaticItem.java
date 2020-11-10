@@ -56,7 +56,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 	public HashMap<PlayerEntity, Boolean> flightMap = new HashMap<PlayerEntity, Boolean>();
 
 	public EnigmaticItem() {
-		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC).isBurnable());
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC).isImmuneToFire());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_item"));
 
 		this.immunityList.add(DamageSource.FALL.damageType);
@@ -194,7 +194,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 
 		world.addEntity(witherskullentity);
 
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(witherskullentity.getPosX(), witherskullentity.getPosY(), witherskullentity.getPosZ(), 64, witherskullentity.world.func_234923_W_())), new PacketWitherParticles(witherskullentity.getPosX(), witherskullentity.getPosY() + (witherskullentity.getHeight() / 2), witherskullentity.getPosZ(), 8, false));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(witherskullentity.getPosX(), witherskullentity.getPosY(), witherskullentity.getPosZ(), 64, witherskullentity.world.getDimensionKey())), new PacketWitherParticles(witherskullentity.getPosX(), witherskullentity.getPosY() + (witherskullentity.getHeight() / 2), witherskullentity.getPosZ(), 8, false));
 
 	}
 

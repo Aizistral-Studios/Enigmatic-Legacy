@@ -71,7 +71,7 @@ public class EtheriumPickaxe extends ItemBaseTool implements IMultiblockMiningTo
 				.defaultMaxDamage((int) (EnigmaticMaterials.ETHERIUM.getMaxUses() * 1.5))
 				.addToolType(ToolType.PICKAXE, EnigmaticMaterials.ETHERIUM.getHarvestLevel())
 				.rarity(Rarity.RARE)
-				.isBurnable());
+				.isImmuneToFire());
 
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_pickaxe"));
 

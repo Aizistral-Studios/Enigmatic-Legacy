@@ -12,6 +12,8 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 
+import net.minecraft.client.gui.toasts.IToast.Visibility;
+
 public class RevelationTomeToast implements IToast {
 
 	private final ItemStack tome;

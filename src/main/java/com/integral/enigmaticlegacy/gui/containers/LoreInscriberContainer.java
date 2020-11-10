@@ -52,8 +52,8 @@ public class LoreInscriberContainer extends Container {
 		this(syncID, playerInv, IWorldPosCallable.of(playerInv.player.world, playerInv.player.getPosition()));
 	}
 
-	private LoreInscriberContainer(int p_i50102_1_, PlayerInventory p_i50102_2_, IWorldPosCallable p_i50102_3_) {
-		this(EnigmaticLegacy.LORE_INSCRIBER_CONTAINER, p_i50102_1_, p_i50102_2_, p_i50102_3_);
+	private LoreInscriberContainer(int id, PlayerInventory playerInventory, IWorldPosCallable worldPosCallable) {
+		this(EnigmaticLegacy.LORE_INSCRIBER_CONTAINER, id, playerInventory, worldPosCallable);
 	}
 
 	private LoreInscriberContainer(@Nullable ContainerType<?> p_i231587_1_, int p_i231587_2_, PlayerInventory playerInv, IWorldPosCallable p_i231587_4_) {

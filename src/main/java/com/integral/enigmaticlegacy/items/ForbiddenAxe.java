@@ -55,7 +55,7 @@ public class ForbiddenAxe extends SwordItem {
 	}
 
 	public ForbiddenAxe() {
-		super(EnigmaticMaterials.FORBIDDENAXE, 6, -2.4F, ItemBaseTool.getDefaultProperties().defaultMaxDamage(2000).rarity(Rarity.EPIC).isBurnable());
+		super(EnigmaticMaterials.FORBIDDENAXE, 6, -2.4F, ItemBaseTool.getDefaultProperties().defaultMaxDamage(2000).rarity(Rarity.EPIC).isImmuneToFire());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "forbidden_axe"));
 	}
 

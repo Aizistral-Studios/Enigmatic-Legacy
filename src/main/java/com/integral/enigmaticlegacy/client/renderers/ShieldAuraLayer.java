@@ -87,12 +87,12 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 
 	}
 
-	private BipedModel.ArmPose func_217766_a(AbstractClientPlayerEntity p_217766_1_, ItemStack p_217766_2_, ItemStack p_217766_3_, Hand p_217766_4_) {
+	private BipedModel.ArmPose func_217766_a(AbstractClientPlayerEntity playerIn, ItemStack itemStackMain, ItemStack itemStackOff, Hand handIn) {
 		BipedModel.ArmPose bipedmodel$armpose = BipedModel.ArmPose.EMPTY;
-		ItemStack itemstack = p_217766_4_ == Hand.MAIN_HAND ? p_217766_2_ : p_217766_3_;
+		ItemStack itemstack = handIn == Hand.MAIN_HAND ? itemStackMain : itemStackOff;
 		if (!itemstack.isEmpty()) {
 			bipedmodel$armpose = BipedModel.ArmPose.ITEM;
-			if (p_217766_1_.getItemInUseCount() > 0) {
+			if (playerIn.getItemInUseCount() > 0) {
 				UseAction useaction = itemstack.getUseAction();
 				if (useaction == UseAction.BLOCK) {
 					bipedmodel$armpose = BipedModel.ArmPose.BLOCK;
@@ -100,19 +100,19 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 					bipedmodel$armpose = BipedModel.ArmPose.BOW_AND_ARROW;
 				} else if (useaction == UseAction.SPEAR) {
 					bipedmodel$armpose = BipedModel.ArmPose.THROW_SPEAR;
-				} else if (useaction == UseAction.CROSSBOW && p_217766_4_ == p_217766_1_.getActiveHand()) {
+				} else if (useaction == UseAction.CROSSBOW && handIn == playerIn.getActiveHand()) {
 					bipedmodel$armpose = BipedModel.ArmPose.CROSSBOW_CHARGE;
 				}
 			} else {
-				boolean flag3 = p_217766_2_.getItem() == Items.CROSSBOW;
-				boolean flag = CrossbowItem.isCharged(p_217766_2_);
-				boolean flag1 = p_217766_3_.getItem() == Items.CROSSBOW;
-				boolean flag2 = CrossbowItem.isCharged(p_217766_3_);
+				boolean flag3 = itemStackMain.getItem() == Items.CROSSBOW;
+				boolean flag = CrossbowItem.isCharged(itemStackMain);
+				boolean flag1 = itemStackOff.getItem() == Items.CROSSBOW;
+				boolean flag2 = CrossbowItem.isCharged(itemStackOff);
 				if (flag3 && flag) {
 					bipedmodel$armpose = BipedModel.ArmPose.CROSSBOW_HOLD;
 				}
 
-				if (flag1 && flag2 && p_217766_2_.getItem().getUseAction(p_217766_2_) == UseAction.NONE) {
+				if (flag1 && flag2 && itemStackMain.getItem().getUseAction(itemStackMain) == UseAction.NONE) {
 					bipedmodel$armpose = BipedModel.ArmPose.CROSSBOW_HOLD;
 				}
 			}

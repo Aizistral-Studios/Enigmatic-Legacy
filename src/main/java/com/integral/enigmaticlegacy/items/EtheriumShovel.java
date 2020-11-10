@@ -48,6 +48,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 
+import net.minecraft.item.Item.Properties;
+
 public class EtheriumShovel extends ItemBaseTool implements IMultiblockMiningTool {
 	public static Omniconfig.IntParameter miningRadius;
 	public static Omniconfig.IntParameter miningDepth;
@@ -78,7 +80,7 @@ public class EtheriumShovel extends ItemBaseTool implements IMultiblockMiningToo
 				.getDefaultProperties().defaultMaxDamage((int) (EnigmaticMaterials.ETHERIUM.getMaxUses() * 1.5))
 				.addToolType(ToolType.SHOVEL, EnigmaticMaterials.ETHERIUM.getHarvestLevel())
 				.rarity(Rarity.RARE)
-				.isBurnable());
+				.isImmuneToFire());
 
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_shovel"));
 

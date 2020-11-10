@@ -872,7 +872,7 @@ public class EnigmaticEventHandler {
 		if (event.getEntityLiving() instanceof ServerPlayerEntity) {
 			ServerPlayerEntity player = (ServerPlayerEntity) event.getEntityLiving();
 
-			if (SuperpositionHandler.hasItem(player, cursedStone) && player.world.func_234923_W_() == proxy.getNetherKey()) {
+			if (SuperpositionHandler.hasItem(player, cursedStone) && player.world.getDimensionKey() == proxy.getNetherKey()) {
 				BlockPos deathPos = player.getPosition();
 
 				if (this.isThereLava(player.world, deathPos)) {
@@ -1027,7 +1027,7 @@ public class EnigmaticEventHandler {
 							((DamagingProjectileEntity) arrow).accelerationZ = -((DamagingProjectileEntity) arrow).accelerationZ;
 						}
 
-						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 64.0D, player.world.func_234923_W_())), new PacketForceArrowRotations(arrow.getEntityId(), arrow.rotationYaw, arrow.rotationPitch, arrow.getMotion().x, arrow.getMotion().y, arrow.getMotion().z, arrow.getPosX(), arrow.getPosY(), arrow.getPosZ()));
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 64.0D, player.world.getDimensionKey())), new PacketForceArrowRotations(arrow.getEntityId(), arrow.rotationYaw, arrow.rotationPitch, arrow.getMotion().x, arrow.getMotion().y, arrow.getMotion().z, arrow.getPosX(), arrow.getPosY(), arrow.getPosZ()));
 
 						player.world.playSound(null, player.getPosition(), EnigmaticLegacy.DEFLECT, SoundCategory.PLAYERS, 1.0F, 0.95F + (float) (Math.random() * 0.1D));
 					}
@@ -1084,7 +1084,7 @@ public class EnigmaticEventHandler {
 						arrow.remove();
 						arrow.forceSetPosition(0, 0, 0);
 
-						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 64.0D, player.world.func_234923_W_())), new PacketForceArrowRotations(arrow.getEntityId(), arrow.rotationYaw, arrow.rotationPitch, arrow.getMotion().x, arrow.getMotion().y, arrow.getMotion().z));
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 64.0D, player.world.getDimensionKey())), new PacketForceArrowRotations(arrow.getEntityId(), arrow.rotationYaw, arrow.rotationPitch, arrow.getMotion().x, arrow.getMotion().y, arrow.getMotion().z));
 
 						//player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDER_PEARL_THROW, SoundCategory.PLAYERS, 1.0F, 0.95F + (float) (Math.random() * 0.1D));
 						player.world.playSound(null, player.getPosition(), EnigmaticLegacy.DEFLECT, SoundCategory.PLAYERS, 1.0F, 0.95F + (float) (Math.random() * 0.1D));
@@ -1157,7 +1157,7 @@ public class EnigmaticEventHandler {
 
 						if (data.getFireImmunityTimer() == 0 && !player.world.isRemote) {
 							player.world.playSound(null, player.getPosition(), SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.PLAYERS, 1.0F, 0.5F + (theySeeMeRollin.nextFloat() * 0.5F));
-							EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 32, player.world.func_234923_W_())), new PacketWitherParticles(player.getPosX(), player.getPosYHeight(0.25D), player.getPosZ(), 8, false, 1));
+							EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 32, player.world.getDimensionKey())), new PacketWitherParticles(player.getPosX(), player.getPosYHeight(0.25D), player.getPosZ(), 8, false, 1));
 						}
 
 						data.setFireImmunityTimer(data.getFireImmunityTimer()+200);
@@ -1175,17 +1175,17 @@ public class EnigmaticEventHandler {
 
 			if (player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == EnigmaticLegacy.extradimensionalEye)
 				if (ItemNBTHelper.verifyExistance(player.getHeldItemMainhand(), "BoundDimension"))
-					if (ItemNBTHelper.getString(player.getHeldItemMainhand(), "BoundDimension", "minecraft:overworld").equals(event.getEntityLiving().world.func_234923_W_().func_240901_a_().toString())) {
+					if (ItemNBTHelper.getString(player.getHeldItemMainhand(), "BoundDimension", "minecraft:overworld").equals(event.getEntityLiving().world.getDimensionKey().getLocation().toString())) {
 						event.setCanceled(true);
 						ItemStack stack = player.getHeldItemMainhand();
 
-						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntityLiving().getPosX(), event.getEntityLiving().getPosY(), event.getEntityLiving().getPosZ(), 128, event.getEntityLiving().world.func_234923_W_())), new PacketPortalParticles(event.getEntityLiving().getPosX(), event.getEntityLiving().getPosY() + (event.getEntityLiving().getHeight() / 2), event.getEntityLiving().getPosZ(), 96, 1.5D, false));
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntityLiving().getPosX(), event.getEntityLiving().getPosY(), event.getEntityLiving().getPosZ(), 128, event.getEntityLiving().world.getDimensionKey())), new PacketPortalParticles(event.getEntityLiving().getPosX(), event.getEntityLiving().getPosY() + (event.getEntityLiving().getHeight() / 2), event.getEntityLiving().getPosZ(), 96, 1.5D, false));
 
 						event.getEntityLiving().world.playSound(null, event.getEntityLiving().getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 						event.getEntityLiving().setPositionAndUpdate(ItemNBTHelper.getDouble(stack, "BoundX", 0D), ItemNBTHelper.getDouble(stack, "BoundY", 0D), ItemNBTHelper.getDouble(stack, "BoundZ", 0D));
 						event.getEntityLiving().world.playSound(null, event.getEntityLiving().getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
-						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntityLiving().getPosX(), event.getEntityLiving().getPosY(), event.getEntityLiving().getPosZ(), 128, event.getEntityLiving().world.func_234923_W_())), new PacketRecallParticles(event.getEntityLiving().getPosX(), event.getEntityLiving().getPosY() + (event.getEntityLiving().getHeight() / 2), event.getEntityLiving().getPosZ(), 48, false));
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntityLiving().getPosX(), event.getEntityLiving().getPosY(), event.getEntityLiving().getPosZ(), 128, event.getEntityLiving().world.getDimensionKey())), new PacketRecallParticles(event.getEntityLiving().getPosX(), event.getEntityLiving().getPosY() + (event.getEntityLiving().getHeight() / 2), event.getEntityLiving().getPosZ(), 48, false));
 
 						if (!player.abilities.isCreativeMode) {
 							stack.shrink(1);
@@ -1560,8 +1560,8 @@ public class EnigmaticEventHandler {
 			//((PiglinEntity)entity).goalSelector.addGoal(3, new AvoidEntityGoal<>((CreatureEntity)entity, PlayerEntity.class, (targetEntity) -> targetEntity instanceof PlayerEntity && SuperpositionHandler.hasAntiInsectAcknowledgement((PlayerEntity)targetEntity), 6, 1, 1.3, EntityPredicates.CAN_AI_TARGET::test));
 
 			/*
-			((PiglinEntity)entity).getBrain().func_233698_a_(Activity.CORE, 0, ImmutableList.<Task<? super PiglinEntity>>of(new ForgetAttackTargetTask<>(AbstractPiglinEntity::func_242337_eM, (piglin) -> {
-				Optional<LivingEntity> optional = BrainUtil.func_233864_a_(((PiglinEntity)entity), MemoryModuleType.ANGRY_AT);
+			((PiglinEntity)entity).getBrain().registerActivity(Activity.CORE, 0, ImmutableList.<Task<? super PiglinEntity>>of(new ForgetAttackTargetTask<>(AbstractPiglinEntity::func_242337_eM, (piglin) -> {
+				Optional<LivingEntity> optional = BrainUtil.getTargetFromMemory(((PiglinEntity)entity), MemoryModuleType.ANGRY_AT);
 				Optional<PlayerEntity> optional2 = piglin.getBrain().getMemory(MemoryModuleType.NEAREST_TARGETABLE_PLAYER_NOT_WEARING_GOLD);
 				if (optional.isPresent())
 					return optional;
@@ -1611,7 +1611,7 @@ public class EnigmaticEventHandler {
 
 			if (hadEscapeScroll) {
 				player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 128, player.world.func_234923_W_())), new PacketPortalParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 100, 1.25F, false));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 128, player.world.getDimensionKey())), new PacketPortalParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 100, 1.25F, false));
 
 
 
@@ -1626,7 +1626,7 @@ public class EnigmaticEventHandler {
 				event.getDrops().clear();
 
 				dimPoint.world.playSound(null, new BlockPos(dimPoint.posX, dimPoint.posY, dimPoint.posZ), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(dimPoint.posX, dimPoint.posY, dimPoint.posZ, 128, dimPoint.world.func_234923_W_())), new PacketRecallParticles(dimPoint.posX, dimPoint.posY, dimPoint.posZ, 48, false));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(dimPoint.posX, dimPoint.posY, dimPoint.posZ, 128, dimPoint.world.getDimensionKey())), new PacketRecallParticles(dimPoint.posX, dimPoint.posY, dimPoint.posZ, 48, false));
 			}
 
 			if (this.hadEnigmaticAmulet(player) && !event.getDrops().isEmpty() && EnigmaticLegacy.enigmaticAmulet.isVesselEnabled()) {
@@ -1932,7 +1932,7 @@ public class EnigmaticEventHandler {
 
 			LootTable modified = event.getTable();
 
-			if (!event.getName().equals(LootTables.field_237380_L_)) {
+			if (!event.getName().equals(LootTables.BASTION_TREASURE)) {
 				modified.addPool(epic);
 			}
 

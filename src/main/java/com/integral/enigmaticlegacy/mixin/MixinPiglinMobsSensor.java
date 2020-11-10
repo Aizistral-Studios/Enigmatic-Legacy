@@ -39,7 +39,7 @@ public class MixinPiglinMobsSensor {
 					if (livingentity instanceof PlayerEntity) {
 						PlayerEntity playerentity = (PlayerEntity)livingentity;
 
-						if (EntityPredicates.field_233583_f_.test(livingentity) &&
+						if (EntityPredicates.CAN_HOSTILE_AI_TARGET.test(livingentity) &&
 								!PiglinTasks.func_234460_a_(playerentity) &&
 								!SuperpositionHandler.hasCurio(playerentity, EnigmaticLegacy.gemRing)) {
 

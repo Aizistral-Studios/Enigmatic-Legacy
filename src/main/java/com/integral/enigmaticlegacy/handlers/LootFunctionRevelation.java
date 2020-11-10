@@ -21,8 +21,8 @@ public class LootFunctionRevelation implements ILootFunction {
 	}
 
 	@Override
-	public LootFunctionType func_230425_b_() {
-		//return LootFunctionManager.field_237430_c_;
+	public LootFunctionType getFunctionType() {
+		//return LootFunctionManager.ENCHANT_WITH_LEVELS;
 		EnigmaticLegacy.enigmaticLogger.info("Substituting LootFunctionType with null...");
 
 		try {

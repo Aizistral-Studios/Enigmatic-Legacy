@@ -114,8 +114,8 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 	* Explosion resistance of a block relative to this entity
 	*/
 	@Override
-	public float getExplosionResistance(Explosion explosionIn, IBlockReader worldIn, BlockPos pos, BlockState blockStateIn, FluidState p_180428_5_, float p_180428_6_) {
-		return this.isSkullInvulnerable() && !BlockTags.WITHER_IMMUNE.contains(blockStateIn.getBlock()) ? Math.min(0.8F, p_180428_6_) : p_180428_6_;
+	public float getExplosionResistance(Explosion explosionIn, IBlockReader worldIn, BlockPos pos, BlockState blockStateIn, FluidState fluidState, float explosionPower) {
+		return this.isSkullInvulnerable() && !BlockTags.WITHER_IMMUNE.contains(blockStateIn.getBlock()) ? Math.min(0.8F, explosionPower) : explosionPower;
 	}
 	
 
@@ -241,14 +241,14 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 				explosion.doExplosionA();
 				explosion.doExplosionB(true);
 
-				for(ServerPlayerEntity serverplayerentity : this.world.getServer().getWorld(this.world.func_234923_W_()).getPlayers()) {
+				for(ServerPlayerEntity serverplayerentity : this.world.getServer().getWorld(this.world.getDimensionKey()).getPlayers()) {
 			         if (serverplayerentity.getDistanceSq(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z) < 4096.0D) {
 			        	 serverplayerentity.connection.sendPacket(new SExplosionPacket(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z, explosionRadius, explosion.getAffectedBlockPositions(), explosion.getPlayerKnockbackMap().get(serverplayerentity)));
 			         }
 			      }
 			}
 
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.func_234923_W_())), new PacketWitherParticles(this.getPosX(), this.getPosY() + (this.getHeight() / 2), this.getPosZ(), this.isSkullInvulnerable() ? 20 : 16, false));
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.getDimensionKey())), new PacketWitherParticles(this.getPosX(), this.getPosY() + (this.getHeight() / 2), this.getPosZ(), this.isSkullInvulnerable() ? 20 : 16, false));
 
 			this.remove();
 		}

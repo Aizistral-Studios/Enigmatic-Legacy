@@ -28,6 +28,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import net.minecraft.item.Item.Properties;
+
 public class HeavenScroll extends ItemBaseCurio {
 	public static Omniconfig.DoubleParameter xpCostModifier;
 

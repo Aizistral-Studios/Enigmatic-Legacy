@@ -85,7 +85,7 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 			AbstractPiglinEntity.class, GuardianEntity.class);
 
 	public GuardianHeart() {
-		super(getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isBurnable());
+		super(getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isImmuneToFire());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "guardian_heart"));
 	}
 
@@ -158,7 +158,7 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 
 						if (player instanceof ServerPlayerEntity) {
 							ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-							EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(theOne.getPosX(), theOne.getPosY(), theOne.getPosZ(), 64, theOne.world.func_234923_W_())), new PacketGenericParticleEffect(theOne.getPosX(), theOne.getPosYEye(), theOne.getPosZ(), 0, false, Effect.GUARDIAN_CURSE));
+							EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(theOne.getPosX(), theOne.getPosY(), theOne.getPosZ(), 64, theOne.world.getDimensionKey())), new PacketGenericParticleEffect(theOne.getPosX(), theOne.getPosYEye(), theOne.getPosZ(), 0, false, Effect.GUARDIAN_CURSE));
 						}
 
 						player.getCooldownTracker().setCooldown(this, abilityCooldown.getValue());

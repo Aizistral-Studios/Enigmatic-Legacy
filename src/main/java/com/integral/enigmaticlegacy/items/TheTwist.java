@@ -52,7 +52,7 @@ public class TheTwist extends TheAcknowledgment implements ICursed {
 	}
 
 	public TheTwist() {
-		super(getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isBurnable(),
+		super(getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isImmuneToFire(),
 				"the_twist", attackDamage.getValue(), attackSpeed.getValue());
 	}
 

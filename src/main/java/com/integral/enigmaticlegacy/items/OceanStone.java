@@ -148,7 +148,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 		if (SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
-		if (!player.world.func_234923_W_().func_240901_a_().toString().equals("minecraft:the_end") && !player.world.func_234923_W_().func_240901_a_().toString().equals("minecraft:the_nether"))
+		if (!player.world.getDimensionKey().getLocation().toString().equals("minecraft:the_end") && !player.world.getDimensionKey().getLocation().toString().equals("minecraft:the_nether"))
 			if (!world.getWorldInfo().isThundering()) {
 				boolean paybackReceived = false;
 				/*
@@ -174,7 +174,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 
 						 serverworld.func_241113_a_(0, thunderstormTime, true, true);
 						 /*
-							info.func_230396_g_(p_230396_1_);
+							info.setWanderingTraderSpawnDelay(delay);
 							info.setRaining(true);
 							info.setThundering(true);
 							info.setRainTime(thunderstormTime);

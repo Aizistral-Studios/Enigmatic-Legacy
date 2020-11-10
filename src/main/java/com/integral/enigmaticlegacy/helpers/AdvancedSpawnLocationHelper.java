@@ -37,11 +37,11 @@ public class AdvancedSpawnLocationHelper {
 	}
 
 	public static void fuckBackToSpawn(ServerWorld worldIn, ServerPlayerEntity playerIn) {
-		BlockPos blockpos = worldIn.func_241135_u_();
+		BlockPos blockpos = worldIn.getSpawnPoint();
 
 		playerIn.setPositionAndUpdate(blockpos.getX() + 0.5, blockpos.getY(), blockpos.getZ() + 0.5);
 
-		if (worldIn.func_230315_m_().hasSkyLight() && worldIn.getServer().func_240793_aU_().getGameType() != GameType.ADVENTURE) {
+		if (worldIn.getDimensionType().hasSkyLight() && worldIn.getServer().getServerConfiguration().getGameType() != GameType.ADVENTURE) {
 			int i = Math.max(0, worldIn.getServer().getSpawnRadius(worldIn));
 			int j = MathHelper.floor(worldIn.getWorldBorder().getClosestDistance(blockpos.getX(), blockpos.getZ()));
 			if (j < i) {
@@ -105,8 +105,8 @@ public class AdvancedSpawnLocationHelper {
 	protected static BlockPos func_241092_a_(ServerWorld p_241092_0_, int p_241092_1_, int p_241092_2_, boolean p_241092_3_) {
 		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(p_241092_1_, 0, p_241092_2_);
 		Biome biome = p_241092_0_.getBiome(blockpos$mutable);
-		boolean flag = p_241092_0_.func_230315_m_().func_236037_d_();
-		BlockState blockstate = biome.func_242440_e().func_242502_e().getTop();
+		boolean flag = p_241092_0_.getDimensionType().getHasCeiling();
+		BlockState blockstate = biome.getGenerationSettings().getSurfaceBuilderConfig().getTop();
 		if (p_241092_3_ && !blockstate.getBlock().isIn(BlockTags.VALID_SPAWN))
 			return null;
 		else {

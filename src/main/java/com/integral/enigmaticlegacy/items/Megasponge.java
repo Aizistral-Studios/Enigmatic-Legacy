@@ -162,7 +162,7 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 						doomedWaterBlocks.clear();
 
 						player.world.playSound(null, player.getPosition(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 64, player.world.func_234923_W_())), new PacketPortalParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 40, 1.0D, false));
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 64, player.world.getDimensionKey())), new PacketPortalParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 40, 1.0D, false));
 						player.getCooldownTracker().setCooldown(this, 20);
 
 					}

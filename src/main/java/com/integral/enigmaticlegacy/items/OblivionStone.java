@@ -68,7 +68,7 @@ public class OblivionStone extends ItemBase implements IVanishable {
 	}
 
 	public OblivionStone() {
-		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.RARE).isBurnable());
+		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.RARE).isImmuneToFire());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "oblivion_stone"));
 	}
 

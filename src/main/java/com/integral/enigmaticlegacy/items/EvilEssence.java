@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class EvilEssence extends ItemBase implements ICursed {
 
 	public EvilEssence() {
-		super(getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(8).isBurnable());
+		super(getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(8).isImmuneToFire());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "evil_essence"));
 	}
 

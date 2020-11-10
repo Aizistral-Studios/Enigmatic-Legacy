@@ -48,6 +48,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
+
 public class CursedRing extends ItemBaseCurio {
 	public static Omniconfig.PerhapsParameter painMultiplier;
 	public static Omniconfig.PerhapsParameter monsterDamageDebuff;

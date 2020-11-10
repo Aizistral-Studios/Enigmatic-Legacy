@@ -91,7 +91,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 	public DamageSource theDarkness;
 
 	public VoidPearl() {
-		super(ItemSpellstoneCurio.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isBurnable());
+		super(ItemSpellstoneCurio.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isImmuneToFire());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "void_pearl"));
 
 		this.immunityList.add(DamageSource.DROWN.damageType);

@@ -19,6 +19,8 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 
+import net.minecraft.block.AbstractBlock.Properties;
+
 public class BlockBigLamp extends LanternBlock {
 	
 	protected final VoxelShape sittingLantern = VoxelShapes.or(Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D));

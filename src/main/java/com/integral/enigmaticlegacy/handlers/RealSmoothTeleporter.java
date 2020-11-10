@@ -32,8 +32,8 @@ public class RealSmoothTeleporter implements ITeleporter {
 	}
 
 	private void fireTriggers(ServerWorld p_213846_1_, ServerPlayerEntity player) {
-		RegistryKey<World> registrykey = p_213846_1_.func_234923_W_();
-		RegistryKey<World> registrykey1 = player.world.func_234923_W_();
+		RegistryKey<World> registrykey = p_213846_1_.getDimensionKey();
+		RegistryKey<World> registrykey1 = player.world.getDimensionKey();
 		CriteriaTriggers.CHANGED_DIMENSION.testForAll(player, registrykey, registrykey1);
 	}
 

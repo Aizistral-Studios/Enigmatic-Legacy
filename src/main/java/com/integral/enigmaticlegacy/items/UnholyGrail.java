@@ -33,7 +33,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class UnholyGrail extends ItemBase implements IVanishable {
 
 	public UnholyGrail() {
-		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isBurnable());
+		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isImmuneToFire());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "unholy_grail"));
 	}
 

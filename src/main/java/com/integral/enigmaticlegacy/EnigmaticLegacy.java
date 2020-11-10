@@ -187,6 +187,8 @@ import net.minecraftforge.fml.network.simple.SimpleChannel;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
+import net.minecraft.block.AbstractBlock;
+
 @Mod(EnigmaticLegacy.MODID)
 public class EnigmaticLegacy {
 
@@ -386,12 +388,12 @@ public class EnigmaticLegacy {
 		enigmaticHandler = new EnigmaticEventHandler();
 		keybindHandler = new EnigmaticKeybindHandler();
 
-		massiveLamp = new BlockMassiveLamp(Block.Properties.from(Blocks.LANTERN), "massive_lamp");
-		bigLamp = new BlockBigLamp(Block.Properties.from(Blocks.LANTERN), "big_lamp");
-		massiveShroomlamp = new BlockMassiveLamp(Block.Properties.from(Blocks.LANTERN), "massive_shroomlamp");
-		bigShroomlamp = new BlockBigLamp(Block.Properties.from(Blocks.LANTERN), "big_shroomlamp");
-		massiveRedstonelamp = new BlockMassiveLamp(Block.Properties.from(Blocks.LANTERN), "massive_redstonelamp");
-		bigRedstonelamp = new BlockBigLamp(Block.Properties.from(Blocks.LANTERN), "big_redstonelamp");
+		massiveLamp = new BlockMassiveLamp(AbstractBlock.Properties.from(Blocks.LANTERN), "massive_lamp");
+		bigLamp = new BlockBigLamp(AbstractBlock.Properties.from(Blocks.LANTERN), "big_lamp");
+		massiveShroomlamp = new BlockMassiveLamp(AbstractBlock.Properties.from(Blocks.LANTERN), "massive_shroomlamp");
+		bigShroomlamp = new BlockBigLamp(AbstractBlock.Properties.from(Blocks.LANTERN), "big_shroomlamp");
+		massiveRedstonelamp = new BlockMassiveLamp(AbstractBlock.Properties.from(Blocks.LANTERN), "massive_redstonelamp");
+		bigRedstonelamp = new BlockBigLamp(AbstractBlock.Properties.from(Blocks.LANTERN), "big_redstonelamp");
 
 		enigmaticItem = new EnigmaticItem();
 		xpScroll = new XPScroll();

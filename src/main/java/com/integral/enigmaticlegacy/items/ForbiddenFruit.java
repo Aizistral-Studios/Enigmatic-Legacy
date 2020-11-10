@@ -61,7 +61,7 @@ public class ForbiddenFruit extends ItemBaseFood implements IVanishable {
 	}
 
 	public ForbiddenFruit() {
-		super(getDefaultProperties().rarity(Rarity.RARE).isBurnable(), buildDefaultFood());
+		super(getDefaultProperties().rarity(Rarity.RARE).isImmuneToFire(), buildDefaultFood());
 
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "forbidden_fruit"));
 	}

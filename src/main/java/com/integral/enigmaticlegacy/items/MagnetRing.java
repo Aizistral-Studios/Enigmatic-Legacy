@@ -29,6 +29,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import net.minecraft.item.Item.Properties;
+
 public class MagnetRing extends ItemBaseCurio {
 	public static Omniconfig.IntParameter range;
 	public static Omniconfig.BooleanParameter invertShift;

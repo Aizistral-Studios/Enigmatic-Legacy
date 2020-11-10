@@ -40,7 +40,7 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, IVanisha
 	public HashMap<PlayerEntity, Multimap<Attribute, AttributeModifier>> attributeDispatcher = new HashMap<PlayerEntity, Multimap<Attribute, AttributeModifier>>();
 
 	public SoulCrystal() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isBurnable().group(EnigmaticLegacy.enigmaticTab));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isImmuneToFire().group(EnigmaticLegacy.enigmaticTab));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "soul_crystal"));
 	}
 
@@ -130,7 +130,7 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, IVanisha
 		if (this.retrieveSoulFromCrystal(player, stack)) {
 			Vector3 playerCenter = Vector3.fromEntityCenter(player);
 			if (!player.world.isRemote) {
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(playerCenter.x, playerCenter.y, playerCenter.z, 64, player.world.func_234923_W_())), new PacketRecallParticles(playerCenter.x, playerCenter.y, playerCenter.z, 48, false));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(playerCenter.x, playerCenter.y, playerCenter.z, 64, player.world.getDimensionKey())), new PacketRecallParticles(playerCenter.x, playerCenter.y, playerCenter.z, 48, false));
 			}
 
 			player.swingArm(hand);

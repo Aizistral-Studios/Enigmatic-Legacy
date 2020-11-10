@@ -93,7 +93,7 @@ public class SuperMagnetRing extends MagnetRing {
 				}
 
 				/*
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(item.getPosX(), item.getPosY(), item.getPosZ(), 24, item.world.func_234923_W_())), new PacketPortalParticles(item.getPosX(), item.getPosY() + (item.getHeight() / 2), item.getPosZ(), 24, 0.75D, true));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(item.getPosX(), item.getPosY(), item.getPosZ(), 24, item.world.getDimensionKey())), new PacketPortalParticles(item.getPosX(), item.getPosY() + (item.getHeight() / 2), item.getPosZ(), 24, 0.75D, true));
 
 				if (ConfigHandler.SUPER_MAGNET_RING_SOUND.getValue())
 					item.world.playSound(null, item.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));

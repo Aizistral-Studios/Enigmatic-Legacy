@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class EnchanterPearl extends ItemBase implements ICursed {
 
 	public EnchanterPearl() {
-		super(getDefaultProperties().rarity(Rarity.EPIC).isBurnable().maxStackSize(1));
+		super(getDefaultProperties().rarity(Rarity.EPIC).isImmuneToFire().maxStackSize(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enchanter_pearl"));
 	}
 

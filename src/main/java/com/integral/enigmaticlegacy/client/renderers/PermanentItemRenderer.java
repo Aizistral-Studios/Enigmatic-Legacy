@@ -78,7 +78,7 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 		float f1 = MathHelper.sin((entityIn.getAge() + partialTicks) / 10.0F + entityIn.hoverStart) * 0.1F + 0.1F;
 		float f2 = this.shouldBob() ? ibakedmodel.getItemCameraTransforms().getTransform(ItemCameraTransforms.TransformType.GROUND).scale.getY() : 0;
 		matrixStackIn.translate(0.0D, f1 + 0.25F * f2, 0.0D);
-		float f3 = entityIn.func_234272_a_(partialTicks);
+		float f3 = entityIn.getItemHover(partialTicks);
 		matrixStackIn.rotate(Vector3f.YP.rotation(f3));
 		if (!flag) {
 			float f7 = -0.0F * (j - 1) * 0.5F;

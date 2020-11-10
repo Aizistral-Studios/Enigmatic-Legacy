@@ -20,6 +20,8 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 
+import net.minecraft.item.Item.Properties;
+
 @SuppressWarnings("deprecation")
 public abstract class ItemBaseArmor extends ArmorItem {
 

@@ -117,7 +117,7 @@ public class MiningCharm extends ItemBaseCurio {
 				PlayerEntity player = (PlayerEntity) living;
 				ItemStack stack = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.miningCharm);
 
-				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) && player.getPosY() < 50 && !player.world.func_234923_W_().func_240901_a_().toString().equals("minecraft:the_nether") && !player.world.func_234923_W_().func_240901_a_().toString().equals("minecraft:the_end") && !player.areEyesInFluid(FluidTags.WATER) && !player.world.canBlockSeeSky(player.getPosition()) && player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0) <= 8) {
+				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) && player.getPosY() < 50 && !player.world.getDimensionKey().getLocation().toString().equals("minecraft:the_nether") && !player.world.getDimensionKey().getLocation().toString().equals("minecraft:the_end") && !player.areEyesInFluid(FluidTags.WATER) && !player.world.canBlockSeeSky(player.getPosition()) && player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0) <= 8) {
 
 					player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
 				} else {

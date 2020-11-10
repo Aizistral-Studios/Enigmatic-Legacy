@@ -60,7 +60,7 @@ public class EtheriumAxe extends AxeItem implements IMultiblockMiningTool {
 	public Set<Material> effectiveMaterials;
 
 	public EtheriumAxe() {
-		super(EnigmaticMaterials.ETHERIUM, 10, -3.2F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).isBurnable());
+		super(EnigmaticMaterials.ETHERIUM, 10, -3.2F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).isImmuneToFire());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_axe"));
 
 		this.effectiveMaterials = Sets.newHashSet();

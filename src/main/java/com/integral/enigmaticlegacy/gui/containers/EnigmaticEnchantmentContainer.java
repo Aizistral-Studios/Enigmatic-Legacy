@@ -39,7 +39,7 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 		}
 	};
 
-	private IWorldPosCallable field_217006_g;
+	private IWorldPosCallable worldPosCallable;
 	private Random rand = new Random();
 	private IntReferenceHolder xpSeed = IntReferenceHolder.single();
 	public int[] enchantLevels = new int[3];
@@ -60,7 +60,7 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 	private EnigmaticEnchantmentContainer(int id, PlayerInventory playerInventory, IWorldPosCallable pos) {
 		super(id, playerInventory, pos);
 
-		this.field_217006_g = pos;
+		this.worldPosCallable = pos;
 		this.addSlot(new Slot(this.tableInventory, 0, 15, 47) {
 			/**
 			 * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
@@ -116,7 +116,7 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 		if (inventoryIn == this.tableInventory) {
 			ItemStack itemstack = inventoryIn.getStackInSlot(0);
 			if (!itemstack.isEmpty() && itemstack.isEnchantable()) {
-				this.field_217006_g.consume((p_217002_2_, p_217002_3_) -> {
+				this.worldPosCallable.consume((p_217002_2_, p_217002_3_) -> {
 					int power = 0;
 
 					for (int k = -1; k <= 1; ++k) {
@@ -187,7 +187,7 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 		else if (this.enchantLevels[id] <= 0 || itemstack.isEmpty() || (playerIn.experienceLevel < i || playerIn.experienceLevel < this.enchantLevels[id]) && !playerIn.abilities.isCreativeMode)
 			return false;
 		else {
-			this.field_217006_g.consume((p_217003_6_, p_217003_7_) -> {
+			this.worldPosCallable.consume((p_217003_6_, p_217003_7_) -> {
 				ItemStack itemstack2 = itemstack;
 				List<EnchantmentData> list = this.getEnchantmentList(itemstack, id, this.enchantLevels[id]);
 				if (!list.isEmpty()) {
@@ -265,7 +265,7 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 	@Override
 	public void onContainerClosed(PlayerEntity playerIn) {
 		super.onContainerClosed(playerIn);
-		this.field_217006_g.consume((p_217004_2_, p_217004_3_) -> {
+		this.worldPosCallable.consume((p_217004_2_, p_217004_3_) -> {
 			this.clearContainer(playerIn, playerIn.world, this.tableInventory);
 		});
 	}
@@ -275,7 +275,7 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 	 */
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
-		return Container.isWithinUsableDistance(this.field_217006_g, playerIn, Blocks.ENCHANTING_TABLE);
+		return Container.isWithinUsableDistance(this.worldPosCallable, playerIn, Blocks.ENCHANTING_TABLE);
 	}
 
 	/**

@@ -73,7 +73,7 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 				.addToolType(ToolType.SHOVEL, EnigmaticMaterials.ETHERIUM.getHarvestLevel())
 				.defaultMaxDamage(4000)
 				.rarity(Rarity.EPIC)
-				.isBurnable());
+				.isImmuneToFire());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_breaker"));
 
 		this.effectiveMaterials.addAll(EnigmaticLegacy.etheriumPickaxe.effectiveMaterials);
@@ -102,7 +102,7 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 	}
 
 	public void spawnFlameParticles(World world, BlockPos pos) {
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 128, world.func_234923_W_())), new PacketFlameParticles(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 18, true));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 128, world.getDimensionKey())), new PacketFlameParticles(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 18, true));
 	}
 
 	@Override
