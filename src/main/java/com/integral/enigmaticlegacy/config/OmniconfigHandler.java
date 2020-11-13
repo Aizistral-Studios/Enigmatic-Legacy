@@ -91,6 +91,8 @@ public class OmniconfigHandler {
 				.getEnum("testEnum", AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, AnchorPoint.CENTER, AnchorPoint.TOP);
 		 */
 
+
+		// TODO Gotta remove this
 		enableWorldNameRandomizer = client
 				.comment("Whether or not integrated World Name Randomizer should be enabled.")
 				.clientOnly()
