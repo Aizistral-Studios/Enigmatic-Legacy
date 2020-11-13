@@ -162,6 +162,13 @@
 	"enchantment.enigmaticlegacy.torrent": "Torrent",
 	"enchantment.enigmaticlegacy.wrath": "Wrath",
 	"enchantment.enigmaticlegacy.slayer": "Slayer",
+	
+	"enchantment.enigmaticlegacy.nemesis_curse.desc": "Deals 35% of damage back to you for each melee attack.",
+	"enchantment.enigmaticlegacy.sharpshooter.desc": "Increased and less random arrow damage.",
+	"enchantment.enigmaticlegacy.ceaseless.desc": "Can shoot basic arrows without consuming ammunition.",
+	"enchantment.enigmaticlegacy.torrent.desc": "Increased damage against water sensitive of fire immune creatures.",
+	"enchantment.enigmaticlegacy.wrath.desc": "Increased damage against everything.",
+	"enchantment.enigmaticlegacy.slayer.desc": "Increased damage against monsters.",
 
 	"curios.identifier.scroll": "Arcane Scroll",
 	"curios.identifier.spellstone": "Spellstone",

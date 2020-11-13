@@ -15,6 +15,7 @@ import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.packets.PacketSyncOptions;
 import com.integral.omniconfig.wrappers.Omniconfig.BooleanParameter;
 import com.integral.omniconfig.wrappers.Omniconfig.DoubleParameter;
+import com.integral.omniconfig.wrappers.Omniconfig.EnumParameter;
 import com.integral.omniconfig.wrappers.Omniconfig.GenericParameter;
 import com.integral.omniconfig.wrappers.Omniconfig.IntParameter;
 import com.integral.omniconfig.wrappers.Omniconfig.PerhapsParameter;
@@ -214,9 +215,9 @@ public class OmniconfigWrapper {
 					boolean worked = syncWrapperToPlayer(this, player);
 
 					if (worked) {
-						EnigmaticLegacy.enigmaticLogger.info("Successfully resynchronized file " + config.getConfigFile().getName() + " to " + player.getGameProfile().getName());
+						EnigmaticLegacy.logger.info("Successfully resynchronized file " + config.getConfigFile().getName() + " to " + player.getGameProfile().getName());
 					} else {
-						EnigmaticLegacy.enigmaticLogger.info("File " + config.getConfigFile().getName() + " was not resynchronized to " + player.getGameProfile().getName() + ", since this integrated server is hosted by them.");
+						EnigmaticLegacy.logger.info("File " + config.getConfigFile().getName() + " was not resynchronized to " + player.getGameProfile().getName() + ", since this integrated server is hosted by them.");
 					}
 				}
 			});
@@ -309,13 +310,26 @@ public class OmniconfigWrapper {
 		return this;
 	}
 
-	public BooleanParameter getBoolean(String name, boolean defaultValue) {
-		BooleanParameter returned = new BooleanParameter(defaultValue);
+	public StringParameter getString(String name, String defaultValue) {
+		return this.getString(name, defaultValue, (String[])null);
+	}
+
+	public <V extends Enum<V>> EnumParameter<V> getEnum(String name, V defaultValue) {
+		return this.getEnum(name, defaultValue, (V[])null);
+	}
+
+	@SuppressWarnings("unchecked")
+	public <V extends Enum<V>> EnumParameter<V> getEnum(String name, V defaultValue, V... validValues) {
+		EnumParameter<V> returned = new EnumParameter<>(defaultValue);
 		returned.setName(this.optionPrefix + name);
 		returned.setCategory(this.currentCategory);
 		returned.setComment(this.currentComment);
 		returned.setSynchronized(this.currentSynchronized);
 		returned.setClientOnly(this.currentClientOnly);
+
+		if (validValues != null && validValues.length > 0) {
+			returned.setValidValues(validValues);
+		}
 
 		this.resetOptionStuff();
 
@@ -327,8 +341,30 @@ public class OmniconfigWrapper {
 		return returned;
 	}
 
-	public StringParameter getString(String name, String defaultValue) {
+	public StringParameter getString(String name, String defaultValue, String... validValues) {
 		StringParameter returned = new StringParameter(defaultValue);
+		returned.setName(this.optionPrefix + name);
+		returned.setCategory(this.currentCategory);
+		returned.setComment(this.currentComment);
+		returned.setSynchronized(this.currentSynchronized);
+		returned.setClientOnly(this.currentClientOnly);
+
+		if (validValues != null && validValues.length > 0) {
+			returned.setValidValues(validValues);
+		}
+
+		this.resetOptionStuff();
+
+		this.invokationMap.put(returned.getId(), returned);
+		if (!this.deferInvokation) {
+			returned.invoke(this.config);
+		}
+
+		return returned;
+	}
+
+	public BooleanParameter getBoolean(String name, boolean defaultValue) {
+		BooleanParameter returned = new BooleanParameter(defaultValue);
 		returned.setName(this.optionPrefix + name);
 		returned.setCategory(this.currentCategory);
 		returned.setComment(this.currentComment);
@@ -419,7 +455,7 @@ public class OmniconfigWrapper {
 
 	public static boolean syncAllToPlayer(ServerPlayerEntity player) {
 		if (SuperpositionHandler.areWeRemoteServer(player)) {
-			EnigmaticLegacy.enigmaticLogger.info("Synchronizing omniconfig files to " + player.getGameProfile().getName() + "...");
+			EnigmaticLegacy.logger.info("Synchronizing omniconfig files to " + player.getGameProfile().getName() + "...");
 
 			for (OmniconfigWrapper wrapper : wrapperRegistry.values()) {
 				if (!wrapper.config.getSidedType().isSided()) {
@@ -434,7 +470,7 @@ public class OmniconfigWrapper {
 
 	public static boolean syncWrapperToPlayer(OmniconfigWrapper wrapper, ServerPlayerEntity player) {
 		if (SuperpositionHandler.areWeRemoteServer(player)) {
-			EnigmaticLegacy.enigmaticLogger.info("Sending data for " + wrapper.config.getConfigFile().getName());
+			EnigmaticLegacy.logger.info("Sending data for " + wrapper.config.getConfigFile().getName());
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player), new PacketSyncOptions(wrapper));
 			return true;
 		} else

@@ -197,9 +197,9 @@ public class LootGenerator extends ItemBase implements IVanishable {
 						chest.clear();
 					}
 
-					EnigmaticLegacy.enigmaticLogger.info("Estimated generation complete in 32768 instances, results:");
+					EnigmaticLegacy.logger.info("Estimated generation complete in 32768 instances, results:");
 					for (Item theItem : lootMap.keySet()) {
-						EnigmaticLegacy.enigmaticLogger.info("Item: " + theItem.getDisplayName(new ItemStack(theItem)).getString() + ", Amount: " + lootMap.get(theItem));
+						EnigmaticLegacy.logger.info("Item: " + theItem.getDisplayName(new ItemStack(theItem)).getString() + ", Amount: " + lootMap.get(theItem));
 					}
 
 					player.sendMessage(new TranslationTextComponent("message.enigmaticlegacy.gen_sim_complete").mergeStyle(TextFormatting.DARK_PURPLE), player.getUniqueID());

@@ -85,7 +85,7 @@ public class MonsterCharm extends ItemBaseCurio {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living) {
+	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 

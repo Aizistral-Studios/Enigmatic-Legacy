@@ -9,6 +9,8 @@ import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.IPerhaps;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.helpers.OverlayPositionHelper;
+import com.integral.enigmaticlegacy.helpers.OverlayPositionHelper.AnchorPoint;
 import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
@@ -22,6 +24,8 @@ public class OmniconfigHandler {
 
 	public static Omniconfig.IntParameter soulCrystalsMode;
 	public static Omniconfig.IntParameter maxSoulCrystalLoss;
+
+	public static Omniconfig.EnumParameter<AnchorPoint> testEnumParam;
 
 	// Client-Only
 	public static Omniconfig.BooleanParameter enableWorldNameRandomizer;
@@ -79,6 +83,13 @@ public class OmniconfigHandler {
 	private static void loadClient(final OmniconfigWrapper client) {
 		client.loadConfigFile();
 		client.pushCategory("Generic Config", "Some more different stuff");
+
+		/*
+		testEnumParam = client
+				.comment("Test enum option")
+				.clientOnly()
+				.getEnum("testEnum", AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, AnchorPoint.CENTER, AnchorPoint.TOP);
+		 */
 
 		enableWorldNameRandomizer = client
 				.comment("Whether or not integrated World Name Randomizer should be enabled.")

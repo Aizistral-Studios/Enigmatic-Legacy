@@ -27,7 +27,7 @@ public class PacketSyncTransientData {
 	public static void handle(PacketSyncTransientData msg, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 
-			// TODO Syncying to server must have additional checks to prevent exploits.
+			// Syncying to server must have additional checks to prevent exploits.
 			// In current implementation it's just not possible, since no need yet exists.
 
 			if (msg.playerData.getPlayer().world.isRemote) {

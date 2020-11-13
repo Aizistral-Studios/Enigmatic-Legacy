@@ -7,6 +7,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.EnchantmentContainer;
 import net.minecraft.inventory.container.RepairContainer;
 import net.minecraft.inventory.container.Slot;
@@ -33,31 +35,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
-@Mixin(EnchantmentContainer.class)
-public class MixinEnchantmentContainer {
-	/*
-	@Redirect(at = @At("INVOKE"), method = "shadows.apotheosis.ench.table.ApothEnchantContainer.enchantItem(Lnet/minecraft/entity/player/PlayerEntity;I)Z", expect = 0, require = 0, remap = false)
-	public boolean onApotheosisEnchantRedirect(EnchantmentContainer container, PlayerEntity player, int clickedID) {
-		System.out.println("Container instance: " + container.getClass());
-		return false;
-	}
+@Mixin(net.minecraft.inventory.container.EnchantmentContainer.class)
+public abstract class MixinEnchantmentContainer extends Container {
 
-	@Inject(at = @At("INVOKE_ASSIGN"), method = "enchantItem*", cancellable = true, remap = false)
-	private void onApotheosisEnchantInvokeAssign(PlayerEntity player, int clickedID, CallbackInfoReturnable<Boolean> info) {
-		System.out.println("This instance: " + this.getClass());
+	protected MixinEnchantmentContainer(ContainerType<?> type, int id) {
+		super(type, id);
 	}
-
-	@Inject(at = @At("INVOKE"), method = "enchantItem*", cancellable = true, remap = false)
-	private void onApotheosisEnchantInvoke(PlayerEntity player, int clickedID, CallbackInfoReturnable<Boolean> info) {
-		System.out.println("This instance: " + this.getClass());
-	}
-	 */
 
 	@Inject(at = @At("INVOKE"), method = "net.minecraft.inventory.container.EnchantmentContainer.enchantItem(Lnet/minecraft/entity/player/PlayerEntity;I)Z", cancellable = true)
 	private void onEnchantedItem(PlayerEntity player, int clickedID, CallbackInfoReturnable<Boolean> info) {
-
-		System.out.println("This instance: " + this.getClass());
-
 		if (EnchantmentContainer.class.isInstance(this)) {
 			// Evaluating expression promts error assuming incompatible types,
 			// so we need to forget our own class to avoid alerting the compiler
@@ -125,7 +111,7 @@ public class MixinEnchantmentContainer {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	@Inject(at = @At("HEAD"), method = "getLapisAmount", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "net.minecraft.inventory.container.EnchantmentContainer.getLapisAmount()I", cancellable = true)
 	public void onGetLapisAmount(CallbackInfoReturnable<Integer> info) {
 		if (EnchantmentContainer.class.isInstance(this)) {
 			Object forgottenObject = this;

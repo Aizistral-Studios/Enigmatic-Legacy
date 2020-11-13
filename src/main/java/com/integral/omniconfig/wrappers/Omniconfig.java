@@ -4,6 +4,8 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.objects.Perhaps;
 import com.integral.omniconfig.Configuration;
 
+import net.minecraftforge.common.ForgeConfigSpec;
+
 public class Omniconfig {
 
 	public static final int STANDART_INTEGER_LIMIT = 32768;
@@ -64,7 +66,7 @@ public class Omniconfig {
 		}
 
 		protected void logGenericParserError(String value) {
-			EnigmaticLegacy.enigmaticLogger.error("Error when parsing value of '" + this.name + "' in '" + this.category + "': " + value);
+			EnigmaticLegacy.logger.error("Error when parsing value of '" + this.name + "' in '" + this.category + "': " + value);
 		}
 
 		public abstract String valueToString();
@@ -133,11 +135,14 @@ public class Omniconfig {
 	public static class StringParameter extends GenericParameter {
 		private String defaultValue;
 		private String value;
+		private String[] validValues;
 
 		public StringParameter(String defaultValue) {
 			super();
 			this.defaultValue = defaultValue;
 			this.value = this.defaultValue;
+
+			this.validValues = null;
 		}
 
 		public String getDefaultValue() {
@@ -156,11 +161,23 @@ public class Omniconfig {
 			this.value = value;
 		}
 
+		public void setValidValues(String... validValues) {
+			this.validValues = validValues;
+		}
+
+		public String[] getValidValues() {
+			return this.validValues;
+		}
+
 		@Override
 		public StringParameter invoke(Configuration config) {
 			if (!this.isClientOnly() || config.getSidedType() == Configuration.SidedConfigType.CLIENT) {
 				config.pushSynchronized(this.isSynchornized);
-				this.value = config.getString(this.name, this.category, this.defaultValue, this.comment);
+				if (this.validValues == null) {
+					this.value = config.getString(this.name, this.category, this.defaultValue, this.comment);
+				} else {
+					this.value = config.getString(this.name, this.category, this.defaultValue, this.comment, this.validValues);
+				}
 			}
 			return this;
 		}
@@ -405,6 +422,73 @@ public class Omniconfig {
 		@Override
 		public String toString() {
 			return this.valueToString();
+		}
+
+	}
+
+	public static class EnumParameter<T extends Enum<T>> extends GenericParameter {
+		private final Class<T> clazz;
+		private T defaultValue;
+		private T[] validValues;
+		private T value;
+
+		public EnumParameter(T defaultValue) {
+			super();
+			this.clazz = defaultValue.getDeclaringClass();
+			this.defaultValue = defaultValue;
+			this.value = this.defaultValue;
+
+			this.validValues = this.clazz.getEnumConstants();
+		}
+
+		public T getDefaultValue() {
+			return this.defaultValue;
+		}
+
+		public void setDefaultValue(T defaultValue) {
+			this.defaultValue = defaultValue;
+		}
+
+		public T getValue() {
+			return this.value;
+		}
+
+		public void setValue(T value) {
+			this.value = value;
+		}
+
+		@SuppressWarnings("unchecked")
+		public void setValidValues(T... values) {
+			this.validValues = values;
+		}
+
+		public T[] getValidValues() {
+			return this.validValues;
+		}
+
+		@Override
+		public EnumParameter<T> invoke(Configuration config) {
+			// <V extends Enum<V>> ForgeConfigSpec
+			if (!this.isClientOnly() || config.getSidedType() == Configuration.SidedConfigType.CLIENT) {
+				config.pushSynchronized(this.isSynchornized);
+				this.value = config.getEnum(this.name, this.category, this.defaultValue, this.comment, this.validValues);
+			}
+			return this;
+		}
+
+		@Override
+		public String valueToString() {
+			return this.value.toString();
+		}
+
+		@Override
+		public void parseFromString(String value) {
+			this.value = Enum.valueOf(this.clazz, value);
+		}
+
+		@Override
+		public String toString() {
+			return this.value.toString();
 		}
 
 	}

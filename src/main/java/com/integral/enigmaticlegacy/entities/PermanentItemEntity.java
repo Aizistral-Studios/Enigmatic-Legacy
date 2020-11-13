@@ -143,7 +143,7 @@ public class PermanentItemEntity extends Entity {
 			return false;
 
 		if (source.isDamageAbsolute()) {
-			EnigmaticLegacy.enigmaticLogger.warn("[WARN] Attacked permanent item entity with absolute DamageSource: " + source);
+			EnigmaticLegacy.logger.warn("[WARN] Attacked permanent item entity with absolute DamageSource: " + source);
 			this.remove();
 			return true;
 		} else
@@ -153,7 +153,7 @@ public class PermanentItemEntity extends Entity {
 
 	@Override
 	public void remove() {
-		EnigmaticLegacy.enigmaticLogger.warn("[WARN] Removing Permanent Item Entity: " + this);
+		EnigmaticLegacy.logger.warn("[WARN] Removing Permanent Item Entity: " + this);
 		super.remove();
 	}
 
@@ -247,7 +247,7 @@ public class PermanentItemEntity extends Entity {
 				player.onItemPickup(this, i);
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.getDimensionKey())), new PacketHandleItemPickup(player.getEntityId(), this.getEntityId()));
 
-				EnigmaticLegacy.enigmaticLogger.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
+				EnigmaticLegacy.logger.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
 				this.remove();
 				itemstack.setCount(0);
 
@@ -258,7 +258,7 @@ public class PermanentItemEntity extends Entity {
 
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.getDimensionKey())), new PacketHandleItemPickup(player.getEntityId(), this.getEntityId()));
 
-					EnigmaticLegacy.enigmaticLogger.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
+					EnigmaticLegacy.logger.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
 					this.remove();
 					itemstack.setCount(i);
 				}

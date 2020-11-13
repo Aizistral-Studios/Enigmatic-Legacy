@@ -2,6 +2,7 @@ package com.integral.enigmaticlegacy.items;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
@@ -31,8 +32,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
 import net.minecraft.entity.monster.EndermanEntity;
 import net.minecraft.entity.monster.VindicatorEntity;
+import net.minecraft.entity.monster.piglin.AbstractPiglinEntity;
+import net.minecraft.entity.monster.piglin.PiglinEntity;
+import net.minecraft.entity.monster.piglin.PiglinTasks;
 import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -198,13 +203,13 @@ public class CursedRing extends ItemBaseCurio {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living) {
+	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier) {
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier, ItemStack stack) {
 		Multimap<Attribute, AttributeModifier> atrributeMap = ArrayListMultimap.create();
 
 		atrributeMap.put(Attributes.ARMOR, new AttributeModifier(UUID.fromString("457d0ac3-69e4-482f-b636-22e0802da6bd"), "enigmaticlegacy:armor_modifier", -armorDebuff.getValue().asModifier(), AttributeModifier.Operation.MULTIPLY_TOTAL));
@@ -214,30 +219,30 @@ public class CursedRing extends ItemBaseCurio {
 	}
 
 	@Override
-	public boolean showAttributesTooltip(String identifier) {
+	public boolean showAttributesTooltip(String identifier, ItemStack stack) {
 		return false;
 	}
 
 	@Override
-	public boolean canUnequip(String identifier, LivingEntity living) {
+	public boolean canUnequip(String identifier, LivingEntity living, ItemStack stack) {
 		if (living instanceof PlayerEntity && ((PlayerEntity) living).isCreative())
-			return super.canUnequip(identifier, living);
+			return super.canUnequip(identifier, living, stack);
 		else
 			return false;
 	}
 
 	@Override
-	public boolean canRightClickEquip() {
+	public boolean canRightClickEquip(ItemStack stack) {
 		return false;
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity entityLivingBase) {
+	public void onUnequip(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
 		// NO-OP
 	}
 
 	@Override
-	public void onEquip(String identifier, int index, LivingEntity entityLivingBase) {
+	public void onEquip(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
 		// TODO Use Curios trigger for this
 		if (entityLivingBase instanceof ServerPlayerEntity) {
 			CursedRingEquippedTrigger.INSTANCE.trigger((ServerPlayerEntity) entityLivingBase);
@@ -245,7 +250,7 @@ public class CursedRing extends ItemBaseCurio {
 	}
 
 	@Override
-	public DropRule getDropRule(LivingEntity livingEntity) {
+	public DropRule getDropRule(LivingEntity livingEntity, ItemStack stack) {
 		return DropRule.ALWAYS_KEEP;
 	}
 
@@ -259,7 +264,7 @@ public class CursedRing extends ItemBaseCurio {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity livingPlayer) {
+	public void curioTick(String identifier, int index, LivingEntity livingPlayer, ItemStack stack) {
 		if (livingPlayer.world.isRemote || !(livingPlayer instanceof PlayerEntity))
 			return;
 
@@ -281,7 +286,18 @@ public class CursedRing extends ItemBaseCurio {
 		}
 
 		for (LivingEntity checkedEntity : genericMobs) {
-			if (checkedEntity instanceof IAngerable) {
+			if (checkedEntity instanceof PiglinEntity) {
+				PiglinEntity piglin = (PiglinEntity) checkedEntity;
+
+				if (piglin.getAttackTarget() == null || !piglin.getAttackTarget().isAlive()) {
+					if (player.canEntityBeSeen(checkedEntity) || player.getDistance(checkedEntity) <= neutralXRayRange.getValue()) {
+						PiglinTasks.func_234468_a_(piglin, player);
+					} else {
+						continue;
+					}
+				}
+
+			} else if (checkedEntity instanceof IAngerable) {
 				IAngerable neutral = (IAngerable) checkedEntity;
 
 				if (neutral instanceof TameableEntity) {

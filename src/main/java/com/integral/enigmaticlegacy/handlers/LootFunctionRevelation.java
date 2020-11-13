@@ -23,12 +23,12 @@ public class LootFunctionRevelation implements ILootFunction {
 	@Override
 	public LootFunctionType getFunctionType() {
 		//return LootFunctionManager.ENCHANT_WITH_LEVELS;
-		EnigmaticLegacy.enigmaticLogger.info("Substituting LootFunctionType with null...");
+		EnigmaticLegacy.logger.info("Substituting LootFunctionType with null...");
 
 		try {
 			return null;
 		} catch (NullPointerException ex) {
-			EnigmaticLegacy.enigmaticLogger.fatal("I must assume that non-serializable LootFuction thing haven't played out well.");
+			EnigmaticLegacy.logger.fatal("I must assume that non-serializable LootFuction thing haven't played out well.");
 			throw ex;
 		}
 	}

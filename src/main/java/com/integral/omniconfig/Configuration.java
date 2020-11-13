@@ -18,6 +18,7 @@ import java.io.PushbackInputStream;
 import java.io.Reader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -30,6 +31,7 @@ import java.util.concurrent.locks.LockSupport;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -886,128 +888,128 @@ public class Configuration {
 							// ignore space charaters
 						} else {
 							switch (line.charAt(i)) {
-								case '#':
-									if (tmpList != null) {
-										break;
-									}
-									skip = true;
-									continue;
-
-								case '"':
-									if (tmpList != null) {
-										break;
-									}
-									if (quoted) {
-										quoted = false;
-									}
-									if (!quoted && nameStart == -1) {
-										quoted = true;
-									}
+							case '#':
+								if (tmpList != null) {
 									break;
+								}
+								skip = true;
+								continue;
 
-								case '{':
-									if (tmpList != null) {
-										break;
-									}
-									name = line.substring(nameStart, nameEnd + 1);
-									String qualifiedName = ConfigCategory.getQualifiedName(name, currentCat);
-
-									ConfigCategory cat = this.categories.get(qualifiedName);
-									if (cat == null) {
-										currentCat = new ConfigCategory(name, currentCat);
-										this.categories.put(qualifiedName, currentCat);
-									} else {
-										currentCat = cat;
-									}
-									name = null;
-
+							case '"':
+								if (tmpList != null) {
 									break;
+								}
+								if (quoted) {
+									quoted = false;
+								}
+								if (!quoted && nameStart == -1) {
+									quoted = true;
+								}
+								break;
 
-								case '}':
-									if (tmpList != null) {
-										break;
-									}
-									if (currentCat == null)
-										throw new RuntimeException(String.format("Config file corrupt, attempted to close to many categories '%s:%d'", this.fileName, lineNum));
-									currentCat = currentCat.parent;
+							case '{':
+								if (tmpList != null) {
 									break;
+								}
+								name = line.substring(nameStart, nameEnd + 1);
+								String qualifiedName = ConfigCategory.getQualifiedName(name, currentCat);
 
-								case '=':
-									if (tmpList != null) {
-										break;
-									}
+								ConfigCategory cat = this.categories.get(qualifiedName);
+								if (cat == null) {
+									currentCat = new ConfigCategory(name, currentCat);
+									this.categories.put(qualifiedName, currentCat);
+								} else {
+									currentCat = cat;
+								}
+								name = null;
+
+								break;
+
+							case '}':
+								if (tmpList != null) {
+									break;
+								}
+								if (currentCat == null)
+									throw new RuntimeException(String.format("Config file corrupt, attempted to close to many categories '%s:%d'", this.fileName, lineNum));
+								currentCat = currentCat.parent;
+								break;
+
+							case '=':
+								if (tmpList != null) {
+									break;
+								}
+								name = line.substring(nameStart, nameEnd + 1);
+
+								if (currentCat == null)
+									throw new RuntimeException(String.format("'%s' has no scope in '%s:%d'", name, this.fileName, lineNum));
+
+								Property prop = new Property(name, line.substring(i + 1), type, true);
+								i = line.length();
+
+								currentCat.put(name, prop);
+
+								break;
+
+							case ':':
+								if (tmpList != null) {
+									break;
+								}
+								type = Property.Type.tryParse(line.substring(nameStart, nameEnd + 1).charAt(0));
+								nameStart = nameEnd = -1;
+								break;
+
+							case '<':
+								if ((tmpList != null && i + 1 == line.length()) || (tmpList == null && i + 1 != line.length()))
+									throw new RuntimeException(String.format("Malformed list property \"%s:%d\"", this.fileName, lineNum));
+								else if (i + 1 == line.length()) {
 									name = line.substring(nameStart, nameEnd + 1);
 
 									if (currentCat == null)
 										throw new RuntimeException(String.format("'%s' has no scope in '%s:%d'", name, this.fileName, lineNum));
 
-									Property prop = new Property(name, line.substring(i + 1), type, true);
-									i = line.length();
+									tmpList = new ArrayList<String>();
 
-									currentCat.put(name, prop);
+									skip = true;
+								}
 
-									break;
+								break;
 
-								case ':':
-									if (tmpList != null) {
-										break;
-									}
-									type = Property.Type.tryParse(line.substring(nameStart, nameEnd + 1).charAt(0));
-									nameStart = nameEnd = -1;
-									break;
+							case '>':
+								if (tmpList == null)
+									throw new RuntimeException(String.format("Malformed list property \"%s:%d\"", this.fileName, lineNum));
 
-								case '<':
-									if ((tmpList != null && i + 1 == line.length()) || (tmpList == null && i + 1 != line.length()))
-										throw new RuntimeException(String.format("Malformed list property \"%s:%d\"", this.fileName, lineNum));
-									else if (i + 1 == line.length()) {
-										name = line.substring(nameStart, nameEnd + 1);
+								if (isFirstNonWhitespaceCharOnLine) {
 
-										if (currentCat == null)
-											throw new RuntimeException(String.format("'%s' has no scope in '%s:%d'", name, this.fileName, lineNum));
-
-										tmpList = new ArrayList<String>();
-
-										skip = true;
-									}
-
-									break;
-
-								case '>':
-									if (tmpList == null)
+									if (currentCat == null)
 										throw new RuntimeException(String.format("Malformed list property \"%s:%d\"", this.fileName, lineNum));
 
-									if (isFirstNonWhitespaceCharOnLine) {
+									currentCat.put(name, new Property(name, tmpList.toArray(new String[tmpList.size()]), type));
+									name = null;
+									tmpList = null;
+									type = null;
+								} // else allow special characters as part of string lists
+								break;
 
-										if (currentCat == null)
-											throw new RuntimeException(String.format("Malformed list property \"%s:%d\"", this.fileName, lineNum));
-
-										currentCat.put(name, new Property(name, tmpList.toArray(new String[tmpList.size()]), type));
-										name = null;
-										tmpList = null;
-										type = null;
-									} // else allow special characters as part of string lists
+							case '@':
+								if (tmpList != null) {
 									break;
+								}
 
-								case '@':
-									if (tmpList != null) {
-										break;
+								if (line.startsWith(CONFIG_VERSION_MARKER)) {
+									int colon = line.indexOf(':');
+									if (colon != -1) {
+										this.loadedConfigVersion = line.substring(colon + 1).trim();
 									}
 
-									if (line.startsWith(CONFIG_VERSION_MARKER)) {
-										int colon = line.indexOf(':');
-										if (colon != -1) {
-											this.loadedConfigVersion = line.substring(colon + 1).trim();
-										}
+									skip = true;
+								}
+								break;
 
-										skip = true;
-									}
+							default:
+								if (tmpList != null) {
 									break;
-
-								default:
-									if (tmpList != null) {
-										break;
-									}
-									throw new RuntimeException(String.format("Unknown character '%s' in '%s:%d'", line.charAt(i), this.fileName, lineNum));
+								}
+								throw new RuntimeException(String.format("Unknown character '%s' in '%s:%d'", line.charAt(i), this.fileName, lineNum));
 							}
 							isFirstNonWhitespaceCharOnLine = false;
 						}
@@ -1039,16 +1041,16 @@ public class Configuration {
 		}
 
 		if (!Objects.equals(this.loadedConfigVersion, this.definedConfigVersion) && !this.firstLoadPassed) {
-			EnigmaticLegacy.enigmaticLogger.info("Loaded config version does not match defined version!");
-			EnigmaticLegacy.enigmaticLogger.info("Loaded version: " + this.loadedConfigVersion + ", provider-defined version: " + this.definedConfigVersion);
+			EnigmaticLegacy.logger.info("Loaded config version does not match defined version!");
+			EnigmaticLegacy.logger.info("Loaded version: " + this.loadedConfigVersion + ", provider-defined version: " + this.definedConfigVersion);
 
 			if (this.versioningPolicy == VersioningPolicy.AGGRESSIVE) {
-				EnigmaticLegacy.enigmaticLogger.info("The config updating policy is defined as " + this.versioningPolicy.toString() + "; full reset of config file will be executed.");
+				EnigmaticLegacy.logger.info("The config updating policy is defined as " + this.versioningPolicy.toString() + "; full reset of config file will be executed.");
 
 				this.categories.clear();
 				this.children.clear();
 			} else if (this.versioningPolicy == VersioningPolicy.DISMISSIVE) {
-				EnigmaticLegacy.enigmaticLogger.info("The config updating policy is defined as " + this.versioningPolicy.toString() + "; everythying in the config file will be left untouched, apart from config version parameter being updated.");
+				EnigmaticLegacy.logger.info("The config updating policy is defined as " + this.versioningPolicy.toString() + "; everythying in the config file will be left untouched, apart from config version parameter being updated.");
 			} else if (this.versioningPolicy == VersioningPolicy.RESPECTFUL) {
 				// NO-OP
 			} else if (this.versioningPolicy == VersioningPolicy.NOBLE) {
@@ -1082,7 +1084,7 @@ public class Configuration {
 				this.loadFile();
 			} catch (Throwable e) {
 				File fileBak = new File(this.file.getAbsolutePath() + "_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".errored");
-				EnigmaticLegacy.enigmaticLogger.error("An exception occurred while loading config file %s. This file will be renamed to %s " + "and a new config file will be generated.", this.file.getName(), fileBak.getName());
+				EnigmaticLegacy.logger.error("An exception occurred while loading config file " + this.file.getName() + ". This file will be renamed to " + fileBak.getName() +  " and a new config file will be generated.");
 				e.printStackTrace();
 
 				this.file.renameTo(fileBak);
@@ -1473,6 +1475,19 @@ public class Configuration {
 			}
 	}
 
+
+	public <V extends Enum<V>> V getEnum(String name, String category, V defaultValue, String comment, V[] validValues) {
+		String[] values = new String[(validValues.length)];
+
+		int i = 0;
+		for (V val : validValues) {
+			values[i] = val.toString();
+			i++;
+		}
+
+		return Enum.valueOf(defaultValue.getDeclaringClass(), this.getString(name, category, defaultValue.toString(), comment, values));
+	}
+
 	/**
 	 * Creates a string property.
 	 *
@@ -1560,7 +1575,8 @@ public class Configuration {
 		Property prop = this.get(category, name, defaultValue);
 		prop.setValidValues(validValues);
 		prop.setLanguageKey(langKey);
-		prop.comment = comment + " [default: " + defaultValue + this.getSynchronizedComment() + "]";
+		prop.comment = comment + " [default: " + defaultValue + this.getSynchronizedComment() + "]" + NEW_LINE +
+				"Valid values: " + Arrays.stream(validValues).collect(Collectors.joining(", "));
 		return prop.getString();
 	}
 
@@ -1710,10 +1726,10 @@ public class Configuration {
 		try {
 			return Double.parseDouble(prop.getString()) < minValue ? minValue : (Double.parseDouble(prop.getString()) > maxValue ? maxValue : Double.parseDouble(prop.getString()));
 		} catch (Exception e) {
-			EnigmaticLegacy.enigmaticLogger.warn("Invalid value specified for '" + name + "' in category '" + category + "': " + prop.getString());
-			EnigmaticLegacy.enigmaticLogger.warn("Default value will be used: " + defaultValue);
-			EnigmaticLegacy.enigmaticLogger.warn("Stacktrace: ");
-			EnigmaticLegacy.enigmaticLogger.catching(e);
+			EnigmaticLegacy.logger.warn("Invalid value specified for '" + name + "' in category '" + category + "': " + prop.getString());
+			EnigmaticLegacy.logger.warn("Default value will be used: " + defaultValue);
+			EnigmaticLegacy.logger.warn("Stacktrace: ");
+			EnigmaticLegacy.logger.catching(e);
 		}
 		return defaultValue;
 	}

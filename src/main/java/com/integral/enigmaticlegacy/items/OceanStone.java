@@ -191,7 +191,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity living) {
+	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
 		if (living instanceof PlayerEntity) {
 			EnigmaticLegacy.miningCharm.removeNightVisionEffect((PlayerEntity) living, this.nightVisionDuration);
 			living.getAttributeManager().removeModifiers(this.createAttributeMap((PlayerEntity)living));
@@ -199,7 +199,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living) {
+	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 
 		if (living instanceof PlayerEntity & !living.world.isRemote)
 			if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.oceanStone)) {
@@ -218,7 +218,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier) {
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier, ItemStack stack) {
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
 		atts.put(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get(), new AttributeModifier(UUID.fromString("13faf191-bf38-4654-b369-cc1f4f1143bf"), "Swim speed bonus", swimminSpeedBoost.getValue().asMultiplier(false), AttributeModifier.Operation.MULTIPLY_BASE));
@@ -228,12 +228,12 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living) {
+	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 
 	@Override
-	public boolean showAttributesTooltip(String identifier) {
+	public boolean showAttributesTooltip(String identifier, ItemStack stack) {
 		return false;
 	}
 

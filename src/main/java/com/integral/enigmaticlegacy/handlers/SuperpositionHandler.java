@@ -162,6 +162,7 @@ public class SuperpositionHandler {
 		return SuperpositionHandler.getSpellstone(entity) != null;
 	}
 
+	@Nullable
 	public static ItemStack getSpellstone(final LivingEntity entity) {
 		List<ItemStack> spellstoneStack = new ArrayList<ItemStack>();
 

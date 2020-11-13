@@ -20,6 +20,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.IItemCurio;
+import com.integral.enigmaticlegacy.api.items.ItemizedCurioInstance;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 import com.integral.enigmaticlegacy.config.JsonConfigHandler;
@@ -569,14 +571,14 @@ public class EnigmaticEventHandler {
 
 						for (OmniconfigWrapper wrapper : OmniconfigWrapper.wrapperRegistry.values()) {
 
-							EnigmaticLegacy.enigmaticLogger.info("Dismissing values of " + wrapper.config.getConfigFile().getName() + " in favor of local config...");
+							EnigmaticLegacy.logger.info("Dismissing values of " + wrapper.config.getConfigFile().getName() + " in favor of local config...");
 
 							for (Omniconfig.GenericParameter param : wrapper.retrieveInvocationList()) {
 								if (param.isSynchronized()) {
 									String oldValue = param.valueToString();
 									param.invoke(wrapper.config);
 
-									EnigmaticLegacy.enigmaticLogger.info("Value of '" + param.getId() + "' was restored to '" + param.valueToString() + "'; former server-forced value: " + oldValue);
+									EnigmaticLegacy.logger.info("Value of '" + param.getId() + "' was restored to '" + param.valueToString() + "'; former server-forced value: " + oldValue);
 								}
 							}
 						}
@@ -666,16 +668,6 @@ public class EnigmaticEventHandler {
 
 		event.setNewSpeed(event.getNewSpeed() + correctedSpeed);
 	}
-
-	// TODO This seems to have been removed in 1.16.2. Investigate
-
-	/*
-	@SubscribeEvent
-	public void onBlockDropsHarvest(HarvestDropsEvent event) {
-		// Oh my god it happens!
-		// System.out.println("Event fired!");
-	}
-	 */
 
 	@SubscribeEvent
 	public void onHarvestCheck(PlayerEvent.HarvestCheck event) {
@@ -807,24 +799,14 @@ public class EnigmaticEventHandler {
 		 * Handler for registering item's capabilities implemented in ICurio interface,
 		 * for Enigmatic Legacy's namespace specifically.
 		 *
-		 * I am aware that implementing ICurio interface on item directly is discouraged,
-		 * but I am under no obligation to give my USDA-certified organic fuck.
-		 * The code seems much more understandable overall when items present capabilities
-		 * for thermselves.
-		 *
-		 * TODO Okay now we need to somehow withold the ItemStack reference
-		 * Nah, I think I will just instantiate ICurio in attachment event solely to proxy
-		 * needed calls to underlying itemclass with subinterface providing stack-sensitive
-		 * methods.
-		 *
 		 * Insisting on bad design choices since 2016!
 		 */
 
-		if (stack.getItem() instanceof ICurio && stack.getItem().getRegistryName().getNamespace().equals(EnigmaticLegacy.MODID)) {
-			ICurio curioCapabilities = (ICurio) stack.getItem();
+		if (stack.getItem() instanceof IItemCurio) {
+			ItemizedCurioInstance itemizedCurio = new ItemizedCurioInstance((IItemCurio)stack.getItem(), stack);
 
 			evt.addCapability(CuriosCapability.ID_ITEM, new ICapabilityProvider() {
-				LazyOptional<ICurio> curio = LazyOptional.of(() -> curioCapabilities);
+				LazyOptional<ICurio> curio = LazyOptional.of(() -> itemizedCurio);
 
 				@Nonnull
 				@Override
@@ -909,8 +891,7 @@ public class EnigmaticEventHandler {
 
 					if (confirmLavaPool) {
 						// System.out.println("Lava pool confirmed!");
-						// TODO Access transform this someday
-						for(List<ItemStack> list : ImmutableList.of(player.inventory.mainInventory, player.inventory.armorInventory, player.inventory.offHandInventory)) {
+						for(List<ItemStack> list : player.inventory.allInventories) {
 							for(ItemStack itemstack : list) {
 								if (!itemstack.isEmpty() && itemstack.getItem() == cursedStone) {
 									itemstack.setCount(0);
@@ -1234,7 +1215,6 @@ public class EnigmaticEventHandler {
 
 		// TODO The priorities are messed up as fuck. We gotta do something about it.
 
-		//DamageSource.WITHER
 		/*
 		 * Ideally fixed numerical increases should come first, then percentage alterations,
 		 * and the last in order - handlers that use the event for notification purpose, doing
@@ -1635,7 +1615,7 @@ public class EnigmaticEventHandler {
 				PermanentItemEntity droppedStorageCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), storageCrystal);
 				droppedStorageCrystal.setOwnerId(player.getUniqueID());
 				dimPoint.world.addEntity(droppedStorageCrystal);
-				EnigmaticLegacy.enigmaticLogger.info("Summoned Extradimensional Storage Crystal for " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
+				EnigmaticLegacy.logger.info("Summoned Extradimensional Storage Crystal for " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
 				event.getDrops().clear();
 
 				if (soulCrystal != null) {
@@ -1647,7 +1627,7 @@ public class EnigmaticEventHandler {
 				PermanentItemEntity droppedSoulCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), soulCrystal);
 				droppedSoulCrystal.setOwnerId(player.getUniqueID());
 				dimPoint.world.addEntity(droppedSoulCrystal);
-				EnigmaticLegacy.enigmaticLogger.info("Teared Soul Crystal from " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
+				EnigmaticLegacy.logger.info("Teared Soul Crystal from " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
 
 				droppedCrystal = true;
 			}
@@ -2001,7 +1981,7 @@ public class EnigmaticEventHandler {
 
 		if (!OmniconfigWrapper.syncAllToPlayer((ServerPlayerEntity) event.getPlayer())) {
 			OmniconfigWrapper.onRemoteServer = false;
-			EnigmaticLegacy.enigmaticLogger.info("Logging in to local integrated server; no synchronization is required.");
+			EnigmaticLegacy.logger.info("Logging in to local integrated server; no synchronization is required.");
 		}
 
 		try {
@@ -2068,10 +2048,10 @@ public class EnigmaticEventHandler {
 										String id = entry.getKey();
 
 										if (present.isEmpty() && (tags.contains(id) || tags.contains("curio")) && cursedRing
-												.canEquip(id, player)) {
+												.canEquip(id, player, cursedRingStack)) {
 											stackHandler.setStackInSlot(i, cursedRingStack);
 											//cursedRing.onEquip(id, i, player);
-											cursedRing.playRightClickEquipSound(player);
+											cursedRing.playRightClickEquipSound(player, cursedRingStack);
 										}
 									}
 								}
@@ -2107,7 +2087,7 @@ public class EnigmaticEventHandler {
 			}
 
 		} catch (Exception ex) {
-			EnigmaticLegacy.enigmaticLogger.error("Failed to check player's advancements upon joining the world!");
+			EnigmaticLegacy.logger.error("Failed to check player's advancements upon joining the world!");
 			ex.printStackTrace();
 		}
 

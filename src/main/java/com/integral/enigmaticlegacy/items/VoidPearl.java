@@ -144,7 +144,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living) {
+	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
@@ -173,7 +173,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 				player.extinguish();
 			}
 
-			for (EffectInstance effect : player.getActivePotionEffects()) {
+			for (EffectInstance effect : new ArrayList<>(player.getActivePotionEffects())) {
 				if (effect.getPotion() == Effects.NIGHT_VISION) {
 					if (effect.getDuration() >= EnigmaticLegacy.miningCharm.nightVisionDuration-10 && effect.getDuration() <= EnigmaticLegacy.miningCharm.nightVisionDuration) {
 						continue;
@@ -220,7 +220,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living) {
+	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 

@@ -73,7 +73,7 @@ public class HeavenScroll extends ItemBaseCurio {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living) {
+	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 		if (living.world.isRemote)
 			return;
 
@@ -119,7 +119,7 @@ public class HeavenScroll extends ItemBaseCurio {
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity entityLivingBase) {
+	public void onUnequip(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
 
 		if (entityLivingBase instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) entityLivingBase;
@@ -137,7 +137,7 @@ public class HeavenScroll extends ItemBaseCurio {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living) {
+	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 

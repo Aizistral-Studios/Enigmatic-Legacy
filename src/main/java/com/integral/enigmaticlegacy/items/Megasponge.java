@@ -118,7 +118,7 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living) {
+	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 		if (living instanceof PlayerEntity & !living.world.isRemote) {
 			PlayerEntity player = (PlayerEntity) living;
 
@@ -206,7 +206,7 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living) {
+	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 

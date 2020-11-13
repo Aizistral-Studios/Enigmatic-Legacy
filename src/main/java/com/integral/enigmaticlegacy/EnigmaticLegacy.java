@@ -1,5 +1,12 @@
 package com.integral.enigmaticlegacy;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -7,6 +14,7 @@ import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.electronwill.nightconfig.core.file.FileWatcher;
 import com.google.common.collect.Lists;
 import com.integral.enigmaticlegacy.api.generic.ConfigurableItem;
 import com.integral.enigmaticlegacy.api.items.IAdvancedPotionItem.PotionType;
@@ -107,6 +115,7 @@ import com.integral.enigmaticlegacy.items.WormholePotion;
 import com.integral.enigmaticlegacy.items.XPScroll;
 import com.integral.enigmaticlegacy.items.generic.GenericBlockItem;
 import com.integral.enigmaticlegacy.objects.AdvancedPotion;
+import com.integral.enigmaticlegacy.objects.LoggerWrapper;
 import com.integral.enigmaticlegacy.packets.clients.PacketFlameParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketGenericParticleEffect;
@@ -182,6 +191,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -193,7 +203,7 @@ import net.minecraft.block.AbstractBlock;
 public class EnigmaticLegacy {
 
 	public static EnigmaticLegacy enigmaticLegacy;
-	public static final Logger enigmaticLogger = LogManager.getLogger("Enigmatic Legacy");
+	public static final LoggerWrapper logger = new LoggerWrapper("Enigmatic Legacy");
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
@@ -379,7 +389,7 @@ public class EnigmaticLegacy {
 	@SuppressWarnings("deprecation")
 	public EnigmaticLegacy() {
 
-		enigmaticLogger.info("Constructing mod instance...");
+		logger.info("Constructing mod instance...");
 
 		enigmaticLegacy = this;
 
@@ -534,13 +544,13 @@ public class EnigmaticLegacy {
 		MinecraftForge.EVENT_BUS.register(keybindHandler);
 		MinecraftForge.EVENT_BUS.register(new EnigmaticUpdateHandler());
 
-		enigmaticLogger.info("Mod instance constructed successfully.");
+		logger.info("Mod instance constructed successfully.");
 	}
 
 	private void onLoadComplete(final FMLLoadCompleteEvent event) {
-		enigmaticLogger.info("Initializing load completion phase...");
+		logger.info("Initializing load completion phase...");
 
-		enigmaticLogger.info("Registering brewing recipes...");
+		logger.info("Registering brewing recipes...");
 
 		if (OmniconfigHandler.isItemEnabled(recallPotion)) {
 			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.AWKWARD)), Ingredient.fromItems(Items.ENDER_EYE), new ItemStack(recallPotion), new ResourceLocation(MODID, "recall_potion")));
@@ -565,18 +575,18 @@ public class EnigmaticLegacy {
 		universalClock = new ItemStack(Items.CLOCK);
 		soulOfTheArchitect = UUID.fromString("3efc546d-30bb-4c29-bb61-b3081a118408");
 
-		enigmaticLogger.info("Load completion phase finished successfully");
+		logger.info("Load completion phase finished successfully");
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
 
-		enigmaticLogger.info("Initializing common setup phase...");
+		logger.info("Initializing common setup phase...");
 
 		damageTypesFire.add(DamageSource.LAVA.damageType);
 		damageTypesFire.add(DamageSource.IN_FIRE.damageType);
 		damageTypesFire.add(DamageSource.ON_FIRE.damageType);
 
-		enigmaticLogger.info("Registering packets...");
+		logger.info("Registering packets...");
 		packetInstance = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MODID, "main")).networkProtocolVersion(() -> PTC_VERSION).clientAcceptedVersions(PTC_VERSION::equals).serverAcceptedVersions(PTC_VERSION::equals).simpleChannel();
 
 		packetInstance.registerMessage(0, PacketRecallParticles.class, PacketRecallParticles::encode, PacketRecallParticles::decode, PacketRecallParticles::handle);
@@ -602,18 +612,18 @@ public class EnigmaticLegacy {
 		packetInstance.registerMessage(20, PacketSyncOptions.class, PacketSyncOptions::encode, PacketSyncOptions::decode, PacketSyncOptions::handle);
 		packetInstance.registerMessage(21, PacketGenericParticleEffect.class, PacketGenericParticleEffect::encode, PacketGenericParticleEffect::decode, PacketGenericParticleEffect::handle);
 
-		enigmaticLogger.info("Registering triggers...");
+		logger.info("Registering triggers...");
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);
 		CriteriaTriggers.register(BeheadingTrigger.INSTANCE);
 		CriteriaTriggers.register(RevelationGainTrigger.INSTANCE);
 		CriteriaTriggers.register(CursedRingEquippedTrigger.INSTANCE);
 		CriteriaTriggers.register(RevelationTomeBurntTrigger.INSTANCE);
 
-		enigmaticLogger.info("Common setup phase finished successfully.");
+		logger.info("Common setup phase finished successfully.");
 	}
 
 	private void clientRegistries(final FMLClientSetupEvent event) {
-		enigmaticLogger.info("Initializing client setup phase...");
+		logger.info("Initializing client setup phase...");
 		keybindHandler.registerKeybinds();
 		enigmaticAmulet.registerVariants();
 
@@ -626,16 +636,16 @@ public class EnigmaticLegacy {
 		ScreenManager.registerFactory(PORTABLE_CRAFTER, CraftingScreen::new);
 		ScreenManager.registerFactory(LORE_INSCRIBER_CONTAINER, LoreInscriberScreen::new);
 
-		enigmaticLogger.info("Client setup phase finished successfully.");
+		logger.info("Client setup phase finished successfully.");
 	}
 
 	private void intermodStuff(final InterModEnqueueEvent event) {
-		enigmaticLogger.info("Sending messages to Curios API...");
+		logger.info("Sending messages to Curios API...");
 		SuperpositionHandler.registerCurioType("charm", 1, true, false, null);
 		SuperpositionHandler.registerCurioType("ring", 2, true, false, null);
 		SuperpositionHandler.registerCurioType("spellstone", 1, false, false, new ResourceLocation(MODID, "slots/empty_spellstone_slot"));
 		SuperpositionHandler.registerCurioType("scroll", 1, false, false, new ResourceLocation(MODID, "slots/empty_scroll_slot"));
-		SuperpositionHandler.registerCurioType("curio", -1, true, false, null);
+		//SuperpositionHandler.registerCurioType("curio", -1, true, false, null);
 
 	}
 
@@ -666,7 +676,7 @@ public class EnigmaticLegacy {
 
 		@SubscribeEvent
 		public static void registerBlocks(final RegistryEvent.Register<Block> event) {
-			enigmaticLogger.info("Initializing blocks registration...");
+			logger.info("Initializing blocks registration...");
 
 			event.getRegistry().registerAll(
 					massiveLamp,
@@ -676,13 +686,13 @@ public class EnigmaticLegacy {
 					massiveRedstonelamp,
 					bigRedstonelamp);
 
-			enigmaticLogger.info("Blocks registered successfully.");
+			logger.info("Blocks registered successfully.");
 		}
 
 		@SubscribeEvent
 		public static void registerItems(final RegistryEvent.Register<Item> event) {
 
-			enigmaticLogger.info("Initializing items registration...");
+			logger.info("Initializing items registration...");
 
 			final IForgeRegistry<Item> registry = event.getRegistry();
 
@@ -788,12 +798,12 @@ public class EnigmaticLegacy {
 					/*,gemOfBinding,wormholePotion*/
 					);
 
-			enigmaticLogger.info("Items registered successfully.");
+			logger.info("Items registered successfully.");
 		}
 
 		@SubscribeEvent
 		public static void registerSounds(final RegistryEvent.Register<SoundEvent> event) {
-			enigmaticLogger.info("Initializing sounds registration...");
+			logger.info("Initializing sounds registration...");
 
 			HHON = SuperpositionHandler.registerSound("misc.hhon");
 			HHOFF = SuperpositionHandler.registerSound("misc.hhoff");
@@ -802,7 +812,7 @@ public class EnigmaticLegacy {
 			WRITE = SuperpositionHandler.registerSound("misc.write");
 			LEARN = SuperpositionHandler.registerSound("misc.learn");
 
-			enigmaticLogger.info("Sounds registered successfully.");
+			logger.info("Sounds registered successfully.");
 		}
 
 		@SubscribeEvent
@@ -813,7 +823,7 @@ public class EnigmaticLegacy {
 		@SubscribeEvent
 		public static void registerBrewing(final RegistryEvent.Register<Potion> event) {
 
-			enigmaticLogger.info("Initializing advanced potion system...");
+			logger.info("Initializing advanced potion system...");
 
 			ULTIMATE_NIGHT_VISION = new AdvancedPotion("ultimate_night_vision", new EffectInstance(Effects.NIGHT_VISION, 19200));
 			ULTIMATE_INVISIBILITY = new AdvancedPotion("ultimate_invisibility", new EffectInstance(Effects.INVISIBILITY, 19200));
@@ -859,7 +869,7 @@ public class EnigmaticLegacy {
 			commonPotionTypes.add(STRONG_HASTE);
 			ultimatePotionTypes.add(ULTIMATE_HASTE);
 
-			enigmaticLogger.info("Advanced potion system initialized successfully.");
+			logger.info("Advanced potion system initialized successfully.");
 		}
 
 		@SubscribeEvent
@@ -885,7 +895,7 @@ public class EnigmaticLegacy {
 
 		@SubscribeEvent
 		public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> event) {
-			enigmaticLogger.info("Initializing entities registration...");
+			logger.info("Initializing entities registration...");
 
 			event.getRegistry().register(EntityType.Builder.<PermanentItemEntity>create(PermanentItemEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new PermanentItemEntity(PermanentItemEntity.TYPE, world)).setUpdateInterval(2).setShouldReceiveVelocityUpdates(true).build(MODID+":permanent_item_entity").setRegistryName(new ResourceLocation(MODID, "permanent_item_entity")));
 
@@ -896,7 +906,7 @@ public class EnigmaticLegacy {
 					//.setShouldReceiveVelocityUpdates(true)
 					.build(MODID+":ultimate_wither_skull_entity").setRegistryName(new ResourceLocation(MODID, "ultimate_wither_skull_entity")));
 
-			enigmaticLogger.info("Entities registered successfully.");
+			logger.info("Entities registered successfully.");
 		}
 
 	}
@@ -904,7 +914,7 @@ public class EnigmaticLegacy {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onColorInit(final net.minecraftforge.client.event.ColorHandlerEvent.Item event) {
-		enigmaticLogger.info("Initializing colors registration...");
+		logger.info("Initializing colors registration...");
 
 		event.getItemColors().register((stack, color) -> {
 			if (PotionHelper.isAdvancedPotion(stack))
@@ -913,7 +923,7 @@ public class EnigmaticLegacy {
 				return color > 0 ? -1 : PotionUtils.getColor(stack);
 		}, ultimatePotionBase, ultimatePotionSplash, ultimatePotionLingering, commonPotionBase, commonPotionSplash, commonPotionLingering);
 
-		enigmaticLogger.info("Colors registered successfully.");
+		logger.info("Colors registered successfully.");
 	}
 
 	public static final ItemGroup enigmaticTab = new ItemGroup("enigmaticCreativeTab") {

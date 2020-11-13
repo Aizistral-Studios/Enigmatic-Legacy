@@ -118,7 +118,7 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living) {
+	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
 
@@ -127,7 +127,7 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity living) {
+	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
 		if (living instanceof PlayerEntity) {
 			living.getAttributeManager().removeModifiers(this.createAttributeMap((PlayerEntity) living));
 		}
@@ -135,12 +135,12 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living) {
+	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 
 	@Override
-	public boolean canEquip(String identifier, LivingEntity living) {
+	public boolean canEquip(String identifier, LivingEntity living, ItemStack stack) {
 		return living instanceof PlayerEntity && SuperpositionHandler.isTheCursedOne((PlayerEntity)living);
 	}
 

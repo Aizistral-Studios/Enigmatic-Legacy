@@ -59,11 +59,11 @@ public abstract class ItemSpellstoneCurio extends ItemBaseCurio implements ISpel
 	}
 
 	@Override
-	public boolean canEquip(String identifier, LivingEntity living) {
-		if (multiequip.getValue()) {
-			return super.canEquip(identifier, living);
-		} else
-			return super.canEquip(identifier, living) && SuperpositionHandler.getSpellstone(living) == null;
+	public boolean canEquip(String identifier, LivingEntity living, ItemStack stack) {
+		if (multiequip.getValue())
+			return super.canEquip(identifier, living, stack);
+		else
+			return super.canEquip(identifier, living, stack) && SuperpositionHandler.getSpellstone(living) == null;
 	}
 
 }

@@ -171,7 +171,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity living) {
+	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
 
@@ -182,7 +182,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living) {
+	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
 
@@ -209,7 +209,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living) {
+	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 

@@ -84,7 +84,7 @@ public class UnholyGrail extends ItemBase implements IVanishable {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		playerIn.setActiveHand(handIn);
-		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+		return new ActionResult<>(ActionResultType.CONSUME, playerIn.getHeldItem(handIn));
 	}
 
 }

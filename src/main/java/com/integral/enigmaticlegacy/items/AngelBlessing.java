@@ -140,7 +140,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living) {
+	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 		/*
 		List<DamagingProjectileEntity> projectileEntities = living.world.getEntitiesWithinAABB(DamagingProjectileEntity.class, new AxisAlignedBB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));
 		List<AbstractArrowEntity> arrowEntities = living.world.getEntitiesWithinAABB(AbstractArrowEntity.class, new AxisAlignedBB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));
@@ -196,7 +196,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living) {
+	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 

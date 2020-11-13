@@ -63,7 +63,7 @@ public class ClientProxy extends CommonProxy {
 			Minecraft.getInstance().world.playSound(entity.getPosX(), entity.getPosY(), entity.getPosZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, (ClientProxy.random.nextFloat() - ClientProxy.random.nextFloat()) * 1.4F + 2.0F, false);
 		} catch (Exception ex) {
 			Exception log = new Exception("Unknown error when rendering permanent item pickup", ex);
-			EnigmaticLegacy.enigmaticLogger.catching(log);
+			EnigmaticLegacy.logger.catching(log);
 		}
 	}
 

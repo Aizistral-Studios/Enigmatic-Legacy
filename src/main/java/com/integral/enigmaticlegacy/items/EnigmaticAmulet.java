@@ -278,7 +278,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity living) {
+	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
 
@@ -289,7 +289,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living) {
+	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
 			ItemStack amulet = SuperpositionHandler.getCurioStack(player, this);
@@ -303,21 +303,21 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	}
 
 	@Override
-	public boolean canEquip(String identifier, LivingEntity living) {
+	public boolean canEquip(String identifier, LivingEntity living, ItemStack stack) {
 		if (multiequip.getValue())
 			return true;
 		else
-			return super.canEquip(identifier, living);
+			return super.canEquip(identifier, living, stack);
 	}
 
 	@Override
-	public boolean showAttributesTooltip(String identifier) {
+	public boolean showAttributesTooltip(String identifier, ItemStack stack) {
 		return false;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living) {
+	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 

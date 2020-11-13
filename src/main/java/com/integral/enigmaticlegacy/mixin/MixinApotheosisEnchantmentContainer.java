@@ -24,6 +24,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -36,8 +37,13 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 @Pseudo
 @Mixin(targets="shadows.apotheosis.ench.table.ApothEnchantContainer")
 public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
+
 	public MixinApotheosisEnchantmentContainer(int id, PlayerInventory playerInventory) {
 		super(id, playerInventory);
+	}
+
+	public MixinApotheosisEnchantmentContainer(int id, PlayerInventory playerInventory, IWorldPosCallable worldPosCallable) {
+		super(id, playerInventory, worldPosCallable);
 	}
 
 	@Inject(at = @At("HEAD"), method = "enchantItem(Lnet/minecraft/entity/player/PlayerEntity;I)Z", cancellable = true)
@@ -67,6 +73,9 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
 
 						player.addStat(Stats.ENCHANT_ITEM);
 						if (player instanceof ServerPlayerEntity) {
+
+							// TODO Gotta finish this someday
+
 							/*
 							try {
 								Class<?> triggerClass = Class.forName("shadows.apotheosis.advancements.EnchantedTrigger");
@@ -75,7 +84,7 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
 							}
 							 */
 							//EnchantedItemTrigger
-							//CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayerEntity)player, enchanted, level);
+							CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayerEntity)player, enchanted, level);
 						}
 
 						this.tableInventory.markDirty();

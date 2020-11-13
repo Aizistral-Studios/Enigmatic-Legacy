@@ -19,7 +19,7 @@ public class EnigmaticRecipeSerializers {
 
 	@SubscribeEvent
 	public void onRegisterSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
-		EnigmaticLegacy.enigmaticLogger.info("Initializing recipe serializers registration...");
+		EnigmaticLegacy.logger.info("Initializing recipe serializers registration...");
 		CraftingHelper.register(EnabledCondition.Serializer.INSTANCE);
 
 		event.getRegistry().register(CRAFTING_MENDING_MIXTURE_REPAIR.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "mending_mixture_repair")));
@@ -28,6 +28,6 @@ public class EnigmaticRecipeSerializers {
 		event.getRegistry().register(ENCHANTMENT_TRANSPOSING.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enchantment_transposing")));
 		event.getRegistry().register(BIND_TO_PLAYER.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "bind_to_player")));
 		event.getRegistry().register(CURSED_SHAPED.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "crafting_shaped_cursed")));
-		EnigmaticLegacy.enigmaticLogger.info("Recipe serializers registered successfully.");
+		EnigmaticLegacy.logger.info("Recipe serializers registered successfully.");
 	}
 }

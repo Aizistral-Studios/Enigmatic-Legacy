@@ -150,7 +150,7 @@ public class XPScroll extends ItemBaseCurio {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity entity) {
+	public void curioTick(String identifier, int index, LivingEntity entity, ItemStack stack) {
 
 		ItemStack itemstack = SuperpositionHandler.getCurioStack(entity, EnigmaticLegacy.xpScroll);
 
@@ -198,13 +198,13 @@ public class XPScroll extends ItemBaseCurio {
 	}
 
 	@Override
-	public boolean canRightClickEquip() {
+	public boolean canRightClickEquip(ItemStack stack) {
 		return false;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living) {
+	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 

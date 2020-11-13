@@ -70,7 +70,7 @@ public class SuperMagnetRing extends MagnetRing {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living) {
+	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 		if (invertShift.getValue() ? !living.isCrouching() : living.isCrouching() || living.world.isRemote || !(living instanceof PlayerEntity))
 			return;
 
@@ -114,7 +114,7 @@ public class SuperMagnetRing extends MagnetRing {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living) {
+	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 

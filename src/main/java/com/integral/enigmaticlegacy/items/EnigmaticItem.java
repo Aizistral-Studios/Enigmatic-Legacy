@@ -102,7 +102,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living) {
+	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 		if (living.isBurning()) {
 			living.extinguish();
 		}
@@ -149,7 +149,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living) {
+	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 

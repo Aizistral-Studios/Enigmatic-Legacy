@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.IItemCurio;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -32,7 +33,7 @@ import net.minecraft.item.Item.Properties;
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
 import top.theillusivec4.curios.api.type.capability.ICurio.RenderHelper;
 
-public abstract class ItemBaseCurio extends ItemBase implements ICurio, IVanishable {
+public abstract class ItemBaseCurio extends ItemBase implements IItemCurio, IVanishable {
 
 	public ItemBaseCurio() {
 		this(getDefaultProperties());
@@ -43,17 +44,17 @@ public abstract class ItemBaseCurio extends ItemBase implements ICurio, IVanisha
 	}
 
 	@Override
-	public void onEquip(String identifier, int index, LivingEntity entityLivingBase) {
+	public void onEquip(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
 		// Insert existential void here
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity entityLivingBase) {
+	public void onUnequip(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
 		// Insert existential void here
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity entityLivingBase) {
+	public void curioTick(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
 		// Insert existential void here
 	}
 
@@ -63,12 +64,12 @@ public abstract class ItemBaseCurio extends ItemBase implements ICurio, IVanisha
 	}
 
 	@Override
-	public boolean canRightClickEquip() {
+	public boolean canRightClickEquip(ItemStack stack) {
 		return true;
 	}
 
 	@Override
-	public boolean canEquip(String identifier, LivingEntity living) {
+	public boolean canEquip(String identifier, LivingEntity living, ItemStack stack) {
 		if (SuperpositionHandler.hasCurio(living, this))
 			return false;
 		else
@@ -77,12 +78,12 @@ public abstract class ItemBaseCurio extends ItemBase implements ICurio, IVanisha
 	}
 
 	@Override
-	public boolean canUnequip(String identifier, LivingEntity living) {
+	public boolean canUnequip(String identifier, LivingEntity living, ItemStack stack) {
 		return true;
 	}
 
 	@Override
-	public DropRule getDropRule(LivingEntity livingEntity) {
+	public DropRule getDropRule(LivingEntity livingEntity, ItemStack stack) {
 		return DropRule.DEFAULT;
 	}
 
@@ -108,19 +109,23 @@ public abstract class ItemBaseCurio extends ItemBase implements ICurio, IVanisha
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public abstract boolean canRender(String identifier, int index, LivingEntity living);
+	public abstract boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack);
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer, int light, LivingEntity living, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-		if (this.canRender(identifier, index, living))
+	public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer,
+			int light, LivingEntity living, float limbSwing, float limbSwingAmount, float partialTicks,
+			float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
+
+		if (this.canRender(identifier, index, living, stack))
 			return;
 
 		BipedModel<LivingEntity> model = this.getModel();
 		model.setRotationAngles(living, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 		model.setLivingAnimations(living, limbSwing, limbSwingAmount, partialTicks);
 		RenderHelper.followBodyRotations(living, model);
-		IVertexBuilder vertexBuilder = ItemRenderer.getBuffer(renderTypeBuffer, model.getRenderType(this.getTexture()), false, false);
+		IVertexBuilder vertexBuilder = ItemRenderer.getBuffer(renderTypeBuffer, model.getRenderType(this.getTexture()),
+				false, false);
 		model.render(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 	}
 
@@ -130,8 +135,8 @@ public abstract class ItemBaseCurio extends ItemBase implements ICurio, IVanisha
 		return null;
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@Nullable
+	@OnlyIn(Dist.CLIENT)
 	protected ResourceLocation getTexture() {
 		return null;
 	}

@@ -110,12 +110,11 @@ public class MiningCharm extends ItemBaseCurio {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living) {
+	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 
 		if (living instanceof PlayerEntity & !living.world.isRemote)
 			if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.miningCharm)) {
 				PlayerEntity player = (PlayerEntity) living;
-				ItemStack stack = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.miningCharm);
 
 				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) && player.getPosY() < 50 && !player.world.getDimensionKey().getLocation().toString().equals("minecraft:the_nether") && !player.world.getDimensionKey().getLocation().toString().equals("minecraft:the_end") && !player.areEyesInFluid(FluidTags.WATER) && !player.world.canBlockSeeSky(player.getPosition()) && player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0) <= 8) {
 
@@ -147,14 +146,14 @@ public class MiningCharm extends ItemBaseCurio {
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity living) {
+	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
 		if (living instanceof PlayerEntity) {
 			this.removeNightVisionEffect((PlayerEntity) living, this.nightVisionDuration);
 		}
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier) {
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier, ItemStack stack) {
 
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
@@ -165,7 +164,7 @@ public class MiningCharm extends ItemBaseCurio {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living) {
+	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 

@@ -1,5 +1,8 @@
 package com.integral.enigmaticlegacy.items;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 
 import com.google.common.collect.Lists;
@@ -54,6 +57,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.PacketDistributor;
 import top.theillusivec4.curios.api.CuriosApi;
 
@@ -221,13 +225,6 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		int ringSlots = CuriosApi.getSlotHelper().getSlotsForType(playerIn, "ring");
-
-		if (ringSlots <= 2) {
-			// TODO Remove in release
-			CuriosApi.getSlotHelper().growSlotType("ring", playerIn);
-			return new ActionResult<ItemStack>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
-		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 
