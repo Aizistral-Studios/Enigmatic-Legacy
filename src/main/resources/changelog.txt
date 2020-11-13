@@ -1,5 +1,11 @@
 The Changelog:
 
+[Release 1.7.3]:
+
+- Fixed Angel's Blessing active ability not working (#104).
+
+
+
 [Release 1.7.2]:
 
 - Re-added missing localized names for Enigmatic Amulet and Scroll of Ageless Wisdom.

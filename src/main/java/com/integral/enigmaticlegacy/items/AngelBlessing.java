@@ -85,7 +85,8 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 		}
 	}
 
-	public void triggerActiveAbility(World world, PlayerEntity player, ItemStack stack) {
+	@Override
+	public void triggerActiveAbility(World world, ServerPlayerEntity player, ItemStack stack) {
 		if (SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
@@ -100,7 +101,7 @@ public class AngelBlessing extends ItemAdvancedCurio implements ISpellstone {
 
 		Vector3 finalMotion = new Vector3(motionVec.x + accelerationVec.x, motionVec.y + accelerationVec.y, motionVec.z + accelerationVec.z);
 
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketPlayerMotion(finalMotion.x, finalMotion.y, finalMotion.z));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player), new PacketPlayerMotion(finalMotion.x, finalMotion.y, finalMotion.z));
 		player.setMotion(finalMotion.x, finalMotion.y, finalMotion.z);
 
 		world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
