@@ -16,8 +16,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.entity.monster.CreeperEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
+import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.EntityPredicates;
@@ -105,6 +107,13 @@ public class RelicOfTesting extends ItemBase {
 
 			if (creeper.getAttackTarget() == entity) {
 				creeper.setAttackTarget(null);
+			}
+		}
+
+		if (entity instanceof ServerPlayerEntity) {
+			ServerPlayerEntity player = (ServerPlayerEntity) entity;
+			if (entity.ticksExisted % 20 == 0) {
+				System.out.println("Time since rest: " + player.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)));
 			}
 		}
 

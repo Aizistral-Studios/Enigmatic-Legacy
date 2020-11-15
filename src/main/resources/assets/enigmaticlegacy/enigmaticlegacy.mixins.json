@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "enigmaticlegacy.refmap.json",
   "mixins": [
+	"MixinPhantomSpawner",
 	"MixinApotheosisEnchantmentContainer",
 	"MixinEnchantmentContainer",
 	"MixinPiglinMobsSensor",

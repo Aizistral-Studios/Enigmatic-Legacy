@@ -202,6 +202,9 @@ curseforge {
         changelogType = 'html'
         changelog = file('docs/changelog.html')
 		
+		addGameVersion '1.16.4'
+		addGameVersion '1.16.3'
+		
 		relations {
 			requiredDependency 'curios'
 			requiredDependency 'patchouli'

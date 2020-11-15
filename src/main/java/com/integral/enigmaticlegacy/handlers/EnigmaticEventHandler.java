@@ -1535,23 +1535,9 @@ public class EnigmaticEventHandler {
 		if (entity instanceof CreatureEntity && ((CreatureEntity)entity).getCreatureAttribute() == CreatureAttribute.ARTHROPOD) {
 			((CreatureEntity)entity).goalSelector.addGoal(3, new AvoidEntityGoal<>((CreatureEntity)entity, PlayerEntity.class, (targetEntity) -> targetEntity instanceof PlayerEntity && SuperpositionHandler.hasAntiInsectAcknowledgement((PlayerEntity)targetEntity), 6, 1, 1.3, EntityPredicates.CAN_AI_TARGET::test));
 		}
+
 		if (entity instanceof PiglinEntity) {
-
-			//((PiglinEntity)entity).goalSelector.addGoal(3, new AvoidEntityGoal<>((CreatureEntity)entity, PlayerEntity.class, (targetEntity) -> targetEntity instanceof PlayerEntity && SuperpositionHandler.hasAntiInsectAcknowledgement((PlayerEntity)targetEntity), 6, 1, 1.3, EntityPredicates.CAN_AI_TARGET::test));
-
-			/*
-			((PiglinEntity)entity).getBrain().registerActivity(Activity.CORE, 0, ImmutableList.<Task<? super PiglinEntity>>of(new ForgetAttackTargetTask<>(AbstractPiglinEntity::func_242337_eM, (piglin) -> {
-				Optional<LivingEntity> optional = BrainUtil.getTargetFromMemory(((PiglinEntity)entity), MemoryModuleType.ANGRY_AT);
-				Optional<PlayerEntity> optional2 = piglin.getBrain().getMemory(MemoryModuleType.NEAREST_TARGETABLE_PLAYER_NOT_WEARING_GOLD);
-				if (optional.isPresent())
-					return optional;
-				else if (optional2.isPresent())
-					return optional2;
-
-				return Optional.empty();
-
-			})));
-			 */
+			// NO-OP
 		}
 
 	}
