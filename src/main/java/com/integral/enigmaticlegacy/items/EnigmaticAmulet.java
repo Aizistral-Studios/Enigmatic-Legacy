@@ -69,7 +69,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 		vesselEnabled = builder
 				.comment("Whether or not Enigmatic Amulet should be summoning Extradimensional Vessel on owner's death.")
-				.getBoolean("EnigmaticAmuletVesselEnabled", true);
+				.getBoolean("VesselEnabled", true);
 
 		ownerOnlyVessel = builder
 				.comment("If true, only original owner of Extradimensional Vessel will be able to pick it up.")

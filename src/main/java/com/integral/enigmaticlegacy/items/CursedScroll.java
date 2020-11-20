@@ -99,7 +99,7 @@ public class CursedScroll extends ItemBaseCurio implements ICursed {
 
 	@Override
 	public boolean canEquip(String identifier, LivingEntity living, ItemStack stack) {
-		return living instanceof PlayerEntity && SuperpositionHandler.isTheCursedOne((PlayerEntity)living);
+		return super.canEquip(identifier, living, stack) && living instanceof PlayerEntity && SuperpositionHandler.isTheCursedOne((PlayerEntity)living);
 	}
 
 }

@@ -79,6 +79,9 @@
 	"item.enigmaticlegacy.enchanter_pearl": "Enchanter's Pearl",
 	"item.enigmaticlegacy.cursed_stone": "Unholy Stone",
 	"item.enigmaticlegacy.gem_ring": "Exquisite Ring",
+	"item.enigmaticlegacy.avarice_scroll": "Pact of Infinite Avarice",
+	"item.enigmaticlegacy.infinimeal": "Essence of Raging Life",
+	"item.enigmaticlegacy.darkest_scroll": "Darkest Scroll",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -713,6 +716,18 @@
 	"tooltip.enigmaticlegacy.soulCrystal1": "§6Right-Click§5 to absorb the crystal and",
 	"tooltip.enigmaticlegacy.soulCrystal2": "§5restore one of your lost §6Soul Crystals.",
 	
+	"tooltip.enigmaticlegacy.avariceScroll1": "§6+%1$s§d Fortune Level",
+	"tooltip.enigmaticlegacy.avariceScroll2": "§5Renders §6Piglins§5 neutral towards you, despite",
+	"tooltip.enigmaticlegacy.avariceScroll3": "§5the §6Second Curse§5. Bartering with them is",
+	"tooltip.enigmaticlegacy.avariceScroll4": "§5around §6100%§5 more beneficial.",
+	"tooltip.enigmaticlegacy.avariceScroll5": "§5Provides §615% Chance§5 of §61 Emerald§5 dropping",
+	"tooltip.enigmaticlegacy.avariceScroll6": "§5from any slain mob.",
+	"tooltip.enigmaticlegacy.avariceScroll7": "§5Villager trades have §635% Discount.",
+	
+	"tooltip.enigmaticlegacy.infinimeal1": "§5Functions as infinite §6Bone Meal.",
+	"tooltip.enigmaticlegacy.infinimeal2": "§5Effective on §6Cactuses§5, §6Vines§5,",
+	"tooltip.enigmaticlegacy.infinimeal3": "§6Nether Wart§5 and §6Sugar Cane.",
+
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",
 	"gui.enigmaticlegacy.blazing_core_bar_offsetX": "0",
@@ -769,7 +784,7 @@
 	"book.enigmaticlegacy.entry.berserk_emblem.page.2": "brim of imminent demise, the greater fury and courage will fulfill you, forcing to fight your way out no matter the circumstances, until the last breath.",
 	
 	
-	"book.enigmaticlegacy.entry.cursed_scroll.name": "Scroll of Curses",
+	"book.enigmaticlegacy.entry.cursed_scroll.name": "Thousand Curses",
 	"book.enigmaticlegacy.entry.cursed_scroll.page.1": "At times curses can take form similar to that of enchantments, with a only couple differences. Unlike normal enchantments, once they are bound to item, there's seemingly no way to get rid of them while keeping the item itself. Hopefully, regular enchanting techniques which you use yourself cannot accidentally produce such curses - but you may come",
 	"book.enigmaticlegacy.entry.cursed_scroll.page.2": "across items bearing them when exploring ancient ruins and dungeons.<br2/>Their effects vary, but none are quite beneficial - any cursed enchantment presents significant drawback to using",
 	"book.enigmaticlegacy.entry.cursed_scroll.page.3": "the item that bears it. Under normal circumstances, they would be just an annoyance for you to avoid. However, now that you bear Ring of the Seven Curses, there are ways you can manipulate them and even benefit from them, unnaccessible to others.<br2/>This scroll, being infused with concentrated wickedness of the Twisted Heart, presents one such possibility. For every curse that every item of your equipment bears, it boosts",
@@ -1281,6 +1296,26 @@
 	"book.enigmaticlegacy.entry.arcane_scrolls.page.1": "Creation of arcane scrolls, besides writing materials and mundane blank scroll, will usually take a couple arcane ingredients, to make sure that the scroll you create does something more than just exist. They can be carried around like any other accessories.<br2/>These are unlikely contribute as much to your image of terrifying, mighty mage,",
 	"book.enigmaticlegacy.entry.arcane_scrolls.page.2": "especially given that books were invented a long time ago by now. Yet that matters not given how vast are practical possibilities they may provide, if designed and put together masterfully.<br2/>Weirdly, it's difficult to come by a scroll used for just storing writings, even among the most ancient samples of literature.<br2/>Perhaps, it's not such an obvious design after all?..",
 	"book.enigmaticlegacy.entry.arcane_scrolls.page.3": "Here is outlined the way to craft an empty scroll.<br2/>Might not be extremely useful on it's own, but it serves as a base for creation of arcane scrolls.",
+	
+	
+	"book.enigmaticlegacy.entry.darkest_scroll.name": "Darkest Scroll",
+	"book.enigmaticlegacy.entry.darkest_scroll.heading.1": "The Scroll",
+	"book.enigmaticlegacy.entry.darkest_scroll.page.1": "Found withing the treasures of dangerous Bastions, those rolls of black-stained pergament draw little suspicion at first glance. Yet in truth they are infused with some unknown sort of dark magic, one that seems strangely familiar to one that empowers Ring of the Seven Curses.<br2/>That magic however lays dormant within it's vessel,",
+	"book.enigmaticlegacy.entry.darkest_scroll.page.2": "a raw, slumbering energy seemingly waiting to be awoken and exploited. Perhaps the Darkest Scroll could serve as base for creation of new, more powerful arcane scrolls?",
+	
+	
+	"book.enigmaticlegacy.entry.avarice_scroll.name": "Pact of Infinite Avarice",
+	"book.enigmaticlegacy.entry.avarice_scroll.page.1": "One another relic harnessing the boundless strength of the Seven Curses, this elegant scroll is designed to fulfill the boundless inner greed you so carefully conceal within your soul.<br/>It's primary effect is an ability to confuse minds of the creatures you trade or barter with, into misguessing true price and benefit of the deal... much in your favor.",
+	"book.enigmaticlegacy.entry.avarice_scroll.page.2": "Piglins seem to be most affected by this ability, with their helpless affection by gold. Not only this allows the scroll to overcome the effect of the Second Curse and render them neutral in your regard, as they normally are",
+	"book.enigmaticlegacy.entry.avarice_scroll.page.3": "towards anyone who bears enough golden equipment on them, but it also makes bartering with those creatures about twice as beneficial on average, allowing you to get anywhere from normal item quantity to three times the quantity in exchange from any single barter.<br2/>Villagers are also affected by this scroll's ability, even though not as much as Piglins are - stable 35<percent/> discount on every trade is about as much",
+	"book.enigmaticlegacy.entry.avarice_scroll.page.4": "as you can get from their little avid person.<br2/>Apart from this, you also get a slight chance of having an entire Emerald materialize into existance right from within your avaricious dreams whenever you happen to slay any living creature, and <&l>+1 Fortune Level<clear/> which will doubtlessly help you get your hands on some more riches anytime you feel like descending into the mines.",
+	"book.enigmaticlegacy.entry.avarice_scroll.page.5": "Just don't let that greed of yours take over your mind, and you'll be fine.",
+	
+	
+	"book.enigmaticlegacy.entry.infinimeal.name": "Essence of Raging Life",
+	"book.enigmaticlegacy.entry.infinimeal.page.1": "One another way to harness the power that rests within Heart of the Earth, this arcane substance embodies the power of nature itself, with it's everlasting desire to spread it's roots across the earth, to grow and thrive no matter what.<br2/>Letting it come in contact with most forms of plantlife is enough to significantly",
+	"book.enigmaticlegacy.entry.infinimeal.page.2": "accellerate their growth, similar to the effect produced when using Bone Meal. Unlike Bone Meal, however, you only need a mere grains of it to achieve such effect. Left alone, it seems to be able to draw power from surrounding",
+	"book.enigmaticlegacy.entry.infinimeal.page.3": "nature, growing and replenishing itself in quantity after being used - though never to more than there was created originally.<br2/>It also works on certain plants that normal fertilizers have no effect on, specifically Sugar Cane, Cactuses, Vines and Nether Wart.",
 	
 	
 	"book.enigmaticlegacy.landing_text": "In front of you lies the well of great knowledge, a place where some of this world's greatest mysteries belong, scrupulously researched and carefully catalogized.<br2/>As your journey continues and the world reveals itself to you, you may revisit and behold knowledge you gathered within these pages."

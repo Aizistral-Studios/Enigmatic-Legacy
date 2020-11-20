@@ -1694,6 +1694,10 @@ public class EnigmaticEventHandler {
 			PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
 			LivingEntity killed = event.getEntityLiving();
 
+			if (SuperpositionHandler.hasCurio(player, avariceScroll)) {
+				this.addDropWithChance(event, new ItemStack(Items.EMERALD, 1), 15);
+			}
+
 			if (killed.getClass() == ShulkerEntity.class) {
 				this.addDropWithChance(event, new ItemStack(EnigmaticLegacy.astralDust, 1), 20);
 			} else if (killed.getClass() == SkeletonEntity.class || killed.getClass() == StrayEntity.class) {
@@ -1900,6 +1904,12 @@ public class EnigmaticEventHandler {
 
 			if (!event.getName().equals(LootTables.BASTION_TREASURE)) {
 				modified.addPool(epic);
+			} else {
+				LootPool scroll = SuperpositionHandler.constructLootPool("darkest_scroll", 0F, 1F,
+						ItemLootEntry.builder(EnigmaticLegacy.darkestScroll).weight(100).acceptFunction(SetCount.builder(RandomValueRange.of(1F, 1F)))
+						);
+
+				modified.addPool(scroll);
 			}
 
 			modified.addPool(netherLiterature);

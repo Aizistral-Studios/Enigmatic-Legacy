@@ -4,6 +4,9 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "enigmaticlegacy.refmap.json",
   "mixins": [
+	"MixinPiglinTasks",
+	"MixinVillagerEntity",
+	"MixinForgeHooks",
 	"MixinPhantomSpawner",
 	"MixinApotheosisEnchantmentContainer",
 	"MixinEnchantmentContainer",

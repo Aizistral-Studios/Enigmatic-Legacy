@@ -45,7 +45,8 @@
 		"<&m>": "$(m)",
 		"<&n>": "$(n)",
 		"<&o>": "$(o)",
-		"<clear>": "$(clear)",
+		"<clear/>": "$(clear)",
+		"<percent/>": "%",
 		"<playername>": "$(playername)"
 	}
 

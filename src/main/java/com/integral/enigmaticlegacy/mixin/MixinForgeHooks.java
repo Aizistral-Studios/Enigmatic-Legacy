@@ -1,0 +1,62 @@
+package com.integral.enigmaticlegacy.mixin;
+
+import java.lang.reflect.Field;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.helpers.LootTableHelper;
+
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.LootTableManager;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.event.LootTableLoadEvent;
+
+/**
+ * No dear Forge, if I said my loot is added to tables - my loot WILL BE ADDED TO TABLES.
+ * @author Integral
+ */
+
+@Mixin(ForgeHooks.class)
+public class MixinForgeHooks {
+
+	@Inject(at = @At("RETURN"), method = "loadLootTable", cancellable = true, remap = false)
+	private static void onLoadLootTable(Gson gson, ResourceLocation name, JsonElement data, boolean custom, LootTableManager lootTableManager, CallbackInfoReturnable<LootTable> info) {
+		LootTable returnedTable = info.getReturnValue();
+
+		if (custom && returnedTable != null) {
+			EnigmaticLegacy.logger.debug("Caught custom LootTable loading: " + name);
+
+			try {
+				EnigmaticLegacy.logger.debug("Unfreezing " + name + "...");
+				LootTableHelper.unfreezePlease(returnedTable);
+			} catch (Exception ex) {
+				EnigmaticLegacy.logger.fatal("FAILED TO PROCESS LOOT TABLE: " + name);
+				throw new RuntimeException(ex);
+			}
+
+			EnigmaticLegacy.logger.debug("Force dispatching LootTableLoadEvent for " + name + "...");
+
+			LootTableLoadEvent event = new LootTableLoadEvent(name, returnedTable, lootTableManager);
+			EnigmaticLegacy.enigmaticHandler.onLootTablesLoaded(event);
+
+			if (event.isCanceled()) {
+				returnedTable = LootTable.EMPTY_LOOT_TABLE;
+			}
+
+			EnigmaticLegacy.logger.debug("Freezing " + name + " back...");
+			returnedTable.freeze();
+
+			EnigmaticLegacy.logger.debug("Returning " + name + " to Forge handler...");
+			info.setReturnValue(returnedTable);
+		}
+	}
+
+
+}

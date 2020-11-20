@@ -15,6 +15,8 @@ import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 import com.integral.enigmaticlegacy.objects.RevelationTomeToast;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.gui.toasts.ToastGui;
@@ -25,11 +27,15 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.Direction;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -127,6 +133,48 @@ public class ClientProxy extends CommonProxy {
 	public void pushRevelationToast(ItemStack renderedStack, int xp, int knowledge) {
 		ToastGui gui = Minecraft.getInstance().getToastGui();
 		gui.add(new RevelationTomeToast(renderedStack, xp, knowledge));
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public void spawnBonemealParticles(World world, BlockPos pos, int data) {
+		if (data == 0) {
+			data = 15;
+		}
+
+		BlockState blockstate = world.getBlockState(pos);
+		if (!blockstate.isAir(world, pos)) {
+			double d0 = 0.5D;
+			double d1;
+			if (blockstate.isIn(Blocks.WATER)) {
+				data *= 3;
+				d1 = 1.0D;
+				d0 = 3.0D;
+			} else if (blockstate.isOpaqueCube(world, pos)) {
+				pos = pos.up();
+				data *= 3;
+				d0 = 3.0D;
+				d1 = 1.0D;
+			} else {
+				d1 = blockstate.getShape(world, pos).getEnd(Direction.Axis.Y);
+			}
+
+			world.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
+
+			for(int i = 0; i < data; ++i) {
+				double d2 = random.nextGaussian() * 0.02D;
+				double d3 = random.nextGaussian() * 0.02D;
+				double d4 = random.nextGaussian() * 0.02D;
+				double d5 = 0.5D - d0;
+				double d6 = pos.getX() + d5 + random.nextDouble() * d0 * 2.0D;
+				double d7 = pos.getY() + random.nextDouble() * d1;
+				double d8 = pos.getZ() + d5 + random.nextDouble() * d0 * 2.0D;
+
+				world.addParticle(ParticleTypes.HAPPY_VILLAGER, d6, d7, d8, d2, d3, d4);
+			}
+
+		}
+
 	}
 
 }

@@ -8,9 +8,11 @@ import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
 import net.minecraft.util.RegistryKey;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
@@ -81,6 +83,10 @@ public class CommonProxy {
 	}
 
 	public void initEntityRendering() {
+		// NO-OP
+	}
+
+	public void spawnBonemealParticles(World world, BlockPos pos, int data) {
 		// NO-OP
 	}
 

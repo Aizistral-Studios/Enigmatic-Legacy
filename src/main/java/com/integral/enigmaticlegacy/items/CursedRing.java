@@ -286,7 +286,7 @@ public class CursedRing extends ItemBaseCurio {
 		}
 
 		for (LivingEntity checkedEntity : genericMobs) {
-			if (checkedEntity instanceof PiglinEntity) {
+			if (checkedEntity instanceof PiglinEntity && !SuperpositionHandler.hasCurio(player, EnigmaticLegacy.avariceScroll)) {
 				PiglinEntity piglin = (PiglinEntity) checkedEntity;
 
 				if (piglin.getAttackTarget() == null || !piglin.getAttackTarget().isAlive()) {

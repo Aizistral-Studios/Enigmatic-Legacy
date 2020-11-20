@@ -32,6 +32,7 @@ public class GemRing extends ItemBaseCurio {
 
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.gemRing1");
 		} else {

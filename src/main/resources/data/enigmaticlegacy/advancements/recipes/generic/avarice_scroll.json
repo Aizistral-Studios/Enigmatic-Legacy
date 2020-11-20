@@ -2,21 +2,11 @@
   "parent": "enigmaticlegacy:recipes/root",
   "rewards": {
     "recipes": [
-      "enigmaticlegacy:cursed_scroll"
+      "enigmaticlegacy:avarice_scroll"
     ]
   },
   "criteria": {
     "has_items1": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "enigmaticlegacy:darkest_scroll"
-          }
-        ]
-      }
-    },
-    "has_items2": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -26,12 +16,22 @@
         ]
       }
     },
+    "has_items2": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "enigmaticlegacy:darkest_scroll"
+          }
+        ]
+      }
+    },
 	"has_recipe_result": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:cursed_scroll"
+            "item": "enigmaticlegacy:avarice_scroll"
           }
         ]
       }
@@ -39,7 +39,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "enigmaticlegacy:cursed_scroll"
+        "recipe": "enigmaticlegacy:avarice_scroll"
       }
     },
     "has_parent_recipe": {

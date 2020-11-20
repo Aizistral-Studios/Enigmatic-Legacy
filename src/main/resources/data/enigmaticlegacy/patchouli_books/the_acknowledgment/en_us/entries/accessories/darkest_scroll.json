@@ -1,0 +1,23 @@
+{
+    "name": "book.enigmaticlegacy.entry.darkest_scroll.name",
+    "icon": "enigmaticlegacy:darkest_scroll",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/darkest_scroll",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 110,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.darkest_scroll.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "enigmaticlegacy:darkest_scroll",
+			"link_recipe": true,
+            "title": "book.enigmaticlegacy.entry.darkest_scroll.heading.1",
+            "text": "book.enigmaticlegacy.entry.darkest_scroll.page.2"
+        }
+    ]
+}

@@ -48,12 +48,14 @@ import com.integral.enigmaticlegacy.items.AnimalGuide;
 import com.integral.enigmaticlegacy.items.AntiforbiddenPotion;
 import com.integral.enigmaticlegacy.items.AstralBreaker;
 import com.integral.enigmaticlegacy.items.AstralDust;
+import com.integral.enigmaticlegacy.items.AvariceScroll;
 import com.integral.enigmaticlegacy.items.BerserkEmblem;
 import com.integral.enigmaticlegacy.items.CursedRing;
 import com.integral.enigmaticlegacy.items.CursedScroll;
 import com.integral.enigmaticlegacy.items.CursedStone;
 import com.integral.enigmaticlegacy.items.DarkArmor;
 import com.integral.enigmaticlegacy.items.DarkMirror;
+import com.integral.enigmaticlegacy.items.DarkestScroll;
 import com.integral.enigmaticlegacy.items.EarthHeart;
 import com.integral.enigmaticlegacy.items.EnchanterPearl;
 import com.integral.enigmaticlegacy.items.EnchantmentTransposer;
@@ -83,6 +85,7 @@ import com.integral.enigmaticlegacy.items.GuardianHeart;
 import com.integral.enigmaticlegacy.items.HastePotion;
 import com.integral.enigmaticlegacy.items.HeavenScroll;
 import com.integral.enigmaticlegacy.items.HunterGuide;
+import com.integral.enigmaticlegacy.items.Infinimeal;
 import com.integral.enigmaticlegacy.items.IronRing;
 import com.integral.enigmaticlegacy.items.LootGenerator;
 import com.integral.enigmaticlegacy.items.LoreFragment;
@@ -207,7 +210,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.9.2";
+	public static final String VERSION = "2.10.0";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -340,6 +343,9 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Unholy Stone") public static CursedStone cursedStone;
 	@ConfigurableItem("Enchanter's Pearl") public static EnchanterPearl enchanterPearl;
 	@ConfigurableItem("Fruit of Ascension") public static PlaceholderItem trueNotchApple;
+	@ConfigurableItem("Pact of Infinite Avarice") public static AvariceScroll avariceScroll;
+	@ConfigurableItem("Essence of Raging Life") public static Infinimeal infinimeal;
+	@ConfigurableItem("Darkest Scroll") public static DarkestScroll darkestScroll;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -388,7 +394,6 @@ public class EnigmaticLegacy {
 
 	@SuppressWarnings("deprecation")
 	public EnigmaticLegacy() {
-
 		logger.info("Constructing mod instance...");
 
 		enigmaticLegacy = this;
@@ -513,6 +518,9 @@ public class EnigmaticLegacy {
 		cursedStone = new CursedStone();
 		enchanterPearl = new EnchanterPearl();
 		trueNotchApple = new PlaceholderItem("true_notch_apple", Rarity.EPIC);
+		avariceScroll = new AvariceScroll();
+		infinimeal = new Infinimeal();
+		darkestScroll = new DarkestScroll();
 
 		sharpshooterEnchantment = new SharpshooterEnchantment(EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND);
 		ceaselessEnchantment = new CeaselessEnchantment(EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND);
@@ -789,6 +797,9 @@ public class EnigmaticLegacy {
 					cursedStone,
 					enchanterPearl,
 					trueNotchApple,
+					avariceScroll,
+					infinimeal,
+					darkestScroll,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),

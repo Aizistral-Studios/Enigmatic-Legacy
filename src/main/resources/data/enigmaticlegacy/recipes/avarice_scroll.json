@@ -3,23 +3,23 @@
   "conditions": [
     {
       "type": "enigmaticlegacy:is_enabled",
-      "item": "enigmaticlegacy:cursed_scroll"
+      "item": "enigmaticlegacy:avarice_scroll"
     }
   ],
   "pattern": [
-    "MHM",
+    "GRG",
     "IXF",
-    "RBR"
+    "GHG"
   ],
   "key": {
     "X": {
       "item": "enigmaticlegacy:darkest_scroll"
     },
-	"M": {
-      "item": "minecraft:phantom_membrane"
+	"G": {
+      "item": "minecraft:gold_ingot"
     },
-	"B": {
-      "item": "minecraft:enchanted_book"
+	"R": {
+      "item": "enigmaticlegacy:gem_ring"
     },
 	"H": {
       "item": "enigmaticlegacy:twisted_core"
@@ -29,12 +29,9 @@
     },
 	"I": {
       "item": "minecraft:ink_sac"
-    },
-	"R": {
-      "item": "minecraft:redstone"
     }
   },
   "result": {
-    "item": "enigmaticlegacy:cursed_scroll"
+    "item": "enigmaticlegacy:avarice_scroll"
   }
 }

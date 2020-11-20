@@ -6,7 +6,7 @@
     "secret": false,
     "priority": false,
     "read_by_default": false,
-    "sortnum": 110,
+    "sortnum": 120,
     "pages": [
         {
             "type": "text",
