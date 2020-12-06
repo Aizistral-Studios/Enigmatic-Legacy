@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Crashes, errors or unintended behaviour
+about: Crashes, errors or unintended behaviour. Bug reports that disregard this template will not be reviewed!
 title: ''
 labels: bug, awaits review
 assignees: Extegral
@@ -11,6 +11,8 @@ assignees: Extegral
 #### Notice
 Please reproduce all issues without any other unnecessary mods before submitting.
 If your issue involves interaction with some other mod apart from Curios and Patchouli, would be helpful if you include name and version of that mod in the list below.
+
+Any submitted bug reports that disregard this template will not be reviewed.
 -->
 
 #### Versions (Be specific, do not write "latest"):
