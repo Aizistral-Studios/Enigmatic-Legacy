@@ -1293,6 +1293,11 @@ public class EnigmaticEventHandler {
 				int slayerLevel = 0;
 				if ((slayerLevel = EnchantmentHelper.getEnchantmentLevel(slayerEnchantment, mainhandStack)) > 0) {
 					event.setAmount(event.getAmount() + slayerEnchantment.bonusDamageByCreature(player, event.getEntityLiving(), slayerLevel));
+
+					if (event.getEntityLiving() instanceof MonsterEntity) {
+						int i = 20 + player.getRNG().nextInt(10 * slayerLevel);
+						event.getEntityLiving().addPotionEffect(new EffectInstance(Effects.SLOWNESS, i, 3));
+					}
 				}
 
 				if (EnigmaticEnchantmentHelper.hasNemesisCurseEnchantment(mainhandStack)) {

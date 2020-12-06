@@ -34,7 +34,7 @@ public class WrathEnchantment extends Enchantment {
 
 	@Override
 	public boolean canApplyTogether(Enchantment ench) {
-		return !(ench instanceof DamageEnchantment) && !(ench instanceof ImpalingEnchantment) && !(ench instanceof TorrentEnchantment);
+		return !(ench instanceof DamageEnchantment) && !(ench instanceof ImpalingEnchantment) && !(ench instanceof TorrentEnchantment) && super.canApplyTogether(ench);
 	}
 
 	public float bonusDamageByCreature(LivingEntity attacker, LivingEntity living, int level) {

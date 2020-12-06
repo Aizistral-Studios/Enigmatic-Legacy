@@ -28,7 +28,7 @@ public class SharpshooterEnchantment extends Enchantment {
 
 	@Override
 	protected boolean canApplyTogether(final Enchantment ench) {
-		return ench != Enchantments.MULTISHOT && ench != Enchantments.PIERCING;
+		return ench != Enchantments.MULTISHOT && ench != Enchantments.PIERCING && super.canApplyTogether(ench);
 	}
 
 	@Override

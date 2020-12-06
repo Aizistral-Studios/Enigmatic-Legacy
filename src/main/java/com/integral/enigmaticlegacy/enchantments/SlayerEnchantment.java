@@ -42,7 +42,7 @@ public class SlayerEnchantment extends Enchantment {
 
 	@Override
 	public boolean canApplyTogether(Enchantment ench) {
-		return !(ench instanceof DamageEnchantment);
+		return !(ench instanceof DamageEnchantment) && super.canApplyTogether(ench);
 	}
 
 	@Override
@@ -54,14 +54,5 @@ public class SlayerEnchantment extends Enchantment {
 		float calculated = living instanceof MonsterEntity ? level * 1.5F : 0F;
 		calculated*= getRegisteredAttackStregth(attacker);
 		return calculated;
-	}
-
-	@Override
-	public void onEntityDamaged(LivingEntity user, Entity target, int level) {
-		if (target instanceof MonsterEntity) {
-			MonsterEntity monster = (MonsterEntity)target;
-			int i = 20 + user.getRNG().nextInt(10 * level);
-			monster.addPotionEffect(new EffectInstance(Effects.SLOWNESS, i, 3));
-		}
 	}
 }

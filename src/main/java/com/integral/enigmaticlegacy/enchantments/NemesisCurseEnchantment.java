@@ -54,4 +54,9 @@ public class NemesisCurseEnchantment extends Enchantment {
 	public boolean isAllowedOnBooks() {
 		return true;
 	}
+
+	@Override
+	protected boolean canApplyTogether(Enchantment ench) {
+		return super.canApplyTogether(ench);
+	}
 }

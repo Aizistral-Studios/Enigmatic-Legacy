@@ -1016,6 +1016,8 @@ public class SuperpositionHandler {
 		boolean canDropMore = EnigmaticLegacy.soulCrystal.getLostCrystals(player) < maxCrystalLoss;
 		boolean keepInventory = player.world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY);
 
+		// TODO Use Enum config
+
 		if (dropMode == 0)
 			return hasCursedRing && canDropMore;
 		else if (dropMode == 1)
