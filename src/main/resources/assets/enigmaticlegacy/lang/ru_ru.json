@@ -5,7 +5,7 @@
 	"item.enigmaticlegacy.extradimensional_eye": "Око измерений",
 	"item.enigmaticlegacy.recall_potion": "Зелье возврата",
 	"item.enigmaticlegacy.forbidden_axe": "Топор палача",
-	"item.enigmaticlegacy.super_magnet_ring": "Dislocation Ring",
+	"item.enigmaticlegacy.super_magnet_ring": "Усиленное магнетическое кольцо",
 	"item.enigmaticlegacy.escape_scroll": "Свиток Посмертного возврата",
 	"item.enigmaticlegacy.heaven_scroll": "Дар Небес",
 	"item.enigmaticlegacy.golem_heart": "Сердце Голема",
@@ -69,10 +69,10 @@
 	"item.enigmaticlegacy.crying_boots": "Плачущие ботинки [В разработке]",
 	"item.enigmaticlegacy.cursed_scroll": "Свиток Тысячи проклятий",
 	"item.enigmaticlegacy.berserk_emblem": "Эмблема окровавленной доблести",
-	"item.enigmaticlegacy.the_twist": "The Twist",
+	"item.enigmaticlegacy.the_twist": "Обман",
 	"item.enigmaticlegacy.evil_essence": "Нечестивая эссенция",
-	"item.enigmaticlegacy.animal_guide": "Пособие по дружбе с животными",
-	"item.enigmaticlegacy.hunter_guide": "Пособие по охоте в дикой природе",
+	"item.enigmaticlegacy.animal_guide": "Руководство по дружбе с животными",
+	"item.enigmaticlegacy.hunter_guide": "Руководство по охоте в дикой природе",
 	"item.enigmaticlegacy.guardian_heart": "Сердце Стража",
 	"item.enigmaticlegacy.forbidden_fruit": "Запретный плод",
 	"item.enigmaticlegacy.antiforbidden_potion": "Зелье искупления",
@@ -188,11 +188,11 @@
 	"key.categories.enigmaticLegacy": "§6§lEnigmatic Legacy",
 	"key.enderRing": "Кольцо Края",
 	"key.xpScroll": "Свиток Вечной мудрости",
-	"key.spellstoneAbility": "Spellstone Active Ability",
+	"key.spellstoneAbility": "Активная способность камня:",
 	"tooltip.enigmaticlegacy.currentKeybind": "§6Текущая клавиша: §d%1$s",
 	"tooltip.enigmaticlegacy.seconds": "секунд",
 	"death.attack.darkness": "%1$s был поглощён тьмой",
-	"message.enigmaticlegacy.gen_sim_complete": "Estimated generation complete in §632768§5 instances; check §6latest.log§5 file to see the results.",
+	"message.enigmaticlegacy.gen_sim_complete": "Предполагаемая генерация завершена за §632768§5 ротаций; проверьте §6latest.log§5, чтобы увидеть результат.",
 	"status.enigmaticlegacy.outdated": "Обнаружена новая версия §6Enigmatic Legacy§5: %1$s. Вам стоит оценить её!",
 	"status.enigmaticlegacy.noconnection": "Enigmatic Legacy не удалось проверить наличие обновлений.",
 	"world.enigmaticlegacy.name": "Мир #",
@@ -1148,26 +1148,26 @@
 	"book.enigmaticlegacy.entry.ancient_tomes.page.4": "other objects of power you might be interested to claim, but may not know where to seek them yet.",
 	
 	
-	"book.enigmaticlegacy.entry.ancient_debris.name": "Ancient Debris",
-	"book.enigmaticlegacy.entry.ancient_debris.heading.1": "The Debris",
+	"book.enigmaticlegacy.entry.ancient_debris.name": "Древние обломки",
+	"book.enigmaticlegacy.entry.ancient_debris.heading.1": "Обломки",
 	"book.enigmaticlegacy.entry.ancient_debris.page.1": "Deep within the Nether's crust, there lies an ancient debris.<br2/>It's origin isn't known exactly. Fragments of lore you came across quite precisely describe the process of refining it and expected properties of material that  can be obtained through doing so, but leave no clues to where  it could've come from. Though geological history of",
 	"book.enigmaticlegacy.entry.ancient_debris.page.2": "the Nether is a mystery in it's own right, how something as unusual as those debris ended up in that history is even more of an enigma.<br2/>Much more than in that history, however, you are interested in laying your hands on the actual sample of debris itself.",
 	"book.enigmaticlegacy.entry.ancient_debris.page.3": "From what you have acknowledged, it might be a key to forging metal that superceeds hardness of a diamond, which for many former eons remained the most durable material both humans and demigods had to work with.",
 	
 	
-	"book.enigmaticlegacy.entry.redstone_lantern.name": "Redstone Lantern",
+	"book.enigmaticlegacy.entry.redstone_lantern.name": "Краснокаменная лампа",
 	"book.enigmaticlegacy.entry.redstone_lantern.heading.1": "Crafting Lanterns",
 	"book.enigmaticlegacy.entry.redstone_lantern.page.1": "Redstone lanterns are another variation to lamp design, manufactured from redstone lamps instead of raw glowstone.<br2/>Unlike redstone lamps themselves, redstone lanterns embed source of power within their structure, so that they remain turned on. That source is encased in such way, however, that it cannot be directly influenced by outer",
 	"book.enigmaticlegacy.entry.redstone_lantern.page.2": "redstone signals, thus not allowing those lanterns to be turned off.<br2/>In every other regard, they are completely similar to their glowstone counterparts, with only their core having slightly different appearance.",
 	
 	
-	"book.enigmaticlegacy.entry.shroomlamp.name": "The Shroomlamp",
+	"book.enigmaticlegacy.entry.shroomlamp.name": "Гриболампа",
 	"book.enigmaticlegacy.entry.shroomlamp.page.1": "Shroomlights are beatiful natural source of lightning in those common spaces of nether that brim with plantlife. But you can adapt that source to serve as alternative material for manufacturing lamps.<br2/>Lamps created with shroomlight as their core are completely identical to their glowstone counterparts, albeit different look of their core.",
 	
 	
-	"book.enigmaticlegacy.entry.lamp.name": "The Lamp",
-	"book.enigmaticlegacy.entry.lamp.page.1": "Glowstone is a good and reliable source of light, but chucking down chunks of raw glowstone doesn't really create much aesthetics. Instead of doing that, you came up with the design similar to that of a common lantern, albeit larger and brighter.<br2/>Just like lanterns, you can place lamps on the floor, or hang them from ceiling.",
-	"book.enigmaticlegacy.entry.lamp.page.2": "Through extensive experimentation you also created somewhat more sophisticated design, with the lamp being encased within a block of glass.<br2/>That removes the need for it to be supported by floor or have something above it could be attach to.",
+	"book.enigmaticlegacy.entry.lamp.name": "Лампа",
+	"book.enigmaticlegacy.entry.lamp.page.1": "Светокамень - хороший и надёжный источник света, однако вид его свисающих гроздьев не приносит большого удовольствия.  Вместо того, чтобы использовать его в сыром виде, вам пришла идея создать нечто вроде обычной лампы, но больше и светлее.<br2/>Вы можете поставить её на пол, или же подвесить под потолком.",
+	"book.enigmaticlegacy.entry.lamp.page.2": "Спустя некоторое количество попыток, у вас получилось разработать улучшенный дизайн, заключив излучающий компонент в стекло.<br2/>Данная особенность избавляет от нужды закреплять лампу под чем-то или же ставить на какую-то поверхность.",
 	
 	
 	"book.enigmaticlegacy.entry.recall_potion.name": "Potion of Recall",
@@ -1318,7 +1318,7 @@
 	"book.enigmaticlegacy.entry.infinimeal.page.3": "nature, growing and replenishing itself in quantity after being used - though never to more than there was created originally.<br2/>It also works on certain plants that normal fertilizers have no effect on, specifically Sugar Cane, Cactuses, Vines and Nether Wart.",
 	
 	
-	"book.enigmaticlegacy.landing_text": "In front of you lies the well of great knowledge, a place where some of this world's greatest mysteries belong, scrupulously researched and carefully catalogized.<br2/>As your journey continues and the world reveals itself to you, you may revisit and behold knowledge you gathered within these pages."
+	"book.enigmaticlegacy.landing_text": "Странник, что раскрыл страницы данной книги, внемли: прямо перед тобой лежит источник великих знаний, что содержит в себе описания различных реликвий этого мира, тщательно изученных и категоризованных.<br2/>Но чтоб понять их смысл, ты должен самостоятельно изучить их. Отправляйся в путь, и когда ты найдёшь что-то новое, данный фолиант расскажет тебе... истину."
 	
 
 
