@@ -320,11 +320,11 @@
 	"tooltip.enigmaticlegacy.enigmaticAmulet5": "§5уносит туманные осколки воспоминаний...",
 	"tooltip.enigmaticlegacy.enigmaticAmulet6": "§5Воспоминаний о чём-то важном.",
 	"tooltip.enigmaticlegacy.enigmaticAmuletInscription": "§5Имя высечено на нём: §4%1$s",
-	"tooltip.enigmaticlegacy.enigmaticAmuletShift1": "§5Если вы умрете, имея данный амулет на шее",
+	"tooltip.enigmaticlegacy.enigmaticAmuletShift1": "§5Если вы умрете, имея данный амулет экипированным на шее",
 	"tooltip.enigmaticlegacy.enigmaticAmuletShift2": "§5или в инвентаре, он призовет §6Потусторонний",
 	"tooltip.enigmaticlegacy.enigmaticAmuletShift3": "§6сосуд§5, что сохранит в себе все ваши вещи,",
-	"tooltip.enigmaticlegacy.enigmaticAmuletShift4": "§5Осколки души и опыт.",
-	"tooltip.enigmaticlegacy.enigmaticAmuletShift5": "§5Чтобы забрать содержимое сосуда - подойдите к нему.",
+	"tooltip.enigmaticlegacy.enigmaticAmuletShift4": "§5Осколки души и опыт. Чтобы забрать",
+	"tooltip.enigmaticlegacy.enigmaticAmuletShift5": "§5содержимое сосуда - просто подойдите к нему.",
 	
 	"tooltip.enigmaticlegacy.enigmaticAmuletModifierRED": "§6+%1$s §dурона",
 	"tooltip.enigmaticlegacy.enigmaticAmuletModifierAQUA": "§6+15% §dскорость бега",
@@ -359,20 +359,20 @@
 
 	"tooltip.enigmaticlegacy.recallPotion1": "§5Возвращает вас к вашей кровати,",
 	"tooltip.enigmaticlegacy.recallPotion2": "§6Якорю возрождения§5, или же к §6Центру Мира",
-	"tooltip.enigmaticlegacy.recallPotion3": "§5если у вы не обладаете первыми двумя.",
+	"tooltip.enigmaticlegacy.recallPotion3": "§5если вы не обладаете первыми двумя.",
 
 	"tooltip.enigmaticlegacy.darkMirror1": "§5Взгляните в зеркало, чтобы вернуться к вашей кровати,",
 	"tooltip.enigmaticlegacy.darkMirror2": "§6Якорю возрождения§5, или же к §6Центру Мира",
-	"tooltip.enigmaticlegacy.darkMirror3": "§5если у вы не обладаете первыми двумя.",
+	"tooltip.enigmaticlegacy.darkMirror3": "§5если вы не обладаете первыми двумя.",
 	
-	"tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance": "§6+%1$s §dШанс обезглавить",
+	"tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance": "§6+%1$s §dшанс обезглавить",
 	"tooltip.enigmaticlegacy.forbiddenAxe1": "§5Может обезглавливать убитых монстров.",
 	"tooltip.enigmaticlegacy.forbiddenAxe2": "§5Каждый уровень Добычи добавляет §6+%1$s§5",
 	"tooltip.enigmaticlegacy.forbiddenAxe3": "§5к общему шансу обезглавливания.",
 	
 	"tooltip.enigmaticlegacy.escapeTome1": "§5Когда вы умираете, телепортирует ваши предметы к вашей кровати,",
 	"tooltip.enigmaticlegacy.escapeTome2": "§6Якорю возрождения§5, или же к §6Центру Мира",
-	"tooltip.enigmaticlegacy.escapeTome3": "§5если у вы не обладаете первыми двумя - но сам",
+	"tooltip.enigmaticlegacy.escapeTome3": "§5если вы не обладаете первыми двумя - но сам",
 	"tooltip.enigmaticlegacy.escapeTome4": "§5остаётся на месте вашей смерти.",
 	
 	"tooltip.enigmaticlegacy.superMagnetRing1": "§5Мгновенно подбирает все брошенные предметы",
