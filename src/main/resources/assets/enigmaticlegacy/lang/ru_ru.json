@@ -371,7 +371,7 @@
 	"tooltip.enigmaticlegacy.forbiddenAxe3": "§5к общему шансу обезглавливания.",
 	
 	"tooltip.enigmaticlegacy.escapeTome1": "§5Когда вы умираете, телепортирует ваши предметы к вашей §6кровати§5,",
-	"tooltip.enigmaticlegacy.escapeTome2": "§6Якорю возрождения§5, или же к §6Центру Мира",
+	"tooltip.enigmaticlegacy.escapeTome2": "§6Якорю возрождения§5, или же к §6Центру Мира§5,",
 	"tooltip.enigmaticlegacy.escapeTome3": "§5если вы не обладаете первыми двумя, - но сам",
 	"tooltip.enigmaticlegacy.escapeTome4": "§5остаётся на месте вашей смерти.",
 	
@@ -600,8 +600,8 @@
 	"tooltip.enigmaticlegacy.revelationTomeClick": "§6Нажмите, чтобы изучить.",
 	"tooltip.enigmaticlegacy.revelationTomeMarkRead": "§cВы уже изучили эту книгу.",
 	
-	"tooltip.enigmaticlegacy.theAcknowledgment1": "§5Ослепляющий свет откровения",
-	"tooltip.enigmaticlegacy.theAcknowledgment2": "§5испепелит тех, кто откажется от знаний...",
+	"tooltip.enigmaticlegacy.theAcknowledgment1": "§5Ослепляющий свет Откровения испепелит",
+	"tooltip.enigmaticlegacy.theAcknowledgment2": "§5тех, кто откажется от знаний...",
 	
 	"tooltip.enigmaticlegacy.cursed_scroll1": "§6+%1$s §dAttack Damage",
 	"tooltip.enigmaticlegacy.cursed_scroll2": "§6+%1$s §dMining Speed",
