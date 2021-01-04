@@ -13,8 +13,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext.Builder;
 import net.minecraft.util.ResourceLocation;
-
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.block.AbstractBlock.Properties;
+import net.minecraft.fluid.FluidState;
 
 public class BlockMassiveLamp extends Block {
 
@@ -23,6 +25,11 @@ public class BlockMassiveLamp extends Block {
 
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, registryName));
 		EnigmaticLegacy.cutoutBlockRegistry.add(this);
+	}
+
+	@Override
+	public boolean shouldDisplayFluidOverlay(BlockState state, IBlockDisplayReader world, BlockPos pos, FluidState fluidState) {
+		return true;
 	}
 
 	@Override
