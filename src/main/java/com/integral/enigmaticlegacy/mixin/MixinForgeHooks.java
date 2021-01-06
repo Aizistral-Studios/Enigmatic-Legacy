@@ -23,7 +23,7 @@ import net.minecraftforge.event.LootTableLoadEvent;
  * @author Integral
  */
 
-@Mixin(ForgeHooks.class)
+@Mixin(value = ForgeHooks.class, remap = false)
 public class MixinForgeHooks {
 
 	@Inject(at = @At("RETURN"), method = "loadLootTable", cancellable = true, remap = false)

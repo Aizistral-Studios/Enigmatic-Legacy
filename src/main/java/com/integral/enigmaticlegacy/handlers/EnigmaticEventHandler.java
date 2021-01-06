@@ -14,6 +14,8 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.tuple.Triple;
+
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -228,6 +230,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -265,6 +268,26 @@ public class EnigmaticEventHandler {
 	public static final Random theySeeMeRollin = new Random();
 	public static final Multimap<PlayerEntity, Item> postmortalPossession = ArrayListMultimap.create();
 	public static final Multimap<PlayerEntity, GuardianEntity> angeredGuardians = ArrayListMultimap.create();
+
+	@SubscribeEvent
+	public void serverStarted(final FMLServerStartedEvent event) {
+		if (!exceptionList.isEmpty()) {
+			EnigmaticLegacy.logger.fatal("Some stupid mods once again attempted to add unnamed LootPools to loot tables!");
+			for (Triple<LootTable, LootPool, Exception> triple : exceptionList) {
+				LootTable table = triple.getLeft();
+				LootPool pool = triple.getMiddle();
+				Exception ex = triple.getRight();
+
+				EnigmaticLegacy.logger.fatal("Loot table in question: " + table);
+				EnigmaticLegacy.logger.fatal("LootPool in question: " + pool);
+				EnigmaticLegacy.logger.fatal("Examine the stacktrace below to see what mod have caused this.");
+				ex.printStackTrace();
+			}
+
+			if (OmniconfigHandler.crashOnUnnamedPool.getValue())
+				throw new RuntimeException(exceptionList.get(0).getRight());
+		}
+	}
 
 	@SubscribeEvent
 	public void onItemUse(LivingEntityUseItemEvent.Stop event) {
@@ -1937,6 +1960,7 @@ public class EnigmaticEventHandler {
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.etheriumOre, 60, 1F, 2F),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.extradimensionalEye, 20)
 					);
+
 
 			LootTable modified = event.getTable();
 			modified.addPool(epic);

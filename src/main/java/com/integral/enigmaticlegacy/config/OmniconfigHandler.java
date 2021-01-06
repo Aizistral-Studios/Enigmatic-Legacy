@@ -21,6 +21,7 @@ public class OmniconfigHandler {
 	public static Omniconfig.BooleanParameter bonusWoolRecipesEnabled;
 	public static Omniconfig.BooleanParameter disableAOEShiftSuppression;
 	public static Omniconfig.BooleanParameter retriggerRecipeUnlocks;
+	public static Omniconfig.BooleanParameter crashOnUnnamedPool;
 
 	public static Omniconfig.IntParameter soulCrystalsMode;
 	public static Omniconfig.IntParameter maxSoulCrystalLoss;
@@ -110,6 +111,11 @@ public class OmniconfigHandler {
 				.comment("Whether or not bonus recipes for wool dyeing should be enabled.")
 				.sync()
 				.getBoolean("BonusWoolRecipesEnabled", true);
+
+		crashOnUnnamedPool = builder
+				.comment("Whether or not Enigmatic Legacy should purposefully crash client whenever any mod tries to inject unnamed "
+						+ "LootPool into any loot table. If false, stacktraces will be printed to log but game will proceed as normal.")
+				.getBoolean("CrashOnUnnamedPool", true);
 
 		disableAOEShiftSuppression = builder
 				.comment("If true, tools with area of effect abilities will not have those abilities disabled when player holds Shift (crouches).")

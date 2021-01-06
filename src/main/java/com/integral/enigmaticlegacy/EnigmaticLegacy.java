@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.lang3.tuple.Triple;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -168,6 +169,8 @@ import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potion;
@@ -193,6 +196,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -210,7 +214,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.10.2";
+	public static final String VERSION = "2.10.3";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -391,6 +395,7 @@ public class EnigmaticLegacy {
 	private static final String PTC_VERSION = "1";
 
 	public static final CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+	public static final List<Triple<LootTable, LootPool, Exception>> exceptionList = new ArrayList<>();
 
 	@SuppressWarnings("deprecation")
 	public EnigmaticLegacy() {
@@ -555,7 +560,7 @@ public class EnigmaticLegacy {
 		logger.info("Mod instance constructed successfully.");
 	}
 
-	private void onLoadComplete(final FMLLoadCompleteEvent event) {
+	public void onLoadComplete(final FMLLoadCompleteEvent event) {
 		logger.info("Initializing load completion phase...");
 
 		logger.info("Registering brewing recipes...");
@@ -587,7 +592,6 @@ public class EnigmaticLegacy {
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
-
 		logger.info("Initializing common setup phase...");
 
 		damageTypesFire.add(DamageSource.LAVA.damageType);

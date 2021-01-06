@@ -12,7 +12,8 @@
 	"MixinEnchantmentContainer",
 	"MixinPiglinMobsSensor",
 	"MixinHoglinTasks",
-	"MixinEnchantment"
+	"MixinEnchantment",
+	"MixinLootTable"
   ],
   "client": [],
   "injectors": {
