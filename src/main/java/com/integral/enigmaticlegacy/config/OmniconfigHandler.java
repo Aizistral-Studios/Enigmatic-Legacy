@@ -115,7 +115,7 @@ public class OmniconfigHandler {
 		crashOnUnnamedPool = builder
 				.comment("Whether or not Enigmatic Legacy should purposefully crash client whenever any mod tries to inject unnamed "
 						+ "LootPool into any loot table. If false, stacktraces will be printed to log but game will proceed as normal.")
-				.getBoolean("CrashOnUnnamedPool", true);
+				.getBoolean("CrashOnUnnamedPool", false);
 
 		disableAOEShiftSuppression = builder
 				.comment("If true, tools with area of effect abilities will not have those abilities disabled when player holds Shift (crouches).")
