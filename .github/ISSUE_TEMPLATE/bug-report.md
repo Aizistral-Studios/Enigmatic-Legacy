@@ -11,6 +11,7 @@ assignees: Extegral
 #### Notice
 Please reproduce all issues without any other unnecessary mods before submitting.
 If your issue involves interaction with some other mod apart from Curios and Patchouli, would be helpful if you include name and version of that mod in the list below.
+If you are convinced your issue relates to what is outlined in https://github.com/Extegral/Enigmatic-Legacy/issues/132, you don't have to do any of the above, just make sure to properly fill in all the other data requested below. 
 
 Any submitted bug reports that disregard this template will not be reviewed.
 -->
