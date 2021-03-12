@@ -212,6 +212,18 @@ public class SuperpositionHandler {
 		return null;
 	}
 
+	public static void destroyCurio(LivingEntity entity, Item curio) {
+		CuriosApi.getCuriosHelper().getEquippedCurios(entity).ifPresent(handler -> {
+			for (int i = 0; i < handler.getSlots()-1; i++) {
+				if (handler.getStackInSlot(i) != null) {
+					if (handler.getStackInSlot(i).getItem() == curio) {
+						handler.setStackInSlot(i, ItemStack.EMPTY);
+					}
+				}
+			}
+		});
+	}
+
 	/**
 	 * Sends message to Curios API in order to register specified Curio type. Should
 	 * be used within InterModEnqueueEvent.

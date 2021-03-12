@@ -98,7 +98,7 @@ public class UltimatePotionLingering extends ItemBase implements IAdvancedPotion
 		if (!worldIn.isRemote) {
 			EnigmaticPotionEntity potionEntity = new EnigmaticPotionEntity(worldIn, playerIn);
 			potionEntity.setItem(throwed);
-			potionEntity.shoot(playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.5F, 1.0F);
+			potionEntity.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.5F, 1.0F);
 			worldIn.addEntity(potionEntity);
 		}
 

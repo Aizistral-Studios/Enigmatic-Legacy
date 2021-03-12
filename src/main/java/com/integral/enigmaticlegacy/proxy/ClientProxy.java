@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.client.fx.PermanentItemPickupParticle;
 import com.integral.enigmaticlegacy.client.renderers.PermanentItemRenderer;
 import com.integral.enigmaticlegacy.client.renderers.ShieldAuraLayer;
 import com.integral.enigmaticlegacy.client.renderers.UltimateWitherSkullRenderer;
@@ -65,9 +66,11 @@ public class ClientProxy extends CommonProxy {
 			Entity pickuper = Minecraft.getInstance().world.getEntityByID(pickuper_id);
 			Entity entity = Minecraft.getInstance().world.getEntityByID(item_id);
 
-			Minecraft.getInstance().particles.addEffect(new ItemPickupParticle(Minecraft.getInstance().getRenderManager(), Minecraft.getInstance().getRenderTypeBuffers(), Minecraft.getInstance().world, pickuper, entity));
-			Minecraft.getInstance().world.playSound(entity.getPosX(), entity.getPosY(), entity.getPosZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, (ClientProxy.random.nextFloat() - ClientProxy.random.nextFloat()) * 1.4F + 2.0F, false);
-		} catch (Exception ex) {
+			// TODO Verify fix... someday
+
+			Minecraft.getInstance().particles.addEffect(new PermanentItemPickupParticle(Minecraft.getInstance().getRenderManager(), Minecraft.getInstance().getRenderTypeBuffers(), Minecraft.getInstance().world, pickuper, entity));
+			Minecraft.getInstance().world.playSound(pickuper.getPosX(), pickuper.getPosY(), pickuper.getPosZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, (ClientProxy.random.nextFloat() - ClientProxy.random.nextFloat()) * 1.4F + 2.0F, false);
+		} catch (Throwable ex) {
 			Exception log = new Exception("Unknown error when rendering permanent item pickup", ex);
 			EnigmaticLegacy.logger.catching(log);
 		}

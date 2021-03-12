@@ -75,7 +75,7 @@ public class MagnetRing extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (invertShift.getValue() ? !living.isCrouching() : living.isCrouching() || !(living instanceof PlayerEntity))
+		if ((invertShift.getValue() ? !living.isSneaking() : living.isSneaking()) || !(living instanceof PlayerEntity))
 			return;
 
 		double x = living.getPosX();

@@ -19,6 +19,8 @@ public class MixinLootTable {
 
 	@Inject(at = @At("HEAD"), method = "addPool", cancellable = true, remap = false)
 	public void onPoolAdded(LootPool pool, CallbackInfo info) {
+		if (true)
+			return;
 
 		Object forgottenObject = this;
 		if (pool.getName() == null) {

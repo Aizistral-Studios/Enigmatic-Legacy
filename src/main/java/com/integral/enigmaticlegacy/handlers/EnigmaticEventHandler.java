@@ -756,7 +756,8 @@ public class EnigmaticEventHandler {
 
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.magmaHeart))
 				if (!player.getActivePotionEffects().isEmpty()) {
-					Collection<EffectInstance> effects = player.getActivePotionEffects();
+					Collection<EffectInstance> effects = new ArrayList<>();
+					effects.addAll(player.getActivePotionEffects());
 
 					for (EffectInstance effect : effects) {
 						if (effect.getPotion().equals(Effects.FIRE_RESISTANCE)) {
@@ -855,6 +856,18 @@ public class EnigmaticEventHandler {
 				postmortalPossession.put(player, EnigmaticLegacy.enigmaticAmulet);
 			}
 
+			if (SuperpositionHandler.hasItem(player, cursedStone)) {
+				postmortalPossession.put(player, cursedStone);
+
+				for(List<ItemStack> list : player.inventory.allInventories) {
+					for(ItemStack itemstack : list) {
+						if (!itemstack.isEmpty() && itemstack.getItem() == cursedStone) {
+							itemstack.setCount(0);
+						}
+					}
+				}
+			}
+
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.escapeScroll)) {
 				postmortalPossession.put(player, EnigmaticLegacy.escapeScroll);
 
@@ -877,7 +890,7 @@ public class EnigmaticEventHandler {
 		if (event.getEntityLiving() instanceof ServerPlayerEntity) {
 			ServerPlayerEntity player = (ServerPlayerEntity) event.getEntityLiving();
 
-			if (SuperpositionHandler.hasItem(player, cursedStone) && player.world.getDimensionKey() == proxy.getNetherKey()) {
+			if (this.hadUnholyStone(player) && player.world.getDimensionKey() == proxy.getNetherKey()) {
 				BlockPos deathPos = player.getPosition();
 
 				if (this.isThereLava(player.world, deathPos)) {
@@ -913,17 +926,10 @@ public class EnigmaticEventHandler {
 					}
 
 					if (confirmLavaPool) {
-						// System.out.println("Lava pool confirmed!");
-						for(List<ItemStack> list : player.inventory.allInventories) {
-							for(ItemStack itemstack : list) {
-								if (!itemstack.isEmpty() && itemstack.getItem() == cursedStone) {
-									itemstack.setCount(0);
-								}
-							}
-						}
-
 						event.addOverride(stack -> stack != null && stack.getItem() == cursedRing, DropRule.DESTROY);
 						soulCrystal.setLostCrystals(player, soulCrystal.getLostCrystals(player)+1);
+						SuperpositionHandler.destroyCurio(player, cursedRing);
+
 						player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_WITHER_DEATH, SoundCategory.PLAYERS, 1.0F, 0.5F);
 					}
 				}
@@ -1607,8 +1613,6 @@ public class EnigmaticEventHandler {
 				player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 128, player.world.getDimensionKey())), new PacketPortalParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 100, 1.25F, false));
 
-
-
 				for (ItemEntity dropIt : event.getDrops()) {
 					ItemEntity alternativeDrop = new ItemEntity(dimPoint.world, dimPoint.posX, dimPoint.posY, dimPoint.posZ, dropIt.getItem());
 					alternativeDrop.setPositionAndUpdate(dimPoint.posX, dimPoint.posY, dimPoint.posZ);
@@ -1808,18 +1812,25 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onLootTablesLoaded(LootTableLoadEvent event) {
+		if (!OmniconfigHandler.customDungeonLootEnabled.getValue())
+			return;
 
 		List<ResourceLocation> underwaterRuins = new ArrayList<ResourceLocation>();
 		underwaterRuins.add(LootTables.CHESTS_UNDERWATER_RUIN_BIG);
 		underwaterRuins.add(LootTables.CHESTS_UNDERWATER_RUIN_SMALL);
 
+		LootPool overworldLiterature = !OmniconfigHandler.isItemEnabled(EnigmaticLegacy.overworldRevelationTome) ? null :
+			SuperpositionHandler.constructLootPool("overworldLiterature", -7F, 2F,
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.overworldRevelationTome, 100).acceptFunction(LootFunctionRevelation.of(RandomValueRange.of(1, 3), RandomValueRange.of(50, 500))));
 
-		LootPool overworldLiterature = SuperpositionHandler.constructLootPool("overworldLiterature", -7F, 2F,
-				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.overworldRevelationTome, 100).acceptFunction(LootFunctionRevelation.of(RandomValueRange.of(1, 3), RandomValueRange.of(50, 500))));
-		LootPool netherLiterature = SuperpositionHandler.constructLootPool("netherLiterature", -7F, 2F,
-				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.netherRevelationTome, 100).acceptFunction(LootFunctionRevelation.of(RandomValueRange.of(1, 3), RandomValueRange.of(100, 700))));
-		LootPool endLiterature = SuperpositionHandler.constructLootPool("endLiterature", -7F, 2F,
-				SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.endRevelationTome, 100).acceptFunction(LootFunctionRevelation.of(RandomValueRange.of(1, 4), RandomValueRange.of(200, 1000))));
+		LootPool netherLiterature = !OmniconfigHandler.isItemEnabled(EnigmaticLegacy.netherRevelationTome) ? null :
+			SuperpositionHandler.constructLootPool("netherLiterature", -7F, 2F,
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.netherRevelationTome, 100).acceptFunction(LootFunctionRevelation.of(RandomValueRange.of(1, 3), RandomValueRange.of(100, 700))));
+
+		LootPool endLiterature = !OmniconfigHandler.isItemEnabled(EnigmaticLegacy.endRevelationTome) ? null :
+			SuperpositionHandler.constructLootPool("endLiterature", -7F, 2F,
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.endRevelationTome, 100).acceptFunction(LootFunctionRevelation.of(RandomValueRange.of(1, 4), RandomValueRange.of(200, 1000))));
+
 		/*
 		 * Handlers for adding spellstones to dungeon loot.
 		 */
@@ -1905,7 +1916,9 @@ public class EnigmaticEventHandler {
 			modified.addPool(epic);
 
 			if (event.getName() != LootTables.CHESTS_SHIPWRECK_SUPPLY) {
-				modified.addPool(overworldLiterature);
+				if (overworldLiterature != null) {
+					modified.addPool(overworldLiterature);
+				}
 			}
 
 			event.setTable(modified);
@@ -1940,7 +1953,9 @@ public class EnigmaticEventHandler {
 				modified.addPool(scroll);
 			}
 
-			modified.addPool(netherLiterature);
+			if (netherLiterature != null) {
+				modified.addPool(netherLiterature);
+			}
 			event.setTable(modified);
 
 		} else if (event.getName().equals(LootTables.CHESTS_END_CITY_TREASURE)) {
@@ -1964,7 +1979,9 @@ public class EnigmaticEventHandler {
 
 			LootTable modified = event.getTable();
 			modified.addPool(epic);
-			modified.addPool(endLiterature);
+			if (endLiterature != null) {
+				modified.addPool(endLiterature);
+			}
 			event.setTable(modified);
 		}
 
@@ -1977,12 +1994,17 @@ public class EnigmaticEventHandler {
 					ItemLootEntry.builder(EnigmaticLegacy.thiccScroll).weight(20).acceptFunction(SetCount.builder(RandomValueRange.of(2F, 6F))),
 					ItemLootEntry.builder(EnigmaticLegacy.loreFragment).weight(10).acceptFunction(SetCount.builder(RandomValueRange.of(1F, 2F))));
 
-			LootPool literature = SuperpositionHandler.constructLootPool("literature", -4F, 3F,
-					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.overworldRevelationTome, 100).acceptFunction(LootFunctionRevelation.of(RandomValueRange.of(1, 3), RandomValueRange.of(50, 500))));
 
 			LootTable modified = event.getTable();
 			modified.addPool(special);
-			modified.addPool(literature);
+
+			if (OmniconfigHandler.isItemEnabled(overworldRevelationTome)) {
+				LootPool literature = SuperpositionHandler.constructLootPool("literature", -4F, 3F,
+						SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.overworldRevelationTome, 100).acceptFunction(LootFunctionRevelation.of(RandomValueRange.of(1, 3), RandomValueRange.of(50, 500))));
+
+				modified.addPool(literature);
+			}
+
 			event.setTable(modified);
 		}
 
@@ -2308,6 +2330,10 @@ public class EnigmaticEventHandler {
 
 	private boolean hadEscapeScroll(PlayerEntity player) {
 		return EnigmaticEventHandler.postmortalPossession.containsKey(player) ? EnigmaticEventHandler.postmortalPossession.containsEntry(player, EnigmaticLegacy.escapeScroll) : false;
+	}
+
+	private boolean hadUnholyStone(PlayerEntity player) {
+		return EnigmaticEventHandler.postmortalPossession.containsKey(player) ? EnigmaticEventHandler.postmortalPossession.containsEntry(player, EnigmaticLegacy.cursedStone) : false;
 	}
 
 

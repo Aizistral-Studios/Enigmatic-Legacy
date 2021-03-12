@@ -19,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
+import net.minecraft.item.SplashPotionItem;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
@@ -98,7 +99,7 @@ public class UltimatePotionSplash extends ItemBase implements IAdvancedPotionIte
 		if (!worldIn.isRemote) {
 			EnigmaticPotionEntity potionEntity = new EnigmaticPotionEntity(worldIn, playerIn);
 			potionEntity.setItem(throwed);
-			potionEntity.shoot(playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.5F, 1.0F);
+			potionEntity.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.5F, 1.0F);
 			worldIn.addEntity(potionEntity);
 		}
 

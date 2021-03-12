@@ -162,25 +162,24 @@ public class XPScroll extends ItemBaseCurio {
 
 		if (ItemNBTHelper.getBoolean(itemstack, "AbsorptionMode", true)) {
 
-			if (player.experienceTotal >= this.xpPortion) {
-				player.giveExperiencePoints(-this.xpPortion);
+			if (ExperienceHelper.getPlayerXP(player) >= this.xpPortion) {
+				ExperienceHelper.drainPlayerXP(player, this.xpPortion);
 				ItemNBTHelper.setInt(itemstack, "XPStored", ItemNBTHelper.getInt(itemstack, "XPStored", 0) + this.xpPortion);
-			} else if (player.experienceTotal > 0 & ExperienceHelper.getPlayerXP(player) < this.xpPortion) {
-				int exp = player.experienceTotal;
-				player.giveExperiencePoints(-exp);
+			} else if (ExperienceHelper.getPlayerXP(player) > 0 & ExperienceHelper.getPlayerXP(player) < this.xpPortion) {
+				int exp = ExperienceHelper.getPlayerXP(player);
+				ExperienceHelper.drainPlayerXP(player, exp);
 				ItemNBTHelper.setInt(itemstack, "XPStored", ItemNBTHelper.getInt(itemstack, "XPStored", 0) + exp);
 			}
 
 		} else {
-
 			int xp = ItemNBTHelper.getInt(itemstack, "XPStored", 0);
 
 			if (xp >= this.xpPortion) {
 				ItemNBTHelper.setInt(itemstack, "XPStored", xp - this.xpPortion);
-				player.giveExperiencePoints(this.xpPortion);
+				ExperienceHelper.addPlayerXP(player, this.xpPortion);
 			} else if (xp > 0 & xp < this.xpPortion) {
 				ItemNBTHelper.setInt(itemstack, "XPStored", 0);
-				player.giveExperiencePoints(xp);
+				ExperienceHelper.addPlayerXP(player, xp);
 			}
 
 		}

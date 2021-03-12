@@ -13,6 +13,7 @@ import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -53,7 +54,7 @@ public class PermanentItemEntity extends Entity {
 	@ObjectHolder(EnigmaticLegacy.MODID + ":permanent_item_entity")
 	public static EntityType<PermanentItemEntity> TYPE;
 
-	public final float hoverStart = (float) (Math.random() * Math.PI * 2.0D);
+	public float hoverStart = (float) (Math.random() * Math.PI * 2.0D);
 
 	public PermanentItemEntity(EntityType<PermanentItemEntity> type, World world) {
 		super(type, world);
@@ -71,6 +72,20 @@ public class PermanentItemEntity extends Entity {
 	public PermanentItemEntity(World worldIn, double x, double y, double z, ItemStack stack) {
 		this(worldIn, x, y, z);
 		this.setItem(stack);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	private PermanentItemEntity(PermanentItemEntity p_i231561_1_) {
+		super(p_i231561_1_.getType(), p_i231561_1_.world);
+		this.setItem(p_i231561_1_.getItem().copy());
+		this.copyLocationAndAnglesFrom(p_i231561_1_);
+		this.age = p_i231561_1_.age;
+		this.hoverStart = p_i231561_1_.hoverStart;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public PermanentItemEntity func_234273_t_() {
+		return new PermanentItemEntity(this);
 	}
 
 	@Override

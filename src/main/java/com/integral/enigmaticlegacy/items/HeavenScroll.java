@@ -9,6 +9,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.integral.omniconfig.wrappers.Omniconfig;
@@ -81,7 +82,7 @@ public class HeavenScroll extends ItemBaseCurio {
 			PlayerEntity player = (PlayerEntity) living;
 
 			if (Math.random() <= (this.baseXpConsumptionProbability * xpCostModifier.getValue()) && player.abilities.isFlying) {
-				player.giveExperiencePoints(-1);
+				ExperienceHelper.drainPlayerXP(player, 1);
 			}
 
 			this.handleFlight(player);
@@ -91,7 +92,7 @@ public class HeavenScroll extends ItemBaseCurio {
 
 	protected void handleFlight(PlayerEntity player) {
 		try {
-			if (player.experienceTotal > 0 && SuperpositionHandler.isInBeaconRange(player)) {
+			if (ExperienceHelper.getPlayerXP(player) > 0 && SuperpositionHandler.isInBeaconRange(player)) {
 
 				if (!player.abilities.allowFlying) {
 					player.abilities.allowFlying = true;

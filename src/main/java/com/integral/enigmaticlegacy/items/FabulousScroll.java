@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 
@@ -60,7 +61,7 @@ public class FabulousScroll extends HeavenScroll {
 
 			if (!SuperpositionHandler.isInBeaconRange(player))
 				if (Math.random() <= (this.baseXpConsumptionProbability*8) * xpCostModifier.getValue() && player.abilities.isFlying) {
-					player.giveExperiencePoints(-1);
+					ExperienceHelper.drainPlayerXP(player, 1);
 				}
 
 			this.handleFabulousFlight(player, inRange);
@@ -70,7 +71,7 @@ public class FabulousScroll extends HeavenScroll {
 
 	protected void handleFabulousFlight(PlayerEntity player, boolean inRange) {
 		try {
-			if (player.experienceTotal > 0 || inRange) {
+			if (ExperienceHelper.getPlayerXP(player) > 0 || inRange) {
 
 				if (!player.abilities.allowFlying) {
 					player.abilities.allowFlying = true;

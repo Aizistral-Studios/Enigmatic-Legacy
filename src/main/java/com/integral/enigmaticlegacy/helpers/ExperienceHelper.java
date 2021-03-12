@@ -1,6 +1,11 @@
 package com.integral.enigmaticlegacy.helpers;
 
+import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.packets.clients.PacketUpdateExperience;
+
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 /**
  * A couple of methods for messing around with player's experience.
@@ -11,7 +16,8 @@ import net.minecraft.entity.player.PlayerEntity;
 public class ExperienceHelper {
 
 	public static int getPlayerXP(PlayerEntity player) {
-		return (int)(getExperienceForLevel(player.experienceLevel) + player.experience * player.xpBarCap());
+		int xp = (int)(getExperienceForLevel(player.experienceLevel) + (player.experience * player.xpBarCap()));
+		return xp;
 	}
 
 	public static void drainPlayerXP(PlayerEntity player, int amount) {
@@ -19,11 +25,18 @@ public class ExperienceHelper {
 	}
 
 	public static void addPlayerXP(PlayerEntity player, int amount) {
+		int formerXP = getPlayerXP(player);
+
 		int experience = getPlayerXP(player) + amount;
 		player.experienceTotal = experience;
 		player.experienceLevel = getLevelForExperience(experience);
 		int expForLevel = getExperienceForLevel(player.experienceLevel);
 		player.experience = (float)(experience - expForLevel) / (float)player.xpBarCap();
+
+		if (!player.world.isRemote && player instanceof ServerPlayerEntity)
+			if (formerXP != getPlayerXP(player)) {
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity)player), new PacketUpdateExperience(getPlayerXP(player)));
+			}
 	}
 
 	public static int getExperienceForLevel(int level) {
@@ -31,11 +44,11 @@ public class ExperienceHelper {
 			return 0;
 
 		if (level > 0 && level < 17)
-		    return (int) (level * level + 6 * level);
+			return level * level + 6 * level;
 		else if (level > 16 && level < 32)
-		    return (int) (2.5 * level * level - 40.5 * level + 360);
+			return (int) (2.5 * level * level - 40.5 * level + 360);
 		else
-		    return (int) (4.5 * level * level - 162.5 * level + 2220);
+			return (int) (4.5 * level * level - 162.5 * level + 2220);
 	}
 
 	public static int getLevelForExperience(int experience) {

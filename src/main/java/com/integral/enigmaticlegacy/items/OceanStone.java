@@ -13,6 +13,7 @@ import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.integral.omniconfig.Configuration;
@@ -151,6 +152,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 		if (!player.world.getDimensionKey().getLocation().toString().equals("minecraft:the_end") && !player.world.getDimensionKey().getLocation().toString().equals("minecraft:the_nether"))
 			if (!world.getWorldInfo().isThundering()) {
 				boolean paybackReceived = false;
+
 				/*
 				 * ItemStack scroll = SuperpositionHandler.getCurioStack(player,
 				 * EnigmaticLegacy.xpScroll);
@@ -160,32 +162,34 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 				 * ItemNBTHelper.getInt(scroll, "XPStored", 0) - (int)
 				 * ((xpCostBase+(Math.random()*xpCostBase))*ConfigHandler.
 				 * OCEAN_STONE_XP_COST_MODIFIER.getValue())); paybackReceived = true; } else
-				 */ if (player.experienceTotal >= this.xpCostBase * 2) {
-					 player.giveExperiencePoints((int) -((this.xpCostBase + (Math.random() * this.xpCostBase)) * xpCostModifier.getValue()));
-					 paybackReceived = true;
-				 }
+				 */
 
-				 if (paybackReceived) {
+				if (ExperienceHelper.getPlayerXP(player) >= this.xpCostBase * 2) {
+					ExperienceHelper.drainPlayerXP(player, (int) -((this.xpCostBase + (Math.random() * this.xpCostBase)) * xpCostModifier.getValue()));
+					paybackReceived = true;
+				}
 
-					 if (world instanceof ServerWorld) {
-						 ServerWorld serverworld = (ServerWorld) world;
+				if (paybackReceived) {
 
-						 int thunderstormTime = (int) (10000 + (Math.random() * 20000));
+					if (world instanceof ServerWorld) {
+						ServerWorld serverworld = (ServerWorld) world;
 
-						 serverworld.func_241113_a_(0, thunderstormTime, true, true);
-						 /*
+						int thunderstormTime = (int) (10000 + (Math.random() * 20000));
+
+						serverworld.func_241113_a_(0, thunderstormTime, true, true);
+						/*
 							info.setWanderingTraderSpawnDelay(delay);
 							info.setRaining(true);
 							info.setThundering(true);
 							info.setRainTime(thunderstormTime);
 							info.setThunderTime(thunderstormTime);
-						  */
-					 }
+						 */
+					}
 
-					 world.playSound(null, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.NEUTRAL, 2.0F, (float) (0.7F + (Math.random() * 0.3D)));
+					world.playSound(null, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.NEUTRAL, 2.0F, (float) (0.7F + (Math.random() * 0.3D)));
 
-					 SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
-				 }
+					SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
+				}
 
 			}
 	}

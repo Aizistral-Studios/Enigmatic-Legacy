@@ -1,7 +1,13 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
-        maven { url = 'https://dist.creeper.host/Sponge/maven' }
+        maven {
+            name "Forge"
+            url "https://files.minecraftforge.net/maven"
+        }
+        maven {
+            name "Sponge"
+            url "https://repo.spongepowered.org/repository/maven-public/"
+        }
         maven { url 'https://plugins.gradle.org/m2/' }
         jcenter()
         mavenCentral()
@@ -23,6 +29,7 @@ apply plugin: 'com.matthewprenger.cursegradle'
 
 mixin {
 	println("Specifying refmaps for Mixin...")
+	
     add sourceSets.main, "enigmaticlegacy.refmap.json"
 }
 
@@ -85,7 +92,9 @@ sourceSets.main.resources {
 }
 
 repositories {
-	println("Specifying repositories...")	
+	println("Specifying repositories...")
+	
+	
 	flatDir {  dirs 'deps' }
 	maven {  url = "https://maven.theillusivec4.top/" } // curios
 	maven {  url = "https://maven.blamejared.com/" } // patchouli
@@ -95,7 +104,8 @@ repositories {
 
 dependencies {
 	println("Processing dependencies...")	
-
+	
+	
 	// Minecraft & Forge
     minecraft "net.minecraftforge:forge:${version_forge}"
    
@@ -132,7 +142,9 @@ dependencies {
 
 
 jar {
-	println("Processing manifest...")	
+	doFirst {
+		println("Processing manifest...")
+	}		
 
     manifest {
         attributes([
@@ -149,9 +161,11 @@ jar {
 }
 
 processResources {
-	println("Processing resources...")
+	doFirst {
+		println("Processing resources...")
+		println("Specifying The Acknowledgment version in book.json...")	
+	}
 	
-	println("Specifying The Acknowledgment version in book.json...")	
 	filesMatching('data/enigmaticlegacy/patchouli_books/the_acknowledgment/book.json') {
         filter {
 			// Bold of you to assume I know how to inflate with Gradle
@@ -195,8 +209,8 @@ processResources {
 curseforge {
 
     project {
-		println("Pushing CurseGradle specifications for project ID: ${curse_id}")	
-	
+		println("Pushing CurseGradle specifications for project ID: ${curse_id}")
+		
 		// Specified as cmd argument
         apiKey = findProperty('curseKey') ?: 0
         
@@ -205,6 +219,7 @@ curseforge {
         changelogType = 'html'
         changelog = file('docs/changelog.html')
 		
+		addGameVersion '1.16.5'
 		addGameVersion '1.16.4'
 		addGameVersion '1.16.3'
 		

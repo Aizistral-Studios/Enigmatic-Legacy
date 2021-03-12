@@ -18,6 +18,7 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 public class OmniconfigHandler {
 	private static final Map<Field, Omniconfig.BooleanParameter> itemsOptions = new HashMap<>();
 
+	public static Omniconfig.BooleanParameter customDungeonLootEnabled;
 	public static Omniconfig.BooleanParameter bonusWoolRecipesEnabled;
 	public static Omniconfig.BooleanParameter disableAOEShiftSuppression;
 	public static Omniconfig.BooleanParameter retriggerRecipeUnlocks;
@@ -106,6 +107,13 @@ public class OmniconfigHandler {
 				"case, and may not work for certain items due to non-generic obtaining methods or generic oversight." + System.lineSeparator() + System.lineSeparator() +
 				"If you discover option that does not work, but for whatever reason you really need it, submit an issue" + System.lineSeparator() +
 				"pointing out to such option here: https://github.com/Extegral/Enigmatic-Legacy/issues");
+
+		customDungeonLootEnabled = builder
+				.comment("Whether or not this mod should add any custom loot to dungeon chests' loot tables. This options is mainly "
+						+ "for modpack developers and enables them to re-add that loot on their own terms, since no other ways of "
+						+ "modifying what Enigmatic Legacy adds to loot tables currently exist.")
+				.sync()
+				.getBoolean("CustomDungeonLootEnabled", true);
 
 		bonusWoolRecipesEnabled = builder
 				.comment("Whether or not bonus recipes for wool dyeing should be enabled.")

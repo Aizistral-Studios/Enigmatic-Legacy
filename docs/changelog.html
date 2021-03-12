@@ -1,5 +1,20 @@
 <h3><b>The Changelog:</b></h3><br/>
 
+<h5><b>[Release 2.11.0]:</b></h5>
+<p>
+&nbsp;- Initial 1.16.5 port;<br/>
+&nbsp;- Attempt fix client-side crash when rendering permanent item pickup with OptiFine installed (#136);<br/>
+&nbsp;- Removed handler for finding out unnamed LootPool injections, since an issue with these pools have been fixed on the side of Forge (related - #132);<br/>
+&nbsp;- Fixed all loot tables ending up broken if any of the Ancient Tomes are disabled in Accessibility Config (#140);<br/>
+&nbsp;- Fixed experience operations performed by variety of items that interact with player's experience (#133, #149);<br/>
+&nbsp;- Fixed mod's splash and lingering potions having incorrect movement direction when thrown by a player (#154);<br/>
+&nbsp;- Probably fixed config option for inverting magnet rings' shift behavior not working correctly (#153);<br/>
+&nbsp;- Fixed Unholy Stone not working if keepInventory is disabled (#157);<br/>
+&nbsp;- Fixed crashes with Blazing Core in certain cases when core's ability forces some potion effect to expire prematurely (#143);<br/>
+&nbsp;- Implemented config option that allows to prevent Enigmatic Legacy from adding any custom loot to loot tables (#156);<br/>
+&nbsp;- Added partial Russian localization (thanks kemika1girl, #120).<br/>
+<p/><br/><br/>
+
 <h5><b>[Release 2.10.3]:</b></h5>
 <p>
 &nbsp;- Implemented handler that purposefully crashes client whenever any mod attempts to inject unnamed LootPool into any loot table (which is an error state), printing out stacktraces that can be examined to see what mod have done this. Such cases have proven incredibly difficult to debug on the side of user, so should be a useful feature. Also added config option that allows to turn it off.<br/>
