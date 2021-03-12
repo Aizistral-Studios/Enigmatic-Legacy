@@ -180,4 +180,9 @@ public class ClientProxy extends CommonProxy {
 
 	}
 
+	@Override
+	public PlayerEntity getClientPlayer() {
+		return Minecraft.getInstance().player;
+	}
+
 }

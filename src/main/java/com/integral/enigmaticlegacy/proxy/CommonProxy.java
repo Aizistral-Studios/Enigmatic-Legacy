@@ -78,6 +78,10 @@ public class CommonProxy {
 			return null;
 	}
 
+	public PlayerEntity getClientPlayer() {
+		return null;
+	}
+
 	public void pushRevelationToast(ItemStack renderedStack, int xp, int knowledge) {
 		// NO-OP
 	}

@@ -2,12 +2,14 @@ package com.integral.enigmaticlegacy.packets.clients;
 
 import java.util.function.Supplier;
 
+import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.objects.Vector3;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -62,7 +64,7 @@ public class PacketGenericParticleEffect {
 	public static void handle(PacketGenericParticleEffect msg, Supplier<NetworkEvent.Context> ctx) {
 
 		ctx.get().enqueueWork(() -> {
-			ClientPlayerEntity player = Minecraft.getInstance().player;
+			PlayerEntity player = EnigmaticLegacy.proxy.getClientPlayer();
 			Vector3 pos = msg.pos;
 
 			int amount = msg.num;
