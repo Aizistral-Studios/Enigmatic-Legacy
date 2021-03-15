@@ -70,11 +70,7 @@ public abstract class ItemBaseCurio extends ItemBase implements IItemCurio, IVan
 
 	@Override
 	public boolean canEquip(String identifier, LivingEntity living, ItemStack stack) {
-		if (SuperpositionHandler.hasCurio(living, this))
-			return false;
-		else
-			return true;
-
+		return true;
 	}
 
 	@Override
