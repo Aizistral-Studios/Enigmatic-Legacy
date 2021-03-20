@@ -3,7 +3,7 @@ name: Bug Report
 about: Crashes, errors or unintended behaviour. Bug reports that disregard this template will not be reviewed!
 title: ''
 labels: bug, awaits review
-assignees: Extegral
+assignees: Aizistral
 
 ---
 
