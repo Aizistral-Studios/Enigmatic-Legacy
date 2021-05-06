@@ -153,6 +153,11 @@ public class MiningCharm extends ItemBaseCurio {
 	}
 
 	@Override
+	public boolean canRightClickEquip(ItemStack stack) {
+		return false;
+	}
+
+	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier, ItemStack stack) {
 
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();

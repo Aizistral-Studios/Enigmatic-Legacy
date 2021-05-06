@@ -40,7 +40,7 @@
 	"item.enigmaticlegacy.etherium_sword": "Эфириумный клинок",
 	"item.enigmaticlegacy.etherium_scythe": "Эфириумная коса",
 	"item.enigmaticlegacy.lore_inscriber": "Чернильница Писаря",
-	"item.enigmaticlegacy.lore_fragment": "Фрагмент Писания",
+	"item.enigmaticlegacy.lore_fragment": "Фрагмент писания",
 	"item.enigmaticlegacy.ender_rod": "Стержень Края",
 	"item.enigmaticlegacy.astral_breaker": "Звёздный крушитель",
 	"item.enigmaticlegacy.oblivion_stone": "Ключ-камень Забвения",
@@ -276,7 +276,7 @@
 	"advancement.enigmaticlegacy:burnTheTome": "Гоголь",
 	"advancement.enigmaticlegacy:burnTheTome.desc": "Бросьте древний фолиант в печь",
 
-	"tooltip.enigmaticlegacy.holdShift": "§5Зажмите §6Shift§5, чтобы увидеть содержимое.",
+	"tooltip.enigmaticlegacy.holdShift": "§5Удерживайте §6Shift§5 для деталей.",
 	
 	"tooltip.enigmaticlegacy.enigmaticItem1": "§dАктивная способность:",
 	"tooltip.enigmaticlegacy.enigmaticItem2": "§6- Низвергает разрушительный ливень из черепов Иссушителя.",
@@ -365,7 +365,7 @@
 	"tooltip.enigmaticlegacy.darkMirror2": "§6кровати§5, §6якорю возрождения§5, или же к",
 	"tooltip.enigmaticlegacy.darkMirror3": "§6Центру Мира§5, если вы не обладаете первыми двумя.",
 	
-	"tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance": "§dТекущий шанс обезглавить§5: §6+%1$s",
+	"tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance": "§6+%1$s §dШанс обезглавливания§5",
 	"tooltip.enigmaticlegacy.forbiddenAxe1": "§5Может обезглавливать убитых монстров.",
 	"tooltip.enigmaticlegacy.forbiddenAxe2": "§5Каждый уровень добычи добавляет §6+%1$s§5",
 	"tooltip.enigmaticlegacy.forbiddenAxe3": "§5к общему шансу обезглавливания.",
@@ -531,10 +531,10 @@
 	"tooltip.enigmaticlegacy.loreInscriber10": "§5написанную строку текста или строку с указанным",
 	"tooltip.enigmaticlegacy.loreInscriber11": "§5индексом, соответственно.",
 	
-	"tooltip.enigmaticlegacy.loreFragment1": "§5Используйте §6Чернильницу Писаря§5, чтобы нанести",
-	"tooltip.enigmaticlegacy.loreFragment2": "§5на полотно название и описание будущего предмета.",
+	"tooltip.enigmaticlegacy.loreFragment1": "§5Используйте §6Чернильницу Писаря§5, дабы начертать",
+	"tooltip.enigmaticlegacy.loreFragment2": "§5название и описание будущего предмета.",
 	"tooltip.enigmaticlegacy.loreFragment3": "§5Когда закончите, соедините с любым предметом в",
-	"tooltip.enigmaticlegacy.loreFragment4": "§6Наковальне§5, дабы переместить письмена на него.",
+	"tooltip.enigmaticlegacy.loreFragment4": "§5наковальне§5, дабы переместить письмена на него.",
 	
 	"tooltip.enigmaticlegacy.aoeDisabled": "§cМассовые способности отключены.",
 	"tooltip.enigmaticlegacy.abilityDisabled": "§cСпециальные способности отключены.",
