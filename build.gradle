@@ -1,9 +1,6 @@
 buildscript {
     repositories {
-        maven {
-            name "Forge"
-            url "https://files.minecraftforge.net/maven"
-        }
+        maven { url = 'https://files.minecraftforge.net/maven' }
         maven {
             name "Sponge"
             url "https://repo.spongepowered.org/repository/maven-public/"
@@ -13,7 +10,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+'
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
 		classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
@@ -96,8 +93,9 @@ repositories {
 	
 	
 	flatDir {  dirs 'deps' }
+	flatDir {  dirs 'deps/' + version_mcp }
 	maven {  url = "https://maven.theillusivec4.top/" } // curios
-	maven {  url = "https://maven.blamejared.com/" } // patchouli
+	maven { url 'https://maven.blamejared.com' } // patchouli
 	maven {  url = "https://repo.spongepowered.org/maven" } // mixin
     maven {	 url "https://dvs1.progwml6.com/files/maven/" } // no idea
 }
@@ -117,12 +115,12 @@ dependencies {
     annotationProcessor 'org.ow2.asm:asm-commons:7.2'
     annotationProcessor 'org.ow2.asm:asm-util:7.2'
 	
-	// These are 1.16.3 - 1.16.4 dependencies
-	compile fg.deobf('generic:decorativeblocks:1.16.1-1.5.2')
-	compile fg.deobf('generic:WorldNameRandomizer:FORGE-1.16.4-v1.1.1')
-	compile fg.deobf('generic:BuildResourceUpdater:1.0')
-	compile fg.deobf('top.theillusivec4.curios:curios-forge:1.16.5-4.0.5.0')
-    compile fg.deobf("vazkii.patchouli:Patchouli:1.16.2-47")
+	// These are 1.16.3 - 1.16.5 dependencies
+	compile name: 'BuildResourceUpdater-1.0-deobf'
+	compile name: 'curios-forge-1.16.5-4.0.5.1-deobf'
+	compile name: 'decorativeblocks-1.16.1-1.5.2-deobf'
+	compile name: 'Patchouli-1.16.4-51-deobf'
+	compile name: 'WorldNameRandomizer-FORGE-1.16.4-v1.1.1-deobf'
 	
 	//compile fg.deobf('generic:Survive:1.16.3-3.0.2')
 	//compile fg.deobf('generic:EnchantmentDescriptions:1.16.4-6.0.1')
