@@ -222,6 +222,7 @@ import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -268,6 +269,19 @@ public class EnigmaticEventHandler {
 	public static final Random theySeeMeRollin = new Random();
 	public static final Multimap<PlayerEntity, Item> postmortalPossession = ArrayListMultimap.create();
 	public static final Multimap<PlayerEntity, GuardianEntity> angeredGuardians = ArrayListMultimap.create();
+
+	/*
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onTooltipEvent(ItemTooltipEvent event) {
+		if (event.getItemStack().getItem() instanceof IItemCurio) {
+			//event.getToolTip().remove(1);
+			//event.getToolTip().remove(1);
+			//while (event.getToolTip().size() > 1) {
+			//	event.getToolTip().remove(event.getToolTip().size()-1);
+			//}
+		}
+	}
+	 */
 
 	@SubscribeEvent
 	public void serverStarted(final FMLServerStartedEvent event) {
