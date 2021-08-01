@@ -1,6 +1,6 @@
-package com.integral.enigmaticlegacy.client.renderers;
+package com.integral.etherium.client;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.etherium.items.EtheriumArmor;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
@@ -26,8 +26,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>> {
-
-	private static final ResourceLocation WITHER_ARMOR = new ResourceLocation(EnigmaticLegacy.MODID, "textures/models/misc/ultimate_wither_armor.png");
+	private static final ResourceLocation WITHER_ARMOR = new ResourceLocation("enigmaticlegacy", "textures/models/misc/ultimate_wither_armor.png");
 	private final PlayerModel<AbstractClientPlayerEntity> witherModel = new PlayerModel<AbstractClientPlayerEntity>(0.5F, false);
 
 	public ShieldAuraLayer(IEntityRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>> renderer) {
@@ -36,13 +35,13 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 
 	@Override
 	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, AbstractClientPlayerEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-
-		if (EnigmaticLegacy.etheriumChestplate.hasShield(entitylivingbaseIn)) {
+		if (EtheriumArmor.hasShield(entitylivingbaseIn)) {
 			float f;
 
 			if (!Minecraft.getInstance().isGamePaused())
-				if (entitylivingbaseIn.getDisplayName().equals(Minecraft.getInstance().player.getDisplayName()))
+				if (entitylivingbaseIn.getDisplayName().equals(Minecraft.getInstance().player.getDisplayName())) {
 					partialTicks = Minecraft.getInstance().getRenderPartialTicks();
+				}
 
 			f = entitylivingbaseIn.ticksExisted + partialTicks;
 
@@ -65,7 +64,7 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 				this.witherModel.bipedRightLegwear.showModel = false;
 				this.witherModel.bipedLeftArmwear.showModel = false;
 				this.witherModel.bipedRightArmwear.showModel = false;
-				*/
+				 */
 
 				this.witherModel.isSneak = entitylivingbaseIn.isCrouching();
 				BipedModel.ArmPose bipedmodel$armpose = this.func_217766_a(entitylivingbaseIn, itemstack, itemstack1, Hand.MAIN_HAND);
@@ -121,11 +120,11 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 		return bipedmodel$armpose;
 	}
 
-	protected static float func_225634_a_(float p_225634_1_) {
+	public static float func_225634_a_(float p_225634_1_) {
 		return MathHelper.cos(p_225634_1_ * 0.02F) * 2.0F;
 	}
 
-	protected static ResourceLocation func_225633_a_() {
+	public static ResourceLocation func_225633_a_() {
 		return ShieldAuraLayer.WITHER_ARMOR;
 	}
 

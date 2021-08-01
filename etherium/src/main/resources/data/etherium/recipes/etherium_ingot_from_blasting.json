@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "etherium:etherium_ore"
+  },
+  "result": "etherium:etherium_ingot",
+  "experience": 8.0,
+  "cookingtime": 200
+}

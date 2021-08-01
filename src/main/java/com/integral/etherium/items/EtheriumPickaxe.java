@@ -1,20 +1,15 @@
-package com.integral.enigmaticlegacy.items;
+package com.integral.etherium.items;
 
 import java.util.HashSet;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
-import com.integral.enigmaticlegacy.api.items.IMultiblockMiningTool;
-import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
-import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
-import com.integral.enigmaticlegacy.items.generic.ItemBaseTool;
-import com.integral.omniconfig.wrappers.Omniconfig;
-import com.integral.omniconfig.wrappers.OmniconfigWrapper;
+import com.integral.etherium.core.EtheriumUtil;
+import com.integral.etherium.core.IEtheriumConfig;
+import com.integral.etherium.items.generic.ItemEtheriumTool;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
@@ -42,38 +37,16 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ToolType;
 
-public class EtheriumPickaxe extends ItemBaseTool implements IMultiblockMiningTool {
-	public static Omniconfig.IntParameter miningRadius;
-	public static Omniconfig.IntParameter miningDepth;
+public class EtheriumPickaxe extends ItemEtheriumTool {
 
-	@SubscribeConfig
-	public static void onConfig(OmniconfigWrapper builder) {
-		builder.pushPrefix("EtheriumPickaxe");
-
-		miningRadius = builder
-				.comment("The radius of Etherium Pickaxe AOE mining. Set to -1 to disable the feature.")
-				.min(-1)
-				.max(128-1)
-				.getInt("MiningRadius", 3);
-
-		miningDepth = builder
-				.comment("The depth of Etherium Pickaxe AOE mining.")
-				.max(128-1)
-				.getInt("MiningDepth", 1);
-
-		builder.popPrefix();
-	}
-
-
-	public EtheriumPickaxe() {
-		super(1F, -2.8F, EnigmaticMaterials.ETHERIUM, new HashSet<>(),
-				ItemBaseTool.getDefaultProperties()
-				.defaultMaxDamage((int) (EnigmaticMaterials.ETHERIUM.getMaxUses() * 1.5))
-				.addToolType(ToolType.PICKAXE, EnigmaticMaterials.ETHERIUM.getHarvestLevel())
-				.rarity(Rarity.RARE)
+	public EtheriumPickaxe(IEtheriumConfig config) {
+		super(1F, -2.8F, config, new HashSet<>(),
+				EtheriumUtil.defaultProperties(config, EtheriumPickaxe.class)
+				.defaultMaxDamage((int) (config.getToolMaterial().getMaxUses() * 1.5))
+				.addToolType(ToolType.PICKAXE, config.getToolMaterial().getHarvestLevel())
 				.isImmuneToFire());
 
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_pickaxe"));
+		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_pickaxe"));
 
 		this.effectiveMaterials.add(Material.IRON);
 		this.effectiveMaterials.add(Material.ROCK);
@@ -85,16 +58,21 @@ public class EtheriumPickaxe extends ItemBaseTool implements IMultiblockMiningTo
 	}
 
 	@Override
+	public String getTranslationKey() {
+		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getTranslationKey();
+	}
+
+	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		if (miningRadius.getValue() == -1)
+		if (this.config.getPickaxeMiningRadius() == -1)
 			return;
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumPickaxe1", TextFormatting.GOLD, miningRadius.getValue(), miningDepth.getValue());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumPickaxe1", TextFormatting.GOLD, this.config.getPickaxeMiningRadius(), this.config.getPickaxeMiningDepth());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-			if (!OmniconfigHandler.disableAOEShiftSuppression.getValue()) {
+			if (!this.config.disableAOEShiftInhibition()) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumPickaxe2");
 			}
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumPickaxe3");
@@ -111,7 +89,7 @@ public class EtheriumPickaxe extends ItemBaseTool implements IMultiblockMiningTo
 	@Override
 	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && miningRadius.getValue() != -1) {
+		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && this.config.getPickaxeMiningRadius() != -1) {
 
 			RayTraceResult trace = AOEMiningHelper.calcRayTrace(world, (PlayerEntity) entityLiving, RayTraceContext.FluidMode.ANY);
 
@@ -119,7 +97,7 @@ public class EtheriumPickaxe extends ItemBaseTool implements IMultiblockMiningTo
 				BlockRayTraceResult blockTrace = (BlockRayTraceResult) trace;
 				Direction face = blockTrace.getFace();
 
-				AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos, this.effectiveMaterials, miningRadius.getValue(), miningDepth.getValue(), true, pos, stack, (objPos, objState) -> {
+				AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos, this.effectiveMaterials, this.config.getPickaxeMiningRadius(), this.config.getPickaxeMiningDepth(), true, pos, stack, (objPos, objState) -> {
 					stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(MobEntity.getSlotForItemStack(stack)));
 				});
 			}

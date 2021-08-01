@@ -24,6 +24,7 @@ import com.integral.enigmaticlegacy.blocks.BlockBigLamp;
 import com.integral.enigmaticlegacy.blocks.BlockMassiveLamp;
 import com.integral.enigmaticlegacy.brewing.SpecialBrewingRecipe;
 import com.integral.enigmaticlegacy.brewing.ValidationBrewingRecipe;
+import com.integral.enigmaticlegacy.config.EtheriumConfigHandler;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.crafting.EnigmaticRecipeSerializers;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
@@ -61,18 +62,9 @@ import com.integral.enigmaticlegacy.items.EarthHeart;
 import com.integral.enigmaticlegacy.items.EnchanterPearl;
 import com.integral.enigmaticlegacy.items.EnchantmentTransposer;
 import com.integral.enigmaticlegacy.items.EnderRing;
-import com.integral.enigmaticlegacy.items.EnderRod;
 import com.integral.enigmaticlegacy.items.EnigmaticAmulet;
 import com.integral.enigmaticlegacy.items.EnigmaticItem;
 import com.integral.enigmaticlegacy.items.EscapeScroll;
-import com.integral.enigmaticlegacy.items.EtheriumArmor;
-import com.integral.enigmaticlegacy.items.EtheriumAxe;
-import com.integral.enigmaticlegacy.items.EtheriumIngot;
-import com.integral.enigmaticlegacy.items.EtheriumOre;
-import com.integral.enigmaticlegacy.items.EtheriumPickaxe;
-import com.integral.enigmaticlegacy.items.EtheriumScythe;
-import com.integral.enigmaticlegacy.items.EtheriumShovel;
-import com.integral.enigmaticlegacy.items.EtheriumSword;
 import com.integral.enigmaticlegacy.items.EvilEssence;
 import com.integral.enigmaticlegacy.items.ExtradimensionalEye;
 import com.integral.enigmaticlegacy.items.EyeOfNebula;
@@ -148,6 +140,16 @@ import com.integral.enigmaticlegacy.triggers.CursedRingEquippedTrigger;
 import com.integral.enigmaticlegacy.triggers.RevelationGainTrigger;
 import com.integral.enigmaticlegacy.triggers.RevelationTomeBurntTrigger;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
+import com.integral.etherium.core.EtheriumEventHandler;
+import com.integral.etherium.items.EnderRod;
+import com.integral.etherium.items.EtheriumArmor;
+import com.integral.etherium.items.EtheriumAxe;
+import com.integral.etherium.items.EtheriumIngot;
+import com.integral.etherium.items.EtheriumOre;
+import com.integral.etherium.items.EtheriumPickaxe;
+import com.integral.etherium.items.EtheriumScythe;
+import com.integral.etherium.items.EtheriumShovel;
+import com.integral.etherium.items.EtheriumSword;
 import com.integral.omniconfig.packets.PacketSyncOptions;
 
 import net.minecraft.advancements.CriteriaTriggers;
@@ -215,7 +217,7 @@ public class EnigmaticLegacy {
 	public static SimpleChannel packetInstance;
 
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.11.4";
+	public static final String VERSION = "2.11.5";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -405,6 +407,7 @@ public class EnigmaticLegacy {
 		enigmaticLegacy = this;
 
 		OmniconfigHandler.initialize();
+		EtheriumConfigHandler etheriumConfig = new EtheriumConfigHandler();
 
 		enigmaticHandler = new EnigmaticEventHandler();
 		keybindHandler = new EnigmaticKeybindHandler();
@@ -442,8 +445,8 @@ public class EnigmaticLegacy {
 		lootGenerator = new LootGenerator();
 		thiccScroll = new ThiccScroll();
 		ironRing = new IronRing();
-		etheriumOre = new EtheriumOre();
-		etheriumIngot = new EtheriumIngot();
+		etheriumOre = new EtheriumOre(etheriumConfig);
+		etheriumIngot = new EtheriumIngot(etheriumConfig);
 
 		hastePotionDefault = (HastePotion) new HastePotion(Rarity.COMMON, 3600, 0).setRegistryName(new ResourceLocation(MODID, "haste_potion_default"));
 		hastePotionExtended = (HastePotion) new HastePotion(Rarity.COMMON, 9600, 0).setRegistryName(new ResourceLocation(MODID, "haste_potion_extended"));
@@ -458,21 +461,21 @@ public class EnigmaticLegacy {
 		ultimatePotionSplash = (UltimatePotionSplash) new UltimatePotionSplash(Rarity.RARE, PotionType.ULTIMATE).setRegistryName(new ResourceLocation(MODID, "ultimate_potion_splash"));
 		ultimatePotionLingering = (UltimatePotionLingering) new UltimatePotionLingering(Rarity.RARE, PotionType.ULTIMATE).setRegistryName(new ResourceLocation(MODID, "ultimate_potion_lingering"));
 
-		etheriumHelmet = (EtheriumArmor) new EtheriumArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.HEAD).setRegistryName(new ResourceLocation(MODID, "etherium_helmet"));
-		etheriumChestplate = (EtheriumArmor) new EtheriumArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.CHEST).setRegistryName(new ResourceLocation(MODID, "etherium_chestplate"));
-		etheriumLeggings = (EtheriumArmor) new EtheriumArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.LEGS).setRegistryName(new ResourceLocation(MODID, "etherium_leggings"));
-		etheriumBoots = (EtheriumArmor) new EtheriumArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.FEET).setRegistryName(new ResourceLocation(MODID, "etherium_boots"));
+		etheriumHelmet = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlotType.HEAD).setRegistryName(new ResourceLocation(MODID, "etherium_helmet"));
+		etheriumChestplate = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlotType.CHEST).setRegistryName(new ResourceLocation(MODID, "etherium_chestplate"));
+		etheriumLeggings = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlotType.LEGS).setRegistryName(new ResourceLocation(MODID, "etherium_leggings"));
+		etheriumBoots = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlotType.FEET).setRegistryName(new ResourceLocation(MODID, "etherium_boots"));
 
-		etheriumPickaxe = new EtheriumPickaxe();
-		etheriumAxe = new EtheriumAxe();
-		etheriumShovel = new EtheriumShovel();
-		etheriumSword = new EtheriumSword();
-		etheriumScythe = new EtheriumScythe();
+		etheriumPickaxe = new EtheriumPickaxe(etheriumConfig);
+		etheriumAxe = new EtheriumAxe(etheriumConfig);
+		etheriumShovel = new EtheriumShovel(etheriumConfig);
+		etheriumSword = new EtheriumSword(etheriumConfig);
+		etheriumScythe = new EtheriumScythe(etheriumConfig);
 
 		astralDust = new AstralDust();
 		loreInscriber = new LoreInscriber();
 		loreFragment = new LoreFragment();
-		enderRod = new EnderRod();
+		enderRod = new EnderRod(etheriumConfig);
 
 		astralBreaker = new AstralBreaker();
 		oblivionStone = new OblivionStone();
@@ -557,6 +560,7 @@ public class EnigmaticLegacy {
 		MinecraftForge.EVENT_BUS.register(enigmaticHandler);
 		MinecraftForge.EVENT_BUS.register(keybindHandler);
 		MinecraftForge.EVENT_BUS.register(new EnigmaticUpdateHandler());
+		MinecraftForge.EVENT_BUS.register(new EtheriumEventHandler(etheriumConfig, etheriumOre));
 
 		logger.info("Mod instance constructed successfully.");
 	}

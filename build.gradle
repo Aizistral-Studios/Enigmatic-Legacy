@@ -18,11 +18,20 @@ buildscript {
 
 println("Applying plugins...")
 
-apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
-apply plugin: 'org.spongepowered.mixin'
+apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'com.matthewprenger.cursegradle'
+apply plugin: 'org.spongepowered.mixin'
+apply from: 'common.gradle'
+
+subprojects {
+    dep_forge     = rootProject.dep_forge
+    dep_minecraft = rootProject.dep_minecraft
+    version_mc    = rootProject.version_mc
+    version_forge = rootProject.version_forge
+    version_mcp   = rootProject.version_mcp
+}
 
 mixin {
 	println("Specifying refmaps for Mixin...")
@@ -30,82 +39,13 @@ mixin {
     add sourceSets.main, "enigmaticlegacy.refmap.json"
 }
 
-println("Specifying project version/group/archivesBaseName...")
-version = "${mod_version}"
-group = "${mod_group}"
-archivesBaseName = "${mod_archives_name}"
-
-
-println("Specifying Java compatibility...")
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
-
-println("Java Installation Data:")
-println(" - Java Version: " + System.getProperty('java.version'))
-println(" - JVM Version: " + System.getProperty('java.vm.version'))
-println(" - Vendor: " + System.getProperty('java.vendor'))
-println(" - OS Archetype: " + System.getProperty('os.arch'))
-
 minecraft {
-	println("Specifying MCP mappings...")
-    mappings channel: 'snapshot', version: "${version_mcp}"
 	println("Specifying Access Transformer configuration...")	
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
-	
-	runs {
-        client {
-			properties 'org.gradle.jvmargs': '-Xms4G -Xmx4G'
-			properties 'fml.earlyprogresswindow': 'false'
-			properties 'mixin.env.disableRefMap': 'true'
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                enigmaticlegacy {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-			properties 'mixin.env.disableRefMap': 'true'
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                enigmaticlegacy {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
-}
-
-sourceSets.main.resources {
-    // NO-OP
-}
-
-repositories {
-	println("Specifying repositories...")
-	
-	
-	flatDir {  dirs 'deps' }
-	flatDir {  dirs 'deps/' + version_mcp }
-	maven {  url = "https://maven.theillusivec4.top/" } // curios
-	maven { url 'https://maven.blamejared.com' } // patchouli
-	maven {  url = "https://repo.spongepowered.org/maven" } // mixin
-    maven {	 url "https://dvs1.progwml6.com/files/maven/" } // no idea
 }
 
 dependencies {
-	println("Processing dependencies...")	
-	
-	
-	// Minecraft & Forge
-    minecraft "net.minecraftforge:forge:${version_forge}"
+	println("Processing dependencies...")
    
 	// Mixin
     annotationProcessor 'org.spongepowered:mixin:0.8'
@@ -116,11 +56,11 @@ dependencies {
     annotationProcessor 'org.ow2.asm:asm-util:7.2'
 	
 	// These are 1.16.3 - 1.16.5 dependencies
-	compile name: 'BuildResourceUpdater-1.0-deobf'
-	compile name: 'curios-forge-1.16.5-4.0.5.1-deobf'
-	compile name: 'decorativeblocks-1.16.1-1.5.2-deobf'
-	compile name: 'Patchouli-1.16.4-51-deobf'
-	compile name: 'WorldNameRandomizer-FORGE-1.16.4-v1.1.1-deobf'
+	implementation name: 'BuildResourceUpdater-1.0-deobf'
+	implementation name: 'curios-forge-1.16.5-4.0.5.2-dev'
+	implementation name: 'decorativeblocks-1.16.1-1.5.2-deobf'
+	implementation name: 'Patchouli-1.16.4-51-deobf'
+	implementation name: 'WorldNameRandomizer-FORGE-1.16.4-v1.1.1-deobf'
 	
 	//compile fg.deobf('generic:Survive:1.16.3-3.0.2')
 	//compile fg.deobf('generic:EnchantmentDescriptions:1.16.4-6.0.1')
@@ -138,21 +78,9 @@ dependencies {
 
 }
 
-
 jar {
-	doFirst {
-		println("Processing manifest...")
-	}		
-
     manifest {
         attributes([
-            "Specification-Title": "${mod_name}",
-            "Specification-Vendor": "${mod_author}",
-            "Specification-Version": "${mod_version}",
-            "Implementation-Title": "${mod_name}",
-            "Implementation-Version": "${mod_version}",
-            "Implementation-Vendor" :"${mod_author}",
-            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
             "MixinConnector": "${project.group}.MixinConnector"
         ])
     }
@@ -204,60 +132,8 @@ processResources {
     }
 }
 
-curseforge {
-
-    project {
-		println("Pushing CurseGradle specifications for project ID: ${curse_id}")
-		
-		// Specified as cmd argument
-        apiKey = findProperty('curseKey') ?: 0
-        
-		id = "${curse_id}"
-        releaseType = "${curse_release}"
-        changelogType = 'html'
-        changelog = file('docs/changelog.html')
-		
-		addGameVersion '1.16.5'
-		addGameVersion '1.16.4'
-		addGameVersion '1.16.3'
-		
-		relations {
-			requiredDependency 'curios'
-			requiredDependency 'patchouli'
-		}
-		
-        //addArtifact(sourcesJar)
-        //addArtifact(apiJar)
-    }
-}
-
-
-
 task updateResources() {
     // NO-OP
 }
 
 tasks.updateResources.dependsOn processResources
-
-tasks.withType(JavaCompile) {
-    options.failOnError(true)
-}
-
-jar.finalizedBy('reobfJar') 
-//publish.dependsOn('reobfJar')
-
-publishing {
-
-	// TODO This needs some work
-
-    publications {
-        mavenJava(MavenPublication) {
-            artifact jar
-        }
-    }
-    repositories {
-        maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
-        }
-    }
-}

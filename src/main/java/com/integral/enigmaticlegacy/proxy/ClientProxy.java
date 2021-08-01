@@ -8,13 +8,13 @@ import java.util.UUID;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.client.fx.PermanentItemPickupParticle;
 import com.integral.enigmaticlegacy.client.renderers.PermanentItemRenderer;
-import com.integral.enigmaticlegacy.client.renderers.ShieldAuraLayer;
 import com.integral.enigmaticlegacy.client.renderers.UltimateWitherSkullRenderer;
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 import com.integral.enigmaticlegacy.objects.RevelationTomeToast;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
+import com.integral.etherium.client.ShieldAuraLayer;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -43,7 +43,6 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 public class ClientProxy extends CommonProxy {
-
 	private static final Random random = new Random();
 	protected final HashMap<PlayerEntity, TransientPlayerData> clientTransientPlayerData;
 

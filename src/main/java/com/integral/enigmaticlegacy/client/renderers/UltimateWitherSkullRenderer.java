@@ -1,6 +1,7 @@
 package com.integral.enigmaticlegacy.client.renderers;
 
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
+import com.integral.etherium.client.ShieldAuraLayer;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [],
+  "pattern": [
+    "   ",
+    "X X",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "etherium:etherium_ingot"
+    }
+  },
+  "result": {
+    "item": "etherium:etherium_boots"
+  }
+}

@@ -43,7 +43,6 @@ import com.integral.enigmaticlegacy.items.CursedRing;
 import com.integral.enigmaticlegacy.items.CursedScroll;
 import com.integral.enigmaticlegacy.items.EnigmaticAmulet;
 import com.integral.enigmaticlegacy.items.EnigmaticAmulet.AmuletColor;
-import com.integral.enigmaticlegacy.items.EtheriumArmor;
 import com.integral.enigmaticlegacy.items.EyeOfNebula;
 import com.integral.enigmaticlegacy.items.ForbiddenAxe;
 import com.integral.enigmaticlegacy.items.ForbiddenFruit;
@@ -1116,11 +1115,7 @@ public class EnigmaticEventHandler {
 						player.world.addEntity(entity);
 					}
 
-				} else*/ if (EnigmaticLegacy.etheriumChestplate.hasShield(player)) {
-					event.setCanceled(true);
-
-					player.world.playSound(null, player.getPosition(), EnigmaticLegacy.SHIELD_TRIGGER, SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
-				}
+				}*/
 			}
 
 			if (event.getSource().damageType == DamageSource.FALL.damageType) {
@@ -1400,22 +1395,6 @@ public class EnigmaticEventHandler {
 					}
 				}
 
-			}
-
-			/*
-			 * Handler for knockback feedback and damage reduction of Etherium Armor Shield.
-			 */
-
-			if (EnigmaticLegacy.etheriumChestplate.hasShield(player)) {
-				if (event.getSource().getImmediateSource() instanceof LivingEntity) {
-					LivingEntity attacker = ((LivingEntity) event.getSource().getTrueSource());
-					Vector3 vec = Vector3.fromEntityCenter(player).subtract(Vector3.fromEntityCenter(event.getSource().getTrueSource())).normalize();
-					attacker.applyKnockback(0.75F, vec.x, vec.z);
-					player.world.playSound(null, player.getPosition(), EnigmaticLegacy.SHIELD_TRIGGER, SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
-					player.world.playSound(null, player.getPosition(), EnigmaticLegacy.SHIELD_TRIGGER, SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
-				}
-
-				event.setAmount(event.getAmount() * EtheriumArmor.shieldReduction.getValue().asModifierInverted());
 			}
 
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.berserkEmblem)) {

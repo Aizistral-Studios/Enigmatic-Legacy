@@ -1,11 +1,11 @@
-package com.integral.enigmaticlegacy.items.generic;
+package com.integral.etherium.items.generic;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
+import com.integral.etherium.core.IEtheriumConfig;
+import com.integral.etherium.core.IEtheriumTool;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -15,27 +15,25 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.item.ToolItem;
+import net.minecraft.item.Item.Properties;
 import net.minecraftforge.common.ToolType;
 
-import net.minecraft.item.Item.Properties;
-
-public abstract class ItemBaseTool extends ToolItem {
+public abstract class ItemEtheriumTool extends ToolItem implements IEtheriumTool {
 	public Set<Material> effectiveMaterials;
 	public ItemStack defaultInstance;
+	protected final IEtheriumConfig config;
 
-	public ItemBaseTool(float attackDamageIn, float attackSpeedIn, IItemTier tier, Set<Block> effectiveBlocksIn, Properties builder) {
-		super(attackDamageIn, attackSpeedIn, tier, effectiveBlocksIn, builder);
+	public ItemEtheriumTool(float attackDamageIn, float attackSpeedIn, IEtheriumConfig config, Set<Block> effectiveBlocksIn, Properties builder) {
+		super(attackDamageIn, attackSpeedIn, config.getToolMaterial(), effectiveBlocksIn, builder);
 
+		this.config = config;
 		this.effectiveMaterials = Sets.newHashSet();
 		this.defaultInstance = new ItemStack(this);
 	}
 
-	public ItemBaseTool(IItemTier tier) {
-		this(4F, -2.8F, tier, new HashSet<>(), ItemBaseTool.getDefaultProperties().addToolType(ToolType.PICKAXE, tier.getHarvestLevel()));
-	}
-
-	public ItemBaseTool() {
-		this(4F, -2.8F, EnigmaticMaterials.ETHERIUM, new HashSet<>(), ItemBaseTool.getDefaultProperties().addToolType(ToolType.PICKAXE, EnigmaticMaterials.ETHERIUM.getHarvestLevel()));
+	@Override
+	public IEtheriumConfig getConfig() {
+		return this.config;
 	}
 
 	@Override
@@ -57,17 +55,6 @@ public abstract class ItemBaseTool extends ToolItem {
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
 		Material material = state.getMaterial();
 		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.efficiency;
-	}
-
-
-	public static Properties getDefaultProperties() {
-		Properties props = new Item.Properties();
-
-		props.group(EnigmaticLegacy.enigmaticTab);
-		props.maxStackSize(1);
-		props.rarity(Rarity.COMMON);
-
-		return props;
 	}
 
 }

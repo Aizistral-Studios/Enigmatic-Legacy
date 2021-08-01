@@ -1,0 +1,29 @@
+{
+  "misc.hhon": {
+    "sounds": [
+      {
+        "name": "etherium:misc/hhon",
+        "stream": false
+      }
+    ]
+  },
+  "misc.hhoff": {
+    "sounds": [
+      {
+        "name": "etherium:misc/hhoff",
+        "stream": false
+      }
+    ]
+  },
+  "misc.shield_trigger": {
+    "sounds": [
+      {
+        "name": "etherium:misc/shield_hit_0",
+        "stream": false
+      }, {
+        "name": "etherium:misc/shield_hit_1",
+        "stream": false
+      }
+    ]
+  }
+}

@@ -1,22 +1,15 @@
-package com.integral.enigmaticlegacy.items;
+package com.integral.etherium.items;
 
 import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
-import com.integral.enigmaticlegacy.api.items.IMultiblockMiningTool;
-import com.integral.enigmaticlegacy.api.items.IPerhaps;
-import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
-import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
-import com.integral.enigmaticlegacy.items.generic.ItemBaseTool;
 import com.integral.enigmaticlegacy.objects.CooldownMap;
 import com.integral.enigmaticlegacy.objects.Vector3;
-import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
-import com.integral.omniconfig.wrappers.Omniconfig;
-import com.integral.omniconfig.wrappers.OmniconfigWrapper;
+import com.integral.etherium.core.EtheriumUtil;
+import com.integral.etherium.core.IEtheriumConfig;
+import com.integral.etherium.core.IEtheriumTool;
 
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
@@ -40,24 +33,24 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-public class EtheriumSword extends SwordItem implements IMultiblockMiningTool {
-	public static Omniconfig.IntParameter cooldown;
-
-	@SubscribeConfig
-	public static void onConfig(OmniconfigWrapper builder) {
-		builder.pushPrefix("EtheriumSword");
-
-		cooldown = builder
-				.comment("Cooldown of Etherium Broadsword ability. Measured in ticks.")
-				.getInt("Cooldown", 40);
-
-		builder.popPrefix();
-	}
+public class EtheriumSword extends SwordItem implements IEtheriumTool {
 	public CooldownMap etheriumSwordCooldowns = new CooldownMap();
+	private final IEtheriumConfig config;
 
-	public EtheriumSword() {
-		super(EnigmaticMaterials.ETHERIUM, 6, -2.6F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).isImmuneToFire());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_sword"));
+	public EtheriumSword(IEtheriumConfig config) {
+		super(config.getToolMaterial(), 6, -2.6F, EtheriumUtil.defaultProperties(config, EtheriumSword.class).isImmuneToFire());
+		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_sword"));
+		this.config = config;
+	}
+
+	@Override
+	public String getTranslationKey() {
+		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getTranslationKey();
+	}
+
+	@Override
+	public IEtheriumConfig getConfig() {
+		return this.config;
 	}
 
 	@Override
@@ -68,7 +61,7 @@ public class EtheriumSword extends SwordItem implements IMultiblockMiningTool {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword4", TextFormatting.GOLD, cooldown.getValue() / 20F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword4", TextFormatting.GOLD, this.config.getSwordCooldown() / 20F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword5");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -96,10 +89,10 @@ public class EtheriumSword extends SwordItem implements IMultiblockMiningTool {
 				Vector3 look = new Vector3(player.getLookVec());
 				Vector3 dir = look.multiply(1D);
 
-				this.knockBack(player, 1.0F, dir.x, dir.z);
+				this.config.knockBack(player, 1.0F, dir.x, dir.z);
 				world.playSound(null, player.getPosition(), SoundEvents.ENTITY_SKELETON_SHOOT, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
 
-				player.getCooldownTracker().setCooldown(this, cooldown.getValue());
+				player.getCooldownTracker().setCooldown(this, this.config.getSwordCooldown());
 
 				player.setActiveHand(hand);
 				return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
@@ -116,16 +109,6 @@ public class EtheriumSword extends SwordItem implements IMultiblockMiningTool {
 			return this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType();
 		else
 			return super.onItemUse(context);
-	}
-
-	public void knockBack(PlayerEntity entityIn, float strength, double xRatio, double zRatio) {
-		entityIn.isAirBorne = true;
-		Vector3d vec3d = new Vector3d(0D, 0D, 0D);
-		Vector3d vec3d1 = (new Vector3d(xRatio, 0.0D, zRatio)).normalize().scale(strength);
-
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entityIn), new PacketPlayerMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z));
-		entityIn.setMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z);
-
 	}
 
 }

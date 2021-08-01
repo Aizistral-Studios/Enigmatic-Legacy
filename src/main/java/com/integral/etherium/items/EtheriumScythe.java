@@ -1,4 +1,4 @@
-package com.integral.enigmaticlegacy.items;
+package com.integral.etherium.items;
 
 import java.util.List;
 import java.util.Map;
@@ -9,17 +9,12 @@ import javax.annotation.Nullable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
-import com.integral.enigmaticlegacy.api.items.IMultiblockMiningTool;
-import com.integral.enigmaticlegacy.api.items.IPerhaps;
-import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
-import com.integral.enigmaticlegacy.config.OmniconfigHandler;
+
 import com.integral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
-import com.integral.enigmaticlegacy.items.generic.ItemBaseTool;
-import com.integral.omniconfig.wrappers.Omniconfig;
-import com.integral.omniconfig.wrappers.OmniconfigWrapper;
+import com.integral.etherium.core.EtheriumUtil;
+import com.integral.etherium.core.IEtheriumConfig;
+import com.integral.etherium.core.IEtheriumTool;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -48,28 +43,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EtheriumScythe extends SwordItem implements IMultiblockMiningTool {
-	public static Omniconfig.IntParameter miningVolume;
-
-	@SubscribeConfig
-	public static void onConfig(OmniconfigWrapper builder) {
-		builder.pushPrefix("EtheriumScythe");
-
-		miningVolume = builder
-				.comment("The volume Etherium Scythe AOE mining. Set to -1 to disable the feature.")
-				.min(-1)
-				.max(128-1)
-				.getInt("MiningVolume", 3);
-
-		builder.popPrefix();
-	}
-
+public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 	protected static final Map<Block, BlockState> HOE_LOOKUP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.getDefaultState(), Blocks.GRASS_PATH, Blocks.FARMLAND.getDefaultState(), Blocks.DIRT, Blocks.FARMLAND.getDefaultState(), Blocks.COARSE_DIRT, Blocks.DIRT.getDefaultState()));
 	public Set<Material> effectiveMaterials;
+	private final IEtheriumConfig config;
 
-	public EtheriumScythe() {
-		super(EnigmaticMaterials.ETHERIUM, 3, -2.0F, ItemBaseTool.getDefaultProperties().rarity(Rarity.RARE).isImmuneToFire());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "etherium_scythe"));
+	public EtheriumScythe(IEtheriumConfig config) {
+		super(config.getToolMaterial(), 3, -2.0F, EtheriumUtil.defaultProperties(config, EtheriumScythe.class).isImmuneToFire());
+		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_scythe"));
+		this.config = config;
 
 		this.effectiveMaterials = Sets.newHashSet();
 		this.effectiveMaterials.add(Material.LEAVES);
@@ -83,16 +65,26 @@ public class EtheriumScythe extends SwordItem implements IMultiblockMiningTool {
 	}
 
 	@Override
+	public String getTranslationKey() {
+		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getTranslationKey();
+	}
+
+	@Override
+	public IEtheriumConfig getConfig() {
+		return this.config;
+	}
+
+	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
-		if (miningVolume.getValue() == -1)
+		if (this.config.getScytheMiningVolume() == -1)
 			return;
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe1", TextFormatting.GOLD, miningVolume.getValue());
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe2", TextFormatting.GOLD, miningVolume.getValue());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe1", TextFormatting.GOLD, this.config.getScytheMiningVolume());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe2", TextFormatting.GOLD, this.config.getScytheMiningVolume());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			if (!OmniconfigHandler.disableAOEShiftSuppression.getValue()) {
+			if (!this.config.disableAOEShiftInhibition()) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe3");
 			}
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe4");
@@ -129,7 +121,7 @@ public class EtheriumScythe extends SwordItem implements IMultiblockMiningTool {
 		if (!this.areaEffectsEnabled(context.getPlayer(), context.getItem()))
 			return type;
 
-		int supRad = (miningVolume.getValue() - 1) / 2;
+		int supRad = (this.config.getScytheMiningVolume() - 1) / 2;
 
 		if (type == ActionResultType.CONSUME) {
 			for (int x = -supRad; x <= supRad; x++) {
@@ -148,11 +140,10 @@ public class EtheriumScythe extends SwordItem implements IMultiblockMiningTool {
 
 	@Override
 	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-
-		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && miningVolume.getValue() != -1) {
+		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && this.config.getScytheMiningVolume() != -1) {
 			Direction face = Direction.UP;
 
-			AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos.add(0, (miningVolume.getValue() - 1) / 2, 0), this.effectiveMaterials, miningVolume.getValue(), miningVolume.getValue(), false, pos, stack, (objPos, objState) -> {
+			AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos.add(0, (this.config.getScytheMiningVolume() - 1) / 2, 0), this.effectiveMaterials, this.config.getScytheMiningVolume(), this.config.getScytheMiningVolume(), false, pos, stack, (objPos, objState) -> {
 				stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(MobEntity.getSlotForItemStack(stack)));
 			});
 		}

@@ -1,0 +1,142 @@
+println("Specifying project version/group/archivesBaseName...")
+version = "${mod_version}"
+group = "${mod_group}"
+archivesBaseName = "${mod_archives_name}"
+
+println("Specifying Java compatibility...")
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+
+println("Java Installation Data:")
+println(" - Java Version: " + System.getProperty('java.version'))
+println(" - JVM Version: " + System.getProperty('java.vm.version'))
+println(" - Vendor: " + System.getProperty('java.vendor'))
+println(" - OS Archetype: " + System.getProperty('os.arch'))
+
+minecraft {
+	println("Specifying MCP mappings...")
+    mappings channel: 'snapshot', version: "${version_mcp}"
+	
+	runs {
+        client {
+			properties 'org.gradle.jvmargs': '-Xms4G -Xmx4G'
+			properties 'fml.earlyprogresswindow': 'false'
+			properties 'mixin.env.disableRefMap': 'true'
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                any {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+			properties 'mixin.env.disableRefMap': 'true'
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                any {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+sourceSets.main.resources {
+    // NO-OP
+}
+
+repositories {
+	println("Specifying repositories...")
+	
+	
+	flatDir {  dirs 'deps' }
+	flatDir {  dirs 'deps/' + version_mcp }
+	maven {  url = "https://maven.theillusivec4.top/" } // curios
+	maven { url 'https://maven.blamejared.com' } // patchouli
+	maven {  url = "https://repo.spongepowered.org/maven" } // mixin
+    maven {	 url "https://dvs1.progwml6.com/files/maven/" } // no idea
+}
+
+dependencies {
+	// Minecraft & Forge
+    minecraft "net.minecraftforge:forge:${version_forge}"
+}
+
+
+jar {
+	doFirst {
+		println("Processing manifest...")
+	}		
+
+    manifest {
+        attributes([
+            "Specification-Title": "${mod_name}",
+            "Specification-Vendor": "${mod_author}",
+            "Specification-Version": "${mod_version}",
+            "Implementation-Title": "${mod_name}",
+            "Implementation-Version": "${mod_version}",
+            "Implementation-Vendor" :"${mod_author}",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+curseforge {
+
+    project {
+		println("Pushing CurseGradle specifications for project ID: ${curse_id}")
+		
+		// Specified as cmd argument
+        apiKey = findProperty('curseKey') ?: 0
+        
+		id = project.curse_id
+        releaseType = project.curse_release
+        changelogType = 'html'
+        changelog = file('docs/changelog.html')
+		
+		addGameVersion '1.16.5'
+		addGameVersion '1.16.4'
+		addGameVersion '1.16.3'
+		
+		if (project.name.equals('EnigmaticLegacy')) {
+			relations {
+				requiredDependency 'curios'
+				requiredDependency 'patchouli'
+			}
+		}
+		
+        //addArtifact(sourcesJar)
+        //addArtifact(apiJar)
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.failOnError(true)
+}
+
+jar.finalizedBy('reobfJar')
+//publish.dependsOn('reobfJar')
+
+publishing {
+
+	// TODO This needs some work
+
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}

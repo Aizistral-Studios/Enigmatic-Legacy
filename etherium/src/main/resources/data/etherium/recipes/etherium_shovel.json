@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [],
+  "pattern": [
+    " X ",
+    " S ",
+    " S "
+  ],
+  "key": {
+    "X": {
+      "item": "etherium:etherium_ingot"
+    },
+	"S": {
+      "item": "etherium:ender_rod"
+    }
+  },
+  "result": {
+    "item": "etherium:etherium_shovel"
+  }
+}

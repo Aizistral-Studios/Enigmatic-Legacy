@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [],
+  "pattern": [
+    " X ",
+    "DXD",
+    " S "
+  ],
+  "key": {
+    "X": {
+      "item": "etherium:etherium_ingot"
+    },
+	"S": {
+      "item": "etherium:ender_rod"
+    },
+	"D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "etherium:etherium_sword"
+  }
+}

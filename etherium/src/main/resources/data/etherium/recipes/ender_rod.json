@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " ab",
+    "aba",
+    "ba "
+  ],
+  "key": {
+	"b": {
+      "item": "minecraft:blaze_rod"
+    },
+	"a": {
+      "item": "minecraft:ender_pearl"
+    }
+  },
+  "result": {
+    "item": "etherium:ender_rod",
+    "count": 2
+  }
+}
