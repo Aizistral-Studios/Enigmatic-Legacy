@@ -46,6 +46,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
 public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool {
 	public static Omniconfig.IntParameter miningRadius;
 	public static Omniconfig.IntParameter miningDepth;
+	public static Omniconfig.BooleanParameter flameParticlesToggle;
 
 	@SubscribeConfig
 	public static void onConfig(OmniconfigWrapper builder) {
@@ -61,6 +62,10 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 				.comment("The depth of Astral Breaker AOE mining.")
 				.max(128-1)
 				.getInt("MiningDepth", 1);
+
+		flameParticlesToggle = builder
+				.comment("Whether or not flame particles should appear when the Astral Breaker breaks a block")
+				.getBoolean("FlameParticlesToggle", true);
 
 		builder.popPrefix();
 	}
@@ -102,7 +107,9 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 	}
 
 	public void spawnFlameParticles(World world, BlockPos pos) {
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 128, world.getDimensionKey())), new PacketFlameParticles(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 18, true));
+		if (flameParticlesToggle.getValue()) {
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 128, world.getDimensionKey())), new PacketFlameParticles(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 18, true));
+		}
 	}
 
 	@Override
