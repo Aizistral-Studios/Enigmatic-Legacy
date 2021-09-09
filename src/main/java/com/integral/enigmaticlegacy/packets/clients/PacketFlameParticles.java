@@ -3,6 +3,7 @@ package com.integral.enigmaticlegacy.packets.clients;
 import java.util.Random;
 import java.util.function.Supplier;
 
+import com.integral.enigmaticlegacy.items.AstralBreaker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.ParticleStatus;
@@ -46,32 +47,32 @@ public class PacketFlameParticles {
 	}
 
 	public static void handle(PacketFlameParticles msg, Supplier<NetworkEvent.Context> ctx) {
+		if (AstralBreaker.flameParticlesToggle.getValue()) {
+			ctx.get().enqueueWork(() -> {
+				ClientPlayerEntity player = Minecraft.getInstance().player;
 
-		ctx.get().enqueueWork(() -> {
-			ClientPlayerEntity player = Minecraft.getInstance().player;
+				int amount = msg.num;
+				float modifier = 1.0F;
 
-			int amount = msg.num;
-			float modifier = 1.0F;
-
-			if (msg.check) {
-				if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.MINIMAL) {
-					modifier = 0.20F;
-				} else if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.DECREASED) {
-					modifier = 0.35F;
-				} else {
-					modifier = 0.65F;
+				if (msg.check) {
+					if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.MINIMAL) {
+						modifier = 0.20F;
+					} else if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.DECREASED) {
+						modifier = 0.35F;
+					} else {
+						modifier = 0.65F;
+					}
 				}
-			}
 
-			amount *= modifier;
+				amount *= modifier;
 
-			for (int counter = 0; counter <= amount; counter++) {
-				player.world.addParticle(ParticleTypes.FLAME, true, msg.x + (Math.random() - 0.5), msg.y + (Math.random() - 0.5), msg.z + (Math.random() - 0.5), (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D);
-			}
+				for (int counter = 0; counter <= amount; counter++) {
+					player.world.addParticle(ParticleTypes.FLAME, true, msg.x + (Math.random() - 0.5), msg.y + (Math.random() - 0.5), msg.z + (Math.random() - 0.5), (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D);
+				}
 
-		});
+			});
 
-		ctx.get().setPacketHandled(true);
+			ctx.get().setPacketHandled(true);
+		}
 	}
-
 }
