@@ -179,6 +179,8 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 					if (effect.getDuration() >= EnigmaticLegacy.miningCharm.nightVisionDuration-10 && effect.getDuration() <= EnigmaticLegacy.miningCharm.nightVisionDuration) {
 						continue;
 					}
+				} else if (effect.getPotion().getRegistryName().equals(new ResourceLocation("mana-and-artifice", "chrono-exhaustion"))) {
+					continue;
 				}
 
 				player.removePotionEffect(effect.getPotion());

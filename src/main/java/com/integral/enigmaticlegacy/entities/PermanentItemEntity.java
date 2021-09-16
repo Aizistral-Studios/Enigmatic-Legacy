@@ -123,7 +123,6 @@ public class PermanentItemEntity extends Entity {
 				this.noClip = false;
 
 				this.world.addParticle(ParticleTypes.PORTAL, this.getPosX(), this.getPosY() + (this.getHeight() / 2), this.getPosZ(), ((Math.random() - 0.5) * 2.0), ((Math.random() - 0.5) * 2.0), ((Math.random() - 0.5) * 2.0));
-
 			}
 
 			++this.age;
