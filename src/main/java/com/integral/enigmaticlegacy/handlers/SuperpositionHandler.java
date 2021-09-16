@@ -1148,7 +1148,7 @@ public class SuperpositionHandler {
 	}
 
 	public static float getMissingHealthPool(PlayerEntity player) {
-		return (player.getMaxHealth() - player.getHealth())/player.getMaxHealth();
+		return (player.getMaxHealth() - Math.min(player.getHealth(), player.getMaxHealth()))/player.getMaxHealth();
 	}
 
 	public static int getCurseAmount(ItemStack stack) {
