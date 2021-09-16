@@ -14,6 +14,7 @@ import com.integral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseTool;
 import com.integral.enigmaticlegacy.packets.clients.PacketFlameParticles;
+import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
@@ -47,20 +48,29 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 	public static Omniconfig.IntParameter miningRadius;
 	public static Omniconfig.IntParameter miningDepth;
 
-	@SubscribeConfig
+	public static Omniconfig.BooleanParameter flameParticlesToggle;
+
+	@SubscribeConfig(receiveClient = true)
 	public static void onConfig(OmniconfigWrapper builder) {
 		builder.pushPrefix("AstralBreaker");
 
-		miningRadius = builder
-				.comment("The radius of Astral Breaker AOE mining. Set to -1 to disable the feature.")
-				.min(-1)
-				.max(128-1)
-				.getInt("MiningRadius", 3);
+		if (builder.config.getSidedType() != Configuration.SidedConfigType.CLIENT) {
+			miningRadius = builder
+					.comment("The radius of Astral Breaker AOE mining. Set to -1 to disable the feature.")
+					.min(-1)
+					.max(128 - 1)
+					.getInt("MiningRadius", 3);
 
-		miningDepth = builder
-				.comment("The depth of Astral Breaker AOE mining.")
-				.max(128-1)
-				.getInt("MiningDepth", 1);
+
+			miningDepth = builder
+					.comment("The depth of Astral Breaker AOE mining.")
+					.max(128 - 1)
+					.getInt("MiningDepth", 1);
+		} else {
+			flameParticlesToggle = builder
+					.comment("Whether or not flame particles should appear when the Astral Breaker breaks a block")
+					.getBoolean("FlameParticlesToggle", true);
+		}
 
 		builder.popPrefix();
 	}
