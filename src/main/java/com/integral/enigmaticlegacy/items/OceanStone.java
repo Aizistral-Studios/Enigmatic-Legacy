@@ -165,7 +165,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 				 */
 
 				if (ExperienceHelper.getPlayerXP(player) >= this.xpCostBase * 2) {
-					ExperienceHelper.drainPlayerXP(player, (int) -((this.xpCostBase + (Math.random() * this.xpCostBase)) * xpCostModifier.getValue()));
+					ExperienceHelper.drainPlayerXP(player, (int) ((this.xpCostBase + (Math.random() * this.xpCostBase)) * xpCostModifier.getValue()));
 					paybackReceived = true;
 				}
 
