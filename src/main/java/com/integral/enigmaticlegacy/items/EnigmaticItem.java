@@ -110,6 +110,10 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 		List<EffectInstance> effects = new ArrayList<EffectInstance>(living.getActivePotionEffects());
 
 		for (EffectInstance effect : effects) {
+			if (effect.getPotion().getRegistryName().equals(new ResourceLocation("mana-and-artifice", "chrono-exhaustion"))) {
+				continue;
+			}
+
 			if (!effect.getPotion().isBeneficial()) {
 				living.removePotionEffect(effect.getPotion());
 			}

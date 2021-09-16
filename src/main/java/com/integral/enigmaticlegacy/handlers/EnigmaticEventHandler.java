@@ -219,6 +219,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
+import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -226,6 +227,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
@@ -281,6 +283,23 @@ public class EnigmaticEventHandler {
 		}
 	}
 	 */
+
+	@SubscribeEvent
+	public void onApplyPotion(PotionEvent.PotionApplicableEvent event) {
+		if (event.getEntityLiving() instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+			EffectInstance effect = event.getPotionEffect();
+
+			if (effect.getPotion().getRegistryName().equals(new ResourceLocation("mana-and-artifice", "chrono-exhaustion")))
+				return;
+
+			if (SuperpositionHandler.hasCurio(player, voidPearl)) {
+				event.setResult(Result.DENY);
+			} else if (SuperpositionHandler.hasCurio(player, enigmaticItem) && !effect.getPotion().isBeneficial()) {
+				event.setResult(Result.DENY);
+			}
+		}
+	}
 
 	@SubscribeEvent
 	public void serverStarted(final FMLServerStartedEvent event) {

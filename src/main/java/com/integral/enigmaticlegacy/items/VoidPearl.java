@@ -190,7 +190,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 				List<LivingEntity> entities = living.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(player.getPosX() - shadowRange.getValue(), player.getPosY() - shadowRange.getValue(), player.getPosZ() - shadowRange.getValue(), player.getPosX() + shadowRange.getValue(), player.getPosY() + shadowRange.getValue(), player.getPosZ() + shadowRange.getValue()));
 
 				if (entities.contains(player)) {
-					//entities.remove(player);
+					entities.remove(player);
 				}
 
 				for (LivingEntity victim : entities) {
