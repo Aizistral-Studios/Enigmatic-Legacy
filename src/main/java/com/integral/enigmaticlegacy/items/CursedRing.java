@@ -286,6 +286,13 @@ public class CursedRing extends ItemBaseCurio {
 		}
 
 		for (LivingEntity checkedEntity : genericMobs) {
+			double visibility = player.getVisibilityMultiplier(checkedEntity);
+			double angerDistance = Math.max(neutralAngerRange.getValue() * visibility, neutralXRayRange.getValue());
+
+			if (checkedEntity.getDistanceSq(player.getPosX(), player.getPosY(), player.getPosZ()) > angerDistance * angerDistance) {
+				continue;
+			}
+
 			if (checkedEntity instanceof PiglinEntity && !SuperpositionHandler.hasCurio(player, EnigmaticLegacy.avariceScroll)) {
 				PiglinEntity piglin = (PiglinEntity) checkedEntity;
 
