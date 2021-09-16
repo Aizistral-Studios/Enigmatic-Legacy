@@ -28,6 +28,8 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
+import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -104,7 +106,6 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 		this.theDarkness.setDamageIsAbsolute();
 		this.theDarkness.setDamageBypassesArmor();
 		this.theDarkness.setMagicDamage();
-
 	}
 
 	@Override
@@ -187,7 +188,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 				List<LivingEntity> entities = living.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(player.getPosX() - shadowRange.getValue(), player.getPosY() - shadowRange.getValue(), player.getPosZ() - shadowRange.getValue(), player.getPosX() + shadowRange.getValue(), player.getPosY() + shadowRange.getValue(), player.getPosZ() + shadowRange.getValue()));
 
 				if (entities.contains(player)) {
-					entities.remove(player);
+					//entities.remove(player);
 				}
 
 				for (LivingEntity victim : entities) {
@@ -201,16 +202,22 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 							}
 						}
 
-						//if (player.ticksExisted % 20 == 0) {
-						victim.attackEntityFrom(this.theDarkness, (float) baseDarknessDamage.getValue());
-						living.world.playSound(null, victim.getPosition(), SoundEvents.ENTITY_PHANTOM_BITE, SoundCategory.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
-						//}
+						if (!(victim instanceof PlayerEntity) || player.canAttackPlayer((PlayerEntity) victim)) {
+							IndirectEntityDamageSource darkness = new IndirectEntityDamageSource("darkness", player, null);
+							darkness.setDamageIsAbsolute().setDamageBypassesArmor().setMagicDamage();
 
-						victim.addPotionEffect(new EffectInstance(Effects.WITHER, 80, 1, false, true));
-						victim.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 100, 2, false, true));
-						victim.addPotionEffect(new EffectInstance(Effects.BLINDNESS, 100, 0, false, true));
-						victim.addPotionEffect(new EffectInstance(Effects.HUNGER, 160, 2, false, true));
-						victim.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, 100, 3, false, true));
+							boolean attack = victim.attackEntityFrom(darkness, (float) baseDarknessDamage.getValue());
+
+							if (attack) {
+								living.world.playSound(null, victim.getPosition(), SoundEvents.ENTITY_PHANTOM_BITE, SoundCategory.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
+
+								victim.addPotionEffect(new EffectInstance(Effects.WITHER, 80, 1, false, true));
+								victim.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 100, 2, false, true));
+								victim.addPotionEffect(new EffectInstance(Effects.BLINDNESS, 100, 0, false, true));
+								victim.addPotionEffect(new EffectInstance(Effects.HUNGER, 160, 2, false, true));
+								victim.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, 100, 3, false, true));
+							}
+						}
 					}
 				}
 			}
