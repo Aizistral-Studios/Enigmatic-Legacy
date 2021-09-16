@@ -97,6 +97,7 @@ import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.IAngerable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.brain.Brain;
@@ -146,8 +147,10 @@ import net.minecraft.entity.monster.piglin.PiglinBruteEntity;
 import net.minecraft.entity.monster.piglin.PiglinEntity;
 import net.minecraft.entity.monster.piglin.PiglinTasks;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.BeeEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.TameableEntity;
+import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
@@ -1241,7 +1244,12 @@ public class EnigmaticEventHandler {
 				PlayerEntity player = (PlayerEntity) event.getSource().getTrueSource();
 
 				if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide)) {
-					event.setCanceled(true);
+					if (!(event.getEntityLiving() instanceof IAngerable)
+							|| event.getEntityLiving() instanceof HoglinEntity
+							|| event.getEntityLiving() instanceof BeeEntity
+							|| event.getEntityLiving() instanceof WolfEntity) {
+						event.setCanceled(true);
+					}
 				}
 
 			}
