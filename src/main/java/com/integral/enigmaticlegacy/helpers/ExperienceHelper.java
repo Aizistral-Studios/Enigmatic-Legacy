@@ -16,8 +16,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
 public class ExperienceHelper {
 
 	public static int getPlayerXP(PlayerEntity player) {
-		int xp = (int)(getExperienceForLevel(player.experienceLevel) + (player.experience * player.xpBarCap()));
-		return xp;
+		return (int) (getExperienceForLevel(player.experienceLevel) + player.experience * player.xpBarCap());
 	}
 
 	public static void drainPlayerXP(PlayerEntity player, int amount) {
@@ -25,18 +24,11 @@ public class ExperienceHelper {
 	}
 
 	public static void addPlayerXP(PlayerEntity player, int amount) {
-		int formerXP = getPlayerXP(player);
-
 		int experience = getPlayerXP(player) + amount;
 		player.experienceTotal = experience;
 		player.experienceLevel = getLevelForExperience(experience);
 		int expForLevel = getExperienceForLevel(player.experienceLevel);
-		player.experience = (float)(experience - expForLevel) / (float)player.xpBarCap();
-
-		if (!player.world.isRemote && player instanceof ServerPlayerEntity)
-			if (formerXP != getPlayerXP(player)) {
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity)player), new PacketUpdateExperience(getPlayerXP(player)));
-			}
+		player.experience = (float) (experience - expForLevel) / (float) player.xpBarCap();
 	}
 
 	public static int getExperienceForLevel(int level) {
@@ -44,7 +36,7 @@ public class ExperienceHelper {
 			return 0;
 
 		if (level > 0 && level < 17)
-			return level * level + 6 * level;
+			return (level * level + 6 * level);
 		else if (level > 16 && level < 32)
 			return (int) (2.5 * level * level - 40.5 * level + 360);
 		else
