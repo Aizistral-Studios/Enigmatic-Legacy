@@ -578,14 +578,13 @@ public class EnigmaticEventHandler {
 		Screen screen = evt.getGui();
 
 		if (screen instanceof InventoryScreen || screen instanceof CreativeScreen || screen instanceof CuriosScreen) {
-
 			ContainerScreen<?> gui = (ContainerScreen<?>) screen;
 			boolean isCreative = screen instanceof CreativeScreen;
 			Tuple<Integer, Integer> offsets = EnderChestInventoryButton.getOffsets(isCreative);
 			int x = offsets.getA();
 			int y = offsets.getB();
 
-			evt.addWidget(new EnderChestInventoryButton(gui, gui.getGuiLeft() + x, (gui.height / 2 - 22) + y, 20, 18, 0, 0, 19,
+			evt.addWidget(new EnderChestInventoryButton(gui, gui.getGuiLeft() + x, gui.getGuiTop() + y, 20, 18, 0, 0, 19,
 					new ResourceLocation(
 							"enigmaticlegacy:textures/gui/ender_chest_button.png"),(button) -> {
 								EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketEnderRingKey(true));

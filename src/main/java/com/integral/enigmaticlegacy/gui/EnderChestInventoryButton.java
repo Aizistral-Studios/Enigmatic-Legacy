@@ -70,7 +70,7 @@ public class EnderChestInventoryButton extends ImageButton {
 
 	public static Tuple<Integer, Integer> getOffsets(boolean creative) {
 		int x = creative ? 170 + EnderRing.buttonOffsetXCreative.getValue() : 150 + EnderRing.buttonOffsetX.getValue();
-		int y = creative ? -41 + EnderRing.buttonOffsetYCreative.getValue() : 0 + EnderRing.buttonOffsetY.getValue();
+		int y = creative ? 5 + EnderRing.buttonOffsetYCreative.getValue() : 61 + EnderRing.buttonOffsetY.getValue();
 
 		return new Tuple<>(x, y);
 	}
