@@ -5,6 +5,8 @@ import com.integral.enigmaticlegacy.packets.clients.PacketUpdateExperience;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 /**
@@ -19,12 +21,36 @@ public class ExperienceHelper {
 		return (int) (getExperienceForLevel(player.experienceLevel) + player.experience * player.xpBarCap());
 	}
 
+	public static int getPlayerXPLevel(PlayerEntity player) {
+		return getLevelForExperience(getPlayerXP(player));
+	}
+
 	public static void drainPlayerXP(PlayerEntity player, int amount) {
 		addPlayerXP(player, -amount);
 	}
 
 	public static void addPlayerXP(PlayerEntity player, int amount) {
+		PlayerXpEvent.XpChange eventXP = new PlayerXpEvent.XpChange(player, amount);
+		if (MinecraftForge.EVENT_BUS.post(eventXP))
+			return;
+
+		amount = eventXP.getAmount();
+
+		int oldLevel = getPlayerXPLevel(player);
+		int newLevel = getLevelForExperience(getPlayerXP(player) + amount);
 		int experience = getPlayerXP(player) + amount;
+
+		if (oldLevel != newLevel) {
+			PlayerXpEvent.LevelChange eventLvl = new PlayerXpEvent.LevelChange(player, newLevel - oldLevel);
+			int remainder = experience - getExperienceForLevel(newLevel);
+
+			if (MinecraftForge.EVENT_BUS.post(eventLvl))
+				return;
+
+			newLevel = oldLevel + eventLvl.getLevels();
+			amount = getExperienceForLevel(newLevel) - getExperienceForLevel(oldLevel) + remainder;
+		}
+
 		player.experienceTotal = experience;
 		player.experienceLevel = getLevelForExperience(experience);
 		int expForLevel = getExperienceForLevel(player.experienceLevel);
