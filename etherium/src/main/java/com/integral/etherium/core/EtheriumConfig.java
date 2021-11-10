@@ -13,6 +13,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -80,6 +81,11 @@ public class EtheriumConfig implements IEtheriumConfig {
 				.define("disableAOEShiftInhibition", false);
 		
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, builder.build(), "Etherium.toml");
+	}
+	
+	@Override
+	public Ingredient getRepairMaterial() {
+		return Ingredient.fromItems(EtheriumMod.etheriumIngot);
 	}
 
 	@Override

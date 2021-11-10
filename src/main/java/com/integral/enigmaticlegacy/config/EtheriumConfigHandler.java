@@ -16,6 +16,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -114,6 +115,11 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 				.getInt("Cooldown", 40);
 
 		builder.popPrefix();
+	}
+
+	@Override
+	public Ingredient getRepairMaterial() {
+		return Ingredient.fromItems(EnigmaticLegacy.etheriumIngot);
 	}
 
 	@Override

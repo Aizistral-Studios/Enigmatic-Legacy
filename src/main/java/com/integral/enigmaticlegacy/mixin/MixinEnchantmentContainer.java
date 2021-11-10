@@ -47,8 +47,7 @@ public abstract class MixinEnchantmentContainer extends Container {
 		if (EnchantmentContainer.class.isInstance(this)) {
 			// Evaluating expression promts error assuming incompatible types,
 			// so we need to forget our own class to avoid alerting the compiler
-			Object forgottenObject = this;
-			EnchantmentContainer container = (EnchantmentContainer)forgottenObject;
+			EnchantmentContainer container = (EnchantmentContainer) (Object) this;
 
 			if (SuperpositionHandler.isTheCursedOne(player))
 				if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.enchanterPearl) || SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enchanterPearl)) {

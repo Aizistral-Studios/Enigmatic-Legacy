@@ -50,6 +50,8 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool {
 		this.effectiveMaterials.add(Material.CACTUS);
 		this.effectiveMaterials.add(Material.BAMBOO);
 		this.effectiveMaterials.add(Material.NETHER_WOOD);
+
+		this.config.getSorceryMaterial("INFUSED_WOOD").ifPresent(this.effectiveMaterials::add);
 	}
 
 	@Override

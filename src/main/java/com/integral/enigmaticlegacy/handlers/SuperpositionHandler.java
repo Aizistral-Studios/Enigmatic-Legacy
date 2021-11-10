@@ -1020,20 +1020,19 @@ public class SuperpositionHandler {
 		return false;
 	}
 
-	public static boolean shouldPlayerDropSoulCrystal(PlayerEntity player) {
+	public static boolean shouldPlayerDropSoulCrystal(PlayerEntity player, boolean hadRing) {
 		int dropMode = OmniconfigHandler.soulCrystalsMode.getValue();
 		int maxCrystalLoss = OmniconfigHandler.maxSoulCrystalLoss.getValue();
 
-		boolean hasCursedRing = SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing);
 		boolean canDropMore = EnigmaticLegacy.soulCrystal.getLostCrystals(player) < maxCrystalLoss;
 		boolean keepInventory = player.world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY);
 
 		// TODO Use Enum config
 
 		if (dropMode == 0)
-			return hasCursedRing && canDropMore;
+			return hadRing && canDropMore;
 		else if (dropMode == 1)
-			return (hasCursedRing || keepInventory) && canDropMore;
+			return (hadRing || keepInventory) && canDropMore;
 		else if (dropMode == 2)
 			return canDropMore;
 

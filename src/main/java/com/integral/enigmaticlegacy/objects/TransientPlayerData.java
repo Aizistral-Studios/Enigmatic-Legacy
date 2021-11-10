@@ -1,5 +1,6 @@
 package com.integral.enigmaticlegacy.objects;
 
+import java.lang.ref.WeakReference;
 import java.util.UUID;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
@@ -50,9 +51,7 @@ public class TransientPlayerData {
 
 	public void syncToPlayer() {
 		if (this.getPlayer() instanceof ServerPlayerEntity) {
-			ServerPlayerEntity serverPlayer = (ServerPlayerEntity) this.getPlayer();
-
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new PacketSyncTransientData(this));
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) this.getPlayer()), new PacketSyncTransientData(this));
 		}
 	}
 
@@ -61,7 +60,7 @@ public class TransientPlayerData {
 		// NO-OP
 	}
 
-	private final PlayerEntity player;
+	private final WeakReference<PlayerEntity> player;
 	private int fireImmunityTimer;
 	private int fireImmunityTimerCap;
 	public int spellstoneCooldown;
@@ -71,7 +70,7 @@ public class TransientPlayerData {
 	public boolean needsSync = false;
 
 	public TransientPlayerData(PlayerEntity thePlayer) {
-		this.player = thePlayer;
+		this.player = new WeakReference<>(thePlayer);
 		this.fireImmunityTimer = 0;
 		this.spellstoneCooldown = 0;
 		this.fireImmunityTimerLast = 0;
@@ -137,25 +136,25 @@ public class TransientPlayerData {
 			this.spellstoneCooldown = newValue;
 
 			for (Item spellstone : EnigmaticLegacy.spellstoneList) {
-				this.player.getCooldownTracker().setCooldown(spellstone, this.spellstoneCooldown);
+				this.player.get().getCooldownTracker().setCooldown(spellstone, this.spellstoneCooldown);
 			}
 		}
 	}
 
 	public Boolean getConsumedForbiddenFruit() {
-		return this.consumedForbiddenFruit != null ? this.consumedForbiddenFruit : (this.consumedForbiddenFruit = SuperpositionHandler.getPersistentBoolean(this.player, ForbiddenFruit.consumedFruitTag, false));
+		return this.consumedForbiddenFruit != null ? this.consumedForbiddenFruit : (this.consumedForbiddenFruit = SuperpositionHandler.getPersistentBoolean(this.player.get(), ForbiddenFruit.consumedFruitTag, false));
 	}
-	
+
 	public void setConsumedForbiddenFruit(Boolean consumedForbiddenFruit){
 		this.consumedForbiddenFruit = consumedForbiddenFruit;
 	}
 
 	public PlayerEntity getPlayer() {
-		return this.player;
+		return this.player.get();
 	}
 
 	public static PacketBuffer encode(TransientPlayerData data, PacketBuffer buf) {
-		buf.writeUniqueId(data.player.getUniqueID());
+		buf.writeUniqueId(data.player.get().getUniqueID());
 		buf.writeInt(data.spellstoneCooldown);
 		buf.writeInt(data.fireImmunityTimer);
 		buf.writeInt(data.fireImmunityTimerCap);

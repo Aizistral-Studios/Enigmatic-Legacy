@@ -3,12 +3,14 @@ package com.integral.enigmaticlegacy.objects;
 import static com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack.getRegisteredMeleeAttack;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class RegisteredMeleeAttack {
-	private static final HashMap<PlayerEntity, RegisteredMeleeAttack> attackRegistry = new HashMap<>();
+	private static final Map<PlayerEntity, RegisteredMeleeAttack> attackRegistry = new WeakHashMap<>();
 
 	public static boolean hasRegisteredMeleeAttack(PlayerEntity player) {
 		return attackRegistry.containsKey(player);
@@ -32,6 +34,10 @@ public class RegisteredMeleeAttack {
 		}
 
 		return attackStregth;
+	}
+
+	public static void clearRegistry() {
+		attackRegistry.clear();
 	}
 
 	public final PlayerEntity player;

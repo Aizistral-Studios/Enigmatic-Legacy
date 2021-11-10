@@ -1,8 +1,12 @@
 package com.integral.enigmaticlegacy.proxy;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentMap;
 
+import com.google.common.collect.MapMaker;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 
@@ -19,13 +23,17 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class CommonProxy {
 
-	protected final HashMap<PlayerEntity, TransientPlayerData> commonTransientPlayerData;
+	protected final Map<PlayerEntity, TransientPlayerData> commonTransientPlayerData;
 
 	public CommonProxy() {
-		this.commonTransientPlayerData = new HashMap<>();
+		this.commonTransientPlayerData = new WeakHashMap<>();
 	}
 
-	public HashMap<PlayerEntity, TransientPlayerData> getTransientPlayerData(boolean clientOnly) {
+	public void clearTransientData() {
+		this.commonTransientPlayerData.clear();
+	}
+
+	public Map<PlayerEntity, TransientPlayerData> getTransientPlayerData(boolean clientOnly) {
 		return this.commonTransientPlayerData;
 	}
 

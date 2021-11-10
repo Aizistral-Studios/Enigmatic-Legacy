@@ -1,8 +1,10 @@
 package com.integral.enigmaticlegacy.api.materials;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.etherium.core.IEtheriumConfig;
 
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.IArmorMaterial;
@@ -12,11 +14,12 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 
 public enum EnigmaticArmorMaterials implements IArmorMaterial {
-	ETHERIUM(EnigmaticLegacy.MODID + ":etherium", 132, new int[] { 4, 7, 9, 4 }, 24, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 4F, 0, () -> {
-		return Ingredient.fromItems(EnigmaticLegacy.etheriumIngot);
-	});
+	ETHERIUM(EnigmaticLegacy.MODID + ":etherium", 132, new int[] { 4, 7, 9, 4 }, 24,
+			SoundEvents.ITEM_ARMOR_EQUIP_IRON, 4F, 0, () -> getEtheriumConfig().getRepairMaterial());
 
 	private static final int[] MAX_DAMAGE_ARRAY = new int[] { 13, 15, 16, 11 };
+	private static IEtheriumConfig etheriumConfig;
+
 	private final String name;
 	private final int maxDamageFactor;
 	private final int[] damageReductionAmountArray;
@@ -26,7 +29,7 @@ public enum EnigmaticArmorMaterials implements IArmorMaterial {
 	private final LazyValue<Ingredient> repairMaterial;
 	private final float knockbackResistance;
 
-	EnigmaticArmorMaterials(String name, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness, float knockbackResistance, Supplier<Ingredient> repairMaterial) {
+	private EnigmaticArmorMaterials(String name, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness, float knockbackResistance, Supplier<Ingredient> repairMaterial) {
 		this.name = name;
 		this.maxDamageFactor = maxDamageFactor;
 		this.damageReductionAmountArray = damageReductionAmountArray;
@@ -77,4 +80,13 @@ public enum EnigmaticArmorMaterials implements IArmorMaterial {
 	public float getKnockbackResistance() {
 		return this.knockbackResistance;
 	}
+
+	public static IEtheriumConfig getEtheriumConfig() {
+		return etheriumConfig;
+	}
+
+	public static void setEtheriumConfig(IEtheriumConfig config) {
+		etheriumConfig = Objects.requireNonNull(config);
+	}
+
 }

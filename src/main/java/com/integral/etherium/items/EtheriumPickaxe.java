@@ -55,6 +55,9 @@ public class EtheriumPickaxe extends ItemEtheriumTool {
 		this.effectiveMaterials.add(Material.PACKED_ICE);
 		this.effectiveMaterials.add(Material.ICE);
 		this.effectiveMaterials.add(Material.SHULKER);
+
+		this.config.getSorceryMaterial("MARBLE").ifPresent(this.effectiveMaterials::add);
+		this.config.getSorceryMaterial("BLACK_MARBLE").ifPresent(this.effectiveMaterials::add);
 	}
 
 	@Override

@@ -2,6 +2,8 @@ package com.integral.enigmaticlegacy.items;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import javax.annotation.Nullable;
 
@@ -45,7 +47,7 @@ public class HeavenScroll extends ItemBaseCurio {
 		builder.popPrefix();
 	}
 
-	public HashMap<PlayerEntity, Integer> flyMap = new HashMap<PlayerEntity, Integer>();
+	public Map<PlayerEntity, Integer> flyMap = new WeakHashMap<PlayerEntity, Integer>();
 	public final double baseXpConsumptionProbability = 0.025D/2D;
 
 	public HeavenScroll() {

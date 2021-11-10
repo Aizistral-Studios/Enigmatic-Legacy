@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
+import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentMap;
 
+import com.google.common.collect.MapMaker;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.client.fx.PermanentItemPickupParticle;
 import com.integral.enigmaticlegacy.client.renderers.PermanentItemRenderer;
@@ -44,15 +47,21 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 public class ClientProxy extends CommonProxy {
 	private static final Random random = new Random();
-	protected final HashMap<PlayerEntity, TransientPlayerData> clientTransientPlayerData;
+	protected final Map<PlayerEntity, TransientPlayerData> clientTransientPlayerData;
 
 	public ClientProxy() {
 		super();
-		this.clientTransientPlayerData = new HashMap<>();
+		this.clientTransientPlayerData = new WeakHashMap<>();
 	}
 
 	@Override
-	public HashMap<PlayerEntity, TransientPlayerData> getTransientPlayerData(boolean clientOnly) {
+	public void clearTransientData() {
+		super.clearTransientData();
+		this.clientTransientPlayerData.clear();
+	}
+
+	@Override
+	public Map<PlayerEntity, TransientPlayerData> getTransientPlayerData(boolean clientOnly) {
 		if (clientOnly)
 			return this.clientTransientPlayerData;
 		else

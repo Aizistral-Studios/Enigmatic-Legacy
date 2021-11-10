@@ -17,7 +17,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class DarkArmor extends ItemBaseArmor {
-
 	public final String TEXTURE = EnigmaticLegacy.MODID + ":textures/models/armor/dark_armor.png";
 
 	public DarkArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {

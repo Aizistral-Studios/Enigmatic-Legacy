@@ -1,14 +1,23 @@
 package com.integral.etherium.core;
 
-import com.integral.enigmaticlegacy.objects.Perhaps;
+import java.util.Optional;
 
+import com.integral.enigmaticlegacy.objects.Perhaps;
+import com.integral.etherium.items.EtheriumAxe;
+import com.integral.etherium.items.EtheriumPickaxe;
+
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.fml.ModList;
 
 public interface IEtheriumConfig {
+
+	public Ingredient getRepairMaterial();
 
 	public ItemGroup getCreativeTab();
 
@@ -47,4 +56,19 @@ public interface IEtheriumConfig {
 	public void knockBack(PlayerEntity entityIn, float strength, double xRatio, double zRatio);
 
 	public boolean isStandalone();
+
+	public default Optional<Material> getSorceryMaterial(String name) {
+		if (ModList.get().isLoaded("astralsorcery")) {
+			try {
+				Class<?> sorceryBlockMaterials = Class.forName("hellfirepvp.astralsorcery.common.lib.MaterialsAS");
+				Material material = (Material) sorceryBlockMaterials.getField(name).get(null);
+				return Optional.ofNullable(material);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		return Optional.empty();
+	}
+
 }

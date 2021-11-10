@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.WeakHashMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -196,6 +197,7 @@ import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent.LoggedInEvent;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -269,7 +271,7 @@ public class EnigmaticEventHandler {
 
 	public static final CooldownMap deferredToast = new CooldownMap();
 	public static final List<IToast> scheduledToasts = new ArrayList<>();
-	public static final HashMap<LivingEntity, Float> knockbackThatBastard = new HashMap<>();
+	public static final Map<LivingEntity, Float> knockbackThatBastard = new WeakHashMap<>();
 	public static final Random theySeeMeRollin = new Random();
 	public static final Multimap<PlayerEntity, Item> postmortalPossession = ArrayListMultimap.create();
 	public static final Multimap<PlayerEntity, GuardianEntity> angeredGuardians = ArrayListMultimap.create();
@@ -876,15 +878,36 @@ public class EnigmaticEventHandler {
 
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onConfirmedDeath(LivingDeathEvent event) {
+	/**
+	 * This was done solely to fix interaction with Corpse Complex.
+	 * Still needs a more elegant workaround, but should do the trick for now.
+	 * @param event
+	 */
 
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void onProbableDeath(LivingDeathEvent event) {
+		if (event.getEntityLiving() instanceof ServerPlayerEntity) {
+			ServerPlayerEntity player = (ServerPlayerEntity) event.getEntityLiving();
+
+			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing)) {
+				postmortalPossession.put(player, EnigmaticLegacy.cursedRing);
+			}
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOWEST, receiveCanceled = true)
+	public void onConfirmedDeath(LivingDeathEvent event) {
 		if (event.getEntityLiving() instanceof ServerPlayerEntity) {
 			ServerPlayerEntity player = (ServerPlayerEntity) event.getEntityLiving();
 
 			/*
 			 * Updates Enigmatic Amulet/Scroll of Postmortal Recall possession status for LivingDropsEvent.
 			 */
+
+			if (event.isCanceled()) {
+				postmortalPossession.removeAll(player);
+				return;
+			}
 
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticAmulet) || SuperpositionHandler.hasItem(player, EnigmaticLegacy.enigmaticAmulet)) {
 				postmortalPossession.put(player, EnigmaticLegacy.enigmaticAmulet);
@@ -914,7 +937,6 @@ public class EnigmaticEventHandler {
 					tomeStack.shrink(1);
 				}
 			}
-
 		}
 
 	}
@@ -1647,7 +1669,7 @@ public class EnigmaticEventHandler {
 			}
 
 			if (this.hadEnigmaticAmulet(player) && !event.getDrops().isEmpty() && EnigmaticLegacy.enigmaticAmulet.isVesselEnabled()) {
-				ItemStack soulCrystal = SuperpositionHandler.shouldPlayerDropSoulCrystal(player) ? EnigmaticLegacy.soulCrystal.createCrystalFrom(player) : null;
+				ItemStack soulCrystal = SuperpositionHandler.shouldPlayerDropSoulCrystal(player, this.hadCursedRing(player)) ? EnigmaticLegacy.soulCrystal.createCrystalFrom(player) : null;
 				ItemStack storageCrystal = EnigmaticLegacy.storageCrystal.storeDropsOnCrystal(event.getDrops(), player, soulCrystal);
 				PermanentItemEntity droppedStorageCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), storageCrystal);
 				droppedStorageCrystal.setOwnerId(player.getUniqueID());
@@ -1659,7 +1681,7 @@ public class EnigmaticEventHandler {
 					droppedCrystal = true;
 				}
 
-			} else if (SuperpositionHandler.shouldPlayerDropSoulCrystal(player)) {
+			} else if (SuperpositionHandler.shouldPlayerDropSoulCrystal(player, this.hadCursedRing(player))) {
 				ItemStack soulCrystal = EnigmaticLegacy.soulCrystal.createCrystalFrom(player);
 				PermanentItemEntity droppedSoulCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), soulCrystal);
 				droppedSoulCrystal.setOwnerId(player.getUniqueID());
@@ -1678,10 +1700,10 @@ public class EnigmaticEventHandler {
 			}
 
 			postmortalPossession.removeAll(player);
-
 			return;
+		} else if (event.getEntityLiving() instanceof PlayerEntity) {
+			postmortalPossession.removeAll(event.getEntityLiving());
 		}
-
 
 		/*
 		 * Beheading handler for Axe of Executioner.
@@ -2051,83 +2073,11 @@ public class EnigmaticEventHandler {
 		}
 
 		try {
-
 			ServerPlayerEntity player = (ServerPlayerEntity) event.getPlayer();
 
-			/*
-			 * Handler for bestowing Enigmatic Amulet to the player, when they first join
-			 * the world.
-			 */
-
-			if (OmniconfigHandler.isItemEnabled(EnigmaticLegacy.enigmaticAmulet))
-				if (!SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_FIRSTJOIN)) {
-
-					ItemStack enigmaticAmulet = new ItemStack(EnigmaticLegacy.enigmaticAmulet);
-					EnigmaticLegacy.enigmaticAmulet.setInscription(enigmaticAmulet, player.getGameProfile().getName());
-
-					if (!EnigmaticAmulet.seededColorGen.getValue()) {
-						EnigmaticLegacy.enigmaticAmulet.setRandomColor(enigmaticAmulet);
-					} else {
-						EnigmaticLegacy.enigmaticAmulet.setSeededColor(enigmaticAmulet);
-					}
-
-					if (player.inventory.getStackInSlot(8).isEmpty()) {
-						player.inventory.setInventorySlotContents(8, enigmaticAmulet);
-					} else {
-						if (!player.inventory.addItemStackToInventory(enigmaticAmulet)) {
-							ItemEntity dropAmulet = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), enigmaticAmulet);
-							player.world.addEntity(dropAmulet);
-						}
-					}
-
-					SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_FIRSTJOIN, true);
-				}
-
-			/*
-			 * Another one for Ring of the Seven Curses.
-			 */
-
-			if (OmniconfigHandler.isItemEnabled(EnigmaticLegacy.cursedRing))
-				if (!SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_CURSEDGIFT)) {
-					ItemStack cursedRingStack = new ItemStack(EnigmaticLegacy.cursedRing);
-
-					if (!CursedRing.ultraHardcore.getValue()) {
-						if (player.inventory.getStackInSlot(7).isEmpty()) {
-							player.inventory.setInventorySlotContents(7, cursedRingStack);
-						} else {
-							if (!player.inventory.addItemStackToInventory(cursedRingStack)) {
-								ItemEntity dropRing = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), cursedRingStack);
-								player.world.addEntity(dropRing);
-							}
-						}
-					} else {
-						CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(handler -> {
-							if (!player.world.isRemote) {
-								Map<String, ICurioStacksHandler> curios = handler.getCurios();
-
-								for (Map.Entry<String, ICurioStacksHandler> entry : curios.entrySet()) {
-									IDynamicStackHandler stackHandler = entry.getValue().getStacks();
-
-									for (int i = 0; i < stackHandler.getSlots(); i++) {
-										ItemStack present = stackHandler.getStackInSlot(i);
-										Set<String> tags = CuriosApi.getCuriosHelper().getCurioTags(cursedRing);
-										String id = entry.getKey();
-
-										if (present.isEmpty() && (tags.contains(id) || tags.contains("curio")) && cursedRing
-												.canEquip(id, player, cursedRingStack)) {
-											stackHandler.setStackInSlot(i, cursedRingStack);
-											//cursedRing.onEquip(id, i, player);
-											cursedRing.playRightClickEquipSound(player, cursedRingStack);
-										}
-									}
-								}
-
-							}
-						});
-					}
-
-					SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_CURSEDGIFT, true);
-				}
+			if (!enigmaticLegacy.isCSGPresent()) {
+				grantStarterGear(player);
+			}
 
 			/*
 			 * Handlers for fixing missing Curios slots upong joining the world.
@@ -2246,6 +2196,12 @@ public class EnigmaticEventHandler {
 	}
 
 	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
+	public void onLogin(LoggedInEvent event) {
+		//enigmaticLegacy.performCleanup();
+	}
+
+	@SubscribeEvent
 	public void onAnvilUpdate(AnvilUpdateEvent event) {
 
 		if (event.getLeft().getCount() == 1)
@@ -2330,6 +2286,85 @@ public class EnigmaticEventHandler {
 		this.addDrop(event, itemStacks[chosenStack]);
 	}
 
+	public static void grantStarterGear(PlayerEntity player) {
+		EnigmaticLegacy.logger.info("Granting starter gear to " + player.getGameProfile().getName());
+
+		/*
+		 * Handler for bestowing Enigmatic Amulet to the player, when they first join
+		 * the world.
+		 */
+
+		if (OmniconfigHandler.isItemEnabled(EnigmaticLegacy.enigmaticAmulet))
+			if (!SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_FIRSTJOIN)) {
+
+				ItemStack enigmaticAmulet = new ItemStack(EnigmaticLegacy.enigmaticAmulet);
+				EnigmaticLegacy.enigmaticAmulet.setInscription(enigmaticAmulet, player.getGameProfile().getName());
+
+				if (!EnigmaticAmulet.seededColorGen.getValue()) {
+					EnigmaticLegacy.enigmaticAmulet.setRandomColor(enigmaticAmulet);
+				} else {
+					EnigmaticLegacy.enigmaticAmulet.setSeededColor(enigmaticAmulet);
+				}
+
+				if (player.inventory.getStackInSlot(8).isEmpty()) {
+					player.inventory.setInventorySlotContents(8, enigmaticAmulet);
+				} else {
+					if (!player.inventory.addItemStackToInventory(enigmaticAmulet)) {
+						ItemEntity dropAmulet = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), enigmaticAmulet);
+						player.world.addEntity(dropAmulet);
+					}
+				}
+
+				SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_FIRSTJOIN, true);
+			}
+
+		/*
+		 * Another one for Ring of the Seven Curses.
+		 */
+
+		if (OmniconfigHandler.isItemEnabled(EnigmaticLegacy.cursedRing))
+			if (!SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_CURSEDGIFT)) {
+				ItemStack cursedRingStack = new ItemStack(EnigmaticLegacy.cursedRing);
+
+				if (!CursedRing.ultraHardcore.getValue()) {
+					if (player.inventory.getStackInSlot(7).isEmpty()) {
+						player.inventory.setInventorySlotContents(7, cursedRingStack);
+					} else {
+						if (!player.inventory.addItemStackToInventory(cursedRingStack)) {
+							ItemEntity dropRing = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), cursedRingStack);
+							player.world.addEntity(dropRing);
+						}
+					}
+				} else {
+					CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(handler -> {
+						if (!player.world.isRemote) {
+							Map<String, ICurioStacksHandler> curios = handler.getCurios();
+
+							for (Map.Entry<String, ICurioStacksHandler> entry : curios.entrySet()) {
+								IDynamicStackHandler stackHandler = entry.getValue().getStacks();
+
+								for (int i = 0; i < stackHandler.getSlots(); i++) {
+									ItemStack present = stackHandler.getStackInSlot(i);
+									Set<String> tags = CuriosApi.getCuriosHelper().getCurioTags(cursedRing);
+									String id = entry.getKey();
+
+									if (present.isEmpty() && (tags.contains(id) || tags.contains("curio")) && cursedRing
+											.canEquip(id, player, cursedRingStack)) {
+										stackHandler.setStackInSlot(i, cursedRingStack);
+										//cursedRing.onEquip(id, i, player);
+										cursedRing.playRightClickEquipSound(player, cursedRingStack);
+									}
+								}
+							}
+
+						}
+					});
+				}
+
+				SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_CURSEDGIFT, true);
+			}
+	}
+
 	/**
 	 * Calculates the chance for Axe of Executioner to behead an enemy.
 	 *
@@ -2353,6 +2388,10 @@ public class EnigmaticEventHandler {
 
 	private boolean hadUnholyStone(PlayerEntity player) {
 		return EnigmaticEventHandler.postmortalPossession.containsKey(player) ? EnigmaticEventHandler.postmortalPossession.containsEntry(player, EnigmaticLegacy.cursedStone) : false;
+	}
+
+	private boolean hadCursedRing(PlayerEntity player) {
+		return EnigmaticEventHandler.postmortalPossession.containsKey(player) ? EnigmaticEventHandler.postmortalPossession.containsEntry(player, EnigmaticLegacy.cursedRing) : false;
 	}
 
 

@@ -3,6 +3,8 @@ package com.integral.enigmaticlegacy.items;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 import javax.annotation.Nullable;
 
@@ -53,7 +55,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 		builder.popPrefix();
 	}
 
-	public HashMap<PlayerEntity, Boolean> flightMap = new HashMap<PlayerEntity, Boolean>();
+	public Map<PlayerEntity, Boolean> flightMap = new WeakHashMap<>();
 
 	public EnigmaticItem() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC).isImmuneToFire());

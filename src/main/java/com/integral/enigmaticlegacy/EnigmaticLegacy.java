@@ -20,6 +20,7 @@ import com.google.common.collect.Lists;
 import com.integral.enigmaticlegacy.api.generic.ConfigurableItem;
 import com.integral.enigmaticlegacy.api.items.IAdvancedPotionItem.PotionType;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
+import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.blocks.BlockBigLamp;
 import com.integral.enigmaticlegacy.blocks.BlockMassiveLamp;
 import com.integral.enigmaticlegacy.brewing.SpecialBrewingRecipe;
@@ -112,6 +113,7 @@ import com.integral.enigmaticlegacy.items.XPScroll;
 import com.integral.enigmaticlegacy.items.generic.GenericBlockItem;
 import com.integral.enigmaticlegacy.objects.AdvancedPotion;
 import com.integral.enigmaticlegacy.objects.LoggerWrapper;
+import com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack;
 import com.integral.enigmaticlegacy.packets.clients.PacketFlameParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketGenericParticleEffect;
@@ -194,11 +196,13 @@ import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -211,15 +215,14 @@ import net.minecraft.block.AbstractBlock;
 
 @Mod(EnigmaticLegacy.MODID)
 public class EnigmaticLegacy {
-
-	public static EnigmaticLegacy enigmaticLegacy;
-	public static final LoggerWrapper logger = new LoggerWrapper("Enigmatic Legacy");
-	public static SimpleChannel packetInstance;
-
 	public static final String MODID = "enigmaticlegacy";
 	public static final String VERSION = "2.11.5";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
+
+	public static EnigmaticLegacy enigmaticLegacy;
+	public static final LoggerWrapper logger = new LoggerWrapper("Enigmatic Legacy");
+	public static SimpleChannel packetInstance;
 
 	public static final int howCoolAmI = Integer.MAX_VALUE;
 
@@ -409,6 +412,9 @@ public class EnigmaticLegacy {
 		OmniconfigHandler.initialize();
 		EtheriumConfigHandler etheriumConfig = new EtheriumConfigHandler();
 
+		EnigmaticMaterials.setEtheriumConfig(etheriumConfig);
+		EnigmaticArmorMaterials.setEtheriumConfig(etheriumConfig);
+
 		enigmaticHandler = new EnigmaticEventHandler();
 		keybindHandler = new EnigmaticKeybindHandler();
 
@@ -561,6 +567,7 @@ public class EnigmaticLegacy {
 		MinecraftForge.EVENT_BUS.register(keybindHandler);
 		MinecraftForge.EVENT_BUS.register(new EnigmaticUpdateHandler());
 		MinecraftForge.EVENT_BUS.register(new EtheriumEventHandler(etheriumConfig, etheriumOre));
+		MinecraftForge.EVENT_BUS.addListener(this::onServerStart);
 
 		logger.info("Mod instance constructed successfully.");
 	}
@@ -665,6 +672,34 @@ public class EnigmaticLegacy {
 		SuperpositionHandler.registerCurioType("scroll", 1, false, false, new ResourceLocation(MODID, "slots/empty_scroll_slot"));
 		//SuperpositionHandler.registerCurioType("curio", -1, true, false, null);
 
+	}
+
+	private void onServerStart(FMLServerAboutToStartEvent event) {
+		this.performCleanup();
+	}
+
+	/**
+	 * Alright boys, it's cleanup time!
+	 * @param event
+	 */
+
+	public void performCleanup() {
+		// TODO Figure something out with those multimaps
+		// I'd really like there to be a weak multimap or something
+
+		proxy.clearTransientData();
+		EnigmaticEventHandler.angeredGuardians.clear();
+		EnigmaticEventHandler.postmortalPossession.clear();
+		EnigmaticEventHandler.knockbackThatBastard.clear();
+		EnigmaticEventHandler.deferredToast.clear();
+		soulCrystal.attributeDispatcher.clear();
+		enigmaticItem.flightMap.clear();
+		heavenScroll.flyMap.clear();
+		RegisteredMeleeAttack.clearRegistry();
+	}
+
+	public boolean isCSGPresent() {
+		return ModList.get().isLoaded("customstartinggear");
 	}
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -782,16 +817,16 @@ public class EnigmaticLegacy {
 					//darkBoots,
 					cursedRing,
 					darkMirror,
-					/*cryingIngot,
-					cryingHelmet,
-					cryingChestplate,
-					cryingLeggings,
-					cryingBoots,
-					cryingPickaxe,
-					cryingAxe,
-					cryingSword,
-					cryingShovel,
-					cryingHoe,*/
+					//cryingIngot,
+					//cryingHelmet,
+					//cryingChestplate,
+					//cryingLeggings,
+					//cryingBoots,
+					//cryingPickaxe,
+					//cryingAxe,
+					//cryingSword,
+					//cryingShovel,
+					//cryingHoe,
 					earthHeart,
 					twistedCore,
 					cursedScroll,
@@ -816,7 +851,7 @@ public class EnigmaticLegacy {
 					new GenericBlockItem(bigShroomlamp),
 					new GenericBlockItem(massiveRedstonelamp),
 					new GenericBlockItem(bigRedstonelamp)
-					/*,gemOfBinding,wormholePotion*/
+					//,gemOfBinding,wormholePotion
 					);
 
 			logger.info("Items registered successfully.");

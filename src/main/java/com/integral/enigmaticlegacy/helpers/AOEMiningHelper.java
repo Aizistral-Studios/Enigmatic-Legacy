@@ -12,6 +12,7 @@ import com.integral.enigmaticlegacy.objects.Vector3;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -30,12 +31,10 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 public class AOEMiningHelper {
-
 	public static final Random random = new Random();
 
 	/** Attempt to break blocks around the given pos in a 3x3x1 square relative to the targeted face.*/
 	public static void attemptBreakNeighbors(World world, BlockPos pos, PlayerEntity player, Set<Block> effectiveOn, Set<Material> effectiveMaterials, boolean checkHarvestLevel) {
-
 		RayTraceResult trace = AOEMiningHelper.calcRayTrace(world, player, RayTraceContext.FluidMode.ANY);
 
 		if (trace.getType() == RayTraceResult.Type.BLOCK) {
@@ -85,7 +84,7 @@ public class AOEMiningHelper {
 
 		boolean validHarvest = !checkHarvestLevel || player.getHeldItemMainhand().canHarvestBlock(state);
 		boolean isEffective = effectiveOn.contains(state.getBlock()) || effectiveMaterials.contains(state.getMaterial());
-		boolean witherImmune = BlockTags.WITHER_IMMUNE.contains(state.getBlock());
+		boolean witherImmune = BlockTags.WITHER_IMMUNE.contains(state.getBlock()) || state.getBlock() == Blocks.SPAWNER;
 
 		if (validHarvest && isEffective && !witherImmune) {
 			world.destroyBlock(pos, false);
