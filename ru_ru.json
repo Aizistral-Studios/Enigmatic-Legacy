@@ -1,0 +1,1326 @@
+{
+	"item.enigmaticlegacy.enigmatic_amulet": "Загадочный Амулет",
+	"item.enigmaticlegacy.enigmatic_item": "Сердце Мироздания",
+	"item.enigmaticlegacy.magnet_ring": "Магнитное Кольцо",
+	"item.enigmaticlegacy.extradimensional_eye": "Око Измерений",
+	"item.enigmaticlegacy.recall_potion": "Зелье Возврата",
+	"item.enigmaticlegacy.forbidden_axe": "Топор Палача",
+	"item.enigmaticlegacy.super_magnet_ring": "Кольцо Смещения",
+	"item.enigmaticlegacy.escape_scroll": "Свиток посмертного Возврата",
+	"item.enigmaticlegacy.heaven_scroll": "Дар Свыше",
+	"item.enigmaticlegacy.golem_heart": "Сердце Голема",
+	"item.enigmaticlegacy.mega_sponge": "Экстраполированная Мега-губка",
+	"item.enigmaticlegacy.unholy_grail": "Осквернённый Грааль",
+	"item.enigmaticlegacy.eye_of_nebula": "Око Туманности",
+	"item.enigmaticlegacy.magma_heart": "Пылающее Ядро",
+	"item.enigmaticlegacy.void_pearl": "Жемчуг Пустоты",
+	"item.enigmaticlegacy.ocean_stone": "Воля Океана",
+	"item.enigmaticlegacy.angel_blessing": "Ангельское Благословение",
+	"item.enigmaticlegacy.monster_charm": "Эмблема истребителя Монстров",
+	"item.enigmaticlegacy.mining_charm": "Оберег охотника за Сокровищами",
+	"item.enigmaticlegacy.ender_ring": "Кольцо Края",
+	"item.enigmaticlegacy.mending_mixture": "Микстура Восстановления",
+	"item.enigmaticlegacy.loot_generator": "Один Ящик",
+	"item.enigmaticlegacy.thicc_scroll": "Пустой свиток",
+	"item.enigmaticlegacy.iron_ring": "Железное кольцо",
+	"item.enigmaticlegacy.haste_potion_default": "Зелье спешки §4[Устаревшее]",
+	"item.enigmaticlegacy.haste_potion_extended": "Зелье спешки §4[Устаревшее]",
+	"item.enigmaticlegacy.haste_potion_empowered": "Зелье спешки §4[Устаревшее]",
+	"item.enigmaticlegacy.haste_potion_extended_empowered": "Зелье спешки §4[Устаревшее]",
+	"item.enigmaticlegacy.etherium_ore": "Эфириумная руда",
+	"item.enigmaticlegacy.etherium_ingot": "Эфирумный слиток",
+	"item.enigmaticlegacy.astral_dust": "Астральная пыль",
+	"item.enigmaticlegacy.etherium_helmet": "Эфириумный шлем",
+	"item.enigmaticlegacy.etherium_chestplate": "Эфириумная кираса",
+	"item.enigmaticlegacy.etherium_leggings": "Эфириумные поножи",
+	"item.enigmaticlegacy.etherium_boots": "Эфириумные ботинки",
+	"item.enigmaticlegacy.etherium_pickaxe": "Эфириумная кирка",
+	"item.enigmaticlegacy.etherium_axe": "Эфириумный боевой топор",
+	"item.enigmaticlegacy.etherium_shovel": "Эфириумная лопата",
+	"item.enigmaticlegacy.etherium_sword": "Эфириумный палаш",
+	"item.enigmaticlegacy.etherium_scythe": "Эфириумная коса",
+	"item.enigmaticlegacy.lore_inscriber": "Чернильница Писаря",
+	"item.enigmaticlegacy.lore_fragment": "Фрагмент писаний",
+	"item.enigmaticlegacy.ender_rod": "Стержень Края",
+	"item.enigmaticlegacy.astral_breaker": "Астральный Крушитель",
+	"item.enigmaticlegacy.oblivion_stone": "Краеугольный камень Забвения",
+	"item.enigmaticlegacy.enchantment_transposer": "Фолиант Жажды Знаний",
+	"item.enigmaticlegacy.xp_scroll": "Свиток безграничной Мудрости",
+	"item.enigmaticlegacy.fabulous_scroll": "Милость Создателя",
+	"item.enigmaticlegacy.storage_crystal": "Межпространственный Сосуд",
+	"item.enigmaticlegacy.soul_crystal": "Кристалл Души",
+	"item.enigmaticlegacy.the_acknowledgment": "Откровение",
+	"item.enigmaticlegacy.tattered_tome": "Потрёпанный Фолиант",
+	"item.enigmaticlegacy.withered_tome": "Иссушенный Фолиант",
+	"item.enigmaticlegacy.corrupted_tome": "Испорченный Фолиант",
+	"item.enigmaticlegacy.cursed_ring": "Кольцо семи проклятий",
+	"item.enigmaticlegacy.dark_mirror": "Искаженное Зеркало",
+	"item.enigmaticlegacy.earth_heart": "Сердце Земли",
+	"item.enigmaticlegacy.twisted_core": "Искаженное Сердце",
+	"item.enigmaticlegacy.crying_ingot": "Слиток плачущего незерита [NYI]",
+	"item.enigmaticlegacy.crying_pickaxe": "Плачущая Кирка [NYI]",
+	"item.enigmaticlegacy.crying_axe": "Плачущий Топор [NYI]",
+	"item.enigmaticlegacy.crying_shovel": "Плачущая Лопата [NYI]",
+	"item.enigmaticlegacy.crying_hoe": "Плачущая Мотыга [NYI]",
+	"item.enigmaticlegacy.crying_sword": "Плачущий Клинок [NYI]",
+	"item.enigmaticlegacy.crying_helmet": "Плачущий Шлем [NYI]",
+	"item.enigmaticlegacy.crying_chestplate": "Плачущая Кираса [NYI]",
+	"item.enigmaticlegacy.crying_leggings": "Плачущие Поножи [NYI]",
+	"item.enigmaticlegacy.crying_boots": "Плачущие Ботинки [NYI]",
+	"item.enigmaticlegacy.cursed_scroll": "Свиток тысячи проклятий",
+	"item.enigmaticlegacy.berserk_emblem": "Эмблема кровавой доблести",
+	"item.enigmaticlegacy.the_twist": "Переломный Момент",
+	"item.enigmaticlegacy.evil_essence": "Скверная Эссенция",
+	"item.enigmaticlegacy.animal_guide": "Руководство дружбы с животными",
+	"item.enigmaticlegacy.hunter_guide": "Руководство дикой охоты",
+	"item.enigmaticlegacy.guardian_heart": "Сердце Стража",
+	"item.enigmaticlegacy.forbidden_fruit": "Запретный Плод",
+	"item.enigmaticlegacy.antiforbidden_potion": "Зелье Искупления",
+	"item.enigmaticlegacy.enchanter_pearl": "Жемчуг Чародейки",
+	"item.enigmaticlegacy.cursed_stone": "Проклятый Камень",
+	"item.enigmaticlegacy.gem_ring": "Роскошное кольцо",
+	"item.enigmaticlegacy.avarice_scroll": "Пакт несметной Алчности",
+	"item.enigmaticlegacy.infinimeal": "Эссенция бушующей Жизни",
+	"item.enigmaticlegacy.darkest_scroll": "Иссине-чёрный свиток",
+	
+	"block.enigmaticlegacy.big_lamp": "Лампа",
+	"block.enigmaticlegacy.massive_lamp": "Обрамленная Лампа",
+	"block.enigmaticlegacy.big_shroomlamp": "Гриболампа",
+	"block.enigmaticlegacy.massive_shroomlamp": "Обрамленная Гриболампа",
+	"block.enigmaticlegacy.big_redstonelamp": "Краснокаменная Лампа",
+	"block.enigmaticlegacy.massive_redstonelamp": "Обрамленная Краснокаменная Лампа",
+	
+	"item.enigmaticlegacy.common_potion.effect.empty": "Пустое зелье",
+	"item.enigmaticlegacy.common_potion.effect.haste": "Зелье Скорости",
+	"item.enigmaticlegacy.common_potion.effect.long_haste": "Зелье Скорости",
+	"item.enigmaticlegacy.common_potion.effect.strong_haste": "Зелье Скорости",
+	
+	"item.enigmaticlegacy.common_potion_splash.effect.empty": "Пустое Взрывное Зелье",
+	"item.enigmaticlegacy.common_potion_splash.effect.haste": "Взрывное Зелье Скорости",
+	"item.enigmaticlegacy.common_potion_splash.effect.long_haste": "Взрывное Зелье Скорости",
+	"item.enigmaticlegacy.common_potion_splash.effect.strong_haste": "Взрывное Зелье Скорости",
+	
+	"item.enigmaticlegacy.common_potion_lingering.effect.empty": "Пустое Туманное Зелье",
+	"item.enigmaticlegacy.common_potion_lingering.effect.haste": "Туманное Зелье Скорости",
+	"item.enigmaticlegacy.common_potion_lingering.effect.long_haste": "Туманное Зелье Скорости",
+	"item.enigmaticlegacy.common_potion_lingering.effect.strong_haste": "Туманное Зелье Скорости",
+	
+	"item.enigmaticlegacy.ultimate_potion.effect.empty": "Пустое Зелье",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_night_vision": "Зелье Ночного Зрения",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_invisibility": "Зелье Невидимости",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_leaping": "Зелье Прыгучести",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_fire_resistance": "Зелье Огнеупорности",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_swiftness": "Зелье Стремительности",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_slowness": "Зелье Медлительности",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_turtle_master": "Зелье Черепашьей Мощи",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_water_breathing": "Зелье Подводного Дыхания",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_healing": "Зелье Исцеления",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_harming": "Зелье Вреда",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_poison": "Зелье Отравления",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_regeneration": "Зелье Регенерации",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_strength": "Зелье Силы",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_weakness": "Зелье Слабости",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_slow_falling": "Зелье Замедленного Падения",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_haste": "Зелье Скорости",
+	
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.empty": "Пустое Взрывное Зелье",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_night_vision": "Взрывное Зелье Ночного Зрения",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_invisibility": "Взрывное Зелье Невидимости",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_leaping": "Взрывное Зелье Прыгучести",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_fire_resistance": "Взрывное Зелье Огнеупорности",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_swiftness": "Взрывное Зелье Стремительности",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_slowness": "Взрывное Зелье Медлительности",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_turtle_master": "Взрывное Зелье Черепашьей Мощи",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_water_breathing": "Взрывное Зелье Подводного Дыхания",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_healing": "Взрывное Зелье Исцеления",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_harming": "Взрывное Зелье Вреда",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_poison": "Взрывное Зелье Отравления",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_regeneration": "Взрывное Зелье Регенерации",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_strength": "Взрывное Зелье Силы",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_weakness": "Взрывное Зелье Слабости",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_slow_falling": "Взрывное Зелье Замедленного Падения",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_haste": "Взрывное Зелье Скорости",
+	
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.empty": "Пустое Туманное Зелье",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_night_vision": "Туманное Зелье Ночного Зрения",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_invisibility": "Туманное Зелье Невидимости",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_leaping": "Туманное Зелье Прыгучести",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_fire_resistance": "Туманное Зелье Огнеупорности",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_swiftness": "Туманное Зелье Стремительности",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_slowness": "Туманное Зелье Медлительности",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_turtle_master": "Туманное Зелье Черепашьей Мощи",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_water_breathing": "Туманное Зелье Подводного Дыхания",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_healing": "Туманное Зелье Исцеления",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_harming": "Туманное Зелье Вреда",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_poison": "Туманное Зелье Отравления",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_regeneration": "Туманное Зелье Регенерации",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_strength": "Туманное Зелье Силы",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_weakness": "Туманное Зелье Слабости",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_slow_falling": "Туманное Зелье Замедленного Падения",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_haste": "Туманное Зелье Скорости",
+	
+	"enchantment.enigmaticlegacy.nemesis_curse": "Проклятие Возмездия",
+	"enchantment.enigmaticlegacy.sharpshooter": "Умелый Стрелок",
+	"enchantment.enigmaticlegacy.ceaseless": "Непрерывность",
+	"enchantment.enigmaticlegacy.torrent": "Стремительный Поток",
+	"enchantment.enigmaticlegacy.wrath": "Гнев",
+	"enchantment.enigmaticlegacy.slayer": "Убийца",
+	
+	"enchantment.enigmaticlegacy.nemesis_curse.desc": "Возвращает вам 35% урона за каждую атаку в ближнем бою.",
+	"enchantment.enigmaticlegacy.sharpshooter.desc": "Увеличенный и менее случайный урон от стрел.",
+	"enchantment.enigmaticlegacy.ceaseless.desc": "Может стрелять простыми стрелами, не расходуя боеприпасы.",
+	"enchantment.enigmaticlegacy.torrent.desc": "Увеличен урон против чувствительных к воде существ с иммунитетом к огню.",
+	"enchantment.enigmaticlegacy.wrath.desc": "Увеличен урон против всего.",
+	"enchantment.enigmaticlegacy.slayer.desc": "Увеличен урон против монстров.",
+
+	"curios.identifier.scroll": "Чародейский Свиток",
+	"curios.identifier.spellstone": "Камень Заклинаний",
+	"curios.identifier.ring": "Кольцо",
+	"curios.identifier.charm": "Амулет",
+	"curios.modifiers.spellstone": "При использовании как Камень заклинаний:",
+	"curios.modifiers.scroll": "При использовании как Чародейский свиток:",
+	"tooltip.enigmaticlegacy.enabled": "§6Вкл",
+	"tooltip.enigmaticlegacy.disabled": "§6Выкл",
+	"generic.reachDistance": "Радиус действия",
+	"forge.swimSpeed": "Скорость плавания",
+	"itemGroup.enigmaticCreativeTab": "§5Загадочное Наследие",
+	"itemGroup.etheriumCreativeTab": "Эфириум",
+	"itemGroup.enigmaticPotionCreativeTab": "Загадочное Наследие - Зелья",
+	"key.categories.enigmaticLegacy": "§6§lЗагадочное Наследие",
+	"key.enderRing": "Кольцо Края",
+	"key.xpScroll": "Свиток Безграничной Мудрости",
+	"key.spellstoneAbility": "Активная способность Камня заклинаний",
+	"tooltip.enigmaticlegacy.currentKeybind": "§6Текущая клавиша: §d%1$s",
+	"tooltip.enigmaticlegacy.seconds": "секунд",
+	"death.attack.darkness": "%1$s был/а пожран/а тьмой",
+	"message.enigmaticlegacy.gen_sim_complete": "Предполагаемая генерация завершена в экземплярах §632768§5; проверьте файл §6latest.log§5, чтобы увидеть результаты.",
+	"status.enigmaticlegacy.outdated": "Была выпущена новая версия §6Enigmatic Legacy§5: %1$s. Вы должны узреть это величие!",
+	"status.enigmaticlegacy.noconnection": "Enigmatic Legacy не смог проверить наличие обновлений.",
+	"world.enigmaticlegacy.name": "Мир #",
+	
+	"enigmaticlegacy.toasts.slotUnlocked.title": "%1$s разблокировано!",
+	"enigmaticlegacy.toasts.slotUnlocked.text1": "Можете теперь экипировать это",
+	"enigmaticlegacy.toasts.slotUnlocked.text2": "в инвентаре Curios.",
+	
+	"enigmaticlegacy.toasts.revelationTome.title": "+%1$s Опыта",
+	"enigmaticlegacy.toasts.revelationTome.text": "+%1$s Очков знаний",
+	
+	"enigmaticlegacy.curiotype.ring": "Кольца",
+	"enigmaticlegacy.curiotype.charm": "Амулеты",
+	"enigmaticlegacy.curiotype.spellstone": "Камни Заклинаний",
+	"enigmaticlegacy.curiotype.scroll": "Чародейские Свитки",
+
+	"tooltip.enigmaticlegacy.undefined": "§4Обнаружена неопределенная всплывающая подсказка",
+	"tooltip.enigmaticlegacy.void": "",
+	"tooltip.enigmaticlegacy.paragraph": "§",
+	"tooltip.enigmaticlegacy.subformat": "&",
+	"tooltip.enigmaticlegacy.tilt": "&",
+	
+
+	"advancementTab.enigmaticlegacy": "Загадочное Наследие",
+	"advancementTab.enigmaticlegacy.desc": "Остатки былых времен",
+	
+	"advancement.enigmaticlegacy:discoverSpellstone": "Элементальная мощь",
+	"advancement.enigmaticlegacy:discoverSpellstone.desc": "Получите свой первый камень заклинаний",
+	
+	"advancement.enigmaticlegacy:discoverScroll": "Свой в доску чародей",
+	"advancement.enigmaticlegacy:discoverScroll.desc": "Получите свой первый чародейский свиток",
+	
+	"advancement.enigmaticlegacy:discoverRing": "Мой алмаз 33 карата",
+	"advancement.enigmaticlegacy:discoverRing.desc": "Получите или создайте своё первое кольцо",
+	
+	"advancement.enigmaticlegacy:recallPotion": "Ёкарный бабай, жми!",
+	"advancement.enigmaticlegacy:recallPotion.desc": "Сварите зелье возврата",
+	
+	"advancement.enigmaticlegacy:magnetRing": "Красота притягивает",
+	"advancement.enigmaticlegacy:magnetRing.desc": "Найдите или создайте магнитное кольцо",
+	
+	"advancement.enigmaticlegacy:superMagnetRing": "Всепожирающее Око",
+	"advancement.enigmaticlegacy:superMagnetRing.desc": "Найдите или создайте кольцо дислокации",
+	
+	"advancement.enigmaticlegacy:heavenScroll": "Небесный свиток",
+	"advancement.enigmaticlegacy:heavenScroll.desc": "Найдите или создайте дар свыше",
+	
+	"advancement.enigmaticlegacy:voidPearl": "Надежда угасает",
+	"advancement.enigmaticlegacy:voidPearl.desc": "Получите жемчуг пустоты",
+	
+	"advancement.enigmaticlegacy:forbiddenAxe": "Ужасающая месть",
+	"advancement.enigmaticlegacy:forbiddenAxe.desc": "Обезглавьте врага с помощью топора палача",
+	
+	"advancement.enigmaticlegacy:megasponge": "Кто проживает на дне океана?..",
+	"advancement.enigmaticlegacy:megasponge.desc": "Найдите или создайте экстраполированная мега-губку",
+	
+	"advancement.enigmaticlegacy:mendingMixture": "Внеземная субстанция",
+	"advancement.enigmaticlegacy:mendingMixture.desc": "Найдите или создайте микстуру восстановления",
+	
+	"advancement.enigmaticlegacy:unholyGrail": "Не слушая советы",
+	"advancement.enigmaticlegacy:unholyGrail.desc": "Испейте из осквернённого грааля",
+	
+	"advancement.enigmaticlegacy:astralDust": "Первобытный катализатор",
+	"advancement.enigmaticlegacy:astralDust.desc": "Откройте для себя астральную пыль",
+	
+	"advancement.enigmaticlegacy:smeltEtherium": "Не такой уж и бесплотный",
+	"advancement.enigmaticlegacy:smeltEtherium.desc": "Выплавьте эфириумный слиток",
+	
+	"advancement.enigmaticlegacy:etheriumTool": "Агрессивный ландшафтный дизайнер",
+	"advancement.enigmaticlegacy:etheriumTool.desc": "Создайте любой инструмент из эфириума",
+	
+	"advancement.enigmaticlegacy:etheriumGear": "Абсолютный щит",
+	"advancement.enigmaticlegacy:etheriumGear.desc": "Создайте полный комплект брони из эфириума",
+	
+	"advancement.enigmaticlegacy:ultimatePotion": "Старший бармен",
+	"advancement.enigmaticlegacy:ultimatePotion.desc": "Приготовьте свое первое высшее зелье",
+	
+	"advancement.enigmaticlegacy:loreInscriber": "Писатель легенд",
+	"advancement.enigmaticlegacy:loreInscriber.desc": "Получите чернильницу писаря",
+	
+	"advancement.enigmaticlegacy:burnTheTome": "Как тебе не стыдно?!",
+	"advancement.enigmaticlegacy:burnTheTome.desc": "Попробуйте использовать древний фолиант в качестве топлива",
+
+	"tooltip.enigmaticlegacy.holdShift": "§5Зажмите §6Shift§5, чтобы увидеть детали.",
+	
+	"tooltip.enigmaticlegacy.enigmaticItem1": "§dАктивная способность:",
+	"tooltip.enigmaticlegacy.enigmaticItem2": "§6- Обрушает опустошительные черепа скелетов-иссушителей.",
+	"tooltip.enigmaticlegacy.enigmaticItemCooldown": "§dПерезарядка: §6%1$s§6 секунд",
+	"tooltip.enigmaticlegacy.enigmaticItem3": "§dПассиваня способность:",
+	"tooltip.enigmaticlegacy.enigmaticItem4": "§5- Невосприимчивость к удушению, падению, столкновению,",
+	"tooltip.enigmaticlegacy.enigmaticItem5": "§5  давлению, голоду, пустоте, горению,",
+	"tooltip.enigmaticlegacy.enigmaticItem6": "§5  прокалыванию и лаве.",
+	"tooltip.enigmaticlegacy.enigmaticItem7": "§5- Невосприимчивость к большинству дебаффов.",
+	"tooltip.enigmaticlegacy.enigmaticItem8": "§5- Дает вам возможность летать.",
+	"tooltip.enigmaticlegacy.enigmaticItem9": "§5- Компенсирует штраф скорости добычи при полете.",
+	"tooltip.enigmaticlegacy.enigmaticItem10": "§5- Вы бессмертны, пока носите его на себе",
+	"tooltip.enigmaticlegacy.enigmaticItem11": "§5  или в своём инвентаре.",
+
+	"tooltip.enigmaticlegacy.xpTomeMode": "§dРежим: %1$s",
+	"tooltip.enigmaticlegacy.code6": "§6",
+	"tooltip.enigmaticlegacy.codeD": "§d",
+	"tooltip.enigmaticlegacy.xpTomeStoredXP": "§dХранимый опыт:",
+	"tooltip.enigmaticlegacy.xpTomeUnits": "§6%1$s§6 единиц или §6%2$s§6 уровней",
+	"tooltip.enigmaticlegacy.xpTomeDeactivated": "§6Выключен",
+	"tooltip.enigmaticlegacy.xpTomeAbsorption": "§6Поглощение",
+	"tooltip.enigmaticlegacy.xpTomeExtraction": "§6Исторжение",
+
+	"tooltip.enigmaticlegacy.xpTome1": "§5Может хранить безграничное количество опыта.",
+	"tooltip.enigmaticlegacy.xpTome2": "§5Нажмите §6Shift§5+§6ПКМ§5, держа в руках,",
+	"tooltip.enigmaticlegacy.xpTome3": "§5чтобы включить.",
+	"tooltip.enigmaticlegacy.xpTome4": "§5Нажмите §6ПКМ§5 для смены режимов.",
+	"tooltip.enigmaticlegacy.xpTome4_5": "§5Вы также можете использовать связанную комбинацию клавиш.",
+	"tooltip.enigmaticlegacy.xpTome5": "§5В режиме §6Поглощение§5, будет потреблять ваш",
+	"tooltip.enigmaticlegacy.xpTome6": "§5опыт, пока надет в слоте свитка.",
+	"tooltip.enigmaticlegacy.xpTome7": "§5В режиме §6Исторжение§5, работа",
+	"tooltip.enigmaticlegacy.xpTome8": "§5противоположна, свиток передаст весь",
+	"tooltip.enigmaticlegacy.xpTome9": "§5накопленный опыт обратно.",
+	"tooltip.enigmaticlegacy.xpTome10": "§5Пока активен, собирает сферы опыта",
+	"tooltip.enigmaticlegacy.xpTome11": "§5в радиусе §6%1$s§6 блоков§5 .",
+
+	"tooltip.enigmaticlegacy.enigmaticAmulet1": "§5С тех пор, как вы впервые вошли в этот мир,",
+	"tooltip.enigmaticlegacy.enigmaticAmulet2": "§5он находится в вашем распоряжении. Вы всё еще не",
+	"tooltip.enigmaticlegacy.enigmaticAmulet3": "§5знаете его происхождение и цель, если такова",
+	"tooltip.enigmaticlegacy.enigmaticAmulet4": "§5есть - время медленно смывает туманные обрывки",
+	"tooltip.enigmaticlegacy.enigmaticAmulet5": "§5разрушенных воспоминаний.",
+	"tooltip.enigmaticlegacy.enigmaticAmulet6": "§5Воспоминания о чем-то важном...",
+	"tooltip.enigmaticlegacy.enigmaticAmuletInscription": "§5Имя выгравировано на нем: §4%1$s",
+	"tooltip.enigmaticlegacy.enigmaticAmuletShift1": "§5Каждый раз, когда вы умираете, нося его на себе",
+	"tooltip.enigmaticlegacy.enigmaticAmuletShift2": "§5или в своем инвентаре, призывает §6Межпространственный",
+	"tooltip.enigmaticlegacy.enigmaticAmuletShift3": "§6Сосуд§5, который сохраняет ваши предметы,",
+	"tooltip.enigmaticlegacy.enigmaticAmuletShift4": "§5кристаллы души и опыт.",
+	"tooltip.enigmaticlegacy.enigmaticAmuletShift5": "§5Подойдите к сосуду, чтобы вернуть утерянное.",
+	
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierRED": "§6+%1$s §dк Урону",
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierAQUA": "§6+15% §dк Скорости Бега",
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierVIOLET": "§6+15% §dк Шансу Уклонения",
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierMAGENTA": "§6-25% §dот Гравитации",
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierGREEN": "§6+25% §dк Скорости Копания",
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierBLACK": "§6+10% §dк Похищению Жизни",
+	"tooltip.enigmaticlegacy.enigmaticAmuletModifierBLUE": "§6+25% §dк Скорости Плавания",
+
+
+	"tooltip.enigmaticlegacy.magnetRing1": "§5Притягивает предметы в радиусе §6%1$s§6 блоков§5.",
+	"tooltip.enigmaticlegacy.magnetRing2": "§5Это можно отключить, удерживая §6Shift§5.",
+	"tooltip.enigmaticlegacy.magnetRing2_alt": "§5Действует только при удерживании §6Shift§5.",
+
+	"tooltip.enigmaticlegacy.extradimensionalEyeLocation": "§dПривязанное местоположение:",
+	"tooltip.enigmaticlegacy.extradimensionalEyeX": "§dX: §6%1$s",
+	"tooltip.enigmaticlegacy.extradimensionalEyeY": "§dY: §6%1$s",
+	"tooltip.enigmaticlegacy.extradimensionalEyeZ": "§dZ: §6%1$s",
+	"tooltip.enigmaticlegacy.extradimensionalEyeDimension": "§6Измерение: §5%1$s",
+
+	"tooltip.enigmaticlegacy.overworld": "§2Внешний мир",
+	"tooltip.enigmaticlegacy.nether": "§4Нижний мир",
+	"tooltip.enigmaticlegacy.end": "§5Край",
+
+	"tooltip.enigmaticlegacy.extradimensionalEye1": "§5Привяжите к желаемому месту, нажав",
+	"tooltip.enigmaticlegacy.extradimensionalEye2": "§6Shift+ПКМ§5, пока стоите там.",
+	"tooltip.enigmaticlegacy.extradimensionalEye3": "§5Потом можно нажать §6Left-Click§5, держа в",
+	"tooltip.enigmaticlegacy.extradimensionalEye4": "§5руке, по живому существу, чтобы переместить",
+	"tooltip.enigmaticlegacy.extradimensionalEye5": "§5его туда, в рамках одно и того же",
+	"tooltip.enigmaticlegacy.extradimensionalEye6": "§5измерения.",
+	"tooltip.enigmaticlegacy.extradimensionalEye7": "§6После использования исчезает.",
+
+	"tooltip.enigmaticlegacy.recallPotion1": "§5Возвращает вас к кровати или §6Якорю Возрождения§5,",
+	"tooltip.enigmaticlegacy.recallPotion2": "§5или же в §6центр Внешнего мира§5",
+	"tooltip.enigmaticlegacy.recallPotion3": "§5за неимением вышеупомянутых.",
+
+	"tooltip.enigmaticlegacy.darkMirror1": "§5Взгляните в зеркало, чтобы вернуться к кровати",
+	"tooltip.enigmaticlegacy.darkMirror2": "§5или §6Якорю Возрождения§5§5, или в §6Центр",
+	"tooltip.enigmaticlegacy.darkMirror3": "§6Внешнего мира§5 за неимением вышеупомянутых.",
+	
+	"tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance": "§6+%1$s §dк Шансу Обезглавить",
+	"tooltip.enigmaticlegacy.forbiddenAxe1": "§5Имеет шанс обезглавить убитых монстров.",
+	"tooltip.enigmaticlegacy.forbiddenAxe2": "§5Каждый уровень Добычи добавляет§6 +%1$s§5",
+	"tooltip.enigmaticlegacy.forbiddenAxe3": "§5к общему шансу обезглавливания.",
+	
+	"tooltip.enigmaticlegacy.escapeTome1": "§5Когда вы умрете, вернет ваши вещи к кровати или",
+	"tooltip.enigmaticlegacy.escapeTome2": "§6Якорю Возрождения§5, или в §6Центр Внешнего",
+	"tooltip.enigmaticlegacy.escapeTome3": "§6мира§5 за неимением вышеупомянутых, но сам",
+	"tooltip.enigmaticlegacy.escapeTome4": "§5останется на месте вашей гибели.",
+	
+	"tooltip.enigmaticlegacy.superMagnetRing1": "§5Мгновенно подбирает любые брошенные предметы",
+	"tooltip.enigmaticlegacy.superMagnetRing2": "§5в радиусе §6%1$s§6 блоков§5.",
+	"tooltip.enigmaticlegacy.superMagnetRing3": "§5Это можно отключить, удерживая §6Shift§5.",
+	"tooltip.enigmaticlegacy.superMagnetRing3_alt": "§5Действует только при удерживании §6Shift§5.",
+	
+	"tooltip.enigmaticlegacy.heavenTome1": "§5Дает возможность летать в пределах досягаемости",
+	"tooltip.enigmaticlegacy.heavenTome2": "§5активного §6Маяка§5 в счёт медленного",
+	"tooltip.enigmaticlegacy.heavenTome3": "§5поглощения вашего опыта.",
+	"tooltip.enigmaticlegacy.heavenTome4": "§5Компенсирует штраф скорости добычи при полете.",
+	
+	"tooltip.enigmaticlegacy.fabulousScroll1": "§5Дает возможность свободно летать, в счет",
+	"tooltip.enigmaticlegacy.fabulousScroll2": "§5быстрого поглощения вашего опыта.",
+	"tooltip.enigmaticlegacy.fabulousScroll3": "§5Потребление опыта полностью сведено на нет",
+	"tooltip.enigmaticlegacy.fabulousScroll4": "§5в пределах активного §6Маяка§5.",
+	"tooltip.enigmaticlegacy.fabulousScroll5": "§5Компенсирует штраф скорости добычи при полете.",
+	
+	"tooltip.enigmaticlegacy.miningCharm1": "§6+%1$s§d к Скорости Копания",
+	"tooltip.enigmaticlegacy.miningCharm2": "§6+%1$s§d к Удаче",
+	"tooltip.enigmaticlegacy.miningCharm3": "§5Когда вы под землей и в темноте,",
+	"tooltip.enigmaticlegacy.miningCharm4": "§5накладывает §6Ночное зрение§5 на вас. Это",
+	"tooltip.enigmaticlegacy.miningCharm5": "§5можно отключить, нажав",
+	"tooltip.enigmaticlegacy.miningCharm6": "§5§6ПКМ§5, держа амулет в руках.",
+	"tooltip.enigmaticlegacy.miningCharmNightVision": "§dНочное зрение: %1$s",
+	
+	"tooltip.enigmaticlegacy.enderRing1": "§5Позволяет получить удаленный доступ к вашему",
+	"tooltip.enigmaticlegacy.enderRing2": "§6Сундуку Края§5 через инвентарь или нажатием клавиши.",
+	
+	"tooltip.enigmaticlegacy.angelBlessing1": "§dАктивная способность:",
+	"tooltip.enigmaticlegacy.angelBlessing2": "§6- Ускоряет вас в направлении вашего взгляда.",
+	"tooltip.enigmaticlegacy.angelBlessingCooldown": "§dПерезарядка: §6%1$s§6 секунд",
+	"tooltip.enigmaticlegacy.angelBlessing3": "§dПассивная способность:",
+	"tooltip.enigmaticlegacy.angelBlessing4": "§5- Невосприимчивость к падению и столкновению.",
+	"tooltip.enigmaticlegacy.angelBlessing5": "§5- §6%1$s§d Шанс§5 уклониться от снаряда.",
+	"tooltip.enigmaticlegacy.angelBlessing6": "§5- Ваши собственные снаряды сильно ускоряются.",
+	"tooltip.enigmaticlegacy.angelBlessing7": "§5- Вы более уязвимы к §6Иссушению§5 и §6Пустоте.",
+	
+	"tooltip.enigmaticlegacy.eyeOfNebula1": "§dАктивная способность:",
+	"tooltip.enigmaticlegacy.eyeOfNebula2": "§6- Телепортирует вас за существо, на которое вы смотрите.",
+	"tooltip.enigmaticlegacy.eyeOfNebulaCooldown": "§dПерезарядка: §6%1$s§6 секунд",
+	"tooltip.enigmaticlegacy.eyeOfNebula3": "§dПассивная способность:",
+	"tooltip.enigmaticlegacy.eyeOfNebula4": "§5- §6%1$s§d Защиты от магии.",
+	"tooltip.enigmaticlegacy.eyeOfNebula5": "§5- §6%1$s§d Шанс§5 уклониться от атак телепортом.",
+	"tooltip.enigmaticlegacy.eyeOfNebula6": "§5- Находясь в воде, вы более уязвимы к ЛЮБОМУ урону.",
+	
+	"tooltip.enigmaticlegacy.oceanStone1": "§dАктивная способность:",
+	"tooltip.enigmaticlegacy.oceanStone2": "§6- Начинаете грозу, ценой большого кол-ва опыта.",
+	"tooltip.enigmaticlegacy.oceanStone3": "§6  ",
+	"tooltip.enigmaticlegacy.oceanStoneCooldown": "§dПерезарядка: §6%1$s§6 секунд",
+	"tooltip.enigmaticlegacy.oceanStone4": "§dПассивная способность:",
+	"tooltip.enigmaticlegacy.oceanStone5": "§5- §6%1$s§d Защиты§5 против подводных существ.",
+	"tooltip.enigmaticlegacy.oceanStone6": "§5- Больше не нужен воздух, чтобы дышать под водой.",
+	"tooltip.enigmaticlegacy.oceanStone7": "§5- Дает §6Ночное зрение§5 в воде.",
+	"tooltip.enigmaticlegacy.oceanStone8": "§5- Дает эффект зачарования §6Подводник§5.",
+	"tooltip.enigmaticlegacy.oceanStone9": "§5- Игнорирует гравитацию под водой.",
+	"tooltip.enigmaticlegacy.oceanStone10": "§5- Значительно увеличена скорость плавания.",
+	"tooltip.enigmaticlegacy.oceanStone11": "§5- Вы более уязвимы к §6Урону от огня.",
+	
+	"tooltip.enigmaticlegacy.magmaHeart1": "§dАктивная способность:",
+	"tooltip.enigmaticlegacy.magmaHeart2": "§4- Отсутсвует.",
+	"tooltip.enigmaticlegacy.magmaHeartCooldown": "§dПерезарядка: §6%1$s§6 секунд",
+	"tooltip.enigmaticlegacy.magmaHeart3": "§dПассивная способность:",
+	"tooltip.enigmaticlegacy.magmaHeart4": "§5- Иммунитет к огню.",
+	"tooltip.enigmaticlegacy.magmaHeart5": "§5- Временный иммунитет к лаве.",
+	"tooltip.enigmaticlegacy.magmaHeart6": "§5- Сжигает тех, кто нападает на вас вблизи.",
+	"tooltip.enigmaticlegacy.magmaHeart7": "§5- Значительно улучшена видимость в лаве.",
+	"tooltip.enigmaticlegacy.magmaHeart8": "§5- Любые эффекты, примененные к вам, длятся",
+	"tooltip.enigmaticlegacy.magmaHeart9": "§5  вдвое меньше, исключая §6Огнеупорность§5.",
+	"tooltip.enigmaticlegacy.magmaHeart10": "§5- §6Огнеупорность§5 длится вдвое дольше.",
+	"tooltip.enigmaticlegacy.magmaHeart11": "§5- Вы уязвимы для подводных существ.",
+	
+	"tooltip.enigmaticlegacy.golemHeart1": "§dАктивная способность:",
+	"tooltip.enigmaticlegacy.golemHeart2": "§4- Отсутсвует.",
+	"tooltip.enigmaticlegacy.golemHeartCooldown": "§dПерезарядка: §6%1$s§6 секунд",
+	"tooltip.enigmaticlegacy.golemHeart3": "§dПассивная способность:",
+	"tooltip.enigmaticlegacy.golemHeart4": "§5- §6+%1$s§d Очков брони.",
+	"tooltip.enigmaticlegacy.golemHeart5": "§5- Если в слотах для брони ничего нет, дает",
+	"tooltip.enigmaticlegacy.golemHeart6": "§5  §6+%1$s§d Очков брони§5, §6+%2$s§d Твердости,",
+	"tooltip.enigmaticlegacy.golemHeart7": "§5  и §6+%1$s§d Взрывоустойчивость.",
+	"tooltip.enigmaticlegacy.golemHeart8": "§5- §6%1$s§d Защиты в ближнем бою.",
+	"tooltip.enigmaticlegacy.golemHeart9": "§5- §6%1$s§d Сопротивления отталкиванию.",
+	"tooltip.enigmaticlegacy.golemHeart10": "§5- Невосприимчивость к давлению и прокалыванию.",
+	"tooltip.enigmaticlegacy.golemHeart11": "§5- Вы более уязвимы к §6Магическому крону.",
+	
+	"tooltip.enigmaticlegacy.voidPearl1": "§dАктивная способность:",
+	"tooltip.enigmaticlegacy.voidPearl2": "§4- Отсутсвует.",
+	"tooltip.enigmaticlegacy.voidPearlCooldown": "§dПерезарядка: §6%1$s§6 секунд",
+	"tooltip.enigmaticlegacy.voidPearl3": "§dПассивная способность:",
+	"tooltip.enigmaticlegacy.voidPearl4": "§5- Вы не испытываете голода, но восстанавливаетесь",
+	"tooltip.enigmaticlegacy.voidPearl5": "§5  намного медленнее.",
+	"tooltip.enigmaticlegacy.voidPearl6": "§5- Вам больше не нужен воздух, чтобы дышать.",
+	"tooltip.enigmaticlegacy.voidPearl7": "§5- Невосприимчивость к любым эффектам.",
+	"tooltip.enigmaticlegacy.voidPearl8": "§5- Ваши атаки накладывают §6Иссушение.",
+	"tooltip.enigmaticlegacy.voidPearl9": "§5- Любая живность поблизости, находясь",
+	"tooltip.enigmaticlegacy.voidPearl10": "§5  в темноте, получает огромный",
+	"tooltip.enigmaticlegacy.voidPearl11": "§5  урон и дебаффы.",
+	"tooltip.enigmaticlegacy.voidPearl12": "§5- §6%1$s§d Шанс§5, что летальный урон",
+	"tooltip.enigmaticlegacy.voidPearl13": "§5  не убьет вас.",
+	
+	"tooltip.enigmaticlegacy.monsterCharm1": "§6+%1$s§d Урона§5 против нежити.",
+	"tooltip.enigmaticlegacy.monsterCharm2": "§6+%1$s§d Урона§5 против других агрессивных существ.",
+	"tooltip.enigmaticlegacy.monsterCharm3": "§6+1 §dк Добыче",
+	"tooltip.enigmaticlegacy.monsterCharm4": "§5С убитых монстров выпадает вдвое больше опыта.",
+	
+	"tooltip.enigmaticlegacy.mendingMixture1": "§5Соедините с любым инструментом, оружием или доспехами",
+	"tooltip.enigmaticlegacy.mendingMixture2": "§5в сетке крафта, чтобы полностью восстановить их прочность.",
+	
+	"tooltip.enigmaticlegacy.unholyGrail1": "§5Тебе бы не стоило пить из этого...",
+	
+	"tooltip.enigmaticlegacy.megaSponge1": "§5Мгновенно впитывает воду в небольшом радиусе",
+	"tooltip.enigmaticlegacy.megaSponge2": "§5вокруг вас, когда вы ступаете в неё.",
+	
+	"tooltip.enigmaticlegacy.lootGeneratorCurrent": "§dТекущая таблица добычи:",
+	"tooltip.enigmaticlegacy.lootGenerator1": "§5Нажмите §6ПКМ§5 или §6Shift+ПКМ§5, чтобы",
+	"tooltip.enigmaticlegacy.lootGenerator2": "§5прокрутить список таблиц добычи вперед и назад.",
+	
+	"tooltip.enigmaticlegacy.lootGenerator3": "§5Нажмите §6Shift+ПКМ§5 по верхушке сундука",
+	"tooltip.enigmaticlegacy.lootGenerator4": "§5чтобы заполнить его случайно сгенерированной добычей из",
+	"tooltip.enigmaticlegacy.lootGenerator5": "§5выбранной таблица добычи, или по низу, чтобы",
+	"tooltip.enigmaticlegacy.lootGenerator6": "§5отобразить возможные генерации добычи в §632768",
+	"tooltip.enigmaticlegacy.lootGenerator7": "§5файл §6latest.log§5.",
+	"tooltip.enigmaticlegacy.lootGenerator8": "§5Нажатие на другие стороны сундука вместо этого",
+	"tooltip.enigmaticlegacy.lootGenerator9": "§5уничтожит всё, что хранится внутри.",
+	
+	"tooltip.enigmaticlegacy.etheriumArmor1": "§5Невидима при носке.",
+	"tooltip.enigmaticlegacy.etheriumHelmet1": "§5Невидим при носке.",
+	"tooltip.enigmaticlegacy.etheriumChestplate1": "§5Невидим при носке.",
+	"tooltip.enigmaticlegacy.etheriumLeggings1": "§5Невидимы при носке.",
+	"tooltip.enigmaticlegacy.etheriumBoots1": "§5Невидимы при носке.",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus1": "§dБонус набора:",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus2": "§5- Когда здоровье опускается ниже §6%1$s§5, создает",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus3": "§5  сильный щит, который отражает большинство снарядов,",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus4": "§5  дает §6%1$s§6 Защиту§5 и отбрасывает",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus5": "§5  назад любое атакующее вас существо.",
+	"tooltip.enigmaticlegacy.etheriumArmorSetBonus6": "§5  ",
+	
+	"tooltip.enigmaticlegacy.loreInscriber1": "§6ПКМ§5, чтобы открыть §6Меню§5. Вставьте §6Фрагмент писаний§5,",
+	"tooltip.enigmaticlegacy.loreInscriber2": "§5чтобы написать характерное название и строки писаний в нём.",
+	
+	"tooltip.enigmaticlegacy.loreInscriber3": "§5Используйте §d&§6[0-f]§5, чтобы применить цвет к любому",
+	"tooltip.enigmaticlegacy.loreInscriber4": "§5тексту в поле названия.",
+	"tooltip.enigmaticlegacy.loreInscriber5": "§5Используйте §d&§6[k/l/m/n/o/r]§5, чтобы применить шрифт.",
+	
+	"tooltip.enigmaticlegacy.loreInscriber6": "§5начните строку с §d!§5, чтобы добавить её",
+	"tooltip.enigmaticlegacy.loreInscriber7": "§5или с §d!§6[0-99]§5, чтобы задать ей",
+	"tooltip.enigmaticlegacy.loreInscriber8": "§5определенный указатель.",
+	
+	"tooltip.enigmaticlegacy.loreInscriber9": "§5Введите §d-!§5 или §d-!§6[0-99]§5, чтобы удалить последнюю строку",
+	"tooltip.enigmaticlegacy.loreInscriber10": "§5или строку с определенным указателем",
+	"tooltip.enigmaticlegacy.loreInscriber11": "§5в указанном порядке.",
+	
+	"tooltip.enigmaticlegacy.loreFragment1": "§5Используйте §6Чернильнцу Писаря§5, чтобы вписать",
+	"tooltip.enigmaticlegacy.loreFragment2": "§5название и историю.",
+	"tooltip.enigmaticlegacy.loreFragment3": "§5Сделав, соедените с любым предметом в §6Наковальне§5,",
+	"tooltip.enigmaticlegacy.loreFragment4": "§5чтобы привязать эти писания к нему.",
+	
+	"tooltip.enigmaticlegacy.aoeDisabled": "§cЭффекты по области подавлены.",
+	"tooltip.enigmaticlegacy.abilityDisabled": "§cОсобые способности подавлены.",
+	
+	"tooltip.enigmaticlegacy.etheriumPickaxe1": "§5Копает блоки в §6%1$s§6x%1$s§6x%2$s§5 области.",
+	"tooltip.enigmaticlegacy.etheriumPickaxe2": "§5Зажмите §6Shift§5, чтобы подавить этот эффект.",
+	"tooltip.enigmaticlegacy.etheriumPickaxe3": "§5Нажмите §6Shift+ПКМ§5, чтобы переключить.",
+	
+	"tooltip.enigmaticlegacy.etheriumAxe1": "§5Срубает деревья и листву в §6%1$s§6x%1$s§6x%1$s§5 области.",
+	"tooltip.enigmaticlegacy.etheriumAxe2": "§5Зажмите §6Shift§5, чтобы подавить этот эффект.",
+	"tooltip.enigmaticlegacy.etheriumAxe3": "§5Нажмите §6Shift+ПКМ§5, чтобы переключить.",
+	
+	"tooltip.enigmaticlegacy.etheriumShovel1": "§5Копает блоки в §6%1$s§6x%1$s§6x%2$s§5 области.",
+	"tooltip.enigmaticlegacy.etheriumShovel2": "§5Зажмите §6Shift§5 чтобы подавить этот эффект.",
+	"tooltip.enigmaticlegacy.etheriumShovel3": "§5Нажмите §6Shift+ПКМ§5 чтобы переключить.",
+	
+	"tooltip.enigmaticlegacy.etheriumSword1": "§5Нажатие §6ПКМ§5, держа меч руках, откинет",
+	"tooltip.enigmaticlegacy.etheriumSword2": "§5вас в противоположном направлении",
+	"tooltip.enigmaticlegacy.etheriumSword3": "§5от вашего взгляда.",
+	"tooltip.enigmaticlegacy.etheriumSword4": "§5Это способность имеет перезарядку §6%1$s §6 секунд§5.",
+	"tooltip.enigmaticlegacy.etheriumSword5": "§5Нажмите §6Shift+ПКМ§5, чтобы подавить это.",
+	
+	"tooltip.enigmaticlegacy.etheriumScythe1": "§5Собирает посевы в §6%1$s§6x%1$s§6x%1$s§5 области.",
+	"tooltip.enigmaticlegacy.etheriumScythe2": "§5Вспахивает землю в §6%1$s§6x%1$s§6x1§5 области.",
+	"tooltip.enigmaticlegacy.etheriumScythe3": "§5Зажмите §6Shift§5, чтобы подавить этот эффект.",
+	"tooltip.enigmaticlegacy.etheriumScythe4": "§5Нажмите §6Shift+ПКМ§5, чтобы переключить.",
+	
+	"tooltip.enigmaticlegacy.oblivionStoneHoldCtrl": "§5Зажмите §6Ctrl§5, чтобы увидеть поглощаемые предметы.",
+	"tooltip.enigmaticlegacy.oblivionStoneCtrlList": "§5Перечень поглощаемых предметов:",
+	"tooltip.enigmaticlegacy.oblivionStone1": "§5Соедените с любым предметом в сетке крафта",
+	"tooltip.enigmaticlegacy.oblivionStone2": "§5чтобы позволить ему поглощать этот предмет или",
+	"tooltip.enigmaticlegacy.oblivionStone2_more": "§5ни с чем, чтобы очистить перечень.",
+	"tooltip.enigmaticlegacy.oblivionStone3": "§5Нажмите §6ПКМ§5, чтобы переключить режимы.",
+	"tooltip.enigmaticlegacy.oblivionStone4": "§5Нажмите §6Shift§5+§6ПКМ§5, чтобы включить",
+	"tooltip.enigmaticlegacy.oblivionStone5": "§5или полностью выключить.",
+	"tooltip.enigmaticlegacy.oblivionStone6": "§5В режиме §6Полного Поглощения§5 краеугольный камень",
+	"tooltip.enigmaticlegacy.oblivionStone7": "§5поглощает все определенные предметы в",
+	"tooltip.enigmaticlegacy.oblivionStone8": "§5вашем инвентаре, пока ничего не останется.",
+	"tooltip.enigmaticlegacy.oblivionStone9": "§5В режиме §6Последнего Стака§5 он будет оставлять всегда",
+	"tooltip.enigmaticlegacy.oblivionStone10": "§51 стак каждого типа предмета, но будет",
+	"tooltip.enigmaticlegacy.oblivionStone11": "§5поглощать всё, что больше стака.",
+	"tooltip.enigmaticlegacy.oblivionStone12": "§5В режиме §6Поглощения Лишнего§5 он будет только",
+	"tooltip.enigmaticlegacy.oblivionStone13": "§5поглощать что-то, если у вас нет свободного",
+	"tooltip.enigmaticlegacy.oblivionStone14": "§5места в инвентаре, и только пока",
+	"tooltip.enigmaticlegacy.oblivionStone15": "§5оно не освободится.",
+	
+	"tooltip.enigmaticlegacy.oblivionStoneModeDesc": "§dРежим: §6%1$s",
+	"tooltip.enigmaticlegacy.oblivionStoneMode0": "§6Полное Поглощение",
+	"tooltip.enigmaticlegacy.oblivionStoneMode1": "§6Последний Стак",
+	"tooltip.enigmaticlegacy.oblivionStoneMode2": "§6Поглощение Лишнего",
+	"tooltip.enigmaticlegacy.oblivionStoneModeInactive": "§6Выключен",
+	
+	"tooltip.enigmaticlegacy.astralBreaker1": "§5Разрушает блоки в §6%1$s§6x%1$s§6x%2$s§5 области.",
+	"tooltip.enigmaticlegacy.astralBreaker2": "§5Зажмите §6Shift§5, чтобы подавить этот эффект.",
+	"tooltip.enigmaticlegacy.astralBreaker3": "§5Нажмите §6Shift+ПКМ§5, чтобы переключить.",
+	"tooltip.enigmaticlegacy.astralBreaker4": "§5Эффективен против большинства блоков.",
+	
+	"tooltip.enigmaticlegacy.enchantmentTransposer1": "§5Соедените с любым зачарованным предметом в сетке крафта,",
+	"tooltip.enigmaticlegacy.enchantmentTransposer2": "§5чтобы перенести все чары из предмета в фолиант.",
+	"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5Фолиант превратится в §6Зачарованную Книгу§5.",
+	
+	"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5Фолиант превратится в §6Зачарованную Книгу§5.",
+	
+	"tooltip.enigmaticlegacy.boundToPlayer": "§5Привязано к: §6%1$s",
+	
+	"tooltip.enigmaticlegacy.revelationTome1": "§5Многие страницы этого фолианта были уничтожены",
+	"tooltip.enigmaticlegacy.revelationTome2": "§5или стали неразборчивыми из-за безжалостного",
+	"tooltip.enigmaticlegacy.revelationTome3": "§5течения времени, но он все еще может содержать",
+	"tooltip.enigmaticlegacy.revelationTome4": "§5полезные фрагменты древних исследований и знаний.",
+	
+	"tooltip.enigmaticlegacy.revelationTomeClick": "§6Нажмите, чтобы изучить.",
+	"tooltip.enigmaticlegacy.revelationTomeMarkRead": "§cВы уже изучили этот фолиант.",
+	
+	"tooltip.enigmaticlegacy.theAcknowledgment1": "§5Ослепляющий свет откровения испепелит",
+	"tooltip.enigmaticlegacy.theAcknowledgment2": "§5тех, кто отказывается принять его.",
+	
+	"tooltip.enigmaticlegacy.cursed_scroll1": "§6+%1$s §dк Урону",
+	"tooltip.enigmaticlegacy.cursed_scroll2": "§6+%1$s §dк Скорости Копания",
+	"tooltip.enigmaticlegacy.cursed_scroll3": "§6+%1$s §dк Регенерации",
+	"tooltip.enigmaticlegacy.cursed_scroll4": "§5Эти характеристики умножаются на общее количество",
+	"tooltip.enigmaticlegacy.cursed_scroll5": "§5проклятий, которые несут все предметы вашего снаряжения.",
+	"tooltip.enigmaticlegacy.cursed_scroll6": "§dТекущие характеристики:",
+	"tooltip.enigmaticlegacy.cursed_scroll7": "§6+%1$s §dк Урону",
+	"tooltip.enigmaticlegacy.cursed_scroll8": "§6+%1$s §dк Скорости Копания",
+	"tooltip.enigmaticlegacy.cursed_scroll9": "§6+%1$s §dк Регенерации",
+	
+	"tooltip.enigmaticlegacy.berserk_emblem1": "§6+%1$s §dк Урону",
+	"tooltip.enigmaticlegacy.berserk_emblem2": "§6+%1$s §dк Скорости Атаки",
+	"tooltip.enigmaticlegacy.berserk_emblem3": "§6+%1$s §dк Скорости Передвижения",
+	"tooltip.enigmaticlegacy.berserk_emblem4": "§6+%1$s §dк Сопротивлению Урону",
+	"tooltip.enigmaticlegacy.berserk_emblem5": "§5Эти черты умножаются на то, сколько процентов",
+	"tooltip.enigmaticlegacy.berserk_emblem6": "§5вашего запаса здоровья вам сейчас не хватает.",
+	"tooltip.enigmaticlegacy.berserk_emblem7": "§dТекущие характеристики:",
+	"tooltip.enigmaticlegacy.berserk_emblem8": "§6+%1$s §dк Урону",
+	"tooltip.enigmaticlegacy.berserk_emblem9": "§6+%1$s §dк Скорости Атаки",
+	"tooltip.enigmaticlegacy.berserk_emblem10": "§6+%1$s §dк Скорости Передвижения",
+	"tooltip.enigmaticlegacy.berserk_emblem11": "§6+%1$s §dк Сопротивлению Урону",
+	
+	"tooltip.enigmaticlegacy.cursedRing1": "§5Надев однажды, стает часть тебя самого.",
+	"tooltip.enigmaticlegacy.cursedRing2": "§4Это кольцо останется с тобой навечно.",
+	"tooltip.enigmaticlegacy.cursedRing2_creative": "§6С силой богов лишь можно снять его.",
+	"tooltip.enigmaticlegacy.cursedRing3": "§dСемь проклятий падут на душу надевшего:",
+	"tooltip.enigmaticlegacy.cursedRing4": "§5- Вы получаете удвоенный урон из §6ЛЮБОГО§5 источника.",
+	"tooltip.enigmaticlegacy.cursedRing4_alt": "§5- Вы получаете §6%1$s§5 урона из §6ЛЮБОГО§5 источника.",
+	"tooltip.enigmaticlegacy.cursedRing5": "§5- Неитральные существа агрессивны по отношению к вам.",
+	"tooltip.enigmaticlegacy.cursedRing6": "§5- Броня хуже на §6%1$s§5.",
+	"tooltip.enigmaticlegacy.cursedRing7": "§5- Монстры получают на §6%1$s§5 меньше урона от вас.",
+	"tooltip.enigmaticlegacy.cursedRing8": "§5- Вы горите вечно, если поджечь.",
+	"tooltip.enigmaticlegacy.cursedRing9": "§5- Каждая смерть разрывает вашу душу.",
+	"tooltip.enigmaticlegacy.cursedRing10": "§5- Вы страдаете неизлечимой бессоницей.",
+	"tooltip.enigmaticlegacy.cursedRing11": "§dСемь благословений получат те, кто устоит:",
+	"tooltip.enigmaticlegacy.cursedRing12": "§5- §6+%1$s§d к Добыче",
+	"tooltip.enigmaticlegacy.cursedRing13": "§5- §6+%1$s§d к Удаче",
+	"tooltip.enigmaticlegacy.cursedRing14": "§5- §6+%1$s§5 к выпадению §dОпыта§5.",
+	"tooltip.enigmaticlegacy.cursedRing15": "§5- §6+%1$s§d к силе чар§5 на §6Столе Зачарований.",
+	"tooltip.enigmaticlegacy.cursedRing16": "§5- Уникальная добыча с некоторых существ.",
+	"tooltip.enigmaticlegacy.cursedRing17": "§5- Работоспособность §6Кольца Края.",
+	"tooltip.enigmaticlegacy.cursedRing18": "§5- Вы можете создавать и использовать уникальные реликвии.",
+	
+	"tooltip.enigmaticlegacy.cursedOnesOnly1": "Только те, кто превозмог Семь проклятий,",
+	"tooltip.enigmaticlegacy.cursedOnesOnly2": "достаточно сильны для этого предмета.",
+	
+	"tooltip.enigmaticlegacy.tainted1": "§5Слегка испорченный присутствием проклятого.",
+	"tooltip.enigmaticlegacy.tainted2": "§5Испорчено прикосновением проклятого.",
+	
+	"tooltip.enigmaticlegacy.theTwist1": "§5Нет лучшего пути познания,",
+	"tooltip.enigmaticlegacy.theTwist2": "§5чем на пути изгнания...",
+	"tooltip.enigmaticlegacy.theTwist3": "§5Против игроков и боссов:",
+	"tooltip.enigmaticlegacy.theTwist4": "§dАльтернатива §6Четвертому Проклятию§5:",
+	"tooltip.enigmaticlegacy.theTwist5": "§5- Всегда наносит полный урон.",
+	"tooltip.enigmaticlegacy.theTwist6": "§6+§6%1$s§d к Урону§5 против игроков и боссов.",
+	"tooltip.enigmaticlegacy.theTwist7": "§6+§6%1$s§d к Откидыванию§5",
+	
+	"tooltip.enigmaticlegacy.animalGuide1": "§5Пока в инвентаре, ваши атаки не могут",
+	"tooltip.enigmaticlegacy.animalGuide2": "§5навредить животным.",
+	"tooltip.enigmaticlegacy.animalGuide3": "§6Хоглины§5 вокруг вас считаются пассивными.",
+	"tooltip.enigmaticlegacy.animalGuide4": "§dАльтернатива §6Второму Проклятью§d:",
+	"tooltip.enigmaticlegacy.animalGuide5": "§5- Волки и пчелы нейтральны к вам.",
+	
+	"tooltip.enigmaticlegacy.hunterGuide1": "§5Пока в инвентаре, весь урон по вашим",
+	"tooltip.enigmaticlegacy.hunterGuide2": "§5питомцам в §6%1$s§6 блоках§5 от вас перенаправляется",
+	"tooltip.enigmaticlegacy.hunterGuide3": "§5на вас самих.",
+	"tooltip.enigmaticlegacy.hunterGuide4": "§5Если также имеется §6Руководство дружбы с животными§5,",
+	"tooltip.enigmaticlegacy.hunterGuide5": "§5перенаправленный урон уменьшается на §6%1$s§5.",
+	
+	"tooltip.enigmaticlegacy.guardianHeart1": "§5Пока в инвентаре, §6Стражи§5 в §6%1$s§6 блоках",
+	"tooltip.enigmaticlegacy.guardianHeart2": "§5от вас считаются нейтральными к вам",
+	"tooltip.enigmaticlegacy.guardianHeart3": "§5и будут нацелены на ближайших монстров.",
+	"tooltip.enigmaticlegacy.guardianHeart4": "§5Пока на панели быстрого доступа, посмотрев на",
+	"tooltip.enigmaticlegacy.guardianHeart5": "§5монстра в §6%1$s§6 блоках§5 от вас, заставит его",
+	"tooltip.enigmaticlegacy.guardianHeart6": "§5временно впасть в ярость, получая большую",
+	"tooltip.enigmaticlegacy.guardianHeart7": "§5силу и сменяя цель на других монстров",
+	"tooltip.enigmaticlegacy.guardianHeart8": "§5поблизости в §6%1$s§6 блоках§5 от вас.",
+	"tooltip.enigmaticlegacy.guardianHeart9": "§5Другие монстры в радиусе будут",
+	"tooltip.enigmaticlegacy.guardianHeart10": "§5мгновенно атаковать разъяренного монстра.",
+	"tooltip.enigmaticlegacy.guardianHeart11": "§6Некоторые монстры имеют иммунитет к ярости.",
+	"tooltip.enigmaticlegacy.guardianHeart12": "§5Это способность имеет §6%1$s§6 секунд§5 перезарядки.",
+	
+	"tooltip.enigmaticlegacy.forbiddenFruit1": "§5После поедания фуркта вы никогда более",
+	"tooltip.enigmaticlegacy.forbiddenFruit2": "§5не испытаете голода вновь, но любой вид",
+	"tooltip.enigmaticlegacy.forbiddenFruit3": "§5регенерации будет на §6%1$s§5 слабее.",
+	
+	"tooltip.enigmaticlegacy.antiforbiddenPotion1": "§5Позволяет искупить совершенный грех",
+	"tooltip.enigmaticlegacy.antiforbiddenPotion2": "§5вкушения §6Запретного Плода§5.",
+	
+	"tooltip.enigmaticlegacy.evilEssence1": "§5Воплощает сырую, неочищенную энергию,",
+	"tooltip.enigmaticlegacy.evilEssence2": "§5высвободившуюся из дущи §6Иссушителя§5.",
+	
+	"tooltip.enigmaticlegacy.gemRing1": "§5Делает §6Пиглинов§5 нейтральными, когда надето.",
+	
+	"tooltip.enigmaticlegacy.enchanterPearl1": "§5Когда надето или в инвентаре, вы",
+	"tooltip.enigmaticlegacy.enchanterPearl2": "§5получаете большое кол-во силы",
+	"tooltip.enigmaticlegacy.enchanterPearl3": "§5зачарований, используя §6Стол Зачарований.",
+	"tooltip.enigmaticlegacy.enchanterPearl4": "§5Зачарование имеет шанс наложить",
+	"tooltip.enigmaticlegacy.enchanterPearl5": "§5и проклятия, и чары сокровищ.",
+	"tooltip.enigmaticlegacy.enchanterPearl6": "§5Вам больше не нужен §6Лазурит§5 для зачарования.",
+	
+	"tooltip.enigmaticlegacy.cursedStone1": "§5Если вы умерет в §6Аду§5, посреди",
+	"tooltip.enigmaticlegacy.cursedStone2": "§5достаточно огромного озера лавы с этим камнем",
+	"tooltip.enigmaticlegacy.cursedStone3": "§5в инвентаре, §6Кольцо Семи проклятий",
+	"tooltip.enigmaticlegacy.cursedStone4": "§5будет навечно уничтожено вместе с",
+	"tooltip.enigmaticlegacy.cursedStone5": "§5одним вашим §6Кристаллом Души.",
+	"tooltip.enigmaticlegacy.cursedStone6": "§4Этот процесс необратим.",
+	
+	"tooltip.enigmaticlegacy.soulCrystal1": "§6ПКМ§5, чтобы поглотить кристалл и",
+	"tooltip.enigmaticlegacy.soulCrystal2": "§5восполнить 1 ваш утерянный §6Кристалл Души.",
+	
+	"tooltip.enigmaticlegacy.avariceScroll1": "§6+%1$s§d к Удаче",
+	"tooltip.enigmaticlegacy.avariceScroll2": "§5Делает §6Пиглинов§5 нейтральными к вам, несмотря",
+	"tooltip.enigmaticlegacy.avariceScroll3": "§5на §6Второе Проклятие§5. Обмен с ними более",
+	"tooltip.enigmaticlegacy.avariceScroll4": "§5чем на, примерно, §6100%§5 эффективнее.",
+	"tooltip.enigmaticlegacy.avariceScroll5": "§5Дает §615% Шанса§5 получить §61 Изумруд§5",
+	"tooltip.enigmaticlegacy.avariceScroll6": "§5с любого убитого существа.",
+	"tooltip.enigmaticlegacy.avariceScroll7": "§5Жители дают вам скидку §635% при торговле.",
+	
+	"tooltip.enigmaticlegacy.infinimeal1": "§5Работает, как бесконечная §6Костная Мука.",
+	"tooltip.enigmaticlegacy.infinimeal2": "§5Эффективен на §6Кактусах§5, §6Лозах§5,",
+	"tooltip.enigmaticlegacy.infinimeal3": "§6Адском Наросте§5 и §6Тростнике.",
+
+	"gui.enigmaticlegacy.lore_inscriber": "Впишите название и историю",
+	"gui.enigmaticlegacy.blazing_core_bar_title": "Нагрев",
+	"gui.enigmaticlegacy.blazing_core_bar_offsetX": "0",
+	"gui.enigmaticlegacy.blazing_core_bar_offsetY": "0",
+	"gui.enigmaticlegacy.blazing_core__COMMENT": "Two strings above allow to move heat bar title by defining offsetX and offsetY to any positive or negative integers. This might be required for certain localizations more than for others depending on amount of symbols title takes takes to be spelled. You can, alternatively, leave title empty if you can't think of a solution that would look good, so that it just won't be rendered. Four symbols or less fit perfectly without any corrections. The string you read currently is just a commentary for localizators - you need not to translate it.",
+	
+	
+	"book.enigmaticlegacy.category.accessories.name": "Аксессуары",
+	"book.enigmaticlegacy.category.accessories.desc": "Многие предметы, хотя их можно носить на своем теле, на первый взгляд не выполняют никакой очевидной функции. Тем не менее, вы можете создавать или открывать для себя предметы, наделенные мощной магией, которые принимают форму колец, или чар, или чего-то еще, что удобнее носить с собой и не обременяет своего владельца так сильно, как тяжелые доспехи или меч.",
+	
+	
+	"book.enigmaticlegacy.category.world.name": "Мир",
+	"book.enigmaticlegacy.category.world.desc": "Некоторые предпочитают бездумно собирать все, что попадается под руку, в поисках сокровищ, оставляя после себя все остальное. Это не совсем неоправданный путь, но разве он лучше тех монстров, слепо ищущих крови в ночи?... Иногда, если вы присмотритесь поближе, руины и следы давно минувших веков могут подсказать вам много о долгой истории до вашего появления.",
+	
+	
+	"book.enigmaticlegacy.category.materials.name": "Ресурсы и Материалы",
+	"book.enigmaticlegacy.category.materials.desc": "Вы прекрасно знакомы с самыми обыденными материалами и ресурсами, которых в этом мире предостаточно. Но стоит копнуть немного дальше и вы откроете для себя то, чего никогда раньше не видели. По мере того, как вы продолжаете искать новые материалы, из которых можно выковать лучшие инструменты и доспехи, стоит указать на необычные свойства некоторых из них.",
+	
+	
+	"book.enigmaticlegacy.category.tools.name": "Инструменты и Оружие",
+	"book.enigmaticlegacy.category.tools.desc": "Даже полубоги часто не могут легко раскрыть свои созидательные и разрушительные силы, если у них в руках нет надлежащего инструмента.<br2/>Мечи ничем не отличаются от любого другого инструмента - они созданы для выполнения своей цели и молча подчиняются своему замыслу. Так уж вышло, что их цель - пролить кровь.",
+	
+	
+	"book.enigmaticlegacy.category.armor.name": "Броня",
+	"book.enigmaticlegacy.category.armor.desc": "Несмотря на всю свою красоту, в самых темных уголках этого мира таится множество опасностей. Многие могут легко стереть с лица земли ничего не подозревающего путешественника, если у него нет надлежащих средств защиты. Многие легендарные кузнецы посвятили свою жизнь попыткам создания совершенных доспехов. Вы, несомненно, превзойдете их всех.",
+	
+	
+	"book.enigmaticlegacy.category.decorations.name": "Декорации",
+	"book.enigmaticlegacy.category.decorations.desc": "Некоторые вещи, которые вы можете спроектировать и сконструировать, действительно не служат практической цели.<br2/>Однако это не значит, что они бессмысленны. Такое могущественное существо, как вы, вне всякого сомнения, заслуживает того, чтобы его окружали комфорт и красота, если захотите.",
+	
+	
+	"book.enigmaticlegacy.category.relics.name": "Артефакты",
+	"book.enigmaticlegacy.category.relics.desc": "Бесчисленные реликвии разбросаны по этому миру, многие из них забыты веками, о других слагают легенды...<br2/>И как исследователь, так и завоеватель, они как раз и являются вашей главной достопримечательностью, поскольку они являются ключами к достижению невообразимой силы и знаками, которые могут привести вас к ответам, которые вы ищете.",
+	
+	
+	"book.enigmaticlegacy.category.brewing.name": "Зельеварение",
+	"book.enigmaticlegacy.category.brewing.desc": "Хотя это было довольно популярно среди человеческих магов прежних эпох, многие полубоги недооценивают силу приготовления зелий, считая, что это не заслуживает обширных исследований и возни с ингредиентами.<br2/>Но для тех, кто готов отдать то, что нужно, зелья могут стать самым мощным инструментом в их распоряжении.",
+	
+	
+	"book.enigmaticlegacy.category.misc.name": "Разное",
+	"book.enigmaticlegacy.category.misc.desc": "Некоторые знания чрезвычайно трудно разделить на категории. Иногда это вообще перестает стоить тех усилий.<br2/>Есть некоторая романтика в том, чтобы оставлять бумаги и свитки на столе, но без какой-либо структуры и порядка. Величие часто рождается из того, что кажется чистым хаосом..",
+	
+	
+	"book.enigmaticlegacy.category.enchantments.name": "Зачарования",
+	"book.enigmaticlegacy.category.enchantments.desc": "Зачарование само по себе является прекрасным видом искусства. Разные мастера ищут разные подходы к его выполнению, и в конечном итоге нельзя сказать, какой из подходов наиболее эффективен, и есть ли он вообще. Как и в других искусствах, существуют краеугольные камни, составляющие основу любой школы чар, которые вам придется выучить.",
+	
+	
+	
+	
+	
+	
+	"book.enigmaticlegacy.entry.berserk_emblem.name": "Эмблема Берсерка",
+	"book.enigmaticlegacy.entry.berserk_emblem.page.1": "Неудивительно, что многие боятся смерти, потому что смерть лежит в центре паутины всех ужасов. Но для тех, кто решил нести великое проклятие, страх - непростительная слабость.<br2/>С помощью силы Искаженного сердца, а также всех семи проклятий вместе взятых, вы можете выковать эту эмблему. Это поможет вам обернуть всё в свою пользу - чем ближе вы",
+	"book.enigmaticlegacy.entry.berserk_emblem.page.2": "будете стоять к грани неминуемой гибели, большая ярость и отвага наполнят вас, заставляя сражаться, несмотря на обстоятельства, до последнего вздоха.",
+	
+	
+	"book.enigmaticlegacy.entry.cursed_scroll.name": "Тысяча проклятий",
+	"book.enigmaticlegacy.entry.cursed_scroll.page.1": "Иногда проклятия могут принимать форму, аналогичную заклинаниям, с некоторыми отличиями. В отличие от обычных чар, когда они привязаны к предмету, кажется, что от них невозможно избавиться, сохранив сам предмет. Будем надеяться, что обычные техники наложения чар, которые вы используете сами, не могут случайно вызвать такие проклятия, но вы можете найти",
+	"book.enigmaticlegacy.entry.cursed_scroll.page.2": "такие предметы, которые имеют их, при исследовании древних руин и подземелий. Их эффекты различаются, но ни один из них не является весьма полезным - любые проклятые чары представляют собой существенный недостаток для использования",
+	"book.enigmaticlegacy.entry.cursed_scroll.page.3": "предмета. В нормальных обстоятельствах они были бы просто досадой, которую вам следует избегать. Однако теперь, когда вы носите Кольцо семи проклятий, есть способы манипулировать ими и даже извлекать из них выгоду, недоступную для других.<br2/>Этот свиток, наполненный концентрированной злобой Искаженного Сердца, представляет одну из таких возможностей. За каждое проклятие, которое несет каждый предмет вашего",
+	"book.enigmaticlegacy.entry.cursed_scroll.page.4": "снаряжения, оно усиливает ваши урон, скорость добычи и регенерацию любого рода. Эффект, несомненно, незначителен только с одним или двумя проклятиями, но если вы не боитесь принять еще немного, это может привести к огромной силе.<br2/>Снаряжение, которое влияет на этот свиток, включает доспехи, предметы для обеих рук и любые носимые предметы, такие как амулеты или кольца, включая даже сам этот свиток, когда он надет.",
+	
+	
+	"book.enigmaticlegacy.entry.iron_ring.name": "Железное кольцо",
+	"book.enigmaticlegacy.entry.iron_ring.page.1": "Довольно простая по конструкции, эта вещь могла быть выкована даже самым обычным кузнецом, не говоря уже о полубоге, подобном вам. Это кольцо полезно только потому, что для его создания нужно лишь какое-то обычное железо. Это может не спасти вас от обезглавливания, но может защитить один из ваших пальцев от того, чтобы когда-нибудь отрубить его... Возможно.",
+	
+	
+	"book.enigmaticlegacy.entry.ceaseless_enchantment.name": "Непрерывность",
+	"book.enigmaticlegacy.entry.ceaseless_enchantment.heading.1": "Зачарование",
+	"book.enigmaticlegacy.entry.ceaseless_enchantment.page.1": "Еще одно возможное зачарование арбалета, довольно полезное в своей простоте. Его эффекты в основном идентичны эффектам чар Бесконечности на луках. С этим чаром на арбалете обычные стрелы из вашего инвентаря не будут расходоваться при стрельбе по ним, так что вам не придется беспокоиться о пополнении запасов.<br2/>",
+	"book.enigmaticlegacy.entry.ceaseless_enchantment.page.2": "Однако он работает только с обычными стрелами - остроконечные стрелы или фейерверки не подвержены эффекту зачарования Непрерывность и будут использованы как обычно.",
+	"book.enigmaticlegacy.entry.ceaseless_enchantment.page.3": "Sharpshooter does only affect arrows - it will not increase damage of fireworks, for instance.<br2/>Furthermore, it cannot be combined with Multishot or Piercing.",
+	
+	
+	"book.enigmaticlegacy.entry.sharpshooter_enchantment.name": "Умелый Стрелок",
+	"book.enigmaticlegacy.entry.sharpshooter_enchantment.heading.1": "Зачарование",
+	"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.1": "Одно из возможных чар для арбалета, это одно из самых полезных.<br2/>Оно увеличивает урон, наносимый стрелами из арбалета, чем-то похож на Силу у лука. Однако разница здесь в том, что в отличие от луков, стрелы, наполненные силой этого чара, всегда будут наносить одинаковое количество урона, а не в некотором диапазоне.",
+	"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.2": "Точная формула итогового значения урона может быть записана следующим образом: <&l>6 + (3 * [<&5>Уровень Умелого Стрелка<&0>])$(clear).<br2/>Это означает, что на максимальном уровне V, который может иметь этот чар, ваши стрелы будут наносить стабильный общий урон по 21 единиц каждая.",
+	"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.3": "Умелый Стрелок действует только на стрелы - например, он не увеличивает урон от фейерверков.<br2/>Кроме того, его нельзя комбинировать с Мульти-выстрелом или Пронзанающей стрелой.",
+	
+	
+	"book.enigmaticlegacy.entry.curse_of_nemesis.name": "Проклятие Возмездия",
+	"book.enigmaticlegacy.entry.curse_of_nemesis.heading.1": "Проклятие",
+	"book.enigmaticlegacy.entry.curse_of_nemesis.page.1": "Одно из менее известных проклятых чар, оно более любопытное и непонятное, чем другие.<br2/>Его можно встретить только на холодном оружии, таком как мечи или топоры. Если вы атакуете напрямую оружием, на котором зачаровано Проклятие Возмездия, вы получите около 25 процентов нанесенного вами урона назад.<br2/>",
+	"book.enigmaticlegacy.entry.curse_of_nemesis.page.2": "Однако, какими бы разрушительными ни были ваши удары, это проклятие никогда не убьет вас.<br2/>В конечном итоге у вас останется лишь малость здоровья, но что-то еще может отнять эту малость, чтобы вы, наконец, умерли.",
+	
+	
+	"book.enigmaticlegacy.entry.wrath_enchantment.name": "Гнев",
+	"book.enigmaticlegacy.entry.wrath_enchantment.heading.1": "Зачарование",
+	"book.enigmaticlegacy.entry.wrath_enchantment.page.1": "Чар, предназначенный исключительно для трезубцев, он очень похож на эффект, который оказывает Острота на мечи и топоры, увеличивая урон, который ваш трезубец может нанести любому противнику в целом. Он работает как при использовании трезубца в качестве оружия ближнего боя, так и при его метании в качестве снаряда.",
+	"book.enigmaticlegacy.entry.wrath_enchantment.page.2": "Однако увеличение урона, предлагаемое этим зачарованием, заметно лучше, чем у Остроты, поскольку оно обеспечивает +1,25 урона за уровень примененного зачарования. Эти чары относятся к той же категории, что и Пронзание со Стремительным Потоком, поэтому являются с ними взаимоисключающими.",
+	
+	
+	"book.enigmaticlegacy.entry.torrent_enchantment.name": "Стремительный Поток",
+	"book.enigmaticlegacy.entry.torrent_enchantment.heading.1": "Зачарование",
+	"book.enigmaticlegacy.entry.torrent_enchantment.page.1": "Эти чары значительно увеличивают урон, наносимый вашим трезубцем, как против существ, невосприимчивых к огню (например, Ифриты или Зомби-пиглины), так и против существ, чувствительных к воде (например, Эндермены).<br2/>Точное увеличение урона против подходящих существ составляет +2,5 урона за уровень зачарования, что идентично таковому у",
+	"book.enigmaticlegacy.entry.torrent_enchantment.page.2": "Небесной Кары против нежити.<br2/>Также эти чары попадают в ту же категорию, что и Пронзание с Гневом, поэтому являются с ними взаимоисключающими.",
+	
+	
+	"book.enigmaticlegacy.entry.slayer_enchantment.name": "Убийца",
+	"book.enigmaticlegacy.entry.slayer_enchantment.heading.1": "Зачарование",
+	"book.enigmaticlegacy.entry.slayer_enchantment.page.1": "Еще одно зачарование, которое позволяет вам увеличить урон вашего меча или топора, оно относится к той же категории, что и Острота, Небесная Кара или Бич Членистоногих, поэтому является взаимоисключающим со всеми ними. Оно увеличивает любой урон, который ваше оружие наносит всему, что классифицируется как монстр. Точное увеличение урона составляет +1,5,",
+	"book.enigmaticlegacy.entry.slayer_enchantment.page.2": "умноженное на уровень самого зачарования, что заметно меньше, чем увеличение +2,5, которое вы получите, например, от Небесной Кары против нежити. Тем не менее, это по-прежнему очень солидный выбор среди своих собратьев, поскольку монстры включают в себя практически всё, с чем вам нужно бороться, в то время как нежить -",
+	"book.enigmaticlegacy.entry.slayer_enchantment.page.3": "гораздо менее всеобъемлющая категория, не говоря уже о членистоногих, охваченных в чаре Бич Членистоногих.<br2/>Кроме того, монстры, атакованные оружием с этим зачарованием, ненадолго замедляются.",
+	
+	
+	"book.enigmaticlegacy.entry.soul_loss.name": "Утеря души",
+	"book.enigmaticlegacy.entry.soul_loss.heading.1": "Кристалл",
+	"book.enigmaticlegacy.entry.soul_loss.page.1": "Каждая смерть имеет свои собственные жертвы, но есть одна гораздо более значительная, чем все другие, с которыми вам приходилось сталкиваться раньше.Кажется, что каждый раз, когда вы умираете в этом мире, часть самой вашей души отделяется от вас, оставаясь на месте вашей кончины. Он не остается эфирным слишком долго, вместо этого быстро проявляется в физической",
+	"book.enigmaticlegacy.entry.soul_loss.page.2": "реальности в форме, известной как Кристалл Души. К счастью для вас, присутствие в этой реальности делает его менее уязвимым, чем в эфирной.Кристаллы души будут парить в воздухе, неуязвимые и не реагирующие на любую силу, действующую на них, как будто душа полубога, являясь лишь ее частью, они могут быть уничтожены только природой",
+	"book.enigmaticlegacy.entry.soul_loss.page.3": "чего-то более высшего. Даже другие полубоги не могут надеяться завладеть вашими кристаллами или уничтожить их. С каждым потерянным фрагментом вашей души ваша жизненная сила ослабевает, вы становитесь слабее, и вас легче убить. Но если вы приблизитесь к своему Кристаллу Души, и он склонится к вам, тогда потерянный фрагмент вашей души будет мгновенно выброшен из своей кристаллической тюрьмы, снова сливаясь с вашим естством.",
+	"book.enigmaticlegacy.entry.soul_loss.page.4": "Надеюсь, даже в худших обстоятельствах вы не потеряете всю свою жизненную силу. По мере того, как ткань вашей души истончается, она становится все более и более стойкой к тому, чтобы ее разорвали на части еще раз. Можно с уверенностью предположить, что в какой-то момент вы не сможете больше терять свои фрагменты души, независимо от того, сколько раз вы умрете - хотя к тому времени вы останетесь в невероятно уязвимом состоянии для любой физической угрозы.",
+	
+	
+	"book.enigmaticlegacy.entry.first_glance.name": "Первый взгляд",
+	"book.enigmaticlegacy.entry.first_glance.page.1": "Когда вы впервые ступили на земли этого мира, вы не были уверены, что уводит вас так далеко от своего места... снова. Это не первый мир, в котором вы когда-либо побывали. Но на этот раз все по-другому.<br2/>Что-то зовет вас из самых тайных глубин, из самых темных уголков, которые, возможно, никогда не предполагалось",
+	"book.enigmaticlegacy.entry.first_glance.page.2": "увидеть человеку. Что-то побуждает следовать за подсказками, разгадывать тайны этих земель. Это вас несколько пугает, но вы не смогли устоять перед соблазном.<br2/>Вы не должны бояться неизвестного, какой бы вызов оно ни представляло.<br2/>Вы будете искать ответы любой ценой.",
+	
+	
+	"book.enigmaticlegacy.entry.forbidden_axe.name": "Топор палача",
+	"book.enigmaticlegacy.entry.forbidden_axe.page.1": "С этими иссушающими скелетами часто бывает довольно сложно иметь дело. Единственная веская причина, по которой вы заинтересованы в их жалком существовании, - это их черепа, которые оказываются гораздо более ценными и полезными в тайном искусстве, чем сами скелеты.<br2/>Но они не будут охотно отдавать вам свои черепа, как бы любезно вы ни попросили.",
+	"book.enigmaticlegacy.entry.forbidden_axe.page.2": "И несмотря на то, что у вас было много практики, вам по-прежнему довольно сложно отделить хрупкий череп от бесполезной остальной части их тела, случайно не раздавив его - они просто не будут спокойно стоять на месте, чтобы вы могли нанести",
+	"book.enigmaticlegacy.entry.forbidden_axe.page.3": "один точный удар своим лезвием, как будто намеренно пытаются вам досаждать.<br2/>Этот топор выкован специально для того, чтобы помочь вам в этой нелегкой работе. Слитый с наилучшим металлом Ада и пропитанный его темной и извращенной природой, он призывает прорваться сквозь шеи ваших врагов, взмахнув головами в воздух.",
+	"book.enigmaticlegacy.entry.forbidden_axe.page.4": "Помимо скелетов, с его помощью можно обезглавить практически любое существо, которое вообще можно обезглавить, даже если раньше вы не могли этого сделать.<br2/>Стремление к крови, которое есть внутри этого оружия, может пригодиться даже помимо его особой способности обезглавливания, так как оно может наносить более быстрые и разрушительные удары, чем даже незеритовый клинок.",
+	
+	
+	"book.enigmaticlegacy.entry.etherium_sword.name": "Эфириумный палаш",
+	"book.enigmaticlegacy.entry.etherium_sword.page.1": "Несмотря на массивный внешний вид, с этим инструментом на самом деле немного легче обращаться, чем с обычными меньшими мечами. Только для вас, конечно - вашим противникам будет не так легко переносить удары из такого оружия, как вам было бы наносить их.<br2/>Эфирный палаш находится посередине между двумя",
+	"book.enigmaticlegacy.entry.etherium_sword.page.2": "другими эфирными оружиями. Не такой легкий и маневренный, как коса, не такой массивный и сокрушительный, как боевой топор, но он берет лучшее от обоих, позволяя наносить уверенные удары с разумным временем простоя, которые будут",
+	"book.enigmaticlegacy.entry.etherium_sword.page.3": "значительными даже для самого защищенного врага.<br2/>В отличие от других инструментов, способность палаша связана исключительно с боем. По вашей команде он отбросит вас назад, преодолевая значительное расстояние. Это можно использовать как способ быстро отступить между сериями ударов или когда нужно быстро уклоняться от особо смертоносных атак. Короткое время восстановления позволяет этой способности",
+	"book.enigmaticlegacy.entry.etherium_sword.page.4": "быть полезной даже в самых жестких боевых сценариях, если у вас достаточно навыков для ее правильного использования.<br2/>Как и другие инструменты из эфириума, палаш действительно обладает впечатляющей прочностью, намного превосходящей любое земное оружие.",
+	
+	
+	"book.enigmaticlegacy.entry.etherium_shovel.name": "Эфириумная лопата",
+	"book.enigmaticlegacy.entry.etherium_shovel.page.1": "В отличие от топора или косы, этот инструмент не совсем полезен в качестве оружия. Однако она отлично справляется, но только со своей другой целью - прокапываться через грязь и землю, как горячий нож через масло.<br2/>Она может легко прорваться сквозь блоки в области 3x3, если только вы добровольно не подавите его способность и",
+	"book.enigmaticlegacy.entry.etherium_shovel.page.2": "не заставите его воздействовать только на отдельные блоки.<br2/>Исключительно прочная, как и всё остальное, выкованное из эфириума.",
+	
+	
+	"book.enigmaticlegacy.entry.etherium_scythe.name": "Эфириумная коса",
+	"book.enigmaticlegacy.entry.etherium_scythe.page.1": "Созданные как мирное орудие, косы, тем не менее, стали одним из самых изысканных видов оружия. Этот не исключение - хотя его сложно освоить, он может помочь вам пожинать души врагов так же легко, как посеянные вами урожаи.<br2/>Эфириумная коса может собирать урожай, растения, листья и траву в пространстве 3x3x3 блоков, сосредоточенных",
+	"book.enigmaticlegacy.entry.etherium_scythe.page.2": "вокруг начальной точки удара. Она также служит мотыгой, способной легко превратить землю в пашню в области 3x3.<br2/>Вы можете подавить эти способности, если хотите, оставаясь способным воздействовать",
+	"book.enigmaticlegacy.entry.etherium_scythe.page.3": "только на отдельные блоки.<br2/>Как оружие, коса находится на противоположном конце от эфириумного боевого топора. Её лезвие тонкое и острое, как бритва, и хотя недостаток массы не позволяет наносить такой сильный урон при каждой атаке, ею намного проще выполнять быстрые взмахи и заставлять немедля кануть большинство существ, которые осмеливаются встать у вас на пути.",
+	"book.enigmaticlegacy.entry.etherium_scythe.page.4": "Эфириумная коса, как и все другие инструменты из эфириума, также чрезвычайно надежна.",
+	
+	
+	"book.enigmaticlegacy.entry.etherium_pickaxe.name": "Эфириумная кирка",
+	"book.enigmaticlegacy.entry.etherium_pickaxe.page.1": "Простая и понятная по своей конструкции, эта кирка обладает мощью, превосходящей любой из обычных инструментов, которые вы когда-либо выковывали из земных материалов. Эфириумная кирка способна мгновенно добывать блоки в области 3x3 всякий раз, когда вы ломаете один, что позволяет с беспрецедентной легкостью прорвать огромные туннели в земной коре.",
+	"book.enigmaticlegacy.entry.etherium_pickaxe.page.2": "У вас также есть удобные способы подавления её силы, если вы захотите, позволяя вам работать с отдельными блоками, если это необходимо.<br2/>Кроме того, эта кирка чрезвычайно прочна и имеет более широкий спектр",
+	"book.enigmaticlegacy.entry.etherium_pickaxe.page.3": "материалов, против которых она эффективна, справляясь со стеклом или льдом лучше, чем обычные кирки.",
+	
+	
+	"book.enigmaticlegacy.entry.etherium_axe.name": "Эфириумный топор",
+	"book.enigmaticlegacy.entry.etherium_axe.page.1": "В отличие от обычных топоров, этот массивный зверь предназначен одновременно и как инструмент, и как оружие. При использовании в качестве инструмента он может рубить древесину в массивном пространстве размером 3x3x3 блоков, сосредоточенных вокруг точки удара. Вы можете подавить эту способность, если вместо этого вам полностью требуется иметь дело с отдельными",
+	"book.enigmaticlegacy.entry.etherium_axe.page.2": "блоками. Помимо бревен или досок, он также эффективно справляется с менее прочными растениями, такими как листья, кактусы или бамбук.<br2/>В качестве оружия он наносит огромный урон и, будучи топором,",
+	"book.enigmaticlegacy.entry.etherium_axe.page.3": "более эффективно действует со щитом противника, если он у него есть. Единственным недостатком является то, что он ужасно тяжелый, и хотя это позволяет вам наносить большой урон с каждой атакой, вам также нужно будет делать более долгий перерыв перед каждым ударом, чтобы оправиться от предыдущего и снова иметь возможность атаковать в полную силу. Как и любой другой предмет из эфириума, Эфириумный боевой топор также чрезвычайно прочный.",
+	
+	
+	"book.enigmaticlegacy.entry.astral_breaker.name": "Астральный крушитель",
+	"book.enigmaticlegacy.entry.astral_breaker.page.1": "Классические инструменты из эфириума сами по себе довольно мощные и полезные, но они не предел того, что можно выковать со всей мощью этого металла.<br2/>Используя чарующую силу астральной пыли, а также задействованные еще несколько тайных ингредиентов, вы открыли способ, которым некоторые из них могут быть объединены",
+	"book.enigmaticlegacy.entry.astral_breaker.page.2": "вместе, чтобы создать идеальный многоцелевой инструмент. Астральный крушитель воплощает в себе кирку, топор и лопату в одном инструменте - он пробивает камни, дерево и грязь с легкостью, не уступающей",
+	"book.enigmaticlegacy.entry.astral_breaker.page.3": "своим эфириумным аналогам, без необходимости использовать их как отдельные инструменты. Единственный недостаток, который он носит, - это уменьшенная область действия по сравнению с Эфириумным боевым топором, но в большинстве случаев это не должно быть большой проблемой.<br2/>Кроме того, он несколько более долговечен, чем другие инструменты на основе эфириума.",
+	
+	
+	"book.enigmaticlegacy.entry.unholy_grail.name": "Осквернённый грааль",
+	"book.enigmaticlegacy.entry.unholy_grail.heading.1": "Грааль",
+	"book.enigmaticlegacy.entry.unholy_grail.page.1": "Узнав о нем столько легенд, вы были удивлены, обнаружив, что эта реликвия просто валяется посреди безымянных руин. Затерянный среди никчемного мусора и безделушек - как будто в этом нет ничего особенного.<br2/>Однако он оказался столь же бесполезным, как и следовало ожидать от тех легенд. Грааль всегда наполнен",
+	"book.enigmaticlegacy.entry.unholy_grail.page.2": "водой, сколько бы вы из него ни выпили, он останется таким же полным, как и был. Но у этой воды горький привкус золы, она ядовита и испорчена. В зависимости от того, сколько вы выпьете, прежде чем осознаете это, это либо оставит вас в тяжелом состоянии, либо просто убьет через короткое время.",
+	"book.enigmaticlegacy.entry.unholy_grail.page.3": "Возможно, стоит сохранить его как уникальный трофей.",
+	
+	
+	"book.enigmaticlegacy.entry.oblivion_stone.name": "Печать великой Пустоты",
+	"book.enigmaticlegacy.entry.oblivion_stone.heading.1": "Краеугольный камень",
+	"book.enigmaticlegacy.entry.oblivion_stone.page.1": "Можно было ожидать, что артефакт с таким громким названием будет чем угодно...чем угодно, кроме очистителя инвентаря. И тем не менее, это по-прежнему остается главной и, вероятно, единственной реальной его задачей. По крайней мере, вне всяких сомнений, он в этом преуспевает. Эта уникальная реликвия могла быть связана с одним или несколькими типами предметов или блоков.",
+	"book.enigmaticlegacy.entry.oblivion_stone.page.2": "Оставаясь в вашем инвентаре, он будет потреблять эти предметы в зависимости от выбранного вами режима. Вам нужен только образец объекта, чтобы с помощью простых манипуляций позволить ему избавить вас от всех таких же объектов... Или, по крайней мере, от их избытка. Вы можете поискать и получить",
+	"book.enigmaticlegacy.entry.oblivion_stone.page.3": "еще несколько краеугольных камней, если хотите, настраивая каждый из них точно так, как хотите. Единственный практический недостаток этой вещи заключается в том, что вы не можете удалить только один элемент из списка расходных материалов - полностью очистить список можно только в том случае, если вы хотите что-то исключить или заменить, так что делайте свой выбор с умом.",
+	"book.enigmaticlegacy.entry.oblivion_stone.page.4": "Пока вы не знаете, куда отправляются предметы, поглощенные этой реликвией. Вы только знаете, что они никогда не вернутся...<br2/>К счастью, пока он не пытался поглотить части вашего тела, и маловероятно, что краеугольный камень вообще может каким-то образом взаимодействовать с живой материей. Тем не менее, каждое прикосновение к нему пробуждает в вас смутное беспокойство.",
+	
+	
+	"book.enigmaticlegacy.entry.nether_star.name": "Звезда Ада",
+	"book.enigmaticlegacy.entry.nether_star.heading.1": "Звезда",
+	"book.enigmaticlegacy.entry.nether_star.page.1": "Some text here - ???:D",
+	"book.enigmaticlegacy.entry.nether_star.page.2": "Some text there",
+	
+	
+	"book.enigmaticlegacy.entry.spellstones.name": "Камни заклинаний",
+	"book.enigmaticlegacy.entry.spellstones.page.1": "Камни заклинаний достаточно отличаются от большинства других реликвий, которые вы можете найти. Они являются источником и сосудами мощной элементальной магии, наделяющей своих носителей способностями, недоступными для людей. В наше время нет известных способов их воссоздания - происхождение камней заклинаний восходит к первым моментам творения, когда безумная энергия",
+	"book.enigmaticlegacy.entry.spellstones.page.2": "высвобождалась в прежде холодное и темное ничто. Взаимодействуя, сражаясь и поглощая друг друга, создавая абсолютный хаос. В этом хаосе они родились, заключив его в форму, достаточно стабильную, чтобы пережить века. Эры за эрами, до вашего пришествия...<br2/>К настоящему времени невозможно встретить один такой естественным образом. Кажется, все они были обнаружены и захвачены древней цивилизацией, которая теперь",
+	"book.enigmaticlegacy.entry.spellstones.page.3": "прекратила свое существование, оставив после себя только руины своих творений.<br2/>И среди этих руин они лежат, ожидая, что какой-нибудь храбрый исследователь воспользуется их силой.",
+	
+	
+	"book.enigmaticlegacy.entry.void_pearl.name": "Жемчуг пустоты",
+	"book.enigmaticlegacy.entry.void_pearl.heading.1": "Камень заклинаний",
+	"book.enigmaticlegacy.entry.void_pearl.page.1": "В Краю есть кое-что еще, помимо самого Края. Это место, где вы можете столкнуться лицом к лицу с чем-то гораздо более темным и загадочным - Великой Пустотой, лежащей под бесчисленными островами, плавающими над ней.<br2/>Кажется, это место полно... пустоты, правда. По какой-то причине там перестает существовать даже воздух, и всё",
+	"book.enigmaticlegacy.entry.void_pearl.page.2": "живое, которое может оказаться достаточно глупым, чтобы подойти к краю одного из этих островов и упасть, поглощается, встречая неминуемую гибель в темном небытии.<br2/>Возможно, однако, эта пустота все-таки не так пуста. У этой жемчужины есть свойства, так тесно связанные с ней,",
+	"book.enigmaticlegacy.entry.void_pearl.page.3": "которые не совпадают ни с одним другим элементом, как если бы Пустота была самостоятельным элементом. <br2/>Таким образом, следует предположить, что этот камень заклинаний когда-то возник из неё, хотя вы не представляете, как что-то могло совершить путешествие в глубины пустоты и вернуться целым.",
+	
+	
+	"book.enigmaticlegacy.entry.ocean_stone.name": "Воля океана",
+	"book.enigmaticlegacy.entry.ocean_stone.heading.1": "Камень заклинаний",
+	"book.enigmaticlegacy.entry.ocean_stone.page.1": "Идеальная реликвия, которой можно обладать, если вы хотите исследовать или, возможно, даже обитать в самых темных глубинах бескрайних морей, покрывающих поверхность Надземного мира.<br2/>Заполучив одну из них, лежащую среди затонувших руин, вы можете стать в воде намного сильнее, чем на суше. Дышать этой водой так же легко, как воздухом,",
+	"book.enigmaticlegacy.entry.ocean_stone.page.2": "плыть по ней быстрее, чем когда-либо бегать по земле, видеть сквозь нее четче, чем можно увидеть поверхность мира даже в самые яркие дни. Если что-то в глубинах океана все еще остается для вас враждебным, оно окажется бессильным и испуганным перед вашим естством.",
+	"book.enigmaticlegacy.entry.ocean_stone.page.3": "И если вы когда-нибудь окажетесь слишком далеко от любой лужи столь необходимой жидкости... Пожертвовав небольшим опытом, вы можете заставить небеса плакать о вас.<br2/>Возможно, это не так полезно, как наличие настоящего пруда в вашем распоряжении, но это определенно сила, которую учли бы даже боги.",
+	
+	
+	"book.enigmaticlegacy.entry.magma_heart.name": "Пылающее Ядро",
+	"book.enigmaticlegacy.entry.magma_heart.heading.1": "Камень заклинаний",
+	"book.enigmaticlegacy.entry.magma_heart.page.1": "Среди пылающих пустошей и бурлящих океанов лавы, простирающейся над взорванными просторами Нижнего мира, среди криков разлученных и забытых душ, и пепла, в который сводилась любая попытка заявить свои права на эти пустоши и управлять ими, нет ничего удивительного в том, чтобы встретить камень заклинаний, олицетворяющий стихию самого огня.",
+	"book.enigmaticlegacy.entry.magma_heart.page.2": "Пылающее ядро дает вам всё, что вам может понадобиться, чтобы выжить в суровой жаре подземного мира. Огонь и лава будут полностью безвредны для вас, и до некоторой степени пламя защитит вас от тех, кто попытается напасть на вас... Ну, может быть, не защитит, но, по крайней мере, поможет вам мгновенно отомстить.",
+	
+	
+	"book.enigmaticlegacy.entry.golem_heart.name": "Сердце голема",
+	"book.enigmaticlegacy.entry.golem_heart.heading.1": "Камень заклинаний",
+	"book.enigmaticlegacy.entry.golem_heart.page.1": "Вероятно, один из самых простых камней заклинаний, поскольку он потенциально может быть найден почти где угодно среди бесчисленных заброшенных подземелий и шахт Надземного мира. Но глуп будет тот, кто недооценивает его силу.<br2/>Связанный с самой стихией земли, этот камень заклинаний не такой прихотливый и изысканный,",
+	"book.enigmaticlegacy.entry.golem_heart.page.2": "как другие, в том, что он делает, вместо этого он помогает своему носителю сосредоточиться и противостоять грубой силе. Это делает вашу кожу жесткой, как сталь, она сопротивляется высокому давлению, прорезанию и прокалыванию намного лучше, чем обычная плоть.",
+	"book.enigmaticlegacy.entry.golem_heart.page.3": "Эффекты Сердца проявляются в полной мере, когда у его носителя нет другой брони, обременяющей его, превращая его шкуру в собственную броню.",
+	
+	
+	"book.enigmaticlegacy.entry.eye_of_nebula.name": "Око туманности",
+	"book.enigmaticlegacy.entry.eye_of_nebula.heading.1": "Камень заклинаний",
+	"book.enigmaticlegacy.entry.eye_of_nebula.page.1": "Найденный среди странных, загадочных земель Края, этот камень заклинаний переполнен энергией Края, связанной с особенностями самого измерения.<br2/Когда вы его носите, вы будете обладать способностями, аналогичными способностям эндермена, и сможете телепортироваться к своим жертвам из, казалось бы, ниоткуда в мгновение ока. Иногда вы также будете уклоняться",
+	"book.enigmaticlegacy.entry.eye_of_nebula.page.2": "от входящих атак, полностью уклоняясь от них.<br2/>Однако над этой последней способностью вы не властны, и иногда она может играть против вас, а не в вашу пользу.",
+	
+	
+	"book.enigmaticlegacy.entry.enigmatic_item.name": "Сердце мироздания",
+	"book.enigmaticlegacy.entry.enigmatic_item.heading.1": "Камень заклинаний",
+	"book.enigmaticlegacy.entry.enigmatic_item.page.1": "Сила этого камня настолько велика и подавляюща, что кажется, что полубог никогда не завладел бы им.<br2/>Он обеспечивает максимальную защиту от большинства угроз окружающей среды. Большинство враждебных существ по-прежнему будут нацелены на вас и смогут причинить вам вред, но их попытки забрать вашу жизнь",
+	"book.enigmaticlegacy.entry.enigmatic_item.page.2": "никогда не увенчаются успехом, если камень заклинаний останется в вашем распоряжении - вас нельзя убить. Независимо от того, насколько близко вы будете стоять на грани смерти, ничто не сможет вас подтолкнуть.<br2/>Несмотря на то, что он носит название «Сердце Мироздания», он также предоставляет вам",
+	"book.enigmaticlegacy.entry.enigmatic_item.page.3": "одно из самых совершенных средств сеять разрушения, обрушивая разрушительные черепа, подобные тем, что были вызваны Иссушителем.<br2/>Они также будут нацелены на любые сущности, на которые вы можете случайно взглянуть, быстро уничтожая большую часть того, на что вы могли бы направить свой гнев.",
+	
+	
+	"book.enigmaticlegacy.entry.enigmatic_amulet.name": "Загадочный амулет",
+	"book.enigmaticlegacy.entry.enigmatic_amulet.heading.1": "Амулет",
+	"book.enigmaticlegacy.entry.enigmatic_amulet.page.1": "Когда вы впервые вошли в этот мир, вы обнаружили эту вещь, удобно лежащую в ваших карманах, без каких-либо подсказок ни о том, откуда она взялась, ни почему она оказалась в вашем распоряжении. Яркий камень, заключенный в его ядро, продолжал двигаться, светясь изнутри, словно живой - одно поистине очаровательное зрелище. После непродолжительного осмотра вы",
+	"book.enigmaticlegacy.entry.enigmatic_amulet.page.2": "обнаружили вырезанную на другой стороне надпись, состоящую из одного имени: \"<&4><&l><playername>$(clear)\".<br2/>Вы пытались изучить его структуру и то, как ее можно воспроизвести, но пока безуспешно. Кажется, что эта вещь вообще не принадлежит этому миру, выкована и принесена сюда силой, которая остается за",
+	"book.enigmaticlegacy.entry.enigmatic_amulet.page.3": "пределами вашего понимания.<br2/>Когда вы носите его, вы чувствуете себя немного сильнее, чем в противном случае.<br2/>Однако, похоже, это не единственное полезное свойство. Если ваша плоть разорвется на части, не в силах больше содержать душу - амулет откроет разрыв в неизвестное пространство, содержащее все предметы, которые вы в противном случае уронили бы на землю,",
+	"book.enigmaticlegacy.entry.enigmatic_amulet.page.4": "включая сам амулет.<br2/>Вместо своей смерти вы найдете вещь, которая, кажется, является ключом к этому разлому, которую вы назвали Межпространственным сосудом. В отличие от обычных предметов, Сосуд кажется полностью неразрушимым и безразличным к любой силе, кроме силы божественной природы, частью которой вы, как оказалось, обладаете. Он парит вокруг совершенно инертно, пока вы не попытаетесь",
+	"book.enigmaticlegacy.entry.enigmatic_amulet.page.5": "приблизиться к нему и коснуться его - затем он легко упадет вам в руки и сломается, высвободив все невидимое пространство, с которым он был связан.",
+	
+	
+	"book.enigmaticlegacy.entry.angel_blessing.name": "Ангельское благословение",
+	"book.enigmaticlegacy.entry.angel_blessing.heading.1": "Камень заклинаний",
+	"book.enigmaticlegacy.entry.angel_blessing.page.1": "Этот камень заклинаний можно найти в руинах древних храмов, тех, что служили цели, о которой вы не знаете. Однако выяснение цели Благословения Ангела оказалось гораздо менее сложной задачей.<br2/>Он дает вам силы, связанные со стихией воздуха, сгибая ветры, чтобы сдуть стрелы, идущие на вас, или спасая ваши ноги от",
+	"book.enigmaticlegacy.entry.angel_blessing.page.2": "поломки при резком падении, или помогая подтолкнуть вас к месту назначения, которого вы, возможно, не сможете достичь с одной лишь силой вашего одни только мышцы. Или все сразу, если хотите.<br2/>Эта активная способность наиболее полезна, когда вы прыгаете, прежде чем использовать ее,",
+	"book.enigmaticlegacy.entry.angel_blessing.page.3": "поскольку импульс, который генерирует камень заклинания, добавляется к вашей текущей скорости, что позволяет вам выполнять действительно длинные или высокие прыжки.<br2/>Вы находите его близкое присутствие несколько успокаивающим по причинам, которые вы не можете объяснить.",
+	
+	
+	"book.enigmaticlegacy.entry.cursed_ring.name": "Тёмное кольцо",
+	"book.enigmaticlegacy.entry.cursed_ring.heading.1": "Кольцо",
+	"book.enigmaticlegacy.entry.cursed_ring.page.1": "Еще один предмет, который вы неожиданно обнаружили в карманах, это кольцо, однако, наполнено злобной тьмой, не имеющей ничего общего с великолепием и таинственностью Загадочного Амулета. Как только вы решите его надеть, оно сольется с самой вашей душой, переплетая ваши судьбы, и у вас будет мало надежд когда-либо снова разлучиться...<br/>Даже после смерти.",
+	"book.enigmaticlegacy.entry.cursed_ring.page.2": "Семь неумолимых проклятий постигнут любого, кто окажется достаточно храбрым, чтобы принять эту тьму. Принимая во внимание приверженность этому кольцу такой невезучей душе, стоило бы перечислить именно то, что они собой представляют:<br2/><&l>Первое проклятье$(clear) сделает ваше страдание невыносимым,",
+	"book.enigmaticlegacy.entry.cursed_ring.page.3": "заставив вас испытать вдвое больший урон и вдвое большую боль от всего, что причиняет вам эту боль. Рубцы превратятся в раны, а раны превратятся в тяжелые, если не мгновенно смертельные травмы.<br2/><&l>Второе$(clear) заставляет большинство существ, которые обычно безразличны к вам, если их не спровоцировать, всегда вести себя так, как будто вы представляете наибольшую угрозу. Может быть, они даже не совсем неправы в",
+	"book.enigmaticlegacy.entry.cursed_ring.page.4": "этом предположении? Если расстояние, которое отделяет вас от них, достаточно короткое, их чувства выдадут вас им, даже если они не могут напрямую вас видеть в данный момент.<br2/>В результате <&l>Третьего$(clear) любая броня, которую вы носите, будет значительно менее эффективной против любого урона, который она должна поглощать, будучи примерно на 30% менее прочной и устойчивой.",
+	"book.enigmaticlegacy.entry.cursed_ring.page.5": "<&l>Четвертое$(clear) уменьшает вашу силу против всего, что считается монстрами, что означает почти против всего, что захочет причинить вам боль в этом мире.<br2/><&l>Пятое$(clear) позволяет вам ощутить, каково было бы постоянно гореть в адском огне. Если вы будете подожжены, этот огонь никогда не погаснет сам по себе, сжигая вашу плоть и кипятя вашу кровь до тех пор, пока не останется больше ничего сжигать и кипятить.",
+	"book.enigmaticlegacy.entry.cursed_ring.page.6": "Вы все еще можете спастись от него, например, потушив этот огонь водой, что будет очень полезным решением, пока вы не решите отправиться в Ад.<br2/><&l>Шестое$(clear) отрывает от вас фрагмент вашей души при каждой смерти, в результате чего ваше здоровье становится все меньше с каждым потерянным фрагментом. Надеемся, что эти фрагменты не потеряны навсегда - они останутся на месте вашей",
+	"book.enigmaticlegacy.entry.cursed_ring.page.7": "кончины, и как только вы приблизитесь к ним, они снова сольются с вашей душой, вернув вам утраченное здоровье.<br2/><&l>Седьмое$(clear) заставит вас потерять сон по ночам, и вы не сможете позволить ночи пройти мимо вас быстрее, чем обычно, просто отдавая себя менее жестокому и тревожному миру снов. Вы все еще можете лежать в постели, как обычно, и использовать ее, чтобы установить место, которое считается вашим домом,",
+	"book.enigmaticlegacy.entry.cursed_ring.page.8": "например, но это не позволит вам пропустить ночь вместе со всеми угрозами, которые скрываются в ее темноте.<br2/>С другой стороны, в обмен на эту плату вы обязательно получите некоторую прибыль. Это так называемые <&l>\"Семь благословений\"$(clear), которые обещают вознаградить любого, кто решит носить кольцо, равными преимуществами в обмен на все страдания, которым они собираются подвергнуться. Однако не позволяйте себя",
+	"book.enigmaticlegacy.entry.cursed_ring.page.9": "одурачить; Хотя власть, которую обеспечивают некоторые из этих благословений, несомненно, соблазнительна, она не компенсирует даже 1/10 всех сборов, которые вам придется заплатить за нее, и может быть слишком поздно пересматривать, когда вы обнаружите, что лучше практика чем голая теория.<br2/>Точный список этих благословений, вероятно, вам уже известен, поэтому не стоит приводить его здесь.",
+	"book.enigmaticlegacy.entry.cursed_ring.page.10": "Единственное, что, вероятно, стоит упомянуть, это то, что они действуют точно так же, как и проклятия, являясь постоянными чертами, которые сразу же появляются вместе с кольцом, как только оно надето, и не могут быть отобраны у носителя так же, как и проклятия.<br2/>В заключение следует сказать, что сила, содержащаяся в этом проклятом кольце, не похожа ни на что другое, и если вам удастся использовать ее, вы сможете достичь подвигов,",
+	"book.enigmaticlegacy.entry.cursed_ring.page.11": "которых невозможно было бы достичь другим способом, обнаруживать, создавать и получать реликвии, которые не под силу никаким другим полубогам. <br2/>Тем не менее, это должно быть безумием - добровольно приносить непрекращающиеся страдания и отчаяние, которые обещает вам Кольцо семи проклятий. Кто мог выбрать такую судьбу?..",
+	
+	
+	"book.enigmaticlegacy.entry.earth_heart.name": "Сердце земли",
+	"book.enigmaticlegacy.entry.earth_heart.heading.1": "Сердце",
+	"book.enigmaticlegacy.entry.earth_heart.page.1": "Подобно тому, как есть Сердце Моря, предмет, связанный с природой бесконечных океанов и морей, покрывающих поверхность Надземного мира, есть Сердце Земли, рожденное в его каменистых глубинах и заключающее в себе часть их сырой энергии. Его можно найти в самых глубоких комнатах и залах подземелий глубоко под поверхностью Надземного мира, потерянных и забытых в удушающей тьме.",
+	"book.enigmaticlegacy.entry.earth_heart.page.2": "Сила стихий, хранимая в этом сердце, похожа на ту, что хранится в камнях заклинаний, но в отличие от последних, она не происходит из изначального хаоса, положившего начало всем мирам, а рождается гораздо позже, медленно конденсируясь в земной коре в течение многих геологических эр.",
+	"book.enigmaticlegacy.entry.earth_heart.page.3": "Полученная форма не служит своему носителю и не позволяет свободно направлять неочищенную энергию, хранящуюся внутри, но может служить ядром для мощных реликвий, требующих такой энергии, при правильном использовании.",
+	
+	
+	"book.enigmaticlegacy.entry.twisted_core.name": "Искаженное сердце",
+	"book.enigmaticlegacy.entry.twisted_core.page.1": "...и таким образом, это вы выбрали эту судьбу. Вы наверняка осознали, сколько печали и сожаления встретится вам в этом долгом пути, но вы все же сделали это. Вы хоть знаете зачем?<br2/>Тем не менее, пути назад нет - только вперед, в попытке использовать силу великих проклятий, которыми вы теперь",
+	"book.enigmaticlegacy.entry.twisted_core.page.2": "связаны. Надеемся, что эта задача не так сложна, как может показаться, если вы сможете получить доступ к необходимым ингредиентам, поскольку сами проклятия, похоже, активно ищут новые способы распространения щупалец своего разложения",
+	"book.enigmaticlegacy.entry.twisted_core.page.3": "в мир вокруг вас - им просто требуется небольшая помощь с вашей стороны.<br2/>Как только вы заполучили Сердце Земли, вы заметили, что оно резонирует с темной силой кольца, слегка сбивая с толку пульсации чистой энергии внутри него. Мы надеемся, что это влияние недостаточно сильное, чтобы мгновенно запятнать сердце, что делает его непригодным для регулярной обработки. Но с помощью небольшого количества тщательно",
+	"book.enigmaticlegacy.entry.twisted_core.page.4": "отобранных мистических ингредиентов и доли вашей силы полубога вы можете усилить связь между ядром сердца и проклятиями, которые вы несете, позволяя последним проклясть его и превратиться во что-то совершенно иное.<br2/>Искаженное сердце - продукт этого нечестивого ритуала, артефакт, воплощающий часть великого проклятия, более темного и могущественного, чем то, что раньше содержало Сердце Земли.",
+	"book.enigmaticlegacy.entry.twisted_core.page.5": "Его нельзя использовать для целей, для которых было полезно Сердце земли, но у него наверняка найдутся свои применения.",
+	
+	
+	"book.enigmaticlegacy.entry.mending_mixture.name": "Микстура восстановления",
+	"book.enigmaticlegacy.entry.mending_mixture.page.1": "Ремонт вашего снаряжения часто может быть утомительной задачей, особенно в дороге, когда у вас нет немедленного доступа к необходимым материалам и инструментам.<br2/>Для создания этой смеси требуется комбинация довольно дорогих мистических ингредиентов, но она того стоит. Осторожно облив ею инструмент, доспех или оружие, можно мгновенно",
+	"book.enigmaticlegacy.entry.mending_mixture.page.2": "исправить даже самые серьезные повреждения, вернув предмету его идеальную форму.<br2/>Только не пытайтесь её пить. Вам не понравятся последствия.",
+	
+	
+	"book.enigmaticlegacy.entry.mega_sponge.name": "Мега-губка",
+	"book.enigmaticlegacy.entry.mega_sponge.page.1": "Даже обычные губки способны впитывать внушительное количество воды, являясь удобным инструментом, который может помочь в очистке небольших бассейнов с водой или внутренних поверхностей конструкций, погруженных под воду. Но всегда может стать лучше.<br2/>Экстраполированная мега-губка устраняет единственный недостаток губок -",
+	"book.enigmaticlegacy.entry.mega_sponge.page.2": "ограничения на количество воды, которые они могут впитать, подразумеваемые физическим пространством, в котором они существуют. Сбрасывая всю поглощенную жидкость в пространство за пределами нашего",
+	"book.enigmaticlegacy.entry.mega_sponge.page.3": "собственного, она может продолжать поглощать воду бесконечно. Теперь вы можете легко осушить что-то намного большее, чем простой пруд на заднем дворе.<br2/>Настоятельно рекомендуется не выбрасывать эту вещь в океан по причинам, которые, вероятно, вполне понятны.",
+	
+	
+	"book.enigmaticlegacy.entry.dark_mirror.name": "Искаженное зеркало",
+	"book.enigmaticlegacy.entry.dark_mirror.page.1": "Среди наиболее очевидных применений, которые может иметь Искаженное сердце, есть это зеркало. Прежде всего, вы можете использовать его, чтобы посмотреть на себя, сожалея о своем однажды принятом решении носить кольцо. Оно также служит той же цели, что и Зелье возврата, что входит в процесс его создания, но вместо того, чтобы смешивать энергию Края",
+	"book.enigmaticlegacy.entry.dark_mirror.page.2": "в питьевую форму, оно фокусирует чистую силу проклятия для достижения этой цели.<br2/>Результат оказывается на удивление эффективным, поскольку использование этого зеркала занимает гораздо",
+	"book.enigmaticlegacy.entry.dark_mirror.page.3": "меньше времени, чем питье зелья, и оно не расходуется в процессе. После телепортации следует значительное время восстановления, прежде чем вы снова сможете использовать зеркало, но при нормальных обстоятельствах это определенно неважно.",
+	
+	
+	"book.enigmaticlegacy.entry.lore_inscriber.name": "Вписание истории",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.1": "Интерфейс",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.2": "Коды цвета",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.3": "Коды шрифта",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.4": "Форматирование имени",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.5": "Форматирование лора",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.6": "Форматирование лора",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.7": "Форматирование лора",
+	"book.enigmaticlegacy.entry.lore_inscriber.heading.8": "Присвоение истории",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.1": "Чернильница писаря - прекрасный инструмент для написания текста. Он может вызывать цвета, яркие, как звездный свет, и символы, начертанные с его помощью, невозможно стереть, если вы полностью не уничтожите их поверхность, на которой они находятся. Чтобы реально использовать его, вам сначала потребуется создать фрагмент знаний - особый тип пергамента, который",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.2": "идеально подходит для хранения ваших писаний.<br2/>Эти фрагменты могут хранить текст сами по себе, но вы можете перенести начертанные вами надписи практически на любой другой предмет,",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.3": "передав их любому человеку или полубогу, который может прийти, чтобы удержать их, гораздо более изысканным способом, чем примитивная гравировка. Следующие страницы содержат более подробные инструкции по использованию.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.4": "Чернильница позволяет получить доступ к графическому интерфейсу, аналогичному приведенному выше.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.5": "Поместите фрагмент истории во входной слот <&c><&l>(1)<clear>. После этого вы сможете написать желаемое имя и историю в текстовом поле <&c><&l>(3)<clear> сверху.<br2/>Существует ряд специальных кодов форматирования, которые не будут включены как часть видимого текста, но вместо этого позволят повлиять на форматирование цвета/шрифта любой последующей записи или указать операцию, которую вы хотите выполнить с текстовой строкой.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.6": "Если вы хотите, чтобы ваша текстовая строка была добавлена как строка истории вместо имени предмета, поставьте перед ней префикс \"<&5><&l>!<clear>\". Каждая добавленная строка истории имеет инкрементный индекс, который определяет ее позицию среди других строк истории. Индексирование начинается с <&l>0<clear>.<br2/>Если вы хотите заменить строку знаний по определенному индексу, вы можете указать индекс после \"<&5><&l>!<clear>\" символа. Например, если вы хотите заменить третью строку знаний во фрагменте строкой, которую вы добавляете, префикс будет",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.7": "выглядеть как \"<&5><&l>!2<clear>\".<br2/>Если вы хотите удалить последнюю добавленную строку истории, просто введите \"<&5><&l>-!<clear>\" в текстовом поле. Если вместо этого вы хотите стереть строку знаний по данному индексу, укажите этот индекс сразу после \"<&5><&l>-!<clear>\". Например, если вы хотите стереть пятую строку лора, вам нужно будет ввести \"<&5><&l>-!4<clear>\".<br2/>Когда вы вводите текстовую строку без операционного кода в качестве префикса, она будет использоваться для переименования элемента.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.8": "Коды цветов и шрифтов, в отличие от операционных кодов, можно вводить в любом месте текстового поля, и их эффект будет применяться ко всему тексту, который идет в поле после них. При использовании цветового кода он изменит цвет всего последующего текста на тот, который он представляет. Если позже за ним последует другой цветовой код, последний переопределит эффект всех предыдущих для всего, что идет после него; это позволяет использовать несколько цветов для разных слов или частей",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.9": "текста в строке. Последний введенный цветовой код всегда будет влиять на все, что следует за ним, пока он не будет заменен другим цветом.<br2/>С другой стороны, коды шрифтов не перекрывают друг друга и, таким образом, могут быть объединены друг с другом и с цветовыми кодами, если они указаны после них. Например, вы можете использовать \"<&5><&l>&4&l&o<clear>\", чтобы создать <&4><&l><&o>Тёмно-красный + Выделенный + Курсивный<clear> стиль текста после этого.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.10": "Форматирование шрифта действует до тех пор, пока после него не будет применено какое-либо цветовое форматирование; любые цветовые коды, которые применяются позже, чем коды шрифтов, полностью очищают форматирование шрифта. Следовательно, форматирование шрифта всегда необходимо указывать после форматирования цвета, если вы хотите наложить его поверх этого.<br2/>Далее приведены точные описания кодов цветов и шрифтов, которые наглядно демонстрируют их действие.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.11": "&1 - <&1>Синий<clear><br/>&2 - <&2>Тёмно-зеленый<clear><br/>&3 - <&3>Голубой<clear><br/>&4 - <&4>Тёмно-красный<clear><br/>&5 - <&5>Фиолетовый<clear><br/>&6 - <&6>Оранжевый<clear><br/>&7 - <&7>Светло-серый<clear><br/>&8 - <&8>Тёмно-серый<clear><br/>&9 - <&9>Светло-синий<clear><br/>&a - <&a>Лаймовый<clear><br/>&b - <&b>Аквамариновый<clear><br/>&c - <&c>Красный<clear><br/>&d - <&d>Пурпурный<clear><br/>&e - <&e>Желтый<clear><br/>",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.12": "&k - <&k>Запутанный<clear><br/>&l - <&l>Выделенный<clear><br/>&m - <&m>Зачёркнутый<clear><br/>&n - <&n>Подчёркнутый<clear><br/>&o - <&o>Курсив<clear><br2/>&r - Восстановить форматирование<br2/><br2/><br2/><br2/>Далее приведены некоторые примеры, которые дают представление о том, чего можно достичь с помощью форматирования.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.13": "&6&lHellish Breaker",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.14": "!&5Dark and powerful.",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.15": "!&5I used to rule &6The World...",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.16": "!&1&lWhy&r &2&ndo&r &3&oI&r &4&mfeel&r &6&kpain",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.17": "После того, как вы закончите начертание надписей на своем",
+	"book.enigmaticlegacy.entry.lore_inscriber.page.18": "фрагменте знаний, вы можете объединить его с любым предметом на наковальне, чтобы передать имя и историю этому предмету. Это всегда будет стоить вам ровно 4 уровня опыта.<br2/>Необязательно, чтобы вы определяли и собственное имя, и историю - вы можете определить только одно из них. При прикреплении фрагмента без собственного имени исходное имя элемента не будет перезаписано; когда присутствует только имя, строки его истории останутся нетронутыми (если они есть).",
+	
+	
+	"book.enigmaticlegacy.entry.extradimensional_eye.name": "Око измерений",
+	"book.enigmaticlegacy.entry.extradimensional_eye.page.1": "Вы часто встречаетесь с существами, которых не прочь забрать с собой домой, для более подробного изучения их или для содержания в качестве домашних животных или скота.<br2/>Но даже самых послушных животных оказывается чрезвычайно сложно доставить на огромные расстояния - даже когда они охотно следуют за вами, они медлительны, почти полностью неспособны",
+	"book.enigmaticlegacy.entry.extradimensional_eye.page.2": "сориентироваться в препятствиях и наверняка заблудятся, если вы не обратите внимание.<br2/>Но, имея в своем распоряжении один из этих глаз, задача по доставке практически любого",
+	"book.enigmaticlegacy.entry.extradimensional_eye.page.3": "существа туда, где вы хотите, становится такой же простой, как высвобождение силы глаза. Сначала вам нужно будет привязать взгляд к месту, которое будет местом назначения. Затем вы можете подойти к любому существу и использовать силу глаза, чтобы заставить его раствориться в воздухе и появиться в точке назначения.",
+	"book.enigmaticlegacy.entry.extradimensional_eye.page.4": "К сожалению, сам глаз также исчезает в процессе и, в отличие от существа, которое вы перевозите, никогда не добирается до конечного пункта назначения. Вы все еще не уверены в том, куда именно он идет, поскольку, как только он исчезает, не остается никаких следов его присутствия в физической реальности.",
+	
+	
+	"book.enigmaticlegacy.entry.enchantment_transposer.name": "Голодные знания",
+	"book.enigmaticlegacy.entry.enchantment_transposer.page.1": "Сама по себе эта книга не содержит большого количества тайных знаний или силы, но похоже, что ее величайшее желание - получить их.<br2/>Если вы позволите ему войти в тесный контакт с любым зачарованным предметом, он мгновенно поглотит эти чары, сохраняя их, как и любая обычная зачарованная книга. Предмет остается",
+	"book.enigmaticlegacy.entry.enchantment_transposer.page.2": "полностью нетронутым и неповрежденным - все в нем остается прежним, кроме чар, которые были поглощены.<br2/>Вы можете использовать получившуюся книгу как обычно - утолив голод, кажется, что она теряет все свойства,",
+	"book.enigmaticlegacy.entry.enchantment_transposer.page.3": "которые отличали бы ее от любой другой книги зачарований.",
+	
+	
+	"book.enigmaticlegacy.entry.netherite.name": "Незерит",
+	"book.enigmaticlegacy.entry.netherite.page.1": "Хотя древние обломки оказались довольно редкими и трудными для поиска, трудно утверждать, что они того не стоят.<br2/>Переплавив его в лом и тщательно сплавив его с золотом, вы можете создать материал, известный как Незерит. Он не только устойчив к высоким температурам Ада, но и способен выжить,",
+	"book.enigmaticlegacy.entry.netherite.page.2": "подвергаясь воздействию огня или погружению в лаву без каких-либо значительных повреждений, да и намного твёрже алмаза. Однако оказалось, что он лучше всего работает не в качестве полной замены алмаза, а как часть",
+	"book.enigmaticlegacy.entry.netherite.page.3": "более изысканного соединения, в основе которого лежит алмаз. Следует предположить, что это, возможно, не самый эффективный сплав, из которого можно создавать, поэтому вы продолжаете экспериментировать с этим металлом, пытаясь создать материал, который мог бы обладать еще более выдающимися качествами.",
+	
+	
+	"book.enigmaticlegacy.entry.etherium_ore.name": "Эфириумная руда",
+	"book.enigmaticlegacy.entry.etherium_ore.heading.1": "Руда",
+	"book.enigmaticlegacy.entry.etherium_ore.page.1": "Среди всех других загадок, берущих начало в Краю, одна привлекает ваше внимание больше, чем любая другая. Ходят слухи, что там можно наткнуться на изысканный материал, носящий имя эфириум. Стоит отметить, что эфириум всегда упоминается как нечто, с чем вы не можете столкнуться естественным образом в глубинах островов Края, и все же каким-то образом",
+	"book.enigmaticlegacy.entry.etherium_ore.page.2": "подразумевается, что этот материал оказался во владении древней цивилизации, которая когда-то пыталась захватить это измерение.<br2/>Поскольку дни правления этой цивилизации давно прошли, вы не можете спросить их, как отыскать её. В настоящее время вы думаете, что им, возможно,",
+	"book.enigmaticlegacy.entry.etherium_ore.page.3": "удалось обуздать подавляющее количество энергии Края и использовать её, чтобы воплотить этот минерал в материальной форме, таким образом, имея возможность производить его.<br2/>К сожалению, вы не можете быть уверены в том, какими были их методы, но если вы увидите результаты их работ, могут появиться еще несколько ответов. Помимо чисто научного интереса, вас гораздо больше интересует это и как мага,",
+	"book.enigmaticlegacy.entry.etherium_ore.page.4": "и как кузнеца, поскольку свойства этих материалов часто описываются таким чудесным образом, что вы бы усомнились в истинности этих описаний, если бы их не было так много вокруг.",
+	
+	
+	"book.enigmaticlegacy.entry.etherium.name": "Эфириум",
+	"book.enigmaticlegacy.entry.etherium.page.1": "Несмотря на название, этот материал физически прочен. Очень.<br2/>Истории оказались правдой. И даже более того - они не преувеличивали правду. Эфириум действительно обладает большинством чудесных свойств, которые были приписаны ему историями, с которыми вы познакомились ранее. У него довольно высокая температура",
+	"book.enigmaticlegacy.entry.etherium.page.2": "плавления, он так же устойчив к огню и лаве, как и незерит, но значительно превосходит его по прочности. Кроме того, этот металл переполнен пульсирующей энергией, побуждающей вас высвободить его в любой форме, которую вы можете придумать. И, подстать вам, его способность принимать форму не подлежит сомнению.",
+	"book.enigmaticlegacy.entry.etherium.page.3": "Этот мир скоро узрит мощь ваших недавно выкованных эфирных инструментов.",
+	
+	
+	"book.enigmaticlegacy.entry.ender_rod.name": "Стержень края",
+	"book.enigmaticlegacy.entry.ender_rod.page.1": "Наполнив Огненный стержень энергией Края и силой, содержащейся в Астральной пыли, вы сможете создать этот жезл.<br2/>В будущем у него может быть больше применений, но вы в первую очередь спроектировали его как основу для ковки ручек для инструментов из эфириума, поскольку обычного дерева для этого уже не хватит.",
+	"book.enigmaticlegacy.entry.ender_rod.page.2": " ",
+	
+	
+	"book.enigmaticlegacy.entry.astral_dust.name": "Астральная пыль",
+	"book.enigmaticlegacy.entry.astral_dust.heading.1": "Za Dusto",
+	"book.enigmaticlegacy.entry.astral_dust.page.1": "Эта неуловимая субстанция, спрятанная в комнатах городов Края, действительно обладает невероятно интересными свойствами. Кажется, что сила всех элементов вливается и смешивается в нем, каким-то образом удерживая себя в относительно стабильной форме. Астральная пыль напоминает само творение, хаотичное и непостоянное, но каким-то образом застывшее во времени, позволяя вам",
+	"book.enigmaticlegacy.entry.astral_dust.page.2": "созерцать всю красоту этого единственного мгновения.<br2/>Таинственная сила, которой он обладает, может быть огромной, но чтобы быть полезной, конструктивно, нужно будет тщательно обрабатывать и формировать ее. Однако со временем вы, несомненно, откроете для себя множество возможных применений.",
+	
+	
+	"book.enigmaticlegacy.entry.evil_essence.name": "Скверная эссенция",
+	"book.enigmaticlegacy.entry.evil_essence.heading.1": "Эссенция",
+	"book.enigmaticlegacy.entry.evil_essence.page.1": "В то время как Звезда Пустоты является ядром физического сосуда Уитера, эта субстанция является проявлением чистой энергии ее, казалось бы, неразрушимой и вечной души. Крошечная доля этой энергии, но она, несомненно, имеет неизмеримый потенциал в ваших руках.<br2/>Кажется, у него странная связь с вашей собственной проклятой сущностью,",
+	"book.enigmaticlegacy.entry.evil_essence.page.2": "поэтому вы в первую очередь смогли получить эту эссенцию. По мере того, как вы приближаетесь, она приближается к вам, будучи склонена желанием вцепиться в вас. Может быть, вы могли бы позволить ему это сделать? ... Нет, что за глупая идея.<br2/>Но одно не подлежит сомнению -",
+	"book.enigmaticlegacy.entry.evil_essence.page.3": "эта материя содержит огромное количество темной, скверной силы, которую вы просто способны обуздать. Вы обязательно найдете, что с этим сделать.",
+	
+	
+	"book.enigmaticlegacy.entry.forbidden_fruit.name": "Запретный плод",
+	"book.enigmaticlegacy.entry.forbidden_fruit.heading.1": "Плод",
+	"book.enigmaticlegacy.entry.forbidden_fruit.page.1": "Редкая реликвия, которую можно найти среди сокровищ остатков древних бастионов в Нижнем мире, этот плод на первый взгляд кажется чем-то, от чего вы не могли бы захотеть откусить кусочек. Его внешний вид действительно не обманчив - у него ужасный вкус золы и гнили, приправленный изысканной маслянистой горечью. Если вы каким-то образом cможете выдержать крик своих вкусовых",
+	"book.enigmaticlegacy.entry.forbidden_fruit.page.2": "рецепторов и употребить всё это, мгновенные эффекты, скорее всего, вас убьют, поэтому лучше подготовьтесь заранее, чтобы как-то облегчить свое тяжелое состояние, пока есть что лечить. Однако после прекращения немедленного токсического воздействия начинают действовать долгосрочные",
+	"book.enigmaticlegacy.entry.forbidden_fruit.page.3": "эффекты. Вы навсегда перестанете испытывать голод в любой форме и, следовательно, будете лишены возможности употреблять большинство обычных видов пищи. Хотя этот эффект может показаться полезным, цена за него - постоянное ощущение ненасыщенности и значительное замедление восстановления здоровья в любой из его форм.",
+	"book.enigmaticlegacy.entry.forbidden_fruit.page.4": "Имейте в виду, что после того, как плод съеден, невозможно обратить вспять эти эффекты - они сохранятся на вас даже после смерти, как грех, который нельзя искупить.<br2/>Делайте свой выбор с умом.",
+	
+	
+	"book.enigmaticlegacy.entry.guardian_heart.name": "Сердце Стража",
+	"book.enigmaticlegacy.entry.guardian_heart.heading.1": "Сердце",
+	"book.enigmaticlegacy.entry.guardian_heart.page.1": "Подводная крепость вместе с бесчисленными Стражами, патрулирующими их внутри и снаружи, являются одними из величайших загадок этого мира.<br/>И сами Стражи представляют гораздо больший интерес, чем затопленные залы и коридоры, заполненные только водой и тьмой, не считая тех, что защищаются в этом заброшенном владении.",
+	"book.enigmaticlegacy.entry.guardian_heart.page.2": "Эта реликвия кажется живым сердцем, вырванным из тела одного из Старших Стражей, которые, в свою очередь, кажутся особенно древней и могущественной разновидностью видов-хранителей. Они могли почувствовать, что вы приближаетесь к их дому, задолго до того, как вы даже погрузились под поверхность",
+	"book.enigmaticlegacy.entry.guardian_heart.page.3": "океана, где он находился, и неоднократно проклинали вас почти полной неспособностью разбивать блоки, тем самым эффективно препятствуя тому, чтобы вы пробились сквозь стены крепости и прокапывая среди них свой собственный путь.<br2/>Это сердце, кажется, является источником их чувств и силы, которая позволила наложить на вас такое проклятие. Оно резонирует с искаженными силами Кольца семи проклятий, поэтому вы",
+	"book.enigmaticlegacy.entry.guardian_heart.page.4": "смогли получить его живым и неповрежденным.<br2/>С Сердцем Стража в вашем распоряжении обычные Стражи не только нейтральны по отношению к вам, но и уделяют приоритетное внимание устранению потенциальных угроз, находящихся достаточно близко к вам, монстров и им подобных. Причина такой приязни остается загадкой, но, возможно, сила сердца имеет гораздо большую связь с ними и влияет на их умы, чем Старшие Стражи,",
+	"book.enigmaticlegacy.entry.guardian_heart.page.5": "обладающие такими сердцами, особенно с учетом того, что теперь оно усилено Семью проклятиями, которые вы несете. Это предположение, однако, вызывает множество вопросов без ответа о происхождении этих сердец, а также о происхождении самих Стражей. Другая способность сердца заключается в том, что когда вы носите его в панели быстрого доступа или держите в руке, обращение вашего взгляда на ближайшего монстра к вам заставит сердце вызвать проклятие,",
+	"book.enigmaticlegacy.entry.guardian_heart.page.6": "которое постигнет этого монстра. Обычно оно не кажется способным производить мощные проклятия, так как даже сами Старшие Стражи не могли сделать ничего большего с его силой для вас, чем просто замедлить. Но абсолютная сила Семи проклятий наполняет сердце гораздо большими способностями, поэтому вместо легкого дебаффа разум затронутого монстра будет манипулирован и вынужден повернуться против одного из его видов, в то время как",
+	"book.enigmaticlegacy.entry.guardian_heart.page.7": " тело будет временно уполномочено помогать в таком предательстве. Монстры, окружающие разъяренного, также будут затронуты проклятием, заставят забыть, что они делали, и повернуться против того, кого оно постигло.<br2/>Следует отметить, что основная цель проклятия вернется в обычное состояние после убийства того, кого заставили атаковать. То же самое и с монстрами, которые обращаются против проклятого -",
+	"book.enigmaticlegacy.entry.guardian_heart.page.8": "если им удастся его убить, они вернутся к своим обычным действиям с монстрами, которые, вероятно, будут пытаться вас убить. Активная способность сердца не будет работать вообще, если у монстра, на которого вы решите обратить свой взор, нет других монстров, которых он мог бы увидеть в непосредственной близости.<br2/>Эта способность имеет значительное время восстановления, поэтому не ожидайте,",
+	"book.enigmaticlegacy.entry.guardian_heart.page.9": "что она сама по себе спасет вас от преследующей вас толпы зомби-пиглинов - лучше установите как можно большую дистанцию между собой и ними, пока они заняты разрешением внутреннего конфликта в своей группе.",
+	
+	
+	"book.enigmaticlegacy.entry.animal_guide.name": "Руководство по приручению",
+	"book.enigmaticlegacy.entry.animal_guide.page.1": "Если вы хотите подружиться с прекрасной фауной Верхнего мира, это подробное руководство обязательно поможет вам в этом. Это поможет вам узнать, как избежать случайных травм своих друзей-животных, когда они заняты борьбой с чем-то гораздо менее дружелюбным, и узнать много способов заработать их лояльность и уважение.",
+	"book.enigmaticlegacy.entry.animal_guide.page.2": "Однако трудно вспомнить сотни страниц, заполненных тщательными исследованиями и описанием деталей по теме, поэтому лучше носите их с собой, на случай, если вам нужно будет быстро найти кое-что.",
+	
+	
+	"book.enigmaticlegacy.entry.hunter_guide.name": "Руководство по охоте",
+	"book.enigmaticlegacy.entry.hunter_guide.page.1": "Еще одно подробное руководство, которое поможет вам научиться охотиться бок о бок со звериными товарищами, которых вы, возможно, приручили. Вы, вероятно, уже знаете, что, несмотря на всю преданность и храбрость, которые они способны проявить в бою, животные гораздо менее разумны, чем вы, и не способны развивать сложные боевые приемы и эффективно",
+	"book.enigmaticlegacy.entry.hunter_guide.page.2": "уклоняться от неочевидных атак.<br2/>В этой книге описывается множество уникальных подходов к бою, которым вы можете научиться как их хозяин, что позволит вам принимать удары, которые обычно наносили бы",
+	"book.enigmaticlegacy.entry.hunter_guide.page.3": "им, спасая их от смертельных атак, которые они могут не выдержать.<br2/>Всё-таки ваши средства защиты намного более продуманы и эффективны, и вы можете лечить себя намного быстрее в бою, используя, например, зелья.",
+	
+	
+	"book.enigmaticlegacy.entry.the_twist.name": "Переломный момент",
+	"book.enigmaticlegacy.entry.the_twist.page.1": "Знание - это сила. Буквально, как иногда доказывает эта книга. Скверная сущность души Иссушителя действительно позволяет вам искажать и преображать физическое воплощение сосуда знаний, страницы которого вы просматриваете прямо сейчас. Результат не сильно влияет на внутреннее содержание - Переломный момент будет служить той же цели,",
+	"book.enigmaticlegacy.entry.the_twist.page.2": "что и Откровение, позволяя вам получить доступ к вашим знаниям о величайших тайнах этого мира, просто завернутых в другую обложку.<br2/>Истинный поворот происходит от его менее схоластической цели,",
+	"book.enigmaticlegacy.entry.the_twist.page.3": "особенно из-за способностей, которые он имеет как оружие, а не как книгу. Атака с его помощью наносит тяжелый урон и даже более сильное отбрасывание, что в сочетании с высокой скоростью атаки позволяет наносить поистине разрушительные серии ударов.<br2/>Наполненная сущностью проклятия и усиленная энергией Иссушителя, эта реликвия черпает силу из Кольца семи проклятий, позволяя вам преодолевать эффекты Второго проклятия,",
+	"book.enigmaticlegacy.entry.the_twist.page.4": "если вы выберете его в качестве оружия, будете всегда наносить полный урон монстрам, как и любым другим существам.<br2/>Более того, эта сущность ненасытно поедает сосуды и души высших существ, сжигая и разрывая их на части, и высшие существа удобно включают в себя полубогов, как и сам Иссушитель.",
+	
+	
+	"book.enigmaticlegacy.entry.ancient_tomes.name": "Древние фолианты",
+	"book.enigmaticlegacy.entry.ancient_tomes.heading.1": "Фолиант",
+	"book.enigmaticlegacy.entry.ancient_tomes.page.1": "Во многих уголках трех величайших миров вы можете встретить эти фолианты. Это очень древние образцы литературы и одни из немногих, сохранившихся до наших дней, несмотря на все повреждения и разложения, постигшие их за столетия до вашего появления.<br2/>Собирать воедино то небольшое количество знаний, которое сохраняется на их",
+	"book.enigmaticlegacy.entry.ancient_tomes.page.2": "страницах, - подвиг, не похожий ни на один другой; Надеюсь, что с разумом и силой полубога это намного проще.<br2/>К сожалению, не так часто эти знания можно использовать на практике. Чаще всего эти произведения содержат фольклорные и художественные описания мира и его",
+	"book.enigmaticlegacy.entry.ancient_tomes.page.3": "обширной истории, которые вряд ли помогут вам его завоевать, хотя, вероятно, сделают его более достойным завоевания в первую очередь. Искать в них чистую правду - непростая задача, но, собрав достаточное количество примеров, вы сможете значительно расширить свои знания обо всех мирах, раскрывая множество загадок, которые иначе вы не смогли бы разгадать. Вы также можете обнаружить немного подсказок, которые приведут вас к легендарным реликвиям и",
+	"book.enigmaticlegacy.entry.ancient_tomes.page.4": "другим объектам силы, которые вы, возможно, захотите заполучить, но еще не знаете, где их искать.",
+	
+	
+	"book.enigmaticlegacy.entry.ancient_debris.name": "Древние обломки",
+	"book.enigmaticlegacy.entry.ancient_debris.heading.1": "Обломки",
+	"book.enigmaticlegacy.entry.ancient_debris.page.1": "Глубоко в недрах Ада лежат древние обломки.<br2/>Их происхождение точно не известно. Фрагменты знаний, с которыми вы столкнулись, довольно точно описывают процесс его улучшения и ожидаемые свойства материала, который может быть получен таким образом, но не оставляют никаких ключей к тому, откуда он мог взяться. Хотя геологическая история",
+	"book.enigmaticlegacy.entry.ancient_debris.page.2": "Ада сама по себе является загадкой, то, как нечто столь необычное, как эти обломки, попало в эту историю, является еще большей загадкой.<br2/>Однако гораздо больше, чем в той истории, вы заинтересованы в том, чтобы заполучить настоящий образец самих обломков.",
+	"book.enigmaticlegacy.entry.ancient_debris.page.3": "Судя по тому, что вы узнали, это может быть ключом к ковке металла, который превосходит твердость алмаза, который на протяжении многих прошлых эпох оставался самым прочным материалом, с которым приходилось работать как людям, так и полубогам.",
+	
+	
+	"book.enigmaticlegacy.entry.redstone_lantern.name": "Светильник из КК",
+	"book.enigmaticlegacy.entry.redstone_lantern.heading.1": "Создание",
+	"book.enigmaticlegacy.entry.redstone_lantern.page.1": "Светильник из красного камня - еще одна вариация дизайна светильника, изготовленная из фонаря красного камня вместо светящегося камня. В отличие от самих фонарей из красного камня, светильник из красного камня встраивают в свою структуру источник энергии, поэтому они остаются включенными. Однако этот источник заключен в корпус, поэтому на него не могут напрямую влиять внешние",
+	"book.enigmaticlegacy.entry.redstone_lantern.page.2": "сигналы красного камня, что не позволяет выключить эти фонари.<br2/>Во всем остальном они полностью похожи на своих собратьев из светящегося камня, только их сердцевина имеет немного другой вид.",
+	
+	
+	"book.enigmaticlegacy.entry.shroomlamp.name": "Грибной светильник",
+	"book.enigmaticlegacy.entry.shroomlamp.page.1": "Грибные светильники - прекрасный естественный источник света в тех пространствах преисподней, где полно растений. Но вы можете использовать этот источник в качестве альтернативного материала для производства ламп. Лампы, созданные с использованием грибосвета в основе, полностью идентичны своим аналогам, хотя внешний вид их сердцевины отличается.",
+	
+	
+	"book.enigmaticlegacy.entry.lamp.name": "Светильник",
+	"book.enigmaticlegacy.entry.lamp.page.1": "Светящийся камень - хороший и надежный источник света, но втыкивание кусков необработанного светящегося камня на самом деле не создает особой эстетики. Вместо этого вы придумали конструкцию, похожую на обычный фонаря, только больше и ярче. Как и фонари, вы можете разместить светильники на полу или подвесить их к потолку.",
+	"book.enigmaticlegacy.entry.lamp.page.2": "Благодаря обширным экспериментам вы также создали несколько более сложный дизайн, в котором лампа помещена в стеклянный блок.<br2/>Это устраняет необходимость в том, чтобы она опиралась на пол или крепилась к чему-то.",
+	
+	
+	"book.enigmaticlegacy.entry.recall_potion.name": "Зелье Возврата",
+	"book.enigmaticlegacy.entry.recall_potion.heading.1": "Приготовление зелья",
+	"book.enigmaticlegacy.entry.recall_potion.page.1": "Путешествие в неизведанные земли всегда в чем-то интересно и увлекательно. Возвращение домой из тех земель, по маршруту, который вы когда-то уже выбрали - обычно не так много. Но наличие этого зелья под рукой может помочь вам пропустить эту скучную часть преодоления всего расстояния на обратном пути, поскольку оно мгновенно телепортирует вас",
+	"book.enigmaticlegacy.entry.recall_potion.page.2": "обратно домой, когда вы его выпьете. Или, по крайней мере, в место, которое технически можно назвать домом.<br2/>Если у вас его нет, вы вместо этого окажетесь где-то в том месте, где впервые",
+	"book.enigmaticlegacy.entry.recall_potion.page.3": "началось ваше путешествие по землям этого мира. Хотя вы не можете быть уверены в том, где именно вы окажетесь, хотя знаете, что это где-то недалеко от этого места.<br2/>Зелье действует независимо от расстояния, разделяющего вас и место назначения, и независимо от того, находитесь ли вы в одном измерении.",
+	
+	
+	"book.enigmaticlegacy.entry.haste_potion.name": "Зелье Скорости",
+	"book.enigmaticlegacy.entry.haste_potion.heading.1": "Зельеварение",
+	"book.enigmaticlegacy.entry.haste_potion.heading.2": "Увеличение длительности",
+	"book.enigmaticlegacy.entry.haste_potion.heading.3": "Эффект усиления",
+	"book.enigmaticlegacy.entry.haste_potion.heading.4": "Взрывная версия",
+	"book.enigmaticlegacy.entry.haste_potion.heading.5": "Туманная версия",
+	"book.enigmaticlegacy.entry.haste_potion.page.1": "Тип зелья, который не так широко известен как обычный.<br2/>Его практическое применение довольно очевидно. Это в основном полезно для длительных сеансов добычи полезных ископаемых, так как позволяет быстрее пробивать камни и землю. Помимо этого, однако, он может оказаться несколько полезным в бою, так как он также делает ваши атаки",
+	"book.enigmaticlegacy.entry.haste_potion.page.2": "немного быстрее и легче объединяются в цепочку.<br2/>Сварить его несложно - просто превратите кварц Нижнего мира в необычное зелье, и всё.",
+	"book.enigmaticlegacy.entry.haste_potion.page.3": "Его эффект может быть увеличен за счет вываривания пыли из красного камня...",
+	"book.enigmaticlegacy.entry.haste_potion.page.4": "...или увеличение мощности с помощью светящегося камня.",
+	"book.enigmaticlegacy.entry.haste_potion.page.5": "Вы также можете заварить его взрывным...",
+	"book.enigmaticlegacy.entry.haste_potion.page.6": "...или туманным, как и любое другое обычное зелье.",
+	
+	
+	"book.enigmaticlegacy.entry.advanced_brewing.name": "Улучшенные Зелья",
+	"book.enigmaticlegacy.entry.advanced_brewing.heading.1": "Высшее Зельеварение",
+	"book.enigmaticlegacy.entry.advanced_brewing.heading.2": "Высшая Сила",
+	"book.enigmaticlegacy.entry.advanced_brewing.heading.3": "Высшая Невидимость",
+	"book.enigmaticlegacy.entry.advanced_brewing.heading.4": "Высшее Исцеление",
+	"book.enigmaticlegacy.entry.advanced_brewing.heading.5": "Высшие взрывные Зелья",
+	"book.enigmaticlegacy.entry.advanced_brewing.page.1": "Один из непосредственных способов применения Астральной пыли - это изготовление зелий. Её необычные свойства позволяют достичь того, что раньше считалось невозможным, создавая идеальные зелья, сочетающие в себе мощный эффект и увеличенную длительность. На следующих страницах приведены примеры эффектов, которых вы можете добиться таким образом.",
+	"book.enigmaticlegacy.entry.advanced_brewing.page.2": "Улучшенные зелья можно приготовить как из длительной, так и, если выбранное зелье имеет такую вариацию, из усиленной версии. Результат не будет отличаться от этого.",
+	"book.enigmaticlegacy.entry.advanced_brewing.page.3": "Если у зелья есть как длительная, так и усиленная версия, его окончательная версия будет сочетать лучшее из обоих. В случае с Силой это означает, что зелье высшего эффекта применяет Силу II на 8 минут.",
+	"book.enigmaticlegacy.entry.advanced_brewing.page.4": "Если зелье имеет только длительную версию, обычно у него будет удвоенная продолжительность. Как видно здесь, высшее зелье невидимости применяет свой эффект в течение 16 минут.",
+	"book.enigmaticlegacy.entry.advanced_brewing.page.5": "Если зелье имеет мгновенный эффект, оно просто получит один дополнительный уровень эффекта. Таким образом, Зелье Исцеления применит Мгновенное Лечения III, если его превратить в высшую версию.",
+	"book.enigmaticlegacy.entry.advanced_brewing.page.6": "Их также можно приготовить и преобразовать как во взрывные, так и в туманные с помощью традиционных средств.",
+	
+	
+	"book.enigmaticlegacy.entry.etherium_armor.name": "Эфириумная Броня",
+	"book.enigmaticlegacy.entry.etherium_armor.heading.1": "Набор Брони",
+	"book.enigmaticlegacy.entry.etherium_armor.page.1": "Конечно, вам не потребовалось много времени, чтобы понять, что обретенная сила эфириума может пригодиться в попытке создать непревзойденную броню. Эфириумная броня не может быть по-настоящему совершенной, но намного превосходит все, что вы можете создать. Одно из её первых примечательных свойств заключается в том, что если вы наденете её на свое",
+	"book.enigmaticlegacy.entry.etherium_armor.page.2": "тело, сама броня станет полностью невидимой и почувствуется гораздо меньшим бременем, чем броня, выкованная из обычных металлов. Пока что-то не попытается взаимодействовать с вами или с этой броней, на самом деле можно полностью забыть, что она на вас, вот насколько незаметен ее вес для того, кто ее носит.",
+	"book.enigmaticlegacy.entry.etherium_armor.page.3": "Однако такая легкость не означает, что она хуже отражает атаки противника. Она превосходит даже незеритовую броню тем, насколько трудно ее пробить. Более того, она невероятно прочна - даже самые сокрушительные удары почти не оставляют на её поверхности царапины. И, как будто этого было недостаточно, отдельные части брони, кажется, резонируют друг с другом, призывая высвободить внутреннюю энергию металла.",
+	"book.enigmaticlegacy.entry.etherium_armor.page.4": "Если вы носите все четыре части одновременно, этот резонанс достигает своего пика, наконец, вы можете пробудить в себе вид мощного щита, сотканного из чистой энергии. Она не может полностью блокировать атаки, но защищает своего носителя от большинства снарядов, значительно ослабляет атаки и отбрасывает любого, кто пытается выполнить эти атаки.<br2/>Однако для поддержания этого щита требуется много энергии.",
+	"book.enigmaticlegacy.entry.etherium_armor.page.5": "Он активируется только тогда, когда носителю каким-то образом удается получить тяжелое ранение, несмотря на выдающуюся защиту самой брони. Когда у вас полная шкала здоровья, таким образом, броня может справляться с входящими угрозами без дополнительных мер защиты - щит рассеивается, и эфириум медленно пополняет его внутреннюю энергию, пока снова не возникает потребность в ее проявлении.<br2/>Трудно не заметить",
+	"book.enigmaticlegacy.entry.etherium_armor.page.6": "сходство этого щита с одним из заклинаний Иссушителя, когда его здоровье уменьшено до половины. Это должно подразумевать какое-то отношение к происхождению и природе силы эфириума, но похоже, что у вас пока недостаточно ключей, чтобы сложить части этой истории воедино.<br2/>Следующие страницы содержат описания того, как можно выковать эфириумную броню.",
+	
+	
+	"book.enigmaticlegacy.entry.xp_scroll.name": "Хранение мудрости",
+	"book.enigmaticlegacy.entry.xp_scroll.page.1": "Эфирная субстанция, известная как опыт, часто бывает довольно сложной и неудобной в обращении. Хотя вы сами обладаете способностью поглощать любое его количество, чего у вас нет, так это возможности эффективно распределить его после. Чем больше вы впитываете и удерживаете одновременно, тем большее количество искусств, таких как наложение чар,",
+	"book.enigmaticlegacy.entry.xp_scroll.page.2": "потребляется, и порой становится невообразимо расточительным. Еще больше раздражает то, что как только ваша физическая оболочка разрывается, большая часть вашего опыта просто исчезает, оставляя после себя лишь незначительные кусочки.",
+	"book.enigmaticlegacy.entry.xp_scroll.page.3": "Однако стоит вам заполучить этот великолепный свиток, и этому кошмару, наконец, придет конец.<br2/>Он может быстро и легко поглотить ваш опыт, удерживая его до тех пор, пока вы не захотите вернуть его. Свиток позволяет точно контролировать, сколько передается назад и вперед, что позволяет вам управлять своим драгоценным опытом так эффективно, как вы хотите, поскольку опыт, хранящийся в свитке,",
+	"book.enigmaticlegacy.entry.xp_scroll.page.4": "не согласовывается с вашим личным. Просто взглянув на него, вы можете легко оценить, сколько опыта он хранит в любой момент времени.<br2/>Пока он активен и надет среди других ваших аксессуаров, этот свиток также поглощает любые сгустки опыта, которые могут находиться в большой области вокруг вас.",
+	
+	
+	"book.enigmaticlegacy.entry.super_magnet_ring.name": "Кольцо Дислокации",
+	"book.enigmaticlegacy.entry.super_magnet_ring.page.1": "Долгожданное обновление Магнитного кольца: Кольцо дислокации - лучше во всех отношениях. Наполненный долей мистической энергии Края, оно покрывает площадь в два раза больше, чем его предшественник, и вместо того, чтобы тянуть к вам упавшие предметы, он... притягивает вас к предметам. Во всех отношениях затронутые предметы будут вести себя так,",
+	"book.enigmaticlegacy.entry.super_magnet_ring.page.2": "как если бы вы стояли рядом с ними, фактически существуя в нескольких местах одновременно. Это кольцо также наследует свойство своего родителя, не позволяя вашим собственным предметам упасть, если вы полностью не подавите его силу.",
+	
+	
+	"book.enigmaticlegacy.entry.monster_charm.name": "Эмблема Убийцы",
+	"book.enigmaticlegacy.entry.monster_charm.page.1": "Иногда монстры, бездумно блуждающие в темноте, могут сильно досаждать. Теперь, когда у вас есть сила для создания Незерита, чаще всего ситуация уменьшаются с некогда значительной угрозы до небольшого неудобства, окрашивающего ваш клинок. Однако иногда все же требуется пара ударов, чтобы убедиться, что их души перестали цепляться за плоть, и это уже",
+	"book.enigmaticlegacy.entry.monster_charm.page.2": "само по себе не является невероятно удобным.<br2/>Эмблема убийцы монстров - идеальный амулет, который поможет вам в этих частых столкновениях, экономя вам от одного до двух ударов вашего меча.",
+	"book.enigmaticlegacy.entry.monster_charm.page.3": "Существа, убитые при ношении, оставят после себя больше полезных вещей, которые вы сможете собрать. Если эти существа окажутся монстрами, вы также сможете поглотить большую часть их жизненной силы в виде опыта.<br2/>Пару раз вам приходилось сталкиваться с историями о героях, которые хоть раз посвятили свою жизнь борьбе с монстрами, но в конечном итоге сами стали монстрами. Однако, просто взглянув на обычного зомби,",
+	"book.enigmaticlegacy.entry.monster_charm.page.4": "вы почти уверены, что вам никогда не придется постигнуть такую судьбу. Как у вас может быть что-то общее?..",
+	
+	
+	"book.enigmaticlegacy.entry.mining_charm.name": "Мечта Шахтёра",
+	"book.enigmaticlegacy.entry.mining_charm.page.1": "Большинство ценных металлов и минералов этого мира спрятано глубоко под его поверхностью. Из-за этого вам часто приходится проводить бесчисленные часы в сырых, холодных и темных подземельях, роя, казалось бы, бесконечные туннели в поисках необходимых вам ресурсов.<br2/>Этот амулет может не избавить вас от бремени, которое придется пройти",
+	"book.enigmaticlegacy.entry.mining_charm.page.2": "но, по крайней мере, он может сделать эти часы немного менее темными и утомительно долгими. Он дает силы, которые вызовут зависть у любого шахтера, позволяя вам вскапывать блоки значительно быстрее, чем вы могли бы без него, видеть в темноте",
+	"book.enigmaticlegacy.entry.mining_charm.page.3": "так же ясно, как и при дневном свете, и иметь возможность дотянуться до предметов с помощью кирки гораздо дальше.<br2/>Это также может немного изменить шансы в вашу пользу при поисках сокровищ... Возможно. В конце концов, может быть, это всего лишь слухи.",
+	
+	
+	"book.enigmaticlegacy.entry.magnet_ring.name": "Магнитное кольцо",
+	"book.enigmaticlegacy.entry.magnet_ring.page.1": "Несмотря на простоту конструкции, Магнитное кольцо уже обладает магической силой.<br2/>Возможно, не тот, который бросает вызов самому творению, но все же весьма полезен - что бы ни лежало на земле вокруг вас, это кольцо принесет его к вам, избавляя вас от необходимости идти к нему и подбирать его самостоятельно.",
+	"book.enigmaticlegacy.entry.magnet_ring.page.2": "Одно из его примечательных свойств заключается в том, что предметы, которые вы можете попытаться выбросить, откажутся покинуть вас, мгновенно пытаясь повторно войти в ваш инвентарь, если вы добровольно не подавите силу кольца.",
+	
+	
+		"book.enigmaticlegacy.entry.gem_ring.name": "Роскошное кольцо",
+	"book.enigmaticlegacy.entry.gem_ring.page.1": "Немного больше работы и примерно столько же драгоценного золота, и вы сможете перековать обычное железное кольцо в более блестящую и красивую форму.<br2/>Единственное примечательное свойство этого аксессуара, частично от того, что он весь блестящий и золотой, заключается в том, что он действует на Пиглинов так же,",
+	"book.enigmaticlegacy.entry.gem_ring.page.2": "как ношение золотых доспехов - они будут уважать вас немного больше, увидев эту драгоценность на вашем пальце, и не будут пытаться убить, как только вы войдете в их поле зрения.",
+	
+	
+	"book.enigmaticlegacy.entry.enchanter_pearl.name": "Жемчуг Чародейки",
+	"book.enigmaticlegacy.entry.enchanter_pearl.page.1": "Среди множества способов использовать силу души Иссушителя есть эта поистине драгоценная жемчужина, способная преодолеть ограничения, с которыми вам обычно приходится сталкиваться при работе на столе зачарований. Во-первых, это позволяет вам раз и навсегда забыть о необходимости дважды бегать к столу, когда вы хотите что-то зачаровать, только",
+	"book.enigmaticlegacy.entry.enchanter_pearl.page.2": "потому, что вы забыли взять с собой немного лазурита в первый раз. Вместо использования лазурита жемчужина черпает энергию из Кольца семи проклятий, чтобы использовать ее в качестве катализатора процесса зачарования. В результате",
+	"book.enigmaticlegacy.entry.enchanter_pearl.page.3": "количество и мощность чар, которые вы получите при зачаровывании чего-либо, в среднем значительно выше, чем при обычном наложении чар.<br2/>Этот процесс также позволяет достичь того, что раньше считалось невозможным - создавать уникальные зачарования из сокровищ на вашем снаряжении, такие как Починка, прямо внутри вашего стола наложения чар. К сожалению, есть шанс получить вместо этого проклятия,",
+	"book.enigmaticlegacy.entry.enchanter_pearl.page.4": "которые вы обычно не получили бы, поэтому эта последняя способность является чем-то вроде палки о двух концах.",
+	
+	
+	"book.enigmaticlegacy.entry.cursed_stone.name": "Разрушение оков",
+	"book.enigmaticlegacy.entry.cursed_stone.page.1": "С тех пор, как вы решили носить Кольцо семи проклятий, вы обдумывали возможность избавиться от него - если не делать этого на самом деле, то, по крайней мере, знать, существует ли она. Хотя материалы, из которых оно выковано, ни в коей мере не являются неразрушимыми, физическое воплощение кольца - лишь малая часть его метафизической силы и природы. Щупальца его порчи",
+	"book.enigmaticlegacy.entry.cursed_stone.page.2": "проникают глубоко в вашу душу, переплетая вашу бессмертную сущность с сущностью самого кольца, и, таким образом, приносит все проклятия и благословения.<br2/>Именно эта связь между вами делает ее такой",
+	"book.enigmaticlegacy.entry.cursed_stone.page.3": "стойкой, неотделимой от вас даже после смерти. В той мере, в какой вы в какой-то степени способны черпать и использовать силу изнутри кольца, кольцо способно вытягивать силу изнутри вас, чтобы укрепить свою физическую форму, а также связь, плотно удерживающую эту форму на вашем пальце. Единственное, к чему оно, кажется, остается едва восприимчивым, - это сильная жара, но эта связь гарантирует, что он не может быть навсегда разрушен без",
+	"book.enigmaticlegacy.entry.cursed_stone.page.4": "того, чтобы ваше собственное тело не было разрушено так же навсегда. И поскольку вы, по-видимому, обладаете способностью создавать и заселять новый сосуд после разрушения старого, кольцо имеет то же самое. Однако теперь, когда вы победили Иссушителя и собрали чистую сущность его испорченной души, возможность преодолеть такое препятствие открылась. Порочный камень символизирует связь между вами и Кольцом семи проклятий,",
+	"book.enigmaticlegacy.entry.cursed_stone.page.5": "проявленной и обнаженной в несколько хрупкой физической форме до тех пор, пока вы держите камень рядом с собой. Это позволяет вам использовать единственную уязвимость кольца, охотно встречая свою кончину в определенной, несколько ритуальной манере. С этим камнем в вашем распоряжении отправляйтесь в измерение пылающего жара и потерянных душ, известное как Нижний мир. Бродить среди этого взорванного, искривленного пейзажа,",
+	"book.enigmaticlegacy.entry.cursed_stone.page.6": "лазать по скалам и уступам, чтобы смотреть с них вниз - пока вы не обнаружите под своими ногами океан бурлящей лавы, настолько обширный и глубокий, насколько вы можете найти. Задержите дыхание на некоторое время, прежде чем выпустить его в последний раз, и прыгните в самую гущу пылающего океана внизу, позволяя своему телу утонуть в раскалённой магме и быть поглощенным огнем. Если все будет выполнено правильно, кольцо расплавится и разрушится навсегда.",
+	"book.enigmaticlegacy.entry.cursed_stone.page.7": "Однако освобождение от цепей обходится недешево - это возможно только потому, что вы обнажаете часть своей души, связанную с ней, через Нечестивый камень. Чтобы этот ритуал был успешным, сначала нужно уничтожить эту часть, иначе это было бы просто невозможно. Но, по крайней мере, с этой принесенной жертвой вы больше никогда не увидите это проклятое кольцо... Если, конечно, не окажется, что в вашем мире было больше одного, что маловероятно.",
+	
+	
+	"book.enigmaticlegacy.entry.heaven_scroll.name": "Дар Свыше",
+	"book.enigmaticlegacy.entry.heaven_scroll.page.1": "Как и любой другой полубог или человек, с самого начала вашего путешествия вы мечтали выйти за пределы своего уязвимого тела. Эта мечта, среди всех других атрибутов, включала свободное блуждание по небу этого мира, как бог - выше всех остальных.<br2/>Что ж, этот свиток может не позволить вам бродить по всем",
+	"book.enigmaticlegacy.entry.heaven_scroll.page.2": "просторам. Но с огромной мощью Звезды Ада, приводящей его в действие, он может кое-что сделать.<br2/>Если вы окажетесь в присутствии активного маяка, проникающего в небеса",
+	"book.enigmaticlegacy.entry.heaven_scroll.page.3": "с его ярким световым лучом - Дар Небес предоставит вам управляемую и удобную возможность парить и летать вокруг, если вы не забредёте слишком далеко от волшебной ауры маяка.<br2/>Эта аура, к сожалению, сама по себе недостаточно сильна, чтобы постоянно истощать из нее много энергии, необходимой для вашего полета. Свиток будет медленно, но неуклонно поглощать полученный вами опыт, чтобы вы могли",
+	"book.enigmaticlegacy.entry.heaven_scroll.page.4": "оставаться в воздухе.<br2/>Вы почти уверены, что должен быть способ улучшить его мощность и преодолеть имеющиеся у него ограничения, но еще какое-то время это то, с чем вам остается поработать.",
+	
+	
+	"book.enigmaticlegacy.entry.fabulous_scroll.name": "Милость Создателя",
+	"book.enigmaticlegacy.entry.fabulous_scroll.page.1": "Ваши ожидания, в конце концов, оправдались. Теперь, когда врата в Край открыты и бескрайние просторы пали перед вашей превосходной мощью, вы, наконец, смогли разработать улучшенную версию Дара Свыше.<br2/>Этот не может полностью устранить пределы своего предшественника, но, по крайней мере, значительно их расширит.",
+	"book.enigmaticlegacy.entry.fabulous_scroll.page.2": " Этот свиток позволяет вам свободно летать по небу всех миров и измерений, без необходимости оставаться рядом с Маяком. Однако обеспечение вашего полета одним только опытом довольно дорого, поэтому не ожидайте, что ваше восхождение",
+	"book.enigmaticlegacy.entry.fabulous_scroll.page.3": "продлится почти так же долго, как в пределах досягаемости маяка.<br2/>С другой стороны, Милость Создателя способна истощать силу маяка гораздо более эффективно, и если вы решите остаться в пределах этого диапазона, вам не придется жертвовать никаким опытом, чтобы оставаться выше всех остальных.",
+	
+	
+	"book.enigmaticlegacy.entry.escape_scroll.name": "Посмертная Воля",
+	"book.enigmaticlegacy.entry.escape_scroll.page.1": "Хотя смерть оказалась лишь временным неудобством для такого полубога, как вы, иногда это приводит к большим потерям.<br/>Намного больше, чем вы хотели бы заплатить - в зависимости от того, где вы умрете, ваше драгоценное снаряжение, созданное из лучших материалов и собранное со всех уголков Надземного мира, может быть поддано забвению или его будет невероятно",
+	"book.enigmaticlegacy.entry.escape_scroll.page.2": "трудно восстановить. Этот свиток - страховка от подобного.<br2/>Он не может защитить своего носителя от смерти, но если жизнь будет отнята, все, что они упадет в месте смерти, вместо этого будет доставлено",
+	"book.enigmaticlegacy.entry.escape_scroll.page.3": "обратно в точку возрождения на любых расстояниях и измерениях. Сам свиток останется там, где его носитель был убит, но в отличие от предметов, которые вы обычно бросаете, он не сгорит и не упадет в Пустоту, где вы, возможно, встретили свою кончину, и не исчезнет в небытие, если вы оставите его без присмотра на слишком долгое время.<br2/>Только рука полубога, пусть и не только ваша, может вернуть его обратно.",
+	
+	
+	"book.enigmaticlegacy.entry.ender_ring.name": "Кольцо Края",
+	"book.enigmaticlegacy.entry.ender_ring.page.1": "Сундук Края оказался чрезвычайно полезной вещью, позволяющей получать доступ к предметам по вашему выбору на любых расстояниях и размерах. В отличие от предметов, которые вы можете носить с собой, те, которые находятся в вашем сундуке Края, не подвергаются опасности, когда ваша физическая оболочка разрушается. Однако есть небольшое неудобство -",
+	"book.enigmaticlegacy.entry.ender_ring.page.2": "необходимость носить с собой этот массивный сундук, ставя его всякий раз, когда вы хотите вытащить что-то из его экстрамерных глубин, а затем извлекать его с помощью невероятно аккуратного инструмента, если вы не хотите, чтобы он был",
+	"book.enigmaticlegacy.entry.ender_ring.page.3": "разбит на кусочки обсидиана, которые вы когда-то так тщательно собрали.<br2/>Кольцо Края разработано как раз для решения этой проблемы, позволяя вам разорвать ткань пространства и получить доступ к содержимому вашего сундука края одним лишь усилием воли.<br2/>Только не забудьте вытащить руку, когда будете закрывать разлом.",
+	
+	
+	"book.enigmaticlegacy.entry.arcane_scrolls.name": "Чародейские свитки",
+	"book.enigmaticlegacy.entry.arcane_scrolls.page.1": "Для создания тайных свитков, помимо письменных принадлежностей и мирских пустых свитков, обычно требуется пара тайных ингредиентов, чтобы убедиться, что создаваемый вами свиток делает нечто большее, чем просто существует. Их можно носить с собой, как и любые другие аксессуары. Вряд ли они так сильно поспособствуют на ваш образ ужасающего, могущественного мага,",
+	"book.enigmaticlegacy.entry.arcane_scrolls.page.2": "тем более, что они были изобретены очень давно. Однако это не имеет значения, учитывая, насколько обширны практические возможности, которые свитки могут предоставить, если их мастерски спроектировать и собрать. Как ни странно, трудно найти свиток, который использовался бы только для хранения произведений, даже среди самых древних образцов литературы. Может быть, это все-таки не такая уж очевидная конструкция?..",
+	"book.enigmaticlegacy.entry.arcane_scrolls.page.3": "Здесь описан способ создания пустого свитка.<br2/>Сам по себе может быть не очень полезным, но он служит базой для создания чародейских свитков.",
+	
+	
+	"book.enigmaticlegacy.entry.darkest_scroll.name": "Иссине-чёрный Свиток",
+	"book.enigmaticlegacy.entry.darkest_scroll.heading.1": "Свиток",
+	"book.enigmaticlegacy.entry.darkest_scroll.page.1": "Найденные среди сокровищ опасных бастионов, эти рулоны пергамента с черными пятнами на первый взгляд не вызывают подозрений. Тем не менее, на самом деле они наполнены какой-то неизвестной темной магией, которая кажется странно знакомой той, которая усиливает Кольцо семи проклятий.<br2/>Эта магия, однако, дремлет в своем сосуде,",
+	"book.enigmaticlegacy.entry.darkest_scroll.page.2": "сырая дремлющая энергия, похоже, ждет, чтобы ее разбудили и использовали. Может быть, Иссине-чёрный свиток мог бы послужить базой для создания новых, более мощных чародейских свитков?",
+	
+	
+	"book.enigmaticlegacy.entry.avarice_scroll.name": "Пакт несметной Алчности",
+	"book.enigmaticlegacy.entry.avarice_scroll.page.1": "Этот элегантный свиток - еще одна реликвия, воплощающая безграничную силу Семи проклятий, - призван удовлетворить безграничную внутреннюю жадность, которую вы так тщательно скрываете в своей душе. Его основной эффект - способность запутать умы существ, с которыми вы торгуете или обмениваетесь, неверно указав цену и выгоду от сделки... во многом в вашу пользу.",
+	"book.enigmaticlegacy.entry.avarice_scroll.page.2": "Пиглины, кажется, больше всего подвержены этой способности, с их беспомощной привязанностью к золоту. Это не только позволяет свитку преодолеть эффект Второго проклятия и сделать их нейтральными в вашем отношении, как обычно",
+	"book.enigmaticlegacy.entry.avarice_scroll.page.3": "к тому, у кого достаточно золотого снаряжения, но также делает обмен с этими существами примерно вдвое более выгодным в среднем, позволяя вам получить от обычного количества товара до трехкратного количества в обмен на любой единичный бартер.<br2/>На жителей деревни также влияет способность этого свитка, хотя и не так сильно, как на Пиглинов - стабильная скидка 35<percent/> на каждую сделку - это примерно столько,",
+	"book.enigmaticlegacy.entry.avarice_scroll.page.4": "сколько вы можете получить от их маленькой жадной личности.<br2/>Кроме того, у вас также есть небольшой шанс материализовать целый Изумруд прямо из ваших скупых мечтаний, когда вы убиваете какое-либо живое существо, и <&l>+1 к Удаче<clear/> что, несомненно, поможет вам заполучить еще немного богатств в любое время, когда вам захочется спуститься в шахты.",
+	"book.enigmaticlegacy.entry.avarice_scroll.page.5": "Просто не позволяй твоей жадности овладеть твоим разумом, и все будет в порядке.",
+	
+	
+	"book.enigmaticlegacy.entry.infinimeal.name": "Эссенция бушующей Жизни",
+	"book.enigmaticlegacy.entry.infinimeal.page.1": "Еще один способ использовать силу, которая находится в Сердце Земли, эта загадочная субстанция воплощает в себе силу самой природы с ее непреходящим желанием распространить свои корни по земле, расти и процветать, несмотря ни на что.<br2/>Позволить ему вступить в контакт с большинством форм растительности достаточно, чтобы значительно",
+	"book.enigmaticlegacy.entry.infinimeal.page.2": "ускорить их рост, аналогично эффекту при использовании костной муки. Однако, в отличие от костной муки, для достижения такого эффекта вам нужно всего лишь ее крупинки. Оставленный в покое, он, кажется, может черпать силу из окружающей природы,",
+	"book.enigmaticlegacy.entry.infinimeal.page.3": "расти и пополняться в количестве после использования - хотя никогда не больше, чем было создано изначально.<br2/>Он также работает на некоторых растениях, на которые не действуют обычные удобрения, в частности на сахарном тростнике, кактусах, виноградных лозах и адском наросте",
+	
+	
+	"book.enigmaticlegacy.landing_text": "Перед вами находится кладезь великих знаний, место, которому принадлежат некоторые из величайших загадок этого мира, скрупулезно исследованные и тщательно каталогизированные. По мере того, как ваше путешествие продолжается, и мир открывается вам, вы можете снова посетить и узреть знания, которые вы собрали на этих страницах."
+	
+
+
+}
