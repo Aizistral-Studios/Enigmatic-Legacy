@@ -55,6 +55,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	public static Omniconfig.BooleanParameter ownerOnlyVessel;
 	public static Omniconfig.BooleanParameter seededColorGen;
 	public static Omniconfig.BooleanParameter multiequip;
+	public static Omniconfig.DoubleParameter savedXPFraction;
 	public static final String amuletColorTag = "AssignedColor";
 	public static final String amuletInscriptionTag = "Inscription";
 
@@ -83,6 +84,11 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 				.comment("Whether or not it should be possible to equip multiple Enigmatic Amulets, "
 						+ "granted player somehow gets more than one charm slot.")
 				.getBoolean("Multiequip", false);
+
+		savedXPFraction = builder
+				.comment("What fraction of player's experience should be stored in Extradimensional Vessel upon their death. "
+						+ "Experience that is not stored will be lost forever. 1.0 means that all experience is saved.")
+				.max(1).getDouble("SavedXPFraction", 1.0);
 
 		builder.popPrefix();
 	}

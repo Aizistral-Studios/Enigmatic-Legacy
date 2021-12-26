@@ -57,7 +57,7 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, IVani
 		int exp = ExperienceHelper.getPlayerXP(player);
 		ExperienceHelper.drainPlayerXP(player, exp);
 
-		ItemNBTHelper.setInt(crystal, "storedXP", exp);
+		ItemNBTHelper.setInt(crystal, "storedXP", (int) (exp * EnigmaticAmulet.savedXPFraction.getValue()));
 		ItemNBTHelper.setBoolean(crystal, "isStored", true);
 
 		return crystal;
