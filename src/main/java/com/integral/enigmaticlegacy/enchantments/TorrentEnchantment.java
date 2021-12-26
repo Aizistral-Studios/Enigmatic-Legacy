@@ -1,6 +1,7 @@
 package com.integral.enigmaticlegacy.enchantments;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack;
 
 import static com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack.*;
@@ -14,6 +15,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.CrossbowItem;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class TorrentEnchantment extends Enchantment {
@@ -39,8 +42,28 @@ public class TorrentEnchantment extends Enchantment {
 	}
 
 	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack) {
+		return this.canApply(stack) && super.canApplyAtEnchantingTable(stack);
+	}
+
+	@Override
 	public boolean canApplyTogether(Enchantment ench) {
 		return !(ench instanceof DamageEnchantment) && !(ench instanceof ImpalingEnchantment) && !(ench instanceof WrathEnchantment) && super.canApplyTogether(ench);
+	}
+
+	@Override
+	public boolean isAllowedOnBooks() {
+		return OmniconfigHandler.isItemEnabled(this);
+	}
+
+	@Override
+	public boolean canGenerateInLoot() {
+		return OmniconfigHandler.isItemEnabled(this);
+	}
+
+	@Override
+	public boolean canApply(ItemStack stack) {
+		return OmniconfigHandler.isItemEnabled(this) && stack.canApplyAtEnchantingTable(this);
 	}
 
 	public float bonusDamageByCreature(LivingEntity attacker, LivingEntity living, int level) {

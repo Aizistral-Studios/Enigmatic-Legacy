@@ -29,7 +29,7 @@ public class OmniconfigHandler {
 
 	public static Omniconfig.EnumParameter<AnchorPoint> testEnumParam;
 
-	// Client-Only
+	// Client-Only (not method)
 
 	public static boolean isItemEnabled(Object item) {
 		if (item == null)

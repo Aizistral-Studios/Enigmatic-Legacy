@@ -1,6 +1,7 @@
 package com.integral.enigmaticlegacy.enchantments;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentType;
@@ -37,7 +38,7 @@ public class NemesisCurseEnchantment extends Enchantment {
 
 	@Override
 	public boolean canApply(ItemStack stack) {
-		return super.canApply(stack) || Enchantments.SHARPNESS.canApply(stack);
+		return OmniconfigHandler.isItemEnabled(this) && (super.canApply(stack) || Enchantments.SHARPNESS.canApply(stack));
 	}
 
 	@Override
@@ -52,7 +53,12 @@ public class NemesisCurseEnchantment extends Enchantment {
 
 	@Override
 	public boolean isAllowedOnBooks() {
-		return true;
+		return OmniconfigHandler.isItemEnabled(this);
+	}
+
+	@Override
+	public boolean canGenerateInLoot() {
+		return OmniconfigHandler.isItemEnabled(this);
 	}
 
 	@Override

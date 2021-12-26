@@ -381,12 +381,12 @@ public class EnigmaticLegacy {
 	public static AdvancedPotion EMPTY;
 	public static AdvancedPotion testingPotion;
 
-	public static SharpshooterEnchantment sharpshooterEnchantment;
-	public static CeaselessEnchantment ceaselessEnchantment;
-	public static NemesisCurseEnchantment nemesisCurseEnchantment;
-	public static TorrentEnchantment torrentEnchantment;
-	public static WrathEnchantment wrathEnchantment;
-	public static SlayerEnchantment slayerEnchantment;
+	@ConfigurableItem("Sharpshooter Enchantment") public static SharpshooterEnchantment sharpshooterEnchantment;
+	@ConfigurableItem("Ceaseless Enchantment") public static CeaselessEnchantment ceaselessEnchantment;
+	@ConfigurableItem("Torrent Enchantment") public static TorrentEnchantment torrentEnchantment;
+	@ConfigurableItem("Wrath Enchantment") public static WrathEnchantment wrathEnchantment;
+	@ConfigurableItem("Slayer Enchantment") public static SlayerEnchantment slayerEnchantment;
+	@ConfigurableItem("Nemesis Curse") public static NemesisCurseEnchantment nemesisCurseEnchantment;
 
 	public static ItemStack universalClock;
 	public static UUID soulOfTheArchitect;

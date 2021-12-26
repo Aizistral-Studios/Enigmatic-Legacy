@@ -3,6 +3,7 @@ package com.integral.enigmaticlegacy.enchantments;
 import static com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack.*;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack;
 
 import net.minecraft.enchantment.DamageEnchantment;
@@ -41,13 +42,28 @@ public class SlayerEnchantment extends Enchantment {
 	}
 
 	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack) {
+		return this.canApply(stack) && super.canApplyAtEnchantingTable(stack);
+	}
+
+	@Override
 	public boolean canApplyTogether(Enchantment ench) {
 		return !(ench instanceof DamageEnchantment) && super.canApplyTogether(ench);
 	}
 
 	@Override
 	public boolean canApply(ItemStack stack) {
-		return stack.getItem() instanceof AxeItem ? true : super.canApply(stack);
+		return OmniconfigHandler.isItemEnabled(this) && (stack.getItem() instanceof AxeItem ? true : stack.canApplyAtEnchantingTable(this));
+	}
+
+	@Override
+	public boolean isAllowedOnBooks() {
+		return OmniconfigHandler.isItemEnabled(this);
+	}
+
+	@Override
+	public boolean canGenerateInLoot() {
+		return OmniconfigHandler.isItemEnabled(this);
 	}
 
 	public float bonusDamageByCreature(LivingEntity attacker, LivingEntity living, int level) {

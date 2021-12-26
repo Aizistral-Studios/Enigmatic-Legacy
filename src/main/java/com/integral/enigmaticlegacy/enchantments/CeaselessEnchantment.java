@@ -2,6 +2,7 @@ package com.integral.enigmaticlegacy.enchantments;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
@@ -48,7 +49,7 @@ public class CeaselessEnchantment extends Enchantment {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(final ItemStack stack) {
-		return stack.getItem() instanceof CrossbowItem;
+		return this.canApply(stack) && stack.getItem() instanceof CrossbowItem;
 	}
 
 	@Override
@@ -63,7 +64,18 @@ public class CeaselessEnchantment extends Enchantment {
 
 	@Override
 	public boolean isAllowedOnBooks() {
-		return true;
+		return OmniconfigHandler.isItemEnabled(this);
 	}
+
+	@Override
+	public boolean canGenerateInLoot() {
+		return OmniconfigHandler.isItemEnabled(this);
+	}
+
+	@Override
+	public boolean canApply(ItemStack stack) {
+		return OmniconfigHandler.isItemEnabled(this) && stack.canApplyAtEnchantingTable(this);
+	}
+
 }
 
