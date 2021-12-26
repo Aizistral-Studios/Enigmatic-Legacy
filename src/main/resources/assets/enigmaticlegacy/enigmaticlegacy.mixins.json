@@ -17,7 +17,8 @@
 	"MixinEnchantment",
 	"MixinLootTable",
 	"MixinCharmEffects",
-	"MixinModEventHandler"
+	"MixinModEventHandler",
+	"AccessorAbstractArrowEntity"
   ],
   "client": [],
   "injectors": {

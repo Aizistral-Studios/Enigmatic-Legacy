@@ -56,6 +56,7 @@ import com.integral.enigmaticlegacy.items.RevelationTome;
 import com.integral.enigmaticlegacy.items.TheTwist;
 import com.integral.enigmaticlegacy.items.VoidPearl;
 import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
+import com.integral.enigmaticlegacy.mixin.AccessorAbstractArrowEntity;
 import com.integral.enigmaticlegacy.objects.CooldownMap;
 import com.integral.enigmaticlegacy.objects.DamageSourceNemesisCurse;
 import com.integral.enigmaticlegacy.objects.DimensionalPosition;
@@ -91,6 +92,8 @@ import net.minecraft.client.gui.screen.inventory.CreativeScreen;
 import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
@@ -156,6 +159,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.entity.projectile.DamagingProjectileEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.CrossbowItem;
@@ -192,6 +196,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.text.ITextProperties;
+import net.minecraft.util.text.LanguageMap;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
@@ -201,7 +209,9 @@ import net.minecraftforge.client.event.ClientPlayerNetworkEvent.LoggedInEvent;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
@@ -236,6 +246,7 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -276,6 +287,8 @@ public class EnigmaticEventHandler {
 	public static final Multimap<PlayerEntity, Item> postmortalPossession = ArrayListMultimap.create();
 	public static final Multimap<PlayerEntity, GuardianEntity> angeredGuardians = ArrayListMultimap.create();
 
+	private static boolean handlingTooltip = false;
+
 	/*
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onTooltipEvent(ItemTooltipEvent event) {
@@ -288,6 +301,189 @@ public class EnigmaticEventHandler {
 		}
 	}
 	 */
+
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void onTooltipRendering(RenderTooltipEvent.Pre event) {
+		if (handlingTooltip)
+			return;
+
+		ItemStack stack = event.getStack();
+
+		if (stack != null && !stack.isEmpty()) { // cause I don't trust you Forge
+			if (stack.getItem().getRegistryName().getNamespace().equals(EnigmaticLegacy.MODID)) {
+				event.setCanceled(handlingTooltip = true);
+				drawHoveringText(event.getStack(), event.getMatrixStack(), event.getLines(), event.getX(),
+						event.getY(), event.getScreenWidth(), event.getScreenHeight(), event.getMaxWidth(),
+						GuiUtils.DEFAULT_BACKGROUND_COLOR, GuiUtils.DEFAULT_BORDER_COLOR_START,
+						GuiUtils.DEFAULT_BORDER_COLOR_END, event.getFontRenderer(), false);
+				handlingTooltip = false;
+			}
+		}
+	}
+
+	/**
+	 * Fucking shame I have to do this manually to fix blasted autowrapping.
+	 * No idea how this works but at least it does.
+	 */
+
+	public static void drawHoveringText(ItemStack stack, MatrixStack mStack, List<? extends ITextProperties> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, int backgroundColor, int borderColorStart, int borderColorEnd, FontRenderer font, boolean secondary) {
+		if (!textLines.isEmpty()) {
+			if (!secondary) {
+				RenderTooltipEvent.Pre event = new RenderTooltipEvent.Pre(stack, textLines, mStack, mouseX, mouseY, screenWidth, screenHeight, maxTextWidth, font);
+				if (MinecraftForge.EVENT_BUS.post(event))
+					return;
+
+				mouseX = event.getX();
+				mouseY = event.getY();
+				screenWidth = event.getScreenWidth();
+				screenHeight = event.getScreenHeight();
+				maxTextWidth = event.getMaxWidth();
+				font = event.getFontRenderer();
+			}
+			int tooltipTextWidth = 0;
+
+			for (ITextProperties textLine : textLines) {
+				int textLineWidth = font.getStringPropertyWidth(textLine);
+				if (textLineWidth > tooltipTextWidth) {
+					tooltipTextWidth = textLineWidth;
+				}
+			}
+
+			int tooltipTextWidthReal = tooltipTextWidth;
+
+			boolean needsWrap = false;
+
+			int titleLinesCount = 1;
+			int tooltipX = mouseX + 12;
+			if (tooltipX + tooltipTextWidth + 4 > screenWidth) {
+				tooltipX = mouseX - 16 - tooltipTextWidth;
+				if (tooltipX < 4) {
+					if (mouseX > screenWidth / 2) {
+						if (!secondary) {
+							drawHoveringText(stack, mStack, textLines, tooltipTextWidthReal + 20, mouseY, screenWidth,
+									screenHeight, maxTextWidth, backgroundColor, borderColorStart, borderColorEnd, font, true);
+							return;
+						}
+					} else {
+						if (!secondary) {
+							drawHoveringText(stack, mStack, textLines, tooltipTextWidthReal + 20, mouseY, screenWidth,
+									screenHeight, maxTextWidth, backgroundColor, borderColorStart, borderColorEnd, font, true);
+							return;
+						}
+					}
+				}
+			}
+
+			if (maxTextWidth > 0 && tooltipTextWidth > maxTextWidth) {
+				tooltipTextWidth = maxTextWidth;
+				needsWrap = true;
+			}
+
+			if (needsWrap) {
+				int wrappedTooltipWidth = 0;
+				List<ITextProperties> wrappedTextLines = new ArrayList<>();
+				for (int i = 0; i < textLines.size(); i++) {
+					ITextProperties textLine = textLines.get(i);
+					List<ITextProperties> wrappedLine = font.getCharacterManager().func_238362_b_(textLine, tooltipTextWidth, Style.EMPTY);
+					if (i == 0) {
+						titleLinesCount = wrappedLine.size();
+					}
+
+					for (ITextProperties line : wrappedLine) {
+						int lineWidth = font.getStringPropertyWidth(line);
+						if (lineWidth > wrappedTooltipWidth) {
+							wrappedTooltipWidth = lineWidth;
+						}
+						wrappedTextLines.add(line);
+					}
+				}
+				tooltipTextWidth = wrappedTooltipWidth;
+				textLines = wrappedTextLines;
+
+				if (mouseX > screenWidth / 2) {
+					tooltipX = mouseX - 16 - tooltipTextWidth;
+				} else {
+					tooltipX = mouseX + 12;
+				}
+			}
+
+			int tooltipY = mouseY - 12;
+			int tooltipHeight = 8;
+
+			if (textLines.size() > 1) {
+				tooltipHeight += (textLines.size() - 1) * 10;
+				if (textLines.size() > titleLinesCount)
+				{
+					tooltipHeight += 2; // gap between title lines and next lines
+				}
+			}
+
+			if (tooltipY < 4) {
+				tooltipY = 4;
+			} else if (tooltipY + tooltipHeight + 4 > screenHeight) {
+				tooltipY = screenHeight - tooltipHeight - 4;
+			}
+
+			final int zLevel = 400;
+			RenderTooltipEvent.Color colorEvent = new RenderTooltipEvent.Color(stack, textLines, mStack, tooltipX, tooltipY, font, backgroundColor, borderColorStart, borderColorEnd);
+			MinecraftForge.EVENT_BUS.post(colorEvent);
+			backgroundColor = colorEvent.getBackground();
+			borderColorStart = colorEvent.getBorderStart();
+			borderColorEnd = colorEvent.getBorderEnd();
+
+			if (tooltipX <= 4) {
+				tooltipX++;
+			}
+			if (tooltipY + tooltipHeight + 6 >= screenHeight) {
+				tooltipY -= 2;
+			}
+
+			RenderSystem.disableRescaleNormal();
+			RenderSystem.disableDepthTest();
+
+			mStack.push();
+			Matrix4f mat = mStack.getLast().getMatrix();
+
+			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY - 4, tooltipX + tooltipTextWidth + 3, tooltipY - 3, backgroundColor, backgroundColor);
+			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY + tooltipHeight + 3, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 4, backgroundColor, backgroundColor);
+			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY - 3, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3, backgroundColor, backgroundColor);
+			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 4, tooltipY - 3, tooltipX - 3, tooltipY + tooltipHeight + 3, backgroundColor, backgroundColor);
+			GuiUtils.drawGradientRect(mat, zLevel, tooltipX + tooltipTextWidth + 3, tooltipY - 3, tooltipX + tooltipTextWidth + 4, tooltipY + tooltipHeight + 3, backgroundColor, backgroundColor);
+			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY - 3 + 1, tooltipX - 3 + 1, tooltipY + tooltipHeight + 3 - 1, borderColorStart, borderColorEnd);
+			GuiUtils.drawGradientRect(mat, zLevel, tooltipX + tooltipTextWidth + 2, tooltipY - 3 + 1, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3 - 1, borderColorStart, borderColorEnd);
+			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY - 3, tooltipX + tooltipTextWidth + 3, tooltipY - 3 + 1, borderColorStart, borderColorStart);
+			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY + tooltipHeight + 2, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3, borderColorEnd, borderColorEnd);
+
+			MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.PostBackground(stack, textLines, mStack, tooltipX, tooltipY, font, tooltipTextWidth, tooltipHeight));
+
+			IRenderTypeBuffer.Impl renderType = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+			mStack.translate(0.0D, 0.0D, zLevel);
+
+			int tooltipTop = tooltipY;
+
+			for (int lineNumber = 0; lineNumber < textLines.size(); ++lineNumber) {
+				ITextProperties line = textLines.get(lineNumber);
+				if (line != null) {
+					font.func_238416_a_(LanguageMap.getInstance().func_241870_a(line), tooltipX, tooltipY, -1, true, mat, renderType, false, 0, 15728880);
+				}
+
+				if (lineNumber + 1 == titleLinesCount) {
+					tooltipY += 2;
+				}
+
+				tooltipY += 10;
+			}
+
+			renderType.finish();
+			mStack.pop();
+
+			MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.PostText(stack, textLines, mStack, tooltipX, tooltipTop, font, tooltipTextWidth, tooltipHeight));
+
+			RenderSystem.enableDepthTest();
+			RenderSystem.enableRescaleNormal();
+		}
+	}
 
 	@SubscribeEvent
 	public void onApplyPotion(PotionEvent.PotionApplicableEvent event) {
@@ -1057,10 +1253,31 @@ public class EnigmaticEventHandler {
 	public void onProjectileImpact(ProjectileImpactEvent event) {
 		if (event.getRayTraceResult() instanceof EntityRayTraceResult) {
 			EntityRayTraceResult result = (EntityRayTraceResult) event.getRayTraceResult();
+
 			if (result.getEntity() instanceof PlayerEntity) {
 				PlayerEntity player = (PlayerEntity) result.getEntity();
+				Entity arrow = event.getEntity();
 
 				if (!player.world.isRemote) {
+					if (arrow instanceof ProjectileEntity) {
+						ProjectileEntity projectile = (ProjectileEntity) arrow;
+
+						if (projectile.func_234616_v_() == player) {
+							for (String tag : arrow.getTags()) {
+								if (tag.startsWith("AB_DEFLECTED")) {
+									try {
+										int time = Integer.parseInt(tag.split(":")[1]);
+										if (arrow.ticksExisted - time < 10)
+											// If we cancel the event here it gets stuck in the infinite loop
+											return;
+									} catch (Exception ex) {
+										ex.printStackTrace();
+									}
+								}
+							}
+						}
+					}
+
 					boolean trigger = false;
 					double chance = 0.0D;
 
@@ -1074,17 +1291,19 @@ public class EnigmaticEventHandler {
 						chance += 0.15;
 					}
 
-
 					if (trigger && Math.random() <= chance) {
 						event.setCanceled(true);
 
-						Entity arrow = event.getEntity();
 						arrow.setMotion(arrow.getMotion().scale(-1.0D));
 						arrow.prevRotationYaw = arrow.rotationYaw + 180.0F;
 						arrow.rotationYaw = arrow.rotationYaw + 180.0F;
 
-						if (arrow instanceof AbstractArrowEntity && !(arrow instanceof TridentEntity)) {
-							((AbstractArrowEntity) arrow).setShooter(player);
+						if (arrow instanceof AbstractArrowEntity) {
+							if (!(arrow instanceof TridentEntity)) {
+								((AbstractArrowEntity) arrow).setShooter(player);
+							}
+
+							((AccessorAbstractArrowEntity)arrow).clearHitEntities();
 						} else if (arrow instanceof DamagingProjectileEntity) {
 							((DamagingProjectileEntity) arrow).setShooter(player);
 
@@ -1093,8 +1312,10 @@ public class EnigmaticEventHandler {
 							((DamagingProjectileEntity) arrow).accelerationZ = -((DamagingProjectileEntity) arrow).accelerationZ;
 						}
 
-						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 64.0D, player.world.getDimensionKey())), new PacketForceArrowRotations(arrow.getEntityId(), arrow.rotationYaw, arrow.rotationPitch, arrow.getMotion().x, arrow.getMotion().y, arrow.getMotion().z, arrow.getPosX(), arrow.getPosY(), arrow.getPosZ()));
+						arrow.getTags().removeIf(tag -> tag.startsWith("AB_DEFLECTED"));
+						arrow.addTag("AB_DEFLECTED:" + arrow.ticksExisted);
 
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 64.0D, player.world.getDimensionKey())), new PacketForceArrowRotations(arrow.getEntityId(), arrow.rotationYaw, arrow.rotationPitch, arrow.getMotion().x, arrow.getMotion().y, arrow.getMotion().z, arrow.getPosX(), arrow.getPosY(), arrow.getPosZ()));
 						player.world.playSound(null, player.getPosition(), EnigmaticLegacy.DEFLECT, SoundCategory.PLAYERS, 1.0F, 0.95F + (float) (Math.random() * 0.1D));
 					}
 				} /*else {

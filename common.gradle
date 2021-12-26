@@ -57,7 +57,7 @@ repositories {
 	println("Specifying repositories...")
 	
 	
-	flatDir {  dirs 'deps' }
+	//flatDir {  dirs 'deps' }
 	flatDir {  dirs 'deps/' + version_mcp }
 	maven {  url = "https://maven.theillusivec4.top/" } // curios
 	maven { url 'https://maven.blamejared.com' } // patchouli
