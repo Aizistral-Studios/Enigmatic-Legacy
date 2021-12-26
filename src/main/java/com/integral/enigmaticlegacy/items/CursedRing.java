@@ -70,6 +70,7 @@ public class CursedRing extends ItemBaseCurio {
 	public static Omniconfig.DoubleParameter endermenRandomportRange;
 	public static Omniconfig.DoubleParameter endermenRandomportFrequency;
 	public static Omniconfig.BooleanParameter saveTheBees;
+	public static Omniconfig.BooleanParameter enableSpecialDrops;
 
 	public static Omniconfig.BooleanParameter ultraHardcore;
 
@@ -108,6 +109,11 @@ public class CursedRing extends ItemBaseCurio {
 		enchantingBonus = builder
 				.comment("How much additional Enchanting Power ring provides in Enchanting Table.")
 				.getInt("EnchantingBonus", 10);
+
+		enableSpecialDrops = builder
+				.comment("Set to false to disable ALL special drops that can be obtained from vanilla mobs when "
+						+ "bearing Ring of the Seven Curses.")
+				.getBoolean("EnableSpecialDrops", true);
 
 		ultraHardcore = builder
 				.comment("If true, Ring of the Seven Curses will be equipped into player's ring slot right away when "

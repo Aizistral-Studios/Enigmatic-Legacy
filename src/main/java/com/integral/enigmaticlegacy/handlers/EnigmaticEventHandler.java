@@ -39,6 +39,7 @@ import com.integral.enigmaticlegacy.helpers.OverlayPositionHelper.AnchorPoint;
 import com.integral.enigmaticlegacy.helpers.OverlayPositionHelper.OverlayPosition;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
+import com.integral.enigmaticlegacy.items.AvariceScroll;
 import com.integral.enigmaticlegacy.items.BerserkEmblem;
 import com.integral.enigmaticlegacy.items.CursedRing;
 import com.integral.enigmaticlegacy.items.CursedScroll;
@@ -1989,8 +1990,11 @@ public class EnigmaticEventHandler {
 			LivingEntity killed = event.getEntityLiving();
 
 			if (SuperpositionHandler.hasCurio(player, avariceScroll)) {
-				this.addDropWithChance(event, new ItemStack(Items.EMERALD, 1), 15);
+				this.addDropWithChance(event, new ItemStack(Items.EMERALD, 1), AvariceScroll.emeraldChance.getValue());
 			}
+
+			if (!CursedRing.enableSpecialDrops.getValue())
+				return;
 
 			if (killed.getClass() == ShulkerEntity.class) {
 				this.addDropWithChance(event, new ItemStack(EnigmaticLegacy.astralDust, 1), 20);
