@@ -328,6 +328,7 @@ public class EnigmaticEventHandler {
 	 * No idea how this works but at least it does.
 	 */
 
+	@OnlyIn(Dist.CLIENT)
 	public static void drawHoveringText(ItemStack stack, MatrixStack mStack, List<? extends ITextProperties> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, int backgroundColor, int borderColorStart, int borderColorEnd, FontRenderer font, boolean secondary) {
 		if (!textLines.isEmpty()) {
 			if (!secondary) {
