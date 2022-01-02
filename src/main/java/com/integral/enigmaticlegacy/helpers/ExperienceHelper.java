@@ -30,10 +30,13 @@ public class ExperienceHelper {
 	}
 
 	public static void addPlayerXP(PlayerEntity player, int amount) {
-		PlayerXpEvent.XpChange eventXP = new PlayerXpEvent.XpChange(player, amount);
-		if (MinecraftForge.EVENT_BUS.post(eventXP))
-			return;
+		// TODO Post events again when we are ready to fully acknowledge their alterable nature
 
+		PlayerXpEvent.XpChange eventXP = new PlayerXpEvent.XpChange(player, amount);
+		//if (MinecraftForge.EVENT_BUS.post(eventXP))
+		//	return;
+
+		//System.out.println("Former: " + amount + ", new: " + eventXP.getAmount());
 		amount = eventXP.getAmount();
 
 		int oldLevel = getPlayerXPLevel(player);
@@ -44,8 +47,8 @@ public class ExperienceHelper {
 			PlayerXpEvent.LevelChange eventLvl = new PlayerXpEvent.LevelChange(player, newLevel - oldLevel);
 			int remainder = experience - getExperienceForLevel(newLevel);
 
-			if (MinecraftForge.EVENT_BUS.post(eventLvl))
-				return;
+			//if (MinecraftForge.EVENT_BUS.post(eventLvl))
+			//	return;
 
 			newLevel = oldLevel + eventLvl.getLevels();
 			amount = getExperienceForLevel(newLevel) - getExperienceForLevel(oldLevel) + remainder;
