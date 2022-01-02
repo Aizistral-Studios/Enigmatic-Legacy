@@ -10,27 +10,23 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.LoreFragment;
 
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.PlayerInventory;
-import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ResultContainer;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.SoundCategory;
 
-public class LoreInscriberContainer extends Container {
-	protected final IInventory craftResultInv = new CraftResultInventory();
-	protected final IInventory craftSlotsInv = new Inventory(2) {
-		/**
-		 * For tile entities, ensures the chunk containing the tile entity is saved to disk later - the game won't think
-		 * it hasn't changed and skip it.
-		 */
+
+public class LoreInscriberContainer extends AbstractContainerMenu {
+	protected final ResultContainer craftResultInv = new ResultContainer();
+	protected final Container craftSlotsInv = new SimpleContainer(2) {
 		@Override
 		public void setChanged() {
 			super.setChanged();
@@ -38,26 +34,23 @@ public class LoreInscriberContainer extends Container {
 		}
 	};
 
-	protected final IWorldPosCallable worldPosCallable;
-	protected final PlayerEntity player;
+	protected final ContainerLevelAccess worldPosCallable;
+	protected final Player player;
 
 	private static final Logger LOGGER = LogManager.getLogger();
 	private String unparsedInputField;
 
-	public LoreInscriberContainer(int syncID, PlayerInventory playerInv) {
-		this(syncID, playerInv, IWorldPosCallable.create(playerInv.player.level, playerInv.player.blockPosition()));
+	public LoreInscriberContainer(int syncID, Inventory playerInv) {
+		this(syncID, playerInv, ContainerLevelAccess.create(playerInv.player.level, playerInv.player.blockPosition()));
 	}
 
-	public LoreInscriberContainer(int syncID, PlayerInventory playerInv, PacketBuffer extraData) {
-		this(syncID, playerInv, IWorldPosCallable.create(playerInv.player.level, playerInv.player.blockPosition()));
+	private LoreInscriberContainer(int id, Inventory Inventory, ContainerLevelAccess worldPosCallable) {
+		this(EnigmaticLegacy.LORE_INSCRIBER_CONTAINER, id, Inventory, worldPosCallable);
 	}
 
-	private LoreInscriberContainer(int id, PlayerInventory playerInventory, IWorldPosCallable worldPosCallable) {
-		this(EnigmaticLegacy.LORE_INSCRIBER_CONTAINER, id, playerInventory, worldPosCallable);
-	}
-
-	private LoreInscriberContainer(@Nullable ContainerType<?> p_i231587_1_, int p_i231587_2_, PlayerInventory playerInv, IWorldPosCallable p_i231587_4_) {
+	private LoreInscriberContainer(@Nullable MenuType<?> p_i231587_1_, int p_i231587_2_, Inventory playerInv, ContainerLevelAccess p_i231587_4_) {
 		super(p_i231587_1_, p_i231587_2_);
+
 		this.worldPosCallable = p_i231587_4_;
 		this.player = playerInv.player;
 		this.addSlot(new Slot(this.craftSlotsInv, 0, 40, 51) {
@@ -87,14 +80,14 @@ public class LoreInscriberContainer extends Container {
 			 * Return whether this slot's stack can be taken from this slot.
 			 */
 			@Override
-			public boolean mayPickup(PlayerEntity playerIn) {
+			public boolean mayPickup(Player playerIn) {
 				return LoreInscriberContainer.this.canCraft(playerIn, this.hasItem());
 			}
 
 			@Override
-			public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
+			public void onTake(Player thePlayer, ItemStack stack) {
 				this.setChanged();
-				return LoreInscriberContainer.this.claimResult(thePlayer, stack);
+				LoreInscriberContainer.this.claimResult(thePlayer, stack);
 			}
 		});
 
@@ -105,10 +98,10 @@ public class LoreInscriberContainer extends Container {
 		}
 
 		for (int k = 0; k < 9; ++k) {
-			if (k == this.player.inventory.selected) {
+			if (k == this.player.getInventory().selected) {
 				this.addSlot(new Slot(playerInv, k, 8 + k * 18, 142) {
 					@Override
-					public boolean mayPickup(PlayerEntity playerIn) {
+					public boolean mayPickup(Player playerIn) {
 						return false;
 					}
 
@@ -133,7 +126,7 @@ public class LoreInscriberContainer extends Container {
 	 * Callback for when the crafting matrix is changed.
 	 */
 	@Override
-	public void slotsChanged(IInventory inventoryIn) {
+	public void slotsChanged(Container inventoryIn) {
 		super.slotsChanged(inventoryIn);
 		if (inventoryIn == this.craftSlotsInv) {
 			this.updateRepairOutput();
@@ -145,28 +138,28 @@ public class LoreInscriberContainer extends Container {
 	 * Called when the container is closed.
 	 */
 	@Override
-	public void removed(PlayerEntity playerIn) {
+	public void removed(Player playerIn) {
 		super.removed(playerIn);
-		this.clearContainer(playerIn, playerIn.level, this.craftSlotsInv);
+		this.clearContainer(playerIn, this.craftSlotsInv);
 	}
 
 	/**
 	 * Determines whether supplied player can use this container
 	 */
 	@Override
-	public boolean stillValid(PlayerEntity playerIn) {
+	public boolean stillValid(Player playerIn) {
 		return true;
 	}
 
 	@Override
-	public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+	public void clicked(int slotId, int dragType, ClickType clickTypeIn, Player player) {
 		//System.out.println("Slot ID: " + slotId + ", Drag Type: " + dragType + ", Click Type: " + clickTypeIn.toString());
 
 		if (clickTypeIn == ClickType.SWAP) {
-			if (dragType == player.inventory.selected || slotId == 29 + player.inventory.selected)
-				return ItemStack.EMPTY;
+			if (dragType == player.getInventory().selected || slotId == 29 + player.getInventory().selected)
+				return;
 		}
-		return super.clicked(slotId, dragType, clickTypeIn, player);
+		super.clicked(slotId, dragType, clickTypeIn, player);
 	}
 
 	/**
@@ -174,7 +167,7 @@ public class LoreInscriberContainer extends Container {
 	 * inventory and the other inventory(s).
 	 */
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(Player playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = this.slots.get(index);
 		if (slot != null && slot.hasItem()) {
@@ -203,15 +196,15 @@ public class LoreInscriberContainer extends Container {
 		return itemstack;
 	}
 
-	protected boolean canCraft(PlayerEntity player, boolean hasOutputStack) {
+	protected boolean canCraft(Player player, boolean hasOutputStack) {
 		return hasOutputStack;
 	}
 
-	protected ItemStack claimResult(PlayerEntity player, ItemStack stack) {
+	protected ItemStack claimResult(Player player, ItemStack stack) {
 		this.craftSlotsInv.setItem(0, ItemStack.EMPTY);
 
 		if (!player.level.isClientSide) {
-			player.level.playSound(null, player.blockPosition(), EnigmaticLegacy.WRITE, SoundCategory.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
+			player.level.playSound(null, player.blockPosition(), EnigmaticLegacy.WRITE, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 		}
 
 		return stack;

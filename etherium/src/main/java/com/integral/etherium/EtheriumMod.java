@@ -21,12 +21,12 @@ import com.integral.etherium.items.EtheriumSword;
 import com.integral.etherium.proxy.CommonProxy;
 import com.integral.etherium.proxy.ClientProxy;
 
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.inventory.EquipmentSlotType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemGroup;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;

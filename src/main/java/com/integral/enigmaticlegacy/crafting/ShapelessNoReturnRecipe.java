@@ -2,14 +2,14 @@ package com.integral.enigmaticlegacy.crafting;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.world.inventory.CraftingInventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.IRecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * A copy of regular Shapeless Recipe, but any container items

@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.entity.player.ClientPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -41,7 +41,7 @@ public class PacketPlayerSetlook {
 	  public static void handle(PacketPlayerSetlook msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {
-		    	ClientPlayerEntity player = Minecraft.getInstance().player;
+		    	ClientPlayer player = Minecraft.getInstance().player;
 		    	
 		    	SuperpositionHandler.lookAt(msg.x, msg.y, msg.z, player);
 		      	

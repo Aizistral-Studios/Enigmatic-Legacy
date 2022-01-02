@@ -2,7 +2,7 @@ package com.integral.enigmaticlegacy.helpers;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import vazkii.patchouli.client.base.PersistentData;
 import vazkii.patchouli.client.base.PersistentData.DataHolder.BookData;

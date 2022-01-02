@@ -18,10 +18,10 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.item.enchantment.IVanishable;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -99,7 +99,7 @@ public class CursedScroll extends ItemBaseCurio implements ICursed {
 
 	@Override
 	public boolean canEquip(String identifier, LivingEntity living, ItemStack stack) {
-		return super.canEquip(identifier, living, stack) && living instanceof PlayerEntity && SuperpositionHandler.isTheCursedOne((PlayerEntity)living);
+		return super.canEquip(identifier, living, stack) && living instanceof Player && SuperpositionHandler.isTheCursedOne((Player)living);
 	}
 
 }

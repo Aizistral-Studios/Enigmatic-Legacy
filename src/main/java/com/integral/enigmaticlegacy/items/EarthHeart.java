@@ -10,10 +10,10 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.item.enchantment.IVanishable;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 
@@ -26,8 +26,8 @@ public class EarthHeart extends ItemBase implements ITaintable, IVanishable {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (entityIn instanceof PlayerEntity && !entityIn.level.isClientSide) {
-			PlayerEntity player = (PlayerEntity) entityIn;
+		if (entityIn instanceof Player && !entityIn.level.isClientSide) {
+			Player player = (Player) entityIn;
 			this.handleTaintable(stack, player);
 		}
 	}

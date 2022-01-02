@@ -22,7 +22,7 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.entity.projectile.AbstractArrowEntity;
 import net.minecraft.world.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.world.entity.projectile.TridentEntity;
@@ -30,9 +30,9 @@ import net.minecraft.world.entity.projectile.WitherSkullEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -115,7 +115,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 	}
 
 	@Override
-	public void triggerActiveAbility(World world, ServerPlayerEntity player, ItemStack stack) {
+	public void triggerActiveAbility(World world, ServerPlayer player, ItemStack stack) {
 		if (SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
@@ -134,7 +134,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player), new PacketPlayerMotion(finalMotion.x, finalMotion.y, finalMotion.z));
 		player.setDeltaMovement(finalMotion.x, finalMotion.y, finalMotion.z);
 
-		world.playSound(null, player.blockPosition(), SoundEvents.ENDER_EYE_LAUNCH, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
+		world.playSound(null, player.blockPosition(), SoundEvents.ENDER_EYE_LAUNCH, SoundSource.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
 
 		SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
 	}

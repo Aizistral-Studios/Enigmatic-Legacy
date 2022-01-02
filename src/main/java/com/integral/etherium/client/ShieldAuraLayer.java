@@ -1,11 +1,11 @@
 package com.integral.etherium.client;
 
 import com.integral.etherium.items.EtheriumArmor;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
+import net.minecraft.client.entity.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
@@ -19,22 +19,22 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>> {
+public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 	private static final ResourceLocation WITHER_ARMOR = new ResourceLocation("enigmaticlegacy", "textures/models/misc/ultimate_wither_armor.png");
-	private final PlayerModel<AbstractClientPlayerEntity> witherModel = new PlayerModel<AbstractClientPlayerEntity>(0.5F, false);
+	private final PlayerModel<AbstractClientPlayer> witherModel = new PlayerModel<AbstractClientPlayer>(0.5F, false);
 
-	public ShieldAuraLayer(IEntityRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>> renderer) {
+	public ShieldAuraLayer(IEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderer) {
 		super(renderer);
 	}
 
 	@Override
-	public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, AbstractClientPlayerEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void render(PoseStack PoseStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, AbstractClientPlayer entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (EtheriumArmor.hasShield(entitylivingbaseIn)) {
 			float f;
 
@@ -45,7 +45,7 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 
 			f = entitylivingbaseIn.tickCount + partialTicks;
 
-			PlayerModel<AbstractClientPlayerEntity> entitymodel = this.model();
+			PlayerModel<AbstractClientPlayer> entitymodel = this.model();
 			entitymodel.prepareMobModel(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks);
 
 			if (entitylivingbaseIn.isSpectator()) {
@@ -81,12 +81,12 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 			this.getParentModel().copyPropertiesTo(entitymodel);
 			IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.energySwirl(ShieldAuraLayer.getTextureLocation(), ShieldAuraLayer.xOffset(f), f * 0.01F));
 			entitymodel.setupAnim(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			entitymodel.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
+			entitymodel.renderToBuffer(PoseStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
 		}
 
 	}
 
-	private BipedModel.ArmPose func_217766_a(AbstractClientPlayerEntity playerIn, ItemStack itemStackMain, ItemStack itemStackOff, Hand handIn) {
+	private BipedModel.ArmPose func_217766_a(AbstractClientPlayer playerIn, ItemStack itemStackMain, ItemStack itemStackOff, Hand handIn) {
 		BipedModel.ArmPose bipedmodel$armpose = BipedModel.ArmPose.EMPTY;
 		ItemStack itemstack = handIn == Hand.MAIN_HAND ? itemStackMain : itemStackOff;
 		if (!itemstack.isEmpty()) {
@@ -128,7 +128,7 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 		return ShieldAuraLayer.WITHER_ARMOR;
 	}
 
-	protected PlayerModel<AbstractClientPlayerEntity> model() {
+	protected PlayerModel<AbstractClientPlayer> model() {
 		return this.witherModel;
 	}
 }

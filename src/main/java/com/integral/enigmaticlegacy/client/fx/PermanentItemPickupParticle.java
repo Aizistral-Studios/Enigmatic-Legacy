@@ -1,7 +1,7 @@
 package com.integral.enigmaticlegacy.client.fx;
 
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.particle.IParticleRenderType;
@@ -60,7 +60,7 @@ public class PermanentItemPickupParticle extends Particle {
 			double d5 = MathHelper.lerp(f, this.item.getZ(), d2);
 			IRenderTypeBuffer.Impl ibuffer = this.renderTypeBuffers.bufferSource();
 			Vector3d vector3d = renderInfo.getPosition();
-			this.renderManager.render(this.item, d3 - vector3d.x(), d4 - vector3d.y(), d5 - vector3d.z(), this.item.yRot, partialTicks, new MatrixStack(), ibuffer, this.renderManager.getPackedLightCoords(this.item, partialTicks));
+			this.renderManager.render(this.item, d3 - vector3d.x(), d4 - vector3d.y(), d5 - vector3d.z(), this.item.yRot, partialTicks, new PoseStack(), ibuffer, this.renderManager.getPackedLightCoords(this.item, partialTicks));
 			ibuffer.endBatch();
 		} catch (Throwable ex) {
 			// NO-OP

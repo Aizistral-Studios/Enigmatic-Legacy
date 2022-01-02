@@ -25,14 +25,14 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.item.alchemy.EffectInstance;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -55,7 +55,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 		builder.popPrefix();
 	}
 
-	public Map<PlayerEntity, Boolean> flightMap = new WeakHashMap<>();
+	public Map<Player, Boolean> flightMap = new WeakHashMap<>();
 
 	public EnigmaticItem() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC).fireResistant());
@@ -123,7 +123,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 
 	}
 
-	public void handleEnigmaticFlight(final PlayerEntity player) {
+	public void handleEnigmaticFlight(final Player player) {
 		try {
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticItem)) {
 				this.flightMap.put(player, true);
@@ -145,7 +145,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void triggerActiveAbility(World world, ServerPlayerEntity player, ItemStack stack) {
+	public void triggerActiveAbility(World world, ServerPlayer player, ItemStack stack) {
 		if (world.isClientSide || SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
@@ -159,8 +159,8 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 		return false;
 	}
 
-	private void launchWitherSkull(World world, PlayerEntity player, boolean invulnerable) {
-		world.levelEvent((PlayerEntity) null, 1024, new BlockPos(player.position()), 0);
+	private void launchWitherSkull(World world, Player player, boolean invulnerable) {
+		world.levelEvent((Player) null, 1024, new BlockPos(player.position()), 0);
 
 		Vector3 look = new Vector3(player.getLookAngle()).multiply(1, 0, 1);
 

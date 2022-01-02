@@ -14,7 +14,7 @@ import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -215,7 +215,7 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	@Override
-	public void playerTouch(PlayerEntity player) {
+	public void playerTouch(Player player) {
 		if (!this.level.isClientSide) {
 			if (this.pickupDelay > 0)
 				return;

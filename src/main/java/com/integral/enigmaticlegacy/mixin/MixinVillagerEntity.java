@@ -13,7 +13,7 @@ import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.merchant.villager.VillagerEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MerchantOffer;
 
@@ -21,7 +21,7 @@ import net.minecraft.world.item.MerchantOffer;
 public class MixinVillagerEntity {
 
 	@Inject(at = @At("RETURN"), method = "updateSpecialPrices")
-	private void onSpecialPrices(PlayerEntity player, CallbackInfo info) {
+	private void onSpecialPrices(Player player, CallbackInfo info) {
 		Object forgottenObject = this;
 
 		if (forgottenObject instanceof VillagerEntity) {

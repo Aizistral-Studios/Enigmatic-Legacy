@@ -11,14 +11,14 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAction;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.item.alchemy.Effects;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -52,13 +52,13 @@ public class HastePotion extends ItemBase {
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-		PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
+		Player player = entityLiving instanceof Player ? (Player) entityLiving : null;
 		if (player == null || !player.abilities.instabuild) {
 			stack.shrink(1);
 		}
 
-		if (player instanceof ServerPlayerEntity) {
-			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
+		if (player instanceof ServerPlayer) {
+			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
 		}
 
 		if (!worldIn.isClientSide && player != null) {
@@ -90,7 +90,7 @@ public class HastePotion extends ItemBase {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
 		playerIn.startUsingItem(handIn);
 		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getItemInHand(handIn));
 	}

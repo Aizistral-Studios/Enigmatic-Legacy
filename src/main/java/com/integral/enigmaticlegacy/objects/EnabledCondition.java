@@ -6,7 +6,7 @@ import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 import net.minecraftforge.registries.ForgeRegistries;

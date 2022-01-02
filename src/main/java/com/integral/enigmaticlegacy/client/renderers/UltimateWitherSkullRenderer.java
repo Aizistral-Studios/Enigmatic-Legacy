@@ -2,7 +2,7 @@ package com.integral.enigmaticlegacy.client.renderers;
 
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 import com.integral.etherium.client.ShieldAuraLayer;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.model.GenericHeadModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
@@ -34,32 +34,32 @@ public class UltimateWitherSkullRenderer extends EntityRenderer<UltimateWitherSk
 	}
 	
 	@Override
-	public void render(UltimateWitherSkullEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
-		matrixStackIn.pushPose();
+	public void render(UltimateWitherSkullEntity entityIn, float entityYaw, float partialTicks, PoseStack PoseStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+		PoseStackIn.pushPose();
 
 		float inflate = entityIn.isSkullInvulnerable() ? 1.4F : 1.0F;
 
-		matrixStackIn.scale(-inflate, -inflate, inflate);
+		PoseStackIn.scale(-inflate, -inflate, inflate);
 
 		float f = MathHelper.rotlerp(entityIn.yRotO, entityIn.yRot, partialTicks);
 		float f1 = MathHelper.lerp(partialTicks, entityIn.xRotO, entityIn.xRot);
 		IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.skeletonHeadModel.renderType(this.getTextureLocation(entityIn)));
 		this.skeletonHeadModel.setupAnim(0.0F, f, f1);
-		this.skeletonHeadModel.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-		matrixStackIn.popPose();
+		this.skeletonHeadModel.renderToBuffer(PoseStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+		PoseStackIn.popPose();
 
 		if (entityIn.isSkullInvulnerable()) {
 
 			float fullTicks = entityIn.tickCount + partialTicks;
-			this.renderShield(matrixStackIn, packedLightIn, fullTicks, inflate + 0.1F, bufferIn);
-			this.renderShield(matrixStackIn, packedLightIn, fullTicks, inflate + 0.2F, bufferIn);
+			this.renderShield(PoseStackIn, packedLightIn, fullTicks, inflate + 0.1F, bufferIn);
+			this.renderShield(PoseStackIn, packedLightIn, fullTicks, inflate + 0.2F, bufferIn);
 
 		}
 
-		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+		super.render(entityIn, entityYaw, partialTicks, PoseStackIn, bufferIn, packedLightIn);
 	}
 
-	private void renderShield(MatrixStack matrix, int light, float fullTicks, float scale, IRenderTypeBuffer bufferIn) {
+	private void renderShield(PoseStack matrix, int light, float fullTicks, float scale, IRenderTypeBuffer bufferIn) {
 		matrix.pushPose();
 		matrix.scale(-scale, -scale, scale);
 

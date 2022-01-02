@@ -13,18 +13,18 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.item.enchantment.IVanishable;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAction;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.item.alchemy.Effects;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -49,10 +49,10 @@ public class UnholyGrail extends ItemBase implements IVanishable {
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-		if (!(entityLiving instanceof PlayerEntity))
+		if (!(entityLiving instanceof Player))
 			return stack;
 
-		PlayerEntity player = (PlayerEntity) entityLiving;
+		Player player = (Player) entityLiving;
 
 		if (!worldIn.isClientSide) {
 			player.addEffect(new EffectInstance(Effects.WITHER, 100, 2, false, true));
@@ -62,7 +62,7 @@ public class UnholyGrail extends ItemBase implements IVanishable {
 			player.addEffect(new EffectInstance(Effects.HUNGER, 160, 2, false, true));
 			player.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 240, 0, false, true));
 
-			UseUnholyGrailTrigger.INSTANCE.trigger((ServerPlayerEntity) player);
+			UseUnholyGrailTrigger.INSTANCE.trigger((ServerPlayer) player);
 
 		}
 
@@ -82,7 +82,7 @@ public class UnholyGrail extends ItemBase implements IVanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
 		playerIn.startUsingItem(handIn);
 		return new ActionResult<>(ActionResultType.CONSUME, playerIn.getItemInHand(handIn));
 	}

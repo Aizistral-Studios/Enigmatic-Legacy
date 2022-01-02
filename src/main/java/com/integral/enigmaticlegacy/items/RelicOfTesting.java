@@ -15,8 +15,8 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.monster.CreeperEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.stats.Stats;
@@ -24,7 +24,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -53,7 +53,7 @@ public class RelicOfTesting extends ItemBase {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
 
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		playerIn.startUsingItem(handIn);
@@ -101,8 +101,8 @@ public class RelicOfTesting extends ItemBase {
 		List<CreeperEntity> list = world.getEntitiesOfClass(CreeperEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(entity, 24D));
 
 		for (CreeperEntity creeper : list) {
-			creeper.goalSelector.addGoal(1, new AvoidEntityGoal<>(creeper, PlayerEntity.class, (arg) -> {
-				return arg instanceof PlayerEntity ? SuperpositionHandler.hasCurio(arg, EnigmaticLegacy.enigmaticAmulet) : false;
+			creeper.goalSelector.addGoal(1, new AvoidEntityGoal<>(creeper, Player.class, (arg) -> {
+				return arg instanceof Player ? SuperpositionHandler.hasCurio(arg, EnigmaticLegacy.enigmaticAmulet) : false;
 			}, 6.0F, 1.0D, 1.2D, EntityPredicates.NO_CREATIVE_OR_SPECTATOR::test));
 
 			if (creeper.getTarget() == entity) {
@@ -110,8 +110,8 @@ public class RelicOfTesting extends ItemBase {
 			}
 		}
 
-		if (entity instanceof ServerPlayerEntity) {
-			ServerPlayerEntity player = (ServerPlayerEntity) entity;
+		if (entity instanceof ServerPlayer) {
+			ServerPlayer player = (ServerPlayer) entity;
 			if (entity.tickCount % 20 == 0) {
 				System.out.println("Time since rest: " + player.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)));
 			}
@@ -129,7 +129,7 @@ public class RelicOfTesting extends ItemBase {
 	}
 
 	/*
-	 * public ActionResultType onItemUse(ItemUseContext context) { PlayerEntity
+	 * public ActionResultType onItemUse(ItemUseContext context) { Player
 	 * player = context.getPlayer(); World world = context.getWorld(); //ItemStack
 	 * stack = context.getItem();
 	 *

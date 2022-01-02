@@ -13,7 +13,7 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.world.item.enchantment.IVanishable;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.World;
 

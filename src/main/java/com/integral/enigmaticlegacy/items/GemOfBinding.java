@@ -12,15 +12,15 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.item.enchantment.IVanishable;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -56,14 +56,14 @@ public class GemOfBinding extends ItemBase implements IVanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand hand) {
+	public ActionResult<ItemStack> use(World worldIn, Player player, Hand hand) {
 		ItemStack itemstack = player.getItemInHand(hand);
 
 		if (player.isCrouching()) {
 			ItemNBTHelper.setString(itemstack, "BoundPlayer", player.getDisplayName().getString());
 			ItemNBTHelper.setUUID(itemstack, "BoundUUID", player.getUUID());
 
-			worldIn.playSound(null, player.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
+			worldIn.playSound(null, player.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 
 			player.swing(hand);
 			return new ActionResult<>(ActionResultType.SUCCESS, itemstack);

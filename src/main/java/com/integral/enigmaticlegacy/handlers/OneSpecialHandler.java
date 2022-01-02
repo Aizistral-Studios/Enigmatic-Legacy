@@ -3,8 +3,8 @@ package com.integral.enigmaticlegacy.handlers;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.LogicalSidedProvider;
@@ -18,11 +18,11 @@ public class OneSpecialHandler {
 	
 	Random rand = new Random();
 	
-	public PlayerEntity nextMan() {
+	public Player nextMan() {
 		MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
 		
-		List<ServerPlayerEntity> players = server.getPlayerList().getPlayers();
-		PlayerEntity man;
+		List<ServerPlayer> players = server.getPlayerList().getPlayers();
+		Player man;
 		
 		if (players.size() > 0) {
 			if (players.size() == 1)

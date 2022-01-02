@@ -4,7 +4,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.world.item.enchantment.IVanishable;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -30,7 +30,7 @@ public abstract class ItemBase extends Item {
 	}
 
 	@Override
-	public void onCraftedBy(ItemStack stack, World worldIn, PlayerEntity playerIn) {
+	public void onCraftedBy(ItemStack stack, World worldIn, Player playerIn) {
 		// Insert existential void here
 	}
 
@@ -44,7 +44,7 @@ public abstract class ItemBase extends Item {
 		return props;
 	}
 
-	public static BlockRayTraceResult rayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidMode fluidMode) {
+	public static BlockRayTraceResult rayTrace(World worldIn, Player player, RayTraceContext.FluidMode fluidMode) {
 		return Item.getPlayerPOVHitResult(worldIn, player, fluidMode);
 	}
 

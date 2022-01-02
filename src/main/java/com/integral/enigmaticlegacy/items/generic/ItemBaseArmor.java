@@ -8,8 +8,8 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.EquipmentSlotType;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.IArmorMaterial;
 import net.minecraft.world.item.Item;
@@ -60,7 +60,7 @@ public abstract class ItemBaseArmor extends ArmorItem {
 		return EnigmaticLegacy.MODID + ":textures/models/armor/unseen_armor.png";
 	}
 
-	public boolean hasFullSet(@Nonnull PlayerEntity player) {
+	public boolean hasFullSet(@Nonnull Player player) {
 		if (player == null)
 			return false;
 

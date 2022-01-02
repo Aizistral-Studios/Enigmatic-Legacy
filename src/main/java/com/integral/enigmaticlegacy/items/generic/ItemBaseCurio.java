@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.IItemCurio;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -19,11 +19,11 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.IVanishable;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -59,7 +59,7 @@ public abstract class ItemBaseCurio extends ItemBase implements IItemCurio, IVan
 	}
 
 	@Override
-	public void onCraftedBy(ItemStack stack, World worldIn, PlayerEntity playerIn) {
+	public void onCraftedBy(ItemStack stack, World worldIn, Player playerIn) {
 		// Insert existential void here
 	}
 
@@ -109,7 +109,7 @@ public abstract class ItemBaseCurio extends ItemBase implements IItemCurio, IVan
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer,
+	public void render(String identifier, int index, PoseStack PoseStack, IRenderTypeBuffer renderTypeBuffer,
 			int light, LivingEntity living, float limbSwing, float limbSwingAmount, float partialTicks,
 			float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
 
@@ -122,7 +122,7 @@ public abstract class ItemBaseCurio extends ItemBase implements IItemCurio, IVan
 		RenderHelper.followBodyRotations(living, model);
 		IVertexBuilder vertexBuilder = ItemRenderer.getFoilBuffer(renderTypeBuffer, model.renderType(this.getTexture()),
 				false, false);
-		model.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+		model.renderToBuffer(PoseStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 	}
 
 	@Nullable

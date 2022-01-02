@@ -3,7 +3,7 @@ package com.integral.enigmaticlegacy.packets.clients;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.entity.player.ClientPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -38,7 +38,7 @@ public class PacketPlayerRotations {
 	  public static void handle(PacketPlayerRotations msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {
-		    	ClientPlayerEntity player = Minecraft.getInstance().player;
+		    	ClientPlayer player = Minecraft.getInstance().player;
 		    	
 		    	player.turn(msg.rotationYaw, msg.rotationPitch);
 		    	player.yHeadRot = msg.rotationYawHead;

@@ -10,8 +10,8 @@ import com.google.common.collect.MapMaker;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAction;
@@ -23,7 +23,7 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class CommonProxy {
 
-	protected final Map<PlayerEntity, TransientPlayerData> commonTransientPlayerData;
+	protected final Map<Player, TransientPlayerData> commonTransientPlayerData;
 
 	public CommonProxy() {
 		this.commonTransientPlayerData = new WeakHashMap<>();
@@ -33,7 +33,7 @@ public class CommonProxy {
 		this.commonTransientPlayerData.clear();
 	}
 
-	public Map<PlayerEntity, TransientPlayerData> getTransientPlayerData(boolean clientOnly) {
+	public Map<Player, TransientPlayerData> getTransientPlayerData(boolean clientOnly) {
 		return this.commonTransientPlayerData;
 	}
 
@@ -49,13 +49,13 @@ public class CommonProxy {
 		// Insert existential void here
 	}
 
-	public boolean isInVanillaDimension(PlayerEntity player) {
-		ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+	public boolean isInVanillaDimension(Player player) {
+		ServerPlayer serverPlayer = (ServerPlayer) player;
 		return serverPlayer.getLevel().dimension().equals(this.getOverworldKey()) || serverPlayer.getLevel().dimension().equals(this.getNetherKey()) || serverPlayer.getLevel().dimension().equals(this.getEndKey());
 	}
 
-	public boolean isInDimension(PlayerEntity player, RegistryKey<World> world) {
-		ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+	public boolean isInDimension(Player player, RegistryKey<World> world) {
+		ServerPlayer serverPlayer = (ServerPlayer) player;
 		return serverPlayer.getLevel().dimension().equals(world);
 	}
 
@@ -79,14 +79,14 @@ public class CommonProxy {
 		return UseAction.BOW;
 	}
 
-	public PlayerEntity getPlayer(UUID playerID) {
+	public Player getPlayer(UUID playerID) {
 		if (ServerLifecycleHooks.getCurrentServer() != null)
 			return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(playerID);
 		else
 			return null;
 	}
 
-	public PlayerEntity getClientPlayer() {
+	public Player getClientPlayer() {
 		return null;
 	}
 

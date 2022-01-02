@@ -19,10 +19,10 @@ import com.integral.enigmaticlegacy.objects.RevelationTomeToast;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.etherium.client.ShieldAuraLayer;
 
-import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
+import net.minecraft.client.entity.player.AbstractClientPlayer;
 import net.minecraft.client.gui.toasts.ToastGui;
 import net.minecraft.client.particle.ItemPickupParticle;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
@@ -30,15 +30,15 @@ import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAction;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Direction;
 import net.minecraft.util.RegistryKey;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -47,7 +47,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 public class ClientProxy extends CommonProxy {
 	private static final Random random = new Random();
-	protected final Map<PlayerEntity, TransientPlayerData> clientTransientPlayerData;
+	protected final Map<Player, TransientPlayerData> clientTransientPlayerData;
 
 	public ClientProxy() {
 		super();
@@ -61,7 +61,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public Map<PlayerEntity, TransientPlayerData> getTransientPlayerData(boolean clientOnly) {
+	public Map<Player, TransientPlayerData> getTransientPlayerData(boolean clientOnly) {
 		if (clientOnly)
 			return this.clientTransientPlayerData;
 		else
@@ -77,7 +77,7 @@ public class ClientProxy extends CommonProxy {
 			// TODO Verify fix... someday
 
 			Minecraft.getInstance().particleEngine.add(new PermanentItemPickupParticle(Minecraft.getInstance().getEntityRenderDispatcher(), Minecraft.getInstance().renderBuffers(), Minecraft.getInstance().level, pickuper, entity));
-			Minecraft.getInstance().level.playLocalSound(pickuper.getX(), pickuper.getY(), pickuper.getZ(), SoundEvents.ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, (ClientProxy.random.nextFloat() - ClientProxy.random.nextFloat()) * 1.4F + 2.0F, false);
+			Minecraft.getInstance().level.playLocalSound(pickuper.getX(), pickuper.getY(), pickuper.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, (ClientProxy.random.nextFloat() - ClientProxy.random.nextFloat()) * 1.4F + 2.0F, false);
 		} catch (Throwable ex) {
 			Exception log = new Exception("Unknown error when rendering permanent item pickup", ex);
 			EnigmaticLegacy.logger.catching(log);
@@ -113,12 +113,12 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public boolean isInVanillaDimension(PlayerEntity player) {
+	public boolean isInVanillaDimension(Player player) {
 		return player.level.dimension().equals(this.getOverworldKey()) || player.level.dimension().equals(this.getNetherKey()) || player.level.dimension().equals(this.getEndKey());
 	}
 
 	@Override
-	public boolean isInDimension(PlayerEntity player, RegistryKey<World> world) {
+	public boolean isInDimension(Player player, RegistryKey<World> world) {
 		return player.level.dimension().equals(world);
 	}
 
@@ -133,7 +133,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public PlayerEntity getPlayer(UUID playerID) {
+	public Player getPlayer(UUID playerID) {
 		if (Minecraft.getInstance().level != null)
 			return Minecraft.getInstance().level.getPlayerByUUID(playerID);
 		else
@@ -189,7 +189,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public PlayerEntity getClientPlayer() {
+	public Player getClientPlayer() {
 		return Minecraft.getInstance().player;
 	}
 

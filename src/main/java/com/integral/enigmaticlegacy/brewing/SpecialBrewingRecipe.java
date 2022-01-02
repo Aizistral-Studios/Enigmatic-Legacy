@@ -7,8 +7,8 @@ import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Variation of brewing recipe sensitive to NBT of input stack.

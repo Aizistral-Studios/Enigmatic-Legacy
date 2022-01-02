@@ -10,15 +10,15 @@ import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.CraftingInventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.IRecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -124,7 +124,7 @@ public class BindToPlayerRecipe extends ShapelessRecipe {
 	public interface IBound {
 		
 		@Nullable
-		default PlayerEntity getBoundPlayer(World world, ItemStack stack) {
+		default Player getBoundPlayer(World world, ItemStack stack) {
 			if (ItemNBTHelper.verifyExistance(stack, "BoundPlayer") && ItemNBTHelper.containsUUID(stack, "BoundUUID")) {
 				 UUID id = ItemNBTHelper.getUUID(stack, "BoundUUID", null);
 				 

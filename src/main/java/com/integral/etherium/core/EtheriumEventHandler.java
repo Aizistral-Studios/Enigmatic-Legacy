@@ -8,23 +8,23 @@ import com.integral.etherium.items.EtheriumArmor;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.PhantomEntity;
 import net.minecraft.world.entity.passive.AnimalEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrowEntity;
 import net.minecraft.world.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.loot.ItemLootEntry;
-import net.minecraft.loot.LootEntry;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.LootTables;
-import net.minecraft.loot.RandomValueRange;
-import net.minecraft.loot.LootPool.Builder;
-import net.minecraft.loot.functions.SetCount;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.level.storage.loot.ItemLootEntry;
+import net.minecraft.world.level.storage.loot.LootEntry;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.LootTables;
+import net.minecraft.world.level.storage.loot.RandomValueRange;
+import net.minecraft.world.level.storage.loot.LootPool.Builder;
+import net.minecraft.world.level.storage.loot.functions.SetCount;
+import net.minecraft.world.item.alchemy.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -43,8 +43,8 @@ public class EtheriumEventHandler {
 
 	@SubscribeEvent
 	public void onEntityHurt(LivingHurtEvent event) {
-		if (event.getEntityLiving() instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+		if (event.getEntityLiving() instanceof Player) {
+			Player player = (Player) event.getEntityLiving();
 
 			/*
 			 * Handler for knockback feedback and damage reduction of Etherium Armor Shield.
@@ -55,8 +55,8 @@ public class EtheriumEventHandler {
 					LivingEntity attacker = ((LivingEntity) event.getSource().getEntity());
 					Vector3 vec = Vector3.fromEntityCenter(player).subtract(Vector3.fromEntityCenter(event.getSource().getEntity())).normalize();
 					attacker.knockback(0.75F, vec.x, vec.z);
-					player.level.playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
-					player.level.playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
+					player.level.playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundSource.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
+					player.level.playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundSource.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
 				}
 
 				event.setAmount(event.getAmount() * this.config.getShieldReduction().asModifierInverted());
@@ -73,14 +73,14 @@ public class EtheriumEventHandler {
 		 * Handler for immunities and projectile deflection.
 		 */
 
-		if (event.getEntityLiving() instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
+		if (event.getEntityLiving() instanceof Player) {
+			Player player = (Player) event.getEntityLiving();
 
 			if (event.getSource().getDirectEntity() instanceof DamagingProjectileEntity || event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
 				if (EtheriumArmor.hasShield(player)) {
 					event.setCanceled(true);
 
-					player.level.playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
+					player.level.playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundSource.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
 				}
 			}
 		}

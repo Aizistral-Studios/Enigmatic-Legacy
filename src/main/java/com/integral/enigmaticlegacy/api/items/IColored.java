@@ -1,7 +1,7 @@
 package com.integral.enigmaticlegacy.api.items;
 /*
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.world.item.ItemStack;

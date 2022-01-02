@@ -6,7 +6,7 @@ import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.objects.SlotUnlockedToast;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.entity.player.ClientPlayer;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
@@ -36,7 +36,7 @@ public class PacketSlotUnlocked {
 	  public static void handle(PacketSlotUnlocked msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {
-		      ClientPlayerEntity player = Minecraft.getInstance().player;
+		      ClientPlayer player = Minecraft.getInstance().player;
 		      ItemStack stack;
 		      
 		      if (msg.type.equals("ring"))

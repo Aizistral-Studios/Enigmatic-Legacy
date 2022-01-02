@@ -6,7 +6,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.XPScroll;
 
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
@@ -36,7 +36,7 @@ public class PacketXPScrollKey {
 	  public static void handle(PacketXPScrollKey msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {
-		      ServerPlayerEntity playerServ = ctx.get().getSender();
+		      ServerPlayer playerServ = ctx.get().getSender();
 				
 		      	 if (SuperpositionHandler.hasCurio(playerServ, EnigmaticLegacy.xpScroll)) {
 		      		 ItemStack scroll = SuperpositionHandler.getCurioStack(playerServ, EnigmaticLegacy.xpScroll);

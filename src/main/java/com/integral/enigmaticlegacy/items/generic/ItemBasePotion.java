@@ -12,8 +12,8 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
@@ -21,7 +21,7 @@ import net.minecraft.world.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -41,13 +41,13 @@ public abstract class ItemBasePotion extends ItemBase {
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity living) {
-		if (living instanceof PlayerEntity) {
-			PlayerEntity player =  (PlayerEntity) living;
+		if (living instanceof Player) {
+			Player player =  (Player) living;
 
 			this.onConsumed(worldIn, player, stack);
 
-			if (player instanceof ServerPlayerEntity) {
-				CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
+			if (player instanceof ServerPlayer) {
+				CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
 			}
 
 			if (!player.abilities.instabuild) {
@@ -75,7 +75,7 @@ public abstract class ItemBasePotion extends ItemBase {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
 		if (this.canDrink(worldIn, playerIn, playerIn.getItemInHand(handIn))) {
 			playerIn.startUsingItem(handIn);
 			return super.use(worldIn, playerIn, handIn);
@@ -89,11 +89,11 @@ public abstract class ItemBasePotion extends ItemBase {
 		return true;
 	}
 
-	public boolean canDrink(World world, PlayerEntity player, ItemStack potion) {
+	public boolean canDrink(World world, Player player, ItemStack potion) {
 		return true;
 	}
 
-	public void onConsumed(World worldIn, PlayerEntity player, ItemStack potion) {
+	public void onConsumed(World worldIn, Player player, ItemStack potion) {
 		// NO-OP
 	}
 

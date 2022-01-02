@@ -11,13 +11,13 @@ import com.integral.etherium.core.EtheriumUtil;
 import com.integral.etherium.core.IEtheriumConfig;
 import com.integral.etherium.items.generic.ItemEtheriumTool;
 
-import net.minecraft.world.level.block.BlockState;
-import net.minecraft.world.level.block.material.Material;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseContext;
 import net.minecraft.world.item.Rarity;
@@ -25,7 +25,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
@@ -92,15 +92,15 @@ public class EtheriumPickaxe extends ItemEtheriumTool {
 	@Override
 	public boolean mineBlock(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getPickaxeMiningRadius() != -1) {
+		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getPickaxeMiningRadius() != -1) {
 
-			RayTraceResult trace = AOEMiningHelper.calcRayTrace(world, (PlayerEntity) entityLiving, RayTraceContext.FluidMode.ANY);
+			RayTraceResult trace = AOEMiningHelper.calcRayTrace(world, (Player) entityLiving, RayTraceContext.FluidMode.ANY);
 
 			if (trace.getType() == RayTraceResult.Type.BLOCK) {
 				BlockRayTraceResult blockTrace = (BlockRayTraceResult) trace;
 				Direction face = blockTrace.getDirection();
 
-				AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos, this.effectiveMaterials, this.config.getPickaxeMiningRadius(), this.config.getPickaxeMiningDepth(), true, pos, stack, (objPos, objState) -> {
+				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, this.effectiveMaterials, this.config.getPickaxeMiningRadius(), this.config.getPickaxeMiningDepth(), true, pos, stack, (objPos, objState) -> {
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(MobEntity.getEquipmentSlotForItem(stack)));
 				});
 			}
@@ -110,7 +110,7 @@ public class EtheriumPickaxe extends ItemEtheriumTool {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public ActionResult<ItemStack> use(World world, Player player, Hand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		player.startUsingItem(hand);
 

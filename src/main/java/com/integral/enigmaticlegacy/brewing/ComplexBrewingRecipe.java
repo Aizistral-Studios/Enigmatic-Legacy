@@ -10,8 +10,8 @@ import com.integral.enigmaticlegacy.helpers.PotionHelper;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * A recipe with one output and any amount of input-ingredient pairs.

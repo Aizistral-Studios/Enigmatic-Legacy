@@ -6,11 +6,11 @@ import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentType;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.container.EnchantmentContainer;
+import net.minecraft.world.inventory.EquipmentSlotType;
+import net.minecraft.world.inventory.container.EnchantmentContainer;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class SharpshooterEnchantment extends Enchantment {
 	public SharpshooterEnchantment(final EquipmentSlotType... slots) {

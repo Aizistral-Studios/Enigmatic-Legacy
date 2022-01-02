@@ -6,12 +6,12 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.etherium.core.IEtheriumConfig;
 
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.inventory.EquipmentSlotType;
 import net.minecraft.world.item.IArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 
 public enum EnigmaticArmorMaterials implements IArmorMaterial {
 	ETHERIUM(EnigmaticLegacy.MODID + ":etherium", 132, new int[] { 4, 7, 9, 4 }, 24,

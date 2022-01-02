@@ -4,7 +4,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class DarkestScroll extends ItemBase {
 

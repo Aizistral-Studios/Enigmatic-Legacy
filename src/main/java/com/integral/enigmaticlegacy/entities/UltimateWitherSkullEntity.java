@@ -9,12 +9,12 @@ import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.objects.WitherExplosion;
 import com.integral.enigmaticlegacy.packets.clients.PacketWitherParticles;
 
-import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.network.IPacket;
@@ -22,8 +22,8 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.server.SExplosionPacket;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.item.alchemy.Effects;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
@@ -184,13 +184,13 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 			return;
 
 		if (this.tickCount < 10) {
-			Vector3 res = AOEMiningHelper.calcRayTrace(this.level, (PlayerEntity) this.getOwner(), FluidMode.NONE, 128);
+			Vector3 res = AOEMiningHelper.calcRayTrace(this.level, (Player) this.getOwner(), FluidMode.NONE, 128);
 
 			this.initMotion((LivingEntity) this.getOwner(), res.x - this.getX(), res.y - this.getY(), res.z - this.getZ(), 0.1F);
 
 			return;
 		} else if (this.tickCount == 10) {
-			Vector3 res = AOEMiningHelper.calcRayTrace(this.level, (PlayerEntity) this.getOwner(), FluidMode.NONE, 128);
+			Vector3 res = AOEMiningHelper.calcRayTrace(this.level, (Player) this.getOwner(), FluidMode.NONE, 128);
 
 			this.initMotion((LivingEntity) this.getOwner(), res.x - this.getX(), res.y - this.getY(), res.z - this.getZ(), 1.5F);
 		} else if (this.tickCount >= 400) {
@@ -241,9 +241,9 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 				explosion.explode();
 				explosion.finalizeExplosion(true);
 
-				for(ServerPlayerEntity serverplayerentity : this.level.getServer().getLevel(this.level.dimension()).players()) {
-			         if (serverplayerentity.distanceToSqr(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z) < 4096.0D) {
-			        	 serverplayerentity.connection.send(new SExplosionPacket(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z, explosionRadius, explosion.getToBlow(), explosion.getHitPlayers().get(serverplayerentity)));
+				for(ServerPlayer serverPlayer : this.level.getServer().getLevel(this.level.dimension()).players()) {
+			         if (serverPlayer.distanceToSqr(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z) < 4096.0D) {
+			        	 serverPlayer.connection.send(new SExplosionPacket(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z, explosionRadius, explosion.getToBlow(), explosion.getHitPlayers().get(serverPlayer)));
 			         }
 			      }
 			}

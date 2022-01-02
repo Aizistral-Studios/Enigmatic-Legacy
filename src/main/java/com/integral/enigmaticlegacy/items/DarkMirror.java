@@ -13,14 +13,14 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.item.enchantment.IVanishable;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -55,11 +55,11 @@ public class DarkMirror extends ItemBase implements ICursed, IVanishable {
 
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-		if (entityLiving instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) entityLiving;
+		if (entityLiving instanceof Player) {
+			Player player = (Player) entityLiving;
 
-			if (player instanceof ServerPlayerEntity) {
-				SuperpositionHandler.backToSpawn((ServerPlayerEntity) player);
+			if (player instanceof ServerPlayer) {
+				SuperpositionHandler.backToSpawn((ServerPlayer) player);
 				player.getCooldownTracker().setCooldown(this, 200);
 			}
 		}
@@ -86,12 +86,12 @@ public class DarkMirror extends ItemBase implements ICursed, IVanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public ActionResult<ItemStack> use(World world, Player player, Hand hand) {
 		if (EnigmaticLegacy.proxy.isInVanillaDimension(player) && SuperpositionHandler.isTheCursedOne(player) && !player.getCooldowns().isOnCooldown(this)) {
 			player.startUsingItem(hand);
 
-			if (player instanceof ServerPlayerEntity) {
-				SuperpositionHandler.backToSpawn((ServerPlayerEntity) player);
+			if (player instanceof ServerPlayer) {
+				SuperpositionHandler.backToSpawn((ServerPlayer) player);
 				player.getCooldowns().addCooldown(this, 200);
 			}
 

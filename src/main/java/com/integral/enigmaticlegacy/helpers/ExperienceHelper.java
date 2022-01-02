@@ -3,8 +3,8 @@ package com.integral.enigmaticlegacy.helpers;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.packets.clients.PacketUpdateExperience;
 
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -17,19 +17,19 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 public class ExperienceHelper {
 
-	public static int getPlayerXP(PlayerEntity player) {
+	public static int getPlayerXP(Player player) {
 		return (int) (getExperienceForLevel(player.experienceLevel) + player.experienceProgress * player.getXpNeededForNextLevel());
 	}
 
-	public static int getPlayerXPLevel(PlayerEntity player) {
+	public static int getPlayerXPLevel(Player player) {
 		return getLevelForExperience(getPlayerXP(player));
 	}
 
-	public static void drainPlayerXP(PlayerEntity player, int amount) {
+	public static void drainPlayerXP(Player player, int amount) {
 		addPlayerXP(player, -amount);
 	}
 
-	public static void addPlayerXP(PlayerEntity player, int amount) {
+	public static void addPlayerXP(Player player, int amount) {
 		// TODO Post events again when we are ready to fully acknowledge their alterable nature
 
 		PlayerXpEvent.XpChange eventXP = new PlayerXpEvent.XpChange(player, amount);

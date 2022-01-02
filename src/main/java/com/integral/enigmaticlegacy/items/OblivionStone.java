@@ -22,7 +22,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.item.enchantment.IVanishable;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -33,9 +33,9 @@ import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextComponent;
@@ -155,13 +155,13 @@ public class OblivionStone extends ItemBase implements IVanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public ActionResult<ItemStack> use(World world, Player player, Hand hand) {
 
 		ItemStack stack = player.getItemInHand(hand);
 		int mode = ItemNBTHelper.getInt(stack, "ConsumptionMode", 0);
 
 		if (player.isCrouching()) {
-			world.playSound(null, player.blockPosition(), ItemNBTHelper.getBoolean(stack, "IsActive", true) ? EnigmaticLegacy.HHOFF : EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.blockPosition(), ItemNBTHelper.getBoolean(stack, "IsActive", true) ? EnigmaticLegacy.HHOFF : EnigmaticLegacy.HHON, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			ItemNBTHelper.setBoolean(stack, "IsActive", !ItemNBTHelper.getBoolean(stack, "IsActive", true));
 		} else {
 			if (mode >= 0 && mode < 2) {
@@ -170,7 +170,7 @@ public class OblivionStone extends ItemBase implements IVanishable {
 				ItemNBTHelper.setInt(stack, "ConsumptionMode", 0);
 			}
 
-			world.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 		}
 
 		player.swing(hand);
@@ -180,10 +180,10 @@ public class OblivionStone extends ItemBase implements IVanishable {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (!(entity instanceof PlayerEntity) || entity.tickCount % 4 != 0)
+		if (!(entity instanceof Player) || entity.tickCount % 4 != 0)
 			return;
 
-		PlayerEntity player = (PlayerEntity) entity;
+		Player player = (Player) entity;
 
 		if (!ItemNBTHelper.getBoolean(stack, "IsActive", true) || stack.getOrCreateTag().getList("SupersolidID", 8).size() < 1)
 			return;
@@ -194,7 +194,7 @@ public class OblivionStone extends ItemBase implements IVanishable {
 		OblivionStone.consumeStuff(player, arr, ItemNBTHelper.getInt(stack, "ConsumptionMode", 0));
 	}
 
-	public static void consumeStuff(PlayerEntity player, ListNBT list, int mode) {
+	public static void consumeStuff(Player player, ListNBT list, int mode) {
 		HashMap<Integer, ItemStack> stackMap = new HashMap<Integer, ItemStack>();
 		int cycleCounter = 0;
 		int filledStacks = 0;

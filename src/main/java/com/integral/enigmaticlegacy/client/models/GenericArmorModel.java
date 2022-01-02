@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ArmorStandEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.inventory.EquipmentSlotType;
 
 /**
  * Generic class for extension by armor models.

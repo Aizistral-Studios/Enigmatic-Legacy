@@ -23,10 +23,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -68,7 +68,7 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "berserk_emblem"));
 	}
 
-	private Multimap<Attribute, AttributeModifier> createAttributeMap(PlayerEntity player) {
+	private Multimap<Attribute, AttributeModifier> createAttributeMap(Player player) {
 		Multimap<Attribute, AttributeModifier> attributesDefault = HashMultimap.create();
 
 		float missingHealthPool = SuperpositionHandler.getMissingHealthPool(player);
@@ -119,8 +119,8 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) living;
+		if (living instanceof Player) {
+			Player player = (Player) living;
 
 			living.getAttributes().addTransientAttributeModifiers(this.createAttributeMap(player));
 		}
@@ -128,8 +128,8 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 
 	@Override
 	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof PlayerEntity) {
-			living.getAttributes().removeAttributeModifiers(this.createAttributeMap((PlayerEntity) living));
+		if (living instanceof Player) {
+			living.getAttributes().removeAttributeModifiers(this.createAttributeMap((Player) living));
 		}
 	}
 
@@ -141,7 +141,7 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 
 	@Override
 	public boolean canEquip(String identifier, LivingEntity living, ItemStack stack) {
-		return super.canEquip(identifier, living, stack) && living instanceof PlayerEntity && SuperpositionHandler.isTheCursedOne((PlayerEntity)living);
+		return super.canEquip(identifier, living, stack) && living instanceof Player && SuperpositionHandler.isTheCursedOne((Player)living);
 	}
 
 }

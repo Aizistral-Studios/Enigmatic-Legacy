@@ -8,7 +8,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.brewing.IBrewingRecipe;
 
 public abstract class AbstractBrewingRecipe implements IBrewingRecipe {

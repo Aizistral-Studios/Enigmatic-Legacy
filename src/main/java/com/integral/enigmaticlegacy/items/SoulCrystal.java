@@ -26,22 +26,22 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public class SoulCrystal extends ItemBase implements IPermanentCrystal, IVanishable {
-	public Map<PlayerEntity, Multimap<Attribute, AttributeModifier>> attributeDispatcher = new WeakHashMap<>();
+	public Map<Player, Multimap<Attribute, AttributeModifier>> attributeDispatcher = new WeakHashMap<>();
 
 	public SoulCrystal() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).fireResistant().tab(EnigmaticLegacy.enigmaticTab));
@@ -58,21 +58,21 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, IVanisha
 		}
 	}
 
-	public ItemStack createCrystalFrom(PlayerEntity player) {
+	public ItemStack createCrystalFrom(Player player) {
 		int lostFragments = this.getLostCrystals(player);
 		this.setLostCrystals(player, lostFragments + 1);
 
 		return new ItemStack(this);
 	}
 
-	public boolean retrieveSoulFromCrystal(PlayerEntity player, ItemStack stack) {
+	public boolean retrieveSoulFromCrystal(Player player, ItemStack stack) {
 		int lostFragments = this.getLostCrystals(player);
 
 		if (lostFragments > 0) {
 			this.setLostCrystals(player, lostFragments - 1);
 
 			if (!player.level.isClientSide) {
-				player.level.playSound(null, new BlockPos(player.position()), SoundEvents.BEACON_ACTIVATE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+				player.level.playSound(null, new BlockPos(player.position()), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.0f);
 			}
 
 			return true;
@@ -80,16 +80,16 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, IVanisha
 			return false;
 	}
 
-	public void setLostCrystals(PlayerEntity player, int lost) {
+	public void setLostCrystals(Player player, int lost) {
 		SuperpositionHandler.setPersistentInteger(player, "enigmaticlegacy.lostsoulfragments", lost);
 		this.updatePlayerSoulMap(player);
 	}
 
-	public int getLostCrystals(PlayerEntity player) {
+	public int getLostCrystals(Player player) {
 		return SuperpositionHandler.getPersistentInteger(player, "enigmaticlegacy.lostsoulfragments", 0);
 	}
 
-	public Multimap<Attribute, AttributeModifier> getOrCreateSoulMap(PlayerEntity player) {
+	public Multimap<Attribute, AttributeModifier> getOrCreateSoulMap(Player player) {
 		if (this.attributeDispatcher.containsKey(player))
 			return this.attributeDispatcher.get(player);
 		else {
@@ -99,13 +99,13 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, IVanisha
 		}
 	}
 
-	public void applyPlayerSoulMap(PlayerEntity player) {
+	public void applyPlayerSoulMap(Player player) {
 		Multimap<Attribute, AttributeModifier> soulMap = this.getOrCreateSoulMap(player);
 		AttributeModifierManager attributeManager = player.getAttributes();
 		attributeManager.addTransientAttributeModifiers(soulMap);
 	}
 
-	public void updatePlayerSoulMap(PlayerEntity player) {
+	public void updatePlayerSoulMap(Player player) {
 		Multimap<Attribute, AttributeModifier> soulMap = this.getOrCreateSoulMap(player);
 		AttributeModifierManager attributeManager = player.getAttributes();
 
@@ -127,7 +127,7 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, IVanisha
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public ActionResult<ItemStack> use(World world, Player player, Hand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		player.startUsingItem(hand);
 

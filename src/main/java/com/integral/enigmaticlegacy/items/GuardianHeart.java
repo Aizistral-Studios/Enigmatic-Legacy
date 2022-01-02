@@ -37,21 +37,21 @@ import net.minecraft.world.entity.monster.piglin.PiglinBruteBrain;
 import net.minecraft.world.entity.monster.piglin.PiglinBruteEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinTasks;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.PlayerInventory;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.item.alchemy.Effects;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -123,11 +123,11 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (entity instanceof PlayerEntity && !world.isClientSide) {
-			PlayerEntity player = (PlayerEntity) entity;
+		if (entity instanceof Player && !world.isClientSide) {
+			Player player = (Player) entity;
 			List<MonsterEntity> genericMobs = player.level.getEntitiesOfClass(MonsterEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, abilityRange.getValue()));
 
-			if (SuperpositionHandler.isTheCursedOne(player) && PlayerInventory.isHotbarSlot(itemSlot) && !player.getCooldowns().isOnCooldown(this)) {
+			if (SuperpositionHandler.isTheCursedOne(player) && Inventory.isHotbarSlot(itemSlot) && !player.getCooldowns().isOnCooldown(this)) {
 				MonsterEntity oneWatched = null;
 
 				for (MonsterEntity monster : genericMobs) {
@@ -158,10 +158,10 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 							this.setAttackTarget(otherMonster, theOne);
 						}
 
-						player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundCategory.HOSTILE, 1.0F, 1.0F);
+						player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.HOSTILE, 1.0F, 1.0F);
 
-						if (player instanceof ServerPlayerEntity) {
-							ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
+						if (player instanceof ServerPlayer) {
+							ServerPlayer serverPlayer = (ServerPlayer) player;
 							EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(theOne.getX(), theOne.getY(), theOne.getZ(), 64, theOne.level.dimension())), new PacketGenericParticleEffect(theOne.getX(), theOne.getEyeY(), theOne.getZ(), 0, false, Effect.GUARDIAN_CURSE));
 						}
 
@@ -224,7 +224,7 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
 		return super.use(worldIn, playerIn, handIn);
 	}
 

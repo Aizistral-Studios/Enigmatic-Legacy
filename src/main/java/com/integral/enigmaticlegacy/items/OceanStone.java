@@ -28,17 +28,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.item.alchemy.Effects;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -102,7 +102,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 		this.resistanceList.put("fireball", () -> 2F);
 	}
 
-	private Multimap<Attribute, AttributeModifier> createAttributeMap(PlayerEntity player) {
+	private Multimap<Attribute, AttributeModifier> createAttributeMap(Player player) {
 		Multimap<Attribute, AttributeModifier> attributesDefault = HashMultimap.create();
 
 		attributesDefault.put(ForgeMod.ENTITY_GRAVITY.get(), new AttributeModifier(UUID.fromString("79e1cc36-fb4e-4c7d-802b-583b8d90648a"), EnigmaticLegacy.MODID+":gravity_bonus", player.isEyeInFluid(FluidTags.WATER) ? -1.0F : 0F, AttributeModifier.Operation.MULTIPLY_TOTAL));
@@ -145,7 +145,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void triggerActiveAbility(World world, ServerPlayerEntity player, ItemStack stack) {
+	public void triggerActiveAbility(World world, ServerPlayer player, ItemStack stack) {
 		if (SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
@@ -186,7 +186,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 						 */
 					}
 
-					world.playSound(null, player.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundCategory.NEUTRAL, 2.0F, (float) (0.7F + (Math.random() * 0.3D)));
+					world.playSound(null, player.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.NEUTRAL, 2.0F, (float) (0.7F + (Math.random() * 0.3D)));
 
 					SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
 				}
@@ -196,18 +196,18 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof PlayerEntity) {
-			EnigmaticLegacy.miningCharm.removeNightVisionEffect((PlayerEntity) living, this.nightVisionDuration);
-			living.getAttributes().removeAttributeModifiers(this.createAttributeMap((PlayerEntity)living));
+		if (living instanceof Player) {
+			EnigmaticLegacy.miningCharm.removeNightVisionEffect((Player) living, this.nightVisionDuration);
+			living.getAttributes().removeAttributeModifiers(this.createAttributeMap((Player)living));
 		}
 	}
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 
-		if (living instanceof PlayerEntity & !living.level.isClientSide)
+		if (living instanceof Player & !living.level.isClientSide)
 			if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.oceanStone)) {
-				PlayerEntity player = (PlayerEntity) living;
+				Player player = (Player) living;
 
 				if (player.isEyeInFluid(FluidTags.WATER)) {
 					player.addEffect(new EffectInstance(Effects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));

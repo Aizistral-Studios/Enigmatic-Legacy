@@ -16,10 +16,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.brain.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.HoglinEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -53,10 +53,10 @@ public class AnimalGuide extends ItemBase implements IVanishable {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (!(entityIn instanceof PlayerEntity) || worldIn.isClientSide)
+		if (!(entityIn instanceof Player) || worldIn.isClientSide)
 			return;
 
-		PlayerEntity player = (PlayerEntity) entityIn;
+		Player player = (Player) entityIn;
 	}
 
 }

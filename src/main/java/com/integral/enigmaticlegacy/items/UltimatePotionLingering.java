@@ -14,7 +14,7 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.enigmaticlegacy.objects.AdvancedPotion;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemGroup;
 import net.minecraft.world.item.ItemStack;
@@ -24,8 +24,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -90,11 +90,11 @@ public class UltimatePotionLingering extends ItemBase implements IAdvancedPotion
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		ItemStack throwed = playerIn.abilities.instabuild ? itemstack.copy() : itemstack.split(1);
 
-		worldIn.playSound((PlayerEntity)null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.LINGERING_POTION_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (Item.random.nextFloat() * 0.4F + 0.8F));
+		worldIn.playSound((Player)null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.LINGERING_POTION_THROW, SoundSource.PLAYERS, 0.5F, 0.4F / (Item.random.nextFloat() * 0.4F + 0.8F));
 		if (!worldIn.isClientSide) {
 			EnigmaticPotionEntity potionEntity = new EnigmaticPotionEntity(worldIn, playerIn);
 			potionEntity.setItem(throwed);

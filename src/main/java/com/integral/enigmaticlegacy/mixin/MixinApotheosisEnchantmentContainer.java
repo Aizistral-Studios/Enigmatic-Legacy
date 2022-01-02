@@ -15,18 +15,18 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.item.enchantment.EnchantmentData;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.PlayerInventory;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.EnchantmentContainer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.world.inventory.container.EnchantmentContainer;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.ContainerLevelAccess;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 /**
@@ -38,16 +38,16 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 @Mixin(targets="shadows.apotheosis.ench.table.ApothEnchantContainer")
 public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
 
-	public MixinApotheosisEnchantmentContainer(int id, PlayerInventory playerInventory) {
-		super(id, playerInventory);
+	public MixinApotheosisEnchantmentContainer(int id, Inventory Inventory) {
+		super(id, Inventory);
 	}
 
-	public MixinApotheosisEnchantmentContainer(int id, PlayerInventory playerInventory, IWorldPosCallable worldPosCallable) {
-		super(id, playerInventory, worldPosCallable);
+	public MixinApotheosisEnchantmentContainer(int id, Inventory Inventory, ContainerLevelAccess worldPosCallable) {
+		super(id, Inventory, worldPosCallable);
 	}
 
-	@Inject(at = @At("HEAD"), method = "enchantItem(Lnet/minecraft/entity/player/PlayerEntity;I)Z", cancellable = true)
-	private void onEnchantedItem(PlayerEntity player, int id, CallbackInfoReturnable<Boolean> info) {
+	@Inject(at = @At("HEAD"), method = "enchantItem(Lnet/minecraft/entity/player/Player;I)Z", cancellable = true)
+	private void onEnchantedItem(Player player, int id, CallbackInfoReturnable<Boolean> info) {
 
 		if (SuperpositionHandler.isTheCursedOne(player))
 			if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.enchanterPearl) || SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enchanterPearl)) {
@@ -72,24 +72,24 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
 						this.enchantSlots.setItem(0, enchanted);
 
 						player.awardStat(Stats.ENCHANT_ITEM);
-						if (player instanceof ServerPlayerEntity) {
+						if (player instanceof ServerPlayer) {
 
 							// TODO Gotta finish this someday
 
 							/*
 							try {
 								Class<?> triggerClass = Class.forName("shadows.apotheosis.advancements.EnchantedTrigger");
-								Method triggerMethod = triggerClass.getDeclaredMethod("trigger", ServerPlayerEntity.class, ItemStack.class, Integer.class, Float.class, Float.class, Float.class);
+								Method triggerMethod = triggerClass.getDeclaredMethod("trigger", ServerPlayer.class, ItemStack.class, Integer.class, Float.class, Float.class, Float.class);
 							} catch (Exception ex) {
 							}
 							 */
 							//EnchantedItemTrigger
-							CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayerEntity)player, enchanted, level);
+							CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer)player, enchanted, level);
 						}
 
 						this.enchantSlots.setChanged();
 						this.slotsChanged(this.enchantSlots);
-						world.playSound((PlayerEntity) null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
+						world.playSound((Player) null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
 					}
 
 				});
@@ -100,7 +100,7 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
 			}
 	}
 
-	private ItemStack enchantStack(PlayerEntity player, ItemStack stack, int id, boolean shadowsRollTwice) {
+	private ItemStack enchantStack(Player player, ItemStack stack, int id, boolean shadowsRollTwice) {
 		ItemStack toEnchant = stack.copy();
 
 		int i = id + 1;

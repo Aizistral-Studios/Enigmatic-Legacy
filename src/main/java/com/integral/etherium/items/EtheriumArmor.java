@@ -14,8 +14,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.EquipmentSlotType;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.IArmorMaterial;
 import net.minecraft.world.item.ItemStack;
@@ -49,7 +49,7 @@ public class EtheriumArmor extends ArmorItem {
 		return config;
 	}
 
-	public static boolean hasFullSet(@Nonnull PlayerEntity player) {
+	public static boolean hasFullSet(@Nonnull Player player) {
 		if (player == null)
 			return false;
 
@@ -61,7 +61,7 @@ public class EtheriumArmor extends ArmorItem {
 		return true;
 	}
 
-	public static boolean hasShield(@Nonnull PlayerEntity player) {
+	public static boolean hasShield(@Nonnull Player player) {
 		if (player != null)
 			if (hasFullSet(player) && player.getHealth() / player.getMaxHealth() <= config.getShieldThreshold().asMultiplier(false))
 				return true;

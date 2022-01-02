@@ -22,17 +22,17 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.item.alchemy.Effects;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -98,7 +98,7 @@ public class MiningCharm extends ItemBaseCurio {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharmNightVision", null, mode);
 	}
 
-	public void removeNightVisionEffect(PlayerEntity player, int duration) {
+	public void removeNightVisionEffect(Player player, int duration) {
 		if (player.getEffect(Effects.NIGHT_VISION) != null) {
 			EffectInstance effect = player.getEffect(Effects.NIGHT_VISION);
 
@@ -112,9 +112,9 @@ public class MiningCharm extends ItemBaseCurio {
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 
-		if (living instanceof PlayerEntity & !living.level.isClientSide)
+		if (living instanceof Player & !living.level.isClientSide)
 			if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.miningCharm)) {
-				PlayerEntity player = (PlayerEntity) living;
+				Player player = (Player) living;
 
 				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) && player.getY() < 50 && !player.level.dimension().location().toString().equals("minecraft:the_nether") && !player.level.dimension().location().toString().equals("minecraft:the_end") && !player.isEyeInFluid(FluidTags.WATER) && !player.level.canSeeSkyFromBelowWater(player.blockPosition()) && player.level.getMaxLocalRawBrightness(player.blockPosition(), 0) <= 8) {
 
@@ -127,16 +127,16 @@ public class MiningCharm extends ItemBaseCurio {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand handIn) {
+	public ActionResult<ItemStack> use(World world, Player player, Hand handIn) {
 
 		ItemStack stack = player.getItemInHand(handIn);
 
 		if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
 			ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", false);
-			world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHOFF, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 		} else {
 			ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", true);
-			world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHON, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 		}
 
 		player.swing(handIn);
@@ -147,8 +147,8 @@ public class MiningCharm extends ItemBaseCurio {
 
 	@Override
 	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof PlayerEntity) {
-			this.removeNightVisionEffect((PlayerEntity) living, this.nightVisionDuration);
+		if (living instanceof Player) {
+			this.removeNightVisionEffect((Player) living, this.nightVisionDuration);
 		}
 	}
 

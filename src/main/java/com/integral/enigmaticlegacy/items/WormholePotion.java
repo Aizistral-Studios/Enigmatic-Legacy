@@ -16,8 +16,8 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -26,9 +26,9 @@ import net.minecraft.world.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -62,16 +62,16 @@ public class WormholePotion extends ItemBase implements IBound {
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-		if (!(entityLiving instanceof PlayerEntity))
+		if (!(entityLiving instanceof Player))
 			return stack;
 
-		PlayerEntity player = (PlayerEntity) entityLiving;
+		Player player = (Player) entityLiving;
 
-		if (player instanceof ServerPlayerEntity) {
-			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
+		if (player instanceof ServerPlayer) {
+			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
 		}
 
-		PlayerEntity receiver = this.getBoundPlayer(worldIn, stack);
+		Player receiver = this.getBoundPlayer(worldIn, stack);
 
 		if (!worldIn.isClientSide && receiver != null) {
 
@@ -80,12 +80,12 @@ public class WormholePotion extends ItemBase implements IBound {
 			while (vec.distanceTo(receiver.position()) < 1.0D)
 				vec = receiver.position().add((Item.random.nextDouble() - 0.5D) * 4D, 0, (Item.random.nextDouble() - 0.5D) * 4D);
 
-			worldIn.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+			worldIn.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketPortalParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 100, 1.25F, false));
 
 			player.teleportTo(vec.x, vec.y + 0.25, vec.z);
-			worldIn.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+			worldIn.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketRecallParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 48, false));
 		}
@@ -116,10 +116,10 @@ public class WormholePotion extends ItemBase implements IBound {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public ActionResult<ItemStack> use(World world, Player player, Hand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 
-		PlayerEntity receiver = this.getBoundPlayer(world, stack);
+		Player receiver = this.getBoundPlayer(world, stack);
 
 		if (receiver != null/* && receiver != player */) {
 			player.startUsingItem(hand);

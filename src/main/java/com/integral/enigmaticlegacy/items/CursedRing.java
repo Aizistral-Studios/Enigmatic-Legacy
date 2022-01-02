@@ -41,11 +41,11 @@ import net.minecraft.world.entity.monster.piglin.PiglinTasks;
 import net.minecraft.world.entity.passive.BeeEntity;
 import net.minecraft.world.entity.passive.IronGolemEntity;
 import net.minecraft.world.entity.passive.TameableEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -231,7 +231,7 @@ public class CursedRing extends ItemBaseCurio {
 
 	@Override
 	public boolean canUnequip(String identifier, LivingEntity living, ItemStack stack) {
-		if (living instanceof PlayerEntity && ((PlayerEntity) living).isCreative())
+		if (living instanceof Player && ((Player) living).isCreative())
 			return super.canUnequip(identifier, living, stack);
 		else
 			return false;
@@ -250,8 +250,8 @@ public class CursedRing extends ItemBaseCurio {
 	@Override
 	public void onEquip(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
 		// TODO Use Curios trigger for this
-		if (entityLivingBase instanceof ServerPlayerEntity) {
-			CursedRingEquippedTrigger.INSTANCE.trigger((ServerPlayerEntity) entityLivingBase);
+		if (entityLivingBase instanceof ServerPlayer) {
+			CursedRingEquippedTrigger.INSTANCE.trigger((ServerPlayer) entityLivingBase);
 		}
 	}
 
@@ -271,10 +271,10 @@ public class CursedRing extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity livingPlayer, ItemStack stack) {
-		if (livingPlayer.level.isClientSide || !(livingPlayer instanceof PlayerEntity))
+		if (livingPlayer.level.isClientSide || !(livingPlayer instanceof Player))
 			return;
 
-		PlayerEntity player = (PlayerEntity) livingPlayer;
+		Player player = (Player) livingPlayer;
 
 		if (player.isCreative() || player.isSpectator())
 			return;

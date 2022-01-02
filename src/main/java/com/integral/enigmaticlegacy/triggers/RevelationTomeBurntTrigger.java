@@ -8,9 +8,9 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.world.level.storage.loot.ConditionArrayParser;
+import net.minecraft.resources.ResourceLocation;
 
 public class RevelationTomeBurntTrigger extends AbstractCriterionTrigger<RevelationTomeBurntTrigger.Instance> {
 	public static final ResourceLocation ID = new ResourceLocation(EnigmaticLegacy.MODID, "revelation_tome_burnt");
@@ -30,7 +30,7 @@ public class RevelationTomeBurntTrigger extends AbstractCriterionTrigger<Revelat
 		return new RevelationTomeBurntTrigger.Instance(playerPred);
 	}
 
-	public void trigger(ServerPlayerEntity player) {
+	public void trigger(ServerPlayer player) {
 		this.trigger(player, instance -> instance.test());
 	}
 

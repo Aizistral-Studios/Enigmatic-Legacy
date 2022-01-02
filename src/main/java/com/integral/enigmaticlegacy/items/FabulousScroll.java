@@ -14,12 +14,12 @@ import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.item.alchemy.Effects;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -54,8 +54,8 @@ public class FabulousScroll extends HeavenScroll {
 		if (living.level.isClientSide)
 			return;
 
-		if (living instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) living;
+		if (living instanceof Player) {
+			Player player = (Player) living;
 
 			boolean inRange = SuperpositionHandler.isInBeaconRange(player);
 
@@ -69,7 +69,7 @@ public class FabulousScroll extends HeavenScroll {
 
 	}
 
-	protected void handleFabulousFlight(PlayerEntity player, boolean inRange) {
+	protected void handleFabulousFlight(Player player, boolean inRange) {
 		try {
 			if (ExperienceHelper.getPlayerXP(player) > 0 || inRange) {
 
@@ -101,8 +101,8 @@ public class FabulousScroll extends HeavenScroll {
 	@Override
 	public void onUnequip(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
 
-		if (entityLivingBase instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) entityLivingBase;
+		if (entityLivingBase instanceof Player) {
+			Player player = (Player) entityLivingBase;
 
 			if (!player.isCreative()) {
 				player.abilities.mayfly = false;

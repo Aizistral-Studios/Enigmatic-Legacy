@@ -4,12 +4,12 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.items.RevelationTome;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.loot.IRandomRange;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootFunction;
-import net.minecraft.loot.LootFunctionType;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.loot.functions.ILootFunction;
+import net.minecraft.world.level.storage.loot.IRandomRange;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootFunction;
+import net.minecraft.world.level.storage.loot.LootFunctionType;
+import net.minecraft.world.level.storage.loot.conditions.ILootCondition;
+import net.minecraft.world.level.storage.loot.functions.ILootFunction;
 
 public class LootFunctionRevelation implements ILootFunction {
 	private final IRandomRange randomPoints;

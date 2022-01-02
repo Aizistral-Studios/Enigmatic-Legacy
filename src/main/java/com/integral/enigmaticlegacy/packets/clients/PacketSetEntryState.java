@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.helpers.PatchouliHelper;
 
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class PacketSetEntryState {

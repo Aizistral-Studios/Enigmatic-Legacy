@@ -3,7 +3,7 @@ package com.integral.enigmaticlegacy.api.items;
 import java.util.List;
 
 import com.google.common.collect.Multimap;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.world.entity.LivingEntity;
@@ -115,11 +115,11 @@ public class ItemizedCurioInstance implements ICurio {
 	}
 
 	@Override
-	public void render(String identifier, int index, MatrixStack matrixStack, IRenderTypeBuffer renderTypeBuffer,
+	public void render(String identifier, int index, PoseStack PoseStack, IRenderTypeBuffer renderTypeBuffer,
 			int light, LivingEntity livingEntity, float limbSwing, float limbSwingAmount, float partialTicks,
 			float ageInTicks, float netHeadYaw, float headPitch) {
 
-		this.curioItem.render(identifier, index, matrixStack, renderTypeBuffer, light, livingEntity, limbSwing,
+		this.curioItem.render(identifier, index, PoseStack, renderTypeBuffer, light, livingEntity, limbSwing,
 				limbSwingAmount, partialTicks, ageInTicks, netHeadYaw, headPitch, this.stackInstance);
 	}
 

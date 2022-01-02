@@ -9,8 +9,8 @@ import com.integral.enigmaticlegacy.items.ForbiddenFruit;
 import com.integral.enigmaticlegacy.items.MagmaHeart;
 import com.integral.enigmaticlegacy.packets.clients.PacketSyncTransientData;
 
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.api.distmarker.Dist;
@@ -21,7 +21,7 @@ public class TransientPlayerData {
 
 	// TODO Wrap variables into param objects
 
-	public static TransientPlayerData get(PlayerEntity player) {
+	public static TransientPlayerData get(Player player) {
 		boolean clientOnly = player.level.isClientSide;
 
 		if (EnigmaticLegacy.proxy.getTransientPlayerData(clientOnly).containsKey(player))
@@ -34,7 +34,7 @@ public class TransientPlayerData {
 		}
 	}
 
-	public static boolean set(PlayerEntity player, TransientPlayerData data) {
+	public static boolean set(Player player, TransientPlayerData data) {
 		boolean clientOnly = player.level.isClientSide;
 
 		if (data != null) {
@@ -45,13 +45,13 @@ public class TransientPlayerData {
 	}
 
 	public void syncToClients(float blockRadius) {
-		PlayerEntity player = this.getPlayer();
+		Player player = this.getPlayer();
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), blockRadius, player.level.dimension())), new PacketSyncTransientData(this));
 	}
 
 	public void syncToPlayer() {
-		if (this.getPlayer() instanceof ServerPlayerEntity) {
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) this.getPlayer()), new PacketSyncTransientData(this));
+		if (this.getPlayer() instanceof ServerPlayer) {
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) this.getPlayer()), new PacketSyncTransientData(this));
 		}
 	}
 
@@ -60,7 +60,7 @@ public class TransientPlayerData {
 		// NO-OP
 	}
 
-	private final WeakReference<PlayerEntity> player;
+	private final WeakReference<Player> player;
 	private int fireImmunityTimer;
 	private int fireImmunityTimerCap;
 	public int spellstoneCooldown;
@@ -69,7 +69,7 @@ public class TransientPlayerData {
 
 	public boolean needsSync = false;
 
-	public TransientPlayerData(PlayerEntity thePlayer) {
+	public TransientPlayerData(Player thePlayer) {
 		this.player = new WeakReference<>(thePlayer);
 		this.fireImmunityTimer = 0;
 		this.spellstoneCooldown = 0;
@@ -149,7 +149,7 @@ public class TransientPlayerData {
 		this.consumedForbiddenFruit = consumedForbiddenFruit;
 	}
 
-	public PlayerEntity getPlayer() {
+	public Player getPlayer() {
 		return this.player.get();
 	}
 
@@ -172,7 +172,7 @@ public class TransientPlayerData {
 		int fireImmunityTimerLast = buf.readInt();
 		boolean consumedForbiddenFruit = buf.readBoolean();
 
-		PlayerEntity player = EnigmaticLegacy.proxy.getPlayer(playerID);
+		Player player = EnigmaticLegacy.proxy.getPlayer(playerID);
 
 		if (player != null) {
 			TransientPlayerData data = new TransientPlayerData(player);

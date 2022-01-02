@@ -10,13 +10,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
-import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ILivingEntityData;
 import net.minecraft.world.entity.SpawnReason;
 import net.minecraft.world.entity.monster.PhantomEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.stats.ServerStatisticsManager;
@@ -51,7 +51,7 @@ public class MixinPhantomSpawner {
 				} else {
 					int i = 0;
 
-					for(ServerPlayerEntity player : world.players()) {
+					for(ServerPlayer player : world.players()) {
 						if (!player.isSpectator() && !player.isCreative()) {
 							BlockPos blockpos = player.blockPosition();
 							if (!world.dimensionType().hasSkyLight() || blockpos.getY() >= world.getSeaLevel() && world.canSeeSky(blockpos)) {

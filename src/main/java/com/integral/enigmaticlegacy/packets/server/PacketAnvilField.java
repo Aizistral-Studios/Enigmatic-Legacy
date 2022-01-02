@@ -2,7 +2,7 @@ package com.integral.enigmaticlegacy.packets.server;
 
 import java.util.function.Supplier;
 
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -30,7 +30,7 @@ public class PacketAnvilField {
 	public static void handle(PacketAnvilField msg, Supplier<NetworkEvent.Context> ctx) {
 
 		ctx.get().enqueueWork(() -> {
-			ServerPlayerEntity playerServ = ctx.get().getSender();
+			ServerPlayer playerServ = ctx.get().getSender();
 
 			//EnigmaticEventHandler.anvilFields.put(playerServ, msg.field);
 

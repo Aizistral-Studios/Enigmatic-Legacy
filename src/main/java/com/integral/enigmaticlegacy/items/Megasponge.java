@@ -15,16 +15,16 @@ import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowingFluidBlock;
 import net.minecraft.world.level.block.IBucketPickupHandler;
-import net.minecraft.world.level.block.material.Material;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.item.enchantment.IVanishable;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
@@ -33,9 +33,9 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ITag.INamedTag;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -80,7 +80,7 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 	}
 
 	@SuppressWarnings("deprecation")
-	public BlockPos getCollidedWater(INamedTag<Fluid> fluidTag, PlayerEntity player) {
+	public BlockPos getCollidedWater(INamedTag<Fluid> fluidTag, Player player) {
 		AxisAlignedBB axisalignedbb = player.getBoundingBox().deflate(0.001D);
 		int i = MathHelper.floor(axisalignedbb.minX);
 		int j = MathHelper.ceil(axisalignedbb.maxX);
@@ -119,8 +119,8 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof PlayerEntity & !living.level.isClientSide) {
-			PlayerEntity player = (PlayerEntity) living;
+		if (living instanceof Player & !living.level.isClientSide) {
+			Player player = (Player) living;
 
 			if (!player.getCooldowns().isOnCooldown(this)) {
 				List<BlockPos> doomedWaterBlocks = new ArrayList<BlockPos>();
@@ -161,7 +161,7 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 
 						doomedWaterBlocks.clear();
 
-						player.level.playSound(null, player.blockPosition(), SoundEvents.BUCKET_FILL, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+						player.level.playSound(null, player.blockPosition(), SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64, player.level.dimension())), new PacketPortalParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 40, 1.0D, false));
 						player.getCooldowns().addCooldown(this, 20);
 

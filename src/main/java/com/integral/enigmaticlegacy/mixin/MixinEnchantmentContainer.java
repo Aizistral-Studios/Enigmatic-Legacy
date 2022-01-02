@@ -3,23 +3,23 @@ package com.integral.enigmaticlegacy.mixin;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.item.enchantment.EnchantmentData;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.PlayerInventory;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.EnchantmentContainer;
-import net.minecraft.inventory.container.RepairContainer;
-import net.minecraft.inventory.container.Slot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.world.inventory.IInventory;
+import net.minecraft.world.inventory.container.Container;
+import net.minecraft.world.inventory.container.MenuType;
+import net.minecraft.world.inventory.container.EnchantmentContainer;
+import net.minecraft.world.inventory.container.RepairContainer;
+import net.minecraft.world.inventory.container.Slot;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.play.server.SAdvancementInfoPacket;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -35,15 +35,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
-@Mixin(net.minecraft.inventory.container.EnchantmentContainer.class)
+@Mixin(net.minecraft.world.inventory.container.EnchantmentContainer.class)
 public abstract class MixinEnchantmentContainer extends Container {
 
-	protected MixinEnchantmentContainer(ContainerType<?> type, int id) {
+	protected MixinEnchantmentContainer(MenuType<?> type, int id) {
 		super(type, id);
 	}
 
-	@Inject(at = @At("INVOKE"), method = "net.minecraft.inventory.container.EnchantmentContainer.clickMenuButton(Lnet/minecraft/entity/player/PlayerEntity;I)Z", cancellable = true)
-	private void onEnchantedItem(PlayerEntity player, int clickedID, CallbackInfoReturnable<Boolean> info) {
+	@Inject(at = @At("INVOKE"), method = "net.minecraft.world.inventory.container.EnchantmentContainer.clickMenuButton(Lnet/minecraft/entity/player/Player;I)Z", cancellable = true)
+	private void onEnchantedItem(Player player, int clickedID, CallbackInfoReturnable<Boolean> info) {
 		if (EnchantmentContainer.class.isInstance(this)) {
 			// Evaluating expression promts error assuming incompatible types,
 			// so we need to forget our own class to avoid alerting the compiler
@@ -88,14 +88,14 @@ public abstract class MixinEnchantmentContainer extends Container {
 								container.enchantSlots.setItem(0, enchantedItem);
 
 								player.awardStat(Stats.ENCHANT_ITEM);
-								if (player instanceof ServerPlayerEntity) {
-									CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayerEntity)player, enchantedItem, levelsRequired);
+								if (player instanceof ServerPlayer) {
+									CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer)player, enchantedItem, levelsRequired);
 								}
 
 								container.enchantSlots.setChanged();
 								container.enchantmentSeed.set(player.getEnchantmentSeed());
 								container.slotsChanged(container.enchantSlots);
-								world.playSound((PlayerEntity)null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
+								world.playSound((Player)null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
 							}
 
 						});
@@ -110,16 +110,16 @@ public abstract class MixinEnchantmentContainer extends Container {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	@Inject(at = @At("HEAD"), method = "net.minecraft.inventory.container.EnchantmentContainer.getGoldCount()I", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "net.minecraft.world.inventory.container.EnchantmentContainer.getGoldCount()I", cancellable = true)
 	public void onGetLapisAmount(CallbackInfoReturnable<Integer> info) {
 		if (EnchantmentContainer.class.isInstance(this)) {
 			Object forgottenObject = this;
 			EnchantmentContainer container = (EnchantmentContainer)forgottenObject;
-			PlayerEntity containerUser = null;
+			Player containerUser = null;
 
 			for (Slot slot : container.slots) {
-				if (slot.container instanceof PlayerInventory) {
-					PlayerInventory playerInv = (PlayerInventory) slot.container;
+				if (slot.container instanceof Inventory) {
+					Inventory playerInv = (Inventory) slot.container;
 					containerUser = playerInv.player;
 					break;
 				}

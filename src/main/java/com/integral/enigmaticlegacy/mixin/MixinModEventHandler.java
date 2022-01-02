@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 /**
@@ -22,7 +22,7 @@ public class MixinModEventHandler {
 
 	@Inject(method = "playerLogin", at = @At("RETURN"), cancellable = false, require = 1)
 	public void onCSGHandling(PlayerEvent.PlayerLoggedInEvent event, CallbackInfo info) {
-		if (event.getPlayer() instanceof ServerPlayerEntity) {
+		if (event.getPlayer() instanceof ServerPlayer) {
 			EnigmaticEventHandler.grantStarterGear(event.getPlayer());
 		}
 	}

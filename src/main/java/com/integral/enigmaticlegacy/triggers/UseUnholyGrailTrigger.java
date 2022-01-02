@@ -8,9 +8,9 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.world.level.storage.loot.ConditionArrayParser;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Special trigger that activates when player drinks from Unholy Grail.
@@ -35,7 +35,7 @@ public class UseUnholyGrailTrigger extends AbstractCriterionTrigger<UseUnholyGra
 		return new UseUnholyGrailTrigger.Instance(playerPred);
 	}
 
-	public void trigger(ServerPlayerEntity player) {
+	public void trigger(ServerPlayer player) {
 		this.trigger(player, instance -> instance.test());
 	}
 

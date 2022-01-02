@@ -9,10 +9,10 @@ import com.integral.enigmaticlegacy.items.RevelationTome;
 import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ConditionArrayParser;
+import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.world.level.storage.loot.ConditionArrayParser;
 import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class RevelationGainTrigger extends AbstractCriterionTrigger<RevelationGainTrigger.Instance> {
 	public static final ResourceLocation ID = new ResourceLocation(EnigmaticLegacy.MODID, "embrace_revelation");
@@ -32,7 +32,7 @@ public class RevelationGainTrigger extends AbstractCriterionTrigger<RevelationGa
 		return new RevelationGainTrigger.Instance(playerPred, JSONUtils.getAsString(json, "point_type"), JSONUtils.getAsInt(json, "point_amount"));
 	}
 
-	public void trigger(ServerPlayerEntity player, RevelationTome.TomeType type, int amount) {
+	public void trigger(ServerPlayer player, RevelationTome.TomeType type, int amount) {
 		this.trigger(player, instance -> instance.test(type, amount));
 	}
 

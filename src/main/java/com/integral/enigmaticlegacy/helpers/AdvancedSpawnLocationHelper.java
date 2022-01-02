@@ -5,9 +5,9 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.world.level.block.BlockState;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.entity.player.SpawnLocationHelper;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RegistryKey;
@@ -24,7 +24,7 @@ import net.minecraft.world.server.ServerWorld;
 
 public class AdvancedSpawnLocationHelper {
 
-	public static RegistryKey<World> getPlayerRespawnDimension(ServerPlayerEntity player) {
+	public static RegistryKey<World> getPlayerRespawnDimension(ServerPlayer player) {
 		return player.getRespawnDimension();
 	}
 
@@ -36,7 +36,7 @@ public class AdvancedSpawnLocationHelper {
 		return p_205735_1_ <= 16 ? p_205735_1_ - 1 : 17;
 	}
 
-	public static void fuckBackToSpawn(ServerWorld worldIn, ServerPlayerEntity playerIn) {
+	public static void fuckBackToSpawn(ServerWorld worldIn, ServerPlayer playerIn) {
 		BlockPos blockpos = worldIn.getSharedSpawnPos();
 
 		playerIn.teleportTo(blockpos.getX() + 0.5, blockpos.getY(), blockpos.getZ() + 0.5);
@@ -88,11 +88,11 @@ public class AdvancedSpawnLocationHelper {
 	 * @return I don't know anymore.
 	 */
 
-	public static Optional<Vector3d> getValidSpawn(final ServerWorld world, final ServerPlayerEntity player) {
+	public static Optional<Vector3d> getValidSpawn(final ServerWorld world, final ServerPlayer player) {
 		BlockPos blockpos = player.getRespawnPosition();
 		Optional<Vector3d> optional;
 		if (world != null && blockpos != null) {
-			optional = PlayerEntity.findRespawnPositionAndUseSpawnBlock(world, blockpos, player.getRespawnAngle(), player.isRespawnForced(), false);
+			optional = Player.findRespawnPositionAndUseSpawnBlock(world, blockpos, player.getRespawnAngle(), player.isRespawnForced(), false);
 			/*player.findRespawnPositionAndUseSpawnBlock(world, blockpos, player.getRespawnAngle(), player.isRespawnForced(), false)*/
 		} else {
 			optional = Optional.empty();

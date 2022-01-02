@@ -18,7 +18,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -104,13 +104,13 @@ public class EnderRing extends ItemBaseCurio {
 
 	/*
 	 * @Override public ActionResult<ItemStack> onItemRightClick(World worldIn,
-	 * PlayerEntity player, Hand handIn) {
+	 * Player player, Hand handIn) {
 	 *
 	 * ItemStack itemstack = player.getHeldItem(handIn);
 	 * player.setActiveHand(handIn);
 	 *
-	 * if (!worldIn.isRemote & player instanceof ServerPlayerEntity) {
-	 * ServerPlayerEntity playerServ = (ServerPlayerEntity) player;
+	 * if (!worldIn.isRemote & player instanceof ServerPlayer) {
+	 * ServerPlayer playerServ = (ServerPlayer) player;
 	 *
 	 * ChestContainer container = ChestContainer.createGeneric9X3(8316,
 	 * playerServ.inventory, playerServ.getInventoryEnderChest());

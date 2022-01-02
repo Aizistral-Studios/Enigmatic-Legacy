@@ -19,14 +19,14 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.item.enchantment.IVanishable;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.Food;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.item.alchemy.Effects;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -79,20 +79,20 @@ public class ForbiddenFruit extends ItemBaseFood implements IVanishable {
 		}
 	}
 
-	public boolean haveConsumedFruit(PlayerEntity player) {
+	public boolean haveConsumedFruit(Player player) {
 		return TransientPlayerData.get(player).getConsumedForbiddenFruit();
 	}
 
-	public void defineConsumedFruit(PlayerEntity player, boolean consumedOrNot) {
+	public void defineConsumedFruit(Player player, boolean consumedOrNot) {
 		SuperpositionHandler.setPersistentBoolean(player, consumedFruitTag, consumedOrNot);
 		TransientPlayerData.get(player).setConsumedForbiddenFruit(consumedOrNot);
 	}
 
 	@Override
-	public void onConsumed(World worldIn, PlayerEntity player, ItemStack food) {
+	public void onConsumed(World worldIn, Player player, ItemStack food) {
 		this.defineConsumedFruit(player, true);
 
-		if (player instanceof ServerPlayerEntity) {
+		if (player instanceof ServerPlayer) {
 			player.addEffect(new EffectInstance(Effects.WITHER, 300, 3, false, true));
 			player.addEffect(new EffectInstance(Effects.CONFUSION, 300, 2, false, true));
 			player.addEffect(new EffectInstance(Effects.WEAKNESS, 400, 2, false, true));
@@ -101,7 +101,7 @@ public class ForbiddenFruit extends ItemBaseFood implements IVanishable {
 	}
 
 	@Override
-	public boolean canEat(World world, PlayerEntity player, ItemStack food) {
+	public boolean canEat(World world, Player player, ItemStack food) {
 		return !this.haveConsumedFruit(player);
 	}
 

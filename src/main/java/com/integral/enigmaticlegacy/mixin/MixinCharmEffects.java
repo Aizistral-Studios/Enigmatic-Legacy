@@ -10,7 +10,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 @Pseudo
@@ -19,7 +19,7 @@ public class MixinCharmEffects {
 
 	@Inject(method = "applySleepCharmEffect", at = @At("HEAD"), cancellable = true, require = 0)
 	private static void onApplySleepCharmEffect(Entity user, ItemStack item, CallbackInfo info) {
-		if (user instanceof PlayerEntity && SuperpositionHandler.hasCurio((PlayerEntity) user, EnigmaticLegacy.cursedRing)) {
+		if (user instanceof Player && SuperpositionHandler.hasCurio((Player) user, EnigmaticLegacy.cursedRing)) {
 			info.cancel();
 		}
 	}

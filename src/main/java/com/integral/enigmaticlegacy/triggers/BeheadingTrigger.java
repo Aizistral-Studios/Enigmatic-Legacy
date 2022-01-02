@@ -8,9 +8,9 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
 import net.minecraft.advancements.criterion.CriterionInstance;
 import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.world.level.storage.loot.ConditionArrayParser;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Special trigger that activates if player successfully beheads a mob with Axe of Executioner.
@@ -35,7 +35,7 @@ public class BeheadingTrigger extends AbstractCriterionTrigger<BeheadingTrigger.
 		return new BeheadingTrigger.Instance(playerPred);
 	}
 
-	public void trigger(ServerPlayerEntity player) {
+	public void trigger(ServerPlayer player) {
 		this.trigger(player, instance -> instance.test());
 	}
 

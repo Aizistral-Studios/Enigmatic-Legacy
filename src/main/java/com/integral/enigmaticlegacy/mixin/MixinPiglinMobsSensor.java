@@ -17,7 +17,7 @@ import net.minecraft.world.entity.ai.brain.Brain;
 import net.minecraft.world.entity.ai.brain.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.brain.sensor.PiglinMobsSensor;
 import net.minecraft.world.entity.monster.piglin.PiglinTasks;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.world.server.ServerWorld;
 
@@ -27,7 +27,7 @@ public class MixinPiglinMobsSensor {
 	@Inject(at = @At("RETURN"), method = "doTick")
 	protected void onPiglinSenses(ServerWorld worldIn, LivingEntity entityIn, CallbackInfo info) {
 		Brain<?> brain = entityIn.getBrain();
-		PlayerEntity player = brain.getMemory(MemoryModuleType.NEAREST_TARGETABLE_PLAYER_NOT_WEARING_GOLD).orElse(null);
+		Player player = brain.getMemory(MemoryModuleType.NEAREST_TARGETABLE_PLAYER_NOT_WEARING_GOLD).orElse(null);
 
 		if (player != null) {
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.gemRing)) {
@@ -36,14 +36,14 @@ public class MixinPiglinMobsSensor {
 				// Cycle through visible mobs again in order to replace removed player,
 				// since there might be other players nearby not wearing gold or ring
 				for(LivingEntity livingentity : brain.getMemory(MemoryModuleType.VISIBLE_LIVING_ENTITIES).orElse(ImmutableList.of())) {
-					if (livingentity instanceof PlayerEntity) {
-						PlayerEntity playerentity = (PlayerEntity)livingentity;
+					if (livingentity instanceof Player) {
+						Player Player = (Player)livingentity;
 
 						if (EntityPredicates.ATTACK_ALLOWED.test(livingentity) &&
-								!PiglinTasks.isWearingGold(playerentity) &&
-								!SuperpositionHandler.hasCurio(playerentity, EnigmaticLegacy.gemRing)) {
+								!PiglinTasks.isWearingGold(Player) &&
+								!SuperpositionHandler.hasCurio(Player, EnigmaticLegacy.gemRing)) {
 
-							brain.setMemory(MemoryModuleType.NEAREST_TARGETABLE_PLAYER_NOT_WEARING_GOLD, Optional.of(playerentity));
+							brain.setMemory(MemoryModuleType.NEAREST_TARGETABLE_PLAYER_NOT_WEARING_GOLD, Optional.of(Player));
 						}
 					}
 				}

@@ -3,10 +3,10 @@ package com.integral.enigmaticlegacy.client.models;
 import java.util.HashMap;
 
 import com.integral.enigmaticlegacy.client.models.SpecialArmorModelRenderer.AnchorType;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.inventory.EquipmentSlotType;
 
 public class DarkArmorModel extends GenericArmorModel {
 
@@ -207,7 +207,7 @@ public class DarkArmorModel extends GenericArmorModel {
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack ms, IVertexBuilder buffer, int light, int overlay, float r, float g, float b, float a) {
+	public void renderToBuffer(PoseStack ms, IVertexBuilder buffer, int light, int overlay, float r, float g, float b, float a) {
 		this.setRenderingForType(this.slot);
 
 		//IVertexBuilder vertexBuilder = ItemRenderer.getBuffer(, model.getRenderType(EnigmaticLegacy.darkHelmet.TEXTURE), false, false);

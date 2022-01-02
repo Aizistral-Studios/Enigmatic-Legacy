@@ -20,15 +20,15 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ExperienceOrbEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -107,7 +107,7 @@ public class XPScroll extends ItemBaseCurio {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand handIn) {
+	public ActionResult<ItemStack> use(World world, Player player, Hand handIn) {
 		ItemStack stack = player.getItemInHand(handIn);
 		this.trigger(world, stack, player, handIn, true);
 
@@ -115,25 +115,25 @@ public class XPScroll extends ItemBaseCurio {
 
 	}
 
-	public void trigger(World world, ItemStack stack, PlayerEntity player, Hand hand, boolean swing) {
+	public void trigger(World world, ItemStack stack, Player player, Hand hand, boolean swing) {
 
 		if (!player.isCrouching()) {
 
 			if (ItemNBTHelper.getBoolean(stack, "AbsorptionMode", true)) {
 				ItemNBTHelper.setBoolean(stack, "AbsorptionMode", false);
-				world.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			} else {
 				ItemNBTHelper.setBoolean(stack, "AbsorptionMode", true);
-				world.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		} else {
 
 			if (ItemNBTHelper.getBoolean(stack, "IsActive", false)) {
 				ItemNBTHelper.setBoolean(stack, "IsActive", false);
-				world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHOFF, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			} else {
 				ItemNBTHelper.setBoolean(stack, "IsActive", true);
-				world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHON, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 
@@ -154,10 +154,10 @@ public class XPScroll extends ItemBaseCurio {
 
 		ItemStack itemstack = SuperpositionHandler.getCurioStack(entity, EnigmaticLegacy.xpScroll);
 
-		if (!(entity instanceof PlayerEntity) || entity.level.isClientSide || !ItemNBTHelper.getBoolean(itemstack, "IsActive", false))
+		if (!(entity instanceof Player) || entity.level.isClientSide || !ItemNBTHelper.getBoolean(itemstack, "IsActive", false))
 			return;
 
-		PlayerEntity player = (PlayerEntity) entity;
+		Player player = (Player) entity;
 		World world = player.level;
 
 		if (ItemNBTHelper.getBoolean(itemstack, "AbsorptionMode", true)) {

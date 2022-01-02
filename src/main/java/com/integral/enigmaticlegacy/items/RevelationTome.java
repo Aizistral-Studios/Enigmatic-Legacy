@@ -18,8 +18,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.item.enchantment.IVanishable;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -30,8 +30,8 @@ import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -79,14 +79,14 @@ public class RevelationTome extends ItemBase implements IVanishable {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (entityIn instanceof ServerPlayerEntity) {
+		if (entityIn instanceof ServerPlayer) {
 			ItemNBTHelper.setUUID(stack, lastHolderTag, entityIn.getUUID());
 		}
 
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public ActionResult<ItemStack> use(World world, Player player, Hand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		player.startUsingItem(hand);
 
@@ -96,15 +96,15 @@ public class RevelationTome extends ItemBase implements IVanishable {
 			int xp = ItemNBTHelper.getInt(stack, RevelationTome.xpPointsTag, Item.random.nextInt(1000));
 			int revelation = ItemNBTHelper.getInt(stack, RevelationTome.revelationPointsTag, 1);
 
-			if (player instanceof ServerPlayerEntity) {
+			if (player instanceof ServerPlayer) {
 				int currentPoints = SuperpositionHandler.getPersistentInteger(player, this.persistantPointsTag, 0);
 
 				ExperienceHelper.addPlayerXP(player, xp);
 				SuperpositionHandler.setPersistentInteger(player, this.persistantPointsTag, currentPoints + revelation);
 
-				world.playSound(null, new BlockPos(player.position()), EnigmaticLegacy.LEARN, SoundCategory.PLAYERS, 0.75f, 1.0f);
-				RevelationGainTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this.theType, currentPoints + revelation);
-				RevelationGainTrigger.INSTANCE.trigger((ServerPlayerEntity) player, TomeType.GENERIC, RevelationTome.getGenericPoints(player));
+				world.playSound(null, new BlockPos(player.position()), EnigmaticLegacy.LEARN, SoundSource.PLAYERS, 0.75f, 1.0f);
+				RevelationGainTrigger.INSTANCE.trigger((ServerPlayer) player, this.theType, currentPoints + revelation);
+				RevelationGainTrigger.INSTANCE.trigger((ServerPlayer) player, TomeType.GENERIC, RevelationTome.getGenericPoints(player));
 			} else {
 				EnigmaticLegacy.proxy.pushRevelationToast(stack, xp, revelation);
 			}
@@ -138,7 +138,7 @@ public class RevelationTome extends ItemBase implements IVanishable {
 		}
 	}
 
-	public static int getGenericPoints(PlayerEntity player) {
+	public static int getGenericPoints(Player player) {
 		int overworldPoints = SuperpositionHandler.getPersistentInteger(player, "enigmaticlegacy.revelation_points_" + TomeType.OVERWORLD.typeName, 0);
 		int netherPoints = SuperpositionHandler.getPersistentInteger(player, "enigmaticlegacy.revelation_points_" + TomeType.NETHER.typeName, 0);
 		int endPoints = SuperpositionHandler.getPersistentInteger(player, "enigmaticlegacy.revelation_points_" + TomeType.END.typeName, 0);
@@ -158,7 +158,7 @@ public class RevelationTome extends ItemBase implements IVanishable {
 		return theTome;
 	}
 
-	public static boolean havePlayerRead(PlayerEntity player, ItemStack tome) {
+	public static boolean havePlayerRead(Player player, ItemStack tome) {
 		boolean haveReadBefore = false;
 
 		CompoundNBT nbt = ItemNBTHelper.getNBT(tome);
@@ -178,7 +178,7 @@ public class RevelationTome extends ItemBase implements IVanishable {
 		return haveReadBefore;
 	}
 
-	public static void markRead(PlayerEntity player, ItemStack tome) {
+	public static void markRead(Player player, ItemStack tome) {
 		CompoundNBT nbt = ItemNBTHelper.getNBT(tome);
 		ListNBT list = (nbt.get(RevelationTome.formerReadersTag) instanceof ListNBT) ? (ListNBT) nbt.get(RevelationTome.formerReadersTag) : new ListNBT();
 

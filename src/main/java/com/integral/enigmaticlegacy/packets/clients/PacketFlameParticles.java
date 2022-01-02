@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.items.AstralBreaker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.entity.player.ClientPlayer;
 import net.minecraft.client.settings.ParticleStatus;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.ParticleTypes;
@@ -49,7 +49,7 @@ public class PacketFlameParticles {
 	public static void handle(PacketFlameParticles msg, Supplier<NetworkEvent.Context> ctx) {
 		if (AstralBreaker.flameParticlesToggle.getValue()) {
 			ctx.get().enqueueWork(() -> {
-				ClientPlayerEntity player = Minecraft.getInstance().player;
+				ClientPlayer player = Minecraft.getInstance().player;
 
 				int amount = msg.num;
 				float modifier = 1.0F;

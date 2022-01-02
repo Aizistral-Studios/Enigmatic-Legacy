@@ -20,8 +20,8 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.merchant.villager.VillagerEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinTasks;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MerchantOffer;
 import net.minecraft.util.ActionResultType;
@@ -32,7 +32,7 @@ import net.minecraft.world.server.ServerWorld;
 public class MixinPiglinTasks {
 	private static final String AVARICE_SCROLL_TAG = EnigmaticLegacy.MODID + ":avarice_scroll_effect";
 
-	private static void markPiglinWithCondition(PiglinEntity piglin, PlayerEntity player) {
+	private static void markPiglinWithCondition(PiglinEntity piglin, Player player) {
 		if (player != null && piglin != null && SuperpositionHandler.hasCurio(player, EnigmaticLegacy.avariceScroll))
 			if (!piglin.getTags().contains(AVARICE_SCROLL_TAG)) {
 				piglin.addTag(AVARICE_SCROLL_TAG);
@@ -61,7 +61,7 @@ public class MixinPiglinTasks {
 	}
 
 	@Inject(at = @At("RETURN"), method = "mobInteract")
-	private static void onBarterByHand(PiglinEntity piglin, PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResultType> info) {
+	private static void onBarterByHand(PiglinEntity piglin, Player player, Hand hand, CallbackInfoReturnable<ActionResultType> info) {
 		if (info.getReturnValue() == ActionResultType.CONSUME) {
 			markPiglinWithCondition(piglin, player);
 		}

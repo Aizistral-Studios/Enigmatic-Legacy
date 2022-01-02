@@ -11,12 +11,12 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.enigmaticlegacy.objects.Vector3;
 
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.material.Material;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tileentity.TileEntity;
@@ -34,7 +34,7 @@ public class AOEMiningHelper {
 	public static final Random random = new Random();
 
 	/** Attempt to break blocks around the given pos in a 3x3x1 square relative to the targeted face.*/
-	public static void attemptBreakNeighbors(World world, BlockPos pos, PlayerEntity player, Set<Block> effectiveOn, Set<Material> effectiveMaterials, boolean checkHarvestLevel) {
+	public static void attemptBreakNeighbors(World world, BlockPos pos, Player player, Set<Block> effectiveOn, Set<Material> effectiveMaterials, boolean checkHarvestLevel) {
 		RayTraceResult trace = AOEMiningHelper.calcRayTrace(world, player, RayTraceContext.FluidMode.ANY);
 
 		if (trace.getType() == RayTraceResult.Type.BLOCK) {
@@ -78,7 +78,7 @@ public class AOEMiningHelper {
 	 * or not damage the tool used for mining the block.
 	 */
 
-	public static void attemptBreak(World world, BlockPos pos, PlayerEntity player, Set<Block> effectiveOn, Set<Material> effectiveMaterials, int fortuneLevel, int silkLevel, boolean checkHarvestLevel, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
+	public static void attemptBreak(World world, BlockPos pos, Player player, Set<Block> effectiveOn, Set<Material> effectiveMaterials, int fortuneLevel, int silkLevel, boolean checkHarvestLevel, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
 		BlockState state = world.getBlockState(pos);
 		TileEntity iCertainlyHopeYouHaveATileEntityLicense = world.getBlockEntity(pos);
 
@@ -99,11 +99,11 @@ public class AOEMiningHelper {
 		}
 	}
 
-	public static BlockRayTraceResult calcRayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidMode fluidMode) {
+	public static BlockRayTraceResult calcRayTrace(World worldIn, Player player, RayTraceContext.FluidMode fluidMode) {
 		return ItemBase.rayTrace(worldIn, player, fluidMode);
 	}
 
-	public static Vector3 calcRayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidMode fluidMode, double distance) {
+	public static Vector3 calcRayTrace(World worldIn, Player player, RayTraceContext.FluidMode fluidMode, double distance) {
 		float f = player.xRot;
 		float f1 = player.yRot;
 		Vector3d vector3d = player.getEyePosition(1.0F);
@@ -125,7 +125,7 @@ public class AOEMiningHelper {
 		}
 	}
 
-	public static void harvestPlane(World world, PlayerEntity player, Direction dir, BlockPos pos, Set<Material> effectiveMaterials, int radius, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
+	public static void harvestPlane(World world, Player player, Direction dir, BlockPos pos, Set<Material> effectiveMaterials, int radius, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
 		int fortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
 		int silkLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getMainHandItem());
 		int supRad = (radius - 1) / 2;
@@ -154,7 +154,7 @@ public class AOEMiningHelper {
 		}
 	}
 
-	public static void harvestCube(World world, PlayerEntity player, Direction dir, BlockPos centralPos, Set<Material> effectiveMaterials, int planeRadius, int depth, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
+	public static void harvestCube(World world, Player player, Direction dir, BlockPos centralPos, Set<Material> effectiveMaterials, int planeRadius, int depth, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
 
 		for (int a = 0; a < depth; a++) {
 			int x = 0;

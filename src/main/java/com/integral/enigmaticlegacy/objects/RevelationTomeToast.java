@@ -2,7 +2,7 @@ package com.integral.enigmaticlegacy.objects;
 
 import javax.annotation.Nonnull;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
@@ -28,7 +28,7 @@ public class RevelationTomeToast implements IToast {
 
 	@Nonnull
 	@Override
-	public Visibility render(MatrixStack ms, ToastGui toastGui, long delta) {
+	public Visibility render(PoseStack ms, ToastGui toastGui, long delta) {
 		Minecraft mc = Minecraft.getInstance();
 		mc.getTextureManager().bind(TEXTURE);
 		RenderSystem.color3f(1.0F, 1.0F, 1.0F);

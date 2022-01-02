@@ -7,7 +7,7 @@ import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 
 import net.minecraft.world.entity.ICrossbowUser;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrowEntity;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.entity.projectile.ProjectileEntity;
@@ -16,8 +16,8 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
@@ -35,8 +35,8 @@ public class CrossbowHelper {
 			ItemStack itemstack;
 			if (!creativeUsingArrows && !isCreative && !bonusCycles) {
 				itemstack = ammo.split(1);
-				if (ammo.isEmpty() && living instanceof PlayerEntity) {
-					((PlayerEntity) living).inventory.removeItem(ammo);
+				if (ammo.isEmpty() && living instanceof Player) {
+					((Player) living).inventory.removeItem(ammo);
 				}
 			} else {
 				itemstack = ammo.copy();
@@ -49,7 +49,7 @@ public class CrossbowHelper {
 
 	public static boolean hasAmmo(LivingEntity entityIn, ItemStack weaponStack) {
 		int requestedAmmo = 1;
-		boolean isCreative = entityIn instanceof PlayerEntity && ((PlayerEntity) entityIn).abilities.instabuild;
+		boolean isCreative = entityIn instanceof Player && ((Player) entityIn).abilities.instabuild;
 		ItemStack itemstack = entityIn.getProjectile(weaponStack);
 		ItemStack itemstack1 = itemstack.copy();
 
@@ -78,7 +78,7 @@ public class CrossbowHelper {
 
 		for (int i = 0; i < list.size(); ++i) {
 			ItemStack itemstack = list.get(i);
-			boolean flag = shooter instanceof PlayerEntity && ((PlayerEntity) shooter).abilities.instabuild;
+			boolean flag = shooter instanceof Player && ((Player) shooter).abilities.instabuild;
 			if (!itemstack.isEmpty()) {
 				if (i == 0) {
 					CrossbowHelper.fireProjectile(worldIn, shooter, handIn, stack, itemstack, afloat[i], flag, velocityIn, inaccuracyIn, 0.0F);
@@ -126,7 +126,7 @@ public class CrossbowHelper {
 				p_220017_1_.broadcastBreakEvent(handIn);
 			});
 			worldIn.addFreshEntity(projectileentity);
-			worldIn.playSound((PlayerEntity)null, shooter.getX(), shooter.getY(), shooter.getZ(), SoundEvents.CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0F, soundPitch);
+			worldIn.playSound((Player)null, shooter.getX(), shooter.getY(), shooter.getZ(), SoundEvents.CROSSBOW_SHOOT, SoundSource.PLAYERS, 1.0F, soundPitch);
 		}
 	}
 

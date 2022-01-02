@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.handlers.EnigmaticUpdateHandler;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.entity.player.ClientPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -29,7 +29,7 @@ public class PacketUpdateNotification {
 	  public static void handle(PacketUpdateNotification msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {
-		      ClientPlayerEntity player = Minecraft.getInstance().player;
+		      ClientPlayer player = Minecraft.getInstance().player;
 		      EnigmaticUpdateHandler.handleShowup(player);
 		      
 		    });

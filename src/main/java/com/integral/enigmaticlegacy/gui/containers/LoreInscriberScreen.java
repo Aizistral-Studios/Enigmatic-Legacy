@@ -2,19 +2,19 @@ package com.integral.enigmaticlegacy.gui.containers;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.packets.server.PacketInkwellField;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.world.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.IContainerListener;
-import net.minecraft.inventory.container.Slot;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.container.Container;
+import net.minecraft.world.inventory.container.IContainerListener;
+import net.minecraft.world.inventory.container.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -26,13 +26,13 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	private static final ResourceLocation ANVIL_RESOURCE = new ResourceLocation(EnigmaticLegacy.MODID, "textures/gui/inkwell_gui.png");
 	private TextFieldWidget nameField;
 
-	public LoreInscriberScreen(LoreInscriberContainer container, PlayerInventory playerInventory, ITextComponent title) {
-		this(container, playerInventory, title, LoreInscriberScreen.ANVIL_RESOURCE);
+	public LoreInscriberScreen(LoreInscriberContainer container, Inventory Inventory, ITextComponent title) {
+		this(container, Inventory, title, LoreInscriberScreen.ANVIL_RESOURCE);
 		this.titleLabelX = 60;
 	}
 
-	private LoreInscriberScreen(LoreInscriberContainer container, PlayerInventory playerInventory, ITextComponent title, ResourceLocation guiTexture) {
-		super(container, playerInventory, title);
+	private LoreInscriberScreen(LoreInscriberContainer container, Inventory Inventory, ITextComponent title, ResourceLocation guiTexture) {
+		super(container, Inventory, title);
 		this.guiTexture = guiTexture;
 	}
 
@@ -66,24 +66,24 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, int x, int y, float partialTicksIGuess) {
-		this.renderBackground(matrixStack);
-		super.render(matrixStack, x, y, partialTicksIGuess);
+	public void render(PoseStack PoseStack, int x, int y, float partialTicksIGuess) {
+		this.renderBackground(PoseStack);
+		super.render(PoseStack, x, y, partialTicksIGuess);
 		RenderSystem.disableBlend();
-		this.renderNameField(matrixStack, x, y, partialTicksIGuess);
-		this.renderTooltip(matrixStack, x, y);
+		this.renderNameField(PoseStack, x, y, partialTicksIGuess);
+		this.renderTooltip(PoseStack, x, y);
 	}
 
 	@Override
-	protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
+	protected void renderBg(PoseStack PoseStack, float partialTicks, int x, int y) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.minecraft.getTextureManager().bind(this.guiTexture);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
-		this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
-		this.blit(matrixStack, i + 52, j + 26, 0, this.imageHeight + (this.menu.getSlot(0).hasItem() ? 0 : 16), 102, 16);
+		this.blit(PoseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+		this.blit(PoseStack, i + 52, j + 26, 0, this.imageHeight + (this.menu.getSlot(0).hasItem() ? 0 : 16), 102, 16);
 		if (this.menu.getSlot(0).hasItem() && !this.menu.getSlot(1).hasItem()) {
-			this.blit(matrixStack, i + 71, j + 49, this.imageWidth, 0, 28, 21);
+			this.blit(PoseStack, i + 71, j + 49, this.imageWidth, 0, 28, 21);
 		}
 
 	}
@@ -135,9 +135,9 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	}
 
 	@Override
-	protected void renderLabels(MatrixStack matrixStack, int x, int y) {
-		this.font.draw(matrixStack, this.title, 52F, 13F, 4210752);
-		//this.font.draw(matrixStack, this.playerInventory.getDisplayName(), JsonConfigHandler.getFloat("playerInvX"), JsonConfigHandler.getFloat("playerInvY"), 4210752);
+	protected void renderLabels(PoseStack PoseStack, int x, int y) {
+		this.font.draw(PoseStack, this.title, 52F, 13F, 4210752);
+		//this.font.draw(PoseStack, this.Inventory.getDisplayName(), JsonConfigHandler.getFloat("playerInvX"), JsonConfigHandler.getFloat("playerInvY"), 4210752);
 
 		RenderSystem.disableBlend();
 		/*
@@ -151,23 +151,23 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 				j = 16736352;
 			} else if (!this.container.getSlot(2).getHasStack()) {
 				flag = false;
-			} else if (!this.container.getSlot(2).canTakeStack(this.playerInventory.player)) {
+			} else if (!this.container.getSlot(2).canTakeStack(this.Inventory.player)) {
 				j = 16736352;
 			}
 
 			if (flag) {
 				int k = this.xSize - 8 - this.font.getStringWidth(s) - 2;
 				int l = 69;
-				AbstractGui.fill(matrixStack, k - 2, 67, this.xSize - 8, 79, 1325400064);
-				this.font.drawStringWithShadow(matrixStack, s, k, 69.0F, j);
+				AbstractGui.fill(PoseStack, k - 2, 67, this.xSize - 8, 79, 1325400064);
+				this.font.drawStringWithShadow(PoseStack, s, k, 69.0F, j);
 			}
 
 		}
 		 */
 	}
 
-	public void renderNameField(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		this.nameField.render(matrixStack, mouseX, mouseY, partialTicks);
+	public void renderNameField(PoseStack PoseStack, int mouseX, int mouseY, float partialTicks) {
+		this.nameField.render(PoseStack, mouseX, mouseY, partialTicks);
 	}
 
 	/**

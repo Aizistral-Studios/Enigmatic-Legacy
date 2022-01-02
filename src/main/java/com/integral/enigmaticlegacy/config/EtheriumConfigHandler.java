@@ -11,13 +11,13 @@ import com.integral.etherium.core.IEtheriumConfig;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.IArmorMaterial;
 import net.minecraft.world.item.IItemTier;
 import net.minecraft.world.item.ItemGroup;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.fml.network.PacketDistributor;
 
@@ -123,12 +123,12 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 	}
 
 	@Override
-	public void knockBack(PlayerEntity entityIn, float strength, double xRatio, double zRatio) {
+	public void knockBack(Player entityIn, float strength, double xRatio, double zRatio) {
 		entityIn.hasImpulse = true;
 		Vector3d vec3d = new Vector3d(0D, 0D, 0D);
 		Vector3d vec3d1 = (new Vector3d(xRatio, 0.0D, zRatio)).normalize().scale(strength);
 
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entityIn), new PacketPlayerMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) entityIn), new PacketPlayerMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z));
 		entityIn.setDeltaMovement(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z);
 	}
 

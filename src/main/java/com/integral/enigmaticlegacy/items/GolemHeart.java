@@ -26,11 +26,11 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -172,8 +172,8 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) living;
+		if (living instanceof Player) {
+			Player player = (Player) living;
 
 			AttributeModifierManager map = player.getAttributes();
 			map.removeAttributeModifiers(this.attributesDefault);
@@ -183,8 +183,8 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) living;
+		if (living instanceof Player) {
+			Player player = (Player) living;
 
 			AttributeModifierManager map = player.getAttributes();
 

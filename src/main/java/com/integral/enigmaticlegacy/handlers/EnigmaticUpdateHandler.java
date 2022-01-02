@@ -10,8 +10,8 @@ import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.client.entity.player.ClientPlayer;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -52,13 +52,13 @@ public class EnigmaticUpdateHandler {
 	@SubscribeEvent
 	public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
 
-		if (event.getPlayer() instanceof ServerPlayerEntity) {
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> ((ServerPlayerEntity)event.getPlayer())), new PacketUpdateNotification());
+		if (event.getPlayer() instanceof ServerPlayer) {
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> ((ServerPlayer)event.getPlayer())), new PacketUpdateNotification());
 		}
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static void handleShowup(ClientPlayerEntity player) {
+	public static void handleShowup(ClientPlayer player) {
 		if (!EnigmaticUpdateHandler.show)
 			return;
 

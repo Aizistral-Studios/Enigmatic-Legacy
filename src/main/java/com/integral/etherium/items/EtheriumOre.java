@@ -5,7 +5,7 @@ import com.integral.etherium.core.IEtheriumConfig;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class EtheriumOre extends Item {
 	private final IEtheriumConfig config;

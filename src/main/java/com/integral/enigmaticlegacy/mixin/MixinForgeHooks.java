@@ -12,9 +12,9 @@ import com.google.gson.JsonElement;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.LootTableHelper;
 
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.LootTableManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.LootTableManager;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.LootTableLoadEvent;
 

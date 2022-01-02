@@ -3,7 +3,7 @@ package com.integral.enigmaticlegacy.objects;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.item.alchemy.EffectInstance;
 
 /**
  * Mimics vanilla Potion type, but is more minimalistic and manageable.

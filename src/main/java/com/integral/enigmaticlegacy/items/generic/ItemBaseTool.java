@@ -8,8 +8,8 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BlockState;
-import net.minecraft.world.level.block.material.Material;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.IItemTier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

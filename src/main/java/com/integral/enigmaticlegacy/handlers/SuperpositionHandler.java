@@ -40,9 +40,9 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.advancements.Advancement;
-import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.entity.player.ClientPlayer;
 import net.minecraft.client.settings.ParticleStatus;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -54,37 +54,37 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.loot.ItemLootEntry;
-import net.minecraft.loot.LootEntry;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootPool.Builder;
-import net.minecraft.loot.LootTables;
-import net.minecraft.loot.RandomValueRange;
-import net.minecraft.loot.StandaloneLootEntry;
-import net.minecraft.loot.functions.EnchantWithLevels;
-import net.minecraft.loot.functions.SetCount;
-import net.minecraft.loot.functions.SetDamage;
+import net.minecraft.world.level.storage.loot.ItemLootEntry;
+import net.minecraft.world.level.storage.loot.LootEntry;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootPool.Builder;
+import net.minecraft.world.level.storage.loot.LootTables;
+import net.minecraft.world.level.storage.loot.RandomValueRange;
+import net.minecraft.world.level.storage.loot.StandaloneLootEntry;
+import net.minecraft.world.level.storage.loot.functions.EnchantWithLevels;
+import net.minecraft.world.level.storage.loot.functions.SetCount;
+import net.minecraft.world.level.storage.loot.functions.SetDamage;
 import net.minecraft.nbt.ByteNBT;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.IntNBT;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectUtils;
+import net.minecraft.world.item.alchemy.Effect;
+import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.item.alchemy.EffectUtils;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.BeaconTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceContext;
@@ -307,7 +307,7 @@ public class SuperpositionHandler {
 	 */
 
 	@Nullable
-	public static LivingEntity getObservedEntity(final PlayerEntity player, final World world, final float range, final int maxDist) {
+	public static LivingEntity getObservedEntity(final Player player, final World world, final float range, final int maxDist) {
 		LivingEntity newTarget = null;
 		Vector3 target = Vector3.fromEntityCenter(player);
 		List<LivingEntity> entities = new ArrayList<LivingEntity>();
@@ -342,7 +342,7 @@ public class SuperpositionHandler {
 		return t;
 	}
 
-	public static boolean doesObserveEntity(PlayerEntity player, LivingEntity entity) {
+	public static boolean doesObserveEntity(Player player, LivingEntity entity) {
 		Vector3d vector3d = player.getViewVector(1.0F).normalize();
 		Vector3d vector3d1 = new Vector3d(entity.getX() - player.getX(), entity.getEyeY() - player.getEyeY(), entity.getZ() - player.getZ());
 		double d0 = vector3d1.length();
@@ -353,15 +353,15 @@ public class SuperpositionHandler {
 	}
 
 
-	public static int getSpellstoneCooldown(PlayerEntity player) {
+	public static int getSpellstoneCooldown(Player player) {
 		return TransientPlayerData.get(player).getSpellstoneCooldown();
 	}
 
-	public static void setSpellstoneCooldown(PlayerEntity playerIn, int value) {
+	public static void setSpellstoneCooldown(Player playerIn, int value) {
 		TransientPlayerData.get(playerIn).setSpellstoneCooldown(value);
 	}
 
-	public static void tickSpellstoneCooldown(PlayerEntity player, int decrementedTicks) {
+	public static void tickSpellstoneCooldown(Player player, int decrementedTicks) {
 		TransientPlayerData data = TransientPlayerData.get(player);
 		data.spellstoneCooldown = data.getSpellstoneCooldown()-decrementedTicks;
 
@@ -372,7 +372,7 @@ public class SuperpositionHandler {
 	 * Checks whether player's spellstone cooldown is greater than zero.
 	 */
 
-	public static boolean hasSpellstoneCooldown(PlayerEntity player) {
+	public static boolean hasSpellstoneCooldown(Player player) {
 		return TransientPlayerData.get(player).getSpellstoneCooldown() > 0;
 	}
 
@@ -382,7 +382,7 @@ public class SuperpositionHandler {
 	 */
 
 	@OnlyIn(Dist.CLIENT)
-	public static void lookAt(double px, double py, double pz, ClientPlayerEntity me) {
+	public static void lookAt(double px, double py, double pz, ClientPlayer me) {
 		double dirx = me.getX() - px;
 		double diry = me.getY() - py;
 		double dirz = me.getZ() - pz;
@@ -427,18 +427,18 @@ public class SuperpositionHandler {
 
 				if (!world.isEmptyBlock(new BlockPos(x, y + counter - 1, z)) & world.getBlockState(new BlockPos(x, y + counter - 1, z)).canOcclude() & world.isEmptyBlock(new BlockPos(x, y + counter, z)) & world.isEmptyBlock(new BlockPos(x, y + counter + 1, z))) {
 
-					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level.dimension())), new PacketPortalParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 72, 1.0F, false));
 
-					if (entity instanceof ServerPlayerEntity) {
-						ServerPlayerEntity player = (ServerPlayerEntity) entity;
+					if (entity instanceof ServerPlayer) {
+						ServerPlayer player = (ServerPlayer) entity;
 						player.teleportTo(x + 0.5, y + counter, z + 0.5);
 					} else {
 						((LivingEntity) entity).teleportTo(x + 0.5, y + counter, z + 0.5);
 					}
 
-					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level.dimension())), new PacketRecallParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 48, false));
 
@@ -453,17 +453,17 @@ public class SuperpositionHandler {
 
 				if (!world.isEmptyBlock(new BlockPos(x, y - counter - 1, z)) & world.getBlockState(new BlockPos(x, y - counter - 1, z)).canOcclude() & world.isEmptyBlock(new BlockPos(x, y - counter, z)) & world.isEmptyBlock(new BlockPos(x, y - counter + 1, z))) {
 
-					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level.dimension())), new PacketRecallParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 48, false));
 
-					if (entity instanceof ServerPlayerEntity) {
-						ServerPlayerEntity player = (ServerPlayerEntity) entity;
+					if (entity instanceof ServerPlayer) {
+						ServerPlayer player = (ServerPlayer) entity;
 						player.teleportTo(x + 0.5, y - counter, z + 0.5);
 					} else {
 						((LivingEntity) entity).teleportTo(x + 0.5, y - counter, z + 0.5);
 					}
 
-					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level.dimension())), new PacketRecallParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 48, false));
 
 					return true;
@@ -681,14 +681,14 @@ public class SuperpositionHandler {
 	 * Retrieves the given INBT type from the player's persistent NBT.
 	 */
 
-	public static INBT getPersistentTag(PlayerEntity player, String tag, INBT expectedValue) {
+	public static INBT getPersistentTag(Player player, String tag, INBT expectedValue) {
 		CompoundNBT data = player.getPersistentData();
 		CompoundNBT persistent;
 
-		if (!data.contains(PlayerEntity.PERSISTED_NBT_TAG)) {
-			data.put(PlayerEntity.PERSISTED_NBT_TAG, (persistent = new CompoundNBT()));
+		if (!data.contains(Player.PERSISTED_NBT_TAG)) {
+			data.put(Player.PERSISTED_NBT_TAG, (persistent = new CompoundNBT()));
 		} else {
-			persistent = data.getCompound(PlayerEntity.PERSISTED_NBT_TAG);
+			persistent = data.getCompound(Player.PERSISTED_NBT_TAG);
 		}
 
 		if (persistent.contains(tag))
@@ -704,14 +704,14 @@ public class SuperpositionHandler {
 	 * Sets the given INBT type to the player's persistent NBT.
 	 */
 
-	public static void setPersistentTag(PlayerEntity player, String tag, INBT value) {
+	public static void setPersistentTag(Player player, String tag, INBT value) {
 		CompoundNBT data = player.getPersistentData();
 		CompoundNBT persistent;
 
-		if (!data.contains(PlayerEntity.PERSISTED_NBT_TAG)) {
-			data.put(PlayerEntity.PERSISTED_NBT_TAG, (persistent = new CompoundNBT()));
+		if (!data.contains(Player.PERSISTED_NBT_TAG)) {
+			data.put(Player.PERSISTED_NBT_TAG, (persistent = new CompoundNBT()));
 		} else {
-			persistent = data.getCompound(PlayerEntity.PERSISTED_NBT_TAG);
+			persistent = data.getCompound(Player.PERSISTED_NBT_TAG);
 		}
 
 		persistent.put(tag, value);
@@ -721,7 +721,7 @@ public class SuperpositionHandler {
 	 * Sets the given boolean tag to the player's persistent NBT.
 	 */
 
-	public static void setPersistentBoolean(PlayerEntity player, String tag, boolean value) {
+	public static void setPersistentBoolean(Player player, String tag, boolean value) {
 		SuperpositionHandler.setPersistentTag(player, tag, ByteNBT.valueOf(value));
 	}
 
@@ -729,16 +729,16 @@ public class SuperpositionHandler {
 	 * Retrieves the given boolean tag from the player's persistent NBT.
 	 */
 
-	public static boolean getPersistentBoolean(PlayerEntity player, String tag, boolean expectedValue) {
+	public static boolean getPersistentBoolean(Player player, String tag, boolean expectedValue) {
 		INBT theTag = SuperpositionHandler.getPersistentTag(player, tag, ByteNBT.valueOf(expectedValue));
 		return theTag instanceof ByteNBT ? ((ByteNBT) theTag).getAsByte() != 0 : expectedValue;
 	}
 
-	public static void setPersistentInteger(PlayerEntity player, String tag, int value) {
+	public static void setPersistentInteger(Player player, String tag, int value) {
 		SuperpositionHandler.setPersistentTag(player, tag, IntNBT.valueOf(value));
 	}
 
-	public static int getPersistentInteger(PlayerEntity player, String tag, int expectedValue) {
+	public static int getPersistentInteger(Player player, String tag, int expectedValue) {
 		INBT theTag = SuperpositionHandler.getPersistentTag(player, tag, IntNBT.valueOf(expectedValue));
 		return theTag instanceof IntNBT ? ((IntNBT) theTag).getAsInt() : expectedValue;
 	}
@@ -748,14 +748,14 @@ public class SuperpositionHandler {
 	 * it's type or value is.
 	 */
 
-	public static boolean hasPersistentTag(PlayerEntity player, String tag) {
+	public static boolean hasPersistentTag(Player player, String tag) {
 		CompoundNBT data = player.getPersistentData();
 		CompoundNBT persistent;
 
-		if (!data.contains(PlayerEntity.PERSISTED_NBT_TAG)) {
-			data.put(PlayerEntity.PERSISTED_NBT_TAG, (persistent = new CompoundNBT()));
+		if (!data.contains(Player.PERSISTED_NBT_TAG)) {
+			data.put(Player.PERSISTED_NBT_TAG, (persistent = new CompoundNBT()));
 		} else {
-			persistent = data.getCompound(PlayerEntity.PERSISTED_NBT_TAG);
+			persistent = data.getCompound(Player.PERSISTED_NBT_TAG);
 		}
 
 		if (persistent.contains(tag))
@@ -769,7 +769,7 @@ public class SuperpositionHandler {
 	 * Checks whether or not player has completed specified advancement.
 	 */
 
-	public static boolean hasAdvancement(@Nonnull ServerPlayerEntity player, @Nonnull ResourceLocation location) {
+	public static boolean hasAdvancement(@Nonnull ServerPlayer player, @Nonnull ResourceLocation location) {
 
 		try {
 			if (player.getAdvancements().getOrStartProgress(player.server.getAdvancements().getAdvancement(location)).isDone())
@@ -786,7 +786,7 @@ public class SuperpositionHandler {
 	 * Don't forget to specify!
 	 */
 
-	public static void grantAdvancement(@Nonnull ServerPlayerEntity player, @Nonnull ResourceLocation location) {
+	public static void grantAdvancement(@Nonnull ServerPlayer player, @Nonnull ResourceLocation location) {
 		Advancement adv = player.server.getAdvancements().getAdvancement(location);
 
 		for (String criterion : player.getAdvancements().getOrStartProgress(adv).getRemainingCriteria()) {
@@ -800,7 +800,7 @@ public class SuperpositionHandler {
 	 * Don't forget to specify!
 	 */
 
-	public static void revokeAdvancement(@Nonnull ServerPlayerEntity player, @Nonnull ResourceLocation location) {
+	public static void revokeAdvancement(@Nonnull ServerPlayer player, @Nonnull ResourceLocation location) {
 		Advancement adv = player.server.getAdvancements().getAdvancement(location);
 
 		for (String criterion : player.getAdvancements().getOrStartProgress(adv).getCompletedCriteria()) {
@@ -834,10 +834,10 @@ public class SuperpositionHandler {
 		return number;
 	}
 
-	public static PlayerEntity getPlayerByName(World world, String name) {
-		PlayerEntity player = null;
+	public static Player getPlayerByName(World world, String name) {
+		Player player = null;
 
-		for (PlayerEntity checkedPlayer : world.players()) {
+		for (Player checkedPlayer : world.players()) {
 			if (checkedPlayer.getDisplayName().getString().equals(name)) {
 				player = checkedPlayer;
 			}
@@ -916,7 +916,7 @@ public class SuperpositionHandler {
 	 *         partially), false otherwise.
 	 */
 
-	public static boolean canPickStack(PlayerEntity player, ItemStack stack) {
+	public static boolean canPickStack(Player player, ItemStack stack) {
 
 		if (player.inventory.getFreeSlot() >= 0)
 			return true;
@@ -967,7 +967,7 @@ public class SuperpositionHandler {
 	 * @author Integral
 	 */
 
-	public static boolean isInBeaconRange(PlayerEntity player) {
+	public static boolean isInBeaconRange(Player player) {
 		List<BeaconTileEntity> list = new ArrayList<BeaconTileEntity>();
 		boolean inRange = false;
 
@@ -1000,7 +1000,7 @@ public class SuperpositionHandler {
 		return inRange;
 	}
 
-	public static boolean hasItem(PlayerEntity player, Item item) {
+	public static boolean hasItem(Player player, Item item) {
 		return player.inventory.contains(new ItemStack(item));
 	}
 
@@ -1020,7 +1020,7 @@ public class SuperpositionHandler {
 		return false;
 	}
 
-	public static boolean shouldPlayerDropSoulCrystal(PlayerEntity player, boolean hadRing) {
+	public static boolean shouldPlayerDropSoulCrystal(Player player, boolean hadRing) {
 		int dropMode = OmniconfigHandler.soulCrystalsMode.getValue();
 		int maxCrystalLoss = OmniconfigHandler.maxSoulCrystalLoss.getValue();
 
@@ -1055,11 +1055,11 @@ public class SuperpositionHandler {
 		return SuperpositionHandler.getWorld(EnigmaticLegacy.proxy.getEndKey());
 	}
 
-	public static ServerWorld backToSpawn(ServerPlayerEntity serverPlayer) {
+	public static ServerWorld backToSpawn(ServerPlayer serverPlayer) {
 		RegistryKey<World> respawnDimension = AdvancedSpawnLocationHelper.getPlayerRespawnDimension(serverPlayer);
 		ServerWorld respawnWorld = SuperpositionHandler.getWorld(respawnDimension);
 
-		serverPlayer.level.playSound(null, serverPlayer.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+		serverPlayer.level.playSound(null, serverPlayer.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 128, serverPlayer.level.dimension())), new PacketPortalParticles(serverPlayer.getX(), serverPlayer.getY() + (serverPlayer.getBbHeight() / 2), serverPlayer.getZ(), 100, 1.25F, false));
 
@@ -1087,14 +1087,14 @@ public class SuperpositionHandler {
 			AdvancedSpawnLocationHelper.fuckBackToSpawn(serverPlayer.getLevel(), serverPlayer);
 		}
 
-		serverPlayer.level.playSound(null, serverPlayer.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+		serverPlayer.level.playSound(null, serverPlayer.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 128, serverPlayer.level.dimension())), new PacketRecallParticles(serverPlayer.getX(), serverPlayer.getY() + (serverPlayer.getBbHeight() / 2), serverPlayer.getZ(), 48, false));
 
 		return destinationWorld;
 	}
 
-	public static DimensionalPosition getRespawnPoint(ServerPlayerEntity serverPlayer) {
+	public static DimensionalPosition getRespawnPoint(ServerPlayer serverPlayer) {
 		RegistryKey<World> respawnDimension = AdvancedSpawnLocationHelper.getPlayerRespawnDimension(serverPlayer);
 		ServerWorld respawnWorld = SuperpositionHandler.getWorld(respawnDimension);
 
@@ -1131,22 +1131,22 @@ public class SuperpositionHandler {
 		return new DimensionalPosition(trueVec.x, trueVec.y, trueVec.z, destinationWorld);
 	}
 
-	public static void removeAttributeMap(PlayerEntity player, Multimap<Attribute, AttributeModifier> attributes) {
+	public static void removeAttributeMap(Player player, Multimap<Attribute, AttributeModifier> attributes) {
 		AttributeModifierManager map = player.getAttributes();
 		map.removeAttributeModifiers(attributes);
 	}
 
-	public static void applyAttributeMap(PlayerEntity player, Multimap<Attribute, AttributeModifier> attributes) {
+	public static void applyAttributeMap(Player player, Multimap<Attribute, AttributeModifier> attributes) {
 		AttributeModifierManager map = player.getAttributes();
 
 		map.addTransientAttributeModifiers(attributes);
 	}
 
-	public static boolean isTheCursedOne(PlayerEntity player) {
+	public static boolean isTheCursedOne(Player player) {
 		return SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing);
 	}
 
-	public static float getMissingHealthPool(PlayerEntity player) {
+	public static float getMissingHealthPool(Player player) {
 		return (player.getMaxHealth() - Math.min(player.getHealth(), player.getMaxHealth()))/player.getMaxHealth();
 	}
 
@@ -1167,7 +1167,7 @@ public class SuperpositionHandler {
 		return totalCurses;
 	}
 
-	public static int getCurseAmount(PlayerEntity player) {
+	public static int getCurseAmount(Player player) {
 		int count = 0;
 
 		for (ItemStack theStack : getFullEquipment(player)) {
@@ -1179,7 +1179,7 @@ public class SuperpositionHandler {
 		return count;
 	}
 
-	public static List<ItemStack> getFullEquipment(PlayerEntity player) {
+	public static List<ItemStack> getFullEquipment(Player player) {
 		List<ItemStack> equipmentStacks = Lists.newArrayList();
 
 		equipmentStacks.add(player.getMainHandItem());
@@ -1265,7 +1265,7 @@ public class SuperpositionHandler {
 	 * @param player Player in question
 	 */
 
-	public static boolean areWeRemoteServer(PlayerEntity player) {
+	public static boolean areWeRemoteServer(Player player) {
 		if (areWeDedicatedServer())
 			return true;
 		else
@@ -1345,7 +1345,7 @@ public class SuperpositionHandler {
 		return accessibilityGeneratorMap;
 	}
 
-	public static boolean hasAntiInsectAcknowledgement(PlayerEntity player) {
+	public static boolean hasAntiInsectAcknowledgement(Player player) {
 		List<ItemStack> heldItems = Lists.newArrayList(player.getMainHandItem(), player.getOffhandItem());
 
 		for (ItemStack held : heldItems) {
@@ -1358,7 +1358,7 @@ public class SuperpositionHandler {
 		return false;
 	}
 
-	public static boolean isStaringAt(PlayerEntity player, LivingEntity living) {
+	public static boolean isStaringAt(Player player, LivingEntity living) {
 		Vector3d vector3d = player.getViewVector(1.0F).normalize();
 		Vector3d vector3d1 = new Vector3d(living.getX() - player.getX(), living.getEyeY() - player.getEyeY(), living.getZ() - player.getZ());
 		double d0 = vector3d1.length();

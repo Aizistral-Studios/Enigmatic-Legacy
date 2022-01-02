@@ -18,10 +18,10 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -75,7 +75,7 @@ public class MagnetRing extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if ((invertShift.getValue() ? !living.isShiftKeyDown() : living.isShiftKeyDown()) || !(living instanceof PlayerEntity))
+		if ((invertShift.getValue() ? !living.isShiftKeyDown() : living.isShiftKeyDown()) || !(living instanceof Player))
 			return;
 
 		double x = living.getX();
@@ -90,7 +90,7 @@ public class MagnetRing extends ItemBaseCurio {
 					break;
 				}
 
-				if (!SuperpositionHandler.canPickStack((PlayerEntity) living, item.getItem())) {
+				if (!SuperpositionHandler.canPickStack((Player) living, item.getItem())) {
 					continue;
 				}
 

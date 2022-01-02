@@ -6,7 +6,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.EnderRing;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
@@ -15,7 +15,7 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.ImageButton;
 import net.minecraft.world.item.ItemGroup;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
@@ -31,7 +31,7 @@ public class EnderChestInventoryButton extends ImageButton {
 	}
 
 	@Override
-	public void renderButton(@Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+	public void renderButton(@Nonnull PoseStack PoseStack, int mouseX, int mouseY, float partialTicks) {
 		this.active = true;
 
 		if (this.parentGui instanceof InventoryScreen || this.parentGui instanceof CuriosScreen) {
@@ -65,7 +65,7 @@ public class EnderChestInventoryButton extends ImageButton {
 			return;
 		}
 
-		super.renderButton(matrixStack, mouseX, mouseY, partialTicks);
+		super.renderButton(PoseStack, mouseX, mouseY, partialTicks);
 	}
 
 	public static Tuple<Integer, Integer> getOffsets(boolean creative) {

@@ -8,10 +8,10 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentType;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.inventory.EquipmentSlotType;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class CeaselessEnchantment extends Enchantment {
 	public static Omniconfig.BooleanParameter allowNoArrow;

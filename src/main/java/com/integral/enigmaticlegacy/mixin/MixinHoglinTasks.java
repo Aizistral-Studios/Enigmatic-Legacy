@@ -15,7 +15,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.brain.sensor.PiglinMobsSensor;
 import net.minecraft.world.entity.monster.HoglinEntity;
 import net.minecraft.world.entity.monster.HoglinTasks;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.server.ServerWorld;
 
 @Mixin(HoglinTasks.class)
@@ -25,8 +25,8 @@ public class MixinHoglinTasks {
 	private static void onHoglinShallAttack(HoglinEntity hoglin, CallbackInfoReturnable<Optional<? extends LivingEntity>> info) {
 		Optional<? extends LivingEntity> returnedTarget = info.getReturnValue();
 
-		if (returnedTarget.isPresent() && returnedTarget.orElse(null) instanceof PlayerEntity) {
-			PlayerEntity returnedPlayer = (PlayerEntity) returnedTarget.orElse(null);
+		if (returnedTarget.isPresent() && returnedTarget.orElse(null) instanceof Player) {
+			Player returnedPlayer = (Player) returnedTarget.orElse(null);
 
 			if (SuperpositionHandler.hasItem(returnedPlayer, EnigmaticLegacy.animalGuide)) {
 				info.setReturnValue(Optional.empty());

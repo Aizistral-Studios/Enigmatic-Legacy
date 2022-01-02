@@ -10,8 +10,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraftforge.common.ForgeHooks;
 
 @Mixin(LootTable.class)

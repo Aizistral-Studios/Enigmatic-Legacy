@@ -12,13 +12,13 @@ import net.minecraft.world.item.enchantment.EnchantmentType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.MonsterEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.EquipmentSlotType;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.item.alchemy.Effects;
+import net.minecraft.resources.ResourceLocation;
 
 public class SlayerEnchantment extends Enchantment {
 	public SlayerEnchantment(EquipmentSlotType... slots) {

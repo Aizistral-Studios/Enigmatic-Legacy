@@ -7,27 +7,27 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 
 public class RegisteredMeleeAttack {
-	private static final Map<PlayerEntity, RegisteredMeleeAttack> attackRegistry = new WeakHashMap<>();
+	private static final Map<Player, RegisteredMeleeAttack> attackRegistry = new WeakHashMap<>();
 
-	public static boolean hasRegisteredMeleeAttack(PlayerEntity player) {
+	public static boolean hasRegisteredMeleeAttack(Player player) {
 		return attackRegistry.containsKey(player);
 	}
 
-	public static RegisteredMeleeAttack getRegisteredMeleeAttack(PlayerEntity player) {
+	public static RegisteredMeleeAttack getRegisteredMeleeAttack(Player player) {
 		return attackRegistry.get(player);
 	}
 
-	public static void registerAttack(PlayerEntity player) {
+	public static void registerAttack(Player player) {
 		attackRegistry.put(player, new RegisteredMeleeAttack(player));
 	}
 
 	public static float getRegisteredAttackStregth(LivingEntity attacker) {
 		float attackStregth = 1F;
-		if (attacker instanceof PlayerEntity && hasRegisteredMeleeAttack((PlayerEntity) attacker)) {
-			RegisteredMeleeAttack attack = getRegisteredMeleeAttack((PlayerEntity)attacker);
+		if (attacker instanceof Player && hasRegisteredMeleeAttack((Player) attacker)) {
+			RegisteredMeleeAttack attack = getRegisteredMeleeAttack((Player)attacker);
 			if (attack.ticksExisted == attacker.tickCount) {
 				attackStregth = attack.cooledAttackStrength;
 			}
@@ -40,12 +40,12 @@ public class RegisteredMeleeAttack {
 		attackRegistry.clear();
 	}
 
-	public final PlayerEntity player;
+	public final Player player;
 	public final int ticksSinceLastSwing;
 	public final int ticksExisted;
 	public final float cooledAttackStrength;
 
-	private RegisteredMeleeAttack(PlayerEntity player) {
+	private RegisteredMeleeAttack(Player player) {
 		this.player = player;
 
 		this.ticksExisted = player.tickCount;

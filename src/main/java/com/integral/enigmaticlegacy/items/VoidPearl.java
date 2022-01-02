@@ -21,18 +21,18 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.potion.Potions;
+import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.item.alchemy.Effects;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.IndirectEntityDamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -147,8 +147,8 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 
-		if (living instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) living;
+		if (living instanceof Player) {
+			Player player = (Player) living;
 
 			/*
 
@@ -196,22 +196,22 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 				for (LivingEntity victim : entities) {
 					if (victim.level.getMaxLocalRawBrightness(victim.blockPosition(), 0) < 3) {
 
-						if (victim instanceof PlayerEntity) {
-							PlayerEntity playerVictim = (PlayerEntity) victim;
+						if (victim instanceof Player) {
+							Player playerVictim = (Player) victim;
 							if (SuperpositionHandler.hasCurio(playerVictim, EnigmaticLegacy.voidPearl)) {
 								playerVictim.addEffect(new EffectInstance(Effects.WITHER, 80, 1, false, true));
 								continue;
 							}
 						}
 
-						if (!(victim instanceof PlayerEntity) || player.canHarmPlayer((PlayerEntity) victim)) {
+						if (!(victim instanceof Player) || player.canHarmPlayer((Player) victim)) {
 							IndirectEntityDamageSource darkness = new IndirectEntityDamageSource("darkness", player, null);
 							darkness.bypassMagic().bypassArmor().setMagic();
 
 							boolean attack = victim.hurt(darkness, (float) baseDarknessDamage.getValue());
 
 							if (attack) {
-								living.level.playSound(null, victim.blockPosition(), SoundEvents.PHANTOM_BITE, SoundCategory.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
+								living.level.playSound(null, victim.blockPosition(), SoundEvents.PHANTOM_BITE, SoundSource.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
 
 								victim.addEffect(new EffectInstance(Effects.WITHER, 80, 1, false, true));
 								victim.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, 2, false, true));

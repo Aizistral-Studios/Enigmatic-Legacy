@@ -15,14 +15,14 @@ import com.integral.enigmaticlegacy.objects.AdvancedPotion;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemGroup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAction;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.item.alchemy.EffectInstance;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
@@ -92,36 +92,36 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-		PlayerEntity playerentity = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
+		Player Player = entityLiving instanceof Player ? (Player) entityLiving : null;
 		List<EffectInstance> effectList = PotionHelper.getEffects(stack);
-		if (playerentity == null || !playerentity.abilities.instabuild) {
+		if (Player == null || !Player.abilities.instabuild) {
 			stack.shrink(1);
 		}
 
-		if (playerentity instanceof ServerPlayerEntity) {
-			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) playerentity, stack);
+		if (Player instanceof ServerPlayer) {
+			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) Player, stack);
 		}
 
 		if (!worldIn.isClientSide) {
 			for (EffectInstance effectinstance : effectList) {
 				if (effectinstance.getEffect().isInstantenous()) {
-					effectinstance.getEffect().applyInstantenousEffect(playerentity, playerentity, entityLiving, effectinstance.getAmplifier(), 1.0D);
+					effectinstance.getEffect().applyInstantenousEffect(Player, Player, entityLiving, effectinstance.getAmplifier(), 1.0D);
 				} else {
 					entityLiving.addEffect(new EffectInstance(effectinstance));
 				}
 			}
 		}
 
-		if (playerentity != null) {
-			playerentity.awardStat(Stats.ITEM_USED.get(this));
+		if (Player != null) {
+			Player.awardStat(Stats.ITEM_USED.get(this));
 		}
 
-		if (playerentity == null || !playerentity.abilities.instabuild) {
+		if (Player == null || !Player.abilities.instabuild) {
 			if (stack.isEmpty())
 				return new ItemStack(Items.GLASS_BOTTLE);
 
-			if (playerentity != null) {
-				playerentity.inventory.add(new ItemStack(Items.GLASS_BOTTLE));
+			if (Player != null) {
+				Player.inventory.add(new ItemStack(Items.GLASS_BOTTLE));
 			}
 		}
 
@@ -139,7 +139,7 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
 		playerIn.startUsingItem(handIn);
 		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getItemInHand(handIn));
 	}

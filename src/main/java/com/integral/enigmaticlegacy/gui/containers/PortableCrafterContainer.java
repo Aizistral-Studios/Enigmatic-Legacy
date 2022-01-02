@@ -1,19 +1,20 @@
 package com.integral.enigmaticlegacy.gui.containers;
 
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.WorkbenchContainer;
-import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.CraftingMenu;
+import net.minecraft.world.entity.player.Inventory;
 
-public class PortableCrafterContainer extends WorkbenchContainer {
+public class PortableCrafterContainer extends CraftingMenu {
 
-    public PortableCrafterContainer(int syncid, PlayerInventory playerInv, IWorldPosCallable posCallable) {
-        super(syncid, playerInv, posCallable);
-    }
+	public PortableCrafterContainer(int syncid, Inventory playerInv, ContainerLevelAccess posCallable) {
+		super(syncid, playerInv, posCallable);
+	}
 
-    @Override
-    public boolean stillValid(PlayerEntity playerIn) {
-        return true;
-    }
+	@Override
+	public boolean stillValid(Player playerIn) {
+		return true;
+	}
 
 }

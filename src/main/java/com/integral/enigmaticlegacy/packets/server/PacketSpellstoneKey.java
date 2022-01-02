@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -35,7 +35,7 @@ public class PacketSpellstoneKey {
 	  public static void handle(PacketSpellstoneKey msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {
-		      ServerPlayerEntity playerServ = ctx.get().getSender();
+		      ServerPlayer playerServ = ctx.get().getSender();
 		      
 		      if (SuperpositionHandler.hasSpellstone(playerServ)) {
 		    	  ItemStack spellstone = SuperpositionHandler.getSpellstone(playerServ);

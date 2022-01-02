@@ -2,8 +2,8 @@ package com.integral.enigmaticlegacy.items.generic;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAction;
@@ -26,25 +26,25 @@ public abstract class ItemBaseFood extends ItemBase {
 		super(props.food(food));
 	}
 
-	public boolean canEat(World world, PlayerEntity player, ItemStack food) {
+	public boolean canEat(World world, Player player, ItemStack food) {
 		return true;
 	}
 
-	public void onConsumed(World worldIn, PlayerEntity player, ItemStack food) {
+	public void onConsumed(World worldIn, Player player, ItemStack food) {
 		// NO-OP
 	}
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-		if (entityLiving instanceof PlayerEntity) {
-			this.onConsumed(worldIn, (PlayerEntity) entityLiving, stack);
+		if (entityLiving instanceof Player) {
+			this.onConsumed(worldIn, (Player) entityLiving, stack);
 		}
 
 		return super.finishUsingItem(stack, worldIn, entityLiving);
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
 		if (this.canEat(worldIn, playerIn, playerIn.getItemInHand(handIn)))
 			return super.use(worldIn, playerIn, handIn);
 		else

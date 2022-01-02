@@ -12,16 +12,16 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.world.item.enchantment.IVanishable;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -32,7 +32,7 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, IVani
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "storage_crystal"));
 	}
 
-	public ItemStack storeDropsOnCrystal(Collection<ItemEntity> drops, PlayerEntity player, @Nullable ItemStack embeddedSoulCrystal) {
+	public ItemStack storeDropsOnCrystal(Collection<ItemEntity> drops, Player player, @Nullable ItemStack embeddedSoulCrystal) {
 		ItemStack crystal = new ItemStack(this);
 		CompoundNBT crystalNBT = ItemNBTHelper.getNBT(crystal);
 		int counter = 0;
@@ -63,7 +63,7 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, IVani
 		return crystal;
 	}
 
-	public ItemStack retrieveDropsFromCrystal(ItemStack crystal, PlayerEntity player, ItemStack retrieveSoul) {
+	public ItemStack retrieveDropsFromCrystal(ItemStack crystal, Player player, ItemStack retrieveSoul) {
 		CompoundNBT crystalNBT = ItemNBTHelper.getNBT(crystal);
 		int counter = crystalNBT.getInt("storedStacks")-1;
 		int exp = crystalNBT.getInt("storedXP");
@@ -83,7 +83,7 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, IVani
 		if (retrieveSoul != null) {
 			EnigmaticLegacy.soulCrystal.retrieveSoulFromCrystal(player, retrieveSoul);
 		} else {
-			player.level.playSound(null, new BlockPos(player.position()), SoundEvents.BEACON_ACTIVATE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			player.level.playSound(null, new BlockPos(player.position()), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.0f);
 		}
 
 		ItemNBTHelper.setBoolean(crystal, "isStored", false);
@@ -94,7 +94,7 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, IVani
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
 		playerIn.startUsingItem(handIn);
 
 		if (!worldIn.isClientSide) {}

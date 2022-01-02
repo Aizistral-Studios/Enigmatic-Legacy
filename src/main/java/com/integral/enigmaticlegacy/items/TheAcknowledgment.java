@@ -22,16 +22,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.world.inventory.EquipmentSlotType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -101,12 +101,12 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 
 	@Nonnull
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
 		ItemStack stack = playerIn.getItemInHand(handIn);
 
-		if (playerIn instanceof ServerPlayerEntity) {
-			ServerPlayerEntity player = (ServerPlayerEntity) playerIn;
-			PatchouliAPI.instance.openBookGUI((ServerPlayerEntity) playerIn, bookID);
+		if (playerIn instanceof ServerPlayer) {
+			ServerPlayer player = (ServerPlayer) playerIn;
+			PatchouliAPI.instance.openBookGUI((ServerPlayer) playerIn, bookID);
 		}
 
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);

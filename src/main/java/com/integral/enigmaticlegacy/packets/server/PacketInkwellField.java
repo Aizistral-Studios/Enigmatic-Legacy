@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.gui.containers.LoreInscriberContainer;
 
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -32,7 +32,7 @@ public class PacketInkwellField {
 	  public static void handle(PacketInkwellField msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {
-		      ServerPlayerEntity playerServ = ctx.get().getSender();
+		      ServerPlayer playerServ = ctx.get().getSender();
 
 		      if (playerServ.containerMenu instanceof LoreInscriberContainer) {
 		    	  LoreInscriberContainer container = (LoreInscriberContainer) playerServ.containerMenu;

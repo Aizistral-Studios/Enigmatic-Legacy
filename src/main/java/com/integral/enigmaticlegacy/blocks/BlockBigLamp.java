@@ -7,12 +7,12 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BlockRenderType;
-import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.loot.LootContext.Builder;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.level.storage.loot.LootContext.Builder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;

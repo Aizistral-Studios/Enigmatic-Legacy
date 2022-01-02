@@ -14,8 +14,8 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
@@ -23,7 +23,7 @@ import net.minecraft.world.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -49,14 +49,14 @@ public class RecallPotion extends ItemBasePotion {
 	}
 
 	@Override
-	public void onConsumed(World worldIn, PlayerEntity player, ItemStack potion) {
-		if (player instanceof ServerPlayerEntity) {
-			SuperpositionHandler.backToSpawn((ServerPlayerEntity)player);
+	public void onConsumed(World worldIn, Player player, ItemStack potion) {
+		if (player instanceof ServerPlayer) {
+			SuperpositionHandler.backToSpawn((ServerPlayer)player);
 		}
 	}
 
 	@Override
-	public boolean canDrink(World world, PlayerEntity player, ItemStack potion) {
+	public boolean canDrink(World world, Player player, ItemStack potion) {
 		return EnigmaticLegacy.proxy.isInVanillaDimension(player);
 	}
 

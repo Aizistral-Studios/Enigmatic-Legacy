@@ -162,34 +162,27 @@ import net.minecraft.client.gui.screens.inventory.CraftingScreen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.PlayerContainer;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemGroup;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.crafting.IRecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -202,6 +195,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -209,9 +203,6 @@ import net.minecraftforge.registries.ObjectHolder;
 
 @Mod(EnigmaticLegacy.MODID)
 public class EnigmaticLegacy {
-	static {
-		Item
-	}
 
 	public static final String MODID = "enigmaticlegacy";
 	public static final String VERSION = "2.11.9";
@@ -391,10 +382,10 @@ public class EnigmaticLegacy {
 
 	public static List<Item> spellstoneList;
 
-	public static final ContainerType<PortableCrafterContainer> PORTABLE_CRAFTER = new ContainerType<>((syncId, playerInv) -> new PortableCrafterContainer(syncId, playerInv, IWorldPosCallable.create(playerInv.player.level, playerInv.player.blockPosition())));
+	public static final MenuType<PortableCrafterContainer> PORTABLE_CRAFTER = new MenuType<>((syncId, playerInv) -> new PortableCrafterContainer(syncId, playerInv, ContainerLevelAccess.create(playerInv.player.level, playerInv.player.blockPosition())));
 
 	@ObjectHolder(MODID + ":enigmatic_repair_container")
-	public static final ContainerType<LoreInscriberContainer> LORE_INSCRIBER_CONTAINER = null;
+	public static final MenuType<LoreInscriberContainer> LORE_INSCRIBER_CONTAINER = null;
 
 	private static final String PTC_VERSION = "1";
 
@@ -656,8 +647,8 @@ public class EnigmaticLegacy {
 
 		proxy.initEntityRendering();
 
-		ScreenManager.register(PORTABLE_CRAFTER, CraftingScreen::new);
-		ScreenManager.register(LORE_INSCRIBER_CONTAINER, LoreInscriberScreen::new);
+		MenuScreens.register(PORTABLE_CRAFTER, CraftingScreen::new);
+		MenuScreens.register(LORE_INSCRIBER_CONTAINER, LoreInscriberScreen::new);
 
 		logger.info("Client setup phase finished successfully.");
 	}
@@ -704,12 +695,12 @@ public class EnigmaticLegacy {
 	public static class RegistryEvents {
 
 		@SubscribeEvent
-		public static void registerContainers(final RegistryEvent.Register<ContainerType<?>> event) {
-			final IForgeRegistry<ContainerType<?>> registry = event.getRegistry();
+		public static void registerContainers(final RegistryEvent.Register<MenuType<?>> event) {
+			final IForgeRegistry<MenuType<?>> registry = event.getRegistry();
 
 			registry.registerAll(
 					PORTABLE_CRAFTER.setRegistryName(MODID, "portable_crafter"),
-					IForgeContainerType.create(LoreInscriberContainer::new).setRegistryName(MODID, "enigmatic_repair_container")
+					IForgeMenuType.create(LoreInscriberContainer::new).setRegistryName(MODID, "enigmatic_repair_container")
 					);
 		}
 

@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.EyeOfNebula;
 
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
@@ -34,7 +34,7 @@ public class PacketConfirmTeleportation {
 	public static void handle(PacketConfirmTeleportation msg, Supplier<NetworkEvent.Context> ctx) {
 
 		ctx.get().enqueueWork(() -> {
-			ServerPlayerEntity playerServ = ctx.get().getSender();
+			ServerPlayer playerServ = ctx.get().getSender();
 
 			//System.out.println("Illuminati confirmed");
 

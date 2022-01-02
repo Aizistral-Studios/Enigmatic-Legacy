@@ -10,8 +10,8 @@ import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import net.minecraft.world.item.enchantment.BindingCurseEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.EnchantmentContainer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.container.EnchantmentContainer;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 

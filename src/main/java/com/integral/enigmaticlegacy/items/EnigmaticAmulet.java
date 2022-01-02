@@ -32,7 +32,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.brain.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.HoglinEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinEntity;
-import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemGroup;
@@ -40,7 +40,7 @@ import net.minecraft.world.item.ItemModelsProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -132,7 +132,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		return AmuletColor.RED;
 	}
 
-	public boolean ifHasColor(PlayerEntity player, AmuletColor color) {
+	public boolean ifHasColor(Player player, AmuletColor color) {
 		ItemStack enigmaticAmulet = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.enigmaticAmulet);
 
 		if ((enigmaticAmulet != null) && (EnigmaticLegacy.enigmaticAmulet.getColor(enigmaticAmulet) == color))
@@ -243,7 +243,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		}
 	}
 
-	public Multimap<Attribute, AttributeModifier> getCurrentModifiers(ItemStack amulet, PlayerEntity player) {
+	public Multimap<Attribute, AttributeModifier> getCurrentModifiers(ItemStack amulet, Player player) {
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
 		AmuletColor color = this.getColor(amulet);
@@ -285,8 +285,8 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 	@Override
 	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) living;
+		if (living instanceof Player) {
+			Player player = (Player) living;
 
 			AttributeModifierManager map = player.getAttributes();
 			map.removeAttributeModifiers(this.getAllModifiers());
@@ -296,8 +296,8 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof PlayerEntity) {
-			PlayerEntity player = (PlayerEntity) living;
+		if (living instanceof Player) {
+			Player player = (Player) living;
 			ItemStack amulet = SuperpositionHandler.getCurioStack(player, this);
 
 			if (amulet != null) {

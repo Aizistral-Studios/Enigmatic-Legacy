@@ -21,7 +21,7 @@ import com.integral.omniconfig.wrappers.Omniconfig.IntParameter;
 import com.integral.omniconfig.wrappers.Omniconfig.PerhapsParameter;
 import com.integral.omniconfig.wrappers.Omniconfig.StringParameter;
 
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.PacketDistributor;
 
@@ -211,7 +211,7 @@ public class OmniconfigWrapper {
 			}
 
 			SuperpositionHandler.executeOnServer(server -> {
-				for (ServerPlayerEntity player : server.getPlayerList().getPlayers()) {
+				for (ServerPlayer player : server.getPlayerList().getPlayers()) {
 					boolean worked = syncWrapperToPlayer(this, player);
 
 					if (worked) {
@@ -453,7 +453,7 @@ public class OmniconfigWrapper {
 		return this.invokationMap.values();
 	}
 
-	public static boolean syncAllToPlayer(ServerPlayerEntity player) {
+	public static boolean syncAllToPlayer(ServerPlayer player) {
 		if (SuperpositionHandler.areWeRemoteServer(player)) {
 			EnigmaticLegacy.logger.info("Synchronizing omniconfig files to " + player.getGameProfile().getName() + "...");
 
@@ -468,7 +468,7 @@ public class OmniconfigWrapper {
 			return false;
 	}
 
-	public static boolean syncWrapperToPlayer(OmniconfigWrapper wrapper, ServerPlayerEntity player) {
+	public static boolean syncWrapperToPlayer(OmniconfigWrapper wrapper, ServerPlayer player) {
 		if (SuperpositionHandler.areWeRemoteServer(player)) {
 			EnigmaticLegacy.logger.info("Sending data for " + wrapper.config.getConfigFile().getName());
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player), new PacketSyncOptions(wrapper));

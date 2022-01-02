@@ -13,8 +13,8 @@ import com.integral.etherium.core.IEtheriumTool;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.world.entity.player.PlayerEntity;
-import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseContext;
 import net.minecraft.world.item.Rarity;
@@ -22,9 +22,9 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -74,7 +74,7 @@ public class EtheriumSword extends SwordItem implements IEtheriumTool {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public ActionResult<ItemStack> use(World world, Player player, Hand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 
 		if (hand == Hand.OFF_HAND)
@@ -90,7 +90,7 @@ public class EtheriumSword extends SwordItem implements IEtheriumTool {
 				Vector3 dir = look.multiply(1D);
 
 				this.config.knockBack(player, 1.0F, dir.x, dir.z);
-				world.playSound(null, player.blockPosition(), SoundEvents.SKELETON_SHOOT, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
+				world.playSound(null, player.blockPosition(), SoundEvents.SKELETON_SHOOT, SoundSource.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
 
 				player.getCooldowns().addCooldown(this, this.config.getSwordCooldown());
 
