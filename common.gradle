@@ -4,7 +4,7 @@ group = "${mod_group}"
 archivesBaseName = "${mod_archives_name}"
 
 println("Specifying Java compatibility...")
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 
 println("Java Installation Data:")
 println(" - Java Version: " + System.getProperty('java.version'))
@@ -102,9 +102,8 @@ curseforge {
         changelogType = 'html'
         changelog = file('docs/changelog.html')
 		
-		addGameVersion '1.16.5'
-		addGameVersion '1.16.4'
-		addGameVersion '1.16.3'
+		addGameVersion '1.17.1'
+		addGameVersion '1.17'
 		
 		relations {
 			if (project.name.equals('EnigmaticLegacy')) {

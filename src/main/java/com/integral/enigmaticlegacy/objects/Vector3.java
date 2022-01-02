@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import org.lwjgl.opengl.GL11;
 
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;

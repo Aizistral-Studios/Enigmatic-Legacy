@@ -8,11 +8,11 @@ import com.integral.enigmaticlegacy.client.models.DarkArmorModel;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseArmor;
 
 import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
+import net.minecraft.world.item.IArmorMaterial;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 

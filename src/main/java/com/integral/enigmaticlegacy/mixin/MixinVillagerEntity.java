@@ -11,11 +11,11 @@ import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.merchant.villager.VillagerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.MerchantOffer;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.merchant.villager.VillagerEntity;
+import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.MerchantOffer;
 
 @Mixin(VillagerEntity.class)
 public class MixinVillagerEntity {

@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.PlayerEntity;
 
 public class RegisteredMeleeAttack {
 	private static final Map<PlayerEntity, RegisteredMeleeAttack> attackRegistry = new WeakHashMap<>();

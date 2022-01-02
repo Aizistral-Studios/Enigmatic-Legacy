@@ -2,7 +2,7 @@ package com.integral.enigmaticlegacy.helpers;
 
 import java.util.UUID;
 
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 
 /**

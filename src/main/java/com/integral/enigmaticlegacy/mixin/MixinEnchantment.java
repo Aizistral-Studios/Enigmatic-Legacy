@@ -7,12 +7,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 
-import net.minecraft.enchantment.BindingCurseEnchantment;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.item.enchantment.BindingCurseEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.EnchantmentContainer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
 @Mixin(Enchantment.class)

@@ -2,8 +2,8 @@ package com.integral.enigmaticlegacy.api.items;
 
 import java.util.Set;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
+import net.minecraft.world.level.block.BlockState;
+import net.minecraft.world.level.block.material.Material;
 import net.minecraftforge.common.ToolType;
 
 public interface IBaseTool {

@@ -2,7 +2,7 @@ package com.integral.enigmaticlegacy.objects;
 
 import java.util.HashMap;
 
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 
 /**
  * Basically, a HashMap<LivingEntity, Integer>, but with integrated

@@ -2,12 +2,12 @@ package com.integral.enigmaticlegacy.items.generic;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.Rarity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Rarity;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 
 public class GenericBlockItem extends BlockItem {
 

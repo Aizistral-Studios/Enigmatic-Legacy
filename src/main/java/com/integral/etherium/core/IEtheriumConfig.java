@@ -6,12 +6,12 @@ import com.integral.enigmaticlegacy.objects.Perhaps;
 import com.integral.etherium.items.EtheriumAxe;
 import com.integral.etherium.items.EtheriumPickaxe;
 
-import net.minecraft.block.material.Material;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.level.block.material.Material;
+import net.minecraft.world.entity.player.PlayerEntity;
+import net.minecraft.world.item.IArmorMaterial;
+import net.minecraft.world.item.IItemTier;
+import net.minecraft.world.item.ItemGroup;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.ModList;
 

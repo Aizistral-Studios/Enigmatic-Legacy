@@ -6,17 +6,17 @@ import com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack;
 
 import static com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack.*;
 
-import net.minecraft.enchantment.DamageEnchantment;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.enchantment.ImpalingEnchantment;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.boss.dragon.EnderDragonEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.item.enchantment.DamageEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentType;
+import net.minecraft.world.item.enchantment.ImpalingEnchantment;
+import net.minecraft.world.entity.CreatureAttribute;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.world.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class TorrentEnchantment extends Enchantment {

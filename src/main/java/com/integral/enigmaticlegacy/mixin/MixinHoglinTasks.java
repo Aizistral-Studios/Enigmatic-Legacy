@@ -11,11 +11,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.brain.sensor.PiglinMobsSensor;
-import net.minecraft.entity.monster.HoglinEntity;
-import net.minecraft.entity.monster.HoglinTasks;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.brain.sensor.PiglinMobsSensor;
+import net.minecraft.world.entity.monster.HoglinEntity;
+import net.minecraft.world.entity.monster.HoglinTasks;
+import net.minecraft.world.entity.player.PlayerEntity;
 import net.minecraft.world.server.ServerWorld;
 
 @Mixin(HoglinTasks.class)

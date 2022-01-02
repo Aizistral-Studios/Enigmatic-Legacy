@@ -21,7 +21,7 @@ import com.integral.omniconfig.wrappers.Omniconfig.IntParameter;
 import com.integral.omniconfig.wrappers.Omniconfig.PerhapsParameter;
 import com.integral.omniconfig.wrappers.Omniconfig.StringParameter;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.ServerPlayerEntity;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.network.PacketDistributor;
 

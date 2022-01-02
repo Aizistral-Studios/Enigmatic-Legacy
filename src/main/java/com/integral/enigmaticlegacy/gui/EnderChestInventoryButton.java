@@ -9,12 +9,12 @@ import com.integral.enigmaticlegacy.items.EnderRing;
 import com.mojang.blaze3d.matrix.MatrixStack;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.gui.screen.inventory.CreativeScreen;
-import net.minecraft.client.gui.screen.inventory.InventoryScreen;
+import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import net.minecraft.client.gui.screens.inventory.CreativeScreen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.button.ImageButton;
-import net.minecraft.item.ItemGroup;
+import net.minecraft.world.item.ItemGroup;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
 import top.theillusivec4.curios.client.gui.CuriosScreen;

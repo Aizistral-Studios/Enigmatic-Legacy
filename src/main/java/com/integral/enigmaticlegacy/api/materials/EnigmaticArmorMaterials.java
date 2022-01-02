@@ -7,8 +7,8 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.etherium.core.IEtheriumConfig;
 
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.IArmorMaterial;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.IArmorMaterial;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;

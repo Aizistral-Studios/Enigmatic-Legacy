@@ -11,13 +11,13 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
-import net.minecraft.enchantment.IVanishable;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.ServerPlayerEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.World;
 
-import net.minecraft.item.Item.Properties;
+import net.minecraft.world.item.Item.Properties;
 
 public abstract class ItemSpellstoneCurio extends ItemBaseCurio implements ISpellstone {
 	public static Omniconfig.BooleanParameter multiequip;

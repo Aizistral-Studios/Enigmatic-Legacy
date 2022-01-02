@@ -6,8 +6,8 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.etherium.core.IEtheriumConfig;
 
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.IItemTier;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 
 /**

@@ -3,14 +3,14 @@ package com.integral.enigmaticlegacy.enchantments;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 
-import net.minecraft.enchantment.DamageEnchantment;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.enchantment.ImpalingEnchantment;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.item.enchantment.DamageEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentType;
+import net.minecraft.world.item.enchantment.ImpalingEnchantment;
+import net.minecraft.world.entity.CreatureAttribute;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 public class WrathEnchantment extends Enchantment {

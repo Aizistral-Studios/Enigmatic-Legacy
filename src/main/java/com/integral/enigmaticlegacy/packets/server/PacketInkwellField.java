@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.gui.containers.LoreInscriberContainer;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.world.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 

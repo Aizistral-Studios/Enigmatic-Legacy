@@ -12,12 +12,12 @@ import com.google.common.collect.ImmutableList;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.brain.Brain;
-import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
-import net.minecraft.entity.ai.brain.sensor.PiglinMobsSensor;
-import net.minecraft.entity.monster.piglin.PiglinTasks;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.brain.Brain;
+import net.minecraft.world.entity.ai.brain.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.brain.sensor.PiglinMobsSensor;
+import net.minecraft.world.entity.monster.piglin.PiglinTasks;
+import net.minecraft.world.entity.player.PlayerEntity;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.world.server.ServerWorld;
 

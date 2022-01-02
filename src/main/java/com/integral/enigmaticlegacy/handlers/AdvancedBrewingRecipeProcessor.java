@@ -8,8 +8,8 @@ import com.integral.enigmaticlegacy.brewing.AbstractBrewingRecipe;
 import com.integral.enigmaticlegacy.brewing.ComplexBrewingRecipe;
 import com.integral.enigmaticlegacy.brewing.SpecialBrewingRecipe;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
