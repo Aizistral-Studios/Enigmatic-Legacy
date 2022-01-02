@@ -61,6 +61,7 @@ dependencies {
 	implementation name: 'decorativeblocks-1.16.1-1.5.2-deobf'
 	implementation name: 'Patchouli-1.16.4-51-deobf'
 	implementation name: 'WorldNameRandomizer-FORGE-1.16.4-v1.1.1-deobf'
+	implementation name: 'playerex-1.1.8-1.16.5-dev'
 	
 	//compile fg.deobf('generic:Survive:1.16.3-3.0.2')
 	//compile fg.deobf('generic:EnchantmentDescriptions:1.16.4-6.0.1')
