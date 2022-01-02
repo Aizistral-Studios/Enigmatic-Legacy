@@ -25,11 +25,11 @@ import net.minecraft.world.server.ServerWorld;
 public class AdvancedSpawnLocationHelper {
 
 	public static RegistryKey<World> getPlayerRespawnDimension(ServerPlayerEntity player) {
-		return player.func_241141_L_();
+		return player.getRespawnDimension();
 	}
 
 	public static BlockPos getRespawnLocation(ServerWorld world, int arg1, int arg2, boolean flag) {
-		return func_241092_a_(world, arg1, arg2, flag);
+		return getOverworldRespawnPos(world, arg1, arg2, flag);
 	}
 
 	private static int someNumberLol(int p_205735_1_) {
@@ -37,13 +37,13 @@ public class AdvancedSpawnLocationHelper {
 	}
 
 	public static void fuckBackToSpawn(ServerWorld worldIn, ServerPlayerEntity playerIn) {
-		BlockPos blockpos = worldIn.getSpawnPoint();
+		BlockPos blockpos = worldIn.getSharedSpawnPos();
 
-		playerIn.setPositionAndUpdate(blockpos.getX() + 0.5, blockpos.getY(), blockpos.getZ() + 0.5);
+		playerIn.teleportTo(blockpos.getX() + 0.5, blockpos.getY(), blockpos.getZ() + 0.5);
 
-		if (worldIn.getDimensionType().hasSkyLight() && worldIn.getServer().getServerConfiguration().getGameType() != GameType.ADVENTURE) {
+		if (worldIn.dimensionType().hasSkyLight() && worldIn.getServer().getWorldData().getGameType() != GameType.ADVENTURE) {
 			int i = Math.max(0, worldIn.getServer().getSpawnRadius(worldIn));
-			int j = MathHelper.floor(worldIn.getWorldBorder().getClosestDistance(blockpos.getX(), blockpos.getZ()));
+			int j = MathHelper.floor(worldIn.getWorldBorder().getDistanceToBorder(blockpos.getX(), blockpos.getZ()));
 			if (j < i) {
 				i = j;
 			}
@@ -64,21 +64,21 @@ public class AdvancedSpawnLocationHelper {
 				int k2 = i2 / (i * 2 + 1);
 				BlockPos blockpos1 = AdvancedSpawnLocationHelper.getRespawnLocation(worldIn, blockpos.getX() + j2 - i, blockpos.getZ() + k2 - i, false);
 				if (blockpos1 != null) {
-					playerIn.setPositionAndUpdate(blockpos1.getX() + 0.5, blockpos1.getY(), blockpos1.getZ() + 0.5);
-					if (worldIn.hasNoCollisions(playerIn)) {
+					playerIn.teleportTo(blockpos1.getX() + 0.5, blockpos1.getY(), blockpos1.getZ() + 0.5);
+					if (worldIn.noCollision(playerIn)) {
 						break;
 					}
 				}
 			}
 		} else {
 
-			while (!worldIn.hasNoCollisions(playerIn) && playerIn.getPosY() < 255.0D) {
-				playerIn.setPositionAndUpdate(playerIn.getPosX(), playerIn.getPosY() + 1.0D, playerIn.getPosZ());
+			while (!worldIn.noCollision(playerIn) && playerIn.getY() < 255.0D) {
+				playerIn.teleportTo(playerIn.getX(), playerIn.getY() + 1.0D, playerIn.getZ());
 			}
 		}
 
-		while (!worldIn.hasNoCollisions(playerIn) && playerIn.getPosY() < 256.0D) {
-			playerIn.setPositionAndUpdate(playerIn.getPosX(), playerIn.getPosY() + 1.0D, playerIn.getPosZ());
+		while (!worldIn.noCollision(playerIn) && playerIn.getY() < 256.0D) {
+			playerIn.teleportTo(playerIn.getX(), playerIn.getY() + 1.0D, playerIn.getZ());
 		}
 
 	}
@@ -89,11 +89,11 @@ public class AdvancedSpawnLocationHelper {
 	 */
 
 	public static Optional<Vector3d> getValidSpawn(final ServerWorld world, final ServerPlayerEntity player) {
-		BlockPos blockpos = player.func_241140_K_();
+		BlockPos blockpos = player.getRespawnPosition();
 		Optional<Vector3d> optional;
 		if (world != null && blockpos != null) {
-			optional = PlayerEntity.func_242374_a(world, blockpos, player.func_242109_L(), player.func_241142_M_(), false);
-			/*player.func_242374_a(world, blockpos, player.func_242109_L(), player.func_241142_M_(), false)*/
+			optional = PlayerEntity.findRespawnPositionAndUseSpawnBlock(world, blockpos, player.getRespawnAngle(), player.isRespawnForced(), false);
+			/*player.findRespawnPositionAndUseSpawnBlock(world, blockpos, player.getRespawnAngle(), player.isRespawnForced(), false)*/
 		} else {
 			optional = Optional.empty();
 		}
@@ -102,32 +102,32 @@ public class AdvancedSpawnLocationHelper {
 	}
 
 	@Nullable
-	protected static BlockPos func_241092_a_(ServerWorld p_241092_0_, int p_241092_1_, int p_241092_2_, boolean p_241092_3_) {
+	protected static BlockPos getOverworldRespawnPos(ServerWorld p_241092_0_, int p_241092_1_, int p_241092_2_, boolean p_241092_3_) {
 		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(p_241092_1_, 0, p_241092_2_);
 		Biome biome = p_241092_0_.getBiome(blockpos$mutable);
-		boolean flag = p_241092_0_.getDimensionType().getHasCeiling();
-		BlockState blockstate = biome.getGenerationSettings().getSurfaceBuilderConfig().getTop();
-		if (p_241092_3_ && !blockstate.getBlock().isIn(BlockTags.VALID_SPAWN))
+		boolean flag = p_241092_0_.dimensionType().hasCeiling();
+		BlockState blockstate = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
+		if (p_241092_3_ && !blockstate.getBlock().is(BlockTags.VALID_SPAWN))
 			return null;
 		else {
 			Chunk chunk = p_241092_0_.getChunk(p_241092_1_ >> 4, p_241092_2_ >> 4);
-			int i = flag ? p_241092_0_.getChunkProvider().getChunkGenerator().getGroundHeight() : chunk.getTopBlockY(Heightmap.Type.MOTION_BLOCKING, p_241092_1_ & 15, p_241092_2_ & 15);
+			int i = flag ? p_241092_0_.getChunkSource().getGenerator().getSpawnHeight() : chunk.getHeight(Heightmap.Type.MOTION_BLOCKING, p_241092_1_ & 15, p_241092_2_ & 15);
 			if (i < 0)
 				return null;
 			else {
-				int j = chunk.getTopBlockY(Heightmap.Type.WORLD_SURFACE, p_241092_1_ & 15, p_241092_2_ & 15);
-				if (j <= i && j > chunk.getTopBlockY(Heightmap.Type.OCEAN_FLOOR, p_241092_1_ & 15, p_241092_2_ & 15))
+				int j = chunk.getHeight(Heightmap.Type.WORLD_SURFACE, p_241092_1_ & 15, p_241092_2_ & 15);
+				if (j <= i && j > chunk.getHeight(Heightmap.Type.OCEAN_FLOOR, p_241092_1_ & 15, p_241092_2_ & 15))
 					return null;
 				else {
 					for(int k = i + 1; k >= 0; --k) {
-						blockpos$mutable.setPos(p_241092_1_, k, p_241092_2_);
+						blockpos$mutable.set(p_241092_1_, k, p_241092_2_);
 						BlockState blockstate1 = p_241092_0_.getBlockState(blockpos$mutable);
 						if (!blockstate1.getFluidState().isEmpty()) {
 							break;
 						}
 
 						if (blockstate1.equals(blockstate))
-							return blockpos$mutable.up().toImmutable();
+							return blockpos$mutable.above().immutable();
 					}
 
 					return null;
@@ -137,10 +137,10 @@ public class AdvancedSpawnLocationHelper {
 	}
 
 	@Nullable
-	public static BlockPos func_241094_a_(ServerWorld p_241094_0_, ChunkPos p_241094_1_, boolean p_241094_2_) {
-		for(int i = p_241094_1_.getXStart(); i <= p_241094_1_.getXEnd(); ++i) {
-			for(int j = p_241094_1_.getZStart(); j <= p_241094_1_.getZEnd(); ++j) {
-				BlockPos blockpos = func_241092_a_(p_241094_0_, i, j, p_241094_2_);
+	public static BlockPos getSpawnPosInChunk(ServerWorld p_241094_0_, ChunkPos p_241094_1_, boolean p_241094_2_) {
+		for(int i = p_241094_1_.getMinBlockX(); i <= p_241094_1_.getMaxBlockX(); ++i) {
+			for(int j = p_241094_1_.getMinBlockZ(); j <= p_241094_1_.getMaxBlockZ(); ++j) {
+				BlockPos blockpos = getOverworldRespawnPos(p_241094_0_, i, j, p_241094_2_);
 				if (blockpos != null)
 					return blockpos;
 			}

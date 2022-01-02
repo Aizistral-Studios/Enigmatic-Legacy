@@ -44,12 +44,12 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, IVanisha
 	public Map<PlayerEntity, Multimap<Attribute, AttributeModifier>> attributeDispatcher = new WeakHashMap<>();
 
 	public SoulCrystal() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isImmuneToFire().group(EnigmaticLegacy.enigmaticTab));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).fireResistant().tab(EnigmaticLegacy.enigmaticTab));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "soul_crystal"));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.soulCrystal1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.soulCrystal2");
@@ -71,8 +71,8 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, IVanisha
 		if (lostFragments > 0) {
 			this.setLostCrystals(player, lostFragments - 1);
 
-			if (!player.world.isRemote) {
-				player.world.playSound(null, new BlockPos(player.getPositionVec()), SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			if (!player.level.isClientSide) {
+				player.level.playSound(null, new BlockPos(player.position()), SoundEvents.BEACON_ACTIVATE, SoundCategory.PLAYERS, 1.0f, 1.0f);
 			}
 
 			return true;
@@ -101,16 +101,16 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, IVanisha
 
 	public void applyPlayerSoulMap(PlayerEntity player) {
 		Multimap<Attribute, AttributeModifier> soulMap = this.getOrCreateSoulMap(player);
-		AttributeModifierManager attributeManager = player.getAttributeManager();
-		attributeManager.reapplyModifiers(soulMap);
+		AttributeModifierManager attributeManager = player.getAttributes();
+		attributeManager.addTransientAttributeModifiers(soulMap);
 	}
 
 	public void updatePlayerSoulMap(PlayerEntity player) {
 		Multimap<Attribute, AttributeModifier> soulMap = this.getOrCreateSoulMap(player);
-		AttributeModifierManager attributeManager = player.getAttributeManager();
+		AttributeModifierManager attributeManager = player.getAttributes();
 
 		// Removes former attributes
-		attributeManager.removeModifiers(soulMap);
+		attributeManager.removeAttributeModifiers(soulMap);
 
 		soulMap.clear();
 
@@ -121,23 +121,23 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, IVanisha
 		}
 
 		// Applies new attributes
-		attributeManager.reapplyModifiers(soulMap);
+		attributeManager.addTransientAttributeModifiers(soulMap);
 
 		this.attributeDispatcher.put(player, soulMap);
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
-		player.setActiveHand(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
+		player.startUsingItem(hand);
 
 		if (this.retrieveSoulFromCrystal(player, stack)) {
 			Vector3 playerCenter = Vector3.fromEntityCenter(player);
-			if (!player.world.isRemote) {
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(playerCenter.x, playerCenter.y, playerCenter.z, 64, player.world.getDimensionKey())), new PacketRecallParticles(playerCenter.x, playerCenter.y, playerCenter.z, 48, false));
+			if (!player.level.isClientSide) {
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(playerCenter.x, playerCenter.y, playerCenter.z, 64, player.level.dimension())), new PacketRecallParticles(playerCenter.x, playerCenter.y, playerCenter.z, 48, false));
 			}
 
-			player.swingArm(hand);
+			player.swing(hand);
 			stack.setCount(0);
 			return new ActionResult<>(ActionResultType.SUCCESS, stack);
 		} else

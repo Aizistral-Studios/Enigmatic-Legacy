@@ -59,7 +59,7 @@ public abstract class ItemBaseCurio extends ItemBase implements IItemCurio, IVan
 	}
 
 	@Override
-	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
+	public void onCraftedBy(ItemStack stack, World worldIn, PlayerEntity playerIn) {
 		// Insert existential void here
 	}
 
@@ -86,8 +86,8 @@ public abstract class ItemBaseCurio extends ItemBase implements IItemCurio, IVan
 	public static Properties getDefaultProperties() {
 		Properties props = new Item.Properties();
 
-		props.group(EnigmaticLegacy.enigmaticTab);
-		props.maxStackSize(1);
+		props.tab(EnigmaticLegacy.enigmaticTab);
+		props.stacksTo(1);
 		props.rarity(Rarity.COMMON);
 
 		return props;
@@ -117,12 +117,12 @@ public abstract class ItemBaseCurio extends ItemBase implements IItemCurio, IVan
 			return;
 
 		BipedModel<LivingEntity> model = this.getModel();
-		model.setRotationAngles(living, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-		model.setLivingAnimations(living, limbSwing, limbSwingAmount, partialTicks);
+		model.setupAnim(living, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+		model.prepareMobModel(living, limbSwing, limbSwingAmount, partialTicks);
 		RenderHelper.followBodyRotations(living, model);
-		IVertexBuilder vertexBuilder = ItemRenderer.getBuffer(renderTypeBuffer, model.getRenderType(this.getTexture()),
+		IVertexBuilder vertexBuilder = ItemRenderer.getFoilBuffer(renderTypeBuffer, model.renderType(this.getTexture()),
 				false, false);
-		model.render(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
+		model.renderToBuffer(matrixStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 	}
 
 	@Nullable

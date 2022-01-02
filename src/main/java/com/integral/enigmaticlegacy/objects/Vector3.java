@@ -48,15 +48,15 @@ public class Vector3 {
 	}
 
 	public static Vector3 fromEntity(Entity e) {
-		return new Vector3(e.getPosX(), e.getPosY(), e.getPosZ());
+		return new Vector3(e.getX(), e.getY(), e.getZ());
 	}
 
 	public static Vector3 fromEntityCenter(Entity e) {
-		return new Vector3(e.getPosX(), e.getPosY() - e.getYOffset() + e.getHeight() / 2, e.getPosZ());
+		return new Vector3(e.getX(), e.getY() - e.getMyRidingOffset() + e.getBbHeight() / 2, e.getZ());
 	}
 
 	public static Vector3 fromTileEntity(TileEntity e) {
-		return Vector3.fromBlockPos(e.getPos());
+		return Vector3.fromBlockPos(e.getBlockPos());
 	}
 
 	public static Vector3 fromTileEntityCenter(TileEntity e) {

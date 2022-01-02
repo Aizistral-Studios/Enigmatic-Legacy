@@ -26,13 +26,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AntiforbiddenPotion extends ItemBasePotion {
 
 	public AntiforbiddenPotion() {
-		super(getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC));
+		super(getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "antiforbidden_potion"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.antiforbiddenPotion1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.antiforbiddenPotion2");

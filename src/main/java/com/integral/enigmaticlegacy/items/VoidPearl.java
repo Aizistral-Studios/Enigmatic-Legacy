@@ -93,24 +93,24 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 	public DamageSource theDarkness;
 
 	public VoidPearl() {
-		super(ItemSpellstoneCurio.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isImmuneToFire());
+		super(ItemSpellstoneCurio.getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "void_pearl"));
 
-		this.immunityList.add(DamageSource.DROWN.damageType);
-		this.immunityList.add(DamageSource.IN_WALL.damageType);
+		this.immunityList.add(DamageSource.DROWN.msgId);
+		this.immunityList.add(DamageSource.IN_WALL.msgId);
 
-		this.healList.add(DamageSource.WITHER.damageType);
-		this.healList.add(DamageSource.MAGIC.damageType);
+		this.healList.add(DamageSource.WITHER.msgId);
+		this.healList.add(DamageSource.MAGIC.msgId);
 
 		this.theDarkness = new DamageSource("darkness");
-		this.theDarkness.setDamageIsAbsolute();
-		this.theDarkness.setDamageBypassesArmor();
-		this.theDarkness.setMagicDamage();
+		this.theDarkness.bypassMagic();
+		this.theDarkness.bypassArmor();
+		this.theDarkness.setMagic();
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -138,7 +138,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.getDisplayString("key.spellstoneAbility").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.spellstoneAbility").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
@@ -166,58 +166,58 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 
 			 */
 
-			if (player.getAir() < 300) {
-				player.setAir(300);
+			if (player.getAirSupply() < 300) {
+				player.setAirSupply(300);
 			}
 
-			if (player.isBurning()) {
-				player.extinguish();
+			if (player.isOnFire()) {
+				player.clearFire();
 			}
 
-			for (EffectInstance effect : new ArrayList<>(player.getActivePotionEffects())) {
-				if (effect.getPotion() == Effects.NIGHT_VISION) {
+			for (EffectInstance effect : new ArrayList<>(player.getActiveEffects())) {
+				if (effect.getEffect() == Effects.NIGHT_VISION) {
 					if (effect.getDuration() >= EnigmaticLegacy.miningCharm.nightVisionDuration-10 && effect.getDuration() <= EnigmaticLegacy.miningCharm.nightVisionDuration) {
 						continue;
 					}
-				} else if (effect.getPotion().getRegistryName().equals(new ResourceLocation("mana-and-artifice", "chrono-exhaustion"))) {
+				} else if (effect.getEffect().getRegistryName().equals(new ResourceLocation("mana-and-artifice", "chrono-exhaustion"))) {
 					continue;
 				}
 
-				player.removePotionEffect(effect.getPotion());
+				player.removeEffect(effect.getEffect());
 			}
 
-			if (player.ticksExisted % 10 == 0) {
-				List<LivingEntity> entities = living.world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(player.getPosX() - shadowRange.getValue(), player.getPosY() - shadowRange.getValue(), player.getPosZ() - shadowRange.getValue(), player.getPosX() + shadowRange.getValue(), player.getPosY() + shadowRange.getValue(), player.getPosZ() + shadowRange.getValue()));
+			if (player.tickCount % 10 == 0) {
+				List<LivingEntity> entities = living.level.getEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(player.getX() - shadowRange.getValue(), player.getY() - shadowRange.getValue(), player.getZ() - shadowRange.getValue(), player.getX() + shadowRange.getValue(), player.getY() + shadowRange.getValue(), player.getZ() + shadowRange.getValue()));
 
 				if (entities.contains(player)) {
 					entities.remove(player);
 				}
 
 				for (LivingEntity victim : entities) {
-					if (victim.world.getNeighborAwareLightSubtracted(victim.getPosition(), 0) < 3) {
+					if (victim.level.getMaxLocalRawBrightness(victim.blockPosition(), 0) < 3) {
 
 						if (victim instanceof PlayerEntity) {
 							PlayerEntity playerVictim = (PlayerEntity) victim;
 							if (SuperpositionHandler.hasCurio(playerVictim, EnigmaticLegacy.voidPearl)) {
-								playerVictim.addPotionEffect(new EffectInstance(Effects.WITHER, 80, 1, false, true));
+								playerVictim.addEffect(new EffectInstance(Effects.WITHER, 80, 1, false, true));
 								continue;
 							}
 						}
 
-						if (!(victim instanceof PlayerEntity) || player.canAttackPlayer((PlayerEntity) victim)) {
+						if (!(victim instanceof PlayerEntity) || player.canHarmPlayer((PlayerEntity) victim)) {
 							IndirectEntityDamageSource darkness = new IndirectEntityDamageSource("darkness", player, null);
-							darkness.setDamageIsAbsolute().setDamageBypassesArmor().setMagicDamage();
+							darkness.bypassMagic().bypassArmor().setMagic();
 
-							boolean attack = victim.attackEntityFrom(darkness, (float) baseDarknessDamage.getValue());
+							boolean attack = victim.hurt(darkness, (float) baseDarknessDamage.getValue());
 
 							if (attack) {
-								living.world.playSound(null, victim.getPosition(), SoundEvents.ENTITY_PHANTOM_BITE, SoundCategory.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
+								living.level.playSound(null, victim.blockPosition(), SoundEvents.PHANTOM_BITE, SoundCategory.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
 
-								victim.addPotionEffect(new EffectInstance(Effects.WITHER, 80, 1, false, true));
-								victim.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 100, 2, false, true));
-								victim.addPotionEffect(new EffectInstance(Effects.BLINDNESS, 100, 0, false, true));
-								victim.addPotionEffect(new EffectInstance(Effects.HUNGER, 160, 2, false, true));
-								victim.addPotionEffect(new EffectInstance(Effects.MINING_FATIGUE, 100, 3, false, true));
+								victim.addEffect(new EffectInstance(Effects.WITHER, 80, 1, false, true));
+								victim.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, 2, false, true));
+								victim.addEffect(new EffectInstance(Effects.BLINDNESS, 100, 0, false, true));
+								victim.addEffect(new EffectInstance(Effects.HUNGER, 160, 2, false, true));
+								victim.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, 100, 3, false, true));
 							}
 						}
 					}

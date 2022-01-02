@@ -58,28 +58,28 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 	public Map<PlayerEntity, Boolean> flightMap = new WeakHashMap<>();
 
 	public EnigmaticItem() {
-		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC).isImmuneToFire());
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC).fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_item"));
 
-		this.immunityList.add(DamageSource.FALL.damageType);
-		this.immunityList.add(DamageSource.FLY_INTO_WALL.damageType);
-		this.immunityList.add(DamageSource.CACTUS.damageType);
-		this.immunityList.add(DamageSource.CRAMMING.damageType);
-		this.immunityList.add(DamageSource.DROWN.damageType);
-		this.immunityList.add(DamageSource.HOT_FLOOR.damageType);
-		this.immunityList.add(DamageSource.LAVA.damageType);
-		this.immunityList.add(DamageSource.IN_FIRE.damageType);
-		this.immunityList.add(DamageSource.ON_FIRE.damageType);
-		this.immunityList.add(DamageSource.IN_WALL.damageType);
-		this.immunityList.add(DamageSource.OUT_OF_WORLD.damageType);
-		this.immunityList.add(DamageSource.STARVE.damageType);
-		this.immunityList.add(DamageSource.SWEET_BERRY_BUSH.damageType);
+		this.immunityList.add(DamageSource.FALL.msgId);
+		this.immunityList.add(DamageSource.FLY_INTO_WALL.msgId);
+		this.immunityList.add(DamageSource.CACTUS.msgId);
+		this.immunityList.add(DamageSource.CRAMMING.msgId);
+		this.immunityList.add(DamageSource.DROWN.msgId);
+		this.immunityList.add(DamageSource.HOT_FLOOR.msgId);
+		this.immunityList.add(DamageSource.LAVA.msgId);
+		this.immunityList.add(DamageSource.IN_FIRE.msgId);
+		this.immunityList.add(DamageSource.ON_FIRE.msgId);
+		this.immunityList.add(DamageSource.IN_WALL.msgId);
+		this.immunityList.add(DamageSource.OUT_OF_WORLD.msgId);
+		this.immunityList.add(DamageSource.STARVE.msgId);
+		this.immunityList.add(DamageSource.SWEET_BERRY_BUSH.msgId);
 
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -105,19 +105,19 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living.isBurning()) {
-			living.extinguish();
+		if (living.isOnFire()) {
+			living.clearFire();
 		}
 
-		List<EffectInstance> effects = new ArrayList<EffectInstance>(living.getActivePotionEffects());
+		List<EffectInstance> effects = new ArrayList<EffectInstance>(living.getActiveEffects());
 
 		for (EffectInstance effect : effects) {
-			if (effect.getPotion().getRegistryName().equals(new ResourceLocation("mana-and-artifice", "chrono-exhaustion"))) {
+			if (effect.getEffect().getRegistryName().equals(new ResourceLocation("mana-and-artifice", "chrono-exhaustion"))) {
 				continue;
 			}
 
-			if (!effect.getPotion().isBeneficial()) {
-				living.removePotionEffect(effect.getPotion());
+			if (!effect.getEffect().isBeneficial()) {
+				living.removeEffect(effect.getEffect());
 			}
 		}
 
@@ -127,15 +127,15 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 		try {
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticItem)) {
 				this.flightMap.put(player, true);
-				if (!player.abilities.allowFlying) {
-					player.abilities.allowFlying = true;
-					player.sendPlayerAbilities();
+				if (!player.abilities.mayfly) {
+					player.abilities.mayfly = true;
+					player.onUpdateAbilities();
 				}
 			} else if (this.flightMap.get(player)) {
 				if (!player.isCreative()) {
-					player.abilities.allowFlying = false;
-					player.abilities.isFlying = false;
-					player.sendPlayerAbilities();
+					player.abilities.mayfly = false;
+					player.abilities.flying = false;
+					player.onUpdateAbilities();
 				}
 				this.flightMap.put(player, false);
 			}
@@ -146,7 +146,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	public void triggerActiveAbility(World world, ServerPlayerEntity player, ItemStack stack) {
-		if (world.isRemote || SuperpositionHandler.hasSpellstoneCooldown(player))
+		if (world.isClientSide || SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
 		this.launchWitherSkull(world, player, Item.random.nextDouble() <= 0.25);
@@ -160,11 +160,11 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	private void launchWitherSkull(World world, PlayerEntity player, boolean invulnerable) {
-		world.playEvent((PlayerEntity) null, 1024, new BlockPos(player.getPositionVec()), 0);
+		world.levelEvent((PlayerEntity) null, 1024, new BlockPos(player.position()), 0);
 
-		Vector3 look = new Vector3(player.getLookVec()).multiply(1, 0, 1);
+		Vector3 look = new Vector3(player.getLookAngle()).multiply(1, 0, 1);
 
-		double playerRot = Math.toRadians(player.rotationYaw + 90);
+		double playerRot = Math.toRadians(player.yRot + 90);
 		if (look.x == 0 && look.z == 0) {
 			look = new Vector3(Math.cos(playerRot), 0, Math.sin(playerRot));
 		}
@@ -196,11 +196,11 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 			witherskullentity.setSkullInvulnerable(true);
 		}
 
-		witherskullentity.setPosition(end.x, end.y, end.z);
+		witherskullentity.setPos(end.x, end.y, end.z);
 
-		world.addEntity(witherskullentity);
+		world.addFreshEntity(witherskullentity);
 
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(witherskullentity.getPosX(), witherskullentity.getPosY(), witherskullentity.getPosZ(), 64, witherskullentity.world.getDimensionKey())), new PacketWitherParticles(witherskullentity.getPosX(), witherskullentity.getPosY() + (witherskullentity.getHeight() / 2), witherskullentity.getPosZ(), 8, false));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(witherskullentity.getX(), witherskullentity.getY(), witherskullentity.getZ(), 64, witherskullentity.level.dimension())), new PacketWitherParticles(witherskullentity.getX(), witherskullentity.getY() + (witherskullentity.getBbHeight() / 2), witherskullentity.getZ(), 8, false));
 
 	}
 

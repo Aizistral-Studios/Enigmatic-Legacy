@@ -45,24 +45,24 @@ public class PacketEnderRingKey {
 			//if (playerServ.openContainer.windowId == 0)
 			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticLegacy.enderRing) || SuperpositionHandler.hasCurio(playerServ, EnigmaticLegacy.cursedRing)) {
 				//ChestContainer container = ChestContainer.createGeneric9X3(playerServ.currentWindowId+1, playerServ.inventory, playerServ.getInventoryEnderChest());
-				ChestContainer container = new ChestContainer(ContainerType.GENERIC_9X3, playerServ.currentWindowId + 1, playerServ.inventory, playerServ.getInventoryEnderChest(), 3) {
+				ChestContainer container = new ChestContainer(ContainerType.GENERIC_9x3, playerServ.containerCounter + 1, playerServ.inventory, playerServ.getEnderChestInventory(), 3) {
 					@Override
-					public void onContainerClosed(PlayerEntity playerIn) {
-						super.onContainerClosed(playerIn);
+					public void removed(PlayerEntity playerIn) {
+						super.removed(playerIn);
 
-						if (!playerIn.world.isRemote) {
-							playerIn.world.playSound(null, playerServ.getPosition(), SoundEvents.BLOCK_ENDER_CHEST_CLOSE, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+						if (!playerIn.level.isClientSide) {
+							playerIn.level.playSound(null, playerServ.blockPosition(), SoundEvents.ENDER_CHEST_CLOSE, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 						}
 					}
 				};
 
-				playerServ.currentWindowId = container.windowId;
-				playerServ.connection.sendPacket(new SOpenWindowPacket(container.windowId, container.getType(), new TranslationTextComponent("container.enderchest")));
-				container.addListener(playerServ);
-				playerServ.openContainer = container;
-				net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.player.PlayerContainerEvent.Open(playerServ, playerServ.openContainer));
+				playerServ.containerCounter = container.containerId;
+				playerServ.connection.send(new SOpenWindowPacket(container.containerId, container.getType(), new TranslationTextComponent("container.enderchest")));
+				container.addSlotListener(playerServ);
+				playerServ.containerMenu = container;
+				net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.player.PlayerContainerEvent.Open(playerServ, playerServ.containerMenu));
 
-				playerServ.world.playSound(null, playerServ.getPosition(), SoundEvents.BLOCK_ENDER_CHEST_OPEN, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+				playerServ.level.playSound(null, playerServ.blockPosition(), SoundEvents.ENDER_CHEST_OPEN, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
 			}
 		});

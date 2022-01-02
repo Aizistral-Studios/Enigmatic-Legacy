@@ -46,22 +46,22 @@ public class EnigmaticKeybindHandler {
 	@OnlyIn(Dist.CLIENT)
 	public void onKeyInput(TickEvent.ClientTickEvent event) {
 
-		if (event.phase != TickEvent.Phase.END || !Minecraft.getInstance().isGameFocused()) {
+		if (event.phase != TickEvent.Phase.END || !Minecraft.getInstance().isWindowActive()) {
 		      return;
 		}
 
-		if (this.enderRingKey.isPressed()) {
-			if (Minecraft.getInstance().isGameFocused())
+		if (this.enderRingKey.consumeClick()) {
+			if (Minecraft.getInstance().isWindowActive())
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketEnderRingKey(true));
 		}
 
-		if (this.xpScrollKey.isPressed()) {
+		if (this.xpScrollKey.consumeClick()) {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketXPScrollKey(true));
 		}
 
-		if (this.spellstoneAbilityKey.isKeyDown() && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.enigmaticItem)) {
+		if (this.spellstoneAbilityKey.isDown() && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.enigmaticItem)) {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true));
-		} else if (this.spellstoneAbilityKey.isPressed() && SuperpositionHandler.hasSpellstone(Minecraft.getInstance().player)) {
+		} else if (this.spellstoneAbilityKey.consumeClick() && SuperpositionHandler.hasSpellstone(Minecraft.getInstance().player)) {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true));
 		}
 

@@ -61,7 +61,7 @@ public class HeavenScroll extends ItemBaseCurio {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
@@ -77,13 +77,13 @@ public class HeavenScroll extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living.world.isRemote)
+		if (living.level.isClientSide)
 			return;
 
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
 
-			if (Math.random() <= (this.baseXpConsumptionProbability * xpCostModifier.getValue()) && player.abilities.isFlying) {
+			if (Math.random() <= (this.baseXpConsumptionProbability * xpCostModifier.getValue()) && player.abilities.flying) {
 				ExperienceHelper.drainPlayerXP(player, 1);
 			}
 
@@ -96,21 +96,21 @@ public class HeavenScroll extends ItemBaseCurio {
 		try {
 			if (ExperienceHelper.getPlayerXP(player) > 0 && SuperpositionHandler.isInBeaconRange(player)) {
 
-				if (!player.abilities.allowFlying) {
-					player.abilities.allowFlying = true;
+				if (!player.abilities.mayfly) {
+					player.abilities.mayfly = true;
 				}
 
-				player.sendPlayerAbilities();
+				player.onUpdateAbilities();
 				this.flyMap.put(player, 100);
 
 			} else if (this.flyMap.get(player) > 1) {
 				this.flyMap.put(player, this.flyMap.get(player)-1);
 			} else if (this.flyMap.get(player) == 1) {
 				if (!player.isCreative()) {
-					player.abilities.allowFlying = false;
-					player.abilities.isFlying = false;
-					player.sendPlayerAbilities();
-					player.addPotionEffect(new EffectInstance(Effects.SLOW_FALLING, 200, 0, true, false));
+					player.abilities.mayfly = false;
+					player.abilities.flying = false;
+					player.onUpdateAbilities();
+					player.addEffect(new EffectInstance(Effects.SLOW_FALLING, 200, 0, true, false));
 				}
 
 				this.flyMap.put(player, 0);
@@ -128,9 +128,9 @@ public class HeavenScroll extends ItemBaseCurio {
 			PlayerEntity player = (PlayerEntity) entityLivingBase;
 
 			if (!player.isCreative()) {
-				player.abilities.allowFlying = false;
-				player.abilities.isFlying = false;
-				player.sendPlayerAbilities();
+				player.abilities.mayfly = false;
+				player.abilities.flying = false;
+				player.onUpdateAbilities();
 			}
 
 			this.flyMap.put(player, 0);

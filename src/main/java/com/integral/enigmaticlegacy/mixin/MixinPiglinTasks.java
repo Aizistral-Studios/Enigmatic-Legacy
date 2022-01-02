@@ -49,37 +49,37 @@ public class MixinPiglinTasks {
 		return newStacks;
 	}
 
-	@Inject(at = @At("RETURN"), method = "func_234470_a_")
+	@Inject(at = @At("RETURN"), method = "pickUpItem")
 	private static void onPiglinItemPickup(PiglinEntity piglin, ItemEntity itemEntity, CallbackInfo info) {
-		UUID ownerID = itemEntity.getThrowerId();
+		UUID ownerID = itemEntity.getThrower();
 
-		if (!itemEntity.isAlive() && itemEntity.world instanceof ServerWorld && ownerID != null) {
-			ServerWorld world = (ServerWorld) itemEntity.world;
-			markPiglinWithCondition(piglin, world.getPlayerByUuid(ownerID));
+		if (!itemEntity.isAlive() && itemEntity.level instanceof ServerWorld && ownerID != null) {
+			ServerWorld world = (ServerWorld) itemEntity.level;
+			markPiglinWithCondition(piglin, world.getPlayerByUUID(ownerID));
 		}
 
 	}
 
-	@Inject(at = @At("RETURN"), method = "func_234471_a_")
+	@Inject(at = @At("RETURN"), method = "mobInteract")
 	private static void onBarterByHand(PiglinEntity piglin, PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResultType> info) {
 		if (info.getReturnValue() == ActionResultType.CONSUME) {
 			markPiglinWithCondition(piglin, player);
 		}
 	}
 
-	@Inject(at = @At("HEAD"), method = "func_234477_a_", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "stopHoldingOffHandItem", cancellable = true)
 	private static void onPiglinBarter(PiglinEntity piglin, boolean repay, CallbackInfo info) {
-		ItemStack stack = piglin.getHeldItem(Hand.OFF_HAND);
+		ItemStack stack = piglin.getItemInHand(Hand.OFF_HAND);
 
-		if (piglin.world instanceof ServerWorld && piglin.getTags().contains(AVARICE_SCROLL_TAG)) {
+		if (piglin.level instanceof ServerWorld && piglin.getTags().contains(AVARICE_SCROLL_TAG)) {
 			piglin.removeTag(AVARICE_SCROLL_TAG);
 
-			if (piglin.func_242337_eM()) {
+			if (piglin.isAdult()) {
 				if (repay && stack.isPiglinCurrency()) {
 					info.cancel();
 
-					piglin.setHeldItem(Hand.OFF_HAND, ItemStack.EMPTY);
-					List<ItemStack> generatedLoot = PiglinTasks.func_234524_k_(piglin);
+					piglin.setItemInHand(Hand.OFF_HAND, ItemStack.EMPTY);
+					List<ItemStack> generatedLoot = PiglinTasks.getBarterResponseItems(piglin);
 					List<ItemStack> newStacks = new ArrayList<>();
 
 					generatedLoot.forEach(lootStack -> {
@@ -95,7 +95,7 @@ public class MixinPiglinTasks {
 					});
 
 					generatedLoot.addAll(newStacks);
-					PiglinTasks.func_234475_a_(piglin, generatedLoot);
+					PiglinTasks.throwItems(piglin, generatedLoot);
 				}
 			}
 		}

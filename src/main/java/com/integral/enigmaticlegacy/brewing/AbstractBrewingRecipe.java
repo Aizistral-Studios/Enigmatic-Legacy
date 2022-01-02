@@ -14,7 +14,7 @@ import net.minecraftforge.common.brewing.IBrewingRecipe;
 public abstract class AbstractBrewingRecipe implements IBrewingRecipe {
 
 	public static HashMap<ResourceLocation, List<AbstractBrewingRecipe>> recipeMap = new HashMap<ResourceLocation, List<AbstractBrewingRecipe>>();
-	public static final AbstractBrewingRecipe EMPTY_RECIPE = new SpecialBrewingRecipe(Ingredient.fromStacks(ItemStack.EMPTY), Ingredient.fromStacks(ItemStack.EMPTY), ItemStack.EMPTY, new ResourceLocation(EnigmaticLegacy.MODID, "empty_recipe"));
+	public static final AbstractBrewingRecipe EMPTY_RECIPE = new SpecialBrewingRecipe(Ingredient.of(ItemStack.EMPTY), Ingredient.of(ItemStack.EMPTY), ItemStack.EMPTY, new ResourceLocation(EnigmaticLegacy.MODID, "empty_recipe"));
 
 
 	public AbstractBrewingRecipe(ResourceLocation registryName) {

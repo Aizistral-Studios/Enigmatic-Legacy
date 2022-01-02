@@ -28,16 +28,16 @@ public class RevelationTomeToast implements IToast {
 
 	@Nonnull
 	@Override
-	public Visibility func_230444_a_(MatrixStack ms, ToastGui toastGui, long delta) {
+	public Visibility render(MatrixStack ms, ToastGui toastGui, long delta) {
 		Minecraft mc = Minecraft.getInstance();
-		mc.getTextureManager().bindTexture(TEXTURE_TOASTS);
+		mc.getTextureManager().bind(TEXTURE);
 		RenderSystem.color3f(1.0F, 1.0F, 1.0F);
 		toastGui.blit(ms, 0, 0, 0, 32, 160, 32);
 
-		toastGui.getMinecraft().fontRenderer.drawString(ms, I18n.format("enigmaticlegacy.toasts.revelationTome.title", this.xpPoints), 30, 7, -11534256);
-		toastGui.getMinecraft().fontRenderer.drawString(ms, I18n.format("enigmaticlegacy.toasts.revelationTome.text", this.revelationPoints), 30, 17, -16777216);
+		toastGui.getMinecraft().font.draw(ms, I18n.get("enigmaticlegacy.toasts.revelationTome.title", this.xpPoints), 30, 7, -11534256);
+		toastGui.getMinecraft().font.draw(ms, I18n.get("enigmaticlegacy.toasts.revelationTome.text", this.revelationPoints), 30, 17, -16777216);
 
-		toastGui.getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI((LivingEntity) null, this.tome, 8, 8);
+		toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem((LivingEntity) null, this.tome, 8, 8);
 
 		return delta >= 5000L ? IToast.Visibility.HIDE : IToast.Visibility.SHOW;
 	}

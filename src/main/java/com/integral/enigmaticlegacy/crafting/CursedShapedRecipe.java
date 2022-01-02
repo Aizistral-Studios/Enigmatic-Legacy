@@ -32,8 +32,8 @@ public class CursedShapedRecipe extends ShapedRecipe {
 	public boolean matches(CraftingInventory inv, World worldIn) {
 		boolean isAllTainted = true;
 
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack checkedItemStack = inv.getStackInSlot(i);
+		for (int i = 0; i < inv.getContainerSize(); i++) {
+			ItemStack checkedItemStack = inv.getItem(i);
 
 			if (checkedItemStack.getItem() instanceof ITaintable && !((ITaintable)checkedItemStack.getItem()).isTainted(checkedItemStack)) {
 				isAllTainted = false;
@@ -44,15 +44,15 @@ public class CursedShapedRecipe extends ShapedRecipe {
 	}
 
 	@Override
-	public ItemStack getCraftingResult(CraftingInventory inv) {
-		return super.getCraftingResult(inv);
+	public ItemStack assemble(CraftingInventory inv) {
+		return super.assemble(inv);
 	}
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>>  implements IRecipeSerializer<CursedShapedRecipe> {
 
 		private NonNullList<Ingredient> handleTainted(NonNullList<Ingredient> ingredientList) {
 			for (Ingredient ing : ingredientList) {
-				for (ItemStack stack : ing.getMatchingStacks()) {
+				for (ItemStack stack : ing.getItems()) {
 					if (stack.getItem() instanceof ITaintable) {
 						ItemNBTHelper.setBoolean(stack, "isTainted", true);
 					}
@@ -63,20 +63,20 @@ public class CursedShapedRecipe extends ShapedRecipe {
 		}
 
 		@Override
-		public CursedShapedRecipe read(ResourceLocation recipeId, JsonObject json) {
-			ShapedRecipe recipe = CRAFTING_SHAPED.read(recipeId, json);
-			return new CursedShapedRecipe(recipe.getId(), recipe.getGroup(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), this.handleTainted(recipe.getIngredients()), recipe.getRecipeOutput());
+		public CursedShapedRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+			ShapedRecipe recipe = SHAPED_RECIPE.fromJson(recipeId, json);
+			return new CursedShapedRecipe(recipe.getId(), recipe.getGroup(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), this.handleTainted(recipe.getIngredients()), recipe.getResultItem());
 		}
 
 		@Override
-		public CursedShapedRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-			ShapedRecipe recipe = CRAFTING_SHAPED.read(recipeId, buffer);
-			return new CursedShapedRecipe(recipe.getId(), recipe.getGroup(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), this.handleTainted(recipe.getIngredients()), recipe.getRecipeOutput());
+		public CursedShapedRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+			ShapedRecipe recipe = SHAPED_RECIPE.fromNetwork(recipeId, buffer);
+			return new CursedShapedRecipe(recipe.getId(), recipe.getGroup(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), this.handleTainted(recipe.getIngredients()), recipe.getResultItem());
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, CursedShapedRecipe recipe) {
-			CRAFTING_SHAPED.write(buffer, recipe);
+		public void toNetwork(PacketBuffer buffer, CursedShapedRecipe recipe) {
+			SHAPED_RECIPE.toNetwork(buffer, recipe);
 		}
 
 	}

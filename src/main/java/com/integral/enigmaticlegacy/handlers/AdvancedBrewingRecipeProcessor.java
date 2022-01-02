@@ -33,7 +33,7 @@ public class AdvancedBrewingRecipeProcessor implements IComponentProcessor {
 		List<IVariable> variableList = new ArrayList<IVariable>();
 
 		for (Ingredient ingredient : ingredientSet) {
-			variableList.addAll(AdvancedBrewingRecipeProcessor.wrapStackList(ingredient.getMatchingStacks()));
+			variableList.addAll(AdvancedBrewingRecipeProcessor.wrapStackList(ingredient.getItems()));
 		}
 
 		return variableList;
@@ -56,9 +56,9 @@ public class AdvancedBrewingRecipeProcessor implements IComponentProcessor {
 			SpecialBrewingRecipe special = (SpecialBrewingRecipe) this.recipe;
 
 			if (key.startsWith("catalyst"))
-				return IVariable.wrapList(AdvancedBrewingRecipeProcessor.wrapStackList(special.getIngredient().getMatchingStacks()));
+				return IVariable.wrapList(AdvancedBrewingRecipeProcessor.wrapStackList(special.getIngredient().getItems()));
 			else if (key.startsWith("input"))
-				return IVariable.wrapList(AdvancedBrewingRecipeProcessor.wrapStackList(special.getInput().getMatchingStacks()));
+				return IVariable.wrapList(AdvancedBrewingRecipeProcessor.wrapStackList(special.getInput().getItems()));
 			else if (key.startsWith("output"))
 				return IVariable.from(special.getOutput());
 

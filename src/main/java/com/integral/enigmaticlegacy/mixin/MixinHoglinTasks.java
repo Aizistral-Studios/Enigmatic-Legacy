@@ -21,7 +21,7 @@ import net.minecraft.world.server.ServerWorld;
 @Mixin(HoglinTasks.class)
 public class MixinHoglinTasks {
 
-	@Inject(at = @At("RETURN"), method = "func_234392_e_", cancellable = true)
+	@Inject(at = @At("RETURN"), method = "findNearestValidAttackTarget", cancellable = true)
 	private static void onHoglinShallAttack(HoglinEntity hoglin, CallbackInfoReturnable<Optional<? extends LivingEntity>> info) {
 		Optional<? extends LivingEntity> returnedTarget = info.getReturnValue();
 

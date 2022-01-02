@@ -42,7 +42,7 @@ public abstract class MixinEnchantmentContainer extends Container {
 		super(type, id);
 	}
 
-	@Inject(at = @At("INVOKE"), method = "net.minecraft.inventory.container.EnchantmentContainer.enchantItem(Lnet/minecraft/entity/player/PlayerEntity;I)Z", cancellable = true)
+	@Inject(at = @At("INVOKE"), method = "net.minecraft.inventory.container.EnchantmentContainer.clickMenuButton(Lnet/minecraft/entity/player/PlayerEntity;I)Z", cancellable = true)
 	private void onEnchantedItem(PlayerEntity player, int clickedID, CallbackInfoReturnable<Boolean> info) {
 		if (EnchantmentContainer.class.isInstance(this)) {
 			// Evaluating expression promts error assuming incompatible types,
@@ -51,20 +51,20 @@ public abstract class MixinEnchantmentContainer extends Container {
 
 			if (SuperpositionHandler.isTheCursedOne(player))
 				if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.enchanterPearl) || SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enchanterPearl)) {
-					ItemStack inputItem = container.tableInventory.getStackInSlot(0);
+					ItemStack inputItem = container.enchantSlots.getItem(0);
 					int levelsRequired = clickedID + 1;
 
-					if (container.enchantLevels[clickedID] <= 0 || inputItem.isEmpty() || (player.experienceLevel < levelsRequired || player.experienceLevel < container.enchantLevels[clickedID]) && !player.abilities.isCreativeMode) {
+					if (container.costs[clickedID] <= 0 || inputItem.isEmpty() || (player.experienceLevel < levelsRequired || player.experienceLevel < container.costs[clickedID]) && !player.abilities.instabuild) {
 						info.setReturnValue(false);
 						return; // false;
 					} else {
-						container.worldPosCallable.consume((world, blockPos) -> {
+						container.access.execute((world, blockPos) -> {
 							ItemStack enchantedItem = inputItem;
-							List<EnchantmentData> rolledEnchantments = container.getEnchantmentList(inputItem, clickedID, container.enchantLevels[clickedID]);
+							List<EnchantmentData> rolledEnchantments = container.getEnchantmentList(inputItem, clickedID, container.costs[clickedID]);
 							if (!rolledEnchantments.isEmpty()) {
-								ItemStack doubleRoll = EnchantmentHelper.addRandomEnchantment(player.getRNG(), enchantedItem.copy(), Math.min(container.enchantLevels[clickedID]+7, 40), true);
+								ItemStack doubleRoll = EnchantmentHelper.enchantItem(player.getRandom(), enchantedItem.copy(), Math.min(container.costs[clickedID]+7, 40), true);
 
-								player.onEnchant(inputItem, levelsRequired);
+								player.onEnchantmentPerformed(inputItem, levelsRequired);
 								boolean isBookStack = inputItem.getItem() == Items.BOOK;
 								if (isBookStack) {
 									enchantedItem = new ItemStack(Items.ENCHANTED_BOOK);
@@ -73,29 +73,29 @@ public abstract class MixinEnchantmentContainer extends Container {
 										enchantedItem.setTag(compoundnbt.copy());
 									}
 
-									container.tableInventory.setInventorySlotContents(0, enchantedItem);
+									container.enchantSlots.setItem(0, enchantedItem);
 								}
 
 								for(EnchantmentData enchantmentdata : rolledEnchantments) {
 									if (isBookStack) {
 										EnchantedBookItem.addEnchantment(enchantedItem, enchantmentdata);
 									} else {
-										enchantedItem.addEnchantment(enchantmentdata.enchantment, enchantmentdata.enchantmentLevel);
+										enchantedItem.enchant(enchantmentdata.enchantment, enchantmentdata.level);
 									}
 								}
 
 								enchantedItem = SuperpositionHandler.mergeEnchantments(enchantedItem, doubleRoll, false, false);
-								container.tableInventory.setInventorySlotContents(0, enchantedItem);
+								container.enchantSlots.setItem(0, enchantedItem);
 
-								player.addStat(Stats.ENCHANT_ITEM);
+								player.awardStat(Stats.ENCHANT_ITEM);
 								if (player instanceof ServerPlayerEntity) {
 									CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayerEntity)player, enchantedItem, levelsRequired);
 								}
 
-								container.tableInventory.markDirty();
-								container.xpSeed.set(player.getXPSeed());
-								container.onCraftMatrixChanged(container.tableInventory);
-								world.playSound((PlayerEntity)null, blockPos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+								container.enchantSlots.setChanged();
+								container.enchantmentSeed.set(player.getEnchantmentSeed());
+								container.slotsChanged(container.enchantSlots);
+								world.playSound((PlayerEntity)null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
 							}
 
 						});
@@ -110,16 +110,16 @@ public abstract class MixinEnchantmentContainer extends Container {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	@Inject(at = @At("HEAD"), method = "net.minecraft.inventory.container.EnchantmentContainer.getLapisAmount()I", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "net.minecraft.inventory.container.EnchantmentContainer.getGoldCount()I", cancellable = true)
 	public void onGetLapisAmount(CallbackInfoReturnable<Integer> info) {
 		if (EnchantmentContainer.class.isInstance(this)) {
 			Object forgottenObject = this;
 			EnchantmentContainer container = (EnchantmentContainer)forgottenObject;
 			PlayerEntity containerUser = null;
 
-			for (Slot slot : container.inventorySlots) {
-				if (slot.inventory instanceof PlayerInventory) {
-					PlayerInventory playerInv = (PlayerInventory) slot.inventory;
+			for (Slot slot : container.slots) {
+				if (slot.container instanceof PlayerInventory) {
+					PlayerInventory playerInv = (PlayerInventory) slot.container;
 					containerUser = playerInv.player;
 					break;
 				}

@@ -21,7 +21,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class LoreFragment extends ItemBase {
 
 	public LoreFragment() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON).maxStackSize(16));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON).stacksTo(16));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "lore_fragment"));
 
 		// TODO Lore Fragment copying recipe
@@ -29,9 +29,9 @@ public class LoreFragment extends ItemBase {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
-		if (!stack.getOrCreateChildTag("display").getString("Name").equals("") || stack.getOrCreateChildTag("display").getList("Lore", 8).size() != 0)
+		if (!stack.getOrCreateTagElement("display").getString("Name").equals("") || stack.getOrCreateTagElement("display").getList("Lore", 8).size() != 0)
 			return;
 
 		if (Screen.hasShiftDown()) {

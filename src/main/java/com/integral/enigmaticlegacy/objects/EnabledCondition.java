@@ -51,7 +51,7 @@ public class EnabledCondition implements ICondition {
 
 		@Override
 		public EnabledCondition read(JsonObject json) {
-			return new EnabledCondition(new ResourceLocation(JSONUtils.getString(json, "item")));
+			return new EnabledCondition(new ResourceLocation(JSONUtils.getAsString(json, "item")));
 		}
 
 		@Override

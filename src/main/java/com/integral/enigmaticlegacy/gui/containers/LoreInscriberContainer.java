@@ -32,9 +32,9 @@ public class LoreInscriberContainer extends Container {
 		 * it hasn't changed and skip it.
 		 */
 		@Override
-		public void markDirty() {
-			super.markDirty();
-			LoreInscriberContainer.this.onCraftMatrixChanged(this);
+		public void setChanged() {
+			super.setChanged();
+			LoreInscriberContainer.this.slotsChanged(this);
 		}
 	};
 
@@ -45,11 +45,11 @@ public class LoreInscriberContainer extends Container {
 	private String unparsedInputField;
 
 	public LoreInscriberContainer(int syncID, PlayerInventory playerInv) {
-		this(syncID, playerInv, IWorldPosCallable.of(playerInv.player.world, playerInv.player.getPosition()));
+		this(syncID, playerInv, IWorldPosCallable.create(playerInv.player.level, playerInv.player.blockPosition()));
 	}
 
 	public LoreInscriberContainer(int syncID, PlayerInventory playerInv, PacketBuffer extraData) {
-		this(syncID, playerInv, IWorldPosCallable.of(playerInv.player.world, playerInv.player.getPosition()));
+		this(syncID, playerInv, IWorldPosCallable.create(playerInv.player.level, playerInv.player.blockPosition()));
 	}
 
 	private LoreInscriberContainer(int id, PlayerInventory playerInventory, IWorldPosCallable worldPosCallable) {
@@ -62,7 +62,7 @@ public class LoreInscriberContainer extends Container {
 		this.player = playerInv.player;
 		this.addSlot(new Slot(this.craftSlotsInv, 0, 40, 51) {
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				if (stack.getItem() instanceof LoreFragment)
 					return true;
 				else
@@ -70,7 +70,7 @@ public class LoreInscriberContainer extends Container {
 			}
 
 			@Override
-			public int getSlotStackLimit() {
+			public int getMaxStackSize() {
 				return 1;
 			}
 		});
@@ -79,7 +79,7 @@ public class LoreInscriberContainer extends Container {
 			 * Check if the stack is allowed to be placed in this slot, used for armor slots as well as furnace fuel.
 			 */
 			@Override
-			public boolean isItemValid(ItemStack stack) {
+			public boolean mayPlace(ItemStack stack) {
 				return false;
 			}
 
@@ -87,13 +87,13 @@ public class LoreInscriberContainer extends Container {
 			 * Return whether this slot's stack can be taken from this slot.
 			 */
 			@Override
-			public boolean canTakeStack(PlayerEntity playerIn) {
-				return LoreInscriberContainer.this.canCraft(playerIn, this.getHasStack());
+			public boolean mayPickup(PlayerEntity playerIn) {
+				return LoreInscriberContainer.this.canCraft(playerIn, this.hasItem());
 			}
 
 			@Override
 			public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
-				this.onSlotChanged();
+				this.setChanged();
 				return LoreInscriberContainer.this.claimResult(thePlayer, stack);
 			}
 		});
@@ -105,20 +105,20 @@ public class LoreInscriberContainer extends Container {
 		}
 
 		for (int k = 0; k < 9; ++k) {
-			if (k == this.player.inventory.currentItem) {
+			if (k == this.player.inventory.selected) {
 				this.addSlot(new Slot(playerInv, k, 8 + k * 18, 142) {
 					@Override
-					public boolean canTakeStack(PlayerEntity playerIn) {
+					public boolean mayPickup(PlayerEntity playerIn) {
 						return false;
 					}
 
 					@Override
-					public boolean isItemValid(ItemStack stack) {
+					public boolean mayPlace(ItemStack stack) {
 						return false;
 					}
 
 					@Override
-					public int getSlotStackLimit() {
+					public int getMaxStackSize() {
 						return 0;
 					}
 				});
@@ -133,8 +133,8 @@ public class LoreInscriberContainer extends Container {
 	 * Callback for when the crafting matrix is changed.
 	 */
 	@Override
-	public void onCraftMatrixChanged(IInventory inventoryIn) {
-		super.onCraftMatrixChanged(inventoryIn);
+	public void slotsChanged(IInventory inventoryIn) {
+		super.slotsChanged(inventoryIn);
 		if (inventoryIn == this.craftSlotsInv) {
 			this.updateRepairOutput();
 		}
@@ -145,28 +145,28 @@ public class LoreInscriberContainer extends Container {
 	 * Called when the container is closed.
 	 */
 	@Override
-	public void onContainerClosed(PlayerEntity playerIn) {
-		super.onContainerClosed(playerIn);
-		this.clearContainer(playerIn, playerIn.world, this.craftSlotsInv);
+	public void removed(PlayerEntity playerIn) {
+		super.removed(playerIn);
+		this.clearContainer(playerIn, playerIn.level, this.craftSlotsInv);
 	}
 
 	/**
 	 * Determines whether supplied player can use this container
 	 */
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
+	public boolean stillValid(PlayerEntity playerIn) {
 		return true;
 	}
 
 	@Override
-	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
+	public ItemStack clicked(int slotId, int dragType, ClickType clickTypeIn, PlayerEntity player) {
 		//System.out.println("Slot ID: " + slotId + ", Drag Type: " + dragType + ", Click Type: " + clickTypeIn.toString());
 
 		if (clickTypeIn == ClickType.SWAP) {
-			if (dragType == player.inventory.currentItem || slotId == 29 + player.inventory.currentItem)
+			if (dragType == player.inventory.selected || slotId == 29 + player.inventory.selected)
 				return ItemStack.EMPTY;
 		}
-		return super.slotClick(slotId, dragType, clickTypeIn, player);
+		return super.clicked(slotId, dragType, clickTypeIn, player);
 	}
 
 	/**
@@ -174,24 +174,24 @@ public class LoreInscriberContainer extends Container {
 	 * inventory and the other inventory(s).
 	 */
 	@Override
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack quickMoveStack(PlayerEntity playerIn, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
-		if (slot != null && slot.getHasStack()) {
-			ItemStack itemstack1 = slot.getStack();
+		Slot slot = this.slots.get(index);
+		if (slot != null && slot.hasItem()) {
+			ItemStack itemstack1 = slot.getItem();
 			itemstack = itemstack1.copy();
 			if (index != 0 && index != 1) {
 				if (index >= 2 && index < 38) {
-					if (!this.mergeItemStack(itemstack1, 0, 1, false))
+					if (!this.moveItemStackTo(itemstack1, 0, 1, false))
 						return ItemStack.EMPTY;
 				}
-			} else if (!this.mergeItemStack(itemstack1, 2, 38, false))
+			} else if (!this.moveItemStackTo(itemstack1, 2, 38, false))
 				return ItemStack.EMPTY;
 
 			if (itemstack1.isEmpty()) {
-				slot.putStack(ItemStack.EMPTY);
+				slot.set(ItemStack.EMPTY);
 			} else {
-				slot.onSlotChanged();
+				slot.setChanged();
 			}
 
 			if (itemstack1.getCount() == itemstack.getCount())
@@ -208,10 +208,10 @@ public class LoreInscriberContainer extends Container {
 	}
 
 	protected ItemStack claimResult(PlayerEntity player, ItemStack stack) {
-		this.craftSlotsInv.setInventorySlotContents(0, ItemStack.EMPTY);
+		this.craftSlotsInv.setItem(0, ItemStack.EMPTY);
 
-		if (!player.world.isRemote) {
-			player.world.playSound(null, player.getPosition(), EnigmaticLegacy.WRITE, SoundCategory.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
+		if (!player.level.isClientSide) {
+			player.level.playSound(null, player.blockPosition(), EnigmaticLegacy.WRITE, SoundCategory.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 		}
 
 		return stack;
@@ -221,26 +221,26 @@ public class LoreInscriberContainer extends Container {
 	 * called when the Anvil Input Slot changes, calculates the new result and puts it in the output slot
 	 */
 	public void updateRepairOutput() {
-		ItemStack input = this.craftSlotsInv.getStackInSlot(0);
+		ItemStack input = this.craftSlotsInv.getItem(0);
 		if (input.isEmpty()) {
-			this.craftResultInv.setInventorySlotContents(0, ItemStack.EMPTY);
+			this.craftResultInv.setItem(0, ItemStack.EMPTY);
 		} else {
 			ItemStack output = input.copy();
 
 			if (StringUtils.isBlank(this.unparsedInputField)) {
-				if (input.hasDisplayName()) {
-					output.clearCustomName();
+				if (input.hasCustomHoverName()) {
+					output.resetHoverName();
 				} else {
 					output = ItemStack.EMPTY;
 				}
-			} else if (!this.unparsedInputField.equals(input.getDisplayName().getString())) {
+			} else if (!this.unparsedInputField.equals(input.getHoverName().getString())) {
 				this.unleashAnvilParser(output);
 			} else {
 				output = ItemStack.EMPTY;
 			}
 
-			this.craftResultInv.setInventorySlotContents(0, output);
-			this.detectAndSendChanges();
+			this.craftResultInv.setItem(0, output);
+			this.broadcastChanges();
 		}
 	}
 

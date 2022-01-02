@@ -26,12 +26,12 @@ public class RevelationTomeBurntTrigger extends AbstractCriterionTrigger<Revelat
 
 	@Nonnull
 	@Override
-	public RevelationTomeBurntTrigger.Instance deserializeTrigger(@Nonnull JsonObject json, @Nonnull EntityPredicate.AndPredicate playerPred, ConditionArrayParser conditions) {
+	public RevelationTomeBurntTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.AndPredicate playerPred, ConditionArrayParser conditions) {
 		return new RevelationTomeBurntTrigger.Instance(playerPred);
 	}
 
 	public void trigger(ServerPlayerEntity player) {
-		this.triggerListeners(player, instance -> instance.test());
+		this.trigger(player, instance -> instance.test());
 	}
 
 	static class Instance extends CriterionInstance {
@@ -41,7 +41,7 @@ public class RevelationTomeBurntTrigger extends AbstractCriterionTrigger<Revelat
 
 		@Nonnull
 		@Override
-		public ResourceLocation getId() {
+		public ResourceLocation getCriterion() {
 			return RevelationTomeBurntTrigger.ID;
 		}
 

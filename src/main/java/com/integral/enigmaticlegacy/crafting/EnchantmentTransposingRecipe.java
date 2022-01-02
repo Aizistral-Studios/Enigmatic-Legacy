@@ -31,12 +31,12 @@ public class EnchantmentTransposingRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public ItemStack getCraftingResult(CraftingInventory inv) {
+	public ItemStack assemble(CraftingInventory inv) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		ItemStack transposer = null;
 
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack checkedItemStack = inv.getStackInSlot(i);
+		for (int i = 0; i < inv.getContainerSize(); i++) {
+			ItemStack checkedItemStack = inv.getItem(i);
 
 			if (!checkedItemStack.isEmpty()) {
 				if (checkedItemStack.getItem() == EnigmaticLegacy.enchantmentTransposer) {
@@ -54,7 +54,7 @@ public class EnchantmentTransposingRecipe extends ShapelessRecipe {
 
 		if (transposer != null && stackList.size() == 1 && stackList.get(0).isEnchanted()) {
 			ItemStack enchanted = stackList.get(0).copy();
-			ListNBT enchantmentNBT = enchanted.getEnchantmentTagList();
+			ListNBT enchantmentNBT = enchanted.getEnchantmentTags();
 			
 			ItemStack returned = new ItemStack(Items.ENCHANTED_BOOK);
 			returned.getOrCreateTag().put("StoredEnchantments", enchantmentNBT);
@@ -70,8 +70,8 @@ public class EnchantmentTransposingRecipe extends ShapelessRecipe {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		ItemStack transposer = null;
 
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack checkedItemStack = inv.getStackInSlot(i);
+		for (int i = 0; i < inv.getContainerSize(); i++) {
+			ItemStack checkedItemStack = inv.getItem(i);
 
 			if (!checkedItemStack.isEmpty()) {
 				if (checkedItemStack.getItem() == EnigmaticLegacy.enchantmentTransposer) {
@@ -95,10 +95,10 @@ public class EnchantmentTransposingRecipe extends ShapelessRecipe {
 	
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(CraftingInventory inv) {
-		NonNullList<ItemStack> nonnulllist = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+		NonNullList<ItemStack> nonnulllist = NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
 
 	      for(int i = 0; i < nonnulllist.size(); ++i) {
-	         ItemStack item = inv.getStackInSlot(i);
+	         ItemStack item = inv.getItem(i);
 	         if (item.getItem() != EnigmaticLegacy.enchantmentTransposer && item.isEnchanted()) {
 	        	ItemStack returned = item.copy();
 	        	CompoundNBT nbt = returned.getOrCreateTag();
@@ -114,12 +114,12 @@ public class EnchantmentTransposingRecipe extends ShapelessRecipe {
 	}
 	
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return ItemStack.EMPTY;
 	}
 	
 	@Override
-	public boolean isDynamic() {
+	public boolean isSpecial() {
 		return true;
 	}
 
@@ -130,17 +130,17 @@ public class EnchantmentTransposingRecipe extends ShapelessRecipe {
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<EnchantmentTransposingRecipe> {
 		@Override
-		public EnchantmentTransposingRecipe read(ResourceLocation recipeId, JsonObject json) {
+		public EnchantmentTransposingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			return new EnchantmentTransposingRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
 		}
 
 		@Override
-		public EnchantmentTransposingRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
+		public EnchantmentTransposingRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
 			return new EnchantmentTransposingRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, EnchantmentTransposingRecipe recipe) {
+		public void toNetwork(PacketBuffer buffer, EnchantmentTransposingRecipe recipe) {
 
 		}
 	}

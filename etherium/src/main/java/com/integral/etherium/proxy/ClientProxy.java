@@ -12,7 +12,7 @@ public class ClientProxy extends CommonProxy {
 	
 	@Override
 	public void initAuxiliaryRender() {
-		Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getRenderManager().getSkinMap();
+		Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
 
 		PlayerRenderer renderSteve;
 		PlayerRenderer renderAlex;

@@ -63,7 +63,7 @@ public class EnigmaticUpdateHandler {
 			return;
 
 		if (notificationsEnabled.getValue()) {
-			player.sendMessage(EnigmaticUpdateHandler.updateStatus, player.getUniqueID());
+			player.sendMessage(EnigmaticUpdateHandler.updateStatus, player.getUUID());
 		}
 
 		EnigmaticUpdateHandler.show = false;
@@ -85,17 +85,17 @@ public class EnigmaticUpdateHandler {
 				EnigmaticUpdateHandler.show = true;
 
 				StringTextComponent newVerArg = new StringTextComponent(EnigmaticUpdateHandler.newestVersion);
-				newVerArg.mergeStyle(TextFormatting.GOLD);
+				newVerArg.withStyle(TextFormatting.GOLD);
 
 				EnigmaticUpdateHandler.updateStatus = new TranslationTextComponent("status.enigmaticlegacy.outdated", newVerArg);
-				EnigmaticUpdateHandler.updateStatus.mergeStyle(TextFormatting.DARK_PURPLE);
+				EnigmaticUpdateHandler.updateStatus.withStyle(TextFormatting.DARK_PURPLE);
 			}
 		}
 		else
 		{
 			EnigmaticUpdateHandler.show = true;
 			EnigmaticUpdateHandler.updateStatus = new TranslationTextComponent("status.enigmaticlegacy.noconnection");
-			EnigmaticUpdateHandler.updateStatus.mergeStyle(TextFormatting.RED);
+			EnigmaticUpdateHandler.updateStatus.withStyle(TextFormatting.RED);
 		}
 	}
 

@@ -105,25 +105,25 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "golem_heart"));
 
-		this.immunityList.add(DamageSource.CACTUS.damageType);
-		this.immunityList.add(DamageSource.CRAMMING.damageType);
-		this.immunityList.add(DamageSource.IN_WALL.damageType);
-		this.immunityList.add(DamageSource.FALLING_BLOCK.damageType);
-		this.immunityList.add(DamageSource.SWEET_BERRY_BUSH.damageType);
+		this.immunityList.add(DamageSource.CACTUS.msgId);
+		this.immunityList.add(DamageSource.CRAMMING.msgId);
+		this.immunityList.add(DamageSource.IN_WALL.msgId);
+		this.immunityList.add(DamageSource.FALLING_BLOCK.msgId);
+		this.immunityList.add(DamageSource.SWEET_BERRY_BUSH.msgId);
 
 		Supplier<Float> meleeResistanceSupplier = () -> meleeResistance.getValue().asModifierInverted();
 		Supplier<Float> explosionResistanceSupplier = () -> explosionResistance.getValue().asModifierInverted();
 		Supplier<Float> magicVulnerabilitySupplier = () -> (float) vulnerabilityModifier.getValue();
 
-		this.resistanceList.put(DamageSource.GENERIC.damageType, meleeResistanceSupplier);
+		this.resistanceList.put(DamageSource.GENERIC.msgId, meleeResistanceSupplier);
 		this.resistanceList.put("mob", meleeResistanceSupplier);
 		this.resistanceList.put("player", meleeResistanceSupplier);
 		this.resistanceList.put("explosion", explosionResistanceSupplier);
 		this.resistanceList.put("explosion.player", explosionResistanceSupplier);
 
-		this.resistanceList.put(DamageSource.MAGIC.damageType, magicVulnerabilitySupplier);
-		this.resistanceList.put(DamageSource.WITHER.damageType, magicVulnerabilitySupplier);
-		this.resistanceList.put(DamageSource.DRAGON_BREATH.damageType, magicVulnerabilitySupplier);
+		this.resistanceList.put(DamageSource.MAGIC.msgId, magicVulnerabilitySupplier);
+		this.resistanceList.put(DamageSource.WITHER.msgId, magicVulnerabilitySupplier);
+		this.resistanceList.put(DamageSource.DRAGON_BREATH.msgId, magicVulnerabilitySupplier);
 
 		this.initAttributes();
 	}
@@ -139,7 +139,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
@@ -163,7 +163,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.getDisplayString("key.spellstoneAbility").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.spellstoneAbility").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
@@ -175,9 +175,9 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
 
-			AttributeModifierManager map = player.getAttributeManager();
-			map.removeModifiers(this.attributesDefault);
-			map.removeModifiers(this.attributesNoArmor);
+			AttributeModifierManager map = player.getAttributes();
+			map.removeAttributeModifiers(this.attributesDefault);
+			map.removeAttributeModifiers(this.attributesNoArmor);
 		}
 	}
 
@@ -186,22 +186,22 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
 
-			AttributeModifierManager map = player.getAttributeManager();
+			AttributeModifierManager map = player.getAttributes();
 
 			if (SuperpositionHandler.hasAnyArmor(player)) {
 				// Removes attributes
-				map.removeModifiers(this.attributesDefault);
-				map.removeModifiers(this.attributesNoArmor);
+				map.removeAttributeModifiers(this.attributesDefault);
+				map.removeAttributeModifiers(this.attributesNoArmor);
 
 				// Applies new attributes
-				map.reapplyModifiers(this.attributesDefault);
+				map.addTransientAttributeModifiers(this.attributesDefault);
 			} else {
 				// Removes attributes
-				map.removeModifiers(this.attributesDefault);
-				map.removeModifiers(this.attributesNoArmor);
+				map.removeAttributeModifiers(this.attributesDefault);
+				map.removeAttributeModifiers(this.attributesNoArmor);
 
 				// Applies new attributes
-				map.reapplyModifiers(this.attributesNoArmor);
+				map.addTransientAttributeModifiers(this.attributesNoArmor);
 			}
 
 		}

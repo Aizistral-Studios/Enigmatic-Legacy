@@ -59,7 +59,7 @@ public class CursedScroll extends ItemBaseCurio implements ICursed {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 

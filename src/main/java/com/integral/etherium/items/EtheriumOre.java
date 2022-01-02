@@ -11,14 +11,14 @@ public class EtheriumOre extends Item {
 	private final IEtheriumConfig config;
 
 	public EtheriumOre(IEtheriumConfig config) {
-		super(EtheriumUtil.defaultProperties(config, EtheriumOre.class).maxStackSize(64).isImmuneToFire());
+		super(EtheriumUtil.defaultProperties(config, EtheriumOre.class).stacksTo(64).fireResistant());
 		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_ore"));
 		this.config = config;
 	}
 
 	@Override
-	public String getTranslationKey() {
-		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getTranslationKey();
+	public String getDescriptionId() {
+		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getDescriptionId();
 	}
 
 }

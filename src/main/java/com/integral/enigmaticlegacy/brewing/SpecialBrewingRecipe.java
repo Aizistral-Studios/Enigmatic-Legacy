@@ -36,8 +36,8 @@ public class SpecialBrewingRecipe extends AbstractBrewingRecipe {
 	    public boolean isInput(@Nonnull ItemStack stack) {
 
 			if (stack != null)
-			for (ItemStack testStack : this.getInput().getMatchingStacks()) {
-				if (testStack.getItem() == stack.getItem() && PotionUtils.getPotionFromItem(testStack) == PotionUtils.getPotionFromItem(stack))
+			for (ItemStack testStack : this.getInput().getItems()) {
+				if (testStack.getItem() == stack.getItem() && PotionUtils.getPotion(testStack) == PotionUtils.getPotion(stack))
 					return true;
 			}
 

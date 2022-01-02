@@ -167,7 +167,7 @@ public class CursedRing extends ItemBaseCurio {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
@@ -271,7 +271,7 @@ public class CursedRing extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity livingPlayer, ItemStack stack) {
-		if (livingPlayer.world.isRemote || !(livingPlayer instanceof PlayerEntity))
+		if (livingPlayer.level.isClientSide || !(livingPlayer instanceof PlayerEntity))
 			return;
 
 		PlayerEntity player = (PlayerEntity) livingPlayer;
@@ -279,32 +279,32 @@ public class CursedRing extends ItemBaseCurio {
 		if (player.isCreative() || player.isSpectator())
 			return;
 
-		List<LivingEntity> genericMobs = livingPlayer.world.getEntitiesWithinAABB(LivingEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, neutralAngerRange.getValue()));
-		List<EndermanEntity> endermen = livingPlayer.world.getEntitiesWithinAABB(EndermanEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, endermenRandomportRange.getValue()));
+		List<LivingEntity> genericMobs = livingPlayer.level.getEntitiesOfClass(LivingEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, neutralAngerRange.getValue()));
+		List<EndermanEntity> endermen = livingPlayer.level.getEntitiesOfClass(EndermanEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, endermenRandomportRange.getValue()));
 
 		for (EndermanEntity enderman : endermen) {
 			if (random.nextDouble() <= (0.002 * endermenRandomportFrequency.getValue())) {
-				if (enderman.teleportToEntity(player) && player.canEntityBeSeen(enderman)) {
-					enderman.setAttackTarget(player);
+				if (enderman.teleportTowards(player) && player.canSee(enderman)) {
+					enderman.setTarget(player);
 				}
 			}
 
 		}
 
 		for (LivingEntity checkedEntity : genericMobs) {
-			double visibility = player.getVisibilityMultiplier(checkedEntity);
+			double visibility = player.getVisibilityPercent(checkedEntity);
 			double angerDistance = Math.max(neutralAngerRange.getValue() * visibility, neutralXRayRange.getValue());
 
-			if (checkedEntity.getDistanceSq(player.getPosX(), player.getPosY(), player.getPosZ()) > angerDistance * angerDistance) {
+			if (checkedEntity.distanceToSqr(player.getX(), player.getY(), player.getZ()) > angerDistance * angerDistance) {
 				continue;
 			}
 
 			if (checkedEntity instanceof PiglinEntity && !SuperpositionHandler.hasCurio(player, EnigmaticLegacy.avariceScroll)) {
 				PiglinEntity piglin = (PiglinEntity) checkedEntity;
 
-				if (piglin.getAttackTarget() == null || !piglin.getAttackTarget().isAlive()) {
-					if (player.canEntityBeSeen(checkedEntity) || player.getDistance(checkedEntity) <= neutralXRayRange.getValue()) {
-						PiglinTasks.func_234468_a_(piglin, player);
+				if (piglin.getTarget() == null || !piglin.getTarget().isAlive()) {
+					if (player.canSee(checkedEntity) || player.distanceTo(checkedEntity) <= neutralXRayRange.getValue()) {
+						PiglinTasks.wasHurtBy(piglin, player);
 					} else {
 						continue;
 					}
@@ -314,7 +314,7 @@ public class CursedRing extends ItemBaseCurio {
 				IAngerable neutral = (IAngerable) checkedEntity;
 
 				if (neutral instanceof TameableEntity) {
-					if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide) || ((TameableEntity)neutral).isTamed()) {
+					if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide) || ((TameableEntity)neutral).isTame()) {
 						continue;
 					}
 				} else if (neutral instanceof IronGolemEntity) {
@@ -327,9 +327,9 @@ public class CursedRing extends ItemBaseCurio {
 					}
 				}
 
-				if (neutral.getAttackTarget() == null || !neutral.getAttackTarget().isAlive()) {
-					if (player.canEntityBeSeen(checkedEntity) || player.getDistance(checkedEntity) <= neutralXRayRange.getValue()) {
-						neutral.setAttackTarget(player);
+				if (neutral.getTarget() == null || !neutral.getTarget().isAlive()) {
+					if (player.canSee(checkedEntity) || player.distanceTo(checkedEntity) <= neutralXRayRange.getValue()) {
+						neutral.setTarget(player);
 					} else {
 						continue;
 					}

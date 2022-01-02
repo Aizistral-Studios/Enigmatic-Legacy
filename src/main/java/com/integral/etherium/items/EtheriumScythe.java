@@ -44,12 +44,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EtheriumScythe extends SwordItem implements IEtheriumTool {
-	protected static final Map<Block, BlockState> HOE_LOOKUP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.getDefaultState(), Blocks.GRASS_PATH, Blocks.FARMLAND.getDefaultState(), Blocks.DIRT, Blocks.FARMLAND.getDefaultState(), Blocks.COARSE_DIRT, Blocks.DIRT.getDefaultState()));
+	protected static final Map<Block, BlockState> HOE_LOOKUP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.defaultBlockState(), Blocks.GRASS_PATH, Blocks.FARMLAND.defaultBlockState(), Blocks.DIRT, Blocks.FARMLAND.defaultBlockState(), Blocks.COARSE_DIRT, Blocks.DIRT.defaultBlockState()));
 	public Set<Material> effectiveMaterials;
 	private final IEtheriumConfig config;
 
 	public EtheriumScythe(IEtheriumConfig config) {
-		super(config.getToolMaterial(), 3, -2.0F, EtheriumUtil.defaultProperties(config, EtheriumScythe.class).isImmuneToFire());
+		super(config.getToolMaterial(), 3, -2.0F, EtheriumUtil.defaultProperties(config, EtheriumScythe.class).fireResistant());
 		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_scythe"));
 		this.config = config;
 
@@ -57,16 +57,16 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 		this.effectiveMaterials.add(Material.LEAVES);
 		this.effectiveMaterials.add(Material.BAMBOO);
 		this.effectiveMaterials.add(Material.BAMBOO_SAPLING);
-		this.effectiveMaterials.add(Material.SEA_GRASS);
-		this.effectiveMaterials.add(Material.PLANTS);
-		this.effectiveMaterials.add(Material.OCEAN_PLANT);
-		this.effectiveMaterials.add(Material.TALL_PLANTS);
+		this.effectiveMaterials.add(Material.REPLACEABLE_WATER_PLANT);
+		this.effectiveMaterials.add(Material.PLANT);
+		this.effectiveMaterials.add(Material.WATER_PLANT);
+		this.effectiveMaterials.add(Material.REPLACEABLE_PLANT);
 		this.effectiveMaterials.add(Material.CACTUS);
 	}
 
 	@Override
-	public String getTranslationKey() {
-		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getTranslationKey();
+	public String getDescriptionId() {
+		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getDescriptionId();
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (this.config.getScytheMiningVolume() == -1)
 			return;
 
@@ -99,26 +99,26 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
-		player.setActiveHand(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
+		player.startUsingItem(hand);
 
 		if (player.isCrouching()) {
 			this.toggleAreaEffects(player, stack);
 
 			return new ActionResult<>(ActionResultType.SUCCESS, stack);
 		} else
-			return super.onItemRightClick(world, player, hand);
+			return super.use(world, player, hand);
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResultType useOn(ItemUseContext context) {
 		if (context.getPlayer().isCrouching())
-			return this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType();
+			return this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
 
-		ActionResultType type = Items.DIAMOND_HOE.onItemUse(context);
+		ActionResultType type = Items.DIAMOND_HOE.useOn(context);
 
-		if (!this.areaEffectsEnabled(context.getPlayer(), context.getItem()))
+		if (!this.areaEffectsEnabled(context.getPlayer(), context.getItemInHand()))
 			return type;
 
 		int supRad = (this.config.getScytheMiningVolume() - 1) / 2;
@@ -130,7 +130,7 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 						continue;
 					}
 
-					Items.DIAMOND_HOE.onItemUse(new ItemUseContext(context.getPlayer(), context.getHand(), new BlockRayTraceResult(context.getHitVec().add(x, 0, z), Direction.UP, context.getPos().add(x, 0, z), context.isInside())));
+					Items.DIAMOND_HOE.useOn(new ItemUseContext(context.getPlayer(), context.getHand(), new BlockRayTraceResult(context.getClickLocation().add(x, 0, z), Direction.UP, context.getClickedPos().offset(x, 0, z), context.isInside())));
 				}
 			}
 		}
@@ -139,22 +139,22 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && this.config.getScytheMiningVolume() != -1) {
+	public boolean mineBlock(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getScytheMiningVolume() != -1) {
 			Direction face = Direction.UP;
 
-			AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos.add(0, (this.config.getScytheMiningVolume() - 1) / 2, 0), this.effectiveMaterials, this.config.getScytheMiningVolume(), this.config.getScytheMiningVolume(), false, pos, stack, (objPos, objState) -> {
-				stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(MobEntity.getSlotForItemStack(stack)));
+			AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos.offset(0, (this.config.getScytheMiningVolume() - 1) / 2, 0), this.effectiveMaterials, this.config.getScytheMiningVolume(), this.config.getScytheMiningVolume(), false, pos, stack, (objPos, objState) -> {
+				stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(MobEntity.getEquipmentSlotForItem(stack)));
 			});
 		}
 
-		return super.onBlockDestroyed(stack, world, state, pos, entityLiving);
+		return super.mineBlock(stack, world, state, pos, entityLiving);
 	}
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
 		Material material = state.getMaterial();
-		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.getTier().getEfficiency();
+		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.getTier().getSpeed();
 	}
 
 }

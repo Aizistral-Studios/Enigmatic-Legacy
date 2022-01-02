@@ -39,10 +39,10 @@ public class AOEMiningHelper {
 
 		if (trace.getType() == RayTraceResult.Type.BLOCK) {
 			BlockRayTraceResult blockTrace = (BlockRayTraceResult) trace;
-			Direction face = blockTrace.getFace();
+			Direction face = blockTrace.getDirection();
 
-			int fortuneLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
-			int silkLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand());
+			int fortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
+			int silkLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getMainHandItem());
 
 			for (int a = -1; a <= 1; a++) {
 				for (int b = -1; b <= 1; b++) {
@@ -53,13 +53,13 @@ public class AOEMiningHelper {
 					BlockPos target = null;
 
 					if (face == Direction.UP || face == Direction.DOWN) {
-						target = pos.add(a, 0, b);
+						target = pos.offset(a, 0, b);
 					}
 					if (face == Direction.NORTH || face == Direction.SOUTH) {
-						target = pos.add(a, b, 0);
+						target = pos.offset(a, b, 0);
 					}
 					if (face == Direction.EAST || face == Direction.WEST) {
-						target = pos.add(0, a, b);
+						target = pos.offset(0, a, b);
 					}
 
 					AOEMiningHelper.attemptBreak(world, target, player, effectiveOn, effectiveMaterials, fortuneLevel, silkLevel, checkHarvestLevel, null, (objPos, objState) -> {
@@ -80,21 +80,21 @@ public class AOEMiningHelper {
 
 	public static void attemptBreak(World world, BlockPos pos, PlayerEntity player, Set<Block> effectiveOn, Set<Material> effectiveMaterials, int fortuneLevel, int silkLevel, boolean checkHarvestLevel, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
 		BlockState state = world.getBlockState(pos);
-		TileEntity iCertainlyHopeYouHaveATileEntityLicense = world.getTileEntity(pos);
+		TileEntity iCertainlyHopeYouHaveATileEntityLicense = world.getBlockEntity(pos);
 
-		boolean validHarvest = !checkHarvestLevel || player.getHeldItemMainhand().canHarvestBlock(state);
+		boolean validHarvest = !checkHarvestLevel || player.getMainHandItem().isCorrectToolForDrops(state);
 		boolean isEffective = effectiveOn.contains(state.getBlock()) || effectiveMaterials.contains(state.getMaterial());
 		boolean witherImmune = BlockTags.WITHER_IMMUNE.contains(state.getBlock()) || state.getBlock() == Blocks.SPAWNER;
 
 		if (validHarvest && isEffective && !witherImmune) {
 			world.destroyBlock(pos, false);
-			Block.spawnDrops(state, world, pos, iCertainlyHopeYouHaveATileEntityLicense, player, player.getHeldItemMainhand());
+			Block.dropResources(state, world, pos, iCertainlyHopeYouHaveATileEntityLicense, player, player.getMainHandItem());
 
 			toolDamageConsumer.accept(pos, state);
 
 			int exp = state.getExpDrop(world, pos, fortuneLevel, silkLevel);
 			if (exp > 0 && world instanceof ServerWorld) {
-				state.getBlock().dropXpOnBlockBreak((ServerWorld) world, pos, exp);
+				state.getBlock().popExperience((ServerWorld) world, pos, exp);
 			}
 		}
 	}
@@ -104,8 +104,8 @@ public class AOEMiningHelper {
 	}
 
 	public static Vector3 calcRayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidMode fluidMode, double distance) {
-		float f = player.rotationPitch;
-		float f1 = player.rotationYaw;
+		float f = player.xRot;
+		float f1 = player.yRot;
 		Vector3d vector3d = player.getEyePosition(1.0F);
 		float f2 = MathHelper.cos(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
 		float f3 = MathHelper.sin(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
@@ -115,19 +115,19 @@ public class AOEMiningHelper {
 		float f7 = f2 * f4;
 		double d0 = distance;
 		Vector3d vector3d1 = vector3d.add(f6 * d0, f5 * d0, f7 * d0);
-		RayTraceResult result = worldIn.rayTraceBlocks(new RayTraceContext(vector3d, vector3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, player));
+		RayTraceResult result = worldIn.clip(new RayTraceContext(vector3d, vector3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, player));
 
 		if (result.getType() == RayTraceResult.Type.BLOCK)
-			return new Vector3(result.getHitVec());
+			return new Vector3(result.getLocation());
 		else {
-			Vector3 vec = new Vector3(player.getLookVec()).multiply(64F).add(new Vector3(player.getPositionVec()));
+			Vector3 vec = new Vector3(player.getLookAngle()).multiply(64F).add(new Vector3(player.position()));
 			return vec;
 		}
 	}
 
 	public static void harvestPlane(World world, PlayerEntity player, Direction dir, BlockPos pos, Set<Material> effectiveMaterials, int radius, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
-		int fortuneLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, player.getHeldItemMainhand());
-		int silkLevel = EnchantmentHelper.getEnchantmentLevel(Enchantments.SILK_TOUCH, player.getHeldItemMainhand());
+		int fortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
+		int silkLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getMainHandItem());
 		int supRad = (radius - 1) / 2;
 
 		for (int a = -supRad; a <= supRad; a++) {
@@ -135,13 +135,13 @@ public class AOEMiningHelper {
 				BlockPos target = null;
 
 				if (dir == Direction.UP || dir == Direction.DOWN) {
-					target = pos.add(a, 0, b);
+					target = pos.offset(a, 0, b);
 				}
 				if (dir == Direction.NORTH || dir == Direction.SOUTH) {
-					target = pos.add(a, b, 0);
+					target = pos.offset(a, b, 0);
 				}
 				if (dir == Direction.EAST || dir == Direction.WEST) {
-					target = pos.add(0, a, b);
+					target = pos.offset(0, a, b);
 				}
 
 				if (excludedBlock != null && target != null)
@@ -180,7 +180,7 @@ public class AOEMiningHelper {
 				x += a;
 			}
 
-			AOEMiningHelper.harvestPlane(world, player, dir, new BlockPos(centralPos).add(x, y, z), effectiveMaterials, planeRadius, harvestLevelCheck, excludedBlock, tool, toolDamageConsumer);
+			AOEMiningHelper.harvestPlane(world, player, dir, new BlockPos(centralPos).offset(x, y, z), effectiveMaterials, planeRadius, harvestLevelCheck, excludedBlock, tool, toolDamageConsumer);
 		}
 	}
 

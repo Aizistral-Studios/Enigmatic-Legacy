@@ -15,6 +15,7 @@ import net.minecraft.loot.LootTable;
 import net.minecraftforge.common.ForgeHooks;
 
 @Mixin(LootTable.class)
+@SuppressWarnings("unused")
 public class MixinLootTable {
 
 	@Inject(at = @At("HEAD"), method = "addPool", cancellable = true, remap = false)

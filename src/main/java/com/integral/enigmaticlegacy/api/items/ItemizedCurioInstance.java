@@ -14,6 +14,8 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.text.ITextComponent;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
+import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
+
 public class ItemizedCurioInstance implements ICurio {
 	private final ItemStack stackInstance;
 	private final IItemCurio curioItem;

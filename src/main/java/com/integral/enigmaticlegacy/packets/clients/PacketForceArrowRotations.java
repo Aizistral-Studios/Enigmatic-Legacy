@@ -51,18 +51,18 @@ public class PacketForceArrowRotations {
 	public static void handle(PacketForceArrowRotations msg, Supplier<NetworkEvent.Context> ctx) {
 
 		ctx.get().enqueueWork(() -> {
-			ClientWorld theWorld = Minecraft.getInstance().world;
-			Entity arrow = theWorld.getEntityByID(msg.entityID);
+			ClientWorld theWorld = Minecraft.getInstance().level;
+			Entity arrow = theWorld.getEntity(msg.entityID);
 
 			if (arrow != null) {
 				arrow.addTag("enigmaticlegacy.redirected");
 
-				arrow.setPositionAndUpdate(msg.posX, msg.posY, msg.posZ);
-				arrow.setMotion(msg.motionX, msg.motionY, msg.motionZ);
-				arrow.rotationYaw = msg.rotationYaw;
-				arrow.prevRotationYaw = msg.rotationYaw;
-				arrow.rotationPitch = msg.rotationPitch;
-				arrow.prevRotationPitch = msg.rotationPitch;
+				arrow.teleportTo(msg.posX, msg.posY, msg.posZ);
+				arrow.setDeltaMovement(msg.motionX, msg.motionY, msg.motionZ);
+				arrow.yRot = msg.rotationYaw;
+				arrow.yRotO = msg.rotationYaw;
+				arrow.xRot = msg.rotationPitch;
+				arrow.xRotO = msg.rotationPitch;
 			}
 
 		});

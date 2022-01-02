@@ -78,16 +78,16 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.RARE));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "angel_blessing"));
 
-		this.immunityList.add(DamageSource.FALL.damageType);
-		this.immunityList.add(DamageSource.FLY_INTO_WALL.damageType);
+		this.immunityList.add(DamageSource.FALL.msgId);
+		this.immunityList.add(DamageSource.FLY_INTO_WALL.msgId);
 
-		this.resistanceList.put(DamageSource.WITHER.damageType, () -> 2F);
-		this.resistanceList.put(DamageSource.OUT_OF_WORLD.damageType, () -> 2F);
+		this.resistanceList.put(DamageSource.WITHER.msgId, () -> 2F);
+		this.resistanceList.put(DamageSource.OUT_OF_WORLD.msgId, () -> 2F);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -108,7 +108,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.getDisplayString("key.spellstoneAbility").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.spellstoneAbility").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
@@ -119,10 +119,10 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 		if (SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
-		Vector3 accelerationVec = new Vector3(player.getLookVec());
-		Vector3 motionVec = new Vector3(player.getMotion());
+		Vector3 accelerationVec = new Vector3(player.getLookAngle());
+		Vector3 motionVec = new Vector3(player.getDeltaMovement());
 
-		if (player.isElytraFlying()) {
+		if (player.isFallFlying()) {
 			accelerationVec = accelerationVec.multiply(accelerationModifierElytra.getValue());
 			accelerationVec = accelerationVec.multiply(1 / (Math.max(0.15D, motionVec.mag()) * 2.25D));
 		} else {
@@ -132,9 +132,9 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 		Vector3 finalMotion = new Vector3(motionVec.x + accelerationVec.x, motionVec.y + accelerationVec.y, motionVec.z + accelerationVec.z);
 
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player), new PacketPlayerMotion(finalMotion.x, finalMotion.y, finalMotion.z));
-		player.setMotion(finalMotion.x, finalMotion.y, finalMotion.z);
+		player.setDeltaMovement(finalMotion.x, finalMotion.y, finalMotion.z);
 
-		world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDER_EYE_LAUNCH, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
+		world.playSound(null, player.blockPosition(), SoundEvents.ENDER_EYE_LAUNCH, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
 
 		SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
 	}
@@ -172,25 +172,25 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 		Vector3 redirection = entityPos.subtract(bearerPos);
 		redirection = redirection.normalize();
 
-		if (redirected instanceof AbstractArrowEntity && ((AbstractArrowEntity) redirected).func_234616_v_() == bearer) {
+		if (redirected instanceof AbstractArrowEntity && ((AbstractArrowEntity) redirected).getOwner() == bearer) {
 
 			if (redirected instanceof TridentEntity) {
 				TridentEntity trident = (TridentEntity) redirected;
 
-				if (trident.returningTicks > 0)
+				if (trident.clientSideReturnTridentTickCount > 0)
 					return;
 			}
 
-			redirected.setMotion(redirected.getMotion().x * 1.75D, redirected.getMotion().y * 1.75D, redirected.getMotion().z * 1.75D);
+			redirected.setDeltaMovement(redirected.getDeltaMovement().x * 1.75D, redirected.getDeltaMovement().y * 1.75D, redirected.getDeltaMovement().z * 1.75D);
 		} else {
-			redirected.setMotion(redirection.x, redirection.y, redirection.z);
+			redirected.setDeltaMovement(redirection.x, redirection.y, redirection.z);
 		}
 
 		if (redirected instanceof DamagingProjectileEntity) {
 			DamagingProjectileEntity redirectedProjectile = (DamagingProjectileEntity) redirected;
-			redirectedProjectile.accelerationX = (redirection.x / 4.0);
-			redirectedProjectile.accelerationY = (redirection.y / 4.0);
-			redirectedProjectile.accelerationZ = (redirection.z / 4.0);
+			redirectedProjectile.xPower = (redirection.x / 4.0);
+			redirectedProjectile.yPower = (redirection.y / 4.0);
+			redirectedProjectile.zPower = (redirection.z / 4.0);
 		}
 	}
 

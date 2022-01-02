@@ -31,16 +31,16 @@ public abstract class ItemBaseTool extends ToolItem {
 	}
 
 	public ItemBaseTool(IItemTier tier) {
-		this(4F, -2.8F, tier, new HashSet<>(), ItemBaseTool.getDefaultProperties().addToolType(ToolType.PICKAXE, tier.getHarvestLevel()));
+		this(4F, -2.8F, tier, new HashSet<>(), ItemBaseTool.getDefaultProperties().addToolType(ToolType.PICKAXE, tier.getLevel()));
 	}
 
 	public ItemBaseTool() {
-		this(4F, -2.8F, EnigmaticMaterials.ETHERIUM, new HashSet<>(), ItemBaseTool.getDefaultProperties().addToolType(ToolType.PICKAXE, EnigmaticMaterials.ETHERIUM.getHarvestLevel()));
+		this(4F, -2.8F, EnigmaticMaterials.ETHERIUM, new HashSet<>(), ItemBaseTool.getDefaultProperties().addToolType(ToolType.PICKAXE, EnigmaticMaterials.ETHERIUM.getLevel()));
 	}
 
 	@Override
-	public boolean canHarvestBlock(BlockState blockIn) {
-		int i = this.getTier().getHarvestLevel();
+	public boolean isCorrectToolForDrops(BlockState blockIn) {
+		int i = this.getTier().getLevel();
 
 		if (this.getToolTypes(this.defaultInstance).contains(blockIn.getHarvestTool())) {
 			if (blockIn.getHarvestTool() == ToolType.PICKAXE)
@@ -56,15 +56,15 @@ public abstract class ItemBaseTool extends ToolItem {
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
 		Material material = state.getMaterial();
-		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.efficiency;
+		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.speed;
 	}
 
 
 	public static Properties getDefaultProperties() {
 		Properties props = new Item.Properties();
 
-		props.group(EnigmaticLegacy.enigmaticTab);
-		props.maxStackSize(1);
+		props.tab(EnigmaticLegacy.enigmaticTab);
+		props.stacksTo(1);
 		props.rarity(Rarity.COMMON);
 
 		return props;

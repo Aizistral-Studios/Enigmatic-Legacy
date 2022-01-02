@@ -22,13 +22,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class EscapeScroll extends ItemBaseCurio {
 
 	public EscapeScroll() {
-		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.RARE).maxStackSize(1));
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.RARE).stacksTo(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "escape_scroll"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 

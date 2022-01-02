@@ -27,13 +27,13 @@ public class SlayerEnchantment extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 5 + (enchantmentLevel - 1) * 8;
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
-		return this.getMinEnchantability(enchantmentLevel) + 20;
+	public int getMaxCost(int enchantmentLevel) {
+		return this.getMinCost(enchantmentLevel) + 20;
 	}
 
 	@Override
@@ -43,16 +43,16 @@ public class SlayerEnchantment extends Enchantment {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return this.canApply(stack) && super.canApplyAtEnchantingTable(stack);
+		return this.canEnchant(stack) && super.canApplyAtEnchantingTable(stack);
 	}
 
 	@Override
-	public boolean canApplyTogether(Enchantment ench) {
-		return !(ench instanceof DamageEnchantment) && super.canApplyTogether(ench);
+	public boolean checkCompatibility(Enchantment ench) {
+		return !(ench instanceof DamageEnchantment) && super.checkCompatibility(ench);
 	}
 
 	@Override
-	public boolean canApply(ItemStack stack) {
+	public boolean canEnchant(ItemStack stack) {
 		return OmniconfigHandler.isItemEnabled(this) && (stack.getItem() instanceof AxeItem ? true : stack.canApplyAtEnchantingTable(this));
 	}
 
@@ -62,7 +62,7 @@ public class SlayerEnchantment extends Enchantment {
 	}
 
 	@Override
-	public boolean canGenerateInLoot() {
+	public boolean isDiscoverable() {
 		return OmniconfigHandler.isItemEnabled(this);
 	}
 

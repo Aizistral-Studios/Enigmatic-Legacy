@@ -20,11 +20,11 @@ public class PacketAnvilField {
 	}
 
 	public static void encode(PacketAnvilField msg, PacketBuffer buf) {
-		buf.writeString(msg.field);
+		buf.writeUtf(msg.field);
 	}
 
 	public static PacketAnvilField decode(PacketBuffer buf) {
-		return new PacketAnvilField(buf.readString(128));
+		return new PacketAnvilField(buf.readUtf(128));
 	}
 
 	public static void handle(PacketAnvilField msg, Supplier<NetworkEvent.Context> ctx) {

@@ -28,13 +28,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class AnimalGuide extends ItemBase implements IVanishable {
 
 	public AnimalGuide() {
-		super(getDefaultProperties().maxStackSize(1).rarity(Rarity.UNCOMMON));
+		super(getDefaultProperties().stacksTo(1).rarity(Rarity.UNCOMMON));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "animal_guide"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuide1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuide2");
@@ -53,7 +53,7 @@ public class AnimalGuide extends ItemBase implements IVanishable {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (!(entityIn instanceof PlayerEntity) || worldIn.isRemote)
+		if (!(entityIn instanceof PlayerEntity) || worldIn.isClientSide)
 			return;
 
 		PlayerEntity player = (PlayerEntity) entityIn;

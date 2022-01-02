@@ -26,8 +26,8 @@ public interface IEtheriumTool {
 		if (stack.getItem() instanceof IEtheriumTool) {
 			ItemNBTHelper.setBoolean(stack, "MultiblockEffectsEnabled", true);
 
-			if (!player.world.isRemote) {
-				player.world.playSound(null, player.getPosition(), getConfig().getAOESoundOn(), SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+			if (!player.level.isClientSide) {
+				player.level.playSound(null, player.blockPosition(), getConfig().getAOESoundOn(), SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 
@@ -37,8 +37,8 @@ public interface IEtheriumTool {
 		if (stack.getItem() instanceof IEtheriumTool) {
 			ItemNBTHelper.setBoolean(stack, "MultiblockEffectsEnabled", false);
 
-			if (!player.world.isRemote) {
-				player.world.playSound(null, player.getPosition(), getConfig().getAOESoundOff(), SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+			if (!player.level.isClientSide) {
+				player.level.playSound(null, player.blockPosition(), getConfig().getAOESoundOff(), SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 	}

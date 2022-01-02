@@ -33,13 +33,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class UnholyGrail extends ItemBase implements IVanishable {
 
 	public UnholyGrail() {
-		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isImmuneToFire());
+		super(ItemBase.getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "unholy_grail"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.unholyGrail1");
 		} else {
@@ -48,25 +48,25 @@ public class UnholyGrail extends ItemBase implements IVanishable {
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
 		if (!(entityLiving instanceof PlayerEntity))
 			return stack;
 
 		PlayerEntity player = (PlayerEntity) entityLiving;
 
-		if (!worldIn.isRemote) {
-			player.addPotionEffect(new EffectInstance(Effects.WITHER, 100, 2, false, true));
-			player.addPotionEffect(new EffectInstance(Effects.POISON, 160, 1, false, true));
-			player.addPotionEffect(new EffectInstance(Effects.NAUSEA, 240, 0, false, true));
-			player.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 200, 1, false, true));
-			player.addPotionEffect(new EffectInstance(Effects.HUNGER, 160, 2, false, true));
-			player.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 240, 0, false, true));
+		if (!worldIn.isClientSide) {
+			player.addEffect(new EffectInstance(Effects.WITHER, 100, 2, false, true));
+			player.addEffect(new EffectInstance(Effects.POISON, 160, 1, false, true));
+			player.addEffect(new EffectInstance(Effects.CONFUSION, 240, 0, false, true));
+			player.addEffect(new EffectInstance(Effects.WEAKNESS, 200, 1, false, true));
+			player.addEffect(new EffectInstance(Effects.HUNGER, 160, 2, false, true));
+			player.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 240, 0, false, true));
 
 			UseUnholyGrailTrigger.INSTANCE.trigger((ServerPlayerEntity) player);
 
 		}
 
-		player.addStat(Stats.ITEM_USED.get(this));
+		player.awardStat(Stats.ITEM_USED.get(this));
 
 		return stack;
 	}
@@ -77,14 +77,14 @@ public class UnholyGrail extends ItemBase implements IVanishable {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.DRINK;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		playerIn.setActiveHand(handIn);
-		return new ActionResult<>(ActionResultType.CONSUME, playerIn.getHeldItem(handIn));
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		playerIn.startUsingItem(handIn);
+		return new ActionResult<>(ActionResultType.CONSUME, playerIn.getItemInHand(handIn));
 	}
 
 }

@@ -38,9 +38,9 @@ public class EnderChestInventoryButton extends ImageButton {
 			boolean lastVisible = this.isRecipeBookVisible;
 
 			if (this.parentGui instanceof InventoryScreen) {
-				this.isRecipeBookVisible = ((InventoryScreen)this.parentGui).getRecipeGui().isVisible();
+				this.isRecipeBookVisible = ((InventoryScreen)this.parentGui).getRecipeBookComponent().isVisible();
 			} else if (this.parentGui instanceof CuriosScreen) {
-				this.isRecipeBookVisible = ((CuriosScreen)this.parentGui).getRecipeGui().isVisible();
+				this.isRecipeBookVisible = ((CuriosScreen)this.parentGui).getRecipeBookComponent().isVisible();
 			}
 
 			if (lastVisible != this.isRecipeBookVisible) {
@@ -50,7 +50,7 @@ public class EnderChestInventoryButton extends ImageButton {
 
 		} else if (this.parentGui instanceof CreativeScreen) {
 			CreativeScreen gui = (CreativeScreen) this.parentGui;
-			boolean isInventoryTab = gui.getSelectedTabIndex() == ItemGroup.INVENTORY.getIndex();
+			boolean isInventoryTab = gui.getSelectedTab() == ItemGroup.TAB_INVENTORY.getId();
 
 			if (!isInventoryTab) {
 				this.active = false;

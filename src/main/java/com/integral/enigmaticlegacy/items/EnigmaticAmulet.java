@@ -177,19 +177,19 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	}
 
 	public EnigmaticAmulet() {
-		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).isImmuneToFire());
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet"));
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public void registerVariants() {
-		ItemModelsProperties.registerProperty(this, new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet_color"), (stack, world, entity) -> {
+		ItemModelsProperties.register(this, new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet_color"), (stack, world, entity) -> {
 			return ItemNBTHelper.getFloat(stack, amuletColorTag, 0F);
 		});
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
 		if (group == EnigmaticLegacy.enigmaticTab) {
 			for (AmuletColor color : AmuletColor.values()) {
 				items.add(this.setColor(new ItemStack(this), color));
@@ -200,7 +200,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		String name = ItemNBTHelper.getString(stack, "Inscription", null);
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
@@ -276,7 +276,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		super.inventoryTick(stack, worldIn, entityIn, itemSlot, isSelected);
 
-		if (!worldIn.isRemote)
+		if (!worldIn.isClientSide)
 			if (ItemNBTHelper.verifyExistance(stack, amuletInscriptionTag) && !ItemNBTHelper.verifyExistance(stack, amuletColorTag)) {
 				this.setSeededColor(stack);
 			}
@@ -288,8 +288,8 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
 
-			AttributeModifierManager map = player.getAttributeManager();
-			map.removeModifiers(this.getAllModifiers());
+			AttributeModifierManager map = player.getAttributes();
+			map.removeAttributeModifiers(this.getAllModifiers());
 		}
 	}
 
@@ -301,8 +301,8 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 			ItemStack amulet = SuperpositionHandler.getCurioStack(player, this);
 
 			if (amulet != null) {
-				AttributeModifierManager map = player.getAttributeManager();
-				map.reapplyModifiers(this.getCurrentModifiers(amulet, player));
+				AttributeModifierManager map = player.getAttributes();
+				map.addTransientAttributeModifiers(this.getCurrentModifiers(amulet, player));
 			}
 		}
 

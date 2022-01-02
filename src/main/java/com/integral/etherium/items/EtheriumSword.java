@@ -38,14 +38,14 @@ public class EtheriumSword extends SwordItem implements IEtheriumTool {
 	private final IEtheriumConfig config;
 
 	public EtheriumSword(IEtheriumConfig config) {
-		super(config.getToolMaterial(), 6, -2.6F, EtheriumUtil.defaultProperties(config, EtheriumSword.class).isImmuneToFire());
+		super(config.getToolMaterial(), 6, -2.6F, EtheriumUtil.defaultProperties(config, EtheriumSword.class).fireResistant());
 		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_sword"));
 		this.config = config;
 	}
 
 	@Override
-	public String getTranslationKey() {
-		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getTranslationKey();
+	public String getDescriptionId() {
+		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getDescriptionId();
 	}
 
 	@Override
@@ -55,7 +55,7 @@ public class EtheriumSword extends SwordItem implements IEtheriumTool {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword2");
@@ -74,41 +74,41 @@ public class EtheriumSword extends SwordItem implements IEtheriumTool {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
 
 		if (hand == Hand.OFF_HAND)
-			return new ActionResult<>(ActionResultType.PASS, player.getHeldItem(hand));
+			return new ActionResult<>(ActionResultType.PASS, player.getItemInHand(hand));
 
 		if (player.isCrouching()) {
 			this.toggleAreaEffects(player, stack);
 
 			return new ActionResult<>(ActionResultType.SUCCESS, stack);
-		} else if (!player.world.isRemote) {
-			if (!player.getCooldownTracker().hasCooldown(this) && this.areaEffectsEnabled(player, stack)) {
-				Vector3 look = new Vector3(player.getLookVec());
+		} else if (!player.level.isClientSide) {
+			if (!player.getCooldowns().isOnCooldown(this) && this.areaEffectsEnabled(player, stack)) {
+				Vector3 look = new Vector3(player.getLookAngle());
 				Vector3 dir = look.multiply(1D);
 
 				this.config.knockBack(player, 1.0F, dir.x, dir.z);
-				world.playSound(null, player.getPosition(), SoundEvents.ENTITY_SKELETON_SHOOT, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
+				world.playSound(null, player.blockPosition(), SoundEvents.SKELETON_SHOOT, SoundCategory.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
 
-				player.getCooldownTracker().setCooldown(this, this.config.getSwordCooldown());
+				player.getCooldowns().addCooldown(this, this.config.getSwordCooldown());
 
-				player.setActiveHand(hand);
-				return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
+				player.startUsingItem(hand);
+				return new ActionResult<>(ActionResultType.SUCCESS, player.getItemInHand(hand));
 			}
 		}
 
-		player.setActiveHand(hand);
-		return new ActionResult<>(ActionResultType.PASS, player.getHeldItem(hand));
+		player.startUsingItem(hand);
+		return new ActionResult<>(ActionResultType.PASS, player.getItemInHand(hand));
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResultType useOn(ItemUseContext context) {
 		if (context.getPlayer().isCrouching())
-			return this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType();
+			return this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
 		else
-			return super.onItemUse(context);
+			return super.useOn(context);
 	}
 
 }

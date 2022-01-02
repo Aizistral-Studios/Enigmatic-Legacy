@@ -30,13 +30,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class GemOfBinding extends ItemBase implements IVanishable {
 
 	public GemOfBinding() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON).maxStackSize(1));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON).stacksTo(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "gem_of_binding"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.gemOfBinding1");
 		} else {
@@ -51,21 +51,21 @@ public class GemOfBinding extends ItemBase implements IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
-		return ItemNBTHelper.verifyExistance(stack, "BoundPlayer") || super.hasEffect(stack);
+	public boolean isFoil(ItemStack stack) {
+		return ItemNBTHelper.verifyExistance(stack, "BoundPlayer") || super.isFoil(stack);
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
-		ItemStack itemstack = player.getHeldItem(hand);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity player, Hand hand) {
+		ItemStack itemstack = player.getItemInHand(hand);
 
 		if (player.isCrouching()) {
 			ItemNBTHelper.setString(itemstack, "BoundPlayer", player.getDisplayName().getString());
-			ItemNBTHelper.setUUID(itemstack, "BoundUUID", player.getUniqueID());
+			ItemNBTHelper.setUUID(itemstack, "BoundUUID", player.getUUID());
 
-			worldIn.playSound(null, player.getPosition(), SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
+			worldIn.playSound(null, player.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 
-			player.swingArm(hand);
+			player.swing(hand);
 			return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
 		}
 

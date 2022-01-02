@@ -31,20 +31,20 @@ public class SlotUnlockedToast implements IToast {
 	}
 
 	@Override
-	public IToast.Visibility func_230444_a_(MatrixStack matrixStack, ToastGui toastGui, long delta) {
-		toastGui.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(EnigmaticLegacy.MODID, "textures/gui/enigmatic_toasts.png"));
-		GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+	public IToast.Visibility render(MatrixStack matrixStack, ToastGui toastGui, long delta) {
+		toastGui.getMinecraft().getTextureManager().bind(new ResourceLocation(EnigmaticLegacy.MODID, "textures/gui/enigmatic_toasts.png"));
+		GlStateManager._color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 		toastGui.blit(matrixStack, 0, 0, 0, 0, 160, 43);
-		toastGui.getMinecraft().fontRenderer.drawString(matrixStack, I18n.format("enigmaticlegacy.toasts.slotUnlocked.title", I18n.format("enigmaticlegacy.curiotype." + this.identifier)), 7.0F, 7.0F, -11534256);
-		toastGui.getMinecraft().fontRenderer.drawString(matrixStack, I18n.format("enigmaticlegacy.toasts.slotUnlocked.text1"), 30.0F, 18.0F, -16777216);
-		toastGui.getMinecraft().fontRenderer.drawString(matrixStack, I18n.format("enigmaticlegacy.toasts.slotUnlocked.text2"), 30.0F, 28.0F, -16777216);
-		RenderHelper.enableStandardItemLighting();
-		GlStateManager.pushMatrix();
-		GlStateManager.scalef(1.6F, 1.6F, 1.0F);
-		GlStateManager.popMatrix();
+		toastGui.getMinecraft().font.draw(matrixStack, I18n.get("enigmaticlegacy.toasts.slotUnlocked.title", I18n.get("enigmaticlegacy.curiotype." + this.identifier)), 7.0F, 7.0F, -11534256);
+		toastGui.getMinecraft().font.draw(matrixStack, I18n.get("enigmaticlegacy.toasts.slotUnlocked.text1"), 30.0F, 18.0F, -16777216);
+		toastGui.getMinecraft().font.draw(matrixStack, I18n.get("enigmaticlegacy.toasts.slotUnlocked.text2"), 30.0F, 28.0F, -16777216);
+		RenderHelper.turnBackOn();
+		GlStateManager._pushMatrix();
+		GlStateManager._scalef(1.6F, 1.6F, 1.0F);
+		GlStateManager._popMatrix();
 
-		toastGui.getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI((LivingEntity) null, this.drawnStack, 8, 18);
+		toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem((LivingEntity) null, this.drawnStack, 8, 18);
 		return delta - this.firstDrawTime >= 5000L ? IToast.Visibility.HIDE : IToast.Visibility.SHOW;
 
 	}

@@ -55,13 +55,13 @@ public class ForbiddenAxe extends SwordItem {
 	}
 
 	public ForbiddenAxe() {
-		super(EnigmaticMaterials.FORBIDDENAXE, 6, -2.4F, ItemBaseTool.getDefaultProperties().defaultMaxDamage(2000).rarity(Rarity.EPIC).isImmuneToFire());
+		super(EnigmaticMaterials.FORBIDDENAXE, 6, -2.4F, ItemBaseTool.getDefaultProperties().defaultDurability(2000).rarity(Rarity.EPIC).fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "forbidden_axe"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenAxe2", TextFormatting.GOLD, beheadingBonus.getValue().asPercentage() + "%");
@@ -70,7 +70,7 @@ public class ForbiddenAxe extends SwordItem {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 
-		int looting = EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING, stack);
+		int looting = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, stack);
 
 		if (Minecraft.getInstance().player != null) {
 			ICuriosItemHandler handler = CuriosApi.getCuriosHelper().getCuriosHandler(Minecraft.getInstance().player).orElse(null);
@@ -85,7 +85,7 @@ public class ForbiddenAxe extends SwordItem {
 	}
 
 	@Override
-	public boolean canHarvestBlock(BlockState blockIn) {
+	public boolean isCorrectToolForDrops(BlockState blockIn) {
 		return false;
 	}
 

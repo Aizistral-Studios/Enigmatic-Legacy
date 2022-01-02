@@ -55,9 +55,9 @@ public class PacketFlameParticles {
 				float modifier = 1.0F;
 
 				if (msg.check) {
-					if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.MINIMAL) {
+					if (Minecraft.getInstance().options.particles == ParticleStatus.MINIMAL) {
 						modifier = 0.20F;
-					} else if (Minecraft.getInstance().gameSettings.particles == ParticleStatus.DECREASED) {
+					} else if (Minecraft.getInstance().options.particles == ParticleStatus.DECREASED) {
 						modifier = 0.35F;
 					} else {
 						modifier = 0.65F;
@@ -67,7 +67,7 @@ public class PacketFlameParticles {
 				amount *= modifier;
 
 				for (int counter = 0; counter <= amount; counter++) {
-					player.world.addParticle(ParticleTypes.FLAME, true, msg.x + (Math.random() - 0.5), msg.y + (Math.random() - 0.5), msg.z + (Math.random() - 0.5), (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D);
+					player.level.addParticle(ParticleTypes.FLAME, true, msg.x + (Math.random() - 0.5), msg.y + (Math.random() - 0.5), msg.z + (Math.random() - 0.5), (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D);
 				}
 
 			});

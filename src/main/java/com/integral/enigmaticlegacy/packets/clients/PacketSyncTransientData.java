@@ -30,7 +30,7 @@ public class PacketSyncTransientData {
 			// Syncying to server must have additional checks to prevent exploits.
 			// In current implementation it's just not possible, since no need yet exists.
 
-			if (msg.playerData.getPlayer().world.isRemote) {
+			if (msg.playerData.getPlayer().level.isClientSide) {
 				TransientPlayerData.set(msg.playerData.getPlayer(), msg.playerData);
 			}
 		});

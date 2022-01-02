@@ -35,12 +35,12 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public ItemStack getCraftingResult(CraftingInventory inv) {
+	public ItemStack assemble(CraftingInventory inv) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		ItemStack voidStone = null;
 
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack checkedItemStack = inv.getStackInSlot(i);
+		for (int i = 0; i < inv.getContainerSize(); i++) {
+			ItemStack checkedItemStack = inv.getItem(i);
 
 			if (!checkedItemStack.isEmpty()) {
 				if (checkedItemStack.getItem() == EnigmaticLegacy.oblivionStone) {
@@ -70,7 +70,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 			for (INBT s_uncast : arr) {
 				counter++;
 
-				String s = ((StringNBT)s_uncast).getString();
+				String s = ((StringNBT)s_uncast).getAsString();
 
 				if (s.equals(ForgeRegistries.ITEMS.getKey(savedStack.getItem()).toString()))
 					return ItemStack.EMPTY;
@@ -91,7 +91,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 		} else if (voidStone != null && stackList.size() == 0) {
 			ItemStack returnedStack = new ItemStack(EnigmaticLegacy.oblivionStone, 1);
 			returnedStack.setTag(voidStone.getOrCreateTag().copy());
-			returnedStack.removeChildTag("SupersolidID");
+			returnedStack.removeTagKey("SupersolidID");
 			return returnedStack;
 		} else
 			return ItemStack.EMPTY;
@@ -102,8 +102,8 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		ItemStack voidStone = null;
 
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack checkedItemStack = inv.getStackInSlot(i);
+		for (int i = 0; i < inv.getContainerSize(); i++) {
+			ItemStack checkedItemStack = inv.getItem(i);
 
 			if (!checkedItemStack.isEmpty()) {
 				if (checkedItemStack.getItem() == EnigmaticLegacy.oblivionStone) {
@@ -133,7 +133,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 			for (INBT s_uncast : arr) {
 				counter++;
 
-				String s = ((StringNBT)s_uncast).getString();
+				String s = ((StringNBT)s_uncast).getAsString();
 
 				if (s.equals(ForgeRegistries.ITEMS.getKey(savedStack.getItem()).toString()))
 					return false;
@@ -149,17 +149,17 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(CraftingInventory inv) {
-		NonNullList<ItemStack> nonnulllist = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+		NonNullList<ItemStack> nonnulllist = NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
 		return nonnulllist;
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return ItemStack.EMPTY;
 	}
 
 	@Override
-	public boolean isDynamic() {
+	public boolean isSpecial() {
 		return true;
 	}
 
@@ -170,17 +170,17 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<OblivionStoneCombineRecipe> {
 		@Override
-		public OblivionStoneCombineRecipe read(ResourceLocation recipeId, JsonObject json) {
+		public OblivionStoneCombineRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			return new OblivionStoneCombineRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
 		}
 
 		@Override
-		public OblivionStoneCombineRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
+		public OblivionStoneCombineRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
 			return new OblivionStoneCombineRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, OblivionStoneCombineRecipe recipe) {
+		public void toNetwork(PacketBuffer buffer, OblivionStoneCombineRecipe recipe) {
 
 		}
 	}

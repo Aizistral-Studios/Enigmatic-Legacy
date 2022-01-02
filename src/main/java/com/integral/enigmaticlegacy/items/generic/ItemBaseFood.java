@@ -35,24 +35,24 @@ public abstract class ItemBaseFood extends ItemBase {
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
 		if (entityLiving instanceof PlayerEntity) {
 			this.onConsumed(worldIn, (PlayerEntity) entityLiving, stack);
 		}
 
-		return super.onItemUseFinish(stack, worldIn, entityLiving);
+		return super.finishUsingItem(stack, worldIn, entityLiving);
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if (this.canEat(worldIn, playerIn, playerIn.getHeldItem(handIn)))
-			return super.onItemRightClick(worldIn, playerIn, handIn);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		if (this.canEat(worldIn, playerIn, playerIn.getItemInHand(handIn)))
+			return super.use(worldIn, playerIn, handIn);
 		else
-			return new ActionResult<>(ActionResultType.PASS, playerIn.getHeldItem(handIn));
+			return new ActionResult<>(ActionResultType.PASS, playerIn.getItemInHand(handIn));
 	}
 
 	protected static Food buildDefaultFood() {
-		return new Food.Builder().hunger(0).saturation(0).setAlwaysEdible().build();
+		return new Food.Builder().nutrition(0).saturationMod(0).alwaysEat().build();
 	}
 
 }

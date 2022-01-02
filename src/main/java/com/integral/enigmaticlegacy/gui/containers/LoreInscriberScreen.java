@@ -28,7 +28,7 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 
 	public LoreInscriberScreen(LoreInscriberContainer container, PlayerInventory playerInventory, ITextComponent title) {
 		this(container, playerInventory, title, LoreInscriberScreen.ANVIL_RESOURCE);
-		this.titleX = 60;
+		this.titleLabelX = 60;
 	}
 
 	private LoreInscriberScreen(LoreInscriberContainer container, PlayerInventory playerInventory, ITextComponent title, ResourceLocation guiTexture) {
@@ -37,32 +37,32 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	}
 
 	protected void initFields() {
-		this.minecraft.keyboardListener.enableRepeatEvents(true);
-		int i = (this.width - this.xSize) / 2;
-		int j = (this.height - this.ySize) / 2;
+		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
+		int i = (this.width - this.imageWidth) / 2;
+		int j = (this.height - this.imageHeight) / 2;
 		this.nameField = new TextFieldWidget(this.font, i + 55, j + 30, 95, 12, new TranslationTextComponent("container.repair"));
 		this.nameField.setCanLoseFocus(false);
 		this.nameField.setTextColor(-1);
-		this.nameField.setDisabledTextColour(-1);
-		this.nameField.setEnableBackgroundDrawing(false);
-		this.nameField.setMaxStringLength(128);
+		this.nameField.setTextColorUneditable(-1);
+		this.nameField.setBordered(false);
+		this.nameField.setMaxLength(128);
 		this.nameField.setResponder(this::renameResponder);
 		this.children.add(this.nameField);
-		this.setFocusedDefault(this.nameField);
+		this.setInitialFocus(this.nameField);
 	}
 
 	@Override
 	protected void init() {
 		super.init();
 		this.initFields();
-		this.container.addListener(this);
+		this.menu.addSlotListener(this);
 	}
 
 	@Override
-	public void onClose() {
-		super.onClose();
-		this.container.removeListener(this);
-		this.minecraft.keyboardListener.enableRepeatEvents(false);
+	public void removed() {
+		super.removed();
+		this.menu.removeSlotListener(this);
+		this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
 	}
 
 	@Override
@@ -71,19 +71,19 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 		super.render(matrixStack, x, y, partialTicksIGuess);
 		RenderSystem.disableBlend();
 		this.renderNameField(matrixStack, x, y, partialTicksIGuess);
-		this.renderHoveredTooltip(matrixStack, x, y);
+		this.renderTooltip(matrixStack, x, y);
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(MatrixStack matrixStack, float partialTicks, int x, int y) {
+	protected void renderBg(MatrixStack matrixStack, float partialTicks, int x, int y) {
 		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bindTexture(this.guiTexture);
-		int i = (this.width - this.xSize) / 2;
-		int j = (this.height - this.ySize) / 2;
-		this.blit(matrixStack, i, j, 0, 0, this.xSize, this.ySize);
-		this.blit(matrixStack, i + 52, j + 26, 0, this.ySize + (this.container.getSlot(0).getHasStack() ? 0 : 16), 102, 16);
-		if (this.container.getSlot(0).getHasStack() && !this.container.getSlot(1).getHasStack()) {
-			this.blit(matrixStack, i + 71, j + 49, this.xSize, 0, 28, 21);
+		this.minecraft.getTextureManager().bind(this.guiTexture);
+		int i = (this.width - this.imageWidth) / 2;
+		int j = (this.height - this.imageHeight) / 2;
+		this.blit(matrixStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+		this.blit(matrixStack, i + 52, j + 26, 0, this.imageHeight + (this.menu.getSlot(0).hasItem() ? 0 : 16), 102, 16);
+		if (this.menu.getSlot(0).hasItem() && !this.menu.getSlot(1).hasItem()) {
+			this.blit(matrixStack, i + 71, j + 49, this.imageWidth, 0, 28, 21);
 		}
 
 	}
@@ -92,8 +92,8 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	 * update the crafting window inventory with the items in the list
 	 */
 	@Override
-	public void sendAllContents(Container containerToSend, NonNullList<ItemStack> itemsList) {
-		this.sendSlotContents(containerToSend, 0, containerToSend.getSlot(0).getStack());
+	public void refreshContainer(Container containerToSend, NonNullList<ItemStack> itemsList) {
+		this.slotChanged(containerToSend, 0, containerToSend.getSlot(0).getItem());
 	}
 
 	/**
@@ -102,42 +102,42 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	 * value. Both are truncated to shorts in non-local SMP.
 	 */
 	@Override
-	public void sendWindowProperty(Container containerIn, int varToUpdate, int newValue) {
+	public void setContainerData(Container containerIn, int varToUpdate, int newValue) {
 	}
 
 	@Override
 	public void resize(Minecraft minecraft, int width, int height) {
-		String s = this.nameField.getText();
+		String s = this.nameField.getValue();
 		this.init(minecraft, width, height);
-		this.nameField.setText(s);
+		this.nameField.setValue(s);
 	}
 
 	@Override
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
 		if (keyCode == 256) {
-			this.minecraft.player.closeScreen();
+			this.minecraft.player.closeContainer();
 		}
 
-		return !this.nameField.keyPressed(keyCode, scanCode, modifiers) && !this.nameField.canWrite() ? super.keyPressed(keyCode, scanCode, modifiers) : true;
+		return !this.nameField.keyPressed(keyCode, scanCode, modifiers) && !this.nameField.canConsumeInput() ? super.keyPressed(keyCode, scanCode, modifiers) : true;
 	}
 
 	private void renameResponder(String input) {
 		if (!input.isEmpty()) {
 			String s = input;
-			Slot slot = this.container.getSlot(0);
-			if (slot != null && slot.getHasStack() && !slot.getStack().hasDisplayName() && input.equals(slot.getStack().getDisplayName().getString())) {
+			Slot slot = this.menu.getSlot(0);
+			if (slot != null && slot.hasItem() && !slot.getItem().hasCustomHoverName() && input.equals(slot.getItem().getHoverName().getString())) {
 				s = "";
 			}
 
-			this.container.updateItemName(s);
+			this.menu.updateItemName(s);
 			EnigmaticLegacy.packetInstance.sendToServer(new PacketInkwellField(s));
 		}
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack matrixStack, int x, int y) {
-		this.font.func_243248_b(matrixStack, this.title, 52F, 13F, 4210752);
-		//this.font.func_238422_b_(matrixStack, this.playerInventory.getDisplayName(), JsonConfigHandler.getFloat("playerInvX"), JsonConfigHandler.getFloat("playerInvY"), 4210752);
+	protected void renderLabels(MatrixStack matrixStack, int x, int y) {
+		this.font.draw(matrixStack, this.title, 52F, 13F, 4210752);
+		//this.font.draw(matrixStack, this.playerInventory.getDisplayName(), JsonConfigHandler.getFloat("playerInvX"), JsonConfigHandler.getFloat("playerInvY"), 4210752);
 
 		RenderSystem.disableBlend();
 		/*
@@ -175,11 +175,11 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	 * contents of that slot.
 	 */
 	@Override
-	public void sendSlotContents(Container containerToSend, int slotInd, ItemStack stack) {
+	public void slotChanged(Container containerToSend, int slotInd, ItemStack stack) {
 		if (slotInd == 0) {
-			this.nameField.setText(stack.isEmpty() ? "" : stack.getDisplayName().getString());
-			this.nameField.setEnabled(!stack.isEmpty());
-			this.setListener(this.nameField);
+			this.nameField.setValue(stack.isEmpty() ? "" : stack.getHoverName().getString());
+			this.nameField.setEditable(!stack.isEmpty());
+			this.setFocused(this.nameField);
 		}
 
 	}

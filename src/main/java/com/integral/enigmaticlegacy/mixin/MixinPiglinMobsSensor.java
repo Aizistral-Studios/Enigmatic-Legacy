@@ -24,7 +24,7 @@ import net.minecraft.world.server.ServerWorld;
 @Mixin(PiglinMobsSensor.class)
 public class MixinPiglinMobsSensor {
 
-	@Inject(at = @At("RETURN"), method = "update")
+	@Inject(at = @At("RETURN"), method = "doTick")
 	protected void onPiglinSenses(ServerWorld worldIn, LivingEntity entityIn, CallbackInfo info) {
 		Brain<?> brain = entityIn.getBrain();
 		PlayerEntity player = brain.getMemory(MemoryModuleType.NEAREST_TARGETABLE_PLAYER_NOT_WEARING_GOLD).orElse(null);
@@ -35,12 +35,12 @@ public class MixinPiglinMobsSensor {
 
 				// Cycle through visible mobs again in order to replace removed player,
 				// since there might be other players nearby not wearing gold or ring
-				for(LivingEntity livingentity : brain.getMemory(MemoryModuleType.VISIBLE_MOBS).orElse(ImmutableList.of())) {
+				for(LivingEntity livingentity : brain.getMemory(MemoryModuleType.VISIBLE_LIVING_ENTITIES).orElse(ImmutableList.of())) {
 					if (livingentity instanceof PlayerEntity) {
 						PlayerEntity playerentity = (PlayerEntity)livingentity;
 
-						if (EntityPredicates.CAN_HOSTILE_AI_TARGET.test(livingentity) &&
-								!PiglinTasks.func_234460_a_(playerentity) &&
+						if (EntityPredicates.ATTACK_ALLOWED.test(livingentity) &&
+								!PiglinTasks.isWearingGold(playerentity) &&
 								!SuperpositionHandler.hasCurio(playerentity, EnigmaticLegacy.gemRing)) {
 
 							brain.setMemory(MemoryModuleType.NEAREST_TARGETABLE_PLAYER_NOT_WEARING_GOLD, Optional.of(playerentity));

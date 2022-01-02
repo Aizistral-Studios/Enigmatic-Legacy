@@ -36,13 +36,13 @@ public class RelicOfTesting extends ItemBase {
 	public Random lootRandomizer = new Random();
 
 	public RelicOfTesting() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).group(null));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).tab(null));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "relic_of_testing"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.relicOfTesting1");
 		} else {
@@ -53,22 +53,22 @@ public class RelicOfTesting extends ItemBase {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
 
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		playerIn.setActiveHand(handIn);
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
+		playerIn.startUsingItem(handIn);
 
 		SuperpositionHandler.setSpellstoneCooldown(playerIn, 0);
 
 		SuperpositionHandler.setPersistentInteger(playerIn, EnigmaticLegacy.overworldRevelationTome.persistantPointsTag, 0);
 
-		ItemStack checkTag = playerIn.inventory.offHandInventory.get(0);
+		ItemStack checkTag = playerIn.inventory.offhand.get(0);
 
 		if (checkTag != null) {
-			playerIn.sendMessage(new StringTextComponent(checkTag.getOrCreateTag().getString()), playerIn.getUniqueID());
+			playerIn.sendMessage(new StringTextComponent(checkTag.getOrCreateTag().getAsString()), playerIn.getUUID());
 		}
 
-		if (!worldIn.isRemote) {
+		if (!worldIn.isClientSide) {
 
 			//playerIn.sendMessage(new StringTextComponent("INTEGER: " + UltimaTestConfig.integerTest.getValue()), playerIn.getUniqueID());
 			//playerIn.sendMessage(new StringTextComponent("FLOAT: " + UltimaTestConfig.floatTest.getValue()), playerIn.getUniqueID());
@@ -90,7 +90,7 @@ public class RelicOfTesting extends ItemBase {
 		}
 		 */
 
-		playerIn.swingArm(handIn);
+		playerIn.swing(handIn);
 
 		return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
 
@@ -98,21 +98,21 @@ public class RelicOfTesting extends ItemBase {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		List<CreeperEntity> list = world.getEntitiesWithinAABB(CreeperEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(entity, 24D));
+		List<CreeperEntity> list = world.getEntitiesOfClass(CreeperEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(entity, 24D));
 
 		for (CreeperEntity creeper : list) {
 			creeper.goalSelector.addGoal(1, new AvoidEntityGoal<>(creeper, PlayerEntity.class, (arg) -> {
 				return arg instanceof PlayerEntity ? SuperpositionHandler.hasCurio(arg, EnigmaticLegacy.enigmaticAmulet) : false;
-			}, 6.0F, 1.0D, 1.2D, EntityPredicates.CAN_AI_TARGET::test));
+			}, 6.0F, 1.0D, 1.2D, EntityPredicates.NO_CREATIVE_OR_SPECTATOR::test));
 
-			if (creeper.getAttackTarget() == entity) {
-				creeper.setAttackTarget(null);
+			if (creeper.getTarget() == entity) {
+				creeper.setTarget(null);
 			}
 		}
 
 		if (entity instanceof ServerPlayerEntity) {
 			ServerPlayerEntity player = (ServerPlayerEntity) entity;
-			if (entity.ticksExisted % 20 == 0) {
+			if (entity.tickCount % 20 == 0) {
 				System.out.println("Time since rest: " + player.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)));
 			}
 		}

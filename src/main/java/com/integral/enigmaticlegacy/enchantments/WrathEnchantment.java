@@ -20,13 +20,13 @@ public class WrathEnchantment extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 1 + (enchantmentLevel - 1) * 8;
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
-		return this.getMinEnchantability(enchantmentLevel) + 20;
+	public int getMaxCost(int enchantmentLevel) {
+		return this.getMinCost(enchantmentLevel) + 20;
 	}
 
 	@Override
@@ -36,12 +36,12 @@ public class WrathEnchantment extends Enchantment {
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return this.canApply(stack) && super.canApplyAtEnchantingTable(stack);
+		return this.canEnchant(stack) && super.canApplyAtEnchantingTable(stack);
 	}
 
 	@Override
-	public boolean canApplyTogether(Enchantment ench) {
-		return !(ench instanceof DamageEnchantment) && !(ench instanceof ImpalingEnchantment) && !(ench instanceof TorrentEnchantment) && super.canApplyTogether(ench);
+	public boolean checkCompatibility(Enchantment ench) {
+		return !(ench instanceof DamageEnchantment) && !(ench instanceof ImpalingEnchantment) && !(ench instanceof TorrentEnchantment) && super.checkCompatibility(ench);
 	}
 
 	@Override
@@ -50,12 +50,12 @@ public class WrathEnchantment extends Enchantment {
 	}
 
 	@Override
-	public boolean canGenerateInLoot() {
+	public boolean isDiscoverable() {
 		return OmniconfigHandler.isItemEnabled(this);
 	}
 
 	@Override
-	public boolean canApply(ItemStack stack) {
+	public boolean canEnchant(ItemStack stack) {
 		return OmniconfigHandler.isItemEnabled(this) && stack.canApplyAtEnchantingTable(this);
 	}
 
@@ -64,7 +64,7 @@ public class WrathEnchantment extends Enchantment {
 	}
 
 	@Override
-	public float calcDamageByCreature(int level, CreatureAttribute creatureType) {
+	public float getDamageBonus(int level, CreatureAttribute creatureType) {
 		return level * 1.25F;
 	}
 }

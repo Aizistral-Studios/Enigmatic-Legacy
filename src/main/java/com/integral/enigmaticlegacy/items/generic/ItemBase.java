@@ -30,22 +30,22 @@ public abstract class ItemBase extends Item {
 	}
 
 	@Override
-	public void onCreated(ItemStack stack, World worldIn, PlayerEntity playerIn) {
+	public void onCraftedBy(ItemStack stack, World worldIn, PlayerEntity playerIn) {
 		// Insert existential void here
 	}
 
 	public static Properties getDefaultProperties() {
 		Properties props = new Item.Properties();
 
-		props.group(EnigmaticLegacy.enigmaticTab);
-		props.maxStackSize(64);
+		props.tab(EnigmaticLegacy.enigmaticTab);
+		props.stacksTo(64);
 		props.rarity(Rarity.COMMON);
 
 		return props;
 	}
 
 	public static BlockRayTraceResult rayTrace(World worldIn, PlayerEntity player, RayTraceContext.FluidMode fluidMode) {
-		return Item.rayTrace(worldIn, player, fluidMode);
+		return Item.getPlayerPOVHitResult(worldIn, player, fluidMode);
 	}
 
 	public Item setPlaceholder() {
@@ -58,12 +58,12 @@ public abstract class ItemBase extends Item {
 	}
 
 	@Override
-	public ITextComponent getDisplayName(ItemStack stack) {
-		ITextComponent superName = super.getDisplayName(stack);
+	public ITextComponent getName(ItemStack stack) {
+		ITextComponent superName = super.getName(stack);
 
 		if (this.isPlaceholder) {
 			if (superName instanceof TextComponent)
-				return ((TextComponent)superName).mergeStyle(TextFormatting.OBFUSCATED);
+				return ((TextComponent)superName).withStyle(TextFormatting.OBFUSCATED);
 		}
 
 		return superName;

@@ -68,13 +68,13 @@ public class OblivionStone extends ItemBase implements IVanishable {
 	}
 
 	public OblivionStone() {
-		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.RARE).isImmuneToFire());
+		super(ItemBase.getDefaultProperties().stacksTo(1).rarity(Rarity.RARE).fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "oblivion_stone"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		//LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -111,26 +111,26 @@ public class OblivionStone extends ItemBase implements IVanishable {
 
 				if (arr.size() <= itemSoftcap.getValue()) {
 					for (INBT s_uncast : arr) {
-						String s = ((StringNBT) s_uncast).getString();
+						String s = ((StringNBT) s_uncast).getAsString();
 						Item something = ForgeRegistries.ITEMS.getValue(new ResourceLocation(s));
 						if (something != null) {
 							ItemStack displayStack;
 							displayStack = new ItemStack(something, 1);
 
-							list.add(new StringTextComponent(" - ").append(((TextComponent)displayStack.getDisplayName()).mergeStyle(TextFormatting.GOLD)).mergeStyle(TextFormatting.GOLD));
+							list.add(new StringTextComponent(" - ").append(((TextComponent)displayStack.getHoverName()).withStyle(TextFormatting.GOLD)).withStyle(TextFormatting.GOLD));
 						}
 						counter++;
 					}
 				} else {
 					for (int s = 0; s < itemSoftcap.getValue(); s++) {
 						int randomID = Item.random.nextInt(arr.size());
-						Item something = ForgeRegistries.ITEMS.getValue(new ResourceLocation(((StringNBT) arr.get(randomID)).getString()));
+						Item something = ForgeRegistries.ITEMS.getValue(new ResourceLocation(((StringNBT) arr.get(randomID)).getAsString()));
 
 						if (something != null) {
 							ItemStack displayStack;
 							displayStack = new ItemStack(something, 1);
 
-							list.add(new StringTextComponent(" - ").append(((TextComponent)displayStack.getDisplayName()).mergeStyle(TextFormatting.GOLD)).mergeStyle(TextFormatting.GOLD));
+							list.add(new StringTextComponent(" - ").append(((TextComponent)displayStack.getHoverName()).withStyle(TextFormatting.GOLD)).withStyle(TextFormatting.GOLD));
 						}
 					}
 				}
@@ -155,13 +155,13 @@ public class OblivionStone extends ItemBase implements IVanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 
-		ItemStack stack = player.getHeldItem(hand);
+		ItemStack stack = player.getItemInHand(hand);
 		int mode = ItemNBTHelper.getInt(stack, "ConsumptionMode", 0);
 
 		if (player.isCrouching()) {
-			world.playSound(null, player.getPosition(), ItemNBTHelper.getBoolean(stack, "IsActive", true) ? EnigmaticLegacy.HHOFF : EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.blockPosition(), ItemNBTHelper.getBoolean(stack, "IsActive", true) ? EnigmaticLegacy.HHOFF : EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			ItemNBTHelper.setBoolean(stack, "IsActive", !ItemNBTHelper.getBoolean(stack, "IsActive", true));
 		} else {
 			if (mode >= 0 && mode < 2) {
@@ -170,17 +170,17 @@ public class OblivionStone extends ItemBase implements IVanishable {
 				ItemNBTHelper.setInt(stack, "ConsumptionMode", 0);
 			}
 
-			world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 		}
 
-		player.swingArm(hand);
+		player.swing(hand);
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);
 
 	}
 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (!(entity instanceof PlayerEntity) || entity.ticksExisted % 4 != 0)
+		if (!(entity instanceof PlayerEntity) || entity.tickCount % 4 != 0)
 			return;
 
 		PlayerEntity player = (PlayerEntity) entity;
@@ -199,11 +199,11 @@ public class OblivionStone extends ItemBase implements IVanishable {
 		int cycleCounter = 0;
 		int filledStacks = 0;
 
-		for (int slot = 0; slot < player.inventory.mainInventory.size(); slot++) {
-			if (!player.inventory.mainInventory.get(slot).isEmpty()) {
+		for (int slot = 0; slot < player.inventory.items.size(); slot++) {
+			if (!player.inventory.items.get(slot).isEmpty()) {
 				filledStacks += 1;
-				if (player.inventory.mainInventory.get(slot).getItem() != EnigmaticLegacy.oblivionStone) {
-					stackMap.put(slot, player.inventory.mainInventory.get(slot));
+				if (player.inventory.items.get(slot).getItem() != EnigmaticLegacy.oblivionStone) {
+					stackMap.put(slot, player.inventory.items.get(slot));
 				}
 			}
 		}
@@ -213,11 +213,11 @@ public class OblivionStone extends ItemBase implements IVanishable {
 
 		if (mode == 0) {
 			for (INBT sID : list) {
-				String str = ((StringNBT) sID).getString();
+				String str = ((StringNBT) sID).getAsString();
 
 				for (int slot : stackMap.keySet()) {
 					if (stackMap.get(slot).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation(str))) {
-						player.inventory.setInventorySlotContents(slot, ItemStack.EMPTY);
+						player.inventory.setItem(slot, ItemStack.EMPTY);
 					}
 				}
 				cycleCounter++;
@@ -225,7 +225,7 @@ public class OblivionStone extends ItemBase implements IVanishable {
 		} else if (mode == 1) {
 
 			for (INBT sID : list) {
-				String str = ((StringNBT) sID).getString();
+				String str = ((StringNBT) sID).getAsString();
 
 				HashMap<Integer, ItemStack> localStackMap = new HashMap<Integer, ItemStack>(stackMap);
 				Multimap<Integer, Integer> stackSizeMultimap = ArrayListMultimap.create();
@@ -240,12 +240,12 @@ public class OblivionStone extends ItemBase implements IVanishable {
 					stackSizeMultimap.put(localStackMap.get(slot).getCount(), slot);
 				}
 
-				while (localStackMap.size() > (player.inventory.offHandInventory.get(0).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation(str)) ? 0 : 1)) {
+				while (localStackMap.size() > (player.inventory.offhand.get(0).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation(str)) ? 0 : 1)) {
 					int smallestStackSize = Collections.min(stackSizeMultimap.keySet());
 					Collection<Integer> smallestStacks = stackSizeMultimap.get(smallestStackSize);
 					int slotWithSmallestStack = Collections.max(smallestStacks);
 
-					player.inventory.setInventorySlotContents(slotWithSmallestStack, ItemStack.EMPTY);
+					player.inventory.setItem(slotWithSmallestStack, ItemStack.EMPTY);
 					stackSizeMultimap.remove(smallestStackSize, slotWithSmallestStack);
 					localStackMap.remove(slotWithSmallestStack);
 				}
@@ -253,10 +253,10 @@ public class OblivionStone extends ItemBase implements IVanishable {
 			}
 
 		} else if (mode == 2) {
-			if (filledStacks >= player.inventory.mainInventory.size()) {
+			if (filledStacks >= player.inventory.items.size()) {
 
 				for (INBT sID : list) {
-					String str = ((StringNBT) sID).getString();
+					String str = ((StringNBT) sID).getAsString();
 					HashMap<Integer, ItemStack> localStackMap = new HashMap<Integer, ItemStack>(stackMap);
 					Multimap<Integer, Integer> stackSizeMultimap = ArrayListMultimap.create();
 
@@ -275,7 +275,7 @@ public class OblivionStone extends ItemBase implements IVanishable {
 						Collection<Integer> smallestStacks = stackSizeMultimap.get(smallestStackSize);
 						int slotWithSmallestStack = Collections.max(smallestStacks);
 
-						player.inventory.setInventorySlotContents(slotWithSmallestStack, ItemStack.EMPTY);
+						player.inventory.setItem(slotWithSmallestStack, ItemStack.EMPTY);
 						return;
 					}
 

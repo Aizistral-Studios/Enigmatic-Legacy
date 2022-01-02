@@ -14,7 +14,7 @@ println(" - OS Archetype: " + System.getProperty('os.arch'))
 
 minecraft {
 	println("Specifying MCP mappings...")
-    mappings channel: 'snapshot', version: "${version_mcp}"
+    mappings channel: 'official', version: "${version_mcp}"
 	
 	runs {
         client {

@@ -61,7 +61,7 @@ public class XPScroll extends ItemBaseCurio {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		TranslationTextComponent cMode;
 		if (!ItemNBTHelper.getBoolean(stack, "IsActive", false)) {
@@ -100,15 +100,15 @@ public class XPScroll extends ItemBaseCurio {
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.getDisplayString("key.xpScroll").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.xpScroll").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand handIn) {
-		ItemStack stack = player.getHeldItem(handIn);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand handIn) {
+		ItemStack stack = player.getItemInHand(handIn);
 		this.trigger(world, stack, player, handIn, true);
 
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);
@@ -121,31 +121,31 @@ public class XPScroll extends ItemBaseCurio {
 
 			if (ItemNBTHelper.getBoolean(stack, "AbsorptionMode", true)) {
 				ItemNBTHelper.setBoolean(stack, "AbsorptionMode", false);
-				world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			} else {
 				ItemNBTHelper.setBoolean(stack, "AbsorptionMode", true);
-				world.playSound(null, player.getPosition(), SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		} else {
 
 			if (ItemNBTHelper.getBoolean(stack, "IsActive", false)) {
 				ItemNBTHelper.setBoolean(stack, "IsActive", false);
-				world.playSound(null, player.getPosition(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			} else {
 				ItemNBTHelper.setBoolean(stack, "IsActive", true);
-				world.playSound(null, player.getPosition(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 
 		if (swing) {
-			player.swingArm(hand);
+			player.swing(hand);
 		}
 
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return ItemNBTHelper.getBoolean(stack, "IsActive", false);
 	}
 
@@ -154,11 +154,11 @@ public class XPScroll extends ItemBaseCurio {
 
 		ItemStack itemstack = SuperpositionHandler.getCurioStack(entity, EnigmaticLegacy.xpScroll);
 
-		if (!(entity instanceof PlayerEntity) || entity.world.isRemote || !ItemNBTHelper.getBoolean(itemstack, "IsActive", false))
+		if (!(entity instanceof PlayerEntity) || entity.level.isClientSide || !ItemNBTHelper.getBoolean(itemstack, "IsActive", false))
 			return;
 
 		PlayerEntity player = (PlayerEntity) entity;
-		World world = player.world;
+		World world = player.level;
 
 		if (ItemNBTHelper.getBoolean(itemstack, "AbsorptionMode", true)) {
 
@@ -184,14 +184,14 @@ public class XPScroll extends ItemBaseCurio {
 
 		}
 
-		List<ExperienceOrbEntity> orbs = world.getEntitiesWithinAABB(ExperienceOrbEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, xpCollectionRange.getValue()));
+		List<ExperienceOrbEntity> orbs = world.getEntitiesOfClass(ExperienceOrbEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, xpCollectionRange.getValue()));
 		for (ExperienceOrbEntity processed : orbs) {
 			if (!processed.isAlive()) {
 				continue;
 			}
 
-			player.xpCooldown = 0;
-			processed.onCollideWithPlayer(player);
+			player.takeXpDelay = 0;
+			processed.playerTouch(player);
 			//processed.setPositionAndUpdate(player.posX, player.posY, player.posZ);
 		}
 	}

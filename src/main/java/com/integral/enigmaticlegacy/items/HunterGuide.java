@@ -45,13 +45,13 @@ public class HunterGuide extends ItemBase implements IVanishable {
 	}
 
 	public HunterGuide() {
-		super(getDefaultProperties().maxStackSize(1).rarity(Rarity.RARE));
+		super(getDefaultProperties().stacksTo(1).rarity(Rarity.RARE));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "hunter_guide"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuide1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuide2", TextFormatting.GOLD, effectiveDistance);

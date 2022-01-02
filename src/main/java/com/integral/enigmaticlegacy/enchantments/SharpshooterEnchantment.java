@@ -29,17 +29,17 @@ public class SharpshooterEnchantment extends Enchantment {
 	}
 
 	@Override
-	protected boolean canApplyTogether(final Enchantment ench) {
-		return ench != Enchantments.MULTISHOT && ench != Enchantments.PIERCING && super.canApplyTogether(ench);
+	protected boolean checkCompatibility(final Enchantment ench) {
+		return ench != Enchantments.MULTISHOT && ench != Enchantments.PIERCING && super.checkCompatibility(ench);
 	}
 
 	@Override
 	public boolean canApplyAtEnchantingTable(final ItemStack stack) {
-		return this.canApply(stack) && stack.getItem() instanceof CrossbowItem;
+		return this.canEnchant(stack) && stack.getItem() instanceof CrossbowItem;
 	}
 
 	@Override
-	public boolean isTreasureEnchantment() {
+	public boolean isTreasureOnly() {
 		return false;
 	}
 
@@ -54,12 +54,12 @@ public class SharpshooterEnchantment extends Enchantment {
 	}
 
 	@Override
-	public boolean canGenerateInLoot() {
+	public boolean isDiscoverable() {
 		return OmniconfigHandler.isItemEnabled(this);
 	}
 
 	@Override
-	public boolean canApply(ItemStack stack) {
+	public boolean canEnchant(ItemStack stack) {
 		return OmniconfigHandler.isItemEnabled(this) && stack.canApplyAtEnchantingTable(this);
 	}
 

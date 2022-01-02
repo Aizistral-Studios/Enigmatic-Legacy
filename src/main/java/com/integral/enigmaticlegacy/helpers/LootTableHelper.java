@@ -19,7 +19,7 @@ public class LootTableHelper {
 		try {
 			isFrozenTable = LootTable.class.getDeclaredField("isFrozen");
 			isFrozenPool = LootPool.class.getDeclaredField("isFrozen");
-			lootPoolsTable = ObfuscationReflectionHelper.findField(LootTable.class, "field_186466_c");
+			lootPoolsTable = ObfuscationReflectionHelper.findField(LootTable.class, "pools");
 
 			isFrozenTable.setAccessible(true);
 			isFrozenPool.setAccessible(true);

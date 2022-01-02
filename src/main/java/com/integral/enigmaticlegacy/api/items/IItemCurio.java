@@ -60,25 +60,25 @@ public interface IItemCurio {
 		if (!stack.isEmpty()) {
 
 			if (!livingEntity.isSilent()) {
-				livingEntity.world.playSound(livingEntity.getPosX(), livingEntity.getPosY(), livingEntity.getPosZ(),
-						SoundEvents.ENTITY_ITEM_BREAK, livingEntity.getSoundCategory(), 0.8F,
-						0.8F + livingEntity.world.rand.nextFloat() * 0.4F, false);
+				livingEntity.level.playLocalSound(livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(),
+						SoundEvents.ITEM_BREAK, livingEntity.getSoundSource(), 0.8F,
+						0.8F + livingEntity.level.random.nextFloat() * 0.4F, false);
 			}
 
 			for (int i = 0; i < 5; ++i) {
-				Vector3d vec3d = new Vector3d((livingEntity.getRNG().nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D,
+				Vector3d vec3d = new Vector3d((livingEntity.getRandom().nextFloat() - 0.5D) * 0.1D, Math.random() * 0.1D + 0.1D,
 						0.0D);
-				vec3d = vec3d.rotatePitch(-livingEntity.rotationPitch * ((float) Math.PI / 180F));
-				vec3d = vec3d.rotateYaw(-livingEntity.rotationYaw * ((float) Math.PI / 180F));
-				double d0 = (-livingEntity.getRNG().nextFloat()) * 0.6D - 0.3D;
+				vec3d = vec3d.xRot(-livingEntity.xRot * ((float) Math.PI / 180F));
+				vec3d = vec3d.yRot(-livingEntity.yRot * ((float) Math.PI / 180F));
+				double d0 = (-livingEntity.getRandom().nextFloat()) * 0.6D - 0.3D;
 
-				Vector3d vec3d1 = new Vector3d((livingEntity.getRNG().nextFloat() - 0.5D) * 0.3D, d0, 0.6D);
-				vec3d1 = vec3d1.rotatePitch(-livingEntity.rotationPitch * ((float) Math.PI / 180F));
-				vec3d1 = vec3d1.rotateYaw(-livingEntity.rotationYaw * ((float) Math.PI / 180F));
-				vec3d1 = vec3d1.add(livingEntity.getPosX(), livingEntity.getPosY() + livingEntity.getEyeHeight(),
-						livingEntity.getPosZ());
+				Vector3d vec3d1 = new Vector3d((livingEntity.getRandom().nextFloat() - 0.5D) * 0.3D, d0, 0.6D);
+				vec3d1 = vec3d1.xRot(-livingEntity.xRot * ((float) Math.PI / 180F));
+				vec3d1 = vec3d1.yRot(-livingEntity.yRot * ((float) Math.PI / 180F));
+				vec3d1 = vec3d1.add(livingEntity.getX(), livingEntity.getY() + livingEntity.getEyeHeight(),
+						livingEntity.getZ());
 
-				livingEntity.world.addParticle(new ItemParticleData(ParticleTypes.ITEM, stack), vec3d1.x, vec3d1.y, vec3d1.z,
+				livingEntity.level.addParticle(new ItemParticleData(ParticleTypes.ITEM, stack), vec3d1.x, vec3d1.y, vec3d1.z,
 						vec3d.x, vec3d.y + 0.05D, vec3d.z);
 			}
 		}
@@ -195,8 +195,8 @@ public interface IItemCurio {
 	 * @param stack The ItemStack in question
 	 */
 	default void playRightClickEquipSound(LivingEntity livingEntity, ItemStack stack) {
-		livingEntity.world.playSound(null, new BlockPos(livingEntity.getPositionVec()),
-				SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.NEUTRAL, 1.0f, 1.0f);
+		livingEntity.level.playSound(null, new BlockPos(livingEntity.position()),
+				SoundEvents.ARMOR_EQUIP_GENERIC, SoundCategory.NEUTRAL, 1.0f, 1.0f);
 	}
 
 	/**
@@ -297,7 +297,7 @@ public interface IItemCurio {
 	 * @return Amount of additional Fortune levels that will be applied when mining
 	 */
 	default int getFortuneBonus(String identifier, LivingEntity livingEntity, ItemStack curio, int index) {
-		return EnchantmentHelper.getEnchantmentLevel(Enchantments.FORTUNE, curio);
+		return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, curio);
 	}
 
 	/**
@@ -312,7 +312,7 @@ public interface IItemCurio {
 	 *         LootingLevelEvent
 	 */
 	default int getLootingBonus(String identifier, LivingEntity livingEntity, ItemStack curio, int index) {
-		return EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING, curio);
+		return EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, curio);
 	}
 
 	/**

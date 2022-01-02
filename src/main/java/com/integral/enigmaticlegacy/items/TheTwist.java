@@ -52,13 +52,13 @@ public class TheTwist extends TheAcknowledgment implements ICursed {
 	}
 
 	public TheTwist() {
-		super(getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isImmuneToFire(),
+		super(getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).fireResistant(),
 				"the_twist", attackDamage.getValue(), attackSpeed.getValue());
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist1");
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist2");
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");

@@ -45,8 +45,8 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 	@ObjectHolder(EnigmaticLegacy.MODID + ":enigmatic_potion_entity")
 	public static EntityType<EnigmaticPotionEntity> TYPE;
 
-	private static final DataParameter<ItemStack> ITEM = EntityDataManager.createKey(EnigmaticPotionEntity.class,
-			DataSerializers.ITEMSTACK);
+	private static final DataParameter<ItemStack> ITEM = EntityDataManager.defineId(EnigmaticPotionEntity.class,
+			DataSerializers.ITEM_STACK);
 
 	public EnigmaticPotionEntity(EntityType<EnigmaticPotionEntity> type, World world) {
 		super(type, world);
@@ -61,13 +61,13 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 	}
 
 	@Override
-	protected void registerData() {
-		this.getDataManager().register(EnigmaticPotionEntity.ITEM, ItemStack.EMPTY);
+	protected void defineSynchedData() {
+		this.getEntityData().define(EnigmaticPotionEntity.ITEM, ItemStack.EMPTY);
 	}
 
 	@Override
 	public ItemStack getItem() {
-		ItemStack itemstack = this.getDataManager().get(EnigmaticPotionEntity.ITEM);
+		ItemStack itemstack = this.getEntityData().get(EnigmaticPotionEntity.ITEM);
 
 		if (PotionHelper.isAdvancedPotion(itemstack))
 			// if (!itemstack.isEmpty())
@@ -80,14 +80,14 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 	}
 
 	public void setItem(ItemStack stack) {
-		this.getDataManager().set(EnigmaticPotionEntity.ITEM, stack.copy());
+		this.getEntityData().set(EnigmaticPotionEntity.ITEM, stack.copy());
 	}
 
 	/**
 	 * Gets the amount of gravity to apply to the thrown entity with each tick.
 	 */
 	@Override
-	protected float getGravityVelocity() {
+	protected float getGravity() {
 		return 0.05F;
 	}
 
@@ -100,8 +100,8 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 	 * Called when this EntityThrowable hits a block or entity.
 	 */
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		if (!this.world.isRemote) {
+	protected void onHit(RayTraceResult result) {
+		if (!this.level.isClientSide) {
 			ItemStack itemstack = this.getItem();
 
 			List<EffectInstance> list = PotionHelper.getEffects(itemstack);
@@ -118,24 +118,24 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 				}
 
 				for (EffectInstance instance : list) {
-					if (instance.getPotion().isInstant()) {
+					if (instance.getEffect().isInstantenous()) {
 						i = 2007;
 					}
 				}
 			}
 
-			this.world.playEvent(i, new BlockPos(this.getOnPosition()), PotionHelper.getColor(itemstack));
+			this.level.levelEvent(i, new BlockPos(this.getOnPos()), PotionHelper.getColor(itemstack));
 			this.remove();
 		}
 	}
 
 	private void triggerSplash(List<EffectInstance> p_213888_1_, @Nullable Entity p_213888_2_) {
-		AxisAlignedBB axisalignedbb = this.getBoundingBox().grow(4.0D, 2.0D, 4.0D);
-		List<LivingEntity> list = this.world.getEntitiesWithinAABB(LivingEntity.class, axisalignedbb);
+		AxisAlignedBB axisalignedbb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
+		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, axisalignedbb);
 		if (!list.isEmpty()) {
 			for (LivingEntity livingentity : list) {
-				if (livingentity.canBeHitWithPotion()) {
-					double d0 = this.getDistanceSq(livingentity);
+				if (livingentity.isAffectedByPotions()) {
+					double d0 = this.distanceToSqr(livingentity);
 					if (d0 < 16.0D) {
 						double d1 = 1.0D - Math.sqrt(d0) / 4.0D;
 						if (livingentity == p_213888_2_) {
@@ -143,16 +143,16 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 						}
 
 						for (EffectInstance effectinstance : p_213888_1_) {
-							Effect effect = effectinstance.getPotion();
-							if (effect.isInstant()) {
-								effect.affectEntity(this, this.func_234616_v_(), livingentity,
+							Effect effect = effectinstance.getEffect();
+							if (effect.isInstantenous()) {
+								effect.applyInstantenousEffect(this, this.getOwner(), livingentity,
 										effectinstance.getAmplifier(), d1);
 							} else {
 								int i = (int) (d1 * effectinstance.getDuration() + 0.5D);
 								if (i > 20) {
-									livingentity.addPotionEffect(
+									livingentity.addEffect(
 											new EffectInstance(effect, i, effectinstance.getAmplifier(),
-													effectinstance.isAmbient(), effectinstance.doesShowParticles()));
+													effectinstance.isAmbient(), effectinstance.isVisible()));
 								}
 							}
 						}
@@ -164,9 +164,9 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 	}
 
 	private void makeAreaOfEffectCloud(ItemStack stack, List<EffectInstance> list) {
-		AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.world, this.getPosX(),
-				this.getPosY(), this.getPosZ());
-		areaeffectcloudentity.setOwner((LivingEntity) this.func_234616_v_());
+		AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.level, this.getX(),
+				this.getY(), this.getZ());
+		areaeffectcloudentity.setOwner((LivingEntity) this.getOwner());
 		areaeffectcloudentity.setRadius(3.0F);
 		areaeffectcloudentity.setRadiusOnUse(-0.5F);
 		areaeffectcloudentity.setWaitTime(10);
@@ -174,14 +174,14 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 		.setRadiusPerTick(-areaeffectcloudentity.getRadius() / areaeffectcloudentity.getDuration());
 
 		for (EffectInstance effectInstance : list) {
-			areaeffectcloudentity.addEffect(new EffectInstance(effectInstance.getPotion(),
+			areaeffectcloudentity.addEffect(new EffectInstance(effectInstance.getEffect(),
 					effectInstance.getDuration() / 4, effectInstance.getAmplifier(), effectInstance.isAmbient(),
-					effectInstance.doesShowParticles()));
+					effectInstance.isVisible()));
 		}
 
-		areaeffectcloudentity.setColor(PotionHelper.getColor(stack));
+		areaeffectcloudentity.setFixedColor(PotionHelper.getColor(stack));
 
-		this.world.addEntity(areaeffectcloudentity);
+		this.level.addFreshEntity(areaeffectcloudentity);
 	}
 
 	private boolean isLingering() {
@@ -193,9 +193,9 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 	 */
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
-		ItemStack itemstack = ItemStack.read(compound.getCompound("Potion"));
+	public void readAdditionalSaveData(CompoundNBT compound) {
+		super.readAdditionalSaveData(compound);
+		ItemStack itemstack = ItemStack.of(compound.getCompound("Potion"));
 		if (itemstack.isEmpty()) {
 			this.remove();
 		} else {
@@ -205,17 +205,17 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundNBT compound) {
+		super.addAdditionalSaveData(compound);
 		ItemStack itemstack = this.getItem();
 		if (!itemstack.isEmpty()) {
-			compound.put("Potion", itemstack.write(new CompoundNBT()));
+			compound.put("Potion", itemstack.save(new CompoundNBT()));
 		}
 
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 

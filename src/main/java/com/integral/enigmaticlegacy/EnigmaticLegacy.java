@@ -393,7 +393,7 @@ public class EnigmaticLegacy {
 
 	public static List<Item> spellstoneList;
 
-	public static final ContainerType<PortableCrafterContainer> PORTABLE_CRAFTER = new ContainerType<>((syncId, playerInv) -> new PortableCrafterContainer(syncId, playerInv, IWorldPosCallable.of(playerInv.player.world, playerInv.player.getPosition())));
+	public static final ContainerType<PortableCrafterContainer> PORTABLE_CRAFTER = new ContainerType<>((syncId, playerInv) -> new PortableCrafterContainer(syncId, playerInv, IWorldPosCallable.create(playerInv.player.level, playerInv.player.blockPosition())));
 
 	@ObjectHolder(MODID + ":enigmatic_repair_container")
 	public static final ContainerType<LoreInscriberContainer> LORE_INSCRIBER_CONTAINER = null;
@@ -418,12 +418,12 @@ public class EnigmaticLegacy {
 		enigmaticHandler = new EnigmaticEventHandler();
 		keybindHandler = new EnigmaticKeybindHandler();
 
-		massiveLamp = new BlockMassiveLamp(AbstractBlock.Properties.from(Blocks.LANTERN), "massive_lamp");
-		bigLamp = new BlockBigLamp(AbstractBlock.Properties.from(Blocks.LANTERN), "big_lamp");
-		massiveShroomlamp = new BlockMassiveLamp(AbstractBlock.Properties.from(Blocks.LANTERN), "massive_shroomlamp");
-		bigShroomlamp = new BlockBigLamp(AbstractBlock.Properties.from(Blocks.LANTERN), "big_shroomlamp");
-		massiveRedstonelamp = new BlockMassiveLamp(AbstractBlock.Properties.from(Blocks.LANTERN), "massive_redstonelamp");
-		bigRedstonelamp = new BlockBigLamp(AbstractBlock.Properties.from(Blocks.LANTERN), "big_redstonelamp");
+		massiveLamp = new BlockMassiveLamp(AbstractBlock.Properties.copy(Blocks.LANTERN), "massive_lamp");
+		bigLamp = new BlockBigLamp(AbstractBlock.Properties.copy(Blocks.LANTERN), "big_lamp");
+		massiveShroomlamp = new BlockMassiveLamp(AbstractBlock.Properties.copy(Blocks.LANTERN), "massive_shroomlamp");
+		bigShroomlamp = new BlockBigLamp(AbstractBlock.Properties.copy(Blocks.LANTERN), "big_shroomlamp");
+		massiveRedstonelamp = new BlockMassiveLamp(AbstractBlock.Properties.copy(Blocks.LANTERN), "massive_redstonelamp");
+		bigRedstonelamp = new BlockBigLamp(AbstractBlock.Properties.copy(Blocks.LANTERN), "big_redstonelamp");
 
 		enigmaticItem = new EnigmaticItem();
 		xpScroll = new XPScroll();
@@ -578,7 +578,7 @@ public class EnigmaticLegacy {
 		logger.info("Registering brewing recipes...");
 
 		if (OmniconfigHandler.isItemEnabled(recallPotion)) {
-			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.AWKWARD)), Ingredient.fromItems(Items.ENDER_EYE), new ItemStack(recallPotion), new ResourceLocation(MODID, "recall_potion")));
+			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.AWKWARD)), Ingredient.of(Items.ENDER_EYE), new ItemStack(recallPotion), new ResourceLocation(MODID, "recall_potion")));
 		}
 
 		if (OmniconfigHandler.isItemEnabled(commonPotionBase)) {
@@ -591,7 +591,7 @@ public class EnigmaticLegacy {
 			PotionHelper.registerLingeringUltimatePotions();
 		}
 
-		BrewingRecipeRegistry.addRecipe(new ValidationBrewingRecipe(Ingredient.fromItems(hastePotionExtendedEmpowered, recallPotion, ultimatePotionLingering, commonPotionLingering), null));
+		BrewingRecipeRegistry.addRecipe(new ValidationBrewingRecipe(Ingredient.of(hastePotionExtendedEmpowered, recallPotion, ultimatePotionLingering, commonPotionLingering), null));
 
 		EnigmaticUpdateHandler.init();
 
@@ -606,9 +606,9 @@ public class EnigmaticLegacy {
 	private void setup(final FMLCommonSetupEvent event) {
 		logger.info("Initializing common setup phase...");
 
-		damageTypesFire.add(DamageSource.LAVA.damageType);
-		damageTypesFire.add(DamageSource.IN_FIRE.damageType);
-		damageTypesFire.add(DamageSource.ON_FIRE.damageType);
+		damageTypesFire.add(DamageSource.LAVA.msgId);
+		damageTypesFire.add(DamageSource.IN_FIRE.msgId);
+		damageTypesFire.add(DamageSource.ON_FIRE.msgId);
 
 		logger.info("Registering packets...");
 		packetInstance = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MODID, "main")).networkProtocolVersion(() -> PTC_VERSION).clientAcceptedVersions(PTC_VERSION::equals).serverAcceptedVersions(PTC_VERSION::equals).simpleChannel();
@@ -653,13 +653,13 @@ public class EnigmaticLegacy {
 		enigmaticAmulet.registerVariants();
 
 		for (final Block theBlock : cutoutBlockRegistry) {
-			RenderTypeLookup.setRenderLayer(theBlock, RenderType.getCutout());
+			RenderTypeLookup.setRenderLayer(theBlock, RenderType.cutout());
 		}
 
 		proxy.initEntityRendering();
 
-		ScreenManager.registerFactory(PORTABLE_CRAFTER, CraftingScreen::new);
-		ScreenManager.registerFactory(LORE_INSCRIBER_CONTAINER, LoreInscriberScreen::new);
+		ScreenManager.register(PORTABLE_CRAFTER, CraftingScreen::new);
+		ScreenManager.register(LORE_INSCRIBER_CONTAINER, LoreInscriberScreen::new);
 
 		logger.info("Client setup phase finished successfully.");
 	}
@@ -719,7 +719,7 @@ public class EnigmaticLegacy {
 		@SubscribeEvent
 		public static void stitchTextures(final TextureStitchEvent.Pre evt) {
 
-			if (evt.getMap().getTextureLocation() == PlayerContainer.LOCATION_BLOCKS_TEXTURE) {
+			if (evt.getMap().location() == PlayerContainer.BLOCK_ATLAS) {
 
 				evt.addSprite(new ResourceLocation(MODID, "slots/empty_spellstone_slot"));
 				evt.addSprite(new ResourceLocation(MODID, "slots/empty_scroll_slot"));
@@ -883,24 +883,24 @@ public class EnigmaticLegacy {
 
 			ULTIMATE_NIGHT_VISION = new AdvancedPotion("ultimate_night_vision", new EffectInstance(Effects.NIGHT_VISION, 19200));
 			ULTIMATE_INVISIBILITY = new AdvancedPotion("ultimate_invisibility", new EffectInstance(Effects.INVISIBILITY, 19200));
-			ULTIMATE_LEAPING = new AdvancedPotion("ultimate_leaping", new EffectInstance(Effects.JUMP_BOOST, 9600, 1));
+			ULTIMATE_LEAPING = new AdvancedPotion("ultimate_leaping", new EffectInstance(Effects.JUMP, 9600, 1));
 			ULTIMATE_FIRE_RESISTANCE = new AdvancedPotion("ultimate_fire_resistance", new EffectInstance(Effects.FIRE_RESISTANCE, 19200));
-			ULTIMATE_SWIFTNESS = new AdvancedPotion("ultimate_swiftness", new EffectInstance(Effects.SPEED, 9600, 1));
-			ULTIMATE_SLOWNESS = new AdvancedPotion("ultimate_slowness", new EffectInstance(Effects.SLOWNESS, 1200, 3));
-			ULTIMATE_TURTLE_MASTER = new AdvancedPotion("ultimate_turtle_master", new EffectInstance(Effects.SLOWNESS, 800, 5), new EffectInstance(Effects.RESISTANCE, 800, 3));
+			ULTIMATE_SWIFTNESS = new AdvancedPotion("ultimate_swiftness", new EffectInstance(Effects.MOVEMENT_SPEED, 9600, 1));
+			ULTIMATE_SLOWNESS = new AdvancedPotion("ultimate_slowness", new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 1200, 3));
+			ULTIMATE_TURTLE_MASTER = new AdvancedPotion("ultimate_turtle_master", new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 800, 5), new EffectInstance(Effects.DAMAGE_RESISTANCE, 800, 3));
 			ULTIMATE_WATER_BREATHING = new AdvancedPotion("ultimate_water_breathing", new EffectInstance(Effects.WATER_BREATHING, 19200));
-			ULTIMATE_HEALING = new AdvancedPotion("ultimate_healing", new EffectInstance(Effects.INSTANT_HEALTH, 1, 2));
-			ULTIMATE_HARMING = new AdvancedPotion("ultimate_harming", new EffectInstance(Effects.INSTANT_DAMAGE, 1, 2));
+			ULTIMATE_HEALING = new AdvancedPotion("ultimate_healing", new EffectInstance(Effects.HEAL, 1, 2));
+			ULTIMATE_HARMING = new AdvancedPotion("ultimate_harming", new EffectInstance(Effects.HARM, 1, 2));
 			ULTIMATE_POISON = new AdvancedPotion("ultimate_poison", new EffectInstance(Effects.POISON, 1800, 1));
 			ULTIMATE_REGENERATION = new AdvancedPotion("ultimate_regeneration", new EffectInstance(Effects.REGENERATION, 1800, 1));
-			ULTIMATE_STRENGTH = new AdvancedPotion("ultimate_strength", new EffectInstance(Effects.STRENGTH, 9600, 1));
+			ULTIMATE_STRENGTH = new AdvancedPotion("ultimate_strength", new EffectInstance(Effects.DAMAGE_BOOST, 9600, 1));
 			ULTIMATE_WEAKNESS = new AdvancedPotion("ultimate_weakness", new EffectInstance(Effects.WEAKNESS, 9600));
 			ULTIMATE_SLOW_FALLING = new AdvancedPotion("ultimate_slow_falling", new EffectInstance(Effects.SLOW_FALLING, 9600));
 
-			HASTE = new AdvancedPotion("haste", new EffectInstance(Effects.HASTE, 3600));
-			LONG_HASTE = new AdvancedPotion("long_haste", new EffectInstance(Effects.HASTE, 9600));
-			STRONG_HASTE = new AdvancedPotion("strong_haste", new EffectInstance(Effects.HASTE, 1800, 1));
-			ULTIMATE_HASTE = new AdvancedPotion("ultimate_haste", new EffectInstance(Effects.HASTE, 9600, 1));
+			HASTE = new AdvancedPotion("haste", new EffectInstance(Effects.DIG_SPEED, 3600));
+			LONG_HASTE = new AdvancedPotion("long_haste", new EffectInstance(Effects.DIG_SPEED, 9600));
+			STRONG_HASTE = new AdvancedPotion("strong_haste", new EffectInstance(Effects.DIG_SPEED, 1800, 1));
+			ULTIMATE_HASTE = new AdvancedPotion("ultimate_haste", new EffectInstance(Effects.DIG_SPEED, 9600, 1));
 
 			EMPTY = new AdvancedPotion("empty");
 
@@ -953,11 +953,11 @@ public class EnigmaticLegacy {
 		public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> event) {
 			logger.info("Initializing entities registration...");
 
-			event.getRegistry().register(EntityType.Builder.<PermanentItemEntity>create(PermanentItemEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new PermanentItemEntity(PermanentItemEntity.TYPE, world)).setUpdateInterval(2).setShouldReceiveVelocityUpdates(true).build(MODID+":permanent_item_entity").setRegistryName(new ResourceLocation(MODID, "permanent_item_entity")));
+			event.getRegistry().register(EntityType.Builder.<PermanentItemEntity>of(PermanentItemEntity::new, EntityClassification.MISC).sized(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new PermanentItemEntity(PermanentItemEntity.TYPE, world)).setUpdateInterval(2).setShouldReceiveVelocityUpdates(true).build(MODID+":permanent_item_entity").setRegistryName(new ResourceLocation(MODID, "permanent_item_entity")));
 
-			event.getRegistry().register(EntityType.Builder.<EnigmaticPotionEntity>create(EnigmaticPotionEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new EnigmaticPotionEntity(EnigmaticPotionEntity.TYPE, world)).setUpdateInterval(10).setShouldReceiveVelocityUpdates(true).build(MODID+":enigmatic_potion_entity").setRegistryName(new ResourceLocation(MODID, "enigmatic_potion_entity")));
+			event.getRegistry().register(EntityType.Builder.<EnigmaticPotionEntity>of(EnigmaticPotionEntity::new, EntityClassification.MISC).sized(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new EnigmaticPotionEntity(EnigmaticPotionEntity.TYPE, world)).setUpdateInterval(10).setShouldReceiveVelocityUpdates(true).build(MODID+":enigmatic_potion_entity").setRegistryName(new ResourceLocation(MODID, "enigmatic_potion_entity")));
 
-			event.getRegistry().register(EntityType.Builder.<UltimateWitherSkullEntity>create(UltimateWitherSkullEntity::new, EntityClassification.MISC).size(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new UltimateWitherSkullEntity(UltimateWitherSkullEntity.TYPE, world))
+			event.getRegistry().register(EntityType.Builder.<UltimateWitherSkullEntity>of(UltimateWitherSkullEntity::new, EntityClassification.MISC).sized(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new UltimateWitherSkullEntity(UltimateWitherSkullEntity.TYPE, world))
 					//.setUpdateInterval(1)
 					//.setShouldReceiveVelocityUpdates(true)
 					.build(MODID+":ultimate_wither_skull_entity").setRegistryName(new ResourceLocation(MODID, "ultimate_wither_skull_entity")));
@@ -985,7 +985,7 @@ public class EnigmaticLegacy {
 	public static final ItemGroup enigmaticTab = new ItemGroup("enigmaticCreativeTab") {
 		@Override
 		@OnlyIn(Dist.CLIENT)
-		public ItemStack createIcon() {
+		public ItemStack makeIcon() {
 			return new ItemStack(enigmaticItem);
 		}
 	};
@@ -993,7 +993,7 @@ public class EnigmaticLegacy {
 	public static final ItemGroup enigmaticPotionTab = new ItemGroup("enigmaticPotionCreativeTab") {
 		@Override
 		@OnlyIn(Dist.CLIENT)
-		public ItemStack createIcon() {
+		public ItemStack makeIcon() {
 			return new ItemStack(recallPotion);
 		}
 	};

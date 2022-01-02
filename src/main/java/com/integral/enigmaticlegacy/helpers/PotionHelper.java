@@ -30,7 +30,7 @@ public class PotionHelper {
 
 		if (PotionHelper.isAdvancedPotion(stack))
 		if (PotionHelper.getEffects(stack) != null && PotionHelper.getEffects(stack).size() > 0)
-			return PotionUtils.getPotionColorFromEffectList(PotionHelper.getEffects(stack));
+			return PotionUtils.getColor(PotionHelper.getEffects(stack));
 
 			return PotionUtils.getColor(stack);
 
@@ -107,7 +107,7 @@ public class PotionHelper {
 	}
 
 	public static ItemStack createVanillaPotion(Item item, Potion potion) {
-		return PotionUtils.addPotionToItemStack(new ItemStack(item), potion);
+		return PotionUtils.setPotion(new ItemStack(item), potion);
 	}
 
 	public static void registerCommonPotions() {
@@ -115,8 +115,8 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 				PotionHelper.constructIngredientMap(
-						Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.AWKWARD)),
-						Ingredient.fromItems(Items.QUARTZ)
+						Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.AWKWARD)),
+						Ingredient.of(Items.QUARTZ)
 						),
 				PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE)
 				));
@@ -124,8 +124,8 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 				PotionHelper.constructIngredientMap(
-						Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE)),
-						Ingredient.fromItems(Items.REDSTONE)
+						Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE)),
+						Ingredient.of(Items.REDSTONE)
 						),
 				PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.LONG_HASTE)
 				));
@@ -133,8 +133,8 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE)),
-								Ingredient.fromItems(Items.GLOWSTONE_DUST)
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE)),
+								Ingredient.of(Items.GLOWSTONE_DUST)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.STRONG_HASTE)
 						));
@@ -144,10 +144,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 				PotionHelper.constructIngredientMap(
-						Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.AWKWARD)),
-						Ingredient.fromItems(Items.QUARTZ),
-						Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE)),
-						Ingredient.fromItems(Items.GUNPOWDER)
+						Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.AWKWARD)),
+						Ingredient.of(Items.QUARTZ),
+						Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE)),
+						Ingredient.of(Items.GUNPOWDER)
 						),
 				PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.HASTE)
 				));
@@ -155,10 +155,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 				PotionHelper.constructIngredientMap(
-						Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.HASTE)),
-						Ingredient.fromItems(Items.REDSTONE),
-						Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.LONG_HASTE)),
-						Ingredient.fromItems(Items.GUNPOWDER)
+						Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.HASTE)),
+						Ingredient.of(Items.REDSTONE),
+						Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.LONG_HASTE)),
+						Ingredient.of(Items.GUNPOWDER)
 						),
 				PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.LONG_HASTE)
 				));
@@ -166,10 +166,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.HASTE)),
-								Ingredient.fromItems(Items.GLOWSTONE_DUST),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.STRONG_HASTE)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.HASTE)),
+								Ingredient.of(Items.GLOWSTONE_DUST),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.STRONG_HASTE)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.STRONG_HASTE)
 						));
@@ -179,10 +179,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 				PotionHelper.constructIngredientMap(
-						Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.AWKWARD)),
-						Ingredient.fromItems(Items.QUARTZ),
-						Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.HASTE)),
-						Ingredient.fromItems(Items.DRAGON_BREATH)
+						Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.AWKWARD)),
+						Ingredient.of(Items.QUARTZ),
+						Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.HASTE)),
+						Ingredient.of(Items.DRAGON_BREATH)
 						),
 				PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.HASTE)
 				));
@@ -190,10 +190,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 				PotionHelper.constructIngredientMap(
-						Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.HASTE)),
-						Ingredient.fromItems(Items.REDSTONE),
-						Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.LONG_HASTE)),
-						Ingredient.fromItems(Items.DRAGON_BREATH)
+						Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.HASTE)),
+						Ingredient.of(Items.REDSTONE),
+						Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.LONG_HASTE)),
+						Ingredient.of(Items.DRAGON_BREATH)
 						),
 				PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.LONG_HASTE)
 				));
@@ -201,10 +201,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.HASTE)),
-								Ingredient.fromItems(Items.GLOWSTONE_DUST),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.STRONG_HASTE)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.HASTE)),
+								Ingredient.of(Items.GLOWSTONE_DUST),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.STRONG_HASTE)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.STRONG_HASTE)
 						));
@@ -215,8 +215,8 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 				PotionHelper.constructIngredientMap(
-						Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_NIGHT_VISION)),
-						Ingredient.fromItems(EnigmaticLegacy.astralDust)
+						Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_NIGHT_VISION)),
+						Ingredient.of(EnigmaticLegacy.astralDust)
 						),
 				PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_NIGHT_VISION)
 				));
@@ -224,8 +224,8 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_INVISIBILITY)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_INVISIBILITY)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_INVISIBILITY)
 						));
@@ -233,8 +233,8 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_FIRE_RESISTANCE)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_FIRE_RESISTANCE)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_FIRE_RESISTANCE)
 						));
@@ -242,8 +242,8 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_HEALING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_HEALING)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_HEALING)
 						));
@@ -251,8 +251,8 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_HARMING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_HARMING)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_HARMING)
 						));
@@ -260,8 +260,8 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_SLOW_FALLING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_SLOW_FALLING)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_SLOW_FALLING)
 						));
@@ -269,8 +269,8 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_WEAKNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_WEAKNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_WEAKNESS)
 						));
@@ -278,8 +278,8 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_WATER_BREATHING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_WATER_BREATHING)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_WATER_BREATHING)
 						));
@@ -290,10 +290,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_STRENGTH)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_STRENGTH)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_STRENGTH)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_STRENGTH)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_STRENGTH)
 						));
@@ -301,10 +301,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_LEAPING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_LEAPING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_LEAPING)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_LEAPING)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_LEAPING)
 						));
@@ -312,10 +312,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_SWIFTNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_SWIFTNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_SWIFTNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_SWIFTNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_SWIFTNESS)
 						));
@@ -323,10 +323,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_SLOWNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_SLOWNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_SLOWNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_SLOWNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_SLOWNESS)
 						));
@@ -334,10 +334,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_TURTLE_MASTER)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_TURTLE_MASTER)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_TURTLE_MASTER)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_TURTLE_MASTER)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_TURTLE_MASTER)
 						));
@@ -345,10 +345,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_POISON)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_POISON)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_POISON)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_POISON)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_POISON)
 						));
@@ -356,10 +356,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_REGENERATION)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_REGENERATION)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.LONG_REGENERATION)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.STRONG_REGENERATION)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_REGENERATION)
 						));
@@ -367,10 +367,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.LONG_HASTE)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.STRONG_HASTE)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust)
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.LONG_HASTE)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.STRONG_HASTE)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_HASTE)
 						));
@@ -382,10 +382,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 				PotionHelper.constructIngredientMap(
-						Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_NIGHT_VISION)),
-						Ingredient.fromItems(EnigmaticLegacy.astralDust),
-						Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_NIGHT_VISION)),
-						Ingredient.fromItems(Items.GUNPOWDER)
+						Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_NIGHT_VISION)),
+						Ingredient.of(EnigmaticLegacy.astralDust),
+						Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_NIGHT_VISION)),
+						Ingredient.of(Items.GUNPOWDER)
 						),
 				PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_NIGHT_VISION)
 				));
@@ -393,10 +393,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_INVISIBILITY)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_INVISIBILITY)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_INVISIBILITY)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_INVISIBILITY)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_INVISIBILITY)
 						));
@@ -404,10 +404,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_FIRE_RESISTANCE)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_FIRE_RESISTANCE)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_FIRE_RESISTANCE)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_FIRE_RESISTANCE)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_FIRE_RESISTANCE)
 						));
@@ -415,10 +415,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_HEALING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_HEALING)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_HEALING)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_HEALING)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_HEALING)
 						));
@@ -426,10 +426,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_HARMING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_HARMING)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_HARMING)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_HARMING)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_HARMING)
 						));
@@ -437,10 +437,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_SLOW_FALLING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_SLOW_FALLING)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_SLOW_FALLING)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_SLOW_FALLING)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_SLOW_FALLING)
 						));
@@ -448,10 +448,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_WEAKNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_WEAKNESS)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_WEAKNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_WEAKNESS)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_WEAKNESS)
 						));
@@ -459,10 +459,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_WATER_BREATHING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_WATER_BREATHING)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_WATER_BREATHING)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_WATER_BREATHING)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_WATER_BREATHING)
 						));
@@ -473,12 +473,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_STRENGTH)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_STRENGTH)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_STRENGTH)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_STRENGTH)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_STRENGTH)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_STRENGTH)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_STRENGTH)
 						));
@@ -486,12 +486,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_LEAPING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_LEAPING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_LEAPING)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_LEAPING)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_LEAPING)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_LEAPING)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_LEAPING)
 						));
@@ -499,12 +499,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_SWIFTNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_SWIFTNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_SWIFTNESS)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_SWIFTNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_SWIFTNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_SWIFTNESS)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_SWIFTNESS)
 						));
@@ -512,12 +512,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_SLOWNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_SLOWNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_SLOWNESS)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_SLOWNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_SLOWNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_SLOWNESS)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_SLOWNESS)
 						));
@@ -525,12 +525,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_TURTLE_MASTER)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_TURTLE_MASTER)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_TURTLE_MASTER)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_TURTLE_MASTER)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_TURTLE_MASTER)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_TURTLE_MASTER)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_TURTLE_MASTER)
 						));
@@ -538,12 +538,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_POISON)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_POISON)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_POISON)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_POISON)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_POISON)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_POISON)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_POISON)
 						));
@@ -551,12 +551,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_REGENERATION)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_REGENERATION)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_REGENERATION)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.LONG_REGENERATION)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.STRONG_REGENERATION)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_REGENERATION)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_REGENERATION)
 						));
@@ -564,12 +564,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.LONG_HASTE)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.STRONG_HASTE)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_HASTE)),
-								Ingredient.fromItems(Items.GUNPOWDER)
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.LONG_HASTE)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.STRONG_HASTE)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_HASTE)),
+								Ingredient.of(Items.GUNPOWDER)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_HASTE)
 						));
@@ -581,10 +581,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 				PotionHelper.constructIngredientMap(
-						Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_NIGHT_VISION)),
-						Ingredient.fromItems(EnigmaticLegacy.astralDust),
-						Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_NIGHT_VISION)),
-						Ingredient.fromItems(Items.DRAGON_BREATH)
+						Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_NIGHT_VISION)),
+						Ingredient.of(EnigmaticLegacy.astralDust),
+						Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_NIGHT_VISION)),
+						Ingredient.of(Items.DRAGON_BREATH)
 						),
 				PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_NIGHT_VISION)
 				));
@@ -592,10 +592,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_INVISIBILITY)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_INVISIBILITY)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_INVISIBILITY)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_INVISIBILITY)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_INVISIBILITY)
 						));
@@ -603,10 +603,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_FIRE_RESISTANCE)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_FIRE_RESISTANCE)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_FIRE_RESISTANCE)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_FIRE_RESISTANCE)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_FIRE_RESISTANCE)
 						));
@@ -614,10 +614,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_HEALING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_HEALING)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_HEALING)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_HEALING)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_HEALING)
 						));
@@ -625,10 +625,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_HARMING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_HARMING)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_HARMING)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_HARMING)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_HARMING)
 						));
@@ -636,10 +636,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_SLOW_FALLING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_SLOW_FALLING)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_SLOW_FALLING)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_SLOW_FALLING)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_SLOW_FALLING)
 						));
@@ -647,10 +647,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_WEAKNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_WEAKNESS)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_WEAKNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_WEAKNESS)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_WEAKNESS)
 						));
@@ -658,10 +658,10 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_WATER_BREATHING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_WATER_BREATHING)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_WATER_BREATHING)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_WATER_BREATHING)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_WATER_BREATHING)
 						));
@@ -672,12 +672,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_STRENGTH)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_STRENGTH)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_STRENGTH)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_STRENGTH)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_STRENGTH)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_STRENGTH)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_STRENGTH)
 						));
@@ -685,12 +685,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_LEAPING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_LEAPING)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_LEAPING)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_LEAPING)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_LEAPING)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_LEAPING)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_LEAPING)
 						));
@@ -698,12 +698,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_SWIFTNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_SWIFTNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_SWIFTNESS)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_SWIFTNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_SWIFTNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_SWIFTNESS)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_SWIFTNESS)
 						));
@@ -711,12 +711,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_SLOWNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_SLOWNESS)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_SLOWNESS)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_SLOWNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_SLOWNESS)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_SLOWNESS)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_SLOWNESS)
 						));
@@ -724,12 +724,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_TURTLE_MASTER)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_TURTLE_MASTER)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_TURTLE_MASTER)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_TURTLE_MASTER)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_TURTLE_MASTER)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_TURTLE_MASTER)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_TURTLE_MASTER)
 						));
@@ -737,12 +737,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_POISON)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_POISON)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_POISON)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_POISON)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_POISON)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_POISON)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_POISON)
 						));
@@ -750,12 +750,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_REGENERATION)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_REGENERATION)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_REGENERATION)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.LONG_REGENERATION)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.STRONG_REGENERATION)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_REGENERATION)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_REGENERATION)
 						));
@@ -764,12 +764,12 @@ public class PotionHelper {
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.LONG_HASTE)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.STRONG_HASTE)),
-								Ingredient.fromItems(EnigmaticLegacy.astralDust),
-								Ingredient.fromStacks(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_HASTE)),
-								Ingredient.fromItems(Items.DRAGON_BREATH)
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.LONG_HASTE)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.STRONG_HASTE)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_HASTE)),
+								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_HASTE)
 						));

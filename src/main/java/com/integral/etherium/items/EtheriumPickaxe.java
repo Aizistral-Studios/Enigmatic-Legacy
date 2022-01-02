@@ -42,32 +42,32 @@ public class EtheriumPickaxe extends ItemEtheriumTool {
 	public EtheriumPickaxe(IEtheriumConfig config) {
 		super(1F, -2.8F, config, new HashSet<>(),
 				EtheriumUtil.defaultProperties(config, EtheriumPickaxe.class)
-				.defaultMaxDamage((int) (config.getToolMaterial().getMaxUses() * 1.5))
-				.addToolType(ToolType.PICKAXE, config.getToolMaterial().getHarvestLevel())
-				.isImmuneToFire());
+				.defaultDurability((int) (config.getToolMaterial().getUses() * 1.5))
+				.addToolType(ToolType.PICKAXE, config.getToolMaterial().getLevel())
+				.fireResistant());
 
 		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_pickaxe"));
 
-		this.effectiveMaterials.add(Material.IRON);
-		this.effectiveMaterials.add(Material.ROCK);
-		this.effectiveMaterials.add(Material.ANVIL);
+		this.effectiveMaterials.add(Material.METAL);
+		this.effectiveMaterials.add(Material.STONE);
+		this.effectiveMaterials.add(Material.HEAVY_METAL);
 		this.effectiveMaterials.add(Material.GLASS);
-		this.effectiveMaterials.add(Material.PACKED_ICE);
+		this.effectiveMaterials.add(Material.ICE_SOLID);
 		this.effectiveMaterials.add(Material.ICE);
-		this.effectiveMaterials.add(Material.SHULKER);
+		this.effectiveMaterials.add(Material.SHULKER_SHELL);
 
 		this.config.getSorceryMaterial("MARBLE").ifPresent(this.effectiveMaterials::add);
 		this.config.getSorceryMaterial("BLACK_MARBLE").ifPresent(this.effectiveMaterials::add);
 	}
 
 	@Override
-	public String getTranslationKey() {
-		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getTranslationKey();
+	public String getDescriptionId() {
+		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getDescriptionId();
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (this.config.getPickaxeMiningRadius() == -1)
 			return;
 
@@ -90,44 +90,44 @@ public class EtheriumPickaxe extends ItemEtheriumTool {
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+	public boolean mineBlock(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && this.config.getPickaxeMiningRadius() != -1) {
+		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getPickaxeMiningRadius() != -1) {
 
 			RayTraceResult trace = AOEMiningHelper.calcRayTrace(world, (PlayerEntity) entityLiving, RayTraceContext.FluidMode.ANY);
 
 			if (trace.getType() == RayTraceResult.Type.BLOCK) {
 				BlockRayTraceResult blockTrace = (BlockRayTraceResult) trace;
-				Direction face = blockTrace.getFace();
+				Direction face = blockTrace.getDirection();
 
 				AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos, this.effectiveMaterials, this.config.getPickaxeMiningRadius(), this.config.getPickaxeMiningDepth(), true, pos, stack, (objPos, objState) -> {
-					stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(MobEntity.getSlotForItemStack(stack)));
+					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(MobEntity.getEquipmentSlotForItem(stack)));
 				});
 			}
 		}
 
-		return super.onBlockDestroyed(stack, world, state, pos, entityLiving);
+		return super.mineBlock(stack, world, state, pos, entityLiving);
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
-		player.setActiveHand(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
+		player.startUsingItem(hand);
 
 		if (player.isCrouching()) {
 			this.toggleAreaEffects(player, stack);
 
 			return new ActionResult<>(ActionResultType.SUCCESS, stack);
 		} else
-			return super.onItemRightClick(world, player, hand);
+			return super.use(world, player, hand);
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResultType useOn(ItemUseContext context) {
 		if (context.getPlayer().isCrouching())
-			return this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType();
+			return this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
 		else
-			return super.onItemUse(context);
+			return super.useOn(context);
 	}
 
 }

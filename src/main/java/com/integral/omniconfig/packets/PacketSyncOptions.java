@@ -34,27 +34,27 @@ public class PacketSyncOptions {
 	}
 
 	public static void encode(PacketSyncOptions msg, PacketBuffer buf) {
-		buf.writeString(msg.fileName, 512);
-		buf.writeString(String.valueOf(msg.configVersion), 512);
+		buf.writeUtf(msg.fileName, 512);
+		buf.writeUtf(String.valueOf(msg.configVersion), 512);
 
 		buf.writeLong(msg.synchronizedParameters.size());
 
 		for (String paramName : msg.synchronizedParameters.keySet()) {
-			buf.writeString(paramName, 512);
-			buf.writeString(msg.synchronizedParameters.get(paramName), 32768);
+			buf.writeUtf(paramName, 512);
+			buf.writeUtf(msg.synchronizedParameters.get(paramName), 32768);
 		}
 	}
 
 	public static PacketSyncOptions decode(PacketBuffer buf) {
-		String fileName = buf.readString(512);
-		String configVersion = buf.readString(512);
+		String fileName = buf.readUtf(512);
+		String configVersion = buf.readUtf(512);
 		long entryAmount = buf.readLong();
 
 		Map<String, String> params = new HashMap<>();
 
 		for (int counter = 0; counter < entryAmount; counter++) {
-			String identifier = buf.readString(512);
-			String value = buf.readString(32768);
+			String identifier = buf.readUtf(512);
+			String value = buf.readUtf(32768);
 
 			params.put(identifier, value);
 		}

@@ -71,13 +71,13 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void handleItemPickup(int pickuper_id, int item_id) {
 		try {
-			Entity pickuper = Minecraft.getInstance().world.getEntityByID(pickuper_id);
-			Entity entity = Minecraft.getInstance().world.getEntityByID(item_id);
+			Entity pickuper = Minecraft.getInstance().level.getEntity(pickuper_id);
+			Entity entity = Minecraft.getInstance().level.getEntity(item_id);
 
 			// TODO Verify fix... someday
 
-			Minecraft.getInstance().particles.addEffect(new PermanentItemPickupParticle(Minecraft.getInstance().getRenderManager(), Minecraft.getInstance().getRenderTypeBuffers(), Minecraft.getInstance().world, pickuper, entity));
-			Minecraft.getInstance().world.playSound(pickuper.getPosX(), pickuper.getPosY(), pickuper.getPosZ(), SoundEvents.ENTITY_ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, (ClientProxy.random.nextFloat() - ClientProxy.random.nextFloat()) * 1.4F + 2.0F, false);
+			Minecraft.getInstance().particleEngine.add(new PermanentItemPickupParticle(Minecraft.getInstance().getEntityRenderDispatcher(), Minecraft.getInstance().renderBuffers(), Minecraft.getInstance().level, pickuper, entity));
+			Minecraft.getInstance().level.playLocalSound(pickuper.getX(), pickuper.getY(), pickuper.getZ(), SoundEvents.ITEM_PICKUP, SoundCategory.PLAYERS, 0.2F, (ClientProxy.random.nextFloat() - ClientProxy.random.nextFloat()) * 1.4F + 2.0F, false);
 		} catch (Throwable ex) {
 			Exception log = new Exception("Unknown error when rendering permanent item pickup", ex);
 			EnigmaticLegacy.logger.catching(log);
@@ -86,7 +86,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void initAuxiliaryRender() {
-		Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getRenderManager().getSkinMap();
+		Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
 
 		PlayerRenderer renderSteve;
 		PlayerRenderer renderAlex;
@@ -114,17 +114,17 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public boolean isInVanillaDimension(PlayerEntity player) {
-		return player.world.getDimensionKey().equals(this.getOverworldKey()) || player.world.getDimensionKey().equals(this.getNetherKey()) || player.world.getDimensionKey().equals(this.getEndKey());
+		return player.level.dimension().equals(this.getOverworldKey()) || player.level.dimension().equals(this.getNetherKey()) || player.level.dimension().equals(this.getEndKey());
 	}
 
 	@Override
 	public boolean isInDimension(PlayerEntity player, RegistryKey<World> world) {
-		return player.world.getDimensionKey().equals(world);
+		return player.level.dimension().equals(world);
 	}
 
 	@Override
 	public World getCentralWorld() {
-		return Minecraft.getInstance().world;
+		return Minecraft.getInstance().level;
 	}
 
 	@Override
@@ -134,16 +134,16 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public PlayerEntity getPlayer(UUID playerID) {
-		if (Minecraft.getInstance().world != null)
-			return Minecraft.getInstance().world.getPlayerByUuid(playerID);
+		if (Minecraft.getInstance().level != null)
+			return Minecraft.getInstance().level.getPlayerByUUID(playerID);
 		else
 			return null;
 	}
 
 	@Override
 	public void pushRevelationToast(ItemStack renderedStack, int xp, int knowledge) {
-		ToastGui gui = Minecraft.getInstance().getToastGui();
-		gui.add(new RevelationTomeToast(renderedStack, xp, knowledge));
+		ToastGui gui = Minecraft.getInstance().getToasts();
+		gui.addToast(new RevelationTomeToast(renderedStack, xp, knowledge));
 	}
 
 	@Override
@@ -157,17 +157,17 @@ public class ClientProxy extends CommonProxy {
 		if (!blockstate.isAir(world, pos)) {
 			double d0 = 0.5D;
 			double d1;
-			if (blockstate.isIn(Blocks.WATER)) {
+			if (blockstate.is(Blocks.WATER)) {
 				data *= 3;
 				d1 = 1.0D;
 				d0 = 3.0D;
-			} else if (blockstate.isOpaqueCube(world, pos)) {
-				pos = pos.up();
+			} else if (blockstate.isSolidRender(world, pos)) {
+				pos = pos.above();
 				data *= 3;
 				d0 = 3.0D;
 				d1 = 1.0D;
 			} else {
-				d1 = blockstate.getShape(world, pos).getEnd(Direction.Axis.Y);
+				d1 = blockstate.getShape(world, pos).max(Direction.Axis.Y);
 			}
 
 			world.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);

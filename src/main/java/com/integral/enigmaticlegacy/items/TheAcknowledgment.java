@@ -50,13 +50,13 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 		this.setRegistryName(EnigmaticLegacy.MODID, name);
 
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(Item.ATTACK_DAMAGE_MODIFIER, "Weapon modifier", attackDamage, AttributeModifier.Operation.ADDITION));
-		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(Item.ATTACK_SPEED_MODIFIER, "Weapon modifier", attackSpeed, AttributeModifier.Operation.ADDITION));
+		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(Item.BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", attackDamage, AttributeModifier.Operation.ADDITION));
+		builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(Item.BASE_ATTACK_SPEED_UUID, "Weapon modifier", attackSpeed, AttributeModifier.Operation.ADDITION));
 		this.attributes = builder.build();
 	}
 
 	public TheAcknowledgment() {
-		this(getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1), bookID.getPath(), 3.5, -2.1);
+		this(getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1), bookID.getPath(), 3.5, -2.1);
 	}
 
 	public static boolean isOpen() {
@@ -68,7 +68,7 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 	}
 
 	public static ITextComponent getTitle(ItemStack stack) {
-		ITextComponent title = stack.getDisplayName();
+		ITextComponent title = stack.getHoverName();
 
 		String akashicTomeNBT = "akashictome:displayName";
 		if (stack.hasTag() && stack.getTag().contains(akashicTomeNBT)) {
@@ -79,10 +79,10 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		target.setFire(4);
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+		target.setSecondsOnFire(4);
 
-		return super.hitEntity(stack, target, attacker);
+		return super.hurtEnemy(stack, target, attacker);
 	}
 
 	@Override
@@ -101,8 +101,8 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 
 	@Nonnull
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack stack = playerIn.getHeldItem(handIn);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack stack = playerIn.getItemInHand(handIn);
 
 		if (playerIn instanceof ServerPlayerEntity) {
 			ServerPlayerEntity player = (ServerPlayerEntity) playerIn;
@@ -134,7 +134,7 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theAcknowledgment1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theAcknowledgment2");

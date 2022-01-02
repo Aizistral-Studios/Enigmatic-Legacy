@@ -61,7 +61,7 @@ public class MagnetRing extends ItemBaseCurio {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -75,14 +75,14 @@ public class MagnetRing extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if ((invertShift.getValue() ? !living.isSneaking() : living.isSneaking()) || !(living instanceof PlayerEntity))
+		if ((invertShift.getValue() ? !living.isShiftKeyDown() : living.isShiftKeyDown()) || !(living instanceof PlayerEntity))
 			return;
 
-		double x = living.getPosX();
-		double y = living.getPosY() + 0.75;
-		double z = living.getPosZ();
+		double x = living.getX();
+		double y = living.getY() + 0.75;
+		double z = living.getZ();
 
-		List<ItemEntity> items = living.world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - range.getValue(), y - range.getValue(), z - range.getValue(), x + range.getValue(), y + range.getValue(), z + range.getValue()));
+		List<ItemEntity> items = living.level.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(x - range.getValue(), y - range.getValue(), z - range.getValue(), x + range.getValue(), y + range.getValue(), z + range.getValue()));
 		int pulled = 0;
 		for (ItemEntity item : items)
 			if (this.canPullItem(item)) {
@@ -95,7 +95,7 @@ public class MagnetRing extends ItemBaseCurio {
 				}
 
 				SuperpositionHandler.setEntityMotionFromVector(item, new Vector3(x, y, z), 0.45F);
-				item.setNoPickupDelay();
+				item.setNoPickUpDelay();
 
 				//for (int counter = 0; counter <= 2; counter++)
 				//	living.world.addParticle(ParticleTypes.WITCH, item.getPosX(), item.getPosY() - item.getYOffset() + item.getHeight() / 2, item.getPosZ(), (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D);

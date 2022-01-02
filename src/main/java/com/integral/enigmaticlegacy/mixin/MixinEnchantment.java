@@ -18,7 +18,7 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 @Mixin(Enchantment.class)
 public class MixinEnchantment {
 
-	@Inject(at = @At("HEAD"), method = "canApply", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "canEnchant", cancellable = true)
 	public void allowEnchantment(ItemStack stack, CallbackInfoReturnable<Boolean> info) {
 		Object forgottenObject = this;
 

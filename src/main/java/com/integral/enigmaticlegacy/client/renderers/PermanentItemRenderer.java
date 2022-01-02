@@ -36,8 +36,8 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 	public PermanentItemRenderer(EntityRendererManager renderManagerIn, net.minecraft.client.renderer.ItemRenderer itemRendererIn) {
 		super(renderManagerIn);
 		this.itemRenderer = itemRendererIn;
-		this.shadowSize = 0.15F;
-		this.shadowOpaque = 0.75F;
+		this.shadowRadius = 0.15F;
+		this.shadowStrength = 0.75F;
 	}
 
 	protected int getModelCount(ItemStack stack) {
@@ -58,10 +58,10 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 	@SuppressWarnings({ "deprecation", "unused" })
 	@Override
 	public void render(PermanentItemEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
-		if (!Minecraft.getInstance().player.isAlive() && Math.sqrt(entityIn.getDistanceSq(Minecraft.getInstance().player.getPosX(), Minecraft.getInstance().player.getPosYEye(), Minecraft.getInstance().player.getPosZ())) <= 1.0)
+		if (!Minecraft.getInstance().player.isAlive() && Math.sqrt(entityIn.distanceToSqr(Minecraft.getInstance().player.getX(), Minecraft.getInstance().player.getEyeY(), Minecraft.getInstance().player.getZ())) <= 1.0)
 			return;
 
-		matrixStackIn.push();
+		matrixStackIn.pushPose();
 		ItemStack itemstack = entityIn.getItem();
 
 		if (itemstack.getItem() instanceof IPermanentCrystal) {
@@ -69,17 +69,17 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 			matrixStackIn.translate(0, -0.1125d, 0);
 		}
 
-		int i = itemstack.isEmpty() ? 187 : Item.getIdFromItem(itemstack.getItem()) + itemstack.getDamage();
+		int i = itemstack.isEmpty() ? 187 : Item.getId(itemstack.getItem()) + itemstack.getDamageValue();
 		this.random.setSeed(i);
-		IBakedModel ibakedmodel = this.itemRenderer.getItemModelWithOverrides(itemstack, entityIn.world, (LivingEntity) null);
+		IBakedModel ibakedmodel = this.itemRenderer.getModel(itemstack, entityIn.level, (LivingEntity) null);
 		boolean flag = ibakedmodel.isGui3d();
 		int j = this.getModelCount(itemstack);
 		float f = 0.25F;
 		float f1 = MathHelper.sin((entityIn.getAge() + partialTicks) / 10.0F + entityIn.hoverStart) * 0.1F + 0.1F;
-		float f2 = this.shouldBob() ? ibakedmodel.getItemCameraTransforms().getTransform(ItemCameraTransforms.TransformType.GROUND).scale.getY() : 0;
+		float f2 = this.shouldBob() ? ibakedmodel.getTransforms().getTransform(ItemCameraTransforms.TransformType.GROUND).scale.y() : 0;
 		matrixStackIn.translate(0.0D, f1 + 0.25F * f2, 0.0D);
 		float f3 = entityIn.getItemHover(partialTicks);
-		matrixStackIn.rotate(Vector3f.YP.rotation(f3));
+		matrixStackIn.mulPose(Vector3f.YP.rotation(f3));
 		if (!flag) {
 			float f7 = -0.0F * (j - 1) * 0.5F;
 			float f8 = -0.0F * (j - 1) * 0.5F;
@@ -88,7 +88,7 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 		}
 
 		for (int k = 0; k < j; ++k) {
-			matrixStackIn.push();
+			matrixStackIn.pushPose();
 			if (k > 0) {
 				if (flag) {
 					float f11 = (this.random.nextFloat() * 2.0F - 1.0F) * 0.15F;
@@ -102,14 +102,14 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 				}
 			}
 
-			this.itemRenderer.renderItem(itemstack, ItemCameraTransforms.TransformType.GROUND, false, matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY, ibakedmodel);
-			matrixStackIn.pop();
+			this.itemRenderer.render(itemstack, ItemCameraTransforms.TransformType.GROUND, false, matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY, ibakedmodel);
+			matrixStackIn.popPose();
 			if (!flag) {
 				matrixStackIn.translate(0.0, 0.0, 0.09375F);
 			}
 		}
 
-		matrixStackIn.pop();
+		matrixStackIn.popPose();
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 	}
 
@@ -118,8 +118,8 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 	*/
 	@SuppressWarnings("deprecation")
 	@Override
-	public ResourceLocation getEntityTexture(PermanentItemEntity entity) {
-		return AtlasTexture.LOCATION_BLOCKS_TEXTURE;
+	public ResourceLocation getTextureLocation(PermanentItemEntity entity) {
+		return AtlasTexture.LOCATION_BLOCKS;
 	}
 
 	/*==================================== FORGE START ===========================================*/

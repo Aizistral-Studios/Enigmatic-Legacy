@@ -33,7 +33,7 @@ public class SpecialArmorModelRenderer extends ModelRenderer {
 	public SpecialArmorModelRenderer(GenericArmorModel model, @Nullable List<SpecialArmorModelRenderer> includeIn) {
 		super(model);
 		model.accept(this);
-		this.setTextureSize(model.textureWidth, model.textureHeight);
+		this.setTexSize(model.texWidth, model.texHeight);
 
 		if (includeIn != null)
 			includeIn.add(this);
@@ -42,7 +42,7 @@ public class SpecialArmorModelRenderer extends ModelRenderer {
 	}
 
 	public SpecialArmorModelRenderer(GenericArmorModel model, int texOffX, int texOffY) {
-		this(model.textureWidth, model.textureHeight, texOffX, texOffY);
+		this(model.texWidth, model.texHeight, texOffX, texOffY);
 		model.accept(this);
 
 		this.model = model;
@@ -50,13 +50,13 @@ public class SpecialArmorModelRenderer extends ModelRenderer {
 
 	public SpecialArmorModelRenderer(int textureWidthIn, int textureHeightIn, int textureOffsetXIn, int textureOffsetYIn) {
 		super(textureWidthIn, textureHeightIn, textureOffsetXIn, textureOffsetYIn);
-		this.setTextureSize(textureWidthIn, textureHeightIn);
-		this.setTextureOffset(textureOffsetXIn, textureOffsetYIn);
+		this.setTexSize(textureWidthIn, textureHeightIn);
+		this.texOffs(textureOffsetXIn, textureOffsetYIn);
 	}
 
 	@Override
-	public SpecialArmorModelRenderer setTextureOffset(int x, int y) {
-		super.setTextureOffset(x, y);
+	public SpecialArmorModelRenderer texOffs(int x, int y) {
+		super.texOffs(x, y);
 		return this;
 	}
 
@@ -114,8 +114,8 @@ public class SpecialArmorModelRenderer extends ModelRenderer {
 
 		}
 
-		this.rotationPointX = rotationPointXIn + offsetX;
-		this.rotationPointY = rotationPointYIn + offsetY;
-		this.rotationPointZ = rotationPointZIn + offsetZ;
+		this.x = rotationPointXIn + offsetX;
+		this.y = rotationPointYIn + offsetY;
+		this.z = rotationPointZIn + offsetZ;
 	}
 }

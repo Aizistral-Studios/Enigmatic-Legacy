@@ -17,12 +17,12 @@ public class NemesisCurseEnchantment extends Enchantment {
 	}
 
 	@Override
-	public int getMinEnchantability(int enchantmentLevel) {
+	public int getMinCost(int enchantmentLevel) {
 		return 25;
 	}
 
 	@Override
-	public int getMaxEnchantability(int enchantmentLevel) {
+	public int getMaxCost(int enchantmentLevel) {
 		return 50;
 	}
 
@@ -37,12 +37,12 @@ public class NemesisCurseEnchantment extends Enchantment {
 	}
 
 	@Override
-	public boolean canApply(ItemStack stack) {
-		return OmniconfigHandler.isItemEnabled(this) && (super.canApply(stack) || Enchantments.SHARPNESS.canApply(stack));
+	public boolean canEnchant(ItemStack stack) {
+		return OmniconfigHandler.isItemEnabled(this) && (super.canEnchant(stack) || Enchantments.SHARPNESS.canEnchant(stack));
 	}
 
 	@Override
-	public boolean isTreasureEnchantment() {
+	public boolean isTreasureOnly() {
 		return true;
 	}
 
@@ -57,12 +57,12 @@ public class NemesisCurseEnchantment extends Enchantment {
 	}
 
 	@Override
-	public boolean canGenerateInLoot() {
+	public boolean isDiscoverable() {
 		return OmniconfigHandler.isItemEnabled(this);
 	}
 
 	@Override
-	protected boolean canApplyTogether(Enchantment ench) {
-		return super.canApplyTogether(ench);
+	protected boolean checkCompatibility(Enchantment ench) {
+		return super.checkCompatibility(ench);
 	}
 }

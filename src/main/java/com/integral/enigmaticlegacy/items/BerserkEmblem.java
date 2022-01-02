@@ -81,7 +81,7 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -122,14 +122,14 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) living;
 
-			living.getAttributeManager().reapplyModifiers(this.createAttributeMap(player));
+			living.getAttributes().addTransientAttributeModifiers(this.createAttributeMap(player));
 		}
 	}
 
 	@Override
 	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
 		if (living instanceof PlayerEntity) {
-			living.getAttributeManager().removeModifiers(this.createAttributeMap((PlayerEntity) living));
+			living.getAttributes().removeAttributeModifiers(this.createAttributeMap((PlayerEntity) living));
 		}
 	}
 

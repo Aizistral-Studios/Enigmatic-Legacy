@@ -47,7 +47,7 @@ public class MixinForgeHooks {
 			EnigmaticLegacy.enigmaticHandler.onLootTablesLoaded(event);
 
 			if (event.isCanceled()) {
-				returnedTable = LootTable.EMPTY_LOOT_TABLE;
+				returnedTable = LootTable.EMPTY;
 			}
 
 			EnigmaticLegacy.logger.debug("Freezing " + name + " back...");

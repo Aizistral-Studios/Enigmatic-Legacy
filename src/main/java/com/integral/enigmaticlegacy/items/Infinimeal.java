@@ -38,13 +38,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class Infinimeal extends ItemBase implements IVanishable {
 
 	public Infinimeal() {
-		super(getDefaultProperties().maxStackSize(1).rarity(Rarity.UNCOMMON));
+		super(getDefaultProperties().stacksTo(1).rarity(Rarity.UNCOMMON));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "infinimeal"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.infinimeal1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
@@ -57,16 +57,16 @@ public class Infinimeal extends ItemBase implements IVanishable {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public ActionResultType onItemUse(ItemUseContext context) {
-		ItemStack stack = context.getItem();
+	public ActionResultType useOn(ItemUseContext context) {
+		ItemStack stack = context.getItemInHand();
 		int savedCount = stack.getCount();
 
-		ActionResultType result = Items.BONE_MEAL.onItemUse(context);
+		ActionResultType result = Items.BONE_MEAL.useOn(context);
 		stack.setCount(savedCount);
 
 		if (result == ActionResultType.PASS) {
-			BlockPos pos = context.getPos();
-			World world = context.getWorld();
+			BlockPos pos = context.getClickedPos();
+			World world = context.getLevel();
 			BlockState state = world.getBlockState(pos);
 			Block block = state.getBlock();
 
@@ -74,33 +74,33 @@ public class Infinimeal extends ItemBase implements IVanishable {
 				BlockPos topMostPos = this.findTopmostGrowable(world, pos, block, true);
 				BlockState topMostState = world.getBlockState(topMostPos);
 
-				if (topMostState.hasProperty(BlockStateProperties.AGE_0_15) && world.isAirBlock(topMostPos.up())) {
-					int age = topMostState.get(BlockStateProperties.AGE_0_15);
+				if (topMostState.hasProperty(BlockStateProperties.AGE_15) && world.isEmptyBlock(topMostPos.above())) {
+					int age = topMostState.getValue(BlockStateProperties.AGE_15);
 
 					int plantHeight;
-					for(plantHeight = 1; world.getBlockState(topMostPos.down(plantHeight)).isIn(block); ++plantHeight) {}
+					for(plantHeight = 1; world.getBlockState(topMostPos.below(plantHeight)).is(block); ++plantHeight) {}
 
 					if (plantHeight >= 3)
 						return result;
 
-					if (!world.isRemote) {
-						world.playEvent(2005, pos, 0);
+					if (!world.isClientSide) {
+						world.levelEvent(2005, pos, 0);
 					}
 
 					age += random.nextInt(20);
-					world.setBlockState(topMostPos, topMostState.with(BlockStateProperties.AGE_0_15, Integer.valueOf(Math.min(age, 15))), 4);
+					world.setBlock(topMostPos, topMostState.setValue(BlockStateProperties.AGE_15, Integer.valueOf(Math.min(age, 15))), 4);
 
 					if (world instanceof ServerWorld) {
 						block.randomTick(world.getBlockState(topMostPos), (ServerWorld)world, topMostPos, random);
 					}
 
-					return ActionResultType.func_233537_a_(world.isRemote);
+					return ActionResultType.sidedSuccess(world.isClientSide);
 				}
 			} else if (block instanceof VineBlock) {
-				if (!block.ticksRandomly(state))
+				if (!block.isRandomlyTicking(state))
 					return result;
 
-				if (world.isRemote) {
+				if (world.isClientSide) {
 					EnigmaticLegacy.proxy.spawnBonemealParticles(world, pos, 0);
 				}
 
@@ -111,16 +111,16 @@ public class Infinimeal extends ItemBase implements IVanishable {
 						block.randomTick(state, (ServerWorld)world, pos, random);
 					}
 
-					state.updateNeighbours(world, pos, 4);
+					state.updateNeighbourShapes(world, pos, 4);
 				}
 
-				return ActionResultType.func_233537_a_(world.isRemote);
+				return ActionResultType.sidedSuccess(world.isClientSide);
 			} else if (block instanceof NetherWartBlock) {
-				if (!block.ticksRandomly(state))
+				if (!block.isRandomlyTicking(state))
 					return result;
 
-				if (!world.isRemote) {
-					world.playEvent(2005, pos, 0);
+				if (!world.isClientSide) {
+					world.levelEvent(2005, pos, 0);
 				}
 
 				int cycles = 1+random.nextInt(1);
@@ -132,7 +132,7 @@ public class Infinimeal extends ItemBase implements IVanishable {
 					}
 				}
 
-				return ActionResultType.func_233537_a_(world.isRemote);
+				return ActionResultType.sidedSuccess(world.isClientSide);
 			}
 		}
 
@@ -144,7 +144,7 @@ public class Infinimeal extends ItemBase implements IVanishable {
 
 		while (true) {
 			if (world.getBlockState(top) != null && world.getBlockState(top).getBlock() == block) {
-				BlockPos nextUp = goUp ? top.up() : top.down();
+				BlockPos nextUp = goUp ? top.above() : top.below();
 
 				if (world.getBlockState(nextUp) == null || world.getBlockState(nextUp).getBlock() != block)
 					return top;

@@ -85,7 +85,7 @@ public class EtheriumConfig implements IEtheriumConfig {
 	
 	@Override
 	public Ingredient getRepairMaterial() {
-		return Ingredient.fromItems(EtheriumMod.etheriumIngot);
+		return Ingredient.of(EtheriumMod.etheriumIngot);
 	}
 
 	@Override
@@ -175,12 +175,12 @@ public class EtheriumConfig implements IEtheriumConfig {
 
 	@Override
 	public void knockBack(PlayerEntity entityIn, float strength, double xRatio, double zRatio) {
-		entityIn.isAirBorne = true;
+		entityIn.hasImpulse = true;
 		Vector3d vec3d = new Vector3d(0D, 0D, 0D);
 		Vector3d vec3d1 = (new Vector3d(xRatio, 0.0D, zRatio)).normalize().scale(strength);
 
 		EtheriumMod.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) entityIn), new PacketPlayerMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z));
-		entityIn.setMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z);
+		entityIn.setDeltaMovement(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z);
 	}
 
 	@Override

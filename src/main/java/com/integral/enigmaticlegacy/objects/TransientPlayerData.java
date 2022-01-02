@@ -22,7 +22,7 @@ public class TransientPlayerData {
 	// TODO Wrap variables into param objects
 
 	public static TransientPlayerData get(PlayerEntity player) {
-		boolean clientOnly = player.world.isRemote;
+		boolean clientOnly = player.level.isClientSide;
 
 		if (EnigmaticLegacy.proxy.getTransientPlayerData(clientOnly).containsKey(player))
 			return EnigmaticLegacy.proxy.getTransientPlayerData(clientOnly).get(player);
@@ -35,7 +35,7 @@ public class TransientPlayerData {
 	}
 
 	public static boolean set(PlayerEntity player, TransientPlayerData data) {
-		boolean clientOnly = player.world.isRemote;
+		boolean clientOnly = player.level.isClientSide;
 
 		if (data != null) {
 			EnigmaticLegacy.proxy.getTransientPlayerData(clientOnly).put(player, data);
@@ -46,7 +46,7 @@ public class TransientPlayerData {
 
 	public void syncToClients(float blockRadius) {
 		PlayerEntity player = this.getPlayer();
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), blockRadius, player.world.getDimensionKey())), new PacketSyncTransientData(this));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), blockRadius, player.level.dimension())), new PacketSyncTransientData(this));
 	}
 
 	public void syncToPlayer() {
@@ -136,7 +136,7 @@ public class TransientPlayerData {
 			this.spellstoneCooldown = newValue;
 
 			for (Item spellstone : EnigmaticLegacy.spellstoneList) {
-				this.player.get().getCooldownTracker().setCooldown(spellstone, this.spellstoneCooldown);
+				this.player.get().getCooldowns().addCooldown(spellstone, this.spellstoneCooldown);
 			}
 		}
 	}
@@ -154,7 +154,7 @@ public class TransientPlayerData {
 	}
 
 	public static PacketBuffer encode(TransientPlayerData data, PacketBuffer buf) {
-		buf.writeUniqueId(data.player.get().getUniqueID());
+		buf.writeUUID(data.player.get().getUUID());
 		buf.writeInt(data.spellstoneCooldown);
 		buf.writeInt(data.fireImmunityTimer);
 		buf.writeInt(data.fireImmunityTimerCap);
@@ -165,7 +165,7 @@ public class TransientPlayerData {
 	}
 
 	public static TransientPlayerData decode(PacketBuffer buf) {
-		UUID playerID = buf.readUniqueId();
+		UUID playerID = buf.readUUID();
 		int spellstoneCooldown = buf.readInt();
 		int fireImmunityTimer = buf.readInt();
 		int fireImmunityTimerCap = buf.readInt();

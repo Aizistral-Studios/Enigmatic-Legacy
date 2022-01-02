@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 public class StorageCrystal extends ItemBase implements IPermanentCrystal, IVanishable {
 
 	public StorageCrystal() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isImmuneToFire().group(null));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).fireResistant().tab(null));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "storage_crystal"));
 	}
 
@@ -70,10 +70,10 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, IVani
 
 		for (int c = counter; c >= 0; c--) {
 			CompoundNBT nbt = crystalNBT.getCompound("storedStack" + c);
-			ItemStack stack = ItemStack.read(nbt);
-			if (!player.inventory.addItemStackToInventory(stack)) {
-				ItemEntity drop = new ItemEntity(player.world, player.getPosX(), player.getPosY(), player.getPosZ(), stack);
-				player.world.addEntity(drop);
+			ItemStack stack = ItemStack.of(nbt);
+			if (!player.inventory.add(stack)) {
+				ItemEntity drop = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), stack);
+				player.level.addFreshEntity(drop);
 			}
 			crystalNBT.remove("storedStack" + c);
 		}
@@ -83,7 +83,7 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, IVani
 		if (retrieveSoul != null) {
 			EnigmaticLegacy.soulCrystal.retrieveSoulFromCrystal(player, retrieveSoul);
 		} else {
-			player.world.playSound(null, new BlockPos(player.getPositionVec()), SoundEvents.BLOCK_BEACON_ACTIVATE, SoundCategory.PLAYERS, 1.0f, 1.0f);
+			player.level.playSound(null, new BlockPos(player.position()), SoundEvents.BEACON_ACTIVATE, SoundCategory.PLAYERS, 1.0f, 1.0f);
 		}
 
 		ItemNBTHelper.setBoolean(crystal, "isStored", false);
@@ -94,12 +94,12 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, IVani
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		playerIn.setActiveHand(handIn);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		playerIn.startUsingItem(handIn);
 
-		if (!worldIn.isRemote) {}
+		if (!worldIn.isClientSide) {}
 
-		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getItemInHand(handIn));
 	}
 
 }

@@ -51,12 +51,12 @@ public class EtheriumEventHandler {
 			 */
 
 			if (EtheriumArmor.hasShield(player)) {
-				if (event.getSource().getImmediateSource() instanceof LivingEntity) {
-					LivingEntity attacker = ((LivingEntity) event.getSource().getTrueSource());
-					Vector3 vec = Vector3.fromEntityCenter(player).subtract(Vector3.fromEntityCenter(event.getSource().getTrueSource())).normalize();
-					attacker.applyKnockback(0.75F, vec.x, vec.z);
-					player.world.playSound(null, player.getPosition(), this.config.getShieldTriggerSound(), SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
-					player.world.playSound(null, player.getPosition(), this.config.getShieldTriggerSound(), SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
+				if (event.getSource().getDirectEntity() instanceof LivingEntity) {
+					LivingEntity attacker = ((LivingEntity) event.getSource().getEntity());
+					Vector3 vec = Vector3.fromEntityCenter(player).subtract(Vector3.fromEntityCenter(event.getSource().getEntity())).normalize();
+					attacker.knockback(0.75F, vec.x, vec.z);
+					player.level.playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
+					player.level.playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
 				}
 
 				event.setAmount(event.getAmount() * this.config.getShieldReduction().asModifierInverted());
@@ -66,7 +66,7 @@ public class EtheriumEventHandler {
 
 	@SubscribeEvent
 	public void onEntityAttacked(LivingAttackEvent event) {
-		if (event.getEntityLiving().world.isRemote)
+		if (event.getEntityLiving().level.isClientSide)
 			return;
 
 		/*
@@ -76,11 +76,11 @@ public class EtheriumEventHandler {
 		if (event.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 
-			if (event.getSource().getImmediateSource() instanceof DamagingProjectileEntity || event.getSource().getImmediateSource() instanceof AbstractArrowEntity) {
+			if (event.getSource().getDirectEntity() instanceof DamagingProjectileEntity || event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
 				if (EtheriumArmor.hasShield(player)) {
 					event.setCanceled(true);
 
-					player.world.playSound(null, player.getPosition(), this.config.getShieldTriggerSound(), SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
+					player.level.playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundCategory.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
 				}
 			}
 		}
@@ -91,11 +91,11 @@ public class EtheriumEventHandler {
 		if (!this.config.isStandalone())
 			return;
 
-		if (event.getName().equals(LootTables.CHESTS_END_CITY_TREASURE)) {
+		if (event.getName().equals(LootTables.END_CITY_TREASURE)) {
 			LootPool epic = constructLootPool("etherium", -11F, 2F,
-					ItemLootEntry.builder(this.etheriumOre)
-					.weight(60)
-					.acceptFunction(SetCount.builder(RandomValueRange.of(1.0F, 2F)))
+					ItemLootEntry.lootTableItem(this.etheriumOre)
+					.setWeight(60)
+					.apply(SetCount.setCount(RandomValueRange.between(1.0F, 2F)))
 					);
 
 			LootTable modified = event.getTable();
@@ -105,13 +105,13 @@ public class EtheriumEventHandler {
 	}
 
 	private static LootPool constructLootPool(String poolName, float minRolls, float maxRolls, @Nullable LootEntry.Builder<?>... entries) {
-		Builder poolBuilder = LootPool.builder();
+		Builder poolBuilder = LootPool.lootPool();
 		poolBuilder.name(poolName);
-		poolBuilder.rolls(RandomValueRange.of(minRolls, maxRolls));
+		poolBuilder.setRolls(RandomValueRange.between(minRolls, maxRolls));
 
 		for (LootEntry.Builder<?> entry : entries) {
 			if (entry != null) {
-				poolBuilder.addEntry(entry);
+				poolBuilder.add(entry);
 			}
 		}
 

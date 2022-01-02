@@ -33,13 +33,13 @@ public class BindToPlayerRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public ItemStack getCraftingResult(CraftingInventory inv) {
+	public ItemStack assemble(CraftingInventory inv) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		
 		ItemStack gem = null;
 		
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack slotStack = inv.getStackInSlot(i);
+		for (int i = 0; i < inv.getContainerSize(); i++) {
+			ItemStack slotStack = inv.getItem(i);
 			
 			if (!slotStack.isEmpty()) {
 				if (slotStack.getItem() == EnigmaticLegacy.gemOfBinding) {
@@ -69,8 +69,8 @@ public class BindToPlayerRecipe extends ShapelessRecipe {
 		
 		ItemStack gem = null;
 		
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack slotStack = inv.getStackInSlot(i);
+		for (int i = 0; i < inv.getContainerSize(); i++) {
+			ItemStack slotStack = inv.getItem(i);
 			
 			if (!slotStack.isEmpty()) {
 				if (slotStack.getItem() == EnigmaticLegacy.gemOfBinding) {
@@ -90,12 +90,12 @@ public class BindToPlayerRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return ItemStack.EMPTY;
 	}
 	
 	@Override
-	public boolean isDynamic() {
+	public boolean isSpecial() {
 		return true;
 	}
 
@@ -106,17 +106,17 @@ public class BindToPlayerRecipe extends ShapelessRecipe {
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<BindToPlayerRecipe> {
 		@Override
-		public BindToPlayerRecipe read(ResourceLocation recipeId, JsonObject json) {
+		public BindToPlayerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			return new BindToPlayerRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
 		}
 
 		@Override
-		public BindToPlayerRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
+		public BindToPlayerRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
 			return new BindToPlayerRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, BindToPlayerRecipe recipe) {
+		public void toNetwork(PacketBuffer buffer, BindToPlayerRecipe recipe) {
 
 		}
 	}
@@ -128,7 +128,7 @@ public class BindToPlayerRecipe extends ShapelessRecipe {
 			if (ItemNBTHelper.verifyExistance(stack, "BoundPlayer") && ItemNBTHelper.containsUUID(stack, "BoundUUID")) {
 				 UUID id = ItemNBTHelper.getUUID(stack, "BoundUUID", null);
 				 
-				 return world.getPlayerByUuid(id);
+				 return world.getPlayerByUUID(id);
 			}
 			
 			return null;

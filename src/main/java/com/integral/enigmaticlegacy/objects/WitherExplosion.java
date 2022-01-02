@@ -44,15 +44,15 @@ public class WitherExplosion extends Explosion {
 		this.z = zIn;
 		this.causesFire = causesFireIn;
 		this.mode = modeIn;
-		DamageSource.causeExplosionDamage(this);
+		DamageSource.explosion(this);
 		new Vector3d(this.x, this.y, this.z);
 	}
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public void doExplosionB(boolean spawnParticles) {
-		if (this.world.isRemote) {
-			this.world.playSound(this.x, this.y, this.z, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.world.rand.nextFloat() - this.world.rand.nextFloat()) * 0.2F) * 0.7F, false);
+	public void finalizeExplosion(boolean spawnParticles) {
+		if (this.world.isClientSide) {
+			this.world.playLocalSound(this.x, this.y, this.z, SoundEvents.GENERIC_EXPLODE, SoundCategory.BLOCKS, 4.0F, (1.0F + (this.world.random.nextFloat() - this.world.random.nextFloat()) * 0.2F) * 0.7F, false);
 		}
 
 		boolean flag = this.mode != Explosion.Mode.NONE;
@@ -65,23 +65,23 @@ public class WitherExplosion extends Explosion {
 		}
 
 		if (flag) {
-			Collections.shuffle(super.getAffectedBlockPositions(), this.world.rand);
+			Collections.shuffle(super.getToBlow(), this.world.random);
 
-			for (BlockPos blockpos : super.getAffectedBlockPositions()) {
+			for (BlockPos blockpos : super.getToBlow()) {
 				BlockState blockstate = this.world.getBlockState(blockpos);
 				if (!blockstate.isAir(this.world, blockpos)) {
-					this.world.getProfiler().startSection("explosion_blocks");
+					this.world.getProfiler().push("explosion_blocks");
 
 					blockstate.onBlockExploded(this.world, blockpos, this);
-					this.world.getProfiler().endSection();
+					this.world.getProfiler().pop();
 				}
 			}
 		}
 
 		if (this.causesFire) {
-			for (BlockPos blockpos2 : super.getAffectedBlockPositions()) {
-				if (this.random.nextInt(3) == 0 && this.world.getBlockState(blockpos2).isAir() && this.world.getBlockState(blockpos2.down()).isOpaqueCube(this.world, blockpos2.down())) {
-					this.world.setBlockState(blockpos2, Blocks.FIRE.getDefaultState());
+			for (BlockPos blockpos2 : super.getToBlow()) {
+				if (this.random.nextInt(3) == 0 && this.world.getBlockState(blockpos2).isAir() && this.world.getBlockState(blockpos2.below()).isSolidRender(this.world, blockpos2.below())) {
+					this.world.setBlockAndUpdate(blockpos2, Blocks.FIRE.defaultBlockState());
 				}
 			}
 		}

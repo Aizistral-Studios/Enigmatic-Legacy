@@ -19,28 +19,28 @@ public abstract class RenderTypes extends RenderType {
     }
 
     public static RenderType unlit(ResourceLocation textureLocation) {
-        State renderState = State.getBuilder()
-                .texture(new TextureState(textureLocation, false, false))
-                .transparency(RenderState.NO_TRANSPARENCY)
-                .alpha(RenderState.DEFAULT_ALPHA)
-                .cull(RenderState.CULL_DISABLED)
-                .lightmap(RenderState.LIGHTMAP_ENABLED)
-                .overlay(RenderState.OVERLAY_ENABLED)
-                .build(true);
-        return RenderType.makeType("enigmatic_entity_unlit", DefaultVertexFormats.ENTITY, GL11.GL_QUADS, 256, true, false, renderState);
+        State renderState = State.builder()
+                .setTextureState(new TextureState(textureLocation, false, false))
+                .setTransparencyState(RenderState.NO_TRANSPARENCY)
+                .setAlphaState(RenderState.DEFAULT_ALPHA)
+                .setCullState(RenderState.NO_CULL)
+                .setLightmapState(RenderState.LIGHTMAP)
+                .setOverlayState(RenderState.OVERLAY)
+                .createCompositeState(true);
+        return RenderType.create("enigmatic_entity_unlit", DefaultVertexFormats.NEW_ENTITY, GL11.GL_QUADS, 256, true, false, renderState);
     }
 
     public static RenderType thyUnlit() {
-        State renderState = State.getBuilder()
-        		.texture(RenderState.BLOCK_SHEET_MIPPED)
-                .transparency(RenderState.LIGHTNING_TRANSPARENCY)
-                .alpha(RenderState.DEFAULT_ALPHA)
-                .cull(RenderState.CULL_DISABLED)
-                .lightmap(RenderState.LIGHTMAP_ENABLED)
-                .overlay(RenderState.OVERLAY_ENABLED)
-                .target(RenderState.field_239236_S_)
-                .build(true);
-        return RenderType.makeType("enigmatic_block_unlit", DefaultVertexFormats.BLOCK, 7, 262144, true, true, renderState);
+        State renderState = State.builder()
+        		.setTextureState(RenderState.BLOCK_SHEET_MIPPED)
+                .setTransparencyState(RenderState.LIGHTNING_TRANSPARENCY)
+                .setAlphaState(RenderState.DEFAULT_ALPHA)
+                .setCullState(RenderState.NO_CULL)
+                .setLightmapState(RenderState.LIGHTMAP)
+                .setOverlayState(RenderState.OVERLAY)
+                .setOutputState(RenderState.TRANSLUCENT_TARGET)
+                .createCompositeState(true);
+        return RenderType.create("enigmatic_block_unlit", DefaultVertexFormats.BLOCK, 7, 262144, true, true, renderState);
     }
 
 }

@@ -93,26 +93,26 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.RARE));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ocean_stone"));
 
-		this.immunityList.add(DamageSource.DROWN.damageType);
+		this.immunityList.add(DamageSource.DROWN.msgId);
 
-		this.resistanceList.put(DamageSource.IN_FIRE.damageType, () -> 2F);
-		this.resistanceList.put(DamageSource.ON_FIRE.damageType, () -> 2F);
-		this.resistanceList.put(DamageSource.LAVA.damageType, () -> 2F);
-		this.resistanceList.put(DamageSource.HOT_FLOOR.damageType, () -> 2F);
+		this.resistanceList.put(DamageSource.IN_FIRE.msgId, () -> 2F);
+		this.resistanceList.put(DamageSource.ON_FIRE.msgId, () -> 2F);
+		this.resistanceList.put(DamageSource.LAVA.msgId, () -> 2F);
+		this.resistanceList.put(DamageSource.HOT_FLOOR.msgId, () -> 2F);
 		this.resistanceList.put("fireball", () -> 2F);
 	}
 
 	private Multimap<Attribute, AttributeModifier> createAttributeMap(PlayerEntity player) {
 		Multimap<Attribute, AttributeModifier> attributesDefault = HashMultimap.create();
 
-		attributesDefault.put(ForgeMod.ENTITY_GRAVITY.get(), new AttributeModifier(UUID.fromString("79e1cc36-fb4e-4c7d-802b-583b8d90648a"), EnigmaticLegacy.MODID+":gravity_bonus", player.areEyesInFluid(FluidTags.WATER) ? -1.0F : 0F, AttributeModifier.Operation.MULTIPLY_TOTAL));
+		attributesDefault.put(ForgeMod.ENTITY_GRAVITY.get(), new AttributeModifier(UUID.fromString("79e1cc36-fb4e-4c7d-802b-583b8d90648a"), EnigmaticLegacy.MODID+":gravity_bonus", player.isEyeInFluid(FluidTags.WATER) ? -1.0F : 0F, AttributeModifier.Operation.MULTIPLY_TOTAL));
 
 		return attributesDefault;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -137,7 +137,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.getDisplayString("key.spellstoneAbility").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.spellstoneAbility").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
@@ -149,8 +149,8 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 		if (SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
-		if (!player.world.getDimensionKey().getLocation().toString().equals("minecraft:the_end") && !player.world.getDimensionKey().getLocation().toString().equals("minecraft:the_nether"))
-			if (!world.getWorldInfo().isThundering()) {
+		if (!player.level.dimension().location().toString().equals("minecraft:the_end") && !player.level.dimension().location().toString().equals("minecraft:the_nether"))
+			if (!world.getLevelData().isThundering()) {
 				boolean paybackReceived = false;
 
 				/*
@@ -176,7 +176,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 
 						int thunderstormTime = (int) (10000 + (Math.random() * 20000));
 
-						serverworld.func_241113_a_(0, thunderstormTime, true, true);
+						serverworld.setWeatherParameters(0, thunderstormTime, true, true);
 						/*
 							info.setWanderingTraderSpawnDelay(delay);
 							info.setRaining(true);
@@ -186,7 +186,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 						 */
 					}
 
-					world.playSound(null, player.getPosition(), SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER, SoundCategory.NEUTRAL, 2.0F, (float) (0.7F + (Math.random() * 0.3D)));
+					world.playSound(null, player.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundCategory.NEUTRAL, 2.0F, (float) (0.7F + (Math.random() * 0.3D)));
 
 					SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
 				}
@@ -198,25 +198,25 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
 		if (living instanceof PlayerEntity) {
 			EnigmaticLegacy.miningCharm.removeNightVisionEffect((PlayerEntity) living, this.nightVisionDuration);
-			living.getAttributeManager().removeModifiers(this.createAttributeMap((PlayerEntity)living));
+			living.getAttributes().removeAttributeModifiers(this.createAttributeMap((PlayerEntity)living));
 		}
 	}
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 
-		if (living instanceof PlayerEntity & !living.world.isRemote)
+		if (living instanceof PlayerEntity & !living.level.isClientSide)
 			if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.oceanStone)) {
 				PlayerEntity player = (PlayerEntity) living;
 
-				if (player.areEyesInFluid(FluidTags.WATER)) {
-					player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
-					player.setAir(300);
+				if (player.isEyeInFluid(FluidTags.WATER)) {
+					player.addEffect(new EffectInstance(Effects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
+					player.setAirSupply(300);
 				} else {
 					EnigmaticLegacy.miningCharm.removeNightVisionEffect(player, this.nightVisionDuration);
 				}
 
-				player.getAttributeManager().reapplyModifiers(this.createAttributeMap(player));
+				player.getAttributes().addTransientAttributeModifiers(this.createAttributeMap(player));
 			}
 
 	}

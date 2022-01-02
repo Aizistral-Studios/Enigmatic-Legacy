@@ -26,11 +26,11 @@ public class PacketSlotUnlocked {
 	  }
 
 	  public static void encode(PacketSlotUnlocked msg, PacketBuffer buf) {
-		  buf.writeString(msg.type);
+		  buf.writeUtf(msg.type);
 	  }
 
 	  public static PacketSlotUnlocked decode(PacketBuffer buf) {
-	    return new PacketSlotUnlocked(buf.readString());
+	    return new PacketSlotUnlocked(buf.readUtf());
 	 }
 
 	  public static void handle(PacketSlotUnlocked msg, Supplier<NetworkEvent.Context> ctx) {

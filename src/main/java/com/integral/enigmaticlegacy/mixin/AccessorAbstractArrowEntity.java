@@ -8,7 +8,7 @@ import net.minecraft.entity.projectile.AbstractArrowEntity;
 @Mixin(AbstractArrowEntity.class)
 public interface AccessorAbstractArrowEntity {
 
-	@Invoker("func_213870_w")
+	@Invoker("resetPiercedEntities")
 	public abstract void clearHitEntities();
 
 }

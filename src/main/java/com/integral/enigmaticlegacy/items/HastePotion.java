@@ -38,22 +38,22 @@ public class HastePotion extends ItemBase {
 	public List<EffectInstance> effectList;
 
 	public HastePotion(Rarity rarity, int duration, int amplifier) {
-		super(ItemBase.getDefaultProperties().rarity(rarity).maxStackSize(1).group(null));
+		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(1).tab(null));
 
 		this.effectList = new ArrayList<EffectInstance>();
-		this.effectList.add(new EffectInstance(Effects.HASTE, duration, amplifier, false, true));
+		this.effectList.add(new EffectInstance(Effects.DIG_SPEED, duration, amplifier, false, true));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		SuperpositionHandler.addPotionTooltip(this.effectList, stack, list, 1.0F);
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
 		PlayerEntity player = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
-		if (player == null || !player.abilities.isCreativeMode) {
+		if (player == null || !player.abilities.instabuild) {
 			stack.shrink(1);
 		}
 
@@ -61,18 +61,18 @@ public class HastePotion extends ItemBase {
 			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
 		}
 
-		if (!worldIn.isRemote && player != null) {
+		if (!worldIn.isClientSide && player != null) {
 			for (EffectInstance instance : this.effectList) {
-				player.addPotionEffect(new EffectInstance(instance));
+				player.addEffect(new EffectInstance(instance));
 			}
 		}
 
-		if (player == null || !player.abilities.isCreativeMode) {
+		if (player == null || !player.abilities.instabuild) {
 			if (stack.isEmpty())
 				return new ItemStack(Items.GLASS_BOTTLE);
 
 			if (player != null) {
-				player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
+				player.inventory.add(new ItemStack(Items.GLASS_BOTTLE));
 			}
 		}
 
@@ -85,19 +85,19 @@ public class HastePotion extends ItemBase {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.DRINK;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		playerIn.setActiveHand(handIn);
-		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		playerIn.startUsingItem(handIn);
+		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getItemInHand(handIn));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return true;
 	}
 

@@ -43,8 +43,8 @@ public class ComplexBrewingRecipe extends AbstractBrewingRecipe {
     }
 
     public boolean isInput(@Nonnull ItemStack stack, Ingredient ingredient) {
-    	for (ItemStack testStack : ingredient.getMatchingStacks()) {
-    		if (testStack.getItem().equals(stack.getItem()) && PotionUtils.getPotionFromItem(testStack).equals(PotionUtils.getPotionFromItem(stack)) && PotionHelper.getAdvancedPotion(testStack).equals(PotionHelper.getAdvancedPotion(stack)))
+    	for (ItemStack testStack : ingredient.getItems()) {
+    		if (testStack.getItem().equals(stack.getItem()) && PotionUtils.getPotion(testStack).equals(PotionUtils.getPotion(stack)) && PotionHelper.getAdvancedPotion(testStack).equals(PotionHelper.getAdvancedPotion(stack)))
     			return true;
     	}
 

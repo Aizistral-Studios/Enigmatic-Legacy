@@ -42,7 +42,7 @@ public abstract class ItemBaseArmor extends ArmorItem {
 	@OnlyIn(Dist.CLIENT)
 	@SuppressWarnings("unchecked")
 	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A original) {
-		return (A) this.model.getValue();
+		return (A) this.model.get();
 		//return super.getArmorModel(entityLiving, itemStack, armorSlot, original);
 	}
 
@@ -50,7 +50,7 @@ public abstract class ItemBaseArmor extends ArmorItem {
 	@Nullable
 	public BipedModel<?> provideArmorModelForSlot(EquipmentSlotType slot) {
 		BipedModel<LivingEntity> model = new BipedModel<LivingEntity>(0.5F);
-		model.setVisible(false);
+		model.setAllVisible(false);
 		return model;
 	}
 
@@ -64,7 +64,7 @@ public abstract class ItemBaseArmor extends ArmorItem {
 		if (player == null)
 			return false;
 
-		for (ItemStack stack : player.getArmorInventoryList()) {
+		for (ItemStack stack : player.getArmorSlots()) {
 			if (!(stack.getItem().getClass() == this.getClass()))
 				return false;
 		}
@@ -75,8 +75,8 @@ public abstract class ItemBaseArmor extends ArmorItem {
 	public static Properties getDefaultProperties() {
 		Properties props = new Item.Properties();
 
-		props.group(EnigmaticLegacy.enigmaticTab);
-		props.maxStackSize(1);
+		props.tab(EnigmaticLegacy.enigmaticTab);
+		props.stacksTo(1);
 		props.rarity(Rarity.COMMON);
 
 		return props;

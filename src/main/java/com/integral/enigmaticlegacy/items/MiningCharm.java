@@ -71,7 +71,7 @@ public class MiningCharm extends ItemBaseCurio {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		TranslationTextComponent mode = new TranslationTextComponent("tooltip.enigmaticlegacy.enabled");
 
@@ -99,11 +99,11 @@ public class MiningCharm extends ItemBaseCurio {
 	}
 
 	public void removeNightVisionEffect(PlayerEntity player, int duration) {
-		if (player.getActivePotionEffect(Effects.NIGHT_VISION) != null) {
-			EffectInstance effect = player.getActivePotionEffect(Effects.NIGHT_VISION);
+		if (player.getEffect(Effects.NIGHT_VISION) != null) {
+			EffectInstance effect = player.getEffect(Effects.NIGHT_VISION);
 
 			if (effect.getDuration() <= (duration - 1)) {
-				player.removePotionEffect(Effects.NIGHT_VISION);
+				player.removeEffect(Effects.NIGHT_VISION);
 			}
 
 		}
@@ -112,13 +112,13 @@ public class MiningCharm extends ItemBaseCurio {
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 
-		if (living instanceof PlayerEntity & !living.world.isRemote)
+		if (living instanceof PlayerEntity & !living.level.isClientSide)
 			if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.miningCharm)) {
 				PlayerEntity player = (PlayerEntity) living;
 
-				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) && player.getPosY() < 50 && !player.world.getDimensionKey().getLocation().toString().equals("minecraft:the_nether") && !player.world.getDimensionKey().getLocation().toString().equals("minecraft:the_end") && !player.areEyesInFluid(FluidTags.WATER) && !player.world.canBlockSeeSky(player.getPosition()) && player.world.getNeighborAwareLightSubtracted(player.getPosition(), 0) <= 8) {
+				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) && player.getY() < 50 && !player.level.dimension().location().toString().equals("minecraft:the_nether") && !player.level.dimension().location().toString().equals("minecraft:the_end") && !player.isEyeInFluid(FluidTags.WATER) && !player.level.canSeeSkyFromBelowWater(player.blockPosition()) && player.level.getMaxLocalRawBrightness(player.blockPosition(), 0) <= 8) {
 
-					player.addPotionEffect(new EffectInstance(Effects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
+					player.addEffect(new EffectInstance(Effects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
 				} else {
 					this.removeNightVisionEffect(player, this.nightVisionDuration);
 				}
@@ -127,19 +127,19 @@ public class MiningCharm extends ItemBaseCurio {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand handIn) {
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand handIn) {
 
-		ItemStack stack = player.getHeldItem(handIn);
+		ItemStack stack = player.getItemInHand(handIn);
 
 		if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
 			ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", false);
-			world.playSound(null, player.getPosition(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 		} else {
 			ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", true);
-			world.playSound(null, player.getPosition(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 		}
 
-		player.swingArm(handIn);
+		player.swing(handIn);
 
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);
 

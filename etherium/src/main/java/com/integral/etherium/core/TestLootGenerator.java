@@ -53,52 +53,52 @@ public class TestLootGenerator extends Item implements IVanishable {
 		}
 		 */
 
-		this.lootList.add(LootTables.CHESTS_SPAWN_BONUS_CHEST);
-		this.lootList.add(LootTables.CHESTS_END_CITY_TREASURE);
-		this.lootList.add(LootTables.CHESTS_SIMPLE_DUNGEON);
-		this.lootList.add(LootTables.CHESTS_ABANDONED_MINESHAFT);
-		this.lootList.add(LootTables.CHESTS_NETHER_BRIDGE);
-		this.lootList.add(LootTables.CHESTS_STRONGHOLD_LIBRARY);
-		this.lootList.add(LootTables.CHESTS_STRONGHOLD_CROSSING);
-		this.lootList.add(LootTables.CHESTS_STRONGHOLD_CORRIDOR);
-		this.lootList.add(LootTables.CHESTS_DESERT_PYRAMID);
-		this.lootList.add(LootTables.CHESTS_JUNGLE_TEMPLE);
-		this.lootList.add(LootTables.CHESTS_JUNGLE_TEMPLE_DISPENSER);
-		this.lootList.add(LootTables.CHESTS_IGLOO_CHEST);
-		this.lootList.add(LootTables.CHESTS_WOODLAND_MANSION);
-		this.lootList.add(LootTables.CHESTS_UNDERWATER_RUIN_SMALL);
-		this.lootList.add(LootTables.CHESTS_UNDERWATER_RUIN_BIG);
-		this.lootList.add(LootTables.CHESTS_BURIED_TREASURE);
-		this.lootList.add(LootTables.CHESTS_SHIPWRECK_MAP);
-		this.lootList.add(LootTables.CHESTS_SHIPWRECK_SUPPLY);
-		this.lootList.add(LootTables.CHESTS_SHIPWRECK_TREASURE);
-		this.lootList.add(LootTables.CHESTS_PILLAGER_OUTPOST);
+		this.lootList.add(LootTables.SPAWN_BONUS_CHEST);
+		this.lootList.add(LootTables.END_CITY_TREASURE);
+		this.lootList.add(LootTables.SIMPLE_DUNGEON);
+		this.lootList.add(LootTables.ABANDONED_MINESHAFT);
+		this.lootList.add(LootTables.NETHER_BRIDGE);
+		this.lootList.add(LootTables.STRONGHOLD_LIBRARY);
+		this.lootList.add(LootTables.STRONGHOLD_CROSSING);
+		this.lootList.add(LootTables.STRONGHOLD_CORRIDOR);
+		this.lootList.add(LootTables.DESERT_PYRAMID);
+		this.lootList.add(LootTables.JUNGLE_TEMPLE);
+		this.lootList.add(LootTables.JUNGLE_TEMPLE_DISPENSER);
+		this.lootList.add(LootTables.IGLOO_CHEST);
+		this.lootList.add(LootTables.WOODLAND_MANSION);
+		this.lootList.add(LootTables.UNDERWATER_RUIN_SMALL);
+		this.lootList.add(LootTables.UNDERWATER_RUIN_BIG);
+		this.lootList.add(LootTables.BURIED_TREASURE);
+		this.lootList.add(LootTables.SHIPWRECK_MAP);
+		this.lootList.add(LootTables.SHIPWRECK_SUPPLY);
+		this.lootList.add(LootTables.SHIPWRECK_TREASURE);
+		this.lootList.add(LootTables.PILLAGER_OUTPOST);
 		this.lootList.add(LootTables.BASTION_TREASURE);
 		this.lootList.add(LootTables.BASTION_OTHER);
 		this.lootList.add(LootTables.BASTION_BRIDGE);
 		this.lootList.add(LootTables.BASTION_HOGLIN_STABLE);
 		this.lootList.add(LootTables.RUINED_PORTAL);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_WEAPONSMITH);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_TOOLSMITH);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_ARMORER);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_CARTOGRAPHER);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_MASON);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_SHEPHERD);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_BUTCHER);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_FLETCHER);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_FISHER);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_TANNERY);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_TEMPLE);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_DESERT_HOUSE);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_PLAINS_HOUSE);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_TAIGA_HOUSE);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_SNOWY_HOUSE);
-		this.lootList.add(LootTables.CHESTS_VILLAGE_VILLAGE_SAVANNA_HOUSE);
+		this.lootList.add(LootTables.VILLAGE_WEAPONSMITH);
+		this.lootList.add(LootTables.VILLAGE_TOOLSMITH);
+		this.lootList.add(LootTables.VILLAGE_ARMORER);
+		this.lootList.add(LootTables.VILLAGE_CARTOGRAPHER);
+		this.lootList.add(LootTables.VILLAGE_MASON);
+		this.lootList.add(LootTables.VILLAGE_SHEPHERD);
+		this.lootList.add(LootTables.VILLAGE_BUTCHER);
+		this.lootList.add(LootTables.VILLAGE_FLETCHER);
+		this.lootList.add(LootTables.VILLAGE_FISHER);
+		this.lootList.add(LootTables.VILLAGE_TANNERY);
+		this.lootList.add(LootTables.VILLAGE_TEMPLE);
+		this.lootList.add(LootTables.VILLAGE_DESERT_HOUSE);
+		this.lootList.add(LootTables.VILLAGE_PLAINS_HOUSE);
+		this.lootList.add(LootTables.VILLAGE_TAIGA_HOUSE);
+		this.lootList.add(LootTables.VILLAGE_SNOWY_HOUSE);
+		this.lootList.add(LootTables.VILLAGE_SAVANNA_HOUSE);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGenerator1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGenerator2");
@@ -117,32 +117,32 @@ public class TestLootGenerator extends Item implements IVanishable {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGeneratorCurrent");
 
-		list.add(new StringTextComponent("" + this.lootList.get(stack.getDamage())).mergeStyle(TextFormatting.GOLD));
+		list.add(new StringTextComponent("" + this.lootList.get(stack.getDamageValue())).withStyle(TextFormatting.GOLD));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 
-		ItemStack itemstack = player.getHeldItem(hand);
+		ItemStack itemstack = player.getItemInHand(hand);
 
 		if (!player.isCrouching()) {
-			player.setActiveHand(hand);
+			player.startUsingItem(hand);
 
-			if (itemstack.getDamage() < this.lootList.size() - 1) {
-				itemstack.setDamage(itemstack.getDamage() + 1);
+			if (itemstack.getDamageValue() < this.lootList.size() - 1) {
+				itemstack.setDamageValue(itemstack.getDamageValue() + 1);
 			} else {
-				itemstack.setDamage(0);
+				itemstack.setDamageValue(0);
 			}
 
-			player.swingArm(hand);
+			player.swing(hand);
 
 		} else {
-			if (itemstack.getDamage() > 0) {
-				itemstack.setDamage(itemstack.getDamage() - 1);
+			if (itemstack.getDamageValue() > 0) {
+				itemstack.setDamageValue(itemstack.getDamageValue() - 1);
 			} else {
-				itemstack.setDamage(this.lootList.size() - 1);
+				itemstack.setDamageValue(this.lootList.size() - 1);
 			}
-			player.swingArm(hand);
+			player.swing(hand);
 		}
 
 		return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
@@ -150,32 +150,32 @@ public class TestLootGenerator extends Item implements IVanishable {
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResultType useOn(ItemUseContext context) {
 		PlayerEntity player = context.getPlayer();
-		World world = context.getWorld();
-		ItemStack stack = context.getItem();
+		World world = context.getLevel();
+		ItemStack stack = context.getItemInHand();
 
-		if (world.isRemote)
+		if (world.isClientSide)
 			return ActionResultType.SUCCESS;
 
-		if (world.getBlockState(context.getPos()).hasTileEntity()) {
-			if (world.getTileEntity(context.getPos()) instanceof ChestTileEntity && player.isCrouching()) {
-				ChestTileEntity chest = (ChestTileEntity) world.getTileEntity(context.getPos());
-				Direction dir = context.getFace();
+		if (world.getBlockState(context.getClickedPos()).hasTileEntity()) {
+			if (world.getBlockEntity(context.getClickedPos()) instanceof ChestTileEntity && player.isCrouching()) {
+				ChestTileEntity chest = (ChestTileEntity) world.getBlockEntity(context.getClickedPos());
+				Direction dir = context.getClickedFace();
 
 				if (dir == Direction.UP) {
-					chest.setLootTable(this.lootList.get(stack.getDamage()), this.lootRandomizer.nextLong());
-					chest.fillWithLoot(player);
-				} else if (dir == Direction.DOWN && !player.getCooldownTracker().hasCooldown(this)) {
-					player.getCooldownTracker().setCooldown(this, 40);
+					chest.setLootTable(this.lootList.get(stack.getDamageValue()), this.lootRandomizer.nextLong());
+					chest.unpackLootTable(player);
+				} else if (dir == Direction.DOWN && !player.getCooldowns().isOnCooldown(this)) {
+					player.getCooldowns().addCooldown(this, 40);
 					HashMap<Item, Integer> lootMap = new HashMap<Item, Integer>();
 
 					for (int counter = 0; counter < 32768; counter++) {
-						chest.setLootTable(this.lootList.get(stack.getDamage()), this.lootRandomizer.nextLong());
-						chest.fillWithLoot(player);
+						chest.setLootTable(this.lootList.get(stack.getDamageValue()), this.lootRandomizer.nextLong());
+						chest.unpackLootTable(player);
 
-						for (int slot = 0; slot < chest.getSizeInventory(); slot++) {
-							ItemStack generatedStack = chest.getStackInSlot(slot);
+						for (int slot = 0; slot < chest.getContainerSize(); slot++) {
+							ItemStack generatedStack = chest.getItem(slot);
 							Item generatedItem = generatedStack.getItem();
 							int amount = generatedStack.getCount();
 
@@ -190,18 +190,18 @@ public class TestLootGenerator extends Item implements IVanishable {
 							}
 						}
 
-						chest.clear();
+						chest.clearContent();
 					}
 
 					EtheriumMod.logger.info("Estimated generation complete in 32768 instances, results:");
 					for (Item theItem : lootMap.keySet()) {
-						EtheriumMod.logger.info("Item: " + theItem.getDisplayName(new ItemStack(theItem)).getString() + ", Amount: " + lootMap.get(theItem));
+						EtheriumMod.logger.info("Item: " + theItem.getName(new ItemStack(theItem)).getString() + ", Amount: " + lootMap.get(theItem));
 					}
 
-					player.sendMessage(new TranslationTextComponent("message.enigmaticlegacy.gen_sim_complete").mergeStyle(TextFormatting.DARK_PURPLE), player.getUniqueID());
+					player.sendMessage(new TranslationTextComponent("message.enigmaticlegacy.gen_sim_complete").withStyle(TextFormatting.DARK_PURPLE), player.getUUID());
 
 				} else {
-					chest.clear();
+					chest.clearContent();
 				}
 
 				return ActionResultType.SUCCESS;

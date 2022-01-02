@@ -38,7 +38,7 @@ public class PacketGenericParticleEffect {
 		buf.writeDouble(msg.pos.z);
 		buf.writeInt(msg.num);
 		buf.writeBoolean(msg.check);
-		buf.writeString(msg.effect.toString(), 512);
+		buf.writeUtf(msg.effect.toString(), 512);
 	}
 
 	public static PacketGenericParticleEffect decode(PacketBuffer buf) {
@@ -51,7 +51,7 @@ public class PacketGenericParticleEffect {
 		Effect effect;
 
 		try {
-			effect = Effect.valueOf(buf.readString(512));
+			effect = Effect.valueOf(buf.readUtf(512));
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			effect = Effect.NONE;
@@ -78,11 +78,11 @@ public class PacketGenericParticleEffect {
 				double distHearts = 0.5;
 
 				for (int counter = 0; counter < 4; counter++) {
-					player.world.addParticle(ParticleTypes.ANGRY_VILLAGER, true, pos.x+SuperpositionHandler.getRandomNegative()*distHearts, pos.y+SuperpositionHandler.getRandomNegative()*distHearts, pos.z+SuperpositionHandler.getRandomNegative()*distHearts, SuperpositionHandler.getRandomNegative() * 1.05, SuperpositionHandler.getRandomNegative() * 1.05, SuperpositionHandler.getRandomNegative() * 1.05);
+					player.level.addParticle(ParticleTypes.ANGRY_VILLAGER, true, pos.x+SuperpositionHandler.getRandomNegative()*distHearts, pos.y+SuperpositionHandler.getRandomNegative()*distHearts, pos.z+SuperpositionHandler.getRandomNegative()*distHearts, SuperpositionHandler.getRandomNegative() * 1.05, SuperpositionHandler.getRandomNegative() * 1.05, SuperpositionHandler.getRandomNegative() * 1.05);
 				}
 
 				for (int counter = 0; counter < 12; counter++) {
-					player.world.addParticle(ParticleTypes.LARGE_SMOKE, true, pos.x, pos.y, pos.z, SuperpositionHandler.getRandomNegative() * dist, SuperpositionHandler.getRandomNegative() * dist, SuperpositionHandler.getRandomNegative() * dist);
+					player.level.addParticle(ParticleTypes.LARGE_SMOKE, true, pos.x, pos.y, pos.z, SuperpositionHandler.getRandomNegative() * dist, SuperpositionHandler.getRandomNegative() * dist, SuperpositionHandler.getRandomNegative() * dist);
 				}
 
 			}

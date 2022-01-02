@@ -70,7 +70,7 @@ public class RevelationTome extends ItemBase implements IVanishable {
 	public final String persistantPointsTag;
 
 	public RevelationTome(Rarity rarity, TomeType type, String registryName) {
-		super(ItemBase.getDefaultProperties().rarity(rarity).maxStackSize(1));
+		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(1));
 		this.theType = type;
 		this.persistantPointsTag = "enigmaticlegacy.revelation_points_" + this.theType.typeName;
 
@@ -80,15 +80,15 @@ public class RevelationTome extends ItemBase implements IVanishable {
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		if (entityIn instanceof ServerPlayerEntity) {
-			ItemNBTHelper.setUUID(stack, lastHolderTag, entityIn.getUniqueID());
+			ItemNBTHelper.setUUID(stack, lastHolderTag, entityIn.getUUID());
 		}
 
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
-		player.setActiveHand(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
+		player.startUsingItem(hand);
 
 		if (!RevelationTome.havePlayerRead(player, stack)) {
 			RevelationTome.markRead(player, stack);
@@ -102,14 +102,14 @@ public class RevelationTome extends ItemBase implements IVanishable {
 				ExperienceHelper.addPlayerXP(player, xp);
 				SuperpositionHandler.setPersistentInteger(player, this.persistantPointsTag, currentPoints + revelation);
 
-				world.playSound(null, new BlockPos(player.getPositionVec()), EnigmaticLegacy.LEARN, SoundCategory.PLAYERS, 0.75f, 1.0f);
+				world.playSound(null, new BlockPos(player.position()), EnigmaticLegacy.LEARN, SoundCategory.PLAYERS, 0.75f, 1.0f);
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayerEntity) player, this.theType, currentPoints + revelation);
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayerEntity) player, TomeType.GENERIC, RevelationTome.getGenericPoints(player));
 			} else {
 				EnigmaticLegacy.proxy.pushRevelationToast(stack, xp, revelation);
 			}
 
-			player.swingArm(hand);
+			player.swing(hand);
 			return new ActionResult<>(ActionResultType.SUCCESS, stack);
 		}
 
@@ -119,7 +119,7 @@ public class RevelationTome extends ItemBase implements IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTome1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTome2");
@@ -168,7 +168,7 @@ public class RevelationTome extends ItemBase implements IVanishable {
 			ListNBT list = (ListNBT) uncheckedList;
 
 			for (INBT entry : list) {
-				if (entry.getString().equals(player.getGameProfile().getName())) {
+				if (entry.getAsString().equals(player.getGameProfile().getName())) {
 					haveReadBefore = true;
 					break;
 				}

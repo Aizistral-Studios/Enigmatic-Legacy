@@ -39,14 +39,14 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 	public PotionType potionType;
 
 	public UltimatePotionBase(Rarity rarity, PotionType type) {
-		super(ItemBase.getDefaultProperties().rarity(rarity).maxStackSize(1).group(EnigmaticLegacy.enigmaticPotionTab));
+		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(1).tab(EnigmaticLegacy.enigmaticPotionTab));
 
 		this.potionType = type;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return true;
 	}
 
@@ -59,19 +59,19 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 	}
 
 	@Override
-	public String getTranslationKey(ItemStack stack) {
-		return this.getTranslationKey() + ".effect." + PotionHelper.getAdvancedPotion(stack).getId();
+	public String getDescriptionId(ItemStack stack) {
+		return this.getDescriptionId() + ".effect." + PotionHelper.getAdvancedPotion(stack).getId();
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		SuperpositionHandler.addPotionTooltip(PotionHelper.getEffects(stack), stack, list, 1.0F);
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		if (this.isInGroup(group)) {
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+		if (this.allowdedIn(group)) {
 
 			if (this.potionType == PotionType.COMMON) {
 				for (AdvancedPotion potion : EnigmaticLegacy.commonPotionTypes) {
@@ -91,10 +91,10 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
 		PlayerEntity playerentity = entityLiving instanceof PlayerEntity ? (PlayerEntity) entityLiving : null;
 		List<EffectInstance> effectList = PotionHelper.getEffects(stack);
-		if (playerentity == null || !playerentity.abilities.isCreativeMode) {
+		if (playerentity == null || !playerentity.abilities.instabuild) {
 			stack.shrink(1);
 		}
 
@@ -102,26 +102,26 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) playerentity, stack);
 		}
 
-		if (!worldIn.isRemote) {
+		if (!worldIn.isClientSide) {
 			for (EffectInstance effectinstance : effectList) {
-				if (effectinstance.getPotion().isInstant()) {
-					effectinstance.getPotion().affectEntity(playerentity, playerentity, entityLiving, effectinstance.getAmplifier(), 1.0D);
+				if (effectinstance.getEffect().isInstantenous()) {
+					effectinstance.getEffect().applyInstantenousEffect(playerentity, playerentity, entityLiving, effectinstance.getAmplifier(), 1.0D);
 				} else {
-					entityLiving.addPotionEffect(new EffectInstance(effectinstance));
+					entityLiving.addEffect(new EffectInstance(effectinstance));
 				}
 			}
 		}
 
 		if (playerentity != null) {
-			playerentity.addStat(Stats.ITEM_USED.get(this));
+			playerentity.awardStat(Stats.ITEM_USED.get(this));
 		}
 
-		if (playerentity == null || !playerentity.abilities.isCreativeMode) {
+		if (playerentity == null || !playerentity.abilities.instabuild) {
 			if (stack.isEmpty())
 				return new ItemStack(Items.GLASS_BOTTLE);
 
 			if (playerentity != null) {
-				playerentity.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
+				playerentity.inventory.add(new ItemStack(Items.GLASS_BOTTLE));
 			}
 		}
 
@@ -134,14 +134,14 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.DRINK;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		playerIn.setActiveHand(handIn);
-		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		playerIn.startUsingItem(handIn);
+		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getItemInHand(handIn));
 	}
 
 	@Override

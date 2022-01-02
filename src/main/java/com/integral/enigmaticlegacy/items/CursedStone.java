@@ -18,12 +18,12 @@ import net.minecraft.world.World;
 public class CursedStone extends ItemBase implements ICursed {
 
 	public CursedStone() {
-		super(getDefaultProperties().rarity(Rarity.EPIC).isImmuneToFire().maxStackSize(1));
+		super(getDefaultProperties().rarity(Rarity.EPIC).fireResistant().stacksTo(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "cursed_stone"));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedStone1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedStone2");

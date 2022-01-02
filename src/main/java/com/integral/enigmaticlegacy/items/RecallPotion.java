@@ -32,13 +32,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class RecallPotion extends ItemBasePotion {
 
 	public RecallPotion() {
-		super(getDefaultProperties().maxStackSize(1).rarity(Rarity.RARE));
+		super(getDefaultProperties().stacksTo(1).rarity(Rarity.RARE));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "recall_potion"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.recallPotion1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.recallPotion2");

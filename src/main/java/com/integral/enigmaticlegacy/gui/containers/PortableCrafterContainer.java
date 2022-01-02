@@ -12,7 +12,7 @@ public class PortableCrafterContainer extends WorkbenchContainer {
     }
 
     @Override
-    public boolean canInteractWith(PlayerEntity playerIn) {
+    public boolean stillValid(PlayerEntity playerIn) {
         return true;
     }
 

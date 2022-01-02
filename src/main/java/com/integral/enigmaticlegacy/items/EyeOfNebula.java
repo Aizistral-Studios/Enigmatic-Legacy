@@ -82,14 +82,14 @@ public class EyeOfNebula extends ItemSpellstoneCurio implements ISpellstone {
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "eye_of_nebula"));
 
 		Supplier<Float> magicResistanceSupplier = () -> magicResistance.getValue().asModifierInverted();
-		this.resistanceList.put(DamageSource.MAGIC.getDamageType(), magicResistanceSupplier);
-		this.resistanceList.put(DamageSource.DRAGON_BREATH.getDamageType(), magicResistanceSupplier);
-		this.resistanceList.put(DamageSource.WITHER.getDamageType(), magicResistanceSupplier);
+		this.resistanceList.put(DamageSource.MAGIC.getMsgId(), magicResistanceSupplier);
+		this.resistanceList.put(DamageSource.DRAGON_BREATH.getMsgId(), magicResistanceSupplier);
+		this.resistanceList.put(DamageSource.WITHER.getMsgId(), magicResistanceSupplier);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -109,7 +109,7 @@ public class EyeOfNebula extends ItemSpellstoneCurio implements ISpellstone {
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.getDisplayString("key.spellstoneAbility").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.spellstoneAbility").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
@@ -138,14 +138,14 @@ public class EyeOfNebula extends ItemSpellstoneCurio implements ISpellstone {
 
 			dir = targetPos.add(dir);
 
-			world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 128, player.world.getDimensionKey())), new PacketPortalParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 72, 1.0F, false));
+			world.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketPortalParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 72, 1.0F, false));
 
-			player.setPositionAndUpdate(dir.x, target.getPosY() + 0.25D, dir.z);
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player), new PacketPlayerSetlook(target.getPosX(), target.getPosY() - 1.0D + (target.getHeight() / 2), target.getPosZ()));
+			player.teleportTo(dir.x, target.getY() + 0.25D, dir.z);
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player), new PacketPlayerSetlook(target.getX(), target.getY() - 1.0D + (target.getBbHeight() / 2), target.getZ()));
 
-			world.playSound(null, player.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 128, player.world.getDimensionKey())), new PacketRecallParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 24, false));
+			world.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketRecallParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 24, false));
 
 			SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
 		}

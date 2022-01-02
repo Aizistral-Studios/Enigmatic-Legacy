@@ -21,7 +21,7 @@ public class LootFunctionRevelation implements ILootFunction {
 	}
 
 	@Override
-	public LootFunctionType getFunctionType() {
+	public LootFunctionType getType() {
 		//return LootFunctionManager.ENCHANT_WITH_LEVELS;
 		EnigmaticLegacy.logger.info("Substituting LootFunctionType with null...");
 
@@ -36,7 +36,7 @@ public class LootFunctionRevelation implements ILootFunction {
 	@Override
 	public ItemStack apply(ItemStack stack, LootContext context) {
 		if (stack.getItem() instanceof RevelationTome)
-			stack.setTag(((RevelationTome)stack.getItem()).createTome(this.randomPoints.generateInt(context.getRandom()), this.randomXP.generateInt(context.getRandom())).getTag().copy());
+			stack.setTag(((RevelationTome)stack.getItem()).createTome(this.randomPoints.getInt(context.getRandom()), this.randomXP.getInt(context.getRandom())).getTag().copy());
 
 		return stack;
 	}
@@ -55,7 +55,7 @@ public class LootFunctionRevelation implements ILootFunction {
 		}
 
 		@Override
-		protected LootFunctionRevelation.Builder doCast() {
+		protected LootFunctionRevelation.Builder getThis() {
 			return this;
 		}
 

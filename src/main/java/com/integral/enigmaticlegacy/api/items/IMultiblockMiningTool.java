@@ -26,8 +26,8 @@ public interface IMultiblockMiningTool {
 		if (stack.getItem() instanceof IMultiblockMiningTool) {
 			ItemNBTHelper.setBoolean(stack, "MultiblockEffectsEnabled", true);
 
-			if (!player.world.isRemote) {
-				player.world.playSound(null, player.getPosition(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+			if (!player.level.isClientSide) {
+				player.level.playSound(null, player.blockPosition(), EnigmaticLegacy.HHON, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 
@@ -37,8 +37,8 @@ public interface IMultiblockMiningTool {
 		if (stack.getItem() instanceof IMultiblockMiningTool) {
 			ItemNBTHelper.setBoolean(stack, "MultiblockEffectsEnabled", false);
 
-			if (!player.world.isRemote) {
-				player.world.playSound(null, player.getPosition(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+			if (!player.level.isClientSide) {
+				player.level.playSound(null, player.blockPosition(), EnigmaticLegacy.HHOFF, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 	}

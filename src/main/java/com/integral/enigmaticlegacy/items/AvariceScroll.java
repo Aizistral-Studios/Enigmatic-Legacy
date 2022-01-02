@@ -42,13 +42,13 @@ public class AvariceScroll extends ItemBaseCurio implements ICursed {
 		builder.popPrefix();
 	}
 	public AvariceScroll() {
-		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1).isImmuneToFire());
+		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "avarice_scroll"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {

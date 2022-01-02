@@ -56,7 +56,7 @@ public class SuperMagnetRing extends MagnetRing {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -71,16 +71,16 @@ public class SuperMagnetRing extends MagnetRing {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (invertShift.getValue() ? !living.isCrouching() : living.isCrouching() || living.world.isRemote || !(living instanceof PlayerEntity))
+		if (invertShift.getValue() ? !living.isCrouching() : living.isCrouching() || living.level.isClientSide || !(living instanceof PlayerEntity))
 			return;
 
 		PlayerEntity player = (PlayerEntity) living;
 
-		double x = living.getPosX();
-		double y = living.getPosY() + 0.75;
-		double z = living.getPosZ();
+		double x = living.getX();
+		double y = living.getY() + 0.75;
+		double z = living.getZ();
 
-		List<ItemEntity> items = living.world.getEntitiesWithinAABB(ItemEntity.class, new AxisAlignedBB(x - range.getValue(), y - range.getValue(), z - range.getValue(), x + range.getValue(), y + range.getValue(), z + range.getValue()));
+		List<ItemEntity> items = living.level.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(x - range.getValue(), y - range.getValue(), z - range.getValue(), x + range.getValue(), y + range.getValue(), z + range.getValue()));
 		int pulled = 0;
 		for (ItemEntity item : items)
 			if (this.canPullItem(item)) {
@@ -99,8 +99,8 @@ public class SuperMagnetRing extends MagnetRing {
 					item.world.playSound(null, item.getPosition(), SoundEvents.ENTITY_ENDERMAN_TELEPORT, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 				 */
 
-				item.setNoPickupDelay();
-				item.onCollideWithPlayer(player);
+				item.setNoPickUpDelay();
+				item.playerTouch(player);
 
 				pulled++;
 			}

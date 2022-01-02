@@ -39,7 +39,7 @@ public class PacketConfirmTeleportation {
 			//System.out.println("Illuminati confirmed");
 
 			for (int counter = 0; counter <= 32; counter++) {
-				if (SuperpositionHandler.validTeleportRandomly(playerServ, playerServ.world, (int) EyeOfNebula.dodgeRange.getValue())) {
+				if (SuperpositionHandler.validTeleportRandomly(playerServ, playerServ.level, (int) EyeOfNebula.dodgeRange.getValue())) {
 					break;
 				}
 			}

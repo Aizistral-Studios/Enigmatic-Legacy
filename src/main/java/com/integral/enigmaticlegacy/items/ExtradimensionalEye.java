@@ -31,13 +31,13 @@ public class ExtradimensionalEye extends ItemBase implements IVanishable {
 	public float range = 3.0F;
 
 	public ExtradimensionalEye() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON).maxStackSize(1));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON).stacksTo(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "extradimensional_eye"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEye1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEye2");
@@ -78,16 +78,16 @@ public class ExtradimensionalEye extends ItemBase implements IVanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
 
 		if (playerIn.isCrouching() && ItemNBTHelper.getString(itemstack, "BoundDimension", null) == null) {
-			ItemNBTHelper.setDouble(itemstack, "BoundX", playerIn.getPosX());
-			ItemNBTHelper.setDouble(itemstack, "BoundY", playerIn.getPosY());
-			ItemNBTHelper.setDouble(itemstack, "BoundZ", playerIn.getPosZ());
+			ItemNBTHelper.setDouble(itemstack, "BoundX", playerIn.getX());
+			ItemNBTHelper.setDouble(itemstack, "BoundY", playerIn.getY());
+			ItemNBTHelper.setDouble(itemstack, "BoundZ", playerIn.getZ());
 
-			ItemNBTHelper.setString(itemstack, "BoundDimension", playerIn.world.getDimensionKey().getLocation().toString());
-			playerIn.swingArm(handIn);
+			ItemNBTHelper.setString(itemstack, "BoundDimension", playerIn.level.dimension().location().toString());
+			playerIn.swing(handIn);
 			return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
 		}
 

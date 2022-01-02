@@ -33,47 +33,47 @@ import net.minecraft.world.spawner.WorldEntitySpawner;
 public class MixinPhantomSpawner {
 	private int ticksUntilSpawn = 0;
 
-	@Inject(at = @At("RETURN"), method = "func_230253_a_", cancellable = true)
+	@Inject(at = @At("RETURN"), method = "tick", cancellable = true)
 	private void onHandlePhantomSpawns(ServerWorld world, boolean p_230253_2_, boolean p_230253_3_, CallbackInfoReturnable<Integer> info) {
 		if (!p_230253_2_) {
 			// NO-OP
-		} else if (!world.getGameRules().getBoolean(GameRules.DO_INSOMNIA)) {
+		} else if (!world.getGameRules().getBoolean(GameRules.RULE_DOINSOMNIA)) {
 			// NO-OP
 		} else {
-			Random random = world.rand;
+			Random random = world.random;
 			--this.ticksUntilSpawn;
 			if (this.ticksUntilSpawn > 0) {
 				// NO-OP
 			} else {
 				this.ticksUntilSpawn += (60 + random.nextInt(60)) * 20;
-				if (world.getSkylightSubtracted() < 5 && world.getDimensionType().hasSkyLight()) {
+				if (world.getSkyDarken() < 5 && world.dimensionType().hasSkyLight()) {
 					// NO-OP
 				} else {
 					int i = 0;
 
-					for(ServerPlayerEntity player : world.getPlayers()) {
+					for(ServerPlayerEntity player : world.players()) {
 						if (!player.isSpectator() && !player.isCreative()) {
-							BlockPos blockpos = player.getPosition();
-							if (!world.getDimensionType().hasSkyLight() || blockpos.getY() >= world.getSeaLevel() && world.canSeeSky(blockpos)) {
-								DifficultyInstance difficulty = world.getDifficultyForLocation(blockpos);
+							BlockPos blockpos = player.blockPosition();
+							if (!world.dimensionType().hasSkyLight() || blockpos.getY() >= world.getSeaLevel() && world.canSeeSky(blockpos)) {
+								DifficultyInstance difficulty = world.getCurrentDifficultyAt(blockpos);
 								if (difficulty.isHarderThan(random.nextFloat() * 3.0F)) {
 									ServerStatisticsManager serverstatisticsmanager = player.getStats();
 									int ticksSinceRest = MathHelper.clamp(serverstatisticsmanager.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)), 1, Integer.MAX_VALUE);
 
 									if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing))
 										if (random.nextInt(ticksSinceRest) <= 72000) {
-											BlockPos blockpos1 = blockpos.up(20 + random.nextInt(15)).east(-10 + random.nextInt(21)).south(-10 + random.nextInt(21));
+											BlockPos blockpos1 = blockpos.above(20 + random.nextInt(15)).east(-10 + random.nextInt(21)).south(-10 + random.nextInt(21));
 											BlockState blockstate = world.getBlockState(blockpos1);
 											FluidState fluidstate = world.getFluidState(blockpos1);
-											if (WorldEntitySpawner.func_234968_a_(world, blockpos1, blockstate, fluidstate, EntityType.PHANTOM)) {
+											if (WorldEntitySpawner.isValidEmptySpawnBlock(world, blockpos1, blockstate, fluidstate, EntityType.PHANTOM)) {
 												ILivingEntityData ilivingentitydata = null;
 												int l = 1 + random.nextInt(difficulty.getDifficulty().getId() + 1);
 
 												for(int i1 = 0; i1 < l; ++i1) {
 													PhantomEntity phantomentity = EntityType.PHANTOM.create(world);
-													phantomentity.moveToBlockPosAndAngles(blockpos1, 0.0F, 0.0F);
-													ilivingentitydata = phantomentity.onInitialSpawn(world, difficulty, SpawnReason.NATURAL, ilivingentitydata, (CompoundNBT)null);
-													world.func_242417_l(phantomentity);
+													phantomentity.moveTo(blockpos1, 0.0F, 0.0F);
+													ilivingentitydata = phantomentity.finalizeSpawn(world, difficulty, SpawnReason.NATURAL, ilivingentitydata, (CompoundNBT)null);
+													world.addFreshEntityWithPassengers(phantomentity);
 												}
 
 												i += l;

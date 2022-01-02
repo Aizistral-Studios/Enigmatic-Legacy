@@ -19,11 +19,11 @@ public class PacketSetEntryState {
 
 	public static void encode(PacketSetEntryState msg, PacketBuffer buf) {
 		buf.writeBoolean(msg.isRead);
-		buf.writeString(msg.entryId);
+		buf.writeUtf(msg.entryId);
 	}
 
 	public static PacketSetEntryState decode(PacketBuffer buf) {
-		return new PacketSetEntryState(buf.readBoolean(), buf.readString());
+		return new PacketSetEntryState(buf.readBoolean(), buf.readUtf());
 	}
 
 	public static void handle(PacketSetEntryState msg, Supplier<NetworkEvent.Context> ctx) {

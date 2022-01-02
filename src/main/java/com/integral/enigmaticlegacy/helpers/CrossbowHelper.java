@@ -36,7 +36,7 @@ public class CrossbowHelper {
 			if (!creativeUsingArrows && !isCreative && !bonusCycles) {
 				itemstack = ammo.split(1);
 				if (ammo.isEmpty() && living instanceof PlayerEntity) {
-					((PlayerEntity) living).inventory.deleteStack(ammo);
+					((PlayerEntity) living).inventory.removeItem(ammo);
 				}
 			} else {
 				itemstack = ammo.copy();
@@ -49,8 +49,8 @@ public class CrossbowHelper {
 
 	public static boolean hasAmmo(LivingEntity entityIn, ItemStack weaponStack) {
 		int requestedAmmo = 1;
-		boolean isCreative = entityIn instanceof PlayerEntity && ((PlayerEntity) entityIn).abilities.isCreativeMode;
-		ItemStack itemstack = entityIn.findAmmo(weaponStack);
+		boolean isCreative = entityIn instanceof PlayerEntity && ((PlayerEntity) entityIn).abilities.instabuild;
+		ItemStack itemstack = entityIn.getProjectile(weaponStack);
 		ItemStack itemstack1 = itemstack.copy();
 
 		for (int k = 0; k < requestedAmmo; ++k) {
@@ -74,11 +74,11 @@ public class CrossbowHelper {
 
 	public static void fireProjectiles(World worldIn, LivingEntity shooter, Hand handIn, ItemStack stack, float velocityIn, float inaccuracyIn) {
 		List<ItemStack> list = CrossbowItem.getChargedProjectiles(stack);
-		float[] afloat = CrossbowItem.getRandomSoundPitches(shooter.getRNG());
+		float[] afloat = CrossbowItem.getShotPitches(shooter.getRandom());
 
 		for (int i = 0; i < list.size(); ++i) {
 			ItemStack itemstack = list.get(i);
-			boolean flag = shooter instanceof PlayerEntity && ((PlayerEntity) shooter).abilities.isCreativeMode;
+			boolean flag = shooter instanceof PlayerEntity && ((PlayerEntity) shooter).abilities.instabuild;
 			if (!itemstack.isEmpty()) {
 				if (i == 0) {
 					CrossbowHelper.fireProjectile(worldIn, shooter, handIn, stack, itemstack, afloat[i], flag, velocityIn, inaccuracyIn, 0.0F);
@@ -90,19 +90,19 @@ public class CrossbowHelper {
 			}
 		}
 
-		CrossbowItem.fireProjectilesAfter(worldIn, shooter, stack);
+		CrossbowItem.onCrossbowShot(worldIn, shooter, stack);
 	}
 
 	private static void fireProjectile(World worldIn, LivingEntity shooter, Hand handIn, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean isCreativeMode, float velocity, float inaccuracy, float projectileAngle) {
-		if (!worldIn.isRemote) {
+		if (!worldIn.isClientSide) {
 			boolean flag = projectile.getItem() == Items.FIREWORK_ROCKET;
 			ProjectileEntity projectileentity;
 			if (flag) {
-				projectileentity = new FireworkRocketEntity(worldIn, projectile, shooter, shooter.getPosX(), shooter.getPosYEye() - 0.15F, shooter.getPosZ(), true);
+				projectileentity = new FireworkRocketEntity(worldIn, projectile, shooter, shooter.getX(), shooter.getEyeY() - 0.15F, shooter.getZ(), true);
 			} else {
-				projectileentity = CrossbowItem.createArrow(worldIn, shooter, crossbow, projectile);
+				projectileentity = CrossbowItem.getArrow(worldIn, shooter, crossbow, projectile);
 				if (isCreativeMode || projectileAngle != 0.0F || EnigmaticEnchantmentHelper.hasCeaselessEnchantment(crossbow)) {
-					((AbstractArrowEntity) projectileentity).pickupStatus = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;	
+					((AbstractArrowEntity) projectileentity).pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;	
 				}
 				
 				if (EnigmaticEnchantmentHelper.hasSharpshooterEnchantment(crossbow)) {
@@ -112,21 +112,21 @@ public class CrossbowHelper {
 
 			if (shooter instanceof ICrossbowUser) {
 				ICrossbowUser icrossbowuser = (ICrossbowUser)shooter;
-				icrossbowuser.func_230284_a_(icrossbowuser.getAttackTarget(), crossbow, projectileentity, projectileAngle);
+				icrossbowuser.shootCrossbowProjectile(icrossbowuser.getTarget(), crossbow, projectileentity, projectileAngle);
 			} else {
 				Vector3d vector3d1 = shooter.getUpVector(1.0F);
 				Quaternion quaternion = new Quaternion(new Vector3f(vector3d1), projectileAngle, true);
-				Vector3d vector3d = shooter.getLook(1.0F);
+				Vector3d vector3d = shooter.getViewVector(1.0F);
 				Vector3f vector3f = new Vector3f(vector3d);
 				vector3f.transform(quaternion);
-				projectileentity.shoot(vector3f.getX(), vector3f.getY(), vector3f.getZ(), velocity, inaccuracy);
+				projectileentity.shoot(vector3f.x(), vector3f.y(), vector3f.z(), velocity, inaccuracy);
 			}
 
-			crossbow.damageItem(flag ? 3 : 1, shooter, (p_220017_1_) -> {
-				p_220017_1_.sendBreakAnimation(handIn);
+			crossbow.hurtAndBreak(flag ? 3 : 1, shooter, (p_220017_1_) -> {
+				p_220017_1_.broadcastBreakEvent(handIn);
 			});
-			worldIn.addEntity(projectileentity);
-			worldIn.playSound((PlayerEntity)null, shooter.getPosX(), shooter.getPosY(), shooter.getPosZ(), SoundEvents.ITEM_CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0F, soundPitch);
+			worldIn.addFreshEntity(projectileentity);
+			worldIn.playSound((PlayerEntity)null, shooter.getX(), shooter.getY(), shooter.getZ(), SoundEvents.CROSSBOW_SHOOT, SoundCategory.PLAYERS, 1.0F, soundPitch);
 		}
 	}
 

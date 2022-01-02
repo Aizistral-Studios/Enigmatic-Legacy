@@ -20,20 +20,20 @@ import net.minecraft.world.World;
 public class EarthHeart extends ItemBase implements ITaintable, IVanishable {
 
 	public EarthHeart() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON).maxStackSize(1));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON).stacksTo(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "earth_heart"));
 	}
 
 	@Override
 	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (entityIn instanceof PlayerEntity && !entityIn.world.isRemote) {
+		if (entityIn instanceof PlayerEntity && !entityIn.level.isClientSide) {
 			PlayerEntity player = (PlayerEntity) entityIn;
 			this.handleTaintable(stack, player);
 		}
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		if (this.isTainted(stack)) {
 			ItemLoreHelper.addLocalizedString(tooltip, "tooltip.enigmaticlegacy.tainted1");
 		}

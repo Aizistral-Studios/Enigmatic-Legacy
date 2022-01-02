@@ -18,7 +18,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
 public class ExperienceHelper {
 
 	public static int getPlayerXP(PlayerEntity player) {
-		return (int) (getExperienceForLevel(player.experienceLevel) + player.experience * player.xpBarCap());
+		return (int) (getExperienceForLevel(player.experienceLevel) + player.experienceProgress * player.getXpNeededForNextLevel());
 	}
 
 	public static int getPlayerXPLevel(PlayerEntity player) {
@@ -54,10 +54,10 @@ public class ExperienceHelper {
 			amount = getExperienceForLevel(newLevel) - getExperienceForLevel(oldLevel) + remainder;
 		}
 
-		player.experienceTotal = experience;
+		player.totalExperience = experience;
 		player.experienceLevel = getLevelForExperience(experience);
 		int expForLevel = getExperienceForLevel(player.experienceLevel);
-		player.experience = (float) (experience - expForLevel) / (float) player.xpBarCap();
+		player.experienceProgress = (float) (experience - expForLevel) / (float) player.getXpNeededForNextLevel();
 	}
 
 	public static int getExperienceForLevel(int level) {

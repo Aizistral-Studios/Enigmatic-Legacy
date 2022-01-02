@@ -22,13 +22,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class MendingMixture extends ItemBase {
 
 	public MendingMixture() {
-		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).containerItem(Items.GLASS_BOTTLE));
+		super(ItemBase.getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC).craftRemainder(Items.GLASS_BOTTLE));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "mending_mixture"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.mendingMixture1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.mendingMixture2");
@@ -39,7 +39,7 @@ public class MendingMixture extends ItemBase {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return true;
 	}
 

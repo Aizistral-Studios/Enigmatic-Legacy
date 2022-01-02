@@ -21,7 +21,7 @@ import net.minecraft.fluid.FluidState;
 public class BlockMassiveLamp extends Block {
 
 	public BlockMassiveLamp(Properties properties, String registryName) {
-		super(properties.sound(SoundType.GLASS).notSolid());
+		super(properties.sound(SoundType.GLASS).noOcclusion());
 
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, registryName));
 		EnigmaticLegacy.cutoutBlockRegistry.add(this);
@@ -33,25 +33,25 @@ public class BlockMassiveLamp extends Block {
 	}
 
 	@Override
-	public BlockRenderType getRenderType(BlockState state) {
+	public BlockRenderType getRenderShape(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
 
 	@Override
 	public List<ItemStack> getDrops(BlockState state, Builder builder) {
 		List<ItemStack> stacklist = new ArrayList<ItemStack>();
-		stacklist.add(new ItemStack(Item.getItemFromBlock(this)));
+		stacklist.add(new ItemStack(Item.byBlock(this)));
 		return stacklist;
 	}
 
 
 	@Override
-	public boolean isVariableOpacity() {
+	public boolean hasDynamicShape() {
 		return true;
 	}
 
 	@Override
-	public boolean isTransparent(BlockState state) {
+	public boolean useShapeForLightOcclusion(BlockState state) {
 		return true;
 	}
 

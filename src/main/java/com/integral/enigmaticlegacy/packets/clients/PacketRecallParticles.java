@@ -55,7 +55,7 @@ public class PacketRecallParticles {
 			    	  amount *= SuperpositionHandler.getParticleMultiplier();
 			      
 			      for (int counter = 0; counter <= amount; counter++)
-		    		player.world.addParticle(ParticleTypes.DRAGON_BREATH, true, msg.x, msg.y, msg.z, (Math.random()-0.5D)*0.2D, (Math.random()-0.5D)*0.2D, (Math.random()-0.5D)*0.2D);
+		    		player.level.addParticle(ParticleTypes.DRAGON_BREATH, true, msg.x, msg.y, msg.z, (Math.random()-0.5D)*0.2D, (Math.random()-0.5D)*0.2D, (Math.random()-0.5D)*0.2D);
 		      
 		      
 		    });

@@ -51,12 +51,12 @@ public class CommonProxy {
 
 	public boolean isInVanillaDimension(PlayerEntity player) {
 		ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-		return serverPlayer.getServerWorld().getDimensionKey().equals(this.getOverworldKey()) || serverPlayer.getServerWorld().getDimensionKey().equals(this.getNetherKey()) || serverPlayer.getServerWorld().getDimensionKey().equals(this.getEndKey());
+		return serverPlayer.getLevel().dimension().equals(this.getOverworldKey()) || serverPlayer.getLevel().dimension().equals(this.getNetherKey()) || serverPlayer.getLevel().dimension().equals(this.getEndKey());
 	}
 
 	public boolean isInDimension(PlayerEntity player, RegistryKey<World> world) {
 		ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-		return serverPlayer.getServerWorld().getDimensionKey().equals(world);
+		return serverPlayer.getLevel().dimension().equals(world);
 	}
 
 	public World getCentralWorld() {
@@ -68,11 +68,11 @@ public class CommonProxy {
 	}
 
 	public RegistryKey<World> getNetherKey() {
-		return World.THE_NETHER;
+		return World.NETHER;
 	}
 
 	public RegistryKey<World> getEndKey() {
-		return World.THE_END;
+		return World.END;
 	}
 
 	public UseAction getVisualBlockAction() {
@@ -81,7 +81,7 @@ public class CommonProxy {
 
 	public PlayerEntity getPlayer(UUID playerID) {
 		if (ServerLifecycleHooks.getCurrentServer() != null)
-			return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUUID(playerID);
+			return ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(playerID);
 		else
 			return null;
 	}

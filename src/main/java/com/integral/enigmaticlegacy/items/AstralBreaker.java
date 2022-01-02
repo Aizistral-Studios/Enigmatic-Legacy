@@ -78,12 +78,12 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 	public AstralBreaker() {
 		super(4F, -2.8F, EnigmaticMaterials.ETHERIUM, new HashSet<>(),
 				ItemBaseTool.getDefaultProperties()
-				.addToolType(ToolType.PICKAXE, EnigmaticMaterials.ETHERIUM.getHarvestLevel())
-				.addToolType(ToolType.AXE, EnigmaticMaterials.ETHERIUM.getHarvestLevel())
-				.addToolType(ToolType.SHOVEL, EnigmaticMaterials.ETHERIUM.getHarvestLevel())
-				.defaultMaxDamage(4000)
+				.addToolType(ToolType.PICKAXE, EnigmaticMaterials.ETHERIUM.getLevel())
+				.addToolType(ToolType.AXE, EnigmaticMaterials.ETHERIUM.getLevel())
+				.addToolType(ToolType.SHOVEL, EnigmaticMaterials.ETHERIUM.getLevel())
+				.defaultDurability(4000)
 				.rarity(Rarity.EPIC)
-				.isImmuneToFire());
+				.fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_breaker"));
 
 		this.effectiveMaterials.addAll(EnigmaticLegacy.etheriumPickaxe.effectiveMaterials);
@@ -93,7 +93,7 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker1", TextFormatting.GOLD, miningRadius.getValue(), miningDepth.getValue());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
@@ -112,55 +112,55 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 	}
 
 	public void spawnFlameParticles(World world, BlockPos pos) {
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 128, world.getDimensionKey())), new PacketFlameParticles(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 18, true));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(pos.getX(), pos.getY(), pos.getZ(), 128, world.dimension())), new PacketFlameParticles(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 18, true));
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+	public boolean mineBlock(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-		if (!world.isRemote) {
+		if (!world.isClientSide) {
 			this.spawnFlameParticles(world, pos);
 		}
 
-		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && miningRadius.getValue() != -1) {
+		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && miningRadius.getValue() != -1) {
 
 			RayTraceResult trace = AOEMiningHelper.calcRayTrace(world, (PlayerEntity) entityLiving, RayTraceContext.FluidMode.ANY);
 
 			if (trace.getType() == RayTraceResult.Type.BLOCK) {
 				BlockRayTraceResult blockTrace = (BlockRayTraceResult) trace;
-				Direction face = blockTrace.getFace();
+				Direction face = blockTrace.getDirection();
 
 				AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos, this.effectiveMaterials, miningRadius.getValue(), miningDepth.getValue(), true, pos, stack, (objPos, objState) -> {
 
-					stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(MobEntity.getSlotForItemStack(stack)));
+					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(MobEntity.getEquipmentSlotForItem(stack)));
 					this.spawnFlameParticles(world, objPos);
 
 				});
 			}
 		}
 
-		return super.onBlockDestroyed(stack, world, state, pos, entityLiving);
+		return super.mineBlock(stack, world, state, pos, entityLiving);
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
-		player.setActiveHand(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
+		player.startUsingItem(hand);
 
 		if (player.isCrouching()) {
 			this.toggleAreaEffects(player, stack);
 
 			return new ActionResult<>(ActionResultType.SUCCESS, stack);
 		} else
-			return super.onItemRightClick(world, player, hand);
+			return super.use(world, player, hand);
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResultType useOn(ItemUseContext context) {
 		if (context.getPlayer().isCrouching())
-			return this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType();
+			return this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
 		else
-			return super.onItemUse(context);
+			return super.useOn(context);
 	}
 
 }

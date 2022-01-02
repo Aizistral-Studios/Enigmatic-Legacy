@@ -32,7 +32,7 @@ import net.minecraft.item.Item.Properties;
 public abstract class ItemBasePotion extends ItemBase {
 
 	public ItemBasePotion() {
-		this(getDefaultProperties().maxStackSize(1));
+		this(getDefaultProperties().stacksTo(1));
 	}
 
 	public ItemBasePotion(Properties props) {
@@ -40,7 +40,7 @@ public abstract class ItemBasePotion extends ItemBase {
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity living) {
+	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity living) {
 		if (living instanceof PlayerEntity) {
 			PlayerEntity player =  (PlayerEntity) living;
 
@@ -50,13 +50,13 @@ public abstract class ItemBasePotion extends ItemBase {
 				CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayerEntity) player, stack);
 			}
 
-			if (!player.abilities.isCreativeMode) {
+			if (!player.abilities.instabuild) {
 				stack.shrink(1);
 
 				if (stack.isEmpty())
 					return new ItemStack(Items.GLASS_BOTTLE);
 
-				player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE));
+				player.inventory.add(new ItemStack(Items.GLASS_BOTTLE));
 			}
 
 		}
@@ -70,22 +70,22 @@ public abstract class ItemBasePotion extends ItemBase {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
+	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.DRINK;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		if (this.canDrink(worldIn, playerIn, playerIn.getHeldItem(handIn))) {
-			playerIn.setActiveHand(handIn);
-			return super.onItemRightClick(worldIn, playerIn, handIn);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		if (this.canDrink(worldIn, playerIn, playerIn.getItemInHand(handIn))) {
+			playerIn.startUsingItem(handIn);
+			return super.use(worldIn, playerIn, handIn);
 		} else
-			return new ActionResult<>(ActionResultType.PASS, playerIn.getHeldItem(handIn));
+			return new ActionResult<>(ActionResultType.PASS, playerIn.getItemInHand(handIn));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return true;
 	}
 

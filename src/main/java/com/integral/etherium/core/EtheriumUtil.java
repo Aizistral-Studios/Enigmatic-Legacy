@@ -20,21 +20,21 @@ public class EtheriumUtil {
 	public static Properties defaultProperties(IEtheriumConfig config, Class<?> itemClass) {
 		Properties props = new Item.Properties();
 
-		props.maxStackSize(1);
+		props.stacksTo(1);
 		props.rarity(Rarity.RARE);
 
 		if (config.isStandalone()) {
 			if (isAmong(itemClass, EnderRod.class, EtheriumOre.class, EtheriumIngot.class)) {
-				props.group(ItemGroup.MATERIALS);
+				props.tab(ItemGroup.TAB_MATERIALS);
 			} else if (isAmong(itemClass, EtheriumAxe.class, EtheriumPickaxe.class, EtheriumScythe.class, EtheriumShovel.class)) {
-				props.group(ItemGroup.TOOLS);
+				props.tab(ItemGroup.TAB_TOOLS);
 			} else if (isAmong(itemClass, EtheriumSword.class, EtheriumArmor.class)) {
-				props.group(ItemGroup.COMBAT);
+				props.tab(ItemGroup.TAB_COMBAT);
 			} else {
-				props.group(ItemGroup.MISC);
+				props.tab(ItemGroup.TAB_MISC);
 			}
 		} else {
-			props.group(config.getCreativeTab());
+			props.tab(config.getCreativeTab());
 		}
 
 		return props;

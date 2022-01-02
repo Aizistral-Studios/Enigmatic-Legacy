@@ -52,26 +52,26 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
 		if (SuperpositionHandler.isTheCursedOne(player))
 			if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.enchanterPearl) || SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enchanterPearl)) {
 
-				int level = this.enchantLevels[id];
-				ItemStack toEnchant = this.tableInventory.getStackInSlot(0);
+				int level = this.costs[id];
+				ItemStack toEnchant = this.enchantSlots.getItem(0);
 				int i = id + 1;
 
-				if (this.enchantLevels[id] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < i || player.experienceLevel < this.enchantLevels[id]) && !player.abilities.isCreativeMode) {
+				if (this.costs[id] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < i || player.experienceLevel < this.costs[id]) && !player.abilities.instabuild) {
 					info.setReturnValue(false);
 					return;// false;
 				}
 
-				this.worldPosCallable.consume((world, pos) -> {
+				this.access.execute((world, pos) -> {
 					ItemStack enchanted = toEnchant;
-					List<EnchantmentData> list = this.getEnchantmentList(toEnchant, id, this.enchantLevels[id]);
+					List<EnchantmentData> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
 					if (!list.isEmpty()) {
 						ItemStack firstRoll = this.enchantStack(player, enchanted, id, true);
 						ItemStack secondRoll = this.enchantStack(player, enchanted, id, false);
 
 						enchanted = SuperpositionHandler.mergeEnchantments(firstRoll, secondRoll, true, false);
-						this.tableInventory.setInventorySlotContents(0, enchanted);
+						this.enchantSlots.setItem(0, enchanted);
 
-						player.addStat(Stats.ENCHANT_ITEM);
+						player.awardStat(Stats.ENCHANT_ITEM);
 						if (player instanceof ServerPlayerEntity) {
 
 							// TODO Gotta finish this someday
@@ -87,9 +87,9 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
 							CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayerEntity)player, enchanted, level);
 						}
 
-						this.tableInventory.markDirty();
-						this.onCraftMatrixChanged(this.tableInventory);
-						world.playSound((PlayerEntity) null, pos, SoundEvents.BLOCK_ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.rand.nextFloat() * 0.1F + 0.9F);
+						this.enchantSlots.setChanged();
+						this.slotsChanged(this.enchantSlots);
+						world.playSound((PlayerEntity) null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundCategory.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
 					}
 
 				});
@@ -104,10 +104,10 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
 		ItemStack toEnchant = stack.copy();
 
 		int i = id + 1;
-		List<EnchantmentData> list = this.getEnchantmentList(toEnchant, id, this.enchantLevels[id]);
+		List<EnchantmentData> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
 		if (!list.isEmpty()) {
-			ItemStack doubleRoll = EnchantmentHelper.addRandomEnchantment(player.getRNG(), toEnchant.copy(), (int) Math.min(this.enchantLevels[id]/1.5, 40), true);
-			player.onEnchant(toEnchant, i);
+			ItemStack doubleRoll = EnchantmentHelper.enchantItem(player.getRandom(), toEnchant.copy(), (int) Math.min(this.costs[id]/1.5, 40), true);
+			player.onEnchantmentPerformed(toEnchant, i);
 
 			boolean tomeConfirmed = false;
 
@@ -130,14 +130,14 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
 				if (flag) {
 					EnchantedBookItem.addEnchantment(toEnchant, enchantmentdata);
 				} else {
-					toEnchant.addEnchantment(enchantmentdata.enchantment, enchantmentdata.enchantmentLevel);
+					toEnchant.enchant(enchantmentdata.enchantment, enchantmentdata.level);
 				}
 			}
 
 			if (shadowsRollTwice) {
 				toEnchant = SuperpositionHandler.mergeEnchantments(toEnchant, doubleRoll, false, true);
 			}
-			this.xpSeed.set(player.getXPSeed());
+			this.enchantmentSeed.set(player.getEnchantmentSeed());
 		}
 		return toEnchant;
 	}

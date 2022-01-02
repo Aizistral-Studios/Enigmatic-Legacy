@@ -31,12 +31,12 @@ public class UseUnholyGrailTrigger extends AbstractCriterionTrigger<UseUnholyGra
 
 	@Nonnull
 	@Override
-	public UseUnholyGrailTrigger.Instance deserializeTrigger(@Nonnull JsonObject json, @Nonnull EntityPredicate.AndPredicate playerPred, ConditionArrayParser conditions) {
+	public UseUnholyGrailTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.AndPredicate playerPred, ConditionArrayParser conditions) {
 		return new UseUnholyGrailTrigger.Instance(playerPred);
 	}
 
 	public void trigger(ServerPlayerEntity player) {
-		this.triggerListeners(player, instance -> instance.test());
+		this.trigger(player, instance -> instance.test());
 	}
 
 	static class Instance extends CriterionInstance {
@@ -46,7 +46,7 @@ public class UseUnholyGrailTrigger extends AbstractCriterionTrigger<UseUnholyGra
 
 		@Nonnull
 		@Override
-		public ResourceLocation getId() {
+		public ResourceLocation getCriterion() {
 			return UseUnholyGrailTrigger.ID;
 		}
 

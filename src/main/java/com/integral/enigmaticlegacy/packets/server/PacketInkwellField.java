@@ -22,11 +22,11 @@ public class PacketInkwellField {
 	  }
 
 	  public static void encode(PacketInkwellField msg, PacketBuffer buf) {
-	     buf.writeString(msg.field);
+	     buf.writeUtf(msg.field);
 	  }
 
 	  public static PacketInkwellField decode(PacketBuffer buf) {
-	    return new PacketInkwellField(buf.readString(128));
+	    return new PacketInkwellField(buf.readUtf(128));
 	 }
 
 	  public static void handle(PacketInkwellField msg, Supplier<NetworkEvent.Context> ctx) {
@@ -34,8 +34,8 @@ public class PacketInkwellField {
 		    ctx.get().enqueueWork(() -> {
 		      ServerPlayerEntity playerServ = ctx.get().getSender();
 
-		      if (playerServ.openContainer instanceof LoreInscriberContainer) {
-		    	  LoreInscriberContainer container = (LoreInscriberContainer) playerServ.openContainer;
+		      if (playerServ.containerMenu instanceof LoreInscriberContainer) {
+		    	  LoreInscriberContainer container = (LoreInscriberContainer) playerServ.containerMenu;
 		    	  container.updateItemName(msg.field);
 		      }
 

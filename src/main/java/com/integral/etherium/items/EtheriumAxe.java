@@ -40,7 +40,7 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool {
 	public Set<Material> effectiveMaterials;
 
 	public EtheriumAxe(IEtheriumConfig config) {
-		super(config.getToolMaterial(), 10, -3.2F, EtheriumUtil.defaultProperties(config, EtheriumAxe.class).isImmuneToFire());
+		super(config.getToolMaterial(), 10, -3.2F, EtheriumUtil.defaultProperties(config, EtheriumAxe.class).fireResistant());
 		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_axe"));
 		this.config = config;
 
@@ -55,8 +55,8 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool {
 	}
 
 	@Override
-	public String getTranslationKey() {
-		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getTranslationKey();
+	public String getDescriptionId() {
+		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getDescriptionId();
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (this.config.getAxeMiningVolume() == -1)
 			return;
 
@@ -89,44 +89,44 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool {
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+	public boolean mineBlock(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && this.config.getAxeMiningVolume() != -1) {
+		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getAxeMiningVolume() != -1) {
 			Direction face = Direction.UP;
 
-			AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos.add(0, (this.config.getAxeMiningVolume() - 1) / 2, 0), this.effectiveMaterials, this.config.getAxeMiningVolume(), this.config.getAxeMiningVolume(), false, pos, stack, (objPos, objState) -> {
-				stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(MobEntity.getSlotForItemStack(stack)));
+			AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos.offset(0, (this.config.getAxeMiningVolume() - 1) / 2, 0), this.effectiveMaterials, this.config.getAxeMiningVolume(), this.config.getAxeMiningVolume(), false, pos, stack, (objPos, objState) -> {
+				stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(MobEntity.getEquipmentSlotForItem(stack)));
 			});
 		}
 
-		return super.onBlockDestroyed(stack, world, state, pos, entityLiving);
+		return super.mineBlock(stack, world, state, pos, entityLiving);
 	}
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
 		Material material = state.getMaterial();
-		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.efficiency;
+		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.speed;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
-		player.setActiveHand(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
+		player.startUsingItem(hand);
 
 		if (player.isCrouching()) {
 			this.toggleAreaEffects(player, stack);
 
 			return new ActionResult<>(ActionResultType.SUCCESS, stack);
 		} else
-			return super.onItemRightClick(world, player, hand);
+			return super.use(world, player, hand);
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResultType useOn(ItemUseContext context) {
 		if (context.getPlayer().isCrouching())
-			return this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType();
+			return this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
 		else
-			return super.onItemUse(context);
+			return super.useOn(context);
 	}
 
 }

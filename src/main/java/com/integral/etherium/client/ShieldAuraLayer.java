@@ -38,24 +38,24 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 		if (EtheriumArmor.hasShield(entitylivingbaseIn)) {
 			float f;
 
-			if (!Minecraft.getInstance().isGamePaused())
+			if (!Minecraft.getInstance().isPaused())
 				if (entitylivingbaseIn.getDisplayName().equals(Minecraft.getInstance().player.getDisplayName())) {
-					partialTicks = Minecraft.getInstance().getRenderPartialTicks();
+					partialTicks = Minecraft.getInstance().getFrameTime();
 				}
 
-			f = entitylivingbaseIn.ticksExisted + partialTicks;
+			f = entitylivingbaseIn.tickCount + partialTicks;
 
-			PlayerModel<AbstractClientPlayerEntity> entitymodel = this.func_225635_b_();
-			entitymodel.setLivingAnimations(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks);
+			PlayerModel<AbstractClientPlayerEntity> entitymodel = this.model();
+			entitymodel.prepareMobModel(entitylivingbaseIn, limbSwing, limbSwingAmount, partialTicks);
 
 			if (entitylivingbaseIn.isSpectator()) {
-				this.witherModel.setVisible(false);
-				this.witherModel.bipedHead.showModel = true;
-				this.witherModel.bipedHeadwear.showModel = true;
+				this.witherModel.setAllVisible(false);
+				this.witherModel.head.visible = true;
+				this.witherModel.hat.visible = true;
 			} else {
-				ItemStack itemstack = entitylivingbaseIn.getHeldItemMainhand();
-				ItemStack itemstack1 = entitylivingbaseIn.getHeldItemOffhand();
-				this.witherModel.setVisible(true);
+				ItemStack itemstack = entitylivingbaseIn.getMainHandItem();
+				ItemStack itemstack1 = entitylivingbaseIn.getOffhandItem();
+				this.witherModel.setAllVisible(true);
 
 				/*
 				this.witherModel.bipedHeadwear.showModel = false;
@@ -66,10 +66,10 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 				this.witherModel.bipedRightArmwear.showModel = false;
 				 */
 
-				this.witherModel.isSneak = entitylivingbaseIn.isCrouching();
+				this.witherModel.crouching = entitylivingbaseIn.isCrouching();
 				BipedModel.ArmPose bipedmodel$armpose = this.func_217766_a(entitylivingbaseIn, itemstack, itemstack1, Hand.MAIN_HAND);
 				BipedModel.ArmPose bipedmodel$armpose1 = this.func_217766_a(entitylivingbaseIn, itemstack, itemstack1, Hand.OFF_HAND);
-				if (entitylivingbaseIn.getPrimaryHand() == HandSide.RIGHT) {
+				if (entitylivingbaseIn.getMainArm() == HandSide.RIGHT) {
 					this.witherModel.rightArmPose = bipedmodel$armpose;
 					this.witherModel.leftArmPose = bipedmodel$armpose1;
 				} else {
@@ -78,10 +78,10 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 				}
 			}
 
-			this.getEntityModel().copyModelAttributesTo(entitymodel);
-			IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.getEnergySwirl(ShieldAuraLayer.func_225633_a_(), ShieldAuraLayer.func_225634_a_(f), f * 0.01F));
-			entitymodel.setRotationAngles(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			entitymodel.render(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
+			this.getParentModel().copyPropertiesTo(entitymodel);
+			IVertexBuilder ivertexbuilder = bufferIn.getBuffer(RenderType.energySwirl(ShieldAuraLayer.getTextureLocation(), ShieldAuraLayer.xOffset(f), f * 0.01F));
+			entitymodel.setupAnim(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+			entitymodel.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
 		}
 
 	}
@@ -91,15 +91,15 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 		ItemStack itemstack = handIn == Hand.MAIN_HAND ? itemStackMain : itemStackOff;
 		if (!itemstack.isEmpty()) {
 			bipedmodel$armpose = BipedModel.ArmPose.ITEM;
-			if (playerIn.getItemInUseCount() > 0) {
-				UseAction useaction = itemstack.getUseAction();
+			if (playerIn.getUseItemRemainingTicks() > 0) {
+				UseAction useaction = itemstack.getUseAnimation();
 				if (useaction == UseAction.BLOCK) {
 					bipedmodel$armpose = BipedModel.ArmPose.BLOCK;
 				} else if (useaction == UseAction.BOW) {
 					bipedmodel$armpose = BipedModel.ArmPose.BOW_AND_ARROW;
 				} else if (useaction == UseAction.SPEAR) {
 					bipedmodel$armpose = BipedModel.ArmPose.THROW_SPEAR;
-				} else if (useaction == UseAction.CROSSBOW && handIn == playerIn.getActiveHand()) {
+				} else if (useaction == UseAction.CROSSBOW && handIn == playerIn.getUsedItemHand()) {
 					bipedmodel$armpose = BipedModel.ArmPose.CROSSBOW_CHARGE;
 				}
 			} else {
@@ -111,7 +111,7 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 					bipedmodel$armpose = BipedModel.ArmPose.CROSSBOW_HOLD;
 				}
 
-				if (flag1 && flag2 && itemStackMain.getItem().getUseAction(itemStackMain) == UseAction.NONE) {
+				if (flag1 && flag2 && itemStackMain.getItem().getUseAnimation(itemStackMain) == UseAction.NONE) {
 					bipedmodel$armpose = BipedModel.ArmPose.CROSSBOW_HOLD;
 				}
 			}
@@ -120,15 +120,15 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayerEntity, P
 		return bipedmodel$armpose;
 	}
 
-	public static float func_225634_a_(float p_225634_1_) {
+	public static float xOffset(float p_225634_1_) {
 		return MathHelper.cos(p_225634_1_ * 0.02F) * 2.0F;
 	}
 
-	public static ResourceLocation func_225633_a_() {
+	public static ResourceLocation getTextureLocation() {
 		return ShieldAuraLayer.WITHER_ARMOR;
 	}
 
-	protected PlayerModel<AbstractClientPlayerEntity> func_225635_b_() {
+	protected PlayerModel<AbstractClientPlayerEntity> model() {
 		return this.witherModel;
 	}
 }

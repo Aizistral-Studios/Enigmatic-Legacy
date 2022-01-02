@@ -29,7 +29,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class DarkMirror extends ItemBase implements ICursed, IVanishable {
 
 	public DarkMirror() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.RARE).maxStackSize(1));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.RARE).stacksTo(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "dark_mirror"));
 	}
 
@@ -72,7 +72,7 @@ public class DarkMirror extends ItemBase implements ICursed, IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.darkMirror1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.darkMirror2");
@@ -86,18 +86,18 @@ public class DarkMirror extends ItemBase implements ICursed, IVanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		if (EnigmaticLegacy.proxy.isInVanillaDimension(player) && SuperpositionHandler.isTheCursedOne(player) && !player.getCooldownTracker().hasCooldown(this)) {
-			player.setActiveHand(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		if (EnigmaticLegacy.proxy.isInVanillaDimension(player) && SuperpositionHandler.isTheCursedOne(player) && !player.getCooldowns().isOnCooldown(this)) {
+			player.startUsingItem(hand);
 
 			if (player instanceof ServerPlayerEntity) {
 				SuperpositionHandler.backToSpawn((ServerPlayerEntity) player);
-				player.getCooldownTracker().setCooldown(this, 200);
+				player.getCooldowns().addCooldown(this, 200);
 			}
 
-			return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
+			return new ActionResult<>(ActionResultType.SUCCESS, player.getItemInHand(hand));
 		} else
-			return new ActionResult<>(ActionResultType.PASS, player.getHeldItem(hand));
+			return new ActionResult<>(ActionResultType.PASS, player.getItemInHand(hand));
 	}
 
 }

@@ -61,7 +61,7 @@ public class ForbiddenFruit extends ItemBaseFood implements IVanishable {
 	}
 
 	public ForbiddenFruit() {
-		super(getDefaultProperties().rarity(Rarity.RARE).isImmuneToFire(), buildDefaultFood());
+		super(getDefaultProperties().rarity(Rarity.RARE).fireResistant(), buildDefaultFood());
 
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "forbidden_fruit"));
 	}
@@ -69,7 +69,7 @@ public class ForbiddenFruit extends ItemBaseFood implements IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenFruit1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenFruit2");
@@ -93,10 +93,10 @@ public class ForbiddenFruit extends ItemBaseFood implements IVanishable {
 		this.defineConsumedFruit(player, true);
 
 		if (player instanceof ServerPlayerEntity) {
-			player.addPotionEffect(new EffectInstance(Effects.WITHER, 300, 3, false, true));
-			player.addPotionEffect(new EffectInstance(Effects.NAUSEA, 300, 2, false, true));
-			player.addPotionEffect(new EffectInstance(Effects.WEAKNESS, 400, 2, false, true));
-			player.addPotionEffect(new EffectInstance(Effects.SLOWNESS, 500, 2, false, true));
+			player.addEffect(new EffectInstance(Effects.WITHER, 300, 3, false, true));
+			player.addEffect(new EffectInstance(Effects.CONFUSION, 300, 2, false, true));
+			player.addEffect(new EffectInstance(Effects.WEAKNESS, 400, 2, false, true));
+			player.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 500, 2, false, true));
 		}
 	}
 

@@ -31,13 +31,13 @@ public class EtheriumArmor extends ArmorItem {
 
 	public EtheriumArmor(IEtheriumConfig config, EquipmentSlotType slot) {
 		super(config.getArmorMaterial(), slot,
-				EtheriumUtil.defaultProperties(config, EtheriumArmor.class).isImmuneToFire());
+				EtheriumUtil.defaultProperties(config, EtheriumArmor.class).fireResistant());
 		EtheriumArmor.config = config;
 	}
 
 	@Override
-	public String getTranslationKey() {
-		return config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getTranslationKey();
+	public String getDescriptionId() {
+		return config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getDescriptionId();
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class EtheriumArmor extends ArmorItem {
 		if (player == null)
 			return false;
 
-		for (ItemStack stack : player.getArmorInventoryList()) {
+		for (ItemStack stack : player.getArmorSlots()) {
 			if (!(stack.getItem().getClass() == EtheriumArmor.class))
 				return false;
 		}
@@ -71,16 +71,16 @@ public class EtheriumArmor extends ArmorItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			EtheriumArmor armor = (EtheriumArmor) stack.getItem();
-			if (armor.getEquipmentSlot() == EquipmentSlotType.HEAD) {
+			if (armor.getSlot() == EquipmentSlotType.HEAD) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumHelmet1");
-			} else if (armor.getEquipmentSlot() == EquipmentSlotType.CHEST) {
+			} else if (armor.getSlot() == EquipmentSlotType.CHEST) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumChestplate1");
-			} else if (armor.getEquipmentSlot() == EquipmentSlotType.LEGS) {
+			} else if (armor.getSlot() == EquipmentSlotType.LEGS) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumLeggings1");
-			} else if (armor.getEquipmentSlot() == EquipmentSlotType.FEET) {
+			} else if (armor.getSlot() == EquipmentSlotType.FEET) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumBoots1");
 			}
 		} else {

@@ -8,7 +8,7 @@ public class DamageSourceNemesisCurse extends EntityDamageSource {
 	public DamageSourceNemesisCurse(Entity attacker) {
 		super("thorns", attacker);
 
-		this.setMagicDamage();
+		this.setMagic();
 	}
 
 }

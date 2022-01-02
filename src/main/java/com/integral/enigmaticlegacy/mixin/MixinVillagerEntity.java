@@ -20,7 +20,7 @@ import net.minecraft.item.MerchantOffer;
 @Mixin(VillagerEntity.class)
 public class MixinVillagerEntity {
 
-	@Inject(at = @At("RETURN"), method = "recalculateSpecialPricesFor")
+	@Inject(at = @At("RETURN"), method = "updateSpecialPrices")
 	private void onSpecialPrices(PlayerEntity player, CallbackInfo info) {
 		Object forgottenObject = this;
 
@@ -30,8 +30,8 @@ public class MixinVillagerEntity {
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.avariceScroll)) {
 				for(MerchantOffer trade : villager.getOffers()) {
 					double discountValue = 0.35;
-					int discount = (int)Math.floor(discountValue * trade.getBuyingStackFirst().getCount());
-					trade.increaseSpecialPrice(-Math.max(discount, 1));
+					int discount = (int)Math.floor(discountValue * trade.getBaseCostA().getCount());
+					trade.addToSpecialPriceDiff(-Math.max(discount, 1));
 				}
 			}
 		}

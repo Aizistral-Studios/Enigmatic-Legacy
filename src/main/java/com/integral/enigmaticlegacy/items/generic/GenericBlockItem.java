@@ -23,8 +23,8 @@ public class GenericBlockItem extends BlockItem {
 	public static Properties getDefaultProperties() {
 		Properties props = new Item.Properties();
 
-		props.group(EnigmaticLegacy.enigmaticTab);
-		props.maxStackSize(64);
+		props.tab(EnigmaticLegacy.enigmaticTab);
+		props.stacksTo(64);
 		props.rarity(Rarity.COMMON);
 
 		return props;

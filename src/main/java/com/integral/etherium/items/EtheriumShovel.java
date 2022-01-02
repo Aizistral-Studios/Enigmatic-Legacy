@@ -50,29 +50,29 @@ public class EtheriumShovel extends ItemEtheriumTool {
 
 	public EtheriumShovel(IEtheriumConfig config) {
 		super(2.5F, -3.0F, config, new HashSet<>(), EtheriumUtil.defaultProperties(config, EtheriumShovel.class)
-				.defaultMaxDamage((int) (config.getToolMaterial().getMaxUses() * 1.5))
-				.addToolType(ToolType.SHOVEL, config.getToolMaterial().getHarvestLevel())
+				.defaultDurability((int) (config.getToolMaterial().getUses() * 1.5))
+				.addToolType(ToolType.SHOVEL, config.getToolMaterial().getLevel())
 				.rarity(Rarity.RARE)
-				.isImmuneToFire());
+				.fireResistant());
 
 		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_shovel"));
 
 		this.effectiveMaterials = Sets.newHashSet();
-		this.effectiveMaterials.add(Material.EARTH);
-		this.effectiveMaterials.add(Material.ORGANIC);
-		this.effectiveMaterials.add(Material.SNOW);
-		this.effectiveMaterials.add(Material.SNOW_BLOCK);
+		this.effectiveMaterials.add(Material.DIRT);
+		this.effectiveMaterials.add(Material.GRASS);
+		this.effectiveMaterials.add(Material.TOP_SNOW);
+		this.effectiveMaterials.add(Material.TOP_SNOW);
 		this.effectiveMaterials.add(Material.SAND);
 	}
 
 	@Override
-	public String getTranslationKey() {
-		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getTranslationKey();
+	public String getDescriptionId() {
+		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getDescriptionId();
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (this.config.getShovelMiningRadius() == -1)
 			return;
 
@@ -95,55 +95,55 @@ public class EtheriumShovel extends ItemEtheriumTool {
 	}
 
 	@Override
-	public boolean onBlockDestroyed(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
+	public boolean mineBlock(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 
-		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isRemote && this.config.getShovelMiningRadius() != -1) {
+		if (entityLiving instanceof PlayerEntity && this.areaEffectsEnabled((PlayerEntity) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getShovelMiningRadius() != -1) {
 
 			RayTraceResult trace = AOEMiningHelper.calcRayTrace(world, (PlayerEntity) entityLiving, RayTraceContext.FluidMode.ANY);
 
 			if (trace.getType() == RayTraceResult.Type.BLOCK) {
 				BlockRayTraceResult blockTrace = (BlockRayTraceResult) trace;
-				Direction face = blockTrace.getFace();
+				Direction face = blockTrace.getDirection();
 
 				AOEMiningHelper.harvestCube(world, (PlayerEntity) entityLiving, face, pos, this.effectiveMaterials, this.config.getShovelMiningRadius(), this.config.getShovelMiningDepth(), false, pos, stack, (objPos, objState) -> {
-					stack.damageItem(1, entityLiving, p -> p.sendBreakAnimation(MobEntity.getSlotForItemStack(stack)));
+					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(MobEntity.getEquipmentSlotForItem(stack)));
 				});
 			}
 		}
 
-		return super.onBlockDestroyed(stack, world, state, pos, entityLiving);
+		return super.mineBlock(stack, world, state, pos, entityLiving);
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
+	public ActionResultType useOn(ItemUseContext context) {
 		if (context.getPlayer().isCrouching())
-			return this.onItemRightClick(context.getWorld(), context.getPlayer(), context.getHand()).getType();
+			return this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
 		else
-			return Items.DIAMOND_SHOVEL.onItemUse(context);
+			return Items.DIAMOND_SHOVEL.useOn(context);
 	}
 
 	@Override
-	public boolean canHarvestBlock(BlockState blockIn) {
-		return Items.DIAMOND_SHOVEL.canHarvestBlock(blockIn);
+	public boolean isCorrectToolForDrops(BlockState blockIn) {
+		return Items.DIAMOND_SHOVEL.isCorrectToolForDrops(blockIn);
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
-		ItemStack stack = player.getHeldItem(hand);
-		player.setActiveHand(hand);
+	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+		ItemStack stack = player.getItemInHand(hand);
+		player.startUsingItem(hand);
 
 		if (player.isCrouching()) {
 			this.toggleAreaEffects(player, stack);
 
 			return new ActionResult<>(ActionResultType.SUCCESS, stack);
 		} else
-			return super.onItemRightClick(world, player, hand);
+			return super.use(world, player, hand);
 	}
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
 		Material material = state.getMaterial();
-		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.efficiency;
+		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.speed;
 	}
 
 }

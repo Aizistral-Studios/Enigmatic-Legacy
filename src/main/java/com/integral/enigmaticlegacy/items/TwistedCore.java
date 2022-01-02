@@ -17,12 +17,12 @@ import net.minecraft.world.World;
 public class TwistedCore extends ItemBase implements IVanishable {
 
 	public TwistedCore() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "twisted_core"));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		ItemLoreHelper.indicateCursedOnesOnly(tooltip);
 	}
 

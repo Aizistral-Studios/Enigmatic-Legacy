@@ -76,24 +76,24 @@ public class MagmaHeart extends ItemSpellstoneCurio implements ISpellstone {
 	public List<String> nemesisList = new ArrayList<String>();
 
 	public MagmaHeart() {
-		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).isImmuneToFire());
+		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "magma_heart"));
 
 		//this.immunityList.add(DamageSource.LAVA.damageType);
-		this.immunityList.add(DamageSource.IN_FIRE.damageType);
-		this.immunityList.add(DamageSource.ON_FIRE.damageType);
-		this.immunityList.add(DamageSource.HOT_FLOOR.damageType);
+		this.immunityList.add(DamageSource.IN_FIRE.msgId);
+		this.immunityList.add(DamageSource.ON_FIRE.msgId);
+		this.immunityList.add(DamageSource.HOT_FLOOR.msgId);
 		//immunityList.add("fireball");
 
 		this.nemesisList.add("mob");
-		this.nemesisList.add(DamageSource.GENERIC.damageType);
+		this.nemesisList.add(DamageSource.GENERIC.msgId);
 		this.nemesisList.add("player");
 		//nemesisList.add("arrow");
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -118,7 +118,7 @@ public class MagmaHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.getDisplayString("key.spellstoneAbility").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.spellstoneAbility").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
@@ -126,8 +126,8 @@ public class MagmaHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living.isBurning()) {
-			living.extinguish();
+		if (living.isOnFire()) {
+			living.clearFire();
 		}
 	}
 

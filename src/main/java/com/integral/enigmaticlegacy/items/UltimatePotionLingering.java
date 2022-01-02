@@ -37,7 +37,7 @@ public class UltimatePotionLingering extends ItemBase implements IAdvancedPotion
 	public PotionType potionType;
 
 	public UltimatePotionLingering(Rarity rarity, PotionType type) {
-		super(ItemBase.getDefaultProperties().rarity(rarity).maxStackSize(1).group(EnigmaticLegacy.enigmaticPotionTab));
+		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(1).tab(EnigmaticLegacy.enigmaticPotionTab));
 
 		this.potionType = type;
 	}
@@ -51,25 +51,25 @@ public class UltimatePotionLingering extends ItemBase implements IAdvancedPotion
 	}
 
 	@Override
-	public String getTranslationKey(ItemStack stack) {
-		return this.getTranslationKey() + ".effect." + PotionHelper.getAdvancedPotion(stack).getId();
+	public String getDescriptionId(ItemStack stack) {
+		return this.getDescriptionId() + ".effect." + PotionHelper.getAdvancedPotion(stack).getId();
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean hasEffect(ItemStack stack) {
+	public boolean isFoil(ItemStack stack) {
 		return true;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		SuperpositionHandler.addPotionTooltip(PotionHelper.getEffects(stack), stack, list, 0.25F);
 	}
 
 	@Override
-	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items) {
-		if (this.isInGroup(group)) {
+	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+		if (this.allowdedIn(group)) {
 
 			if (this.potionType == PotionType.COMMON) {
 				for (AdvancedPotion potion : EnigmaticLegacy.commonPotionTypes) {
@@ -90,19 +90,19 @@ public class UltimatePotionLingering extends ItemBase implements IAdvancedPotion
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack itemstack = playerIn.getHeldItem(handIn);
-		ItemStack throwed = playerIn.abilities.isCreativeMode ? itemstack.copy() : itemstack.split(1);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack itemstack = playerIn.getItemInHand(handIn);
+		ItemStack throwed = playerIn.abilities.instabuild ? itemstack.copy() : itemstack.split(1);
 
-		worldIn.playSound((PlayerEntity)null, playerIn.getPosX(), playerIn.getPosY(), playerIn.getPosZ(), SoundEvents.ENTITY_LINGERING_POTION_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (Item.random.nextFloat() * 0.4F + 0.8F));
-		if (!worldIn.isRemote) {
+		worldIn.playSound((PlayerEntity)null, playerIn.getX(), playerIn.getY(), playerIn.getZ(), SoundEvents.LINGERING_POTION_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (Item.random.nextFloat() * 0.4F + 0.8F));
+		if (!worldIn.isClientSide) {
 			EnigmaticPotionEntity potionEntity = new EnigmaticPotionEntity(worldIn, playerIn);
 			potionEntity.setItem(throwed);
-			potionEntity.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, -20.0F, 0.5F, 1.0F);
-			worldIn.addEntity(potionEntity);
+			potionEntity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, -20.0F, 0.5F, 1.0F);
+			worldIn.addFreshEntity(potionEntity);
 		}
 
-		playerIn.addStat(Stats.ITEM_USED.get(this));
+		playerIn.awardStat(Stats.ITEM_USED.get(this));
 		return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
 	}
 

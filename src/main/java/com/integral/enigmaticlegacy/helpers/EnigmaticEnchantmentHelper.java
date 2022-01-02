@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 public class EnigmaticEnchantmentHelper {
 
 	public static boolean hasCustomCrossbowEnchantments(ItemStack crossbowStack) {
-		return (EnchantmentHelper.getEnchantmentLevel(EnigmaticLegacy.ceaselessEnchantment, crossbowStack) > 0 || EnchantmentHelper.getEnchantmentLevel(EnigmaticLegacy.sharpshooterEnchantment, crossbowStack) > 0);
+		return (EnchantmentHelper.getItemEnchantmentLevel(EnigmaticLegacy.ceaselessEnchantment, crossbowStack) > 0 || EnchantmentHelper.getItemEnchantmentLevel(EnigmaticLegacy.sharpshooterEnchantment, crossbowStack) > 0);
 	}
 
 	public static boolean hasSharpshooterEnchantment(ItemStack stack) {
@@ -24,14 +24,14 @@ public class EnigmaticEnchantmentHelper {
 	}
 
 	public static int getSharpshooterLevel(ItemStack stack) {
-		return EnchantmentHelper.getEnchantmentLevel(EnigmaticLegacy.sharpshooterEnchantment, stack);
+		return EnchantmentHelper.getItemEnchantmentLevel(EnigmaticLegacy.sharpshooterEnchantment, stack);
 	}
 
 	public static int getCeaselessLevel(ItemStack stack) {
-		return EnchantmentHelper.getEnchantmentLevel(EnigmaticLegacy.ceaselessEnchantment, stack);
+		return EnchantmentHelper.getItemEnchantmentLevel(EnigmaticLegacy.ceaselessEnchantment, stack);
 	}
 
 	public static int getNemesisCurseLevel(ItemStack stack) {
-		return EnchantmentHelper.getEnchantmentLevel(EnigmaticLegacy.nemesisCurseEnchantment, stack);
+		return EnchantmentHelper.getItemEnchantmentLevel(EnigmaticLegacy.nemesisCurseEnchantment, stack);
 	}
 }

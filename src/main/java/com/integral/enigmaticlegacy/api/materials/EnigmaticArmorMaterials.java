@@ -15,7 +15,7 @@ import net.minecraft.util.SoundEvents;
 
 public enum EnigmaticArmorMaterials implements IArmorMaterial {
 	ETHERIUM(EnigmaticLegacy.MODID + ":etherium", 132, new int[] { 4, 7, 9, 4 }, 24,
-			SoundEvents.ITEM_ARMOR_EQUIP_IRON, 4F, 0, () -> getEtheriumConfig().getRepairMaterial());
+			SoundEvents.ARMOR_EQUIP_IRON, 4F, 0, () -> getEtheriumConfig().getRepairMaterial());
 
 	private static final int[] MAX_DAMAGE_ARRAY = new int[] { 13, 15, 16, 11 };
 	private static IEtheriumConfig etheriumConfig;
@@ -41,29 +41,29 @@ public enum EnigmaticArmorMaterials implements IArmorMaterial {
 	}
 
 	@Override
-	public int getDurability(EquipmentSlotType slot) {
+	public int getDurabilityForSlot(EquipmentSlotType slot) {
 		int durability = MAX_DAMAGE_ARRAY[slot.getIndex()] * this.maxDamageFactor;
 		return durability;
 	}
 
 	@Override
-	public int getDamageReductionAmount(EquipmentSlotType slot) {
+	public int getDefenseForSlot(EquipmentSlotType slot) {
 		return this.damageReductionAmountArray[slot.getIndex()];
 	}
 
 	@Override
-	public int getEnchantability() {
+	public int getEnchantmentValue() {
 		return this.enchantability;
 	}
 
 	@Override
-	public SoundEvent getSoundEvent() {
+	public SoundEvent getEquipSound() {
 		return this.soundEvent;
 	}
 
 	@Override
-	public Ingredient getRepairMaterial() {
-		return this.repairMaterial.getValue();
+	public Ingredient getRepairIngredient() {
+		return this.repairMaterial.get();
 	}
 
 	@Override

@@ -64,7 +64,7 @@ public final class ItemNBTHelper {
 	}
 
 	public static void setUUID(final ItemStack stack, final String tag, final UUID id) {
-		ItemNBTHelper.getNBT(stack).putUniqueId(tag, id);
+		ItemNBTHelper.getNBT(stack).putUUID(tag, id);
 	}
 
 	public static boolean verifyExistance(final ItemStack stack, final String tag) {
@@ -76,11 +76,11 @@ public final class ItemNBTHelper {
 	}
 
 	public static boolean containsUUID(final ItemStack stack, final String tag) {
-		return stack != null && ItemNBTHelper.getNBT(stack).hasUniqueId(tag);
+		return stack != null && ItemNBTHelper.getNBT(stack).hasUUID(tag);
 	}
 
 	public static UUID getUUID(final ItemStack stack, final String tag, UUID defaultExpected) {
-		return ItemNBTHelper.containsUUID(stack, tag) ? ItemNBTHelper.getNBT(stack).getUniqueId(tag) : defaultExpected;
+		return ItemNBTHelper.containsUUID(stack, tag) ? ItemNBTHelper.getNBT(stack).getUUID(tag) : defaultExpected;
 	}
 
 	public static byte getByte(final ItemStack stack, final String tag, final byte defaultExpected) {

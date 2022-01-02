@@ -28,7 +28,7 @@ public class RegisteredMeleeAttack {
 		float attackStregth = 1F;
 		if (attacker instanceof PlayerEntity && hasRegisteredMeleeAttack((PlayerEntity) attacker)) {
 			RegisteredMeleeAttack attack = getRegisteredMeleeAttack((PlayerEntity)attacker);
-			if (attack.ticksExisted == attacker.ticksExisted) {
+			if (attack.ticksExisted == attacker.tickCount) {
 				attackStregth = attack.cooledAttackStrength;
 			}
 		}
@@ -48,9 +48,9 @@ public class RegisteredMeleeAttack {
 	private RegisteredMeleeAttack(PlayerEntity player) {
 		this.player = player;
 
-		this.ticksExisted = player.ticksExisted;
-		this.ticksSinceLastSwing = player.ticksSinceLastSwing;
-		this.cooledAttackStrength = player.getCooledAttackStrength(0.5F);
+		this.ticksExisted = player.tickCount;
+		this.ticksSinceLastSwing = player.attackStrengthTicker;
+		this.cooledAttackStrength = player.getAttackStrengthScale(0.5F);
 	}
 
 

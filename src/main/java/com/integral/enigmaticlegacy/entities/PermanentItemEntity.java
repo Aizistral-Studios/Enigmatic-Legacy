@@ -44,7 +44,7 @@ import net.minecraftforge.registries.ObjectHolder;
  */
 
 public class PermanentItemEntity extends Entity {
-	private static final DataParameter<ItemStack> ITEM = EntityDataManager.createKey(PermanentItemEntity.class, DataSerializers.ITEMSTACK);
+	private static final DataParameter<ItemStack> ITEM = EntityDataManager.defineId(PermanentItemEntity.class, DataSerializers.ITEM_STACK);
 	private int age;
 	private int pickupDelay;
 	private int health = 5;
@@ -62,8 +62,8 @@ public class PermanentItemEntity extends Entity {
 
 	public PermanentItemEntity(World worldIn, double x, double y, double z) {
 		this(PermanentItemEntity.TYPE, worldIn);
-		this.setPosition(x, y <= 0 ? 1 : y, z);
-		this.rotationYaw = this.rand.nextFloat() * 360.0F;
+		this.setPos(x, y <= 0 ? 1 : y, z);
+		this.yRot = this.random.nextFloat() * 360.0F;
 		this.setInvulnerable(true);
 
 		this.setNoGravity(true);
@@ -76,26 +76,26 @@ public class PermanentItemEntity extends Entity {
 
 	@OnlyIn(Dist.CLIENT)
 	private PermanentItemEntity(PermanentItemEntity p_i231561_1_) {
-		super(p_i231561_1_.getType(), p_i231561_1_.world);
+		super(p_i231561_1_.getType(), p_i231561_1_.level);
 		this.setItem(p_i231561_1_.getItem().copy());
-		this.copyLocationAndAnglesFrom(p_i231561_1_);
+		this.copyPosition(p_i231561_1_);
 		this.age = p_i231561_1_.age;
 		this.hoverStart = p_i231561_1_.hoverStart;
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public PermanentItemEntity func_234273_t_() {
+	public PermanentItemEntity copy() {
 		return new PermanentItemEntity(this);
 	}
 
 	@Override
-	protected boolean canTriggerWalking() {
+	protected boolean isMovementNoisy() {
 		return false;
 	}
 
 	@Override
-	protected void registerData() {
-		this.getDataManager().register(PermanentItemEntity.ITEM, ItemStack.EMPTY);
+	protected void defineSynchedData() {
+		this.getEntityData().define(PermanentItemEntity.ITEM, ItemStack.EMPTY);
 	}
 
 	@Override
@@ -110,27 +110,27 @@ public class PermanentItemEntity extends Entity {
 				--this.pickupDelay;
 			}
 
-			this.prevPosX = this.getPosX();
-			this.prevPosY = this.getPosY();
-			this.prevPosZ = this.getPosZ();
-			Vector3d vec3d = this.getMotion();
+			this.xo = this.getX();
+			this.yo = this.getY();
+			this.zo = this.getZ();
+			Vector3d vec3d = this.getDeltaMovement();
 
-			if (!this.hasNoGravity()) {
-				this.setMotion(this.getMotion().add(0.0D, -0.04D, 0.0D));
+			if (!this.isNoGravity()) {
+				this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.04D, 0.0D));
 			}
 
-			if (this.world.isRemote) {
-				this.noClip = false;
+			if (this.level.isClientSide) {
+				this.noPhysics = false;
 
-				this.world.addParticle(ParticleTypes.PORTAL, this.getPosX(), this.getPosY() + (this.getHeight() / 2), this.getPosZ(), ((Math.random() - 0.5) * 2.0), ((Math.random() - 0.5) * 2.0), ((Math.random() - 0.5) * 2.0));
+				this.level.addParticle(ParticleTypes.PORTAL, this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), ((Math.random() - 0.5) * 2.0), ((Math.random() - 0.5) * 2.0), ((Math.random() - 0.5) * 2.0));
 			}
 
 			++this.age;
 
-			if (!this.world.isRemote) {
-				double d0 = this.getMotion().subtract(vec3d).lengthSquared();
+			if (!this.level.isClientSide) {
+				double d0 = this.getDeltaMovement().subtract(vec3d).lengthSqr();
 				if (d0 > 0.01D) {
-					this.isAirBorne = true;
+					this.hasImpulse = true;
 				}
 			}
 
@@ -141,7 +141,7 @@ public class PermanentItemEntity extends Entity {
 			}
 
 			// Portal Cooldown
-			this.field_242273_aw = Short.MAX_VALUE;
+			this.portalCooldown = Short.MAX_VALUE;
 
 		}
 	}
@@ -152,11 +152,11 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (this.world.isRemote || !this.isAlive())
+	public boolean hurt(DamageSource source, float amount) {
+		if (this.level.isClientSide || !this.isAlive())
 			return false;
 
-		if (source.isDamageAbsolute()) {
+		if (source.isBypassMagic()) {
 			EnigmaticLegacy.logger.warn("[WARN] Attacked permanent item entity with absolute DamageSource: " + source);
 			this.remove();
 			return true;
@@ -172,26 +172,26 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundNBT compound) {
 		compound.putShort("Health", (short) this.health);
 		compound.putShort("Age", (short) this.age);
 		compound.putShort("PickupDelay", (short) this.pickupDelay);
 		if (this.getThrowerId() != null) {
-			compound.putUniqueId("Thrower", this.getThrowerId());
+			compound.putUUID("Thrower", this.getThrowerId());
 		}
 
 		if (this.getOwnerId() != null) {
-			compound.putUniqueId("Owner", this.getOwnerId());
+			compound.putUUID("Owner", this.getOwnerId());
 		}
 
 		if (!this.getItem().isEmpty()) {
-			compound.put("Item", this.getItem().write(new CompoundNBT()));
+			compound.put("Item", this.getItem().save(new CompoundNBT()));
 		}
 
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundNBT compound) {
 		this.health = compound.getShort("Health");
 		this.age = compound.getShort("Age");
 		if (compound.contains("PickupDelay")) {
@@ -199,15 +199,15 @@ public class PermanentItemEntity extends Entity {
 		}
 
 		if (compound.contains("Owner")) {
-			this.owner = compound.getUniqueId("Owner");
+			this.owner = compound.getUUID("Owner");
 		}
 
 		if (compound.contains("Thrower")) {
-			this.thrower = compound.getUniqueId("Thrower");
+			this.thrower = compound.getUUID("Thrower");
 		}
 
 		CompoundNBT compoundnbt = compound.getCompound("Item");
-		this.setItem(ItemStack.read(compoundnbt));
+		this.setItem(ItemStack.of(compoundnbt));
 		if (this.getItem().isEmpty()) {
 			this.remove();
 		}
@@ -215,8 +215,8 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	@Override
-	public void onCollideWithPlayer(PlayerEntity player) {
-		if (!this.world.isRemote) {
+	public void playerTouch(PlayerEntity player) {
+		if (!this.level.isClientSide) {
 			if (this.pickupDelay > 0)
 				return;
 			ItemStack itemstack = this.getItem();
@@ -224,7 +224,7 @@ public class PermanentItemEntity extends Entity {
 			int i = itemstack.getCount();
 
 			ItemStack copy = itemstack.copy();
-			boolean isPlayerOwner = player.getUniqueID().equals(this.getOwnerId());
+			boolean isPlayerOwner = player.getUUID().equals(this.getOwnerId());
 			boolean allowPickUp = false;
 
 			if (item instanceof StorageCrystal && (isPlayerOwner || !EnigmaticLegacy.enigmaticAmulet.isVesselOwnerOnly())) {
@@ -237,7 +237,7 @@ public class PermanentItemEntity extends Entity {
 
 				if (item instanceof StorageCrystal) {
 					CompoundNBT crystalNBT = ItemNBTHelper.getNBT(itemstack);
-					ItemStack embeddedSoul = crystalNBT.contains("embeddedSoul") ? ItemStack.read(crystalNBT.getCompound("embeddedSoul")) : null;
+					ItemStack embeddedSoul = crystalNBT.contains("embeddedSoul") ? ItemStack.of(crystalNBT.getCompound("embeddedSoul")) : null;
 
 					if (!isPlayerOwner && embeddedSoul != null)
 						return;
@@ -256,28 +256,28 @@ public class PermanentItemEntity extends Entity {
 						return;
 				}
 
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY() + (this.getHeight() / 2), this.getPosZ(), 64, player.world.getDimensionKey())), new PacketRecallParticles(this.getPosX(), this.getPosY() + (this.getHeight() / 2), this.getPosZ(), 48, false));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), 64, player.level.dimension())), new PacketRecallParticles(this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), 48, false));
 
-				player.onItemPickup(this, i);
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.getDimensionKey())), new PacketHandleItemPickup(player.getEntityId(), this.getEntityId()));
+				player.take(this, i);
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY(), this.getZ(), 64, this.level.dimension())), new PacketHandleItemPickup(player.getId(), this.getId()));
 
 				EnigmaticLegacy.logger.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
 				this.remove();
 				itemstack.setCount(0);
 
-			} else if (this.pickupDelay == 0 && (this.owner == null || this.owner.equals(player.getUniqueID())) && (i <= 0 || player.inventory.addItemStackToInventory(itemstack))) {
+			} else if (this.pickupDelay == 0 && (this.owner == null || this.owner.equals(player.getUUID())) && (i <= 0 || player.inventory.add(itemstack))) {
 				copy.setCount(copy.getCount() - this.getItem().getCount());
 				if (itemstack.isEmpty()) {
-					player.onItemPickup(this, i);
+					player.take(this, i);
 
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getPosX(), this.getPosY(), this.getPosZ(), 64, this.world.getDimensionKey())), new PacketHandleItemPickup(player.getEntityId(), this.getEntityId()));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY(), this.getZ(), 64, this.level.dimension())), new PacketHandleItemPickup(player.getId(), this.getId()));
 
 					EnigmaticLegacy.logger.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
 					this.remove();
 					itemstack.setCount(i);
 				}
 
-				player.addStat(Stats.ITEM_PICKED_UP.get(item), i);
+				player.awardStat(Stats.ITEM_PICKED_UP.get(item), i);
 			}
 
 		}
@@ -290,8 +290,8 @@ public class PermanentItemEntity extends Entity {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public boolean isInRangeToRenderDist(double distance) {
-		double d0 = this.getBoundingBox().getAverageEdgeLength() * 4.0D;
+	public boolean shouldRenderAtSqrDistance(double distance) {
+		double d0 = this.getBoundingBox().getSize() * 4.0D;
 		if (Double.isNaN(d0)) {
 			d0 = 4.0D;
 		}
@@ -303,20 +303,20 @@ public class PermanentItemEntity extends Entity {
 	@Override
 	public ITextComponent getName() {
 		ITextComponent itextcomponent = this.getCustomName();
-		return itextcomponent != null ? itextcomponent : new TranslationTextComponent(this.getItem().getTranslationKey());
+		return itextcomponent != null ? itextcomponent : new TranslationTextComponent(this.getItem().getDescriptionId());
 	}
 
 	@Override
-	public boolean canBeAttackedWithItem() {
+	public boolean isAttackable() {
 		return false;
 	}
 
 	public ItemStack getItem() {
-		return this.getDataManager().get(PermanentItemEntity.ITEM);
+		return this.getEntityData().get(PermanentItemEntity.ITEM);
 	}
 
 	public void setItem(ItemStack stack) {
-		this.getDataManager().set(PermanentItemEntity.ITEM, stack);
+		this.getEntityData().set(PermanentItemEntity.ITEM, stack);
 	}
 
 	@Nullable
@@ -367,7 +367,7 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public IPacket<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

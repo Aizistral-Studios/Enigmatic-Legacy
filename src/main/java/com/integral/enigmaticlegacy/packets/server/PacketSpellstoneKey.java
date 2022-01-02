@@ -41,7 +41,7 @@ public class PacketSpellstoneKey {
 		    	  ItemStack spellstone = SuperpositionHandler.getSpellstone(playerServ);
 		    	  ISpellstone function = (ISpellstone) spellstone.getItem();
 		    	  
-		    	  function.triggerActiveAbility(playerServ.world, playerServ, spellstone);
+		    	  function.triggerActiveAbility(playerServ.level, playerServ, spellstone);
 		      }
 
 		    });

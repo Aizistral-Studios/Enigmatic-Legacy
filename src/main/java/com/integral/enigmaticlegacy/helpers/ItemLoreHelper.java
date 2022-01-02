@@ -32,13 +32,13 @@ public class ItemLoreHelper {
 		}
 
 
-		list.add(new TranslationTextComponent("tooltip.enigmaticlegacy.cursedOnesOnly1").mergeStyle(format));
-		list.add(new TranslationTextComponent("tooltip.enigmaticlegacy.cursedOnesOnly2").mergeStyle(format));
+		list.add(new TranslationTextComponent("tooltip.enigmaticlegacy.cursedOnesOnly1").withStyle(format));
+		list.add(new TranslationTextComponent("tooltip.enigmaticlegacy.cursedOnesOnly2").withStyle(format));
 
 	}
 
 	public static void addLocalizedFormattedString(List<ITextComponent> list, String str, TextFormatting format) {
-		list.add(new TranslationTextComponent(str).mergeStyle(format));
+		list.add(new TranslationTextComponent(str).withStyle(format));
 	}
 
 	public static void addLocalizedString(List<ITextComponent> list, String str) {
@@ -59,7 +59,7 @@ public class ItemLoreHelper {
 			}
 
 			if (format != null) {
-				comp.mergeStyle(format);
+				comp.withStyle(format);
 			}
 
 			stringValues[counter] = comp;
@@ -70,9 +70,9 @@ public class ItemLoreHelper {
 	}
 
 	public static ItemStack mergeDisplayData(ItemStack from, ItemStack to) {
-		CompoundNBT nbt = from.getOrCreateChildTag("display");
-		ListNBT loreList = nbt.getList("Lore", 8).size() > 0 ? nbt.getList("Lore", 8) : to.getOrCreateChildTag("display").getList("Lore", 8);
-		StringNBT displayName = nbt.getString("Name").length() > 0 ? StringNBT.valueOf(nbt.getString("Name")) : StringNBT.valueOf(to.getOrCreateChildTag("display").getString("Name"));
+		CompoundNBT nbt = from.getOrCreateTagElement("display");
+		ListNBT loreList = nbt.getList("Lore", 8).size() > 0 ? nbt.getList("Lore", 8) : to.getOrCreateTagElement("display").getList("Lore", 8);
+		StringNBT displayName = nbt.getString("Name").length() > 0 ? StringNBT.valueOf(nbt.getString("Name")) : StringNBT.valueOf(to.getOrCreateTagElement("display").getString("Name"));
 
 		CompoundNBT mergedData = new CompoundNBT();
 		mergedData.put("Lore", loreList.copy());
@@ -84,7 +84,7 @@ public class ItemLoreHelper {
 	}
 
 	public static ItemStack addLoreString(ItemStack stack, String string) {
-		CompoundNBT nbt = stack.getOrCreateChildTag("display");
+		CompoundNBT nbt = stack.getOrCreateTagElement("display");
 
 		ListNBT loreList = nbt.getList("Lore", 8);
 		loreList.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
@@ -95,7 +95,7 @@ public class ItemLoreHelper {
 	}
 
 	public static ItemStack setLoreString(ItemStack stack, String string, int index) {
-		CompoundNBT nbt = stack.getOrCreateChildTag("display");
+		CompoundNBT nbt = stack.getOrCreateTagElement("display");
 
 		ListNBT loreList = nbt.getList("Lore", 8);
 		if (loreList.size() - 1 >= index) {
@@ -110,7 +110,7 @@ public class ItemLoreHelper {
 	}
 
 	public static ItemStack removeLoreString(ItemStack stack, int index) {
-		CompoundNBT nbt = stack.getOrCreateChildTag("display");
+		CompoundNBT nbt = stack.getOrCreateTagElement("display");
 
 		ListNBT loreList = nbt.getList("Lore", 8);
 
@@ -126,7 +126,7 @@ public class ItemLoreHelper {
 	}
 
 	public static ItemStack setLastLoreString(ItemStack stack, String string) {
-		CompoundNBT nbt = stack.getOrCreateChildTag("display");
+		CompoundNBT nbt = stack.getOrCreateTagElement("display");
 
 		ListNBT loreList = nbt.getList("Lore", 8);
 
@@ -142,7 +142,7 @@ public class ItemLoreHelper {
 	}
 
 	public static ItemStack setDisplayName(ItemStack stack, String name) {
-		CompoundNBT nbt = stack.getOrCreateChildTag("display");
+		CompoundNBT nbt = stack.getOrCreateTagElement("display");
 
 		nbt.putString("Name", ITextComponent.Serializer.toJson(new StringTextComponent(name)));
 

@@ -18,12 +18,12 @@ import net.minecraft.world.World;
 public class EvilEssence extends ItemBase implements ICursed {
 
 	public EvilEssence() {
-		super(getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(8).isImmuneToFire());
+		super(getDefaultProperties().rarity(Rarity.EPIC).stacksTo(8).fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "evil_essence"));
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.evilEssence1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.evilEssence2");

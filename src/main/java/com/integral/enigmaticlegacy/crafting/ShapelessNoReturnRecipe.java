@@ -33,7 +33,7 @@ public class ShapelessNoReturnRecipe extends ShapelessRecipe {
 
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(CraftingInventory inv) {
-		NonNullList<ItemStack> nonnulllist = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
+		NonNullList<ItemStack> nonnulllist = NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
 		return nonnulllist;
 	}
 
@@ -44,20 +44,20 @@ public class ShapelessNoReturnRecipe extends ShapelessRecipe {
 
 	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ShapelessNoReturnRecipe> {
 		@Override
-		public ShapelessNoReturnRecipe read(ResourceLocation recipeId, JsonObject json) {
-			ShapelessRecipe recipe = CRAFTING_SHAPELESS.read(recipeId, json);
-			return new ShapelessNoReturnRecipe(recipe.getId(), recipe.getGroup(), recipe.getRecipeOutput(), recipe.getIngredients());
+		public ShapelessNoReturnRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
+			ShapelessRecipe recipe = SHAPELESS_RECIPE.fromJson(recipeId, json);
+			return new ShapelessNoReturnRecipe(recipe.getId(), recipe.getGroup(), recipe.getResultItem(), recipe.getIngredients());
 		}
 
 		@Override
-		public ShapelessNoReturnRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
-			ShapelessRecipe recipe = CRAFTING_SHAPELESS.read(recipeId, buffer);
-			return new ShapelessNoReturnRecipe(recipe.getId(), recipe.getGroup(), recipe.getRecipeOutput(), recipe.getIngredients());
+		public ShapelessNoReturnRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+			ShapelessRecipe recipe = SHAPELESS_RECIPE.fromNetwork(recipeId, buffer);
+			return new ShapelessNoReturnRecipe(recipe.getId(), recipe.getGroup(), recipe.getResultItem(), recipe.getIngredients());
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, ShapelessNoReturnRecipe recipe) {
-			CRAFTING_SHAPELESS.write(buffer, recipe);
+		public void toNetwork(PacketBuffer buffer, ShapelessNoReturnRecipe recipe) {
+			SHAPELESS_RECIPE.toNetwork(buffer, recipe);
 		}
 
 	}

@@ -21,13 +21,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class EnchantmentTransposer extends ItemBase {
 
 	public EnchantmentTransposer() {
-		super(ItemBase.getDefaultProperties().maxStackSize(1).rarity(Rarity.UNCOMMON));
+		super(ItemBase.getDefaultProperties().stacksTo(1).rarity(Rarity.UNCOMMON));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enchantment_transposer"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enchantmentTransposer1");

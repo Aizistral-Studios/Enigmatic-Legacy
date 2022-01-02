@@ -28,22 +28,22 @@ public class MendingMixtureRepairRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public ItemStack getCraftingResult(CraftingInventory inv) {
+	public ItemStack assemble(CraftingInventory inv) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack slotStack = inv.getStackInSlot(i);
+		for (int i = 0; i < inv.getContainerSize(); i++) {
+			ItemStack slotStack = inv.getItem(i);
 			
 			if (!slotStack.isEmpty())
 				stackList.add(slotStack);
 		}
 		
 		if (stackList.size() == 2)
-			if (stackList.get(0).isDamageable() || stackList.get(1).isDamageable())
+			if (stackList.get(0).isDamageableItem() || stackList.get(1).isDamageableItem())
 				if (stackList.get(0).getItem() == EnigmaticLegacy.mendingMixture || stackList.get(1).getItem() == EnigmaticLegacy.mendingMixture) {
-					ItemStack tool = stackList.get(0).isDamageable() ? stackList.get(0).copy() : stackList.get(1).copy();
+					ItemStack tool = stackList.get(0).isDamageableItem() ? stackList.get(0).copy() : stackList.get(1).copy();
 					
-					tool.setDamage(0);
+					tool.setDamageValue(0);
 					return tool;
 				}
 					
@@ -54,15 +54,15 @@ public class MendingMixtureRepairRecipe extends ShapelessRecipe {
 	public boolean matches(CraftingInventory inv, World world) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack slotStack = inv.getStackInSlot(i);
+		for (int i = 0; i < inv.getContainerSize(); i++) {
+			ItemStack slotStack = inv.getItem(i);
 			
 			if (!slotStack.isEmpty())
 				stackList.add(slotStack);
 		}
 		
 		if (stackList.size() == 2)
-			if (stackList.get(0).isDamageable() || stackList.get(1).isDamageable())
+			if (stackList.get(0).isDamageableItem() || stackList.get(1).isDamageableItem())
 				if (stackList.get(0).getItem() == EnigmaticLegacy.mendingMixture || stackList.get(1).getItem() == EnigmaticLegacy.mendingMixture)
 					return true;
 					
@@ -70,12 +70,12 @@ public class MendingMixtureRepairRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public ItemStack getRecipeOutput() {
+	public ItemStack getResultItem() {
 		return ItemStack.EMPTY;
 	}
 	
 	@Override
-	public boolean isDynamic() {
+	public boolean isSpecial() {
 		return true;
 	}
 
@@ -86,17 +86,17 @@ public class MendingMixtureRepairRecipe extends ShapelessRecipe {
 
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<MendingMixtureRepairRecipe> {
 		@Override
-		public MendingMixtureRepairRecipe read(ResourceLocation recipeId, JsonObject json) {
+		public MendingMixtureRepairRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			return new MendingMixtureRepairRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
 		}
 
 		@Override
-		public MendingMixtureRepairRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
+		public MendingMixtureRepairRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
 			return new MendingMixtureRepairRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
 		}
 
 		@Override
-		public void write(PacketBuffer buffer, MendingMixtureRepairRecipe recipe) {
+		public void toNetwork(PacketBuffer buffer, MendingMixtureRepairRecipe recipe) {
 
 		}
 	}

@@ -17,13 +17,13 @@ public class RealSmoothTeleporter implements ITeleporter {
 	}
 
 	public RealSmoothTeleporter(ServerPlayerEntity serverPlayer, double x, double y, double z) {
-		serverPlayer.moveForced(x, y, z);
+		serverPlayer.moveTo(x, y, z);
 	}
 
 	@Override
 	public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
 		if (entity instanceof ServerPlayerEntity) {
-			entity.setWorld(destWorld);
+			entity.setLevel(destWorld);
 			destWorld.addDuringPortalTeleport((ServerPlayerEntity) entity);
 			this.fireTriggers(currentWorld, (ServerPlayerEntity) entity);
 			return entity;
@@ -32,9 +32,9 @@ public class RealSmoothTeleporter implements ITeleporter {
 	}
 
 	private void fireTriggers(ServerWorld p_213846_1_, ServerPlayerEntity player) {
-		RegistryKey<World> registrykey = p_213846_1_.getDimensionKey();
-		RegistryKey<World> registrykey1 = player.world.getDimensionKey();
-		CriteriaTriggers.CHANGED_DIMENSION.testForAll(player, registrykey, registrykey1);
+		RegistryKey<World> registrykey = p_213846_1_.dimension();
+		RegistryKey<World> registrykey1 = player.level.dimension();
+		CriteriaTriggers.CHANGED_DIMENSION.trigger(player, registrykey, registrykey1);
 	}
 
 }

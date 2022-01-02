@@ -37,8 +37,8 @@ public abstract class ItemEtheriumTool extends ToolItem implements IEtheriumTool
 	}
 
 	@Override
-	public boolean canHarvestBlock(BlockState blockIn) {
-		int i = this.getTier().getHarvestLevel();
+	public boolean isCorrectToolForDrops(BlockState blockIn) {
+		int i = this.getTier().getLevel();
 
 		if (this.getToolTypes(this.defaultInstance).contains(blockIn.getHarvestTool())) {
 			if (blockIn.getHarvestTool() == ToolType.PICKAXE)
@@ -54,7 +54,7 @@ public abstract class ItemEtheriumTool extends ToolItem implements IEtheriumTool
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
 		Material material = state.getMaterial();
-		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.efficiency;
+		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.speed;
 	}
 
 }

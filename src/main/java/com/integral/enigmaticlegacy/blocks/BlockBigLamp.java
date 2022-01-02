@@ -23,8 +23,8 @@ import net.minecraft.block.AbstractBlock.Properties;
 
 public class BlockBigLamp extends LanternBlock {
 	
-	protected final VoxelShape sittingLantern = VoxelShapes.or(Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D));
-	protected final VoxelShape hangingLantern = VoxelShapes.or(Block.makeCuboidShape(1.0D, 1.0D, 1.0D, 15.0D, 15.0D, 15.0D));
+	protected final VoxelShape sittingLantern = VoxelShapes.or(Block.box(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D));
+	protected final VoxelShape hangingLantern = VoxelShapes.or(Block.box(1.0D, 1.0D, 1.0D, 15.0D, 15.0D, 15.0D));
 
 	public BlockBigLamp(Properties properties, String registryName) {
 		super(properties);
@@ -35,18 +35,18 @@ public class BlockBigLamp extends LanternBlock {
 	
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-	      return state.get(HANGING) ? hangingLantern : sittingLantern;
+	      return state.getValue(HANGING) ? hangingLantern : sittingLantern;
 	}
 	
 	@Override
-	public BlockRenderType getRenderType(BlockState state) {
+	public BlockRenderType getRenderShape(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
 	
 	@Override
 	public List<ItemStack> getDrops(BlockState state, Builder builder) {
 		List<ItemStack> stacklist = new ArrayList<ItemStack>();
-		stacklist.add(new ItemStack(Item.getItemFromBlock(this)));
+		stacklist.add(new ItemStack(Item.byBlock(this)));
 		return stacklist;
 	}
 	

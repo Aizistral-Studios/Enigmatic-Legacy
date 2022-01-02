@@ -28,12 +28,12 @@ public class RevelationGainTrigger extends AbstractCriterionTrigger<RevelationGa
 
 	@Nonnull
 	@Override
-	public RevelationGainTrigger.Instance deserializeTrigger(@Nonnull JsonObject json, @Nonnull EntityPredicate.AndPredicate playerPred, ConditionArrayParser conditions) {
-		return new RevelationGainTrigger.Instance(playerPred, JSONUtils.getString(json, "point_type"), JSONUtils.getInt(json, "point_amount"));
+	public RevelationGainTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.AndPredicate playerPred, ConditionArrayParser conditions) {
+		return new RevelationGainTrigger.Instance(playerPred, JSONUtils.getAsString(json, "point_type"), JSONUtils.getAsInt(json, "point_amount"));
 	}
 
 	public void trigger(ServerPlayerEntity player, RevelationTome.TomeType type, int amount) {
-		this.triggerListeners(player, instance -> instance.test(type, amount));
+		this.trigger(player, instance -> instance.test(type, amount));
 	}
 
 	static class Instance extends CriterionInstance {
@@ -48,7 +48,7 @@ public class RevelationGainTrigger extends AbstractCriterionTrigger<RevelationGa
 
 		@Nonnull
 		@Override
-		public ResourceLocation getId() {
+		public ResourceLocation getCriterion() {
 			return RevelationGainTrigger.ID;
 		}
 

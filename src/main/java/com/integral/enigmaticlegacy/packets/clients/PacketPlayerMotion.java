@@ -41,7 +41,7 @@ public class PacketPlayerMotion {
 		    ctx.get().enqueueWork(() -> {
 		    	ClientPlayerEntity player = Minecraft.getInstance().player;
 		    	
-		    	player.setMotion(msg.x, msg.y, msg.z);
+		    	player.setDeltaMovement(msg.x, msg.y, msg.z);
 		      	
 		    });
 		    ctx.get().setPacketHandled(true);

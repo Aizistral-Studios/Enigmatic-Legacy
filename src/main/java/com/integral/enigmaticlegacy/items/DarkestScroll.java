@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 public class DarkestScroll extends ItemBase {
 
 	public DarkestScroll() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON).maxStackSize(1));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON).stacksTo(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "darkest_scroll"));
 	}
 

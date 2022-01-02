@@ -89,13 +89,13 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 			AbstractPiglinEntity.class, GuardianEntity.class);
 
 	public GuardianHeart() {
-		super(getDefaultProperties().maxStackSize(1).rarity(Rarity.EPIC).isImmuneToFire());
+		super(getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "guardian_heart"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart1", TextFormatting.GOLD, abilityRange);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart2");
@@ -123,11 +123,11 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
-		if (entity instanceof PlayerEntity && !world.isRemote) {
+		if (entity instanceof PlayerEntity && !world.isClientSide) {
 			PlayerEntity player = (PlayerEntity) entity;
-			List<MonsterEntity> genericMobs = player.world.getEntitiesWithinAABB(MonsterEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, abilityRange.getValue()));
+			List<MonsterEntity> genericMobs = player.level.getEntitiesOfClass(MonsterEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, abilityRange.getValue()));
 
-			if (SuperpositionHandler.isTheCursedOne(player) && PlayerInventory.isHotbar(itemSlot) && !player.getCooldownTracker().hasCooldown(this)) {
+			if (SuperpositionHandler.isTheCursedOne(player) && PlayerInventory.isHotbarSlot(itemSlot) && !player.getCooldowns().isOnCooldown(this)) {
 				MonsterEntity oneWatched = null;
 
 				for (MonsterEntity monster : genericMobs) {
@@ -142,30 +142,30 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 				if (oneWatched != null && oneWatched.isAlive()) {
 					final MonsterEntity theOne = oneWatched;
 					Vector3 vec = Vector3.fromEntityCenter(theOne);
-					List<MonsterEntity> surroundingMobs = player.world.getEntitiesWithinAABB(MonsterEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(theOne, enrageRange.getValue()), (living) -> { return living.isAlive() && theOne.canEntityBeSeen(living); });
+					List<MonsterEntity> surroundingMobs = player.level.getEntitiesOfClass(MonsterEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(theOne, enrageRange.getValue()), (living) -> { return living.isAlive() && theOne.canSee(living); });
 					MonsterEntity closestMonster = SuperpositionHandler.getClosestEntity(surroundingMobs, (monster) -> monster != theOne, vec.x, vec.y, vec.z);
 
 					//System.out.println("Closest monster: " + closestMonster);
 
 					if (closestMonster != null) {
 						this.setAttackTarget(theOne, closestMonster);
-						theOne.addPotionEffect(new EffectInstance(Effects.BLINDNESS, 300, 0, false, true));
-						theOne.addPotionEffect(new EffectInstance(Effects.STRENGTH, 300, 1, false, false));
-						theOne.addPotionEffect(new EffectInstance(Effects.RESISTANCE, 300, 1, false, false));
+						theOne.addEffect(new EffectInstance(Effects.BLINDNESS, 300, 0, false, true));
+						theOne.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 300, 1, false, false));
+						theOne.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 300, 1, false, false));
 						//theOne.addPotionEffect(new EffectInstance(Effects., 400, 1, false, true));
 
 						for (MonsterEntity otherMonster : surroundingMobs) {
 							this.setAttackTarget(otherMonster, theOne);
 						}
 
-						player.world.playSound(null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_ELDER_GUARDIAN_CURSE, SoundCategory.HOSTILE, 1.0F, 1.0F);
+						player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundCategory.HOSTILE, 1.0F, 1.0F);
 
 						if (player instanceof ServerPlayerEntity) {
 							ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
-							EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(theOne.getPosX(), theOne.getPosY(), theOne.getPosZ(), 64, theOne.world.getDimensionKey())), new PacketGenericParticleEffect(theOne.getPosX(), theOne.getPosYEye(), theOne.getPosZ(), 0, false, Effect.GUARDIAN_CURSE));
+							EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(theOne.getX(), theOne.getY(), theOne.getZ(), 64, theOne.level.dimension())), new PacketGenericParticleEffect(theOne.getX(), theOne.getEyeY(), theOne.getZ(), 0, false, Effect.GUARDIAN_CURSE));
 						}
 
-						player.getCooldownTracker().setCooldown(this, abilityCooldown.getValue());
+						player.getCooldowns().addCooldown(this, abilityCooldown.getValue());
 					}
 				}
 
@@ -175,9 +175,9 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 				if (monster instanceof GuardianEntity && monster.getClass() != ElderGuardianEntity.class) {
 					final GuardianEntity guardian = (GuardianEntity) monster;
 
-					if (guardian.getAttackTarget() == null) {
-						List<MonsterEntity> surroundingMobs = player.world.getEntitiesWithinAABB(MonsterEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(guardian, 12), (living) -> { return living.isAlive() && guardian.canEntityBeSeen(living); });
-						MonsterEntity closestMonster = SuperpositionHandler.getClosestEntity(surroundingMobs, (checked) -> { return !(checked instanceof GuardianEntity); }, guardian.getPosX(), guardian.getPosY(), guardian.getPosZ());
+					if (guardian.getTarget() == null) {
+						List<MonsterEntity> surroundingMobs = player.level.getEntitiesOfClass(MonsterEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(guardian, 12), (living) -> { return living.isAlive() && guardian.canSee(living); });
+						MonsterEntity closestMonster = SuperpositionHandler.getClosestEntity(surroundingMobs, (checked) -> { return !(checked instanceof GuardianEntity); }, guardian.getX(), guardian.getY(), guardian.getZ());
 
 						if (closestMonster != null) {
 							this.setAttackTarget(guardian, closestMonster);
@@ -204,28 +204,28 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 		if (monster != null && otherMonster != null && monster != otherMonster) {
 			if (monster instanceof AbstractPiglinEntity) {
 				((AbstractPiglinEntity)monster).getBrain().setMemory(MemoryModuleType.ATTACK_TARGET, otherMonster);
-				monster.setAttackTarget(otherMonster);
-				monster.setRevengeTarget(otherMonster);
+				monster.setTarget(otherMonster);
+				monster.setLastHurtByMob(otherMonster);
 
 				if (monster instanceof PiglinBruteEntity) {
-					PiglinBruteBrain.func_242353_a((PiglinBruteEntity) monster, otherMonster);
+					PiglinBruteBrain.wasHurtBy((PiglinBruteEntity) monster, otherMonster);
 				} else if (monster instanceof PiglinEntity) {
-					PiglinTasks.func_234468_a_((PiglinEntity) monster, otherMonster);
+					PiglinTasks.wasHurtBy((PiglinEntity) monster, otherMonster);
 				}
 
 				//monster.goalSelector.addGoal(1, new NearestAttackableTargetGoal<>(monster, MonsterEntity.class, true));
 			} else if (monster instanceof IAngerable) {
-				((IAngerable)monster).setAttackTarget(otherMonster);
+				((IAngerable)monster).setTarget(otherMonster);
 			} else {
-				monster.setAttackTarget(otherMonster);
-				monster.setRevengeTarget(otherMonster);
+				monster.setTarget(otherMonster);
+				monster.setLastHurtByMob(otherMonster);
 			}
 		}
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		return super.onItemRightClick(worldIn, playerIn, handIn);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		return super.use(worldIn, playerIn, handIn);
 	}
 
 }

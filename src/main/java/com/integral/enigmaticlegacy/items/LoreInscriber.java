@@ -28,13 +28,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class LoreInscriber extends ItemBase implements IVanishable {
 
 	public LoreInscriber() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).maxStackSize(1));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "lore_inscriber"));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.loreInscriber1");
@@ -58,14 +58,14 @@ public class LoreInscriber extends ItemBase implements IVanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack stack = playerIn.getHeldItem(handIn);
-		playerIn.setActiveHand(handIn);
+	public ActionResult<ItemStack> use(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		ItemStack stack = playerIn.getItemInHand(handIn);
+		playerIn.startUsingItem(handIn);
 
-		if (!worldIn.isRemote) {
+		if (!worldIn.isClientSide) {
 			ITextComponent name = new TranslationTextComponent("gui.enigmaticlegacy.lore_inscriber");
 
-			playerIn.openContainer(new LoreInscriberContainerProvider(name));
+			playerIn.openMenu(new LoreInscriberContainerProvider(name));
 		}
 
 		return new ActionResult<>(ActionResultType.SUCCESS, stack);

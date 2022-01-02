@@ -40,8 +40,8 @@ public class PacketPlayerRotations {
 		    ctx.get().enqueueWork(() -> {
 		    	ClientPlayerEntity player = Minecraft.getInstance().player;
 		    	
-		    	player.rotateTowards(msg.rotationYaw, msg.rotationPitch);
-		    	player.rotationYawHead = msg.rotationYawHead;
+		    	player.turn(msg.rotationYaw, msg.rotationPitch);
+		    	player.yHeadRot = msg.rotationYawHead;
 		      	
 		    });
 		    ctx.get().setPacketHandled(true);

@@ -67,7 +67,7 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -81,7 +81,7 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 
 	@SuppressWarnings("deprecation")
 	public BlockPos getCollidedWater(INamedTag<Fluid> fluidTag, PlayerEntity player) {
-		AxisAlignedBB axisalignedbb = player.getBoundingBox().shrink(0.001D);
+		AxisAlignedBB axisalignedbb = player.getBoundingBox().deflate(0.001D);
 		int i = MathHelper.floor(axisalignedbb.minX);
 		int j = MathHelper.ceil(axisalignedbb.maxX);
 		int k = MathHelper.floor(axisalignedbb.minY);
@@ -91,7 +91,7 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 
 		BlockPos pos = null;
 
-		if (!player.world.isAreaLoaded(i, k, i1, j, l, j1))
+		if (!player.level.hasChunksAt(i, k, i1, j, l, j1))
 			return null;
 		else {
 			try {
@@ -100,10 +100,10 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 				for (int l1 = i; l1 < j; ++l1) {
 					for (int i2 = k; i2 < l; ++i2) {
 						for (int j2 = i1; j2 < j1; ++j2) {
-							blockpos$pooledmutableblockpos.setPos(l1, i2, j2);
-							FluidState ifluidstate = player.world.getFluidState(blockpos$pooledmutableblockpos);
-							if (ifluidstate.isTagged(fluidTag)) {
-								ifluidstate.tick(player.world, blockpos$pooledmutableblockpos);
+							blockpos$pooledmutableblockpos.set(l1, i2, j2);
+							FluidState ifluidstate = player.level.getFluidState(blockpos$pooledmutableblockpos);
+							if (ifluidstate.is(fluidTag)) {
+								ifluidstate.tick(player.level, blockpos$pooledmutableblockpos);
 								pos = new BlockPos(l1, i2, j2);
 							}
 						}
@@ -119,16 +119,16 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof PlayerEntity & !living.world.isRemote) {
+		if (living instanceof PlayerEntity & !living.level.isClientSide) {
 			PlayerEntity player = (PlayerEntity) living;
 
-			if (!player.getCooldownTracker().hasCooldown(this)) {
+			if (!player.getCooldowns().isOnCooldown(this)) {
 				List<BlockPos> doomedWaterBlocks = new ArrayList<BlockPos>();
 				BlockPos initialPos = this.getCollidedWater(FluidTags.WATER, player);
-				BlockState initialState = initialPos != null ? player.world.getBlockState(initialPos) : null;
+				BlockState initialState = initialPos != null ? player.level.getBlockState(initialPos) : null;
 
 				if (initialPos != null && initialState != null)
-					if (initialState.getFluidState() != null && initialState.getFluidState().isTagged(FluidTags.WATER)) {
+					if (initialState.getFluidState() != null && initialState.getFluidState().is(FluidTags.WATER)) {
 
 						doomedWaterBlocks.add(initialPos);
 						List<BlockPos> processedBlocks = new ArrayList<BlockPos>();
@@ -138,7 +138,7 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 							List<BlockPos> outputBlocks = new ArrayList<BlockPos>();
 
 							for (BlockPos checkedPos : processedBlocks) {
-								outputBlocks.addAll(this.getNearbyWater(player.world, checkedPos));
+								outputBlocks.addAll(this.getNearbyWater(player.level, checkedPos));
 							}
 
 							processedBlocks.clear();
@@ -156,14 +156,14 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 						processedBlocks.clear();
 
 						for (BlockPos exterminatedBlock : doomedWaterBlocks) {
-							this.absorbWaterBlock(exterminatedBlock, player.world.getBlockState(exterminatedBlock), player.world);
+							this.absorbWaterBlock(exterminatedBlock, player.level.getBlockState(exterminatedBlock), player.level);
 						}
 
 						doomedWaterBlocks.clear();
 
-						player.world.playSound(null, player.getPosition(), SoundEvents.ITEM_BUCKET_FILL, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getPosX(), player.getPosY(), player.getPosZ(), 64, player.world.getDimensionKey())), new PacketPortalParticles(player.getPosX(), player.getPosY() + (player.getHeight() / 2), player.getPosZ(), 40, 1.0D, false));
-						player.getCooldownTracker().setCooldown(this, 20);
+						player.level.playSound(null, player.blockPosition(), SoundEvents.BUCKET_FILL, SoundCategory.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64, player.level.dimension())), new PacketPortalParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 40, 1.0D, false));
+						player.getCooldowns().addCooldown(this, 20);
 
 					}
 
@@ -173,14 +173,14 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 
 	public void absorbWaterBlock(BlockPos pos, BlockState state, World world) {
 
-		if (state.getBlock() instanceof IBucketPickupHandler && ((IBucketPickupHandler) state.getBlock()).pickupFluid(world, pos, state) != Fluids.EMPTY) {
+		if (state.getBlock() instanceof IBucketPickupHandler && ((IBucketPickupHandler) state.getBlock()).takeLiquid(world, pos, state) != Fluids.EMPTY) {
 			// Whatever
 		} else if (state.getBlock() instanceof FlowingFluidBlock) {
-			world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
-		} else if (state.getMaterial() == Material.OCEAN_PLANT || state.getMaterial() == Material.SEA_GRASS) {
-			TileEntity tileentity = state.hasTileEntity() ? world.getTileEntity(pos) : null;
-			Block.spawnDrops(state, world, pos, tileentity);
-			world.setBlockState(pos, Blocks.AIR.getDefaultState(), 3);
+			world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+		} else if (state.getMaterial() == Material.WATER_PLANT || state.getMaterial() == Material.REPLACEABLE_WATER_PLANT) {
+			TileEntity tileentity = state.hasTileEntity() ? world.getBlockEntity(pos) : null;
+			Block.dropResources(state, world, pos, tileentity);
+			world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
 		}
 	}
 
@@ -196,7 +196,7 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 		nearBlocks.add(new BlockPos(pos.getX(), pos.getY(), pos.getZ() - 1));
 
 		for (BlockPos checkedPos : nearBlocks) {
-			if (world.getBlockState(checkedPos).getFluidState().isTagged(FluidTags.WATER)) {
+			if (world.getBlockState(checkedPos).getFluidState().is(FluidTags.WATER)) {
 				waterBlocks.add(checkedPos);
 			}
 		}
