@@ -12,7 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
@@ -44,7 +44,7 @@ public class PotionHelper {
 			return false;
 	}
 
-	public static List<EffectInstance> getEffects(ItemStack stack) {
+	public static List<MobEffectInstance> getEffects(ItemStack stack) {
 			if (PotionHelper.isAdvancedPotion(stack)) {
 				AdvancedPotion potion = PotionHelper.getAdvancedPotion(ItemNBTHelper.getString(stack, "EnigmaticPotion", "nothing"));
 			    if (potion != null) {
@@ -52,7 +52,7 @@ public class PotionHelper {
 			    }
 			}
 
-		return new ArrayList<EffectInstance>();
+		return new ArrayList<MobEffectInstance>();
 	};
 
 	public static AdvancedPotion getAdvancedPotion(ItemStack stack) {

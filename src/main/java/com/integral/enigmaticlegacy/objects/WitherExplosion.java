@@ -8,24 +8,21 @@ import javax.annotation.Nullable;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.ExplosionContext;
-import net.minecraft.world.World;
-
-import net.minecraft.world.Explosion.Mode;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.ExplosionDamageCalculator;
+import net.minecraft.world.level.Level;
 
 public class WitherExplosion extends Explosion {
-
 	private final boolean causesFire;
-	private final Explosion.Mode mode;
+	private final Explosion.BlockInteraction mode;
 	private final Random random = new Random();
-	private final World world;
+	private final Level world;
 	private final double x;
 	private final double y;
 	private final double z;
@@ -33,8 +30,8 @@ public class WitherExplosion extends Explosion {
 	private final Entity exploder;
 	private final float size;
 
-	public WitherExplosion(World worldIn, Entity exploderIn, double xIn, double yIn, double zIn, float sizeIn, boolean causesFireIn, Mode modeIn) {
-		super(worldIn, exploderIn, (DamageSource)null, (ExplosionContext)null, xIn, yIn, zIn, sizeIn, causesFireIn, modeIn);
+	public WitherExplosion(Level worldIn, Entity exploderIn, double xIn, double yIn, double zIn, float sizeIn, boolean causesFireIn, BlockInteraction modeIn) {
+		super(worldIn, exploderIn, (DamageSource)null, (ExplosionDamageCalculator)null, xIn, yIn, zIn, sizeIn, causesFireIn, modeIn);
 
 		this.world = worldIn;
 		this.exploder = exploderIn;
@@ -45,7 +42,7 @@ public class WitherExplosion extends Explosion {
 		this.causesFire = causesFireIn;
 		this.mode = modeIn;
 		DamageSource.explosion(this);
-		new Vector3d(this.x, this.y, this.z);
+		new Vec3(this.x, this.y, this.z);
 	}
 
 	@Override
@@ -55,7 +52,7 @@ public class WitherExplosion extends Explosion {
 			this.world.playLocalSound(this.x, this.y, this.z, SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, (1.0F + (this.world.random.nextFloat() - this.world.random.nextFloat()) * 0.2F) * 0.7F, false);
 		}
 
-		boolean flag = this.mode != Explosion.Mode.NONE;
+		boolean flag = this.mode != Explosion.BlockInteraction.NONE;
 		if (spawnParticles) {
 			if (!(this.size < 2.0F) && flag) {
 				this.world.addParticle(ParticleTypes.EXPLOSION_EMITTER, this.x, this.y, this.z, 1.0D, 0.0D, 0.0D);
@@ -69,7 +66,7 @@ public class WitherExplosion extends Explosion {
 
 			for (BlockPos blockpos : super.getToBlow()) {
 				BlockState blockstate = this.world.getBlockState(blockpos);
-				if (!blockstate.isAir(this.world, blockpos)) {
+				if (!blockstate.isAir()) {
 					this.world.getProfiler().push("explosion_blocks");
 
 					blockstate.onBlockExploded(this.world, blockpos, this);

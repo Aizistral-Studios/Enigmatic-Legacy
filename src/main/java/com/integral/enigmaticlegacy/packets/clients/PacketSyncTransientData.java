@@ -4,8 +4,8 @@ import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class PacketSyncTransientData {
 
@@ -15,11 +15,11 @@ public class PacketSyncTransientData {
 		this.playerData = data;
 	}
 
-	public static void encode(PacketSyncTransientData msg, PacketBuffer buf) {
+	public static void encode(PacketSyncTransientData msg, FriendlyByteBuf buf) {
 		TransientPlayerData.encode(msg.playerData, buf);
 	}
 
-	public static PacketSyncTransientData decode(PacketBuffer buf) {
+	public static PacketSyncTransientData decode(FriendlyByteBuf buf) {
 		TransientPlayerData data = TransientPlayerData.decode(buf);
 		return new PacketSyncTransientData(data);
 	}

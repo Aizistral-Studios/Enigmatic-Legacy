@@ -17,7 +17,7 @@ import net.minecraft.world.item.enchantment.EnchantmentData;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.container.EnchantmentContainer;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;

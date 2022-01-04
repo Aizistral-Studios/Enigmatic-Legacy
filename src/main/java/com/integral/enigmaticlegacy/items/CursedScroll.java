@@ -15,16 +15,16 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -59,14 +59,14 @@ public class CursedScroll extends ItemBaseCurio implements ICursed {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursed_scroll1", TextFormatting.GOLD, damageBoost + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursed_scroll2", TextFormatting.GOLD, miningBoost + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursed_scroll3", TextFormatting.GOLD, regenBoost + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursed_scroll1", ChatFormatting.GOLD, damageBoost + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursed_scroll2", ChatFormatting.GOLD, miningBoost + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursed_scroll3", ChatFormatting.GOLD, regenBoost + "%");
 
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursed_scroll4");
@@ -81,9 +81,9 @@ public class CursedScroll extends ItemBaseCurio implements ICursed {
 
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursed_scroll6");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursed_scroll7", TextFormatting.GOLD, (damageBoost.getValue().asPercentage()*curses) + "%");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursed_scroll8", TextFormatting.GOLD, (miningBoost.getValue().asPercentage()*curses) + "%");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursed_scroll9", TextFormatting.GOLD, (regenBoost.getValue().asPercentage()*curses) + "%");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursed_scroll7", ChatFormatting.GOLD, (damageBoost.getValue().asPercentage()*curses) + "%");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursed_scroll8", ChatFormatting.GOLD, (miningBoost.getValue().asPercentage()*curses) + "%");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursed_scroll9", ChatFormatting.GOLD, (regenBoost.getValue().asPercentage()*curses) + "%");
 
 			}
 

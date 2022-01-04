@@ -8,7 +8,7 @@ import com.integral.etherium.items.EtheriumPickaxe;
 
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.IArmorMaterial;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.IItemTier;
 import net.minecraft.world.item.ItemGroup;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -23,7 +23,7 @@ public interface IEtheriumConfig {
 
 	public String getOwnerMod();
 
-	public IArmorMaterial getArmorMaterial();
+	public ArmorMaterial getArmorMaterial();
 
 	public IItemTier getToolMaterial();
 

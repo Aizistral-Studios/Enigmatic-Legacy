@@ -22,7 +22,7 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -42,14 +42,14 @@ import net.minecraft.world.entity.passive.BeeEntity;
 import net.minecraft.world.entity.passive.IronGolemEntity;
 import net.minecraft.world.entity.passive.TameableEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -167,7 +167,7 @@ public class CursedRing extends ItemBaseCurio {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
@@ -175,20 +175,20 @@ public class CursedRing extends ItemBaseCurio {
 			if (painMultiplier.getValue().asMultiplier() == 2.0) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing4");
 			} else {
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing4_alt", TextFormatting.GOLD, painMultiplier+"%");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing4_alt", ChatFormatting.GOLD, painMultiplier+"%");
 			}
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing5");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing6", TextFormatting.GOLD, armorDebuff+"%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing7", TextFormatting.GOLD, monsterDamageDebuff+"%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing6", ChatFormatting.GOLD, armorDebuff+"%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing7", ChatFormatting.GOLD, monsterDamageDebuff+"%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing8");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing9");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing10");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing11");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing12", TextFormatting.GOLD, lootingBonus);
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing13", TextFormatting.GOLD, fortuneBonus);
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing14", TextFormatting.GOLD, experienceBonus+"%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing15", TextFormatting.GOLD, enchantingBonus);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing12", ChatFormatting.GOLD, lootingBonus);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing13", ChatFormatting.GOLD, fortuneBonus);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing14", ChatFormatting.GOLD, experienceBonus+"%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing15", ChatFormatting.GOLD, enchantingBonus);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing16");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing17");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing18");
@@ -265,7 +265,7 @@ public class CursedRing extends ItemBaseCurio {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		// TODO Dirty self-equipping tricks
 	}
 

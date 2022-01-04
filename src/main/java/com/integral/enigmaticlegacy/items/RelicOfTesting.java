@@ -11,12 +11,12 @@ import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.monster.CreeperEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.stats.Stats;
@@ -25,9 +25,9 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.Hand;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.text.TextComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -42,7 +42,7 @@ public class RelicOfTesting extends ItemBase {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.relicOfTesting1");
 		} else {
@@ -53,7 +53,7 @@ public class RelicOfTesting extends ItemBase {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, Hand handIn) {
 
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		playerIn.startUsingItem(handIn);
@@ -65,25 +65,25 @@ public class RelicOfTesting extends ItemBase {
 		ItemStack checkTag = playerIn.inventory.offhand.get(0);
 
 		if (checkTag != null) {
-			playerIn.sendMessage(new StringTextComponent(checkTag.getOrCreateTag().getAsString()), playerIn.getUUID());
+			playerIn.sendMessage(new TextComponent(checkTag.getOrCreateTag().getAsString()), playerIn.getUUID());
 		}
 
 		if (!worldIn.isClientSide) {
 
-			//playerIn.sendMessage(new StringTextComponent("INTEGER: " + UltimaTestConfig.integerTest.getValue()), playerIn.getUniqueID());
-			//playerIn.sendMessage(new StringTextComponent("FLOAT: " + UltimaTestConfig.floatTest.getValue()), playerIn.getUniqueID());
-			//playerIn.sendMessage(new StringTextComponent("BOOLEAN: " + UltimaTestConfig.booleanTest.getValue()), playerIn.getUniqueID());
+			//playerIn.sendMessage(new TextComponent("INTEGER: " + UltimaTestConfig.integerTest.getValue()), playerIn.getUniqueID());
+			//playerIn.sendMessage(new TextComponent("FLOAT: " + UltimaTestConfig.floatTest.getValue()), playerIn.getUniqueID());
+			//playerIn.sendMessage(new TextComponent("BOOLEAN: " + UltimaTestConfig.booleanTest.getValue()), playerIn.getUniqueID());
 
 		}
 
 		/*
 		if(!worldIn.isRemote) {
-		    ITextComponent name = null;
+		    Component name = null;
 
 		    if(itemstack.hasDisplayName()) {
 		        name = itemstack.getDisplayName();
 		    } else {
-		        name = new TranslationTextComponent(this.getTranslationKey());
+		        name = new TranslatableComponent(this.getTranslationKey());
 		    }
 
 		    playerIn.openContainer(new PortableCrafterContainerProvider(name));
@@ -97,7 +97,7 @@ public class RelicOfTesting extends ItemBase {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
 		List<CreeperEntity> list = world.getEntitiesOfClass(CreeperEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(entity, 24D));
 
 		for (CreeperEntity creeper : list) {
@@ -130,7 +130,7 @@ public class RelicOfTesting extends ItemBase {
 
 	/*
 	 * public ActionResultType onItemUse(ItemUseContext context) { Player
-	 * player = context.getPlayer(); World world = context.getWorld(); //ItemStack
+	 * player = context.getPlayer(); Level world = context.getWorld(); //ItemStack
 	 * stack = context.getItem();
 	 *
 	 * if (world.getBlockState(context.getPos()).hasTileEntity()) { if

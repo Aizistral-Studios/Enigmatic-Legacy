@@ -8,10 +8,10 @@ import java.util.Objects;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.world.entity.Entity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.math.vector.Vector4f;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,7 +39,7 @@ public class Vector3 {
 		this.z = d2;
 	}
 
-	public Vector3(Vector3d vec) {
+	public Vector3(Vec3 vec) {
 		this(vec.x, vec.y, vec.z);
 	}
 
@@ -55,11 +55,11 @@ public class Vector3 {
 		return new Vector3(e.getX(), e.getY() - e.getMyRidingOffset() + e.getBbHeight() / 2, e.getZ());
 	}
 
-	public static Vector3 fromTileEntity(TileEntity e) {
+	public static Vector3 fromTileEntity(BlockEntity e) {
 		return Vector3.fromBlockPos(e.getBlockPos());
 	}
 
-	public static Vector3 fromTileEntityCenter(TileEntity e) {
+	public static Vector3 fromTileEntityCenter(BlockEntity e) {
 		return Vector3.fromTileEntity(e).add(0.5);
 	}
 
@@ -166,15 +166,15 @@ public class Vector3 {
 		return new Vector3(d, 0, d1);
 	}
 
-	public Vector3d toVec3D() {
-		return new Vector3d(this.x, this.y, this.z);
+	public Vec3 toVec3D() {
+		return new Vec3(this.x, this.y, this.z);
 	}
 
 	public double angle(Vector3 vec) {
 		return Math.acos(this.normalize().dotProduct(vec.normalize()));
 	}
 
-	public boolean isInside(AxisAlignedBB aabb) {
+	public boolean isInside(AABB aabb) {
 		return this.x >= aabb.minX && this.y >= aabb.maxY && this.z >= aabb.minZ && this.x < aabb.maxX && this.y < aabb.maxY && this.z < aabb.maxZ;
 	}
 

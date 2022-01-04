@@ -13,32 +13,33 @@ import com.integral.enigmaticlegacy.objects.Vector3;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.core.Direction;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 
 public class AOEMiningHelper {
 	public static final Random random = new Random();
 
 	/** Attempt to break blocks around the given pos in a 3x3x1 square relative to the targeted face.*/
-	public static void attemptBreakNeighbors(World world, BlockPos pos, Player player, Set<Block> effectiveOn, Set<Material> effectiveMaterials, boolean checkHarvestLevel) {
-		RayTraceResult trace = AOEMiningHelper.calcRayTrace(world, player, RayTraceContext.FluidMode.ANY);
+	public static void attemptBreakNeighbors(Level world, BlockPos pos, Player player, Set<Block> effectiveOn, Set<Material> effectiveMaterials, boolean checkHarvestLevel) {
+		HitResult trace = AOEMiningHelper.calcRayTrace(world, player, ClipContext.Fluid.ANY);
 
-		if (trace.getType() == RayTraceResult.Type.BLOCK) {
-			BlockRayTraceResult blockTrace = (BlockRayTraceResult) trace;
+		if (trace.getType() == HitResult.Type.BLOCK) {
+			BlockHitResult blockTrace = (BlockHitResult) trace;
 			Direction face = blockTrace.getDirection();
 
 			int fortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
@@ -78,9 +79,9 @@ public class AOEMiningHelper {
 	 * or not damage the tool used for mining the block.
 	 */
 
-	public static void attemptBreak(World world, BlockPos pos, Player player, Set<Block> effectiveOn, Set<Material> effectiveMaterials, int fortuneLevel, int silkLevel, boolean checkHarvestLevel, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
+	public static void attemptBreak(Level world, BlockPos pos, Player player, Set<Block> effectiveOn, Set<Material> effectiveMaterials, int fortuneLevel, int silkLevel, boolean checkHarvestLevel, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
 		BlockState state = world.getBlockState(pos);
-		TileEntity iCertainlyHopeYouHaveATileEntityLicense = world.getBlockEntity(pos);
+		BlockEntity iCertainlyHopeYouHaveATileEntityLicense = world.getBlockEntity(pos);
 
 		boolean validHarvest = !checkHarvestLevel || player.getMainHandItem().isCorrectToolForDrops(state);
 		boolean isEffective = effectiveOn.contains(state.getBlock()) || effectiveMaterials.contains(state.getMaterial());
@@ -93,31 +94,31 @@ public class AOEMiningHelper {
 			toolDamageConsumer.accept(pos, state);
 
 			int exp = state.getExpDrop(world, pos, fortuneLevel, silkLevel);
-			if (exp > 0 && world instanceof ServerWorld) {
-				state.getBlock().popExperience((ServerWorld) world, pos, exp);
+			if (exp > 0 && world instanceof ServerLevel) {
+				state.getBlock().popExperience((ServerLevel) world, pos, exp);
 			}
 		}
 	}
 
-	public static BlockRayTraceResult calcRayTrace(World worldIn, Player player, RayTraceContext.FluidMode fluidMode) {
+	public static BlockHitResult calcRayTrace(Level worldIn, Player player, ClipContext.Fluid fluidMode) {
 		return ItemBase.rayTrace(worldIn, player, fluidMode);
 	}
 
-	public static Vector3 calcRayTrace(World worldIn, Player player, RayTraceContext.FluidMode fluidMode, double distance) {
-		float f = player.xRot;
-		float f1 = player.yRot;
-		Vector3d vector3d = player.getEyePosition(1.0F);
-		float f2 = MathHelper.cos(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
-		float f3 = MathHelper.sin(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
-		float f4 = -MathHelper.cos(-f * ((float) Math.PI / 180F));
-		float f5 = MathHelper.sin(-f * ((float) Math.PI / 180F));
+	public static Vector3 calcRayTrace(Level worldIn, Player player, ClipContext.Fluid fluidMode, double distance) {
+		float f = player.getXRot();
+		float f1 = player.getYRot();
+		Vec3 vector3d = player.getEyePosition(1.0F);
+		float f2 = Mth.cos(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
+		float f3 = Mth.sin(-f1 * ((float) Math.PI / 180F) - (float) Math.PI);
+		float f4 = -Mth.cos(-f * ((float) Math.PI / 180F));
+		float f5 = Mth.sin(-f * ((float) Math.PI / 180F));
 		float f6 = f3 * f4;
 		float f7 = f2 * f4;
 		double d0 = distance;
-		Vector3d vector3d1 = vector3d.add(f6 * d0, f5 * d0, f7 * d0);
-		RayTraceResult result = worldIn.clip(new RayTraceContext(vector3d, vector3d1, RayTraceContext.BlockMode.OUTLINE, fluidMode, player));
+		Vec3 vector3d1 = vector3d.add(f6 * d0, f5 * d0, f7 * d0);
+		HitResult result = worldIn.clip(new ClipContext(vector3d, vector3d1, ClipContext.Block.OUTLINE, fluidMode, player));
 
-		if (result.getType() == RayTraceResult.Type.BLOCK)
+		if (result.getType() == HitResult.Type.BLOCK)
 			return new Vector3(result.getLocation());
 		else {
 			Vector3 vec = new Vector3(player.getLookAngle()).multiply(64F).add(new Vector3(player.position()));
@@ -125,7 +126,7 @@ public class AOEMiningHelper {
 		}
 	}
 
-	public static void harvestPlane(World world, Player player, Direction dir, BlockPos pos, Set<Material> effectiveMaterials, int radius, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
+	public static void harvestPlane(Level world, Player player, Direction dir, BlockPos pos, Set<Material> effectiveMaterials, int radius, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
 		int fortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
 		int silkLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getMainHandItem());
 		int supRad = (radius - 1) / 2;
@@ -154,7 +155,7 @@ public class AOEMiningHelper {
 		}
 	}
 
-	public static void harvestCube(World world, Player player, Direction dir, BlockPos centralPos, Set<Material> effectiveMaterials, int planeRadius, int depth, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
+	public static void harvestCube(Level world, Player player, Direction dir, BlockPos centralPos, Set<Material> effectiveMaterials, int planeRadius, int depth, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
 
 		for (int a = 0; a < depth; a++) {
 			int x = 0;

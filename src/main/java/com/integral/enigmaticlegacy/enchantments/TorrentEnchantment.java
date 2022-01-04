@@ -14,13 +14,13 @@ import net.minecraft.world.entity.CreatureAttribute;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 
 public class TorrentEnchantment extends Enchantment {
-	public TorrentEnchantment(EquipmentSlotType... slots) {
+	public TorrentEnchantment(EquipmentSlot... slots) {
 		super(Enchantment.Rarity.RARE, EnchantmentType.TRIDENT, slots);
 
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "torrent"));

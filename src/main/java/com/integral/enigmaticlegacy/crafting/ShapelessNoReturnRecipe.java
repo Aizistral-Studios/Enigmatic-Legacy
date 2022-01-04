@@ -7,7 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.IRecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 
@@ -50,13 +50,13 @@ public class ShapelessNoReturnRecipe extends ShapelessRecipe {
 		}
 
 		@Override
-		public ShapelessNoReturnRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+		public ShapelessNoReturnRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			ShapelessRecipe recipe = SHAPELESS_RECIPE.fromNetwork(recipeId, buffer);
 			return new ShapelessNoReturnRecipe(recipe.getId(), recipe.getGroup(), recipe.getResultItem(), recipe.getIngredients());
 		}
 
 		@Override
-		public void toNetwork(PacketBuffer buffer, ShapelessNoReturnRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buffer, ShapelessNoReturnRecipe recipe) {
 			SHAPELESS_RECIPE.toNetwork(buffer, recipe);
 		}
 

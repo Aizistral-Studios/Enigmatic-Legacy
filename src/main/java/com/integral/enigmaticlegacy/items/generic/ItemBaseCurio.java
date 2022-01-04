@@ -17,14 +17,14 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import top.theillusivec4.curios.api.type.capability.ICurio;
@@ -33,7 +33,7 @@ import net.minecraft.world.item.Item.Properties;
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
 import top.theillusivec4.curios.api.type.capability.ICurio.RenderHelper;
 
-public abstract class ItemBaseCurio extends ItemBase implements IItemCurio, IVanishable {
+public abstract class ItemBaseCurio extends ItemBase implements IItemCurio, Vanishable {
 
 	public ItemBaseCurio() {
 		this(getDefaultProperties());
@@ -59,7 +59,7 @@ public abstract class ItemBaseCurio extends ItemBase implements IItemCurio, IVan
 	}
 
 	@Override
-	public void onCraftedBy(ItemStack stack, World worldIn, Player playerIn) {
+	public void onCraftedBy(ItemStack stack, Level worldIn, Player playerIn) {
 		// Insert existential void here
 	}
 

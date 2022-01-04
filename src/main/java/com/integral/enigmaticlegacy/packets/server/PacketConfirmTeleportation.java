@@ -5,9 +5,9 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.EyeOfNebula;
 
-import net.minecraft.world.entity.player.ServerPlayer;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet for executing random teleportation.
@@ -23,11 +23,11 @@ public class PacketConfirmTeleportation {
 		this.pressed = pressed;
 	}
 
-	public static void encode(PacketConfirmTeleportation msg, PacketBuffer buf) {
+	public static void encode(PacketConfirmTeleportation msg, FriendlyByteBuf buf) {
 		buf.writeBoolean(msg.pressed);
 	}
 
-	public static PacketConfirmTeleportation decode(PacketBuffer buf) {
+	public static PacketConfirmTeleportation decode(FriendlyByteBuf buf) {
 		return new PacketConfirmTeleportation(buf.readBoolean());
 	}
 

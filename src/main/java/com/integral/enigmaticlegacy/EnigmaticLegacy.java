@@ -154,14 +154,28 @@ import com.integral.etherium.items.EtheriumShovel;
 import com.integral.etherium.items.EtheriumSword;
 import com.integral.omniconfig.packets.PacketSyncOptions;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+
 import com.mojang.blaze3d.platform.ScreenManager;
+
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.CraftingScreen;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.CreativeModeTab;
@@ -182,7 +196,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -195,11 +209,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.fmllegacy.network.NetworkRegistry;
 import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
+import net.minecraftforge.fmlserverevents.FMLServerAboutToStartEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
-//import net.minecraft.world.level.block.AbstractBlock;
+//import net.minecraft.world.level.block.BlockBehaviour;
 
 @Mod(EnigmaticLegacy.MODID)
 public class EnigmaticLegacy {
@@ -407,12 +423,12 @@ public class EnigmaticLegacy {
 		enigmaticHandler = new EnigmaticEventHandler();
 		keybindHandler = new EnigmaticKeybindHandler();
 
-		massiveLamp = new BlockMassiveLamp(AbstractBlock.Properties.copy(Blocks.LANTERN), "massive_lamp");
-		bigLamp = new BlockBigLamp(AbstractBlock.Properties.copy(Blocks.LANTERN), "big_lamp");
-		massiveShroomlamp = new BlockMassiveLamp(AbstractBlock.Properties.copy(Blocks.LANTERN), "massive_shroomlamp");
-		bigShroomlamp = new BlockBigLamp(AbstractBlock.Properties.copy(Blocks.LANTERN), "big_shroomlamp");
-		massiveRedstonelamp = new BlockMassiveLamp(AbstractBlock.Properties.copy(Blocks.LANTERN), "massive_redstonelamp");
-		bigRedstonelamp = new BlockBigLamp(AbstractBlock.Properties.copy(Blocks.LANTERN), "big_redstonelamp");
+		massiveLamp = new BlockMassiveLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN), "massive_lamp");
+		bigLamp = new BlockBigLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN), "big_lamp");
+		massiveShroomlamp = new BlockMassiveLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN), "massive_shroomlamp");
+		bigShroomlamp = new BlockBigLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN), "big_shroomlamp");
+		massiveRedstonelamp = new BlockMassiveLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN), "massive_redstonelamp");
+		bigRedstonelamp = new BlockBigLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN), "big_redstonelamp");
 
 		enigmaticItem = new EnigmaticItem();
 		xpScroll = new XPScroll();
@@ -456,10 +472,10 @@ public class EnigmaticLegacy {
 		ultimatePotionSplash = (UltimatePotionSplash) new UltimatePotionSplash(Rarity.RARE, PotionType.ULTIMATE).setRegistryName(new ResourceLocation(MODID, "ultimate_potion_splash"));
 		ultimatePotionLingering = (UltimatePotionLingering) new UltimatePotionLingering(Rarity.RARE, PotionType.ULTIMATE).setRegistryName(new ResourceLocation(MODID, "ultimate_potion_lingering"));
 
-		etheriumHelmet = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlotType.HEAD).setRegistryName(new ResourceLocation(MODID, "etherium_helmet"));
-		etheriumChestplate = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlotType.CHEST).setRegistryName(new ResourceLocation(MODID, "etherium_chestplate"));
-		etheriumLeggings = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlotType.LEGS).setRegistryName(new ResourceLocation(MODID, "etherium_leggings"));
-		etheriumBoots = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlotType.FEET).setRegistryName(new ResourceLocation(MODID, "etherium_boots"));
+		etheriumHelmet = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.HEAD).setRegistryName(new ResourceLocation(MODID, "etherium_helmet"));
+		etheriumChestplate = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.CHEST).setRegistryName(new ResourceLocation(MODID, "etherium_chestplate"));
+		etheriumLeggings = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.LEGS).setRegistryName(new ResourceLocation(MODID, "etherium_leggings"));
+		etheriumBoots = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.FEET).setRegistryName(new ResourceLocation(MODID, "etherium_boots"));
 
 		etheriumPickaxe = new EtheriumPickaxe(etheriumConfig);
 		etheriumAxe = new EtheriumAxe(etheriumConfig);
@@ -487,10 +503,10 @@ public class EnigmaticLegacy {
 		netherRevelationTome = new RevelationTome(Rarity.UNCOMMON, RevelationTome.TomeType.NETHER, "withered_tome");
 		endRevelationTome = new RevelationTome(Rarity.RARE, RevelationTome.TomeType.END, "corrupted_tome");
 
-		darkHelmet = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.HEAD).setRegistryName(new ResourceLocation(MODID, "dark_helmet"));
-		darkChestplate = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.CHEST).setRegistryName(new ResourceLocation(MODID, "dark_chestplate"));
-		darkLeggings = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.LEGS).setRegistryName(new ResourceLocation(MODID, "dark_leggings"));
-		darkBoots = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlotType.FEET).setRegistryName(new ResourceLocation(MODID, "dark_boots"));
+		darkHelmet = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlot.HEAD).setRegistryName(new ResourceLocation(MODID, "dark_helmet"));
+		darkChestplate = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlot.CHEST).setRegistryName(new ResourceLocation(MODID, "dark_chestplate"));
+		darkLeggings = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlot.LEGS).setRegistryName(new ResourceLocation(MODID, "dark_leggings"));
+		darkBoots = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlot.FEET).setRegistryName(new ResourceLocation(MODID, "dark_boots"));
 
 		cursedRing = new CursedRing();
 		darkMirror = new DarkMirror();
@@ -526,12 +542,12 @@ public class EnigmaticLegacy {
 		infinimeal = new Infinimeal();
 		darkestScroll = new DarkestScroll();
 
-		sharpshooterEnchantment = new SharpshooterEnchantment(EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND);
-		ceaselessEnchantment = new CeaselessEnchantment(EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND);
-		nemesisCurseEnchantment = new NemesisCurseEnchantment(EquipmentSlotType.MAINHAND);
-		torrentEnchantment = new TorrentEnchantment(EquipmentSlotType.MAINHAND);
-		wrathEnchantment = new WrathEnchantment(EquipmentSlotType.MAINHAND);
-		slayerEnchantment = new SlayerEnchantment(EquipmentSlotType.MAINHAND);
+		sharpshooterEnchantment = new SharpshooterEnchantment(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
+		ceaselessEnchantment = new CeaselessEnchantment(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
+		nemesisCurseEnchantment = new NemesisCurseEnchantment(EquipmentSlot.MAINHAND);
+		torrentEnchantment = new TorrentEnchantment(EquipmentSlot.MAINHAND);
+		wrathEnchantment = new WrathEnchantment(EquipmentSlot.MAINHAND);
+		slayerEnchantment = new SlayerEnchantment(EquipmentSlot.MAINHAND);
 
 		spellstoneList = Lists.newArrayList(
 				angelBlessing,
@@ -642,7 +658,7 @@ public class EnigmaticLegacy {
 		enigmaticAmulet.registerVariants();
 
 		for (final Block theBlock : cutoutBlockRegistry) {
-			RenderTypeLookup.setRenderLayer(theBlock, RenderType.cutout());
+			ItemBlockRenderTypes.setRenderLayer(theBlock, RenderType.cutout());
 		}
 
 		proxy.initEntityRendering();
@@ -700,19 +716,16 @@ public class EnigmaticLegacy {
 
 			registry.registerAll(
 					PORTABLE_CRAFTER.setRegistryName(MODID, "portable_crafter"),
-					IForgeMenuType.create(LoreInscriberContainer::new).setRegistryName(MODID, "enigmatic_repair_container")
+					IForgeContainerType.create(LoreInscriberContainer::new).setRegistryName(MODID, "enigmatic_repair_container")
 					);
 		}
 
 		@OnlyIn(Dist.CLIENT)
 		@SubscribeEvent
-		public static void stitchTextures(final TextureStitchEvent.Pre evt) {
-
-			if (evt.getMap().location() == PlayerContainer.BLOCK_ATLAS) {
-
+		public static void stitchTextures(TextureStitchEvent.Pre evt) {
+			if (evt.getMap().location() == InventoryMenu.BLOCK_ATLAS) {
 				evt.addSprite(new ResourceLocation(MODID, "slots/empty_spellstone_slot"));
 				evt.addSprite(new ResourceLocation(MODID, "slots/empty_scroll_slot"));
-
 			}
 		}
 
@@ -733,10 +746,9 @@ public class EnigmaticLegacy {
 
 		@SubscribeEvent
 		public static void registerItems(final RegistryEvent.Register<Item> event) {
-
 			logger.info("Initializing items registration...");
 
-			final IForgeRegistry<Item> registry = event.getRegistry();
+			IForgeRegistry<Item> registry = event.getRegistry();
 
 			event.getRegistry().registerAll(
 					enigmaticItem,
@@ -861,7 +873,7 @@ public class EnigmaticLegacy {
 		}
 
 		@SubscribeEvent
-		public static void onRecipeRegister(final RegistryEvent.Register<IRecipeSerializer<?>> e) {
+		public static void onRecipeRegister(final RegistryEvent.Register<RecipeSerializer<?>> e) {
 
 		}
 
@@ -870,26 +882,26 @@ public class EnigmaticLegacy {
 
 			logger.info("Initializing advanced potion system...");
 
-			ULTIMATE_NIGHT_VISION = new AdvancedPotion("ultimate_night_vision", new EffectInstance(Effects.NIGHT_VISION, 19200));
-			ULTIMATE_INVISIBILITY = new AdvancedPotion("ultimate_invisibility", new EffectInstance(Effects.INVISIBILITY, 19200));
-			ULTIMATE_LEAPING = new AdvancedPotion("ultimate_leaping", new EffectInstance(Effects.JUMP, 9600, 1));
-			ULTIMATE_FIRE_RESISTANCE = new AdvancedPotion("ultimate_fire_resistance", new EffectInstance(Effects.FIRE_RESISTANCE, 19200));
-			ULTIMATE_SWIFTNESS = new AdvancedPotion("ultimate_swiftness", new EffectInstance(Effects.MOVEMENT_SPEED, 9600, 1));
-			ULTIMATE_SLOWNESS = new AdvancedPotion("ultimate_slowness", new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 1200, 3));
-			ULTIMATE_TURTLE_MASTER = new AdvancedPotion("ultimate_turtle_master", new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 800, 5), new EffectInstance(Effects.DAMAGE_RESISTANCE, 800, 3));
-			ULTIMATE_WATER_BREATHING = new AdvancedPotion("ultimate_water_breathing", new EffectInstance(Effects.WATER_BREATHING, 19200));
-			ULTIMATE_HEALING = new AdvancedPotion("ultimate_healing", new EffectInstance(Effects.HEAL, 1, 2));
-			ULTIMATE_HARMING = new AdvancedPotion("ultimate_harming", new EffectInstance(Effects.HARM, 1, 2));
-			ULTIMATE_POISON = new AdvancedPotion("ultimate_poison", new EffectInstance(Effects.POISON, 1800, 1));
-			ULTIMATE_REGENERATION = new AdvancedPotion("ultimate_regeneration", new EffectInstance(Effects.REGENERATION, 1800, 1));
-			ULTIMATE_STRENGTH = new AdvancedPotion("ultimate_strength", new EffectInstance(Effects.DAMAGE_BOOST, 9600, 1));
-			ULTIMATE_WEAKNESS = new AdvancedPotion("ultimate_weakness", new EffectInstance(Effects.WEAKNESS, 9600));
-			ULTIMATE_SLOW_FALLING = new AdvancedPotion("ultimate_slow_falling", new EffectInstance(Effects.SLOW_FALLING, 9600));
+			ULTIMATE_NIGHT_VISION = new AdvancedPotion("ultimate_night_vision", new MobEffectInstance(MobEffects.NIGHT_VISION, 19200));
+			ULTIMATE_INVISIBILITY = new AdvancedPotion("ultimate_invisibility", new MobEffectInstance(MobEffects.INVISIBILITY, 19200));
+			ULTIMATE_LEAPING = new AdvancedPotion("ultimate_leaping", new MobEffectInstance(MobEffects.JUMP, 9600, 1));
+			ULTIMATE_FIRE_RESISTANCE = new AdvancedPotion("ultimate_fire_resistance", new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 19200));
+			ULTIMATE_SWIFTNESS = new AdvancedPotion("ultimate_swiftness", new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 9600, 1));
+			ULTIMATE_SLOWNESS = new AdvancedPotion("ultimate_slowness", new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 1200, 3));
+			ULTIMATE_TURTLE_MASTER = new AdvancedPotion("ultimate_turtle_master", new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 800, 5), new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 800, 3));
+			ULTIMATE_WATER_BREATHING = new AdvancedPotion("ultimate_water_breathing", new MobEffectInstance(MobEffects.WATER_BREATHING, 19200));
+			ULTIMATE_HEALING = new AdvancedPotion("ultimate_healing", new MobEffectInstance(MobEffects.HEAL, 1, 2));
+			ULTIMATE_HARMING = new AdvancedPotion("ultimate_harming", new MobEffectInstance(MobEffects.HARM, 1, 2));
+			ULTIMATE_POISON = new AdvancedPotion("ultimate_poison", new MobEffectInstance(MobEffects.POISON, 1800, 1));
+			ULTIMATE_REGENERATION = new AdvancedPotion("ultimate_regeneration", new MobEffectInstance(MobEffects.REGENERATION, 1800, 1));
+			ULTIMATE_STRENGTH = new AdvancedPotion("ultimate_strength", new MobEffectInstance(MobEffects.DAMAGE_BOOST, 9600, 1));
+			ULTIMATE_WEAKNESS = new AdvancedPotion("ultimate_weakness", new MobEffectInstance(MobEffects.WEAKNESS, 9600));
+			ULTIMATE_SLOW_FALLING = new AdvancedPotion("ultimate_slow_falling", new MobEffectInstance(MobEffects.SLOW_FALLING, 9600));
 
-			HASTE = new AdvancedPotion("haste", new EffectInstance(Effects.DIG_SPEED, 3600));
-			LONG_HASTE = new AdvancedPotion("long_haste", new EffectInstance(Effects.DIG_SPEED, 9600));
-			STRONG_HASTE = new AdvancedPotion("strong_haste", new EffectInstance(Effects.DIG_SPEED, 1800, 1));
-			ULTIMATE_HASTE = new AdvancedPotion("ultimate_haste", new EffectInstance(Effects.DIG_SPEED, 9600, 1));
+			HASTE = new AdvancedPotion("haste", new MobEffectInstance(MobEffects.DIG_SPEED, 3600));
+			LONG_HASTE = new AdvancedPotion("long_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 9600));
+			STRONG_HASTE = new AdvancedPotion("strong_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 1800, 1));
+			ULTIMATE_HASTE = new AdvancedPotion("ultimate_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 9600, 1));
 
 			EMPTY = new AdvancedPotion("empty");
 
@@ -942,11 +954,11 @@ public class EnigmaticLegacy {
 		public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> event) {
 			logger.info("Initializing entities registration...");
 
-			event.getRegistry().register(EntityType.Builder.<PermanentItemEntity>of(PermanentItemEntity::new, EntityClassification.MISC).sized(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new PermanentItemEntity(PermanentItemEntity.TYPE, world)).setUpdateInterval(2).setShouldReceiveVelocityUpdates(true).build(MODID+":permanent_item_entity").setRegistryName(new ResourceLocation(MODID, "permanent_item_entity")));
+			event.getRegistry().register(EntityType.Builder.<PermanentItemEntity>of(PermanentItemEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new PermanentItemEntity(PermanentItemEntity.TYPE, world)).setUpdateInterval(2).setShouldReceiveVelocityUpdates(true).build(MODID+":permanent_item_entity").setRegistryName(new ResourceLocation(MODID, "permanent_item_entity")));
 
-			event.getRegistry().register(EntityType.Builder.<EnigmaticPotionEntity>of(EnigmaticPotionEntity::new, EntityClassification.MISC).sized(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new EnigmaticPotionEntity(EnigmaticPotionEntity.TYPE, world)).setUpdateInterval(10).setShouldReceiveVelocityUpdates(true).build(MODID+":enigmatic_potion_entity").setRegistryName(new ResourceLocation(MODID, "enigmatic_potion_entity")));
+			event.getRegistry().register(EntityType.Builder.<EnigmaticPotionEntity>of(EnigmaticPotionEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new EnigmaticPotionEntity(EnigmaticPotionEntity.TYPE, world)).setUpdateInterval(10).setShouldReceiveVelocityUpdates(true).build(MODID+":enigmatic_potion_entity").setRegistryName(new ResourceLocation(MODID, "enigmatic_potion_entity")));
 
-			event.getRegistry().register(EntityType.Builder.<UltimateWitherSkullEntity>of(UltimateWitherSkullEntity::new, EntityClassification.MISC).sized(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new UltimateWitherSkullEntity(UltimateWitherSkullEntity.TYPE, world))
+			event.getRegistry().register(EntityType.Builder.<UltimateWitherSkullEntity>of(UltimateWitherSkullEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new UltimateWitherSkullEntity(UltimateWitherSkullEntity.TYPE, world))
 					//.setUpdateInterval(1)
 					//.setShouldReceiveVelocityUpdates(true)
 					.build(MODID+":ultimate_wither_skull_entity").setRegistryName(new ResourceLocation(MODID, "ultimate_wither_skull_entity")));
@@ -971,7 +983,7 @@ public class EnigmaticLegacy {
 		logger.info("Colors registered successfully.");
 	}
 
-	public static final ItemGroup enigmaticTab = new ItemGroup("enigmaticCreativeTab") {
+	public static final CreativeModeTab enigmaticTab = new CreativeModeTab("enigmaticCreativeTab") {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack makeIcon() {
@@ -979,7 +991,7 @@ public class EnigmaticLegacy {
 		}
 	};
 
-	public static final ItemGroup enigmaticPotionTab = new ItemGroup("enigmaticPotionCreativeTab") {
+	public static final CreativeModeTab enigmaticPotionTab = new CreativeModeTab("enigmaticPotionCreativeTab") {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack makeIcon() {
@@ -987,6 +999,6 @@ public class EnigmaticLegacy {
 		}
 	};
 
-	public static final Rarity LEGENDARY = Rarity.create("legendary", TextFormatting.GOLD);
+	public static final Rarity LEGENDARY = Rarity.create("legendary", ChatFormatting.GOLD);
 
 }

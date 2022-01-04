@@ -10,8 +10,8 @@ import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -19,13 +19,13 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class LoreInscriber extends ItemBase implements IVanishable {
+public class LoreInscriber extends ItemBase implements Vanishable {
 
 	public LoreInscriber() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1));
@@ -34,7 +34,7 @@ public class LoreInscriber extends ItemBase implements IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.loreInscriber1");
@@ -58,12 +58,12 @@ public class LoreInscriber extends ItemBase implements IVanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, Hand handIn) {
 		ItemStack stack = playerIn.getItemInHand(handIn);
 		playerIn.startUsingItem(handIn);
 
 		if (!worldIn.isClientSide) {
-			ITextComponent name = new TranslationTextComponent("gui.enigmaticlegacy.lore_inscriber");
+			Component name = new TranslatableComponent("gui.enigmaticlegacy.lore_inscriber");
 
 			playerIn.openMenu(new LoreInscriberContainerProvider(name));
 		}

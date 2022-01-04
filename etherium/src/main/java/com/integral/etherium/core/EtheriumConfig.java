@@ -9,19 +9,19 @@ import com.integral.etherium.EtheriumMod;
 import com.integral.omniconfig.wrappers.Omniconfig;
 
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
-import net.minecraft.world.item.IArmorMaterial;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.IItemTier;
 import net.minecraft.world.item.ItemGroup;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.IntValue;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 public class EtheriumConfig implements IEtheriumConfig {
 	private static IntValue shieldThreshold;
@@ -99,7 +99,7 @@ public class EtheriumConfig implements IEtheriumConfig {
 	}
 
 	@Override
-	public IArmorMaterial getArmorMaterial() {
+	public ArmorMaterial getArmorMaterial() {
 		return EnigmaticArmorMaterials.ETHERIUM;
 	}
 
@@ -176,8 +176,8 @@ public class EtheriumConfig implements IEtheriumConfig {
 	@Override
 	public void knockBack(Player entityIn, float strength, double xRatio, double zRatio) {
 		entityIn.hasImpulse = true;
-		Vector3d vec3d = new Vector3d(0D, 0D, 0D);
-		Vector3d vec3d1 = (new Vector3d(xRatio, 0.0D, zRatio)).normalize().scale(strength);
+		Vec3 vec3d = new Vec3(0D, 0D, 0D);
+		Vec3 vec3d1 = (new Vec3(xRatio, 0.0D, zRatio)).normalize().scale(strength);
 
 		EtheriumMod.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) entityIn), new PacketPlayerMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z));
 		entityIn.setDeltaMovement(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z);

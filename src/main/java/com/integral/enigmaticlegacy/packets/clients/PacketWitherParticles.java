@@ -5,10 +5,10 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayer;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet for bursting out particles for UltimateWitherSkull.
@@ -37,7 +37,7 @@ public class PacketWitherParticles {
 		this.mode = mode;
 	}
 
-	public static void encode(PacketWitherParticles msg, PacketBuffer buf) {
+	public static void encode(PacketWitherParticles msg, FriendlyByteBuf buf) {
 		buf.writeDouble(msg.x);
 		buf.writeDouble(msg.y);
 		buf.writeDouble(msg.z);
@@ -46,7 +46,7 @@ public class PacketWitherParticles {
 		buf.writeInt(msg.mode);
 	}
 
-	public static PacketWitherParticles decode(PacketBuffer buf) {
+	public static PacketWitherParticles decode(FriendlyByteBuf buf) {
 		return new PacketWitherParticles(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readInt(), buf.readBoolean(), buf.readInt());
 	}
 
@@ -54,7 +54,7 @@ public class PacketWitherParticles {
 
 		ctx.get().enqueueWork(() -> {
 
-			ClientPlayer player = Minecraft.getInstance().player;
+			LocalPlayer player = Minecraft.getInstance().player;
 
 			int amount = msg.num;
 

@@ -6,11 +6,11 @@ import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.objects.SlotUnlockedToast;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayer;
-import net.minecraft.client.gui.toasts.IToast;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet for displaying Curio slot unlock notification.
@@ -25,18 +25,18 @@ public class PacketSlotUnlocked {
 		  this.type = type;
 	  }
 
-	  public static void encode(PacketSlotUnlocked msg, PacketBuffer buf) {
+	  public static void encode(PacketSlotUnlocked msg, FriendlyByteBuf buf) {
 		  buf.writeUtf(msg.type);
 	  }
 
-	  public static PacketSlotUnlocked decode(PacketBuffer buf) {
+	  public static PacketSlotUnlocked decode(FriendlyByteBuf buf) {
 	    return new PacketSlotUnlocked(buf.readUtf());
 	 }
 
 	  public static void handle(PacketSlotUnlocked msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {
-		      ClientPlayer player = Minecraft.getInstance().player;
+		      LocalPlayer player = Minecraft.getInstance().player;
 		      ItemStack stack;
 		      
 		      if (msg.type.equals("ring"))
@@ -48,7 +48,7 @@ public class PacketSlotUnlocked {
 		      else
 		    	  stack = new ItemStack(EnigmaticLegacy.ironRing);
 		      
-		      IToast toast = new SlotUnlockedToast(stack, msg.type);
+		      Toast toast = new SlotUnlockedToast(stack, msg.type);
 		      EnigmaticEventHandler.scheduledToasts.add(toast);
 		      EnigmaticEventHandler.deferredToast.put(player, 5);
 		      

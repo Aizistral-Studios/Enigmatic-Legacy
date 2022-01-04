@@ -4,9 +4,9 @@ import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.gui.containers.LoreInscriberContainer;
 
-import net.minecraft.world.entity.player.ServerPlayer;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet for updating stored anvil field for targeted player on server side.
@@ -21,11 +21,11 @@ public class PacketInkwellField {
 	    this.field = field;
 	  }
 
-	  public static void encode(PacketInkwellField msg, PacketBuffer buf) {
+	  public static void encode(PacketInkwellField msg, FriendlyByteBuf buf) {
 	     buf.writeUtf(msg.field);
 	  }
 
-	  public static PacketInkwellField decode(PacketBuffer buf) {
+	  public static PacketInkwellField decode(FriendlyByteBuf buf) {
 	    return new PacketInkwellField(buf.readUtf(128));
 	 }
 

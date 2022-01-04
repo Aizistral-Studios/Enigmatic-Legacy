@@ -8,7 +8,7 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentType;
-import net.minecraft.world.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
@@ -27,7 +27,7 @@ public class CeaselessEnchantment extends Enchantment {
 		builder.popPrefix();
 	}
 
-	public CeaselessEnchantment(final EquipmentSlotType... slots) {
+	public CeaselessEnchantment(final EquipmentSlot... slots) {
 		super(Enchantment.Rarity.RARE, EnchantmentType.CROSSBOW, slots);
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ceaseless"));
 	}

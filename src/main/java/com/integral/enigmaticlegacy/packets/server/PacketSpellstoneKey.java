@@ -5,10 +5,10 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet for triggering active ability of the spellstone.
@@ -24,11 +24,11 @@ public class PacketSpellstoneKey {
 
 	  }
 
-	  public static void encode(PacketSpellstoneKey msg, PacketBuffer buf) {
+	  public static void encode(PacketSpellstoneKey msg, FriendlyByteBuf buf) {
 	     buf.writeBoolean(msg.pressed);
 	  }
 
-	  public static PacketSpellstoneKey decode(PacketBuffer buf) {
+	  public static PacketSpellstoneKey decode(FriendlyByteBuf buf) {
 	    return new PacketSpellstoneKey(buf.readBoolean());
 	 }
 

@@ -12,8 +12,8 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.model.GenericHeadModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -41,8 +41,8 @@ public class UltimateWitherSkullRenderer extends EntityRenderer<UltimateWitherSk
 
 		PoseStackIn.scale(-inflate, -inflate, inflate);
 
-		float f = MathHelper.rotlerp(entityIn.yRotO, entityIn.yRot, partialTicks);
-		float f1 = MathHelper.lerp(partialTicks, entityIn.xRotO, entityIn.xRot);
+		float f = Mth.rotlerp(entityIn.yRotO, entityIn.yRot, partialTicks);
+		float f1 = Mth.lerp(partialTicks, entityIn.xRotO, entityIn.xRot);
 		IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.skeletonHeadModel.renderType(this.getTextureLocation(entityIn)));
 		this.skeletonHeadModel.setupAnim(0.0F, f, f1);
 		this.skeletonHeadModel.renderToBuffer(PoseStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);

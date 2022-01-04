@@ -13,8 +13,8 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -30,7 +30,7 @@ public class PermanentItemPickupParticle extends Particle {
 		this(entityRenderManager, buffers, world, item, target, item.getDeltaMovement());
 	}
 
-	private PermanentItemPickupParticle(EntityRendererManager entityRenderManager, RenderTypeBuffers buffers, ClientWorld world, Entity item, Entity target, Vector3d motionVector) {
+	private PermanentItemPickupParticle(EntityRendererManager entityRenderManager, RenderTypeBuffers buffers, ClientWorld world, Entity item, Entity target, Vec3 motionVector) {
 		super(world, item.getX(), item.getY(), item.getZ(), motionVector.x, motionVector.y, motionVector.z);
 		this.renderTypeBuffers = buffers;
 		this.item = this.getSafeCopy(item);
@@ -52,14 +52,14 @@ public class PermanentItemPickupParticle extends Particle {
 		try {
 			float f = (this.particleAge + partialTicks) / 3.0F;
 			f = f * f;
-			double d0 = MathHelper.lerp(partialTicks, this.target.xOld, this.target.getX());
-			double d1 = MathHelper.lerp(partialTicks, this.target.yOld, this.target.getY()) + 0.5D;
-			double d2 = MathHelper.lerp(partialTicks, this.target.zOld, this.target.getZ());
-			double d3 = MathHelper.lerp(f, this.item.getX(), d0);
-			double d4 = MathHelper.lerp(f, this.item.getY(), d1);
-			double d5 = MathHelper.lerp(f, this.item.getZ(), d2);
+			double d0 = Mth.lerp(partialTicks, this.target.xOld, this.target.getX());
+			double d1 = Mth.lerp(partialTicks, this.target.yOld, this.target.getY()) + 0.5D;
+			double d2 = Mth.lerp(partialTicks, this.target.zOld, this.target.getZ());
+			double d3 = Mth.lerp(f, this.item.getX(), d0);
+			double d4 = Mth.lerp(f, this.item.getY(), d1);
+			double d5 = Mth.lerp(f, this.item.getZ(), d2);
 			IRenderTypeBuffer.Impl ibuffer = this.renderTypeBuffers.bufferSource();
-			Vector3d vector3d = renderInfo.getPosition();
+			Vec3 vector3d = renderInfo.getPosition();
 			this.renderManager.render(this.item, d3 - vector3d.x(), d4 - vector3d.y(), d5 - vector3d.z(), this.item.yRot, partialTicks, new PoseStack(), ibuffer, this.renderManager.getPackedLightCoords(this.item, partialTicks));
 			ibuffer.endBatch();
 		} catch (Throwable ex) {

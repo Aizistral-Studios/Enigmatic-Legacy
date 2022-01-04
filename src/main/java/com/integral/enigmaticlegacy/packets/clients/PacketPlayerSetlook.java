@@ -5,9 +5,9 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayer;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet for setting the player to look at specific point in space,
@@ -27,13 +27,13 @@ public class PacketPlayerSetlook {
 	    this.z = z;
 	  }
 
-	  public static void encode(PacketPlayerSetlook msg, PacketBuffer buf) {
+	  public static void encode(PacketPlayerSetlook msg, FriendlyByteBuf buf) {
 	     buf.writeDouble(msg.x);
 	     buf.writeDouble(msg.y);
 	     buf.writeDouble(msg.z);
 	  }
 
-	  public static PacketPlayerSetlook decode(PacketBuffer buf) {
+	  public static PacketPlayerSetlook decode(FriendlyByteBuf buf) {
 	     return new PacketPlayerSetlook(buf.readDouble(), buf.readDouble(), buf.readDouble());
 	  }
 
@@ -41,7 +41,7 @@ public class PacketPlayerSetlook {
 	  public static void handle(PacketPlayerSetlook msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {
-		    	ClientPlayer player = Minecraft.getInstance().player;
+		    	LocalPlayer player = Minecraft.getInstance().player;
 		    	
 		    	SuperpositionHandler.lookAt(msg.x, msg.y, msg.z, player);
 		      	

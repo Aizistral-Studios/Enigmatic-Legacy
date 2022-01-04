@@ -4,12 +4,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.container.Container;
 import net.minecraft.world.inventory.container.INamedContainerProvider;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
 
 public class LoreInscriberContainerProvider implements INamedContainerProvider {
-	private ITextComponent name;
+	private Component name;
 
-	public LoreInscriberContainerProvider(ITextComponent name) {
+	public LoreInscriberContainerProvider(Component name) {
 		this.name = name;
 	}
 
@@ -19,7 +19,7 @@ public class LoreInscriberContainerProvider implements INamedContainerProvider {
 	}
 
 	@Override
-	public ITextComponent getDisplayName() {
+	public Component getDisplayName() {
 		return this.name;
 	}
 

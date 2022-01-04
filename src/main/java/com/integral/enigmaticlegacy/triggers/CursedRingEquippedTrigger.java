@@ -5,14 +5,14 @@ import javax.annotation.Nonnull;
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
-import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.world.entity.player.ServerPlayer;
-import net.minecraft.world.level.storage.loot.ConditionArrayParser;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.resources.ResourceLocation;
 
-public class CursedRingEquippedTrigger extends AbstractCriterionTrigger<CursedRingEquippedTrigger.Instance> {
+public class CursedRingEquippedTrigger extends SimpleCriterionTrigger<CursedRingEquippedTrigger.Instance> {
 	public static final ResourceLocation ID = new ResourceLocation(EnigmaticLegacy.MODID, "equip_cursed_ring");
 	public static final CursedRingEquippedTrigger INSTANCE = new CursedRingEquippedTrigger();
 
@@ -26,7 +26,7 @@ public class CursedRingEquippedTrigger extends AbstractCriterionTrigger<CursedRi
 
 	@Nonnull
 	@Override
-	public CursedRingEquippedTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.AndPredicate playerPred, ConditionArrayParser conditions) {
+	public CursedRingEquippedTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.Composite playerPred, DeserializationContext conditions) {
 		return new CursedRingEquippedTrigger.Instance(playerPred);
 	}
 
@@ -34,8 +34,8 @@ public class CursedRingEquippedTrigger extends AbstractCriterionTrigger<CursedRi
 		this.trigger(player, instance -> instance.test());
 	}
 
-	static class Instance extends CriterionInstance {
-		Instance(EntityPredicate.AndPredicate playerPred) {
+	static class Instance extends AbstractCriterionTriggerInstance {
+		Instance(EntityPredicate.Composite playerPred) {
 			super(CursedRingEquippedTrigger.ID, playerPred);
 		}
 

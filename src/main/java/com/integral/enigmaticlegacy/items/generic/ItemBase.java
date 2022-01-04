@@ -3,18 +3,17 @@ package com.integral.enigmaticlegacy.items.generic;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
-import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
-
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.item.Item.Properties;
 
 public abstract class ItemBase extends Item {
@@ -30,7 +29,7 @@ public abstract class ItemBase extends Item {
 	}
 
 	@Override
-	public void onCraftedBy(ItemStack stack, World worldIn, Player playerIn) {
+	public void onCraftedBy(ItemStack stack, Level worldIn, Player playerIn) {
 		// Insert existential void here
 	}
 
@@ -44,7 +43,7 @@ public abstract class ItemBase extends Item {
 		return props;
 	}
 
-	public static BlockRayTraceResult rayTrace(World worldIn, Player player, RayTraceContext.FluidMode fluidMode) {
+	public static BlockHitResult rayTrace(Level worldIn, Player player, ClipContext.Fluid fluidMode) {
 		return Item.getPlayerPOVHitResult(worldIn, player, fluidMode);
 	}
 
@@ -58,12 +57,12 @@ public abstract class ItemBase extends Item {
 	}
 
 	@Override
-	public ITextComponent getName(ItemStack stack) {
-		ITextComponent superName = super.getName(stack);
+	public Component getName(ItemStack stack) {
+		Component superName = super.getName(stack);
 
 		if (this.isPlaceholder) {
 			if (superName instanceof TextComponent)
-				return ((TextComponent)superName).withStyle(TextFormatting.OBFUSCATED);
+				return ((TextComponent)superName).withStyle(ChatFormatting.OBFUSCATED);
 		}
 
 		return superName;

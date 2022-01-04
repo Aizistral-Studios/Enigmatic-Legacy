@@ -17,24 +17,27 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.ITeleporter;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import net.minecraftforge.registries.ObjectHolder;
 
 /**
@@ -44,7 +47,7 @@ import net.minecraftforge.registries.ObjectHolder;
  */
 
 public class PermanentItemEntity extends Entity {
-	private static final DataParameter<ItemStack> ITEM = EntityDataManager.defineId(PermanentItemEntity.class, DataSerializers.ITEM_STACK);
+	private static final EntityDataAccessor<ItemStack> ITEM = SynchedEntityData.defineId(PermanentItemEntity.class, EntityDataSerializers.ITEM_STACK);
 	private int age;
 	private int pickupDelay;
 	private int health = 5;
@@ -56,20 +59,20 @@ public class PermanentItemEntity extends Entity {
 
 	public float hoverStart = (float) (Math.random() * Math.PI * 2.0D);
 
-	public PermanentItemEntity(EntityType<PermanentItemEntity> type, World world) {
+	public PermanentItemEntity(EntityType<PermanentItemEntity> type, Level world) {
 		super(type, world);
 	}
 
-	public PermanentItemEntity(World worldIn, double x, double y, double z) {
+	public PermanentItemEntity(Level worldIn, double x, double y, double z) {
 		this(PermanentItemEntity.TYPE, worldIn);
 		this.setPos(x, y <= 0 ? 1 : y, z);
-		this.yRot = this.random.nextFloat() * 360.0F;
+		this.setYRot(this.random.nextFloat() * 360.0F);
 		this.setInvulnerable(true);
 
 		this.setNoGravity(true);
 	}
 
-	public PermanentItemEntity(World worldIn, double x, double y, double z, ItemStack stack) {
+	public PermanentItemEntity(Level worldIn, double x, double y, double z, ItemStack stack) {
 		this(worldIn, x, y, z);
 		this.setItem(stack);
 	}
@@ -89,8 +92,13 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	@Override
-	protected boolean isMovementNoisy() {
-		return false;
+	public boolean occludesVibrations() {
+		return ItemTags.OCCLUDES_VIBRATION_SIGNALS.contains(this.getItem().getItem());
+	}
+
+	@Override
+	protected Entity.MovementEmission getMovementEmission() {
+		return Entity.MovementEmission.NONE;
 	}
 
 	@Override
@@ -100,9 +108,8 @@ public class PermanentItemEntity extends Entity {
 
 	@Override
 	public void tick() {
-
 		if (this.getItem().isEmpty()) {
-			this.remove();
+			this.discard();
 		} else {
 			super.tick();
 
@@ -113,7 +120,7 @@ public class PermanentItemEntity extends Entity {
 			this.xo = this.getX();
 			this.yo = this.getY();
 			this.zo = this.getZ();
-			Vector3d vec3d = this.getDeltaMovement();
+			Vec3 vec3d = this.getDeltaMovement();
 
 			if (!this.isNoGravity()) {
 				this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.04D, 0.0D));
@@ -137,17 +144,21 @@ public class PermanentItemEntity extends Entity {
 			ItemStack item = this.getItem();
 
 			if (item.isEmpty()) {
-				this.remove();
+				this.discard();
 			}
 
 			// Portal Cooldown
-			this.portalCooldown = Short.MAX_VALUE;
-
+			this.setPortalCooldown();
 		}
 	}
 
 	@Override
-	public Entity changeDimension(ServerWorld server, ITeleporter teleporter) {
+	public int getDimensionChangingDelay() {
+		return Short.MAX_VALUE;
+	}
+
+	@Override
+	public Entity changeDimension(ServerLevel server, ITeleporter teleporter) {
 		return null;
 	}
 
@@ -158,7 +169,7 @@ public class PermanentItemEntity extends Entity {
 
 		if (source.isBypassMagic()) {
 			EnigmaticLegacy.logger.warn("[WARN] Attacked permanent item entity with absolute DamageSource: " + source);
-			this.remove();
+			this.kill();
 			return true;
 		} else
 			return false;
@@ -166,13 +177,13 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	@Override
-	public void remove() {
+	public void remove(Entity.RemovalReason reason) {
 		EnigmaticLegacy.logger.warn("[WARN] Removing Permanent Item Entity: " + this);
-		super.remove();
+		super.remove(reason);
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		compound.putShort("Health", (short) this.health);
 		compound.putShort("Age", (short) this.age);
 		compound.putShort("PickupDelay", (short) this.pickupDelay);
@@ -185,13 +196,13 @@ public class PermanentItemEntity extends Entity {
 		}
 
 		if (!this.getItem().isEmpty()) {
-			compound.put("Item", this.getItem().save(new CompoundNBT()));
+			compound.put("Item", this.getItem().save(new CompoundTag()));
 		}
 
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		this.health = compound.getShort("Health");
 		this.age = compound.getShort("Age");
 		if (compound.contains("PickupDelay")) {
@@ -206,10 +217,10 @@ public class PermanentItemEntity extends Entity {
 			this.thrower = compound.getUUID("Thrower");
 		}
 
-		CompoundNBT compoundnbt = compound.getCompound("Item");
+		CompoundTag compoundnbt = compound.getCompound("Item");
 		this.setItem(ItemStack.of(compoundnbt));
 		if (this.getItem().isEmpty()) {
-			this.remove();
+			this.discard();
 		}
 
 	}
@@ -236,7 +247,7 @@ public class PermanentItemEntity extends Entity {
 			if (allowPickUp) {
 
 				if (item instanceof StorageCrystal) {
-					CompoundNBT crystalNBT = ItemNBTHelper.getNBT(itemstack);
+					CompoundTag crystalNBT = ItemNBTHelper.getNBT(itemstack);
 					ItemStack embeddedSoul = crystalNBT.contains("embeddedSoul") ? ItemStack.of(crystalNBT.getCompound("embeddedSoul")) : null;
 
 					if (!isPlayerOwner && embeddedSoul != null)
@@ -262,10 +273,9 @@ public class PermanentItemEntity extends Entity {
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY(), this.getZ(), 64, this.level.dimension())), new PacketHandleItemPickup(player.getId(), this.getId()));
 
 				EnigmaticLegacy.logger.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
-				this.remove();
+				this.discard();
 				itemstack.setCount(0);
-
-			} else if (this.pickupDelay == 0 && (this.owner == null || this.owner.equals(player.getUUID())) && (i <= 0 || player.inventory.add(itemstack))) {
+			} else if (this.pickupDelay == 0 && (this.owner == null || this.owner.equals(player.getUUID())) && (i <= 0 || player.getInventory().add(itemstack))) {
 				copy.setCount(copy.getCount() - this.getItem().getCount());
 				if (itemstack.isEmpty()) {
 					player.take(this, i);
@@ -273,7 +283,7 @@ public class PermanentItemEntity extends Entity {
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY(), this.getZ(), 64, this.level.dimension())), new PacketHandleItemPickup(player.getId(), this.getId()));
 
 					EnigmaticLegacy.logger.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
-					this.remove();
+					this.discard();
 					itemstack.setCount(i);
 				}
 
@@ -301,9 +311,9 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	@Override
-	public ITextComponent getName() {
-		ITextComponent itextcomponent = this.getCustomName();
-		return itextcomponent != null ? itextcomponent : new TranslationTextComponent(this.getItem().getDescriptionId());
+	public Component getName() {
+		Component itextcomponent = this.getCustomName();
+		return itextcomponent != null ? itextcomponent : new TranslatableComponent(this.getItem().getDescriptionId());
 	}
 
 	@Override
@@ -367,7 +377,8 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
+
 }

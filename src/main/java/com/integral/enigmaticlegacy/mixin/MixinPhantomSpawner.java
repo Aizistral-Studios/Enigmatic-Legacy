@@ -16,16 +16,16 @@ import net.minecraft.world.entity.ILivingEntityData;
 import net.minecraft.world.entity.SpawnReason;
 import net.minecraft.world.entity.monster.PhantomEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.stats.ServerStatisticsManager;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.spawner.PhantomSpawner;
 import net.minecraft.world.spawner.WorldEntitySpawner;
 
@@ -34,7 +34,7 @@ public class MixinPhantomSpawner {
 	private int ticksUntilSpawn = 0;
 
 	@Inject(at = @At("RETURN"), method = "tick", cancellable = true)
-	private void onHandlePhantomSpawns(ServerWorld world, boolean p_230253_2_, boolean p_230253_3_, CallbackInfoReturnable<Integer> info) {
+	private void onHandlePhantomSpawns(ServerLevel world, boolean p_230253_2_, boolean p_230253_3_, CallbackInfoReturnable<Integer> info) {
 		if (!p_230253_2_) {
 			// NO-OP
 		} else if (!world.getGameRules().getBoolean(GameRules.RULE_DOINSOMNIA)) {
@@ -58,7 +58,7 @@ public class MixinPhantomSpawner {
 								DifficultyInstance difficulty = world.getCurrentDifficultyAt(blockpos);
 								if (difficulty.isHarderThan(random.nextFloat() * 3.0F)) {
 									ServerStatisticsManager serverstatisticsmanager = player.getStats();
-									int ticksSinceRest = MathHelper.clamp(serverstatisticsmanager.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)), 1, Integer.MAX_VALUE);
+									int ticksSinceRest = Mth.clamp(serverstatisticsmanager.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)), 1, Integer.MAX_VALUE);
 
 									if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing))
 										if (random.nextInt(ticksSinceRest) <= 72000) {
@@ -72,7 +72,7 @@ public class MixinPhantomSpawner {
 												for(int i1 = 0; i1 < l; ++i1) {
 													PhantomEntity phantomentity = EntityType.PHANTOM.create(world);
 													phantomentity.moveTo(blockpos1, 0.0F, 0.0F);
-													ilivingentitydata = phantomentity.finalizeSpawn(world, difficulty, SpawnReason.NATURAL, ilivingentitydata, (CompoundNBT)null);
+													ilivingentitydata = phantomentity.finalizeSpawn(world, difficulty, SpawnReason.NATURAL, ilivingentitydata, (CompoundTag)null);
 													world.addFreshEntityWithPassengers(phantomentity);
 												}
 

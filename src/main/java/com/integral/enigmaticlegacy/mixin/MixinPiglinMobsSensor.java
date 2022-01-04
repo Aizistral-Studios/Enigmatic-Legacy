@@ -19,13 +19,13 @@ import net.minecraft.world.entity.ai.brain.sensor.PiglinMobsSensor;
 import net.minecraft.world.entity.monster.piglin.PiglinTasks;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.EntityPredicates;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
 
 @Mixin(PiglinMobsSensor.class)
 public class MixinPiglinMobsSensor {
 
 	@Inject(at = @At("RETURN"), method = "doTick")
-	protected void onPiglinSenses(ServerWorld worldIn, LivingEntity entityIn, CallbackInfo info) {
+	protected void onPiglinSenses(ServerLevel worldIn, LivingEntity entityIn, CallbackInfo info) {
 		Brain<?> brain = entityIn.getBrain();
 		Player player = brain.getMemory(MemoryModuleType.NEAREST_TARGETABLE_PLAYER_NOT_WEARING_GOLD).orElse(null);
 

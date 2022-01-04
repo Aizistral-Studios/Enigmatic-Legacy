@@ -1,15 +1,15 @@
 package com.integral.enigmaticlegacy.objects;
 
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class DimensionalPosition {
 
 	public double posX;
 	public double posY;
 	public double posZ;
-	public World world;
+	public Level world;
 
-	public DimensionalPosition(double x, double y, double z, World world) {
+	public DimensionalPosition(double x, double y, double z, Level world) {
 		this.posX = x;
 		this.posY = y;
 		this.posZ = z;
@@ -28,7 +28,7 @@ public class DimensionalPosition {
 		return this.posZ;
 	}
 
-	public World getWorld() {
+	public Level getWorld() {
 		return this.world;
 	}
 }

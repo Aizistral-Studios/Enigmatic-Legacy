@@ -5,10 +5,10 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayer;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet for bursting out a bunch of dragon breath particles.
@@ -31,7 +31,7 @@ public class PacketRecallParticles {
 	    this.check = checkSettings;
 	  }
 
-	  public static void encode(PacketRecallParticles msg, PacketBuffer buf) {
+	  public static void encode(PacketRecallParticles msg, FriendlyByteBuf buf) {
 	    buf.writeDouble(msg.x);
 	    buf.writeDouble(msg.y);
 	    buf.writeDouble(msg.z);
@@ -39,7 +39,7 @@ public class PacketRecallParticles {
 	    buf.writeBoolean(msg.check);
 	  }
 
-	  public static PacketRecallParticles decode(PacketBuffer buf) {
+	  public static PacketRecallParticles decode(FriendlyByteBuf buf) {
 		  return new PacketRecallParticles(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readInt(), buf.readBoolean());
 	  }
 
@@ -47,7 +47,7 @@ public class PacketRecallParticles {
 	  public static void handle(PacketRecallParticles msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {    	
-		      ClientPlayer player = Minecraft.getInstance().player;
+		      LocalPlayer player = Minecraft.getInstance().player;
 		      
 		    	int amount = msg.num;
 			      

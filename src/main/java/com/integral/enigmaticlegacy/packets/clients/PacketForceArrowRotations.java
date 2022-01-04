@@ -5,8 +5,8 @@ import java.util.function.Supplier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet for setting arrows's rotations on client side.
@@ -32,7 +32,7 @@ public class PacketForceArrowRotations {
 		this.posZ = posZ;
 	}
 
-	public static void encode(PacketForceArrowRotations msg, PacketBuffer buf) {
+	public static void encode(PacketForceArrowRotations msg, FriendlyByteBuf buf) {
 		buf.writeInt(msg.entityID);
 		buf.writeFloat(msg.rotationYaw);
 		buf.writeFloat(msg.rotationPitch);
@@ -44,7 +44,7 @@ public class PacketForceArrowRotations {
 		buf.writeDouble(msg.posZ);
 	}
 
-	public static PacketForceArrowRotations decode(PacketBuffer buf) {
+	public static PacketForceArrowRotations decode(FriendlyByteBuf buf) {
 		return new PacketForceArrowRotations(buf.readInt(), buf.readFloat(), buf.readFloat(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble());
 	}
 

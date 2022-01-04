@@ -19,7 +19,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -76,7 +76,7 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 		boolean flag = ibakedmodel.isGui3d();
 		int j = this.getModelCount(itemstack);
 		float f = 0.25F;
-		float f1 = MathHelper.sin((entityIn.getAge() + partialTicks) / 10.0F + entityIn.hoverStart) * 0.1F + 0.1F;
+		float f1 = Mth.sin((entityIn.getAge() + partialTicks) / 10.0F + entityIn.hoverStart) * 0.1F + 0.1F;
 		float f2 = this.shouldBob() ? ibakedmodel.getTransforms().getTransform(ItemCameraTransforms.TransformType.GROUND).scale.y() : 0;
 		PoseStackIn.translate(0.0D, f1 + 0.25F * f2, 0.0D);
 		float f3 = entityIn.getItemHover(partialTicks);

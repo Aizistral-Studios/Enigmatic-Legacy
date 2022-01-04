@@ -21,31 +21,31 @@ import net.minecraft.world.level.block.FlowingFluidBlock;
 import net.minecraft.world.level.block.IBucketPickupHandler;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ITag.INamedTag;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
-public class Megasponge extends ItemBaseCurio implements IVanishable {
+public class Megasponge extends ItemBaseCurio implements Vanishable {
 	public static Omniconfig.IntParameter radius;
 
 	@SubscribeConfig
@@ -67,7 +67,7 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -81,13 +81,13 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 
 	@SuppressWarnings("deprecation")
 	public BlockPos getCollidedWater(INamedTag<Fluid> fluidTag, Player player) {
-		AxisAlignedBB axisalignedbb = player.getBoundingBox().deflate(0.001D);
-		int i = MathHelper.floor(axisalignedbb.minX);
-		int j = MathHelper.ceil(axisalignedbb.maxX);
-		int k = MathHelper.floor(axisalignedbb.minY);
-		int l = MathHelper.ceil(axisalignedbb.maxY);
-		int i1 = MathHelper.floor(axisalignedbb.minZ);
-		int j1 = MathHelper.ceil(axisalignedbb.maxZ);
+		AABB axisalignedbb = player.getBoundingBox().deflate(0.001D);
+		int i = Mth.floor(axisalignedbb.minX);
+		int j = Mth.ceil(axisalignedbb.maxX);
+		int k = Mth.floor(axisalignedbb.minY);
+		int l = Mth.ceil(axisalignedbb.maxY);
+		int i1 = Mth.floor(axisalignedbb.minZ);
+		int j1 = Mth.ceil(axisalignedbb.maxZ);
 
 		BlockPos pos = null;
 
@@ -95,7 +95,7 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 			return null;
 		else {
 			try {
-				net.minecraft.util.math.BlockPos.Mutable blockpos$pooledmutableblockpos = new BlockPos.Mutable();
+				net.minecraft.core.BlockPos.Mutable blockpos$pooledmutableblockpos = new BlockPos.Mutable();
 
 				for (int l1 = i; l1 < j; ++l1) {
 					for (int i2 = k; i2 < l; ++i2) {
@@ -171,20 +171,20 @@ public class Megasponge extends ItemBaseCurio implements IVanishable {
 		}
 	}
 
-	public void absorbWaterBlock(BlockPos pos, BlockState state, World world) {
+	public void absorbWaterBlock(BlockPos pos, BlockState state, Level world) {
 
 		if (state.getBlock() instanceof IBucketPickupHandler && ((IBucketPickupHandler) state.getBlock()).takeLiquid(world, pos, state) != Fluids.EMPTY) {
 			// Whatever
 		} else if (state.getBlock() instanceof FlowingFluidBlock) {
 			world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
 		} else if (state.getMaterial() == Material.WATER_PLANT || state.getMaterial() == Material.REPLACEABLE_WATER_PLANT) {
-			TileEntity tileentity = state.hasTileEntity() ? world.getBlockEntity(pos) : null;
+			BlockEntity tileentity = state.hasTileEntity() ? world.getBlockEntity(pos) : null;
 			Block.dropResources(state, world, pos, tileentity);
 			world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
 		}
 	}
 
-	public List<BlockPos> getNearbyWater(World world, BlockPos pos) {
+	public List<BlockPos> getNearbyWater(Level world, BlockPos pos) {
 		List<BlockPos> nearBlocks = new ArrayList<BlockPos>();
 		List<BlockPos> waterBlocks = new ArrayList<BlockPos>();
 

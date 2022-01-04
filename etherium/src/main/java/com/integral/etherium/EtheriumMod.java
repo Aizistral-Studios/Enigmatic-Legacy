@@ -21,7 +21,7 @@ import com.integral.etherium.items.EtheriumSword;
 import com.integral.etherium.proxy.CommonProxy;
 import com.integral.etherium.proxy.ClientProxy;
 
-import net.minecraft.world.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemGroup;
 import net.minecraft.world.item.ItemStack;
@@ -37,8 +37,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraftforge.fmllegacy.network.NetworkRegistry;
+import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -84,10 +84,10 @@ public class EtheriumMod {
 		etheriumOre = new EtheriumOre(etheriumConfig);
 		etheriumIngot = new EtheriumIngot(etheriumConfig);
 		
-		etheriumHelmet = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlotType.HEAD).setRegistryName(new ResourceLocation(MODID, "etherium_helmet"));
-		etheriumChestplate = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlotType.CHEST).setRegistryName(new ResourceLocation(MODID, "etherium_chestplate"));
-		etheriumLeggings = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlotType.LEGS).setRegistryName(new ResourceLocation(MODID, "etherium_leggings"));
-		etheriumBoots = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlotType.FEET).setRegistryName(new ResourceLocation(MODID, "etherium_boots"));
+		etheriumHelmet = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.HEAD).setRegistryName(new ResourceLocation(MODID, "etherium_helmet"));
+		etheriumChestplate = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.CHEST).setRegistryName(new ResourceLocation(MODID, "etherium_chestplate"));
+		etheriumLeggings = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.LEGS).setRegistryName(new ResourceLocation(MODID, "etherium_leggings"));
+		etheriumBoots = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.FEET).setRegistryName(new ResourceLocation(MODID, "etherium_boots"));
 
 		etheriumPickaxe = new EtheriumPickaxe(etheriumConfig);
 		etheriumAxe = new EtheriumAxe(etheriumConfig);

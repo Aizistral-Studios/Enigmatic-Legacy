@@ -4,7 +4,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 
-import net.minecraft.client.gui.toasts.IToast;
+import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.toasts.ToastGui;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
@@ -20,7 +20,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 
 @OnlyIn(Dist.CLIENT)
-public class SlotUnlockedToast implements IToast {
+public class SlotUnlockedToast implements Toast {
 	private long firstDrawTime;
 	private ItemStack drawnStack;
 	private String identifier;
@@ -31,7 +31,7 @@ public class SlotUnlockedToast implements IToast {
 	}
 
 	@Override
-	public IToast.Visibility render(PoseStack PoseStack, ToastGui toastGui, long delta) {
+	public Toast.Visibility render(PoseStack PoseStack, ToastGui toastGui, long delta) {
 		toastGui.getMinecraft().getTextureManager().bind(new ResourceLocation(EnigmaticLegacy.MODID, "textures/gui/enigmatic_toasts.png"));
 		GlStateManager._color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
@@ -45,7 +45,7 @@ public class SlotUnlockedToast implements IToast {
 		GlStateManager._popMatrix();
 
 		toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem((LivingEntity) null, this.drawnStack, 8, 18);
-		return delta - this.firstDrawTime >= 5000L ? IToast.Visibility.HIDE : IToast.Visibility.SHOW;
+		return delta - this.firstDrawTime >= 5000L ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
 
 	}
 

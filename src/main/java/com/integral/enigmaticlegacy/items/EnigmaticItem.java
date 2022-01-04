@@ -23,23 +23,23 @@ import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.alchemy.EffectInstance;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 	public static Omniconfig.IntParameter spellstoneCooldown;
@@ -79,7 +79,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -87,7 +87,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticItem1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticItem2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticItemCooldown", TextFormatting.GOLD, spellstoneCooldown.getValue() / 20F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticItemCooldown", ChatFormatting.GOLD, spellstoneCooldown.getValue() / 20F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticItem3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticItem4");
@@ -109,9 +109,9 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 			living.clearFire();
 		}
 
-		List<EffectInstance> effects = new ArrayList<EffectInstance>(living.getActiveEffects());
+		List<MobEffectInstance> effects = new ArrayList<MobEffectInstance>(living.getActiveEffects());
 
-		for (EffectInstance effect : effects) {
+		for (MobEffectInstance effect : effects) {
 			if (effect.getEffect().getRegistryName().equals(new ResourceLocation("mana-and-artifice", "chrono-exhaustion"))) {
 				continue;
 			}
@@ -145,7 +145,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void triggerActiveAbility(World world, ServerPlayer player, ItemStack stack) {
+	public void triggerActiveAbility(Level world, ServerPlayer player, ItemStack stack) {
 		if (world.isClientSide || SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
@@ -159,7 +159,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 		return false;
 	}
 
-	private void launchWitherSkull(World world, Player player, boolean invulnerable) {
+	private void launchWitherSkull(Level world, Player player, boolean invulnerable) {
 		world.levelEvent((Player) null, 1024, new BlockPos(player.position()), 0);
 
 		Vector3 look = new Vector3(player.getLookAngle()).multiply(1, 0, 1);

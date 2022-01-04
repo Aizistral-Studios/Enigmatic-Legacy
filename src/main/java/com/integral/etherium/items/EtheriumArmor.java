@@ -12,24 +12,24 @@ import com.integral.etherium.core.IEtheriumConfig;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.IArmorMaterial;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EtheriumArmor extends ArmorItem {
 	private static IEtheriumConfig config;
 
-	public EtheriumArmor(IEtheriumConfig config, EquipmentSlotType slot) {
+	public EtheriumArmor(IEtheriumConfig config, EquipmentSlot slot) {
 		super(config.getArmorMaterial(), slot,
 				EtheriumUtil.defaultProperties(config, EtheriumArmor.class).fireResistant());
 		EtheriumArmor.config = config;
@@ -41,7 +41,7 @@ public class EtheriumArmor extends ArmorItem {
 	}
 
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
 		return "enigmaticlegacy:textures/models/armor/unseen_armor.png";
 	}
 
@@ -71,16 +71,16 @@ public class EtheriumArmor extends ArmorItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			EtheriumArmor armor = (EtheriumArmor) stack.getItem();
-			if (armor.getSlot() == EquipmentSlotType.HEAD) {
+			if (armor.getSlot() == EquipmentSlot.HEAD) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumHelmet1");
-			} else if (armor.getSlot() == EquipmentSlotType.CHEST) {
+			} else if (armor.getSlot() == EquipmentSlot.CHEST) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumChestplate1");
-			} else if (armor.getSlot() == EquipmentSlotType.LEGS) {
+			} else if (armor.getSlot() == EquipmentSlot.LEGS) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumLeggings1");
-			} else if (armor.getSlot() == EquipmentSlotType.FEET) {
+			} else if (armor.getSlot() == EquipmentSlot.FEET) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumBoots1");
 			}
 		} else {
@@ -90,9 +90,9 @@ public class EtheriumArmor extends ArmorItem {
 		if (hasFullSet(Minecraft.getInstance().player) || (ItemNBTHelper.verifyExistance(stack, "forceDisplaySetBonus") && ItemNBTHelper.getBoolean(stack, "forceDisplaySetBonus", false))) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus2", TextFormatting.GOLD, config.getShieldThreshold().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus2", ChatFormatting.GOLD, config.getShieldThreshold().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus3");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus4", TextFormatting.GOLD, config.getShieldReduction().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus4", ChatFormatting.GOLD, config.getShieldReduction().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus5");
 
 			//ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus6");

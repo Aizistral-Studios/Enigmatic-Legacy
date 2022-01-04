@@ -12,18 +12,18 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class HunterGuide extends ItemBase implements IVanishable {
+public class HunterGuide extends ItemBase implements Vanishable {
 
 	public static Omniconfig.IntParameter effectiveDistance;
 	public static Omniconfig.PerhapsParameter synergyDamageReduction;
@@ -51,14 +51,14 @@ public class HunterGuide extends ItemBase implements IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuide1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuide2", TextFormatting.GOLD, effectiveDistance);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuide2", ChatFormatting.GOLD, effectiveDistance);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuide3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuide4");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuide5", TextFormatting.GOLD, synergyDamageReduction + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuide5", ChatFormatting.GOLD, synergyDamageReduction + "%");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}

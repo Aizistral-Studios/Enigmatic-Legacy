@@ -6,46 +6,46 @@ import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class ItemLoreHelper {
 
 	@OnlyIn(Dist.CLIENT)
-	public static void indicateCursedOnesOnly(List<ITextComponent> list) {
-		TextFormatting format;
+	public static void indicateCursedOnesOnly(List<Component> list) {
+		ChatFormatting format;
 
 		if (Minecraft.getInstance().player != null) {
-			format = SuperpositionHandler.isTheCursedOne(Minecraft.getInstance().player) ? TextFormatting.GOLD : TextFormatting.DARK_RED;
+			format = SuperpositionHandler.isTheCursedOne(Minecraft.getInstance().player) ? ChatFormatting.GOLD : ChatFormatting.DARK_RED;
 		} else {
-			format = TextFormatting.DARK_RED;
+			format = ChatFormatting.DARK_RED;
 		}
 
-
-		list.add(new TranslationTextComponent("tooltip.enigmaticlegacy.cursedOnesOnly1").withStyle(format));
-		list.add(new TranslationTextComponent("tooltip.enigmaticlegacy.cursedOnesOnly2").withStyle(format));
+		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.cursedOnesOnly1").withStyle(format));
+		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.cursedOnesOnly2").withStyle(format));
 
 	}
 
-	public static void addLocalizedFormattedString(List<ITextComponent> list, String str, TextFormatting format) {
-		list.add(new TranslationTextComponent(str).withStyle(format));
+	public static void addLocalizedFormattedString(List<Component> list, String str, ChatFormatting format) {
+		list.add(new TranslatableComponent(str).withStyle(format));
 	}
 
-	public static void addLocalizedString(List<ITextComponent> list, String str) {
-		list.add(new TranslationTextComponent(str));
+	public static void addLocalizedString(List<Component> list, String str) {
+		list.add(new TranslatableComponent(str));
 	}
 
-	public static void addLocalizedString(List<ITextComponent> list, String str, @Nullable TextFormatting format, Object... values) {
+	public static void addLocalizedString(List<Component> list, String str, @Nullable ChatFormatting format, Object... values) {
 		TextComponent[] stringValues = new TextComponent[values.length];
 
 		int counter = 0;
@@ -55,7 +55,7 @@ public class ItemLoreHelper {
 			if (value instanceof TextComponent) {
 				comp = (TextComponent)value;
 			} else {
-				comp = new StringTextComponent(value.toString());
+				comp = new TextComponent(value.toString());
 			}
 
 			if (format != null) {
@@ -66,15 +66,15 @@ public class ItemLoreHelper {
 			counter++;
 		}
 
-		list.add(new TranslationTextComponent(str, (Object[])stringValues));
+		list.add(new TranslatableComponent(str, (Object[])stringValues));
 	}
 
 	public static ItemStack mergeDisplayData(ItemStack from, ItemStack to) {
-		CompoundNBT nbt = from.getOrCreateTagElement("display");
-		ListNBT loreList = nbt.getList("Lore", 8).size() > 0 ? nbt.getList("Lore", 8) : to.getOrCreateTagElement("display").getList("Lore", 8);
-		StringNBT displayName = nbt.getString("Name").length() > 0 ? StringNBT.valueOf(nbt.getString("Name")) : StringNBT.valueOf(to.getOrCreateTagElement("display").getString("Name"));
+		CompoundTag nbt = from.getOrCreateTagElement("display");
+		ListTag loreList = nbt.getList("Lore", 8).size() > 0 ? nbt.getList("Lore", 8) : to.getOrCreateTagElement("display").getList("Lore", 8);
+		StringTag displayName = nbt.getString("Name").length() > 0 ? StringTag.valueOf(nbt.getString("Name")) : StringTag.valueOf(to.getOrCreateTagElement("display").getString("Name"));
 
-		CompoundNBT mergedData = new CompoundNBT();
+		CompoundTag mergedData = new CompoundTag();
 		mergedData.put("Lore", loreList.copy());
 		mergedData.put("Name", displayName.copy());
 
@@ -84,10 +84,10 @@ public class ItemLoreHelper {
 	}
 
 	public static ItemStack addLoreString(ItemStack stack, String string) {
-		CompoundNBT nbt = stack.getOrCreateTagElement("display");
+		CompoundTag nbt = stack.getOrCreateTagElement("display");
 
-		ListNBT loreList = nbt.getList("Lore", 8);
-		loreList.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
+		ListTag loreList = nbt.getList("Lore", 8);
+		loreList.add(StringTag.valueOf(Component.Serializer.toJson(new TextComponent(string))));
 
 		nbt.put("Lore", loreList);
 
@@ -95,13 +95,13 @@ public class ItemLoreHelper {
 	}
 
 	public static ItemStack setLoreString(ItemStack stack, String string, int index) {
-		CompoundNBT nbt = stack.getOrCreateTagElement("display");
+		CompoundTag nbt = stack.getOrCreateTagElement("display");
 
-		ListNBT loreList = nbt.getList("Lore", 8);
+		ListTag loreList = nbt.getList("Lore", 8);
 		if (loreList.size() - 1 >= index) {
-			loreList.set(index, StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
+			loreList.set(index, StringTag.valueOf(Component.Serializer.toJson(new TextComponent(string))));
 		} else {
-			loreList.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
+			loreList.add(StringTag.valueOf(Component.Serializer.toJson(new TextComponent(string))));
 		}
 
 		nbt.put("Lore", loreList);
@@ -110,9 +110,9 @@ public class ItemLoreHelper {
 	}
 
 	public static ItemStack removeLoreString(ItemStack stack, int index) {
-		CompoundNBT nbt = stack.getOrCreateTagElement("display");
+		CompoundTag nbt = stack.getOrCreateTagElement("display");
 
-		ListNBT loreList = nbt.getList("Lore", 8);
+		ListTag loreList = nbt.getList("Lore", 8);
 
 		if (index == -1 && loreList.size() > 0) {
 			loreList.remove(loreList.size() - 1);
@@ -126,14 +126,14 @@ public class ItemLoreHelper {
 	}
 
 	public static ItemStack setLastLoreString(ItemStack stack, String string) {
-		CompoundNBT nbt = stack.getOrCreateTagElement("display");
+		CompoundTag nbt = stack.getOrCreateTagElement("display");
 
-		ListNBT loreList = nbt.getList("Lore", 8);
+		ListTag loreList = nbt.getList("Lore", 8);
 
 		if (loreList.size() > 0) {
-			loreList.set(loreList.size() - 1, StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
+			loreList.set(loreList.size() - 1, StringTag.valueOf(Component.Serializer.toJson(new TextComponent(string))));
 		} else {
-			loreList.add(StringNBT.valueOf(ITextComponent.Serializer.toJson(new StringTextComponent(string))));
+			loreList.add(StringTag.valueOf(Component.Serializer.toJson(new TextComponent(string))));
 		}
 
 		nbt.put("Lore", loreList);
@@ -142,9 +142,9 @@ public class ItemLoreHelper {
 	}
 
 	public static ItemStack setDisplayName(ItemStack stack, String name) {
-		CompoundNBT nbt = stack.getOrCreateTagElement("display");
+		CompoundTag nbt = stack.getOrCreateTagElement("display");
 
-		nbt.putString("Name", ITextComponent.Serializer.toJson(new StringTextComponent(name)));
+		nbt.putString("Name", Component.Serializer.toJson(new TextComponent(name)));
 
 		return stack;
 	}
@@ -189,8 +189,8 @@ public class ItemLoreHelper {
 		}
 
 		private static String parseFormatting(String field) {
-			String formatter = new TranslationTextComponent("tooltip.enigmaticlegacy.paragraph").getString();
-			String subformat = new TranslationTextComponent("tooltip.enigmaticlegacy.subformat").getString();
+			String formatter = new TranslatableComponent("tooltip.enigmaticlegacy.paragraph").getString();
+			String subformat = new TranslatableComponent("tooltip.enigmaticlegacy.subformat").getString();
 
 			return field.replace(subformat, formatter);
 		}

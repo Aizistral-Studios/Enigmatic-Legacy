@@ -2,9 +2,9 @@ package com.integral.enigmaticlegacy.packets.server;
 
 import java.util.function.Supplier;
 
-import net.minecraft.world.entity.player.ServerPlayer;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet for updating stored anvil field for targeted player on server side.
@@ -19,11 +19,11 @@ public class PacketAnvilField {
 		this.field = field;
 	}
 
-	public static void encode(PacketAnvilField msg, PacketBuffer buf) {
+	public static void encode(PacketAnvilField msg, FriendlyByteBuf buf) {
 		buf.writeUtf(msg.field);
 	}
 
-	public static PacketAnvilField decode(PacketBuffer buf) {
+	public static PacketAnvilField decode(FriendlyByteBuf buf) {
 		return new PacketAnvilField(buf.readUtf(128));
 	}
 

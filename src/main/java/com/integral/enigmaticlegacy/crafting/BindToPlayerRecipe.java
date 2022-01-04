@@ -16,10 +16,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.IRecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.NonNullList;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
@@ -64,7 +64,7 @@ public class BindToPlayerRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, World world) {
+	public boolean matches(CraftingInventory inv, Level world) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		
 		ItemStack gem = null;
@@ -111,12 +111,12 @@ public class BindToPlayerRecipe extends ShapelessRecipe {
 		}
 
 		@Override
-		public BindToPlayerRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+		public BindToPlayerRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			return new BindToPlayerRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
 		}
 
 		@Override
-		public void toNetwork(PacketBuffer buffer, BindToPlayerRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buffer, BindToPlayerRecipe recipe) {
 
 		}
 	}
@@ -124,7 +124,7 @@ public class BindToPlayerRecipe extends ShapelessRecipe {
 	public interface IBound {
 		
 		@Nullable
-		default Player getBoundPlayer(World world, ItemStack stack) {
+		default Player getBoundPlayer(Level world, ItemStack stack) {
 			if (ItemNBTHelper.verifyExistance(stack, "BoundPlayer") && ItemNBTHelper.containsUUID(stack, "BoundUUID")) {
 				 UUID id = ItemNBTHelper.getUUID(stack, "BoundUUID", null);
 				 

@@ -13,18 +13,18 @@ import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
-import net.minecraft.world.inventory.EquipmentSlotType;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -32,16 +32,16 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.text.TextComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import vazkii.patchouli.api.PatchouliAPI;
 
 import net.minecraft.world.item.Item.Properties;
 
-public class TheAcknowledgment extends ItemBase implements IVanishable {
+public class TheAcknowledgment extends ItemBase implements Vanishable {
 	private final Multimap<Attribute, AttributeModifier> attributes;
 	private static final ResourceLocation bookID = new ResourceLocation(EnigmaticLegacy.MODID, "the_acknowledgment");
 
@@ -63,16 +63,16 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 		return bookID.equals(PatchouliAPI.instance.getOpenBookGui());
 	}
 
-	public static ITextComponent getEdition() {
+	public static Component getEdition() {
 		return PatchouliAPI.instance.getSubtitle(bookID);
 	}
 
-	public static ITextComponent getTitle(ItemStack stack) {
-		ITextComponent title = stack.getHoverName();
+	public static Component getTitle(ItemStack stack) {
+		Component title = stack.getHoverName();
 
 		String akashicTomeNBT = "akashictome:displayName";
 		if (stack.hasTag() && stack.getTag().contains(akashicTomeNBT)) {
-			title = new StringTextComponent(stack.getTag().getString(akashicTomeNBT));
+			title = new TextComponent(stack.getTag().getString(akashicTomeNBT));
 		}
 
 		return title;
@@ -91,9 +91,9 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
 
-		if (slot.equals(EquipmentSlotType.MAINHAND))
+		if (slot.equals(EquipmentSlot.MAINHAND))
 			return this.attributes;
 		else
 			return super.getAttributeModifiers(slot, stack);
@@ -101,7 +101,7 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 
 	@Nonnull
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, Hand handIn) {
 		ItemStack stack = playerIn.getItemInHand(handIn);
 
 		if (playerIn instanceof ServerPlayer) {
@@ -134,7 +134,7 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theAcknowledgment1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theAcknowledgment2");
@@ -143,7 +143,7 @@ public class TheAcknowledgment extends ItemBase implements IVanishable {
 		}
 
 		try {
-			//list.add(new StringTextComponent("").append(TheAcknowledgment.getEdition()).mergeStyle(TextFormatting.DARK_PURPLE));
+			//list.add(new TextComponent("").append(TheAcknowledgment.getEdition()).mergeStyle(ChatFormatting.DARK_PURPLE));
 		} catch (Exception ex) {
 			// Just don't do it lol
 		}

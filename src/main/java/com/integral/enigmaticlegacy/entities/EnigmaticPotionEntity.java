@@ -7,32 +7,31 @@ import javax.annotation.Nullable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
 
-import net.minecraft.world.entity.AreaEffectCloudEntity;
+import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.IRendersAsItem;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableEntity;
+import net.minecraft.world.entity.projectile.ItemSupplier;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.world.item.alchemy.Effect;
-import net.minecraft.world.item.alchemy.EffectInstance;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.fmllegacy.network.NetworkHooks;
 import net.minecraftforge.registries.ObjectHolder;
-
-@OnlyIn(value = Dist.CLIENT, _interface = IRendersAsItem.class)
 
 /**
  * Modified version of Potion Entity designed specifically for Enigmatic
@@ -41,22 +40,22 @@ import net.minecraftforge.registries.ObjectHolder;
  * @author Integral
  */
 
-public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAsItem {
+public class EnigmaticPotionEntity extends ThrowableItemProjectile implements ItemSupplier {
 	@ObjectHolder(EnigmaticLegacy.MODID + ":enigmatic_potion_entity")
 	public static EntityType<EnigmaticPotionEntity> TYPE;
 
-	private static final DataParameter<ItemStack> ITEM = EntityDataManager.defineId(EnigmaticPotionEntity.class,
-			DataSerializers.ITEM_STACK);
+	private static final EntityDataAccessor<ItemStack> ITEM = SynchedEntityData.defineId(EnigmaticPotionEntity.class,
+			EntityDataSerializers.ITEM_STACK);
 
-	public EnigmaticPotionEntity(EntityType<EnigmaticPotionEntity> type, World world) {
+	public EnigmaticPotionEntity(EntityType<EnigmaticPotionEntity> type, Level world) {
 		super(type, world);
 	}
 
-	public EnigmaticPotionEntity(World world, LivingEntity entity) {
+	public EnigmaticPotionEntity(Level world, LivingEntity entity) {
 		super(EnigmaticPotionEntity.TYPE, entity, world);
 	}
 
-	public EnigmaticPotionEntity(World world, double x, double y, double z) {
+	public EnigmaticPotionEntity(Level world, double x, double y, double z) {
 		super(EnigmaticPotionEntity.TYPE, x, y, z, world);
 	}
 
@@ -79,6 +78,7 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 
 	}
 
+	@Override
 	public void setItem(ItemStack stack) {
 		this.getEntityData().set(EnigmaticPotionEntity.ITEM, stack.copy());
 	}
@@ -100,11 +100,11 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 	 * Called when this EntityThrowable hits a block or entity.
 	 */
 	@Override
-	protected void onHit(RayTraceResult result) {
+	protected void onHit(HitResult result) {
 		if (!this.level.isClientSide) {
 			ItemStack itemstack = this.getItem();
 
-			List<EffectInstance> list = PotionHelper.getEffects(itemstack);
+			List<MobEffectInstance> list = PotionHelper.getEffects(itemstack);
 
 			int i = 2002;
 
@@ -113,11 +113,11 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 					this.makeAreaOfEffectCloud(itemstack, list);
 				} else {
 					this.triggerSplash(list,
-							result.getType() == RayTraceResult.Type.ENTITY ? ((EntityRayTraceResult) result).getEntity()
+							result.getType() == HitResult.Type.ENTITY ? ((EntityHitResult) result).getEntity()
 									: null);
 				}
 
-				for (EffectInstance instance : list) {
+				for (MobEffectInstance instance : list) {
 					if (instance.getEffect().isInstantenous()) {
 						i = 2007;
 					}
@@ -125,12 +125,12 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 			}
 
 			this.level.levelEvent(i, new BlockPos(this.getOnPos()), PotionHelper.getColor(itemstack));
-			this.remove();
+			this.discard();
 		}
 	}
 
-	private void triggerSplash(List<EffectInstance> p_213888_1_, @Nullable Entity p_213888_2_) {
-		AxisAlignedBB axisalignedbb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
+	private void triggerSplash(List<MobEffectInstance> p_213888_1_, @Nullable Entity p_213888_2_) {
+		AABB axisalignedbb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
 		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, axisalignedbb);
 		if (!list.isEmpty()) {
 			for (LivingEntity livingentity : list) {
@@ -142,8 +142,8 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 							d1 = 1.0D;
 						}
 
-						for (EffectInstance effectinstance : p_213888_1_) {
-							Effect effect = effectinstance.getEffect();
+						for (MobEffectInstance effectinstance : p_213888_1_) {
+							MobEffect effect = effectinstance.getEffect();
 							if (effect.isInstantenous()) {
 								effect.applyInstantenousEffect(this, this.getOwner(), livingentity,
 										effectinstance.getAmplifier(), d1);
@@ -151,7 +151,7 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 								int i = (int) (d1 * effectinstance.getDuration() + 0.5D);
 								if (i > 20) {
 									livingentity.addEffect(
-											new EffectInstance(effect, i, effectinstance.getAmplifier(),
+											new MobEffectInstance(effect, i, effectinstance.getAmplifier(),
 													effectinstance.isAmbient(), effectinstance.isVisible()));
 								}
 							}
@@ -163,8 +163,8 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 
 	}
 
-	private void makeAreaOfEffectCloud(ItemStack stack, List<EffectInstance> list) {
-		AreaEffectCloudEntity areaeffectcloudentity = new AreaEffectCloudEntity(this.level, this.getX(),
+	private void makeAreaOfEffectCloud(ItemStack stack, List<MobEffectInstance> list) {
+		AreaEffectCloud areaeffectcloudentity = new AreaEffectCloud(this.level, this.getX(),
 				this.getY(), this.getZ());
 		areaeffectcloudentity.setOwner((LivingEntity) this.getOwner());
 		areaeffectcloudentity.setRadius(3.0F);
@@ -173,8 +173,8 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 		areaeffectcloudentity
 		.setRadiusPerTick(-areaeffectcloudentity.getRadius() / areaeffectcloudentity.getDuration());
 
-		for (EffectInstance effectInstance : list) {
-			areaeffectcloudentity.addEffect(new EffectInstance(effectInstance.getEffect(),
+		for (MobEffectInstance effectInstance : list) {
+			areaeffectcloudentity.addEffect(new MobEffectInstance(effectInstance.getEffect(),
 					effectInstance.getDuration() / 4, effectInstance.getAmplifier(), effectInstance.isAmbient(),
 					effectInstance.isVisible()));
 		}
@@ -193,11 +193,11 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 	 */
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		ItemStack itemstack = ItemStack.of(compound.getCompound("Potion"));
 		if (itemstack.isEmpty()) {
-			this.remove();
+			this.discard();
 		} else {
 			this.setItem(itemstack);
 		}
@@ -205,18 +205,23 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		ItemStack itemstack = this.getItem();
 		if (!itemstack.isEmpty()) {
-			compound.put("Potion", itemstack.save(new CompoundNBT()));
+			compound.put("Potion", itemstack.save(new CompoundTag()));
 		}
 
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
+	}
+
+	@Override
+	protected Item getDefaultItem() {
+		return Items.SPLASH_POTION;
 	}
 
 }

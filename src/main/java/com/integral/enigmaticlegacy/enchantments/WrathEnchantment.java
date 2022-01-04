@@ -9,12 +9,12 @@ import net.minecraft.world.item.enchantment.EnchantmentType;
 import net.minecraft.world.item.enchantment.ImpalingEnchantment;
 import net.minecraft.world.entity.CreatureAttribute;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 
 public class WrathEnchantment extends Enchantment {
-	public WrathEnchantment(EquipmentSlotType... slots) {
+	public WrathEnchantment(EquipmentSlot... slots) {
 		super(Enchantment.Rarity.RARE, EnchantmentType.TRIDENT, slots);
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "wrath"));
 	}

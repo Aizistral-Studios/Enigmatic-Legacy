@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ArmorStandEntity;
-import net.minecraft.world.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.EquipmentSlot;
 
 /**
  * Generic class for extension by armor models.
@@ -17,14 +17,14 @@ import net.minecraft.world.inventory.EquipmentSlotType;
  */
 
 public class GenericArmorModel extends BipedModel<LivingEntity> {
-	protected final EquipmentSlotType slot;
+	protected final EquipmentSlot slot;
 
 	protected List<SpecialArmorModelRenderer> helmetParts = new ArrayList<>();
 	protected List<SpecialArmorModelRenderer> chestplateParts = new ArrayList<>();
 	protected List<SpecialArmorModelRenderer> leggingsParts = new ArrayList<>();
 	protected List<SpecialArmorModelRenderer> bootsParts = new ArrayList<>();
 
-	public GenericArmorModel(EquipmentSlotType slot) {
+	public GenericArmorModel(EquipmentSlot slot) {
 		super(1);
 		this.slot = slot;
 	}
@@ -69,19 +69,19 @@ public class GenericArmorModel extends BipedModel<LivingEntity> {
 		modelRenderer.zRot = z;
 	}
 
-	public void setRenderingForType(EquipmentSlotType type) {
+	public void setRenderingForType(EquipmentSlot type) {
 
 		for (SpecialArmorModelRenderer renderer : this.helmetParts) {
-			renderer.visible = type == EquipmentSlotType.HEAD || type == EquipmentSlotType.MAINHAND;
+			renderer.visible = type == EquipmentSlot.HEAD || type == EquipmentSlot.MAINHAND;
 		}
 		for (SpecialArmorModelRenderer renderer : this.chestplateParts) {
-			renderer.visible = type == EquipmentSlotType.CHEST || type == EquipmentSlotType.MAINHAND;
+			renderer.visible = type == EquipmentSlot.CHEST || type == EquipmentSlot.MAINHAND;
 		}
 		for (SpecialArmorModelRenderer renderer : this.leggingsParts) {
-			renderer.visible = type == EquipmentSlotType.LEGS || type == EquipmentSlotType.MAINHAND;
+			renderer.visible = type == EquipmentSlot.LEGS || type == EquipmentSlot.MAINHAND;
 		}
 		for (SpecialArmorModelRenderer renderer : this.bootsParts) {
-			renderer.visible = type == EquipmentSlotType.FEET || type == EquipmentSlotType.MAINHAND;
+			renderer.visible = type == EquipmentSlot.FEET || type == EquipmentSlot.MAINHAND;
 		}
 
 	}

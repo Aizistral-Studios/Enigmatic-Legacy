@@ -13,14 +13,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.IRecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.NonNullList;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -59,9 +59,9 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 		if (voidStone != null && stackList.size() == 1) {
 			ItemStack savedStack = stackList.get(0).copy();
 
-			CompoundNBT nbt = voidStone.getOrCreateTag();
+			CompoundTag nbt = voidStone.getOrCreateTag();
 
-			ListNBT arr = nbt.getList("SupersolidID", 8);
+			ListTag arr = nbt.getList("SupersolidID", 8);
 			int counter = 0;
 
 			if (arr.size() >= OblivionStone.itemHardcap.getValue())
@@ -70,16 +70,16 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 			for (INBT s_uncast : arr) {
 				counter++;
 
-				String s = ((StringNBT)s_uncast).getAsString();
+				String s = ((StringTag)s_uncast).getAsString();
 
 				if (s.equals(ForgeRegistries.ITEMS.getKey(savedStack.getItem()).toString()))
 					return ItemStack.EMPTY;
 			}
 
-			ListNBT arrCopy = arr.copy();
-			CompoundNBT nbtCopy = nbt.copy();
+			ListTag arrCopy = arr.copy();
+			CompoundTag nbtCopy = nbt.copy();
 
-			arrCopy.add(StringNBT.valueOf(ForgeRegistries.ITEMS.getKey(savedStack.getItem()).toString()));
+			arrCopy.add(StringTag.valueOf(ForgeRegistries.ITEMS.getKey(savedStack.getItem()).toString()));
 
 			nbtCopy.put("SupersolidID", arrCopy);
 
@@ -98,7 +98,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, World world) {
+	public boolean matches(CraftingInventory inv, Level world) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		ItemStack voidStone = null;
 
@@ -122,9 +122,9 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 		if (voidStone != null && stackList.size() == 1) {
 			ItemStack savedStack = stackList.get(0).copy();
 
-			CompoundNBT nbt = voidStone.getOrCreateTag();
+			CompoundTag nbt = voidStone.getOrCreateTag();
 
-			ListNBT arr = nbt.getList("SupersolidID", 8);
+			ListTag arr = nbt.getList("SupersolidID", 8);
 			int counter = 0;
 
 			if (arr.size() >= OblivionStone.itemHardcap.getValue())
@@ -133,7 +133,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 			for (INBT s_uncast : arr) {
 				counter++;
 
-				String s = ((StringNBT)s_uncast).getAsString();
+				String s = ((StringTag)s_uncast).getAsString();
 
 				if (s.equals(ForgeRegistries.ITEMS.getKey(savedStack.getItem()).toString()))
 					return false;
@@ -175,12 +175,12 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 		}
 
 		@Override
-		public OblivionStoneCombineRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+		public OblivionStoneCombineRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			return new OblivionStoneCombineRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
 		}
 
 		@Override
-		public void toNetwork(PacketBuffer buffer, OblivionStoneCombineRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buffer, OblivionStoneCombineRecipe recipe) {
 
 		}
 	}

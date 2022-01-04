@@ -6,12 +6,12 @@ import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentType;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 
 public class NemesisCurseEnchantment extends Enchantment {
-	public NemesisCurseEnchantment(final EquipmentSlotType... slots) {
+	public NemesisCurseEnchantment(final EquipmentSlot... slots) {
 		super(Enchantment.Rarity.RARE, EnchantmentType.WEAPON, slots);
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "nemesis_curse"));
 	}

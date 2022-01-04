@@ -5,11 +5,11 @@ import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.items.AstralBreaker;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayer;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.settings.ParticleStatus;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet for bursting out a bunch of flame breath particles.
@@ -34,7 +34,7 @@ public class PacketFlameParticles {
 		this.check = checkSettings;
 	}
 
-	public static void encode(PacketFlameParticles msg, PacketBuffer buf) {
+	public static void encode(PacketFlameParticles msg, FriendlyByteBuf buf) {
 		buf.writeDouble(msg.x);
 		buf.writeDouble(msg.y);
 		buf.writeDouble(msg.z);
@@ -42,14 +42,14 @@ public class PacketFlameParticles {
 		buf.writeBoolean(msg.check);
 	}
 
-	public static PacketFlameParticles decode(PacketBuffer buf) {
+	public static PacketFlameParticles decode(FriendlyByteBuf buf) {
 		return new PacketFlameParticles(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readInt(), buf.readBoolean());
 	}
 
 	public static void handle(PacketFlameParticles msg, Supplier<NetworkEvent.Context> ctx) {
 		if (AstralBreaker.flameParticlesToggle.getValue()) {
 			ctx.get().enqueueWork(() -> {
-				ClientPlayer player = Minecraft.getInstance().player;
+				LocalPlayer player = Minecraft.getInstance().player;
 
 				int amount = msg.num;
 				float modifier = 1.0F;

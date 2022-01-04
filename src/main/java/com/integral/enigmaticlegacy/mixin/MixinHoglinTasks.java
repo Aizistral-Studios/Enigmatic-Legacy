@@ -16,7 +16,7 @@ import net.minecraft.world.entity.ai.brain.sensor.PiglinMobsSensor;
 import net.minecraft.world.entity.monster.HoglinEntity;
 import net.minecraft.world.entity.monster.HoglinTasks;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
 
 @Mixin(HoglinTasks.class)
 public class MixinHoglinTasks {

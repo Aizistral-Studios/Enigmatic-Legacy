@@ -10,12 +10,12 @@ import com.integral.enigmaticlegacy.items.MagmaHeart;
 import com.integral.enigmaticlegacy.packets.clients.PacketSyncTransientData;
 
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 public class TransientPlayerData {
 
@@ -153,7 +153,7 @@ public class TransientPlayerData {
 		return this.player.get();
 	}
 
-	public static PacketBuffer encode(TransientPlayerData data, PacketBuffer buf) {
+	public static FriendlyByteBuf encode(TransientPlayerData data, FriendlyByteBuf buf) {
 		buf.writeUUID(data.player.get().getUUID());
 		buf.writeInt(data.spellstoneCooldown);
 		buf.writeInt(data.fireImmunityTimer);
@@ -164,7 +164,7 @@ public class TransientPlayerData {
 		return buf;
 	}
 
-	public static TransientPlayerData decode(PacketBuffer buf) {
+	public static TransientPlayerData decode(FriendlyByteBuf buf) {
 		UUID playerID = buf.readUUID();
 		int spellstoneCooldown = buf.readInt();
 		int fireImmunityTimer = buf.readInt();

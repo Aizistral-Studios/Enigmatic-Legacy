@@ -4,8 +4,8 @@ import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet for playing respective sound and animation on client side,
@@ -24,12 +24,12 @@ public class PacketHandleItemPickup {
 		  this.pickuper_id = pickuperID;
 	  }
 
-	  public static void encode(PacketHandleItemPickup msg, PacketBuffer buf) {
+	  public static void encode(PacketHandleItemPickup msg, FriendlyByteBuf buf) {
 		  buf.writeInt(msg.item_id);
 		  buf.writeInt(msg.pickuper_id);
 	  }
 
-	  public static PacketHandleItemPickup decode(PacketBuffer buf) {
+	  public static PacketHandleItemPickup decode(FriendlyByteBuf buf) {
 	    return new PacketHandleItemPickup(buf.readInt(), buf.readInt());
 	 }
 

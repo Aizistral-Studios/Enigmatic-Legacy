@@ -6,32 +6,35 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
-import net.minecraft.client.gui.widget.TextFieldWidget;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.container.Container;
-import net.minecraft.world.inventory.container.IContainerListener;
-import net.minecraft.world.inventory.container.Slot;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerListener;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer> implements IContainerListener {
+public class LoreInscriberScreen extends AbstractContainerScreen<LoreInscriberContainer> implements ContainerListener {
 	private ResourceLocation guiTexture;
 	private static final ResourceLocation ANVIL_RESOURCE = new ResourceLocation(EnigmaticLegacy.MODID, "textures/gui/inkwell_gui.png");
-	private TextFieldWidget nameField;
+	private EditBox nameField;
 
-	public LoreInscriberScreen(LoreInscriberContainer container, Inventory Inventory, ITextComponent title) {
+	public LoreInscriberScreen(LoreInscriberContainer container, Inventory Inventory, Component title) {
 		this(container, Inventory, title, LoreInscriberScreen.ANVIL_RESOURCE);
 		this.titleLabelX = 60;
 	}
 
-	private LoreInscriberScreen(LoreInscriberContainer container, Inventory Inventory, ITextComponent title, ResourceLocation guiTexture) {
+	private LoreInscriberScreen(LoreInscriberContainer container, Inventory Inventory, Component title, ResourceLocation guiTexture) {
 		super(container, Inventory, title);
 		this.guiTexture = guiTexture;
 	}
@@ -40,14 +43,14 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
-		this.nameField = new TextFieldWidget(this.font, i + 55, j + 30, 95, 12, new TranslationTextComponent("container.repair"));
+		this.nameField = new EditBox(this.font, i + 55, j + 30, 95, 12, new TranslatableComponent("container.repair"));
 		this.nameField.setCanLoseFocus(false);
 		this.nameField.setTextColor(-1);
 		this.nameField.setTextColorUneditable(-1);
 		this.nameField.setBordered(false);
 		this.nameField.setMaxLength(128);
 		this.nameField.setResponder(this::renameResponder);
-		this.children.add(this.nameField);
+		this.addWidget(this.nameField);
 		this.setInitialFocus(this.nameField);
 	}
 
@@ -76,8 +79,8 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 
 	@Override
 	protected void renderBg(PoseStack PoseStack, float partialTicks, int x, int y) {
-		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bind(this.guiTexture);
+		RenderSystem.clearColor(1.0F, 1.0F, 1.0F, 1.0F);
+		this.minecraft.getTextureManager().bindForSetup(this.guiTexture);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		this.blit(PoseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
@@ -85,24 +88,6 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 		if (this.menu.getSlot(0).hasItem() && !this.menu.getSlot(1).hasItem()) {
 			this.blit(PoseStack, i + 71, j + 49, this.imageWidth, 0, 28, 21);
 		}
-
-	}
-
-	/**
-	 * update the crafting window inventory with the items in the list
-	 */
-	@Override
-	public void refreshContainer(Container containerToSend, NonNullList<ItemStack> itemsList) {
-		this.slotChanged(containerToSend, 0, containerToSend.getSlot(0).getItem());
-	}
-
-	/**
-	 * Sends two ints to the client-side Container. Used for furnace burning time, smelting progress, brewing progress,
-	 * and enchanting level. Normally the first int identifies which variable to update, and the second contains the new
-	 * value. Both are truncated to shorts in non-local SMP.
-	 */
-	@Override
-	public void setContainerData(Container containerIn, int varToUpdate, int newValue) {
 	}
 
 	@Override
@@ -175,7 +160,7 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 	 * contents of that slot.
 	 */
 	@Override
-	public void slotChanged(Container containerToSend, int slotInd, ItemStack stack) {
+	public void slotChanged(AbstractContainerMenu containerToSend, int slotInd, ItemStack stack) {
 		if (slotInd == 0) {
 			this.nameField.setValue(stack.isEmpty() ? "" : stack.getHoverName().getString());
 			this.nameField.setEditable(!stack.isEmpty());
@@ -183,4 +168,10 @@ public class LoreInscriberScreen extends ContainerScreen<LoreInscriberContainer>
 		}
 
 	}
+
+	@Override
+	public void dataChanged(AbstractContainerMenu p_150524_, int p_150525_, int p_150526_) {
+		// NO-OP
+	}
+
 }

@@ -20,8 +20,8 @@ import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.IAngerable;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,7 +29,7 @@ import net.minecraft.world.entity.MobEntity;
 import net.minecraft.world.entity.ai.brain.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.ElderGuardianEntity;
-import net.minecraft.world.entity.monster.GuardianEntity;
+import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.monster.MonsterEntity;
 import net.minecraft.world.entity.monster.ZombifiedPiglinEntity;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglinEntity;
@@ -39,12 +39,12 @@ import net.minecraft.world.entity.monster.piglin.PiglinEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinTasks;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.world.item.alchemy.EffectInstance;
-import net.minecraft.world.item.alchemy.Effects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.EntityPredicates;
@@ -52,16 +52,16 @@ import net.minecraft.util.Hand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import top.theillusivec4.curios.api.CuriosApi;
 
-public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
+public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 	public static Omniconfig.IntParameter abilityRange;
 	public static Omniconfig.IntParameter enrageRange;
 	public static Omniconfig.IntParameter abilityCooldown;
@@ -86,7 +86,7 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 	}
 
 	public static final List<Class<? extends LivingEntity>> excludedMobs = Lists.newArrayList(
-			AbstractPiglinEntity.class, GuardianEntity.class);
+			AbstractPiglinEntity.class, Guardian.class);
 
 	public GuardianHeart() {
 		super(getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());
@@ -95,23 +95,23 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart1", TextFormatting.GOLD, abilityRange);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart1", ChatFormatting.GOLD, abilityRange);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart4");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart5", TextFormatting.GOLD, abilityRange);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart5", ChatFormatting.GOLD, abilityRange);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart6");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart7");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart8", TextFormatting.GOLD, enrageRange);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart8", ChatFormatting.GOLD, enrageRange);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart9");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart10");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart11");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart12", TextFormatting.GOLD, (abilityCooldown.getValue()/20.0));
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.guardianHeart12", ChatFormatting.GOLD, (abilityCooldown.getValue()/20.0));
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -122,7 +122,7 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
 		if (entity instanceof Player && !world.isClientSide) {
 			Player player = (Player) entity;
 			List<MonsterEntity> genericMobs = player.level.getEntitiesOfClass(MonsterEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, abilityRange.getValue()));
@@ -149,10 +149,10 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 
 					if (closestMonster != null) {
 						this.setAttackTarget(theOne, closestMonster);
-						theOne.addEffect(new EffectInstance(Effects.BLINDNESS, 300, 0, false, true));
-						theOne.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 300, 1, false, false));
-						theOne.addEffect(new EffectInstance(Effects.DAMAGE_RESISTANCE, 300, 1, false, false));
-						//theOne.addPotionEffect(new EffectInstance(Effects., 400, 1, false, true));
+						theOne.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 300, 0, false, true));
+						theOne.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300, 1, false, false));
+						theOne.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 300, 1, false, false));
+						//theOne.addPotionEffect(new MobEffectInstance(MobEffects., 400, 1, false, true));
 
 						for (MonsterEntity otherMonster : surroundingMobs) {
 							this.setAttackTarget(otherMonster, theOne);
@@ -172,12 +172,12 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 			}
 
 			for (MonsterEntity monster : genericMobs) {
-				if (monster instanceof GuardianEntity && monster.getClass() != ElderGuardianEntity.class) {
-					final GuardianEntity guardian = (GuardianEntity) monster;
+				if (monster instanceof Guardian && monster.getClass() != ElderGuardianEntity.class) {
+					final Guardian guardian = (Guardian) monster;
 
 					if (guardian.getTarget() == null) {
 						List<MonsterEntity> surroundingMobs = player.level.getEntitiesOfClass(MonsterEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(guardian, 12), (living) -> { return living.isAlive() && guardian.canSee(living); });
-						MonsterEntity closestMonster = SuperpositionHandler.getClosestEntity(surroundingMobs, (checked) -> { return !(checked instanceof GuardianEntity); }, guardian.getX(), guardian.getY(), guardian.getZ());
+						MonsterEntity closestMonster = SuperpositionHandler.getClosestEntity(surroundingMobs, (checked) -> { return !(checked instanceof Guardian); }, guardian.getX(), guardian.getY(), guardian.getZ());
 
 						if (closestMonster != null) {
 							this.setAttackTarget(guardian, closestMonster);
@@ -224,7 +224,7 @@ public class GuardianHeart extends ItemBase implements ICursed, IVanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, Hand handIn) {
 		return super.use(worldIn, playerIn, handIn);
 	}
 

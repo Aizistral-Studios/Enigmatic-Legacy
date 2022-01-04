@@ -9,10 +9,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.IRecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.NonNullList;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class CursedShapedRecipe extends ShapedRecipe {
@@ -29,7 +29,7 @@ public class CursedShapedRecipe extends ShapedRecipe {
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, World worldIn) {
+	public boolean matches(CraftingInventory inv, Level worldIn) {
 		boolean isAllTainted = true;
 
 		for (int i = 0; i < inv.getContainerSize(); i++) {
@@ -69,13 +69,13 @@ public class CursedShapedRecipe extends ShapedRecipe {
 		}
 
 		@Override
-		public CursedShapedRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+		public CursedShapedRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			ShapedRecipe recipe = SHAPED_RECIPE.fromNetwork(recipeId, buffer);
 			return new CursedShapedRecipe(recipe.getId(), recipe.getGroup(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), this.handleTainted(recipe.getIngredients()), recipe.getResultItem());
 		}
 
 		@Override
-		public void toNetwork(PacketBuffer buffer, CursedShapedRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buffer, CursedShapedRecipe recipe) {
 			SHAPED_RECIPE.toNetwork(buffer, recipe);
 		}
 

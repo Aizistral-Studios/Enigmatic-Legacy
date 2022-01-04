@@ -42,7 +42,7 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayer;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.settings.ParticleStatus;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -55,7 +55,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -71,39 +71,39 @@ import net.minecraft.world.level.storage.loot.functions.EnchantWithLevels;
 import net.minecraft.world.level.storage.loot.functions.SetCount;
 import net.minecraft.world.level.storage.loot.functions.SetDamage;
 import net.minecraft.nbt.ByteNBT;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.IntNBT;
 import net.minecraft.world.item.alchemy.Effect;
-import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.alchemy.EffectUtils;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.BeaconTileEntity;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.math.ClipContext;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.util.text.IFormattableTextComponent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.text.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.forgespi.language.ModFileScanData;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -275,8 +275,8 @@ public class SuperpositionHandler {
 	 * Creates and returns simple bounding box of given radius around the entity.
 	 */
 
-	public static AxisAlignedBB getBoundingBoxAroundEntity(final Entity entity, final double radius) {
-		return new AxisAlignedBB(entity.getX() - radius, entity.getY() - radius, entity.getZ() - radius, entity.getX() + radius, entity.getY() + radius, entity.getZ() + radius);
+	public static AABB getBoundingBoxAroundEntity(final Entity entity, final double radius) {
+		return new AABB(entity.getX() - radius, entity.getY() - radius, entity.getZ() - radius, entity.getX() + radius, entity.getY() + radius, entity.getZ() + radius);
 	}
 
 	/**
@@ -307,13 +307,13 @@ public class SuperpositionHandler {
 	 */
 
 	@Nullable
-	public static LivingEntity getObservedEntity(final Player player, final World world, final float range, final int maxDist) {
+	public static LivingEntity getObservedEntity(final Player player, final Level world, final float range, final int maxDist) {
 		LivingEntity newTarget = null;
 		Vector3 target = Vector3.fromEntityCenter(player);
 		List<LivingEntity> entities = new ArrayList<LivingEntity>();
 		for (int distance = 1; entities.size() == 0 && distance < maxDist; ++distance) {
 			target = target.add(new Vector3(player.getLookAngle()).multiply(distance)).add(0.0, 0.5, 0.0);
-			entities = player.level.getEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(target.x - range, target.y - range, target.z - range, target.x + range, target.y + range, target.z + range));
+			entities = player.level.getEntitiesOfClass(LivingEntity.class, new AABB(target.x - range, target.y - range, target.z - range, target.x + range, target.y + range, target.z + range));
 			if (entities.contains(player)) {
 				entities.remove(player);
 			}
@@ -343,8 +343,8 @@ public class SuperpositionHandler {
 	}
 
 	public static boolean doesObserveEntity(Player player, LivingEntity entity) {
-		Vector3d vector3d = player.getViewVector(1.0F).normalize();
-		Vector3d vector3d1 = new Vector3d(entity.getX() - player.getX(), entity.getEyeY() - player.getEyeY(), entity.getZ() - player.getZ());
+		Vec3 vector3d = player.getViewVector(1.0F).normalize();
+		Vec3 vector3d1 = new Vec3(entity.getX() - player.getX(), entity.getEyeY() - player.getEyeY(), entity.getZ() - player.getZ());
 		double d0 = vector3d1.length();
 		vector3d1 = vector3d1.normalize();
 		double d1 = vector3d.dot(vector3d1);
@@ -382,7 +382,7 @@ public class SuperpositionHandler {
 	 */
 
 	@OnlyIn(Dist.CLIENT)
-	public static void lookAt(double px, double py, double pz, ClientPlayer me) {
+	public static void lookAt(double px, double py, double pz, LocalPlayer me) {
 		double dirx = me.getX() - px;
 		double diry = me.getY() - py;
 		double dirz = me.getZ() - pz;
@@ -413,7 +413,7 @@ public class SuperpositionHandler {
 	 * @return True if successfull, false otherwise.
 	 */
 
-	public static boolean validTeleport(Entity entity, double x_init, double y_init, double z_init, World world, int checkAxis) {
+	public static boolean validTeleport(Entity entity, double x_init, double y_init, double z_init, Level world, int checkAxis) {
 
 		int x = (int) x_init;
 		int y = (int) y_init;
@@ -482,7 +482,7 @@ public class SuperpositionHandler {
 	 *
 	 * @return True if teleportation were successfull, false otherwise.
 	 */
-	public static boolean validTeleportRandomly(Entity entity, World world, int radius) {
+	public static boolean validTeleportRandomly(Entity entity, Level world, int radius) {
 		int d = radius * 2;
 
 		double x = entity.getX() + ((Math.random() - 0.5D) * d);
@@ -682,11 +682,11 @@ public class SuperpositionHandler {
 	 */
 
 	public static INBT getPersistentTag(Player player, String tag, INBT expectedValue) {
-		CompoundNBT data = player.getPersistentData();
-		CompoundNBT persistent;
+		CompoundTag data = player.getPersistentData();
+		CompoundTag persistent;
 
 		if (!data.contains(Player.PERSISTED_NBT_TAG)) {
-			data.put(Player.PERSISTED_NBT_TAG, (persistent = new CompoundNBT()));
+			data.put(Player.PERSISTED_NBT_TAG, (persistent = new CompoundTag()));
 		} else {
 			persistent = data.getCompound(Player.PERSISTED_NBT_TAG);
 		}
@@ -705,11 +705,11 @@ public class SuperpositionHandler {
 	 */
 
 	public static void setPersistentTag(Player player, String tag, INBT value) {
-		CompoundNBT data = player.getPersistentData();
-		CompoundNBT persistent;
+		CompoundTag data = player.getPersistentData();
+		CompoundTag persistent;
 
 		if (!data.contains(Player.PERSISTED_NBT_TAG)) {
-			data.put(Player.PERSISTED_NBT_TAG, (persistent = new CompoundNBT()));
+			data.put(Player.PERSISTED_NBT_TAG, (persistent = new CompoundTag()));
 		} else {
 			persistent = data.getCompound(Player.PERSISTED_NBT_TAG);
 		}
@@ -749,11 +749,11 @@ public class SuperpositionHandler {
 	 */
 
 	public static boolean hasPersistentTag(Player player, String tag) {
-		CompoundNBT data = player.getPersistentData();
-		CompoundNBT persistent;
+		CompoundTag data = player.getPersistentData();
+		CompoundTag persistent;
 
 		if (!data.contains(Player.PERSISTED_NBT_TAG)) {
-			data.put(Player.PERSISTED_NBT_TAG, (persistent = new CompoundNBT()));
+			data.put(Player.PERSISTED_NBT_TAG, (persistent = new CompoundTag()));
 		} else {
 			persistent = data.getCompound(Player.PERSISTED_NBT_TAG);
 		}
@@ -834,7 +834,7 @@ public class SuperpositionHandler {
 		return number;
 	}
 
-	public static Player getPlayerByName(World world, String name) {
+	public static Player getPlayerByName(Level world, String name) {
 		Player player = null;
 
 		for (Player checkedPlayer : world.players()) {
@@ -857,13 +857,13 @@ public class SuperpositionHandler {
 	 */
 
 	@OnlyIn(Dist.CLIENT)
-	public static void addPotionTooltip(List<EffectInstance> list, ItemStack itemIn, List<ITextComponent> lores, float durationFactor) {
+	public static void addPotionTooltip(List<MobEffectInstance> list, ItemStack itemIn, List<Component> lores, float durationFactor) {
 		List<Pair<Attribute, AttributeModifier>> list1 = Lists.newArrayList();
 		if (list.isEmpty()) {
-			lores.add((new TranslationTextComponent("effect.none")).withStyle(TextFormatting.GRAY));
+			lores.add((new TranslatableComponent("effect.none")).withStyle(ChatFormatting.GRAY));
 		} else {
-			for (EffectInstance effectinstance : list) {
-				IFormattableTextComponent iformattabletextcomponent = new TranslationTextComponent(effectinstance.getDescriptionId());
+			for (MobEffectInstance effectinstance : list) {
+				IFormattableTextComponent iformattabletextcomponent = new TranslatableComponent(effectinstance.getDescriptionId());
 				Effect effect = effectinstance.getEffect();
 				Map<Attribute, AttributeModifier> map = effect.getAttributeModifiers();
 				if (!map.isEmpty()) {
@@ -875,7 +875,7 @@ public class SuperpositionHandler {
 				}
 
 				if (effectinstance.getAmplifier() > 0) {
-					iformattabletextcomponent.append(" ").append(new TranslationTextComponent("potion.potency." + effectinstance.getAmplifier()));
+					iformattabletextcomponent.append(" ").append(new TranslatableComponent("potion.potency." + effectinstance.getAmplifier()));
 				}
 
 				if (effectinstance.getDuration() > 20) {
@@ -887,8 +887,8 @@ public class SuperpositionHandler {
 		}
 
 		if (!list1.isEmpty()) {
-			lores.add(StringTextComponent.EMPTY);
-			lores.add((new TranslationTextComponent("potion.whenDrank")).withStyle(TextFormatting.DARK_PURPLE));
+			lores.add(TextComponent.EMPTY);
+			lores.add((new TranslatableComponent("potion.whenDrank")).withStyle(ChatFormatting.DARK_PURPLE));
 
 			for (Pair<Attribute, AttributeModifier> pair : list1) {
 				AttributeModifier attributemodifier2 = pair.getSecond();
@@ -901,10 +901,10 @@ public class SuperpositionHandler {
 				}
 
 				if (d0 > 0.0D) {
-					lores.add((new TranslationTextComponent("attribute.modifier.plus." + attributemodifier2.getOperation().toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(d1), new TranslationTextComponent(pair.getFirst().getDescriptionId()))).withStyle(TextFormatting.BLUE));
+					lores.add((new TranslatableComponent("attribute.modifier.plus." + attributemodifier2.getOperation().toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(d1), new TranslatableComponent(pair.getFirst().getDescriptionId()))).withStyle(ChatFormatting.BLUE));
 				} else if (d0 < 0.0D) {
 					d1 = d1 * -1.0D;
-					lores.add((new TranslationTextComponent("attribute.modifier.take." + attributemodifier2.getOperation().toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(d1), new TranslationTextComponent(pair.getFirst().getDescriptionId()))).withStyle(TextFormatting.DARK_RED));
+					lores.add((new TranslatableComponent("attribute.modifier.take." + attributemodifier2.getOperation().toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(d1), new TranslatableComponent(pair.getFirst().getDescriptionId()))).withStyle(ChatFormatting.DARK_RED));
 				}
 			}
 		}
@@ -971,7 +971,7 @@ public class SuperpositionHandler {
 		List<BeaconTileEntity> list = new ArrayList<BeaconTileEntity>();
 		boolean inRange = false;
 
-		for (TileEntity tile : player.level.blockEntityList) {
+		for (BlockEntity tile : player.level.blockEntityList) {
 			if (tile instanceof BeaconTileEntity) {
 				list.add((BeaconTileEntity) tile);
 			}
@@ -1039,33 +1039,33 @@ public class SuperpositionHandler {
 		return false;
 	}
 
-	public static ServerWorld getWorld(RegistryKey<World> key) {
+	public static ServerLevel getWorld(RegistryKey<World> key) {
 		return ServerLifecycleHooks.getCurrentServer().getLevel(key);
 	}
 
-	public static ServerWorld getOverworld() {
+	public static ServerLevel getOverworld() {
 		return SuperpositionHandler.getWorld(EnigmaticLegacy.proxy.getOverworldKey());
 	}
 
-	public static ServerWorld getNether() {
+	public static ServerLevel getNether() {
 		return SuperpositionHandler.getWorld(EnigmaticLegacy.proxy.getNetherKey());
 	}
 
-	public static ServerWorld getEnd() {
+	public static ServerLevel getEnd() {
 		return SuperpositionHandler.getWorld(EnigmaticLegacy.proxy.getEndKey());
 	}
 
-	public static ServerWorld backToSpawn(ServerPlayer serverPlayer) {
+	public static ServerLevel backToSpawn(ServerPlayer serverPlayer) {
 		RegistryKey<World> respawnDimension = AdvancedSpawnLocationHelper.getPlayerRespawnDimension(serverPlayer);
-		ServerWorld respawnWorld = SuperpositionHandler.getWorld(respawnDimension);
+		ServerLevel respawnWorld = SuperpositionHandler.getWorld(respawnDimension);
 
 		serverPlayer.level.playSound(null, serverPlayer.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 128, serverPlayer.level.dimension())), new PacketPortalParticles(serverPlayer.getX(), serverPlayer.getY() + (serverPlayer.getBbHeight() / 2), serverPlayer.getZ(), 100, 1.25F, false));
 
-		Optional<Vector3d> vec = AdvancedSpawnLocationHelper.getValidSpawn(respawnWorld, serverPlayer);
-		Optional<Vector3d> vec2;
-		ServerWorld destinationWorld = vec.isPresent() ? respawnWorld : serverPlayer.server.overworld();
+		Optional<Vec3> vec = AdvancedSpawnLocationHelper.getValidSpawn(respawnWorld, serverPlayer);
+		Optional<Vec3> vec2;
+		ServerLevel destinationWorld = vec.isPresent() ? respawnWorld : serverPlayer.server.overworld();
 
 		if (!serverPlayer.getLevel().equals(destinationWorld)) {
 			serverPlayer.changeDimension(destinationWorld, new RealSmoothTeleporter());
@@ -1078,10 +1078,10 @@ public class SuperpositionHandler {
 		}
 
 		if (vec.isPresent()) {
-			Vector3d trueVec = vec.get();
+			Vec3 trueVec = vec.get();
 			serverPlayer.teleportTo(trueVec.x, trueVec.y, trueVec.z);
 		} else if (vec2.isPresent()) {
-			Vector3d trueVec = vec2.get();
+			Vec3 trueVec = vec2.get();
 			serverPlayer.teleportTo(trueVec.x, trueVec.y, trueVec.z);
 		} else {
 			AdvancedSpawnLocationHelper.fuckBackToSpawn(serverPlayer.getLevel(), serverPlayer);
@@ -1096,12 +1096,12 @@ public class SuperpositionHandler {
 
 	public static DimensionalPosition getRespawnPoint(ServerPlayer serverPlayer) {
 		RegistryKey<World> respawnDimension = AdvancedSpawnLocationHelper.getPlayerRespawnDimension(serverPlayer);
-		ServerWorld respawnWorld = SuperpositionHandler.getWorld(respawnDimension);
+		ServerLevel respawnWorld = SuperpositionHandler.getWorld(respawnDimension);
 
-		Optional<Vector3d> currentDimensionRespawnCoords = AdvancedSpawnLocationHelper.getValidSpawn(respawnWorld, serverPlayer);
-		Optional<Vector3d> destinationDimensionRespawnCoords;
+		Optional<Vec3> currentDimensionRespawnCoords = AdvancedSpawnLocationHelper.getValidSpawn(respawnWorld, serverPlayer);
+		Optional<Vec3> destinationDimensionRespawnCoords;
 
-		ServerWorld destinationWorld = currentDimensionRespawnCoords.isPresent() ? respawnWorld : serverPlayer.server.overworld();
+		ServerLevel destinationWorld = currentDimensionRespawnCoords.isPresent() ? respawnWorld : serverPlayer.server.overworld();
 
 		if (!respawnWorld.equals(destinationWorld)) {
 			destinationDimensionRespawnCoords = AdvancedSpawnLocationHelper.getValidSpawn(destinationWorld, serverPlayer);
@@ -1109,7 +1109,7 @@ public class SuperpositionHandler {
 			destinationDimensionRespawnCoords = Optional.empty();
 		}
 
-		Vector3d trueVec;
+		Vec3 trueVec;
 
 		if (currentDimensionRespawnCoords.isPresent()) {
 			trueVec = currentDimensionRespawnCoords.get();
@@ -1120,7 +1120,7 @@ public class SuperpositionHandler {
 			 * TODO Spawning player at the world's center involves a lot of collision checks, which we can't do
 			 * without actually teleporting the player. Investigate on possible workarounds.
 			 */
-			trueVec = new Vector3d(destinationWorld.getSharedSpawnPos().getX() + 0.5, destinationWorld.getSharedSpawnPos().getY() + 0.5, destinationWorld.getSharedSpawnPos().getZ() + 0.5);
+			trueVec = new Vec3(destinationWorld.getSharedSpawnPos().getX() + 0.5, destinationWorld.getSharedSpawnPos().getY() + 0.5, destinationWorld.getSharedSpawnPos().getZ() + 0.5);
 
 			while (!destinationWorld.getBlockState(new BlockPos(trueVec)).isAir(destinationWorld, new BlockPos(trueVec)) && trueVec.y < 255.0D) {
 				trueVec = trueVec.add(0, 1D, 0);
@@ -1359,8 +1359,8 @@ public class SuperpositionHandler {
 	}
 
 	public static boolean isStaringAt(Player player, LivingEntity living) {
-		Vector3d vector3d = player.getViewVector(1.0F).normalize();
-		Vector3d vector3d1 = new Vector3d(living.getX() - player.getX(), living.getEyeY() - player.getEyeY(), living.getZ() - player.getZ());
+		Vec3 vector3d = player.getViewVector(1.0F).normalize();
+		Vec3 vector3d1 = new Vec3(living.getX() - player.getX(), living.getEyeY() - player.getEyeY(), living.getZ() - player.getZ());
 		double d0 = vector3d1.length();
 		vector3d1 = vector3d1.normalize();
 		double d1 = vector3d.dot(vector3d1);

@@ -13,15 +13,15 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.MonsterEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.alchemy.EffectInstance;
-import net.minecraft.world.item.alchemy.Effects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.resources.ResourceLocation;
 
 public class SlayerEnchantment extends Enchantment {
-	public SlayerEnchantment(EquipmentSlotType... slots) {
+	public SlayerEnchantment(EquipmentSlot... slots) {
 		super(Enchantment.Rarity.COMMON, EnchantmentType.WEAPON, slots);
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "slayer"));
 	}

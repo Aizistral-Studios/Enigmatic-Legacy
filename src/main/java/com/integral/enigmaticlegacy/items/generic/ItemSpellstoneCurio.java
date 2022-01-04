@@ -11,11 +11,11 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
-import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import net.minecraft.world.item.Item.Properties;
 

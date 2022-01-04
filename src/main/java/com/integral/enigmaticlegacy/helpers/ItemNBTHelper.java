@@ -3,7 +3,7 @@ package com.integral.enigmaticlegacy.helpers;
 import java.util.UUID;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 
 /**
  * A couple of methods for mork convenient work with NBT of ItemStacks.
@@ -18,15 +18,15 @@ public final class ItemNBTHelper {
 
 	public static void initNBT(final ItemStack stack) {
 		if (!ItemNBTHelper.detectNBT(stack)) {
-			ItemNBTHelper.injectNBT(stack, new CompoundNBT());
+			ItemNBTHelper.injectNBT(stack, new CompoundTag());
 		}
 	}
 
-	public static void injectNBT(final ItemStack stack, final CompoundNBT nbt) {
+	public static void injectNBT(final ItemStack stack, final CompoundTag nbt) {
 		stack.setTag(nbt);
 	}
 
-	public static CompoundNBT getNBT(final ItemStack stack) {
+	public static CompoundTag getNBT(final ItemStack stack) {
 		ItemNBTHelper.initNBT(stack);
 		return stack.getTag();
 	}
@@ -107,8 +107,8 @@ public final class ItemNBTHelper {
 		return ItemNBTHelper.verifyExistance(stack, tag) ? ItemNBTHelper.getNBT(stack).getDouble(tag) : defaultExpected;
 	}
 
-	public static CompoundNBT getCompound(final ItemStack stack, final String tag, final boolean nullifyOnFail) {
-		return ItemNBTHelper.verifyExistance(stack, tag) ? ItemNBTHelper.getNBT(stack).getCompound(tag) : (nullifyOnFail ? null : new CompoundNBT());
+	public static CompoundTag getCompound(final ItemStack stack, final String tag, final boolean nullifyOnFail) {
+		return ItemNBTHelper.verifyExistance(stack, tag) ? ItemNBTHelper.getNBT(stack).getCompound(tag) : (nullifyOnFail ? null : new CompoundTag());
 	}
 
 	public static String getString(final ItemStack stack, final String tag, final String defaultExpected) {

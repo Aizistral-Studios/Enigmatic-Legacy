@@ -21,12 +21,12 @@ import net.minecraft.world.entity.merchant.villager.VillagerEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinTasks;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MerchantOffer;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
 
 @Mixin(PiglinTasks.class)
 public class MixinPiglinTasks {
@@ -53,8 +53,8 @@ public class MixinPiglinTasks {
 	private static void onPiglinItemPickup(PiglinEntity piglin, ItemEntity itemEntity, CallbackInfo info) {
 		UUID ownerID = itemEntity.getThrower();
 
-		if (!itemEntity.isAlive() && itemEntity.level instanceof ServerWorld && ownerID != null) {
-			ServerWorld world = (ServerWorld) itemEntity.level;
+		if (!itemEntity.isAlive() && itemEntity.level instanceof ServerLevel && ownerID != null) {
+			ServerLevel world = (ServerLevel) itemEntity.level;
 			markPiglinWithCondition(piglin, world.getPlayerByUUID(ownerID));
 		}
 
@@ -71,7 +71,7 @@ public class MixinPiglinTasks {
 	private static void onPiglinBarter(PiglinEntity piglin, boolean repay, CallbackInfo info) {
 		ItemStack stack = piglin.getItemInHand(Hand.OFF_HAND);
 
-		if (piglin.level instanceof ServerWorld && piglin.getTags().contains(AVARICE_SCROLL_TAG)) {
+		if (piglin.level instanceof ServerLevel && piglin.getTags().contains(AVARICE_SCROLL_TAG)) {
 			piglin.removeTag(AVARICE_SCROLL_TAG);
 
 			if (piglin.isAdult()) {

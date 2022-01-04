@@ -6,15 +6,15 @@ import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.items.RevelationTome;
 
-import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.world.entity.player.ServerPlayer;
-import net.minecraft.world.level.storage.loot.ConditionArrayParser;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.resources.ResourceLocation;
 
-public class RevelationGainTrigger extends AbstractCriterionTrigger<RevelationGainTrigger.Instance> {
+public class RevelationGainTrigger extends SimpleCriterionTrigger<RevelationGainTrigger.Instance> {
 	public static final ResourceLocation ID = new ResourceLocation(EnigmaticLegacy.MODID, "embrace_revelation");
 	public static final RevelationGainTrigger INSTANCE = new RevelationGainTrigger();
 
@@ -28,7 +28,7 @@ public class RevelationGainTrigger extends AbstractCriterionTrigger<RevelationGa
 
 	@Nonnull
 	@Override
-	public RevelationGainTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.AndPredicate playerPred, ConditionArrayParser conditions) {
+	public RevelationGainTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.Composite playerPred, DeserializationContext conditions) {
 		return new RevelationGainTrigger.Instance(playerPred, JSONUtils.getAsString(json, "point_type"), JSONUtils.getAsInt(json, "point_amount"));
 	}
 
@@ -36,11 +36,11 @@ public class RevelationGainTrigger extends AbstractCriterionTrigger<RevelationGa
 		this.trigger(player, instance -> instance.test(type, amount));
 	}
 
-	static class Instance extends CriterionInstance {
+	static class Instance extends AbstractCriterionTriggerInstance {
 		private final String revelationType;
 		private final int requiredAmount;
 
-		Instance(EntityPredicate.AndPredicate playerPred, String type, int amount) {
+		Instance(EntityPredicate.Composite playerPred, String type, int amount) {
 			super(RevelationGainTrigger.ID, playerPred);
 			this.revelationType = type;
 			this.requiredAmount = amount;

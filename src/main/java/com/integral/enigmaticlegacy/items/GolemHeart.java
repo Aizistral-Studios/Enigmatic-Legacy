@@ -20,7 +20,7 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -29,11 +29,11 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -139,22 +139,22 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeartCooldown", TextFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeartCooldown", ChatFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart3");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart4", TextFormatting.GOLD, (int) defaultArmorBonus.getValue());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart4", ChatFormatting.GOLD, (int) defaultArmorBonus.getValue());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart5");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart6", TextFormatting.GOLD, (int) superArmorBonus.getValue(), (int) superArmorToughnessBonus.getValue());
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart7", TextFormatting.GOLD, explosionResistance.getValue().asPercentage() + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart8", TextFormatting.GOLD, meleeResistance.getValue().asPercentage() + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart9", TextFormatting.GOLD, knockbackResistance.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart6", ChatFormatting.GOLD, (int) superArmorBonus.getValue(), (int) superArmorToughnessBonus.getValue());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart7", ChatFormatting.GOLD, explosionResistance.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart8", ChatFormatting.GOLD, meleeResistance.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart9", ChatFormatting.GOLD, knockbackResistance.getValue().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart10");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.golemHeart11");
 		} else {
@@ -163,7 +163,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.spellstoneAbility").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", ChatFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.spellstoneAbility").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
@@ -220,7 +220,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 	 protected DarkArmorModel getModel() {
 
 		 if (this.model == null) {
-			 this.model = new DarkArmorModel(EquipmentSlotType.MAINHAND);
+			 this.model = new DarkArmorModel(EquipmentSlot.MAINHAND);
 		 }
 
 		boolean shouldUpdate = false;
@@ -244,7 +244,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 		}
 
 		if (shouldUpdate)
-			this.model = new DarkArmorModel(EquipmentSlotType.MAINHAND);
+			this.model = new DarkArmorModel(EquipmentSlot.MAINHAND);
 
 	     return (DarkArmorModel) this.model;
 	 }

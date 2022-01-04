@@ -5,11 +5,11 @@ import javax.annotation.Nonnull;
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
-import net.minecraft.advancements.criterion.AbstractCriterionTrigger;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.world.entity.player.ServerPlayer;
-import net.minecraft.world.level.storage.loot.ConditionArrayParser;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -17,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
  * @author Integral
  */
 
-public class BeheadingTrigger extends AbstractCriterionTrigger<BeheadingTrigger.Instance> {
+public class BeheadingTrigger extends SimpleCriterionTrigger<BeheadingTrigger.Instance> {
 	public static final ResourceLocation ID = new ResourceLocation(EnigmaticLegacy.MODID, "forbidden_axe_beheading");
 	public static final BeheadingTrigger INSTANCE = new BeheadingTrigger();
 
@@ -31,7 +31,7 @@ public class BeheadingTrigger extends AbstractCriterionTrigger<BeheadingTrigger.
 
 	@Nonnull
 	@Override
-	public BeheadingTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.AndPredicate playerPred, ConditionArrayParser conditions) {
+	public BeheadingTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.Composite playerPred, DeserializationContext conditions) {
 		return new BeheadingTrigger.Instance(playerPred);
 	}
 
@@ -39,8 +39,8 @@ public class BeheadingTrigger extends AbstractCriterionTrigger<BeheadingTrigger.
 		this.trigger(player, instance -> instance.test());
 	}
 
-	static class Instance extends CriterionInstance {
-		Instance(EntityPredicate.AndPredicate playerPred) {
+	static class Instance extends AbstractCriterionTriggerInstance {
+		Instance(EntityPredicate.Composite playerPred) {
 			super(BeheadingTrigger.ID, playerPred);
 		}
 

@@ -9,21 +9,21 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAction;
-import net.minecraft.world.item.alchemy.EffectInstance;
-import net.minecraft.world.item.alchemy.Effects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -35,23 +35,23 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @Deprecated
 public class HastePotion extends ItemBase {
 
-	public List<EffectInstance> effectList;
+	public List<MobEffectInstance> effectList;
 
 	public HastePotion(Rarity rarity, int duration, int amplifier) {
 		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(1).tab(null));
 
-		this.effectList = new ArrayList<EffectInstance>();
-		this.effectList.add(new EffectInstance(Effects.DIG_SPEED, duration, amplifier, false, true));
+		this.effectList = new ArrayList<MobEffectInstance>();
+		this.effectList.add(new MobEffectInstance(MobEffects.DIG_SPEED, duration, amplifier, false, true));
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		SuperpositionHandler.addPotionTooltip(this.effectList, stack, list, 1.0F);
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
 		Player player = entityLiving instanceof Player ? (Player) entityLiving : null;
 		if (player == null || !player.abilities.instabuild) {
 			stack.shrink(1);
@@ -62,8 +62,8 @@ public class HastePotion extends ItemBase {
 		}
 
 		if (!worldIn.isClientSide && player != null) {
-			for (EffectInstance instance : this.effectList) {
-				player.addEffect(new EffectInstance(instance));
+			for (MobEffectInstance instance : this.effectList) {
+				player.addEffect(new MobEffectInstance(instance));
 			}
 		}
 
@@ -90,7 +90,7 @@ public class HastePotion extends ItemBase {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, Hand handIn) {
 		playerIn.startUsingItem(handIn);
 		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getItemInHand(handIn));
 	}

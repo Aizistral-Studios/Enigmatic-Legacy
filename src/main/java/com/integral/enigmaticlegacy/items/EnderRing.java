@@ -14,14 +14,14 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.eventbus.api.Cancelable;
@@ -76,7 +76,7 @@ public class EnderRing extends ItemBaseCurio {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -89,7 +89,7 @@ public class EnderRing extends ItemBaseCurio {
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.enderRing").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", ChatFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.enderRing").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
@@ -103,7 +103,7 @@ public class EnderRing extends ItemBaseCurio {
 	}
 
 	/*
-	 * @Override public ActionResult<ItemStack> onItemRightClick(World worldIn,
+	 * @Override public ActionResult<ItemStack> onItemRightClick(Level worldIn,
 	 * Player player, Hand handIn) {
 	 *
 	 * ItemStack itemstack = player.getHeldItem(handIn);
@@ -117,7 +117,7 @@ public class EnderRing extends ItemBaseCurio {
 	 *
 	 * playerServ.currentWindowId = container.windowId;
 	 * playerServ.connection.sendPacket(new SOpenWindowPacket(container.windowId,
-	 * container.getType(), new TranslationTextComponent("container.enderchest")));
+	 * container.getType(), new TranslatableComponent("container.enderchest")));
 	 * container.addListener(playerServ); playerServ.openContainer = container;
 	 * net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new
 	 * net.minecraftforge.event.entity.player.PlayerContainerEvent.Open(playerServ,

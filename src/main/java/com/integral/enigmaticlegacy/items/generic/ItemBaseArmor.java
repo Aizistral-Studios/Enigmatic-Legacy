@@ -9,9 +9,9 @@ import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.IArmorMaterial;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -27,28 +27,28 @@ public abstract class ItemBaseArmor extends ArmorItem {
 
 	private final LazyValue<BipedModel<?>> model;
 
-	public ItemBaseArmor(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builder) {
+	public ItemBaseArmor(ArmorMaterial materialIn, EquipmentSlot slot, Properties builder) {
 		super(materialIn, slot, builder);
 
 		this.model = DistExecutor.runForDist(() -> () -> new LazyValue<>(() -> this.provideArmorModelForSlot(slot)),
 				() -> () -> null);
 	}
 
-	public ItemBaseArmor(IArmorMaterial materialIn, EquipmentSlotType slot) {
+	public ItemBaseArmor(ArmorMaterial materialIn, EquipmentSlot slot) {
 		this(materialIn, slot, ItemBaseArmor.getDefaultProperties());
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	@SuppressWarnings("unchecked")
-	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlotType armorSlot, A original) {
+	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A original) {
 		return (A) this.model.get();
 		//return super.getArmorModel(entityLiving, itemStack, armorSlot, original);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@Nullable
-	public BipedModel<?> provideArmorModelForSlot(EquipmentSlotType slot) {
+	public BipedModel<?> provideArmorModelForSlot(EquipmentSlot slot) {
 		BipedModel<LivingEntity> model = new BipedModel<LivingEntity>(0.5F);
 		model.setAllVisible(false);
 		return model;
@@ -56,7 +56,7 @@ public abstract class ItemBaseArmor extends ArmorItem {
 
 	@Nonnull
 	@Override
-	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
 		return EnigmaticLegacy.MODID + ":textures/models/armor/unseen_armor.png";
 	}
 

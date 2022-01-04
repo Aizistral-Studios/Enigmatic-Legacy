@@ -21,9 +21,9 @@ import com.integral.omniconfig.wrappers.Omniconfig.IntParameter;
 import com.integral.omniconfig.wrappers.Omniconfig.PerhapsParameter;
 import com.integral.omniconfig.wrappers.Omniconfig.StringParameter;
 
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 public class OmniconfigWrapper {
 	public static final Map<String, OmniconfigWrapper> wrapperRegistry = new HashMap<>();

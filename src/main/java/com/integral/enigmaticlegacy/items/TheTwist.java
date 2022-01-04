@@ -11,12 +11,12 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -58,7 +58,7 @@ public class TheTwist extends TheAcknowledgment implements ICursed {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag) {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist1");
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist2");
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
@@ -69,8 +69,8 @@ public class TheTwist extends TheAcknowledgment implements ICursed {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist5");
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			}
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist6", TextFormatting.GOLD, bossDamageBonus + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist7", TextFormatting.GOLD, knockbackBonus + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist6", ChatFormatting.GOLD, bossDamageBonus + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist7", ChatFormatting.GOLD, knockbackBonus + "%");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -79,7 +79,7 @@ public class TheTwist extends TheAcknowledgment implements ICursed {
 		ItemLoreHelper.indicateCursedOnesOnly(list);
 
 		try {
-			//list.add(new StringTextComponent("").append(TheAcknowledgment.getEdition()).mergeStyle(TextFormatting.DARK_PURPLE));
+			//list.add(new TextComponent("").append(TheAcknowledgment.getEdition()).mergeStyle(ChatFormatting.DARK_PURPLE));
 		} catch (Exception ex) {
 			// Just don't do it lol
 		}

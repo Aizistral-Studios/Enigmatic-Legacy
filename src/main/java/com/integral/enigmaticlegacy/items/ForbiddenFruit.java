@@ -17,23 +17,23 @@ import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Food;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.alchemy.EffectInstance;
-import net.minecraft.world.item.alchemy.Effects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ForbiddenFruit extends ItemBaseFood implements IVanishable {
+public class ForbiddenFruit extends ItemBaseFood implements Vanishable {
 	public static final String consumedFruitTag = "ConsumedForbiddenFruit";
 	public static Omniconfig.PerhapsParameter regenerationSubtraction;
 	public static Omniconfig.BooleanParameter renderHungerBar;
@@ -69,11 +69,11 @@ public class ForbiddenFruit extends ItemBaseFood implements IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenFruit1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenFruit2");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenFruit3", TextFormatting.GOLD, regenerationSubtraction+"%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenFruit3", ChatFormatting.GOLD, regenerationSubtraction+"%");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -89,19 +89,19 @@ public class ForbiddenFruit extends ItemBaseFood implements IVanishable {
 	}
 
 	@Override
-	public void onConsumed(World worldIn, Player player, ItemStack food) {
+	public void onConsumed(Level worldIn, Player player, ItemStack food) {
 		this.defineConsumedFruit(player, true);
 
 		if (player instanceof ServerPlayer) {
-			player.addEffect(new EffectInstance(Effects.WITHER, 300, 3, false, true));
-			player.addEffect(new EffectInstance(Effects.CONFUSION, 300, 2, false, true));
-			player.addEffect(new EffectInstance(Effects.WEAKNESS, 400, 2, false, true));
-			player.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 500, 2, false, true));
+			player.addEffect(new MobEffectInstance(MobEffects.WITHER, 300, 3, false, true));
+			player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 300, 2, false, true));
+			player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 400, 2, false, true));
+			player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 500, 2, false, true));
 		}
 	}
 
 	@Override
-	public boolean canEat(World world, Player player, ItemStack food) {
+	public boolean canEat(Level world, Player player, ItemStack food) {
 		return !this.haveConsumedFruit(player);
 	}
 

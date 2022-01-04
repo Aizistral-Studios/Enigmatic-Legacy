@@ -35,12 +35,12 @@ import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAction;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -123,7 +123,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public World getCentralWorld() {
+	public Level getCentralWorld() {
 		return Minecraft.getInstance().level;
 	}
 
@@ -148,7 +148,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public void spawnBonemealParticles(World world, BlockPos pos, int data) {
+	public void spawnBonemealParticles(Level world, BlockPos pos, int data) {
 		if (data == 0) {
 			data = 15;
 		}

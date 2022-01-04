@@ -18,7 +18,7 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -27,9 +27,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -81,15 +81,15 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem1", TextFormatting.GOLD, minimizeNumber(attackDamage.getValue()) + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem2", TextFormatting.GOLD, minimizeNumber(attackSpeed.getValue()) + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem3", TextFormatting.GOLD, minimizeNumber(movementSpeed.getValue()) + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem4", TextFormatting.GOLD, minimizeNumber(damageResistance.getValue()) + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem1", ChatFormatting.GOLD, minimizeNumber(attackDamage.getValue()) + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem2", ChatFormatting.GOLD, minimizeNumber(attackSpeed.getValue()) + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem3", ChatFormatting.GOLD, minimizeNumber(movementSpeed.getValue()) + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem4", ChatFormatting.GOLD, minimizeNumber(damageResistance.getValue()) + "%");
 
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem5");
@@ -105,10 +105,10 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem7");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem8", TextFormatting.GOLD, minimizeNumber(attackDamage.getValue()*percentage) + "%");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem9", TextFormatting.GOLD, minimizeNumber(attackSpeed.getValue()*percentage) + "%");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem10", TextFormatting.GOLD, minimizeNumber(movementSpeed.getValue()*percentage) + "%");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem11", TextFormatting.GOLD, minimizeNumber(damageResistance.getValue()*percentage) + "%");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem8", ChatFormatting.GOLD, minimizeNumber(attackDamage.getValue()*percentage) + "%");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem9", ChatFormatting.GOLD, minimizeNumber(attackSpeed.getValue()*percentage) + "%");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem10", ChatFormatting.GOLD, minimizeNumber(movementSpeed.getValue()*percentage) + "%");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem11", ChatFormatting.GOLD, minimizeNumber(damageResistance.getValue()*percentage) + "%");
 
 			}
 

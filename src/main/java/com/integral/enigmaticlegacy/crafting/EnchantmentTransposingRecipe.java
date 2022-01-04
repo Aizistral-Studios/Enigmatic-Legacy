@@ -12,12 +12,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.IRecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.NonNullList;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
@@ -54,7 +54,7 @@ public class EnchantmentTransposingRecipe extends ShapelessRecipe {
 
 		if (transposer != null && stackList.size() == 1 && stackList.get(0).isEnchanted()) {
 			ItemStack enchanted = stackList.get(0).copy();
-			ListNBT enchantmentNBT = enchanted.getEnchantmentTags();
+			ListTag enchantmentNBT = enchanted.getEnchantmentTags();
 			
 			ItemStack returned = new ItemStack(Items.ENCHANTED_BOOK);
 			returned.getOrCreateTag().put("StoredEnchantments", enchantmentNBT);
@@ -66,7 +66,7 @@ public class EnchantmentTransposingRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, World world) {
+	public boolean matches(CraftingInventory inv, Level world) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		ItemStack transposer = null;
 
@@ -101,7 +101,7 @@ public class EnchantmentTransposingRecipe extends ShapelessRecipe {
 	         ItemStack item = inv.getItem(i);
 	         if (item.getItem() != EnigmaticLegacy.enchantmentTransposer && item.isEnchanted()) {
 	        	ItemStack returned = item.copy();
-	        	CompoundNBT nbt = returned.getOrCreateTag();
+	        	CompoundTag nbt = returned.getOrCreateTag();
 	        	
 	        	nbt.remove("Enchantments");
 	        	//returned.setTag(nbt);
@@ -135,12 +135,12 @@ public class EnchantmentTransposingRecipe extends ShapelessRecipe {
 		}
 
 		@Override
-		public EnchantmentTransposingRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+		public EnchantmentTransposingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			return new EnchantmentTransposingRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
 		}
 
 		@Override
-		public void toNetwork(PacketBuffer buffer, EnchantmentTransposingRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buffer, EnchantmentTransposingRecipe recipe) {
 
 		}
 	}

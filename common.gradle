@@ -58,7 +58,7 @@ repositories {
 	
 	
 	//flatDir {  dirs 'deps' }
-	flatDir {  dirs 'deps/' + version_mcp }
+	maven { url "file:///${project.projectDir}/deps/" } // I'LL FUCKING STAB YOUR PARENTS
 	maven {  url = "https://maven.theillusivec4.top/" } // curios
 	maven { url 'https://maven.blamejared.com' } // patchouli
 	maven {  url = "https://repo.spongepowered.org/maven" } // mixin

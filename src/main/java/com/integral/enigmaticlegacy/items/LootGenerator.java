@@ -13,8 +13,8 @@ import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -24,18 +24,18 @@ import net.minecraft.world.level.storage.loot.LootTables;
 import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.text.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class LootGenerator extends ItemBase implements IVanishable {
+public class LootGenerator extends ItemBase implements Vanishable {
 
 	public Random lootRandomizer = new Random();
 	public List<ResourceLocation> lootList = new ArrayList<ResourceLocation>();
@@ -101,7 +101,7 @@ public class LootGenerator extends ItemBase implements IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGenerator1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGenerator2");
@@ -120,11 +120,11 @@ public class LootGenerator extends ItemBase implements IVanishable {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGeneratorCurrent");
 
-		list.add(new StringTextComponent("" + this.lootList.get(stack.getDamageValue())).withStyle(TextFormatting.GOLD));
+		list.add(new TextComponent("" + this.lootList.get(stack.getDamageValue())).withStyle(ChatFormatting.GOLD));
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, Player player, Hand hand) {
+	public ActionResult<ItemStack> use(Level world, Player player, Hand hand) {
 
 		ItemStack itemstack = player.getItemInHand(hand);
 
@@ -155,7 +155,7 @@ public class LootGenerator extends ItemBase implements IVanishable {
 	@Override
 	public ActionResultType useOn(ItemUseContext context) {
 		Player player = context.getPlayer();
-		World world = context.getLevel();
+		Level world = context.getLevel();
 		ItemStack stack = context.getItemInHand();
 
 		if (world.isClientSide)
@@ -202,7 +202,7 @@ public class LootGenerator extends ItemBase implements IVanishable {
 						EnigmaticLegacy.logger.info("Item: " + theItem.getName(new ItemStack(theItem)).getString() + ", Amount: " + lootMap.get(theItem));
 					}
 
-					player.sendMessage(new TranslationTextComponent("message.enigmaticlegacy.gen_sim_complete").withStyle(TextFormatting.DARK_PURPLE), player.getUUID());
+					player.sendMessage(new TranslatableComponent("message.enigmaticlegacy.gen_sim_complete").withStyle(ChatFormatting.DARK_PURPLE), player.getUUID());
 
 				} else {
 					chest.clearContent();

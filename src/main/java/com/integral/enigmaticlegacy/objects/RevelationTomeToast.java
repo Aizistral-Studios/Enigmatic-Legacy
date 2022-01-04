@@ -6,15 +6,15 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.toasts.IToast;
+import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.toasts.ToastGui;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
-import net.minecraft.client.gui.toasts.IToast.Visibility;
+import net.minecraft.client.gui.toasts.Toast.Visibility;
 
-public class RevelationTomeToast implements IToast {
+public class RevelationTomeToast implements Toast {
 
 	private final ItemStack tome;
 	private final int xpPoints;
@@ -39,7 +39,7 @@ public class RevelationTomeToast implements IToast {
 
 		toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem((LivingEntity) null, this.tome, 8, 8);
 
-		return delta >= 5000L ? IToast.Visibility.HIDE : IToast.Visibility.SHOW;
+		return delta >= 5000L ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
 	}
 
 }

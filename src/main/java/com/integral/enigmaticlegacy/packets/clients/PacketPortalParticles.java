@@ -5,10 +5,10 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayer;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet for spawning a bunch of portal particles around specific point.
@@ -33,7 +33,7 @@ public class PacketPortalParticles {
 	    this.check = checkSettings;
 	  }
 
-	  public static void encode(PacketPortalParticles msg, PacketBuffer buf) {
+	  public static void encode(PacketPortalParticles msg, FriendlyByteBuf buf) {
 	    buf.writeDouble(msg.x);
 	    buf.writeDouble(msg.y);
 	    buf.writeDouble(msg.z);
@@ -42,7 +42,7 @@ public class PacketPortalParticles {
 	    buf.writeBoolean(msg.check);
 	  }
 
-	  public static PacketPortalParticles decode(PacketBuffer buf) {
+	  public static PacketPortalParticles decode(FriendlyByteBuf buf) {
 	    return new PacketPortalParticles(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readInt(), buf.readDouble(), buf.readBoolean());
 	 }
 
@@ -50,7 +50,7 @@ public class PacketPortalParticles {
 	  public static void handle(PacketPortalParticles msg, Supplier<NetworkEvent.Context> ctx) {
 
 		    ctx.get().enqueueWork(() -> {
-		    	ClientPlayer player = Minecraft.getInstance().player;
+		    	LocalPlayer player = Minecraft.getInstance().player;
 		      
 		    	int amount = msg.num;
 			      

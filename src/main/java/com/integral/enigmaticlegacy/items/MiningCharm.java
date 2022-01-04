@@ -18,25 +18,25 @@ import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.alchemy.EffectInstance;
-import net.minecraft.world.item.alchemy.Effects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -71,20 +71,20 @@ public class MiningCharm extends ItemBaseCurio {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 
-		TranslationTextComponent mode = new TranslationTextComponent("tooltip.enigmaticlegacy.enabled");
+		TranslatableComponent mode = new TranslatableComponent("tooltip.enigmaticlegacy.enabled");
 
 		if (ItemNBTHelper.verifyExistance(stack, "nightVisionEnabled"))
 			if (!ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
-				mode = new TranslationTextComponent("tooltip.enigmaticlegacy.disabled");
+				mode = new TranslatableComponent("tooltip.enigmaticlegacy.disabled");
 			}
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm1", TextFormatting.GOLD, breakSpeedBonus.getValue().asPercentage() + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm2", TextFormatting.GOLD, 1);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm1", ChatFormatting.GOLD, breakSpeedBonus.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm2", ChatFormatting.GOLD, 1);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm4");
@@ -99,11 +99,11 @@ public class MiningCharm extends ItemBaseCurio {
 	}
 
 	public void removeNightVisionEffect(Player player, int duration) {
-		if (player.getEffect(Effects.NIGHT_VISION) != null) {
-			EffectInstance effect = player.getEffect(Effects.NIGHT_VISION);
+		if (player.getEffect(MobEffects.NIGHT_VISION) != null) {
+			MobEffectInstance effect = player.getEffect(MobEffects.NIGHT_VISION);
 
 			if (effect.getDuration() <= (duration - 1)) {
-				player.removeEffect(Effects.NIGHT_VISION);
+				player.removeEffect(MobEffects.NIGHT_VISION);
 			}
 
 		}
@@ -118,7 +118,7 @@ public class MiningCharm extends ItemBaseCurio {
 
 				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) && player.getY() < 50 && !player.level.dimension().location().toString().equals("minecraft:the_nether") && !player.level.dimension().location().toString().equals("minecraft:the_end") && !player.isEyeInFluid(FluidTags.WATER) && !player.level.canSeeSkyFromBelowWater(player.blockPosition()) && player.level.getMaxLocalRawBrightness(player.blockPosition(), 0) <= 8) {
 
-					player.addEffect(new EffectInstance(Effects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
+					player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
 				} else {
 					this.removeNightVisionEffect(player, this.nightVisionDuration);
 				}
@@ -127,7 +127,7 @@ public class MiningCharm extends ItemBaseCurio {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, Player player, Hand handIn) {
+	public ActionResult<ItemStack> use(Level world, Player player, Hand handIn) {
 
 		ItemStack stack = player.getItemInHand(handIn);
 

@@ -6,10 +6,10 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayer;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class PacketUpdateExperience {
 	private int experience;
@@ -18,11 +18,11 @@ public class PacketUpdateExperience {
 		this.experience = xp;
 	}
 
-	public static void encode(PacketUpdateExperience msg, PacketBuffer buf) {
+	public static void encode(PacketUpdateExperience msg, FriendlyByteBuf buf) {
 		buf.writeInt(msg.experience);
 	}
 
-	public static PacketUpdateExperience decode(PacketBuffer buf) {
+	public static PacketUpdateExperience decode(FriendlyByteBuf buf) {
 		return new PacketUpdateExperience(buf.readInt());
 	}
 

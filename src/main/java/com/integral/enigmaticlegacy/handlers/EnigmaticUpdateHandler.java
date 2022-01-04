@@ -10,16 +10,16 @@ import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
-import net.minecraft.client.entity.player.ClientPlayer;
-import net.minecraft.world.entity.player.ServerPlayer;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.text.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 /**
  * Some code is still borrowed from Tainted Magic update handler.
@@ -45,7 +45,7 @@ public class EnigmaticUpdateHandler {
 
 	private static String currentVersion = EnigmaticLegacy.VERSION + " " + EnigmaticLegacy.RELEASE_TYPE;
 	private static String newestVersion;
-	public static TranslationTextComponent updateStatus = null;
+	public static TranslatableComponent updateStatus = null;
 	public static boolean show = false;
 	static boolean worked = false;
 
@@ -58,7 +58,7 @@ public class EnigmaticUpdateHandler {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static void handleShowup(ClientPlayer player) {
+	public static void handleShowup(LocalPlayer player) {
 		if (!EnigmaticUpdateHandler.show)
 			return;
 
@@ -84,18 +84,18 @@ public class EnigmaticUpdateHandler {
 			{
 				EnigmaticUpdateHandler.show = true;
 
-				StringTextComponent newVerArg = new StringTextComponent(EnigmaticUpdateHandler.newestVersion);
-				newVerArg.withStyle(TextFormatting.GOLD);
+				TextComponent newVerArg = new TextComponent(EnigmaticUpdateHandler.newestVersion);
+				newVerArg.withStyle(ChatFormatting.GOLD);
 
-				EnigmaticUpdateHandler.updateStatus = new TranslationTextComponent("status.enigmaticlegacy.outdated", newVerArg);
-				EnigmaticUpdateHandler.updateStatus.withStyle(TextFormatting.DARK_PURPLE);
+				EnigmaticUpdateHandler.updateStatus = new TranslatableComponent("status.enigmaticlegacy.outdated", newVerArg);
+				EnigmaticUpdateHandler.updateStatus.withStyle(ChatFormatting.DARK_PURPLE);
 			}
 		}
 		else
 		{
 			EnigmaticUpdateHandler.show = true;
-			EnigmaticUpdateHandler.updateStatus = new TranslationTextComponent("status.enigmaticlegacy.noconnection");
-			EnigmaticUpdateHandler.updateStatus.withStyle(TextFormatting.RED);
+			EnigmaticUpdateHandler.updateStatus = new TranslatableComponent("status.enigmaticlegacy.noconnection");
+			EnigmaticUpdateHandler.updateStatus.withStyle(ChatFormatting.RED);
 		}
 	}
 

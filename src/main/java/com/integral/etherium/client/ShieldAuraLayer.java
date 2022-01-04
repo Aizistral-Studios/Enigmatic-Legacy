@@ -20,7 +20,7 @@ import net.minecraft.world.item.UseAction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -121,7 +121,7 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayer, PlayerM
 	}
 
 	public static float xOffset(float p_225634_1_) {
-		return MathHelper.cos(p_225634_1_ * 0.02F) * 2.0F;
+		return Mth.cos(p_225634_1_ * 0.02F) * 2.0F;
 	}
 
 	public static ResourceLocation getTextureLocation() {

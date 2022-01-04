@@ -13,10 +13,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext.Builder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.IBlockDisplayReader;
 import net.minecraft.world.level.block.AbstractBlock.Properties;
-import net.minecraft.fluid.FluidState;
+import net.minecraft.world.level.material.FluidState;
 
 public class BlockMassiveLamp extends Block {
 

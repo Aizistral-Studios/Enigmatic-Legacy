@@ -17,7 +17,7 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ExperienceOrbEntity;
 import net.minecraft.world.entity.player.Player;
@@ -29,10 +29,10 @@ import net.minecraft.util.Hand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -61,15 +61,15 @@ public class XPScroll extends ItemBaseCurio {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 
-		TranslationTextComponent cMode;
+		TranslatableComponent cMode;
 		if (!ItemNBTHelper.getBoolean(stack, "IsActive", false)) {
-			cMode = new TranslationTextComponent("tooltip.enigmaticlegacy.xpTomeDeactivated");
+			cMode = new TranslatableComponent("tooltip.enigmaticlegacy.xpTomeDeactivated");
 		} else if (ItemNBTHelper.getBoolean(stack, "AbsorptionMode", true)) {
-			cMode = new TranslationTextComponent("tooltip.enigmaticlegacy.xpTomeAbsorption");
+			cMode = new TranslatableComponent("tooltip.enigmaticlegacy.xpTomeAbsorption");
 		} else {
-			cMode = new TranslationTextComponent("tooltip.enigmaticlegacy.xpTomeExtraction");
+			cMode = new TranslatableComponent("tooltip.enigmaticlegacy.xpTomeExtraction");
 		}
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
@@ -87,7 +87,7 @@ public class XPScroll extends ItemBaseCurio {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome9");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome10");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome11", TextFormatting.GOLD, (int) xpCollectionRange.getValue());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTome11", ChatFormatting.GOLD, (int) xpCollectionRange.getValue());
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -96,18 +96,18 @@ public class XPScroll extends ItemBaseCurio {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTomeMode", null, cMode);
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTomeStoredXP");
-		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTomeUnits", TextFormatting.GOLD, ItemNBTHelper.getInt(stack, "XPStored", 0), ExperienceHelper.getLevelForExperience(ItemNBTHelper.getInt(stack, "XPStored", 0)));
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.xpTomeUnits", ChatFormatting.GOLD, ItemNBTHelper.getInt(stack, "XPStored", 0), ExperienceHelper.getLevelForExperience(ItemNBTHelper.getInt(stack, "XPStored", 0)));
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.xpScroll").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", ChatFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.xpScroll").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, Player player, Hand handIn) {
+	public ActionResult<ItemStack> use(Level world, Player player, Hand handIn) {
 		ItemStack stack = player.getItemInHand(handIn);
 		this.trigger(world, stack, player, handIn, true);
 
@@ -115,7 +115,7 @@ public class XPScroll extends ItemBaseCurio {
 
 	}
 
-	public void trigger(World world, ItemStack stack, Player player, Hand hand, boolean swing) {
+	public void trigger(Level world, ItemStack stack, Player player, Hand hand, boolean swing) {
 
 		if (!player.isCrouching()) {
 
@@ -158,7 +158,7 @@ public class XPScroll extends ItemBaseCurio {
 			return;
 
 		Player player = (Player) entity;
-		World world = player.level;
+		Level world = player.level;
 
 		if (ItemNBTHelper.getBoolean(itemstack, "AbsorptionMode", true)) {
 

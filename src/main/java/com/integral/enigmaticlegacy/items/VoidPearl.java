@@ -19,24 +19,24 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.alchemy.EffectInstance;
-import net.minecraft.world.item.alchemy.Effects;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.util.DamageSource;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.network.chat.Component;
+import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -110,7 +110,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -118,7 +118,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearlCooldown", TextFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearlCooldown", ChatFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl3");
 			// These lines describe hunger negation trait that was removed since release 2.5.0
@@ -130,7 +130,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl9");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl10");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl11");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl12", TextFormatting.GOLD, undeadProbability.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl12", ChatFormatting.GOLD, undeadProbability.getValue().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl13");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -138,7 +138,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", TextFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.spellstoneAbility").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", ChatFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.spellstoneAbility").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
@@ -174,8 +174,8 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 				player.clearFire();
 			}
 
-			for (EffectInstance effect : new ArrayList<>(player.getActiveEffects())) {
-				if (effect.getEffect() == Effects.NIGHT_VISION) {
+			for (MobEffectInstance effect : new ArrayList<>(player.getActiveEffects())) {
+				if (effect.getEffect() == MobEffects.NIGHT_VISION) {
 					if (effect.getDuration() >= EnigmaticLegacy.miningCharm.nightVisionDuration-10 && effect.getDuration() <= EnigmaticLegacy.miningCharm.nightVisionDuration) {
 						continue;
 					}
@@ -187,7 +187,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 			}
 
 			if (player.tickCount % 10 == 0) {
-				List<LivingEntity> entities = living.level.getEntitiesOfClass(LivingEntity.class, new AxisAlignedBB(player.getX() - shadowRange.getValue(), player.getY() - shadowRange.getValue(), player.getZ() - shadowRange.getValue(), player.getX() + shadowRange.getValue(), player.getY() + shadowRange.getValue(), player.getZ() + shadowRange.getValue()));
+				List<LivingEntity> entities = living.level.getEntitiesOfClass(LivingEntity.class, new AABB(player.getX() - shadowRange.getValue(), player.getY() - shadowRange.getValue(), player.getZ() - shadowRange.getValue(), player.getX() + shadowRange.getValue(), player.getY() + shadowRange.getValue(), player.getZ() + shadowRange.getValue()));
 
 				if (entities.contains(player)) {
 					entities.remove(player);
@@ -199,7 +199,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 						if (victim instanceof Player) {
 							Player playerVictim = (Player) victim;
 							if (SuperpositionHandler.hasCurio(playerVictim, EnigmaticLegacy.voidPearl)) {
-								playerVictim.addEffect(new EffectInstance(Effects.WITHER, 80, 1, false, true));
+								playerVictim.addEffect(new MobEffectInstance(MobEffects.WITHER, 80, 1, false, true));
 								continue;
 							}
 						}
@@ -213,11 +213,11 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 							if (attack) {
 								living.level.playSound(null, victim.blockPosition(), SoundEvents.PHANTOM_BITE, SoundSource.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
 
-								victim.addEffect(new EffectInstance(Effects.WITHER, 80, 1, false, true));
-								victim.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 100, 2, false, true));
-								victim.addEffect(new EffectInstance(Effects.BLINDNESS, 100, 0, false, true));
-								victim.addEffect(new EffectInstance(Effects.HUNGER, 160, 2, false, true));
-								victim.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, 100, 3, false, true));
+								victim.addEffect(new MobEffectInstance(MobEffects.WITHER, 80, 1, false, true));
+								victim.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2, false, true));
+								victim.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100, 0, false, true));
+								victim.addEffect(new MobEffectInstance(MobEffects.HUNGER, 160, 2, false, true));
+								victim.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100, 3, false, true));
 							}
 						}
 					}

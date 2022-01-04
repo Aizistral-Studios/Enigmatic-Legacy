@@ -6,14 +6,14 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.etherium.core.IEtheriumConfig;
 
-import net.minecraft.world.inventory.EquipmentSlotType;
-import net.minecraft.world.item.IArmorMaterial;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 
-public enum EnigmaticArmorMaterials implements IArmorMaterial {
+public enum EnigmaticArmorMaterials implements ArmorMaterial {
 	ETHERIUM(EnigmaticLegacy.MODID + ":etherium", 132, new int[] { 4, 7, 9, 4 }, 24,
 			SoundEvents.ARMOR_EQUIP_IRON, 4F, 0, () -> getEtheriumConfig().getRepairMaterial());
 
@@ -41,13 +41,13 @@ public enum EnigmaticArmorMaterials implements IArmorMaterial {
 	}
 
 	@Override
-	public int getDurabilityForSlot(EquipmentSlotType slot) {
+	public int getDurabilityForSlot(EquipmentSlot slot) {
 		int durability = MAX_DAMAGE_ARRAY[slot.getIndex()] * this.maxDamageFactor;
 		return durability;
 	}
 
 	@Override
-	public int getDefenseForSlot(EquipmentSlotType slot) {
+	public int getDefenseForSlot(EquipmentSlot slot) {
 		return this.damageReductionAmountArray[slot.getIndex()];
 	}
 

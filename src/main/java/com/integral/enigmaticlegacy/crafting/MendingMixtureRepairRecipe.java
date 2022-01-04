@@ -11,10 +11,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.IRecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.NonNullList;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
@@ -51,7 +51,7 @@ public class MendingMixtureRepairRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, World world) {
+	public boolean matches(CraftingInventory inv, Level world) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		
 		for (int i = 0; i < inv.getContainerSize(); i++) {
@@ -91,12 +91,12 @@ public class MendingMixtureRepairRecipe extends ShapelessRecipe {
 		}
 
 		@Override
-		public MendingMixtureRepairRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+		public MendingMixtureRepairRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			return new MendingMixtureRepairRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
 		}
 
 		@Override
-		public void toNetwork(PacketBuffer buffer, MendingMixtureRepairRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buffer, MendingMixtureRepairRecipe recipe) {
 
 		}
 	}

@@ -5,7 +5,7 @@ import net.minecraft.world.item.enchantment.EnchantmentData;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.IInventory;
 import net.minecraft.world.inventory.container.Container;
 import net.minecraft.world.inventory.container.MenuType;
@@ -15,7 +15,7 @@ import net.minecraft.world.inventory.container.Slot;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.play.server.SAdvancementInfoPacket;
 import net.minecraft.stats.Stats;
 import net.minecraft.sounds.SoundSource;
@@ -68,7 +68,7 @@ public abstract class MixinEnchantmentContainer extends Container {
 								boolean isBookStack = inputItem.getItem() == Items.BOOK;
 								if (isBookStack) {
 									enchantedItem = new ItemStack(Items.ENCHANTED_BOOK);
-									CompoundNBT compoundnbt = inputItem.getTag();
+									CompoundTag compoundnbt = inputItem.getTag();
 									if (compoundnbt != null) {
 										enchantedItem.setTag(compoundnbt.copy());
 									}

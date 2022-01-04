@@ -7,20 +7,20 @@ import javax.annotation.Nullable;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.SpawnLocationHelper;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RegistryKey;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.GameType;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
 
 public class AdvancedSpawnLocationHelper {
 
@@ -28,7 +28,7 @@ public class AdvancedSpawnLocationHelper {
 		return player.getRespawnDimension();
 	}
 
-	public static BlockPos getRespawnLocation(ServerWorld world, int arg1, int arg2, boolean flag) {
+	public static BlockPos getRespawnLocation(ServerLevel world, int arg1, int arg2, boolean flag) {
 		return getOverworldRespawnPos(world, arg1, arg2, flag);
 	}
 
@@ -36,14 +36,14 @@ public class AdvancedSpawnLocationHelper {
 		return p_205735_1_ <= 16 ? p_205735_1_ - 1 : 17;
 	}
 
-	public static void fuckBackToSpawn(ServerWorld worldIn, ServerPlayer playerIn) {
+	public static void fuckBackToSpawn(ServerLevel worldIn, ServerPlayer playerIn) {
 		BlockPos blockpos = worldIn.getSharedSpawnPos();
 
 		playerIn.teleportTo(blockpos.getX() + 0.5, blockpos.getY(), blockpos.getZ() + 0.5);
 
 		if (worldIn.dimensionType().hasSkyLight() && worldIn.getServer().getWorldData().getGameType() != GameType.ADVENTURE) {
 			int i = Math.max(0, worldIn.getServer().getSpawnRadius(worldIn));
-			int j = MathHelper.floor(worldIn.getWorldBorder().getDistanceToBorder(blockpos.getX(), blockpos.getZ()));
+			int j = Mth.floor(worldIn.getWorldBorder().getDistanceToBorder(blockpos.getX(), blockpos.getZ()));
 			if (j < i) {
 				i = j;
 			}
@@ -88,9 +88,9 @@ public class AdvancedSpawnLocationHelper {
 	 * @return I don't know anymore.
 	 */
 
-	public static Optional<Vector3d> getValidSpawn(final ServerWorld world, final ServerPlayer player) {
+	public static Optional<Vec3> getValidSpawn(final ServerLevel world, final ServerPlayer player) {
 		BlockPos blockpos = player.getRespawnPosition();
-		Optional<Vector3d> optional;
+		Optional<Vec3> optional;
 		if (world != null && blockpos != null) {
 			optional = Player.findRespawnPositionAndUseSpawnBlock(world, blockpos, player.getRespawnAngle(), player.isRespawnForced(), false);
 			/*player.findRespawnPositionAndUseSpawnBlock(world, blockpos, player.getRespawnAngle(), player.isRespawnForced(), false)*/
@@ -102,7 +102,7 @@ public class AdvancedSpawnLocationHelper {
 	}
 
 	@Nullable
-	protected static BlockPos getOverworldRespawnPos(ServerWorld p_241092_0_, int p_241092_1_, int p_241092_2_, boolean p_241092_3_) {
+	protected static BlockPos getOverworldRespawnPos(ServerLevel p_241092_0_, int p_241092_1_, int p_241092_2_, boolean p_241092_3_) {
 		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(p_241092_1_, 0, p_241092_2_);
 		Biome biome = p_241092_0_.getBiome(blockpos$mutable);
 		boolean flag = p_241092_0_.dimensionType().hasCeiling();
@@ -137,7 +137,7 @@ public class AdvancedSpawnLocationHelper {
 	}
 
 	@Nullable
-	public static BlockPos getSpawnPosInChunk(ServerWorld p_241094_0_, ChunkPos p_241094_1_, boolean p_241094_2_) {
+	public static BlockPos getSpawnPosInChunk(ServerLevel p_241094_0_, ChunkPos p_241094_1_, boolean p_241094_2_) {
 		for(int i = p_241094_1_.getMinBlockX(); i <= p_241094_1_.getMaxBlockX(); ++i) {
 			for(int j = p_241094_1_.getMinBlockZ(); j <= p_241094_1_.getMaxBlockZ(); ++j) {
 				BlockPos blockpos = getOverworldRespawnPos(p_241094_0_, i, j, p_241094_2_);

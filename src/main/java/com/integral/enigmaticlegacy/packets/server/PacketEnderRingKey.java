@@ -6,15 +6,15 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.container.ChestContainer;
 import net.minecraft.world.inventory.container.MenuType;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.play.server.SOpenWindowPacket;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet for opening Ender Chest inventory to a player.
@@ -29,11 +29,11 @@ public class PacketEnderRingKey {
 		this.pressed = pressed;
 	}
 
-	public static void encode(PacketEnderRingKey msg, PacketBuffer buf) {
+	public static void encode(PacketEnderRingKey msg, FriendlyByteBuf buf) {
 		buf.writeBoolean(msg.pressed);
 	}
 
-	public static PacketEnderRingKey decode(PacketBuffer buf) {
+	public static PacketEnderRingKey decode(FriendlyByteBuf buf) {
 		return new PacketEnderRingKey(buf.readBoolean());
 	}
 
@@ -57,7 +57,7 @@ public class PacketEnderRingKey {
 				};
 
 				playerServ.containerCounter = container.containerId;
-				playerServ.connection.send(new SOpenWindowPacket(container.containerId, container.getType(), new TranslationTextComponent("container.enderchest")));
+				playerServ.connection.send(new SOpenWindowPacket(container.containerId, container.getType(), new TranslatableComponent("container.enderchest")));
 				container.addSlotListener(playerServ);
 				playerServ.containerMenu = container;
 				net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.player.PlayerContainerEvent.Open(playerServ, playerServ.containerMenu));

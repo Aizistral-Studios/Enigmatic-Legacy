@@ -10,8 +10,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
@@ -89,7 +89,7 @@ public class ItemizedCurioInstance implements ICurio {
 	}
 
 	@Override
-	public List<ITextComponent> getTagsTooltip(List<ITextComponent> tagTooltips) {
+	public List<Component> getTagsTooltip(List<Component> tagTooltips) {
 		return this.curioItem.getTagsTooltip(tagTooltips);
 	}
 
@@ -110,7 +110,7 @@ public class ItemizedCurioInstance implements ICurio {
 	}
 
 	@Override
-	public void readSyncData(CompoundNBT compound) {
+	public void readSyncData(CompoundTag compound) {
 		this.curioItem.readSyncData(compound);
 	}
 
@@ -129,7 +129,7 @@ public class ItemizedCurioInstance implements ICurio {
 	}
 
 	@Override
-	public CompoundNBT writeSyncData() {
+	public CompoundTag writeSyncData() {
 		return this.curioItem.writeSyncData();
 	}
 

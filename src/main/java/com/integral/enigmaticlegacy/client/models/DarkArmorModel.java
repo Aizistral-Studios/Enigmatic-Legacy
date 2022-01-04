@@ -6,7 +6,7 @@ import com.integral.enigmaticlegacy.client.models.SpecialArmorModelRenderer.Anch
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import net.minecraft.world.inventory.EquipmentSlotType;
+import net.minecraft.world.entity.EquipmentSlot;
 
 public class DarkArmorModel extends GenericArmorModel {
 
@@ -65,7 +65,7 @@ public class DarkArmorModel extends GenericArmorModel {
 	private final SpecialArmorModelRenderer LegRightAnchor;
 	private final SpecialArmorModelRenderer LegLeftAnchor;
 
-	public DarkArmorModel(EquipmentSlotType type) {
+	public DarkArmorModel(EquipmentSlot type) {
 		super(type);
 
 		this.texWidth = 128;
@@ -212,15 +212,15 @@ public class DarkArmorModel extends GenericArmorModel {
 
 		//IVertexBuilder vertexBuilder = ItemRenderer.getBuffer(, model.getRenderType(EnigmaticLegacy.darkHelmet.TEXTURE), false, false);
 
-		//this.helmet.showModel = this.slot == EquipmentSlotType.HEAD;
-		//this.chestplate.showModel = this.slot == EquipmentSlotType.HEAD;
-		//this.leggings.showModel = this.slot == EquipmentSlotType.HEAD;
-		//this.boots.showModel = this.slot == EquipmentSlotType.HEAD;
+		//this.helmet.showModel = this.slot == EquipmentSlot.HEAD;
+		//this.chestplate.showModel = this.slot == EquipmentSlot.HEAD;
+		//this.leggings.showModel = this.slot == EquipmentSlot.HEAD;
+		//this.boots.showModel = this.slot == EquipmentSlot.HEAD;
 
-		//legR.showModel = slot == EquipmentSlotType.LEGS;
-		//legL.showModel = slot == EquipmentSlotType.LEGS;
-		//bootL.showModel = slot == EquipmentSlotType.FEET;
-		//bootR.showModel = slot == EquipmentSlotType.FEET;
+		//legR.showModel = slot == EquipmentSlot.LEGS;
+		//legL.showModel = slot == EquipmentSlot.LEGS;
+		//bootL.showModel = slot == EquipmentSlot.FEET;
+		//bootR.showModel = slot == EquipmentSlot.FEET;
 		this.hat.visible = false;
 
 		this.head = this.HelmetAnchor;

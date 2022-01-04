@@ -6,11 +6,11 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.XPScroll;
 
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.Hand;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
  * Packet for handing the keybind of Scroll of Ageless Wisdom.
@@ -25,11 +25,11 @@ public class PacketXPScrollKey {
 	    this.pressed = pressed;
 	  }
 
-	  public static void encode(PacketXPScrollKey msg, PacketBuffer buf) {
+	  public static void encode(PacketXPScrollKey msg, FriendlyByteBuf buf) {
 	     buf.writeBoolean(msg.pressed);
 	  }
 
-	  public static PacketXPScrollKey decode(PacketBuffer buf) {
+	  public static PacketXPScrollKey decode(FriendlyByteBuf buf) {
 	    return new PacketXPScrollKey(buf.readBoolean());
 	 }
 	  

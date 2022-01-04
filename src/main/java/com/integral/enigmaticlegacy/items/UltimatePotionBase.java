@@ -13,23 +13,23 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.enigmaticlegacy.objects.AdvancedPotion;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemGroup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAction;
-import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -65,7 +65,7 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		SuperpositionHandler.addPotionTooltip(PotionHelper.getEffects(stack), stack, list, 1.0F);
 	}
 
@@ -91,9 +91,9 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
+	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
 		Player Player = entityLiving instanceof Player ? (Player) entityLiving : null;
-		List<EffectInstance> effectList = PotionHelper.getEffects(stack);
+		List<MobEffectInstance> effectList = PotionHelper.getEffects(stack);
 		if (Player == null || !Player.abilities.instabuild) {
 			stack.shrink(1);
 		}
@@ -103,11 +103,11 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 		}
 
 		if (!worldIn.isClientSide) {
-			for (EffectInstance effectinstance : effectList) {
+			for (MobEffectInstance effectinstance : effectList) {
 				if (effectinstance.getEffect().isInstantenous()) {
 					effectinstance.getEffect().applyInstantenousEffect(Player, Player, entityLiving, effectinstance.getAmplifier(), 1.0D);
 				} else {
-					entityLiving.addEffect(new EffectInstance(effectinstance));
+					entityLiving.addEffect(new MobEffectInstance(effectinstance));
 				}
 			}
 		}
@@ -139,7 +139,7 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, Hand handIn) {
 		playerIn.startUsingItem(handIn);
 		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getItemInHand(handIn));
 	}

@@ -10,22 +10,22 @@ import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
-import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
 
-public class StorageCrystal extends ItemBase implements IPermanentCrystal, IVanishable {
+public class StorageCrystal extends ItemBase implements IPermanentCrystal, Vanishable {
 
 	public StorageCrystal() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).fireResistant().tab(null));
@@ -34,19 +34,19 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, IVani
 
 	public ItemStack storeDropsOnCrystal(Collection<ItemEntity> drops, Player player, @Nullable ItemStack embeddedSoulCrystal) {
 		ItemStack crystal = new ItemStack(this);
-		CompoundNBT crystalNBT = ItemNBTHelper.getNBT(crystal);
+		CompoundTag crystalNBT = ItemNBTHelper.getNBT(crystal);
 		int counter = 0;
 
 		for (ItemEntity drop : drops) {
 			ItemStack dropStack = drop.getItem();
-			CompoundNBT nbt = dropStack.serializeNBT();
+			CompoundTag nbt = dropStack.serializeNBT();
 			crystalNBT.put("storedStack" + counter, nbt);
 
 			counter++;
 		}
 
 		if (embeddedSoulCrystal != null) {
-			CompoundNBT deserializedCrystal = new CompoundNBT();
+			CompoundTag deserializedCrystal = new CompoundTag();
 			embeddedSoulCrystal.deserializeNBT(deserializedCrystal);
 
 			crystalNBT.put("embeddedSoul", deserializedCrystal);
@@ -64,12 +64,12 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, IVani
 	}
 
 	public ItemStack retrieveDropsFromCrystal(ItemStack crystal, Player player, ItemStack retrieveSoul) {
-		CompoundNBT crystalNBT = ItemNBTHelper.getNBT(crystal);
+		CompoundTag crystalNBT = ItemNBTHelper.getNBT(crystal);
 		int counter = crystalNBT.getInt("storedStacks")-1;
 		int exp = crystalNBT.getInt("storedXP");
 
 		for (int c = counter; c >= 0; c--) {
-			CompoundNBT nbt = crystalNBT.getCompound("storedStack" + c);
+			CompoundTag nbt = crystalNBT.getCompound("storedStack" + c);
 			ItemStack stack = ItemStack.of(nbt);
 			if (!player.inventory.add(stack)) {
 				ItemEntity drop = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), stack);
@@ -94,7 +94,7 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, IVani
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World worldIn, Player playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, Hand handIn) {
 		playerIn.startUsingItem(handIn);
 
 		if (!worldIn.isClientSide) {}

@@ -8,11 +8,11 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.objects.Vector3;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayer;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class PacketGenericParticleEffect {
 
@@ -32,7 +32,7 @@ public class PacketGenericParticleEffect {
 		this.effect = effect;
 	}
 
-	public static void encode(PacketGenericParticleEffect msg, PacketBuffer buf) {
+	public static void encode(PacketGenericParticleEffect msg, FriendlyByteBuf buf) {
 		buf.writeDouble(msg.pos.x);
 		buf.writeDouble(msg.pos.y);
 		buf.writeDouble(msg.pos.z);
@@ -41,13 +41,13 @@ public class PacketGenericParticleEffect {
 		buf.writeUtf(msg.effect.toString(), 512);
 	}
 
-	public static PacketGenericParticleEffect decode(PacketBuffer buf) {
+	public static PacketGenericParticleEffect decode(FriendlyByteBuf buf) {
 
 
 		return new PacketGenericParticleEffect(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readInt(), buf.readBoolean(), evaluateEffect(buf));
 	}
 
-	private static Effect evaluateEffect(PacketBuffer buf) {
+	private static Effect evaluateEffect(FriendlyByteBuf buf) {
 		Effect effect;
 
 		try {

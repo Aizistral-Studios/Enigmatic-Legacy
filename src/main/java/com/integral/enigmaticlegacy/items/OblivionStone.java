@@ -19,34 +19,34 @@ import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.text.TextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class OblivionStone extends ItemBase implements IVanishable {
+public class OblivionStone extends ItemBase implements Vanishable {
 	public static Omniconfig.IntParameter itemSoftcap;
 	public static Omniconfig.IntParameter itemHardcap;
 
@@ -74,7 +74,7 @@ public class OblivionStone extends ItemBase implements IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 
 		//LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
@@ -105,32 +105,32 @@ public class OblivionStone extends ItemBase implements IVanishable {
 
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneCtrlList");
 			if (stack.hasTag()) {
-				CompoundNBT nbt = stack.getTag();
-				ListNBT arr = nbt.getList("SupersolidID", 8);
+				CompoundTag nbt = stack.getTag();
+				ListTag arr = nbt.getList("SupersolidID", 8);
 				int counter = 0;
 
 				if (arr.size() <= itemSoftcap.getValue()) {
 					for (INBT s_uncast : arr) {
-						String s = ((StringNBT) s_uncast).getAsString();
+						String s = ((StringTag) s_uncast).getAsString();
 						Item something = ForgeRegistries.ITEMS.getValue(new ResourceLocation(s));
 						if (something != null) {
 							ItemStack displayStack;
 							displayStack = new ItemStack(something, 1);
 
-							list.add(new StringTextComponent(" - ").append(((TextComponent)displayStack.getHoverName()).withStyle(TextFormatting.GOLD)).withStyle(TextFormatting.GOLD));
+							list.add(new TextComponent(" - ").append(((TextComponent)displayStack.getHoverName()).withStyle(ChatFormatting.GOLD)).withStyle(ChatFormatting.GOLD));
 						}
 						counter++;
 					}
 				} else {
 					for (int s = 0; s < itemSoftcap.getValue(); s++) {
 						int randomID = Item.random.nextInt(arr.size());
-						Item something = ForgeRegistries.ITEMS.getValue(new ResourceLocation(((StringNBT) arr.get(randomID)).getAsString()));
+						Item something = ForgeRegistries.ITEMS.getValue(new ResourceLocation(((StringTag) arr.get(randomID)).getAsString()));
 
 						if (something != null) {
 							ItemStack displayStack;
 							displayStack = new ItemStack(something, 1);
 
-							list.add(new StringTextComponent(" - ").append(((TextComponent)displayStack.getHoverName()).withStyle(TextFormatting.GOLD)).withStyle(TextFormatting.GOLD));
+							list.add(new TextComponent(" - ").append(((TextComponent)displayStack.getHoverName()).withStyle(ChatFormatting.GOLD)).withStyle(ChatFormatting.GOLD));
 						}
 					}
 				}
@@ -143,19 +143,19 @@ public class OblivionStone extends ItemBase implements IVanishable {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		TranslationTextComponent mode;
+		TranslatableComponent mode;
 
 		if (ItemNBTHelper.getBoolean(stack, "IsActive", true)) {
-			mode = new TranslationTextComponent("tooltip.enigmaticlegacy.oblivionStoneMode" + ItemNBTHelper.getInt(stack, "ConsumptionMode", 0));
+			mode = new TranslatableComponent("tooltip.enigmaticlegacy.oblivionStoneMode" + ItemNBTHelper.getInt(stack, "ConsumptionMode", 0));
 		} else {
-			mode = new TranslationTextComponent("tooltip.enigmaticlegacy.oblivionStoneModeInactive");
+			mode = new TranslatableComponent("tooltip.enigmaticlegacy.oblivionStoneModeInactive");
 		}
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneModeDesc", null, mode);
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, Player player, Hand hand) {
+	public ActionResult<ItemStack> use(Level world, Player player, Hand hand) {
 
 		ItemStack stack = player.getItemInHand(hand);
 		int mode = ItemNBTHelper.getInt(stack, "ConsumptionMode", 0);
@@ -179,7 +179,7 @@ public class OblivionStone extends ItemBase implements IVanishable {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
 		if (!(entity instanceof Player) || entity.tickCount % 4 != 0)
 			return;
 
@@ -188,13 +188,13 @@ public class OblivionStone extends ItemBase implements IVanishable {
 		if (!ItemNBTHelper.getBoolean(stack, "IsActive", true) || stack.getOrCreateTag().getList("SupersolidID", 8).size() < 1)
 			return;
 
-		CompoundNBT nbt = stack.getOrCreateTag();
-		ListNBT arr = nbt.getList("SupersolidID", 8);
+		CompoundTag nbt = stack.getOrCreateTag();
+		ListTag arr = nbt.getList("SupersolidID", 8);
 
 		OblivionStone.consumeStuff(player, arr, ItemNBTHelper.getInt(stack, "ConsumptionMode", 0));
 	}
 
-	public static void consumeStuff(Player player, ListNBT list, int mode) {
+	public static void consumeStuff(Player player, ListTag list, int mode) {
 		HashMap<Integer, ItemStack> stackMap = new HashMap<Integer, ItemStack>();
 		int cycleCounter = 0;
 		int filledStacks = 0;
@@ -213,7 +213,7 @@ public class OblivionStone extends ItemBase implements IVanishable {
 
 		if (mode == 0) {
 			for (INBT sID : list) {
-				String str = ((StringNBT) sID).getAsString();
+				String str = ((StringTag) sID).getAsString();
 
 				for (int slot : stackMap.keySet()) {
 					if (stackMap.get(slot).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation(str))) {
@@ -225,7 +225,7 @@ public class OblivionStone extends ItemBase implements IVanishable {
 		} else if (mode == 1) {
 
 			for (INBT sID : list) {
-				String str = ((StringNBT) sID).getAsString();
+				String str = ((StringTag) sID).getAsString();
 
 				HashMap<Integer, ItemStack> localStackMap = new HashMap<Integer, ItemStack>(stackMap);
 				Multimap<Integer, Integer> stackSizeMultimap = ArrayListMultimap.create();
@@ -256,7 +256,7 @@ public class OblivionStone extends ItemBase implements IVanishable {
 			if (filledStacks >= player.inventory.items.size()) {
 
 				for (INBT sID : list) {
-					String str = ((StringNBT) sID).getAsString();
+					String str = ((StringTag) sID).getAsString();
 					HashMap<Integer, ItemStack> localStackMap = new HashMap<Integer, ItemStack>(stackMap);
 					Multimap<Integer, Integer> stackSizeMultimap = ArrayListMultimap.create();
 

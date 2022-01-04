@@ -3,7 +3,8 @@ package com.integral.enigmaticlegacy.objects;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.world.item.alchemy.EffectInstance;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectInstance;
 
 /**
  * Mimics vanilla Potion type, but is more minimalistic and manageable.
@@ -12,15 +13,16 @@ import net.minecraft.world.item.alchemy.EffectInstance;
 
 public class AdvancedPotion {
 
-	private List<EffectInstance> effects;
+	private List<MobEffectInstance> effects;
 	private String id;
 
-	public AdvancedPotion(String identifier, EffectInstance... effects) {
+	public AdvancedPotion(String identifier, MobEffectInstance... effects) {
 
-		this.effects = new ArrayList<EffectInstance>();
+		this.effects = new ArrayList<MobEffectInstance>();
 
-		for (EffectInstance effect : effects)
+		for (MobEffectInstance effect : effects) {
 			this.effects.add(effect);
+		}
 
 		this.id = identifier;
 	}
@@ -29,11 +31,12 @@ public class AdvancedPotion {
 		return this.id;
 	}
 
-	public List<EffectInstance> getEffects() {
-		List<EffectInstance> returnList = new ArrayList<EffectInstance>();
+	public List<MobEffectInstance> getEffects() {
+		List<MobEffectInstance> returnList = new ArrayList<MobEffectInstance>();
 
-		for (EffectInstance effect : this.effects)
-			returnList.add(new EffectInstance(effect));
+		for (MobEffectInstance effect : this.effects) {
+			returnList.add(new MobEffectInstance(effect));
+		}
 
 		return returnList;
 	}

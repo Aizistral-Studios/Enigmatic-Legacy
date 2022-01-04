@@ -4,9 +4,9 @@ import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.helpers.PatchouliHelper;
 
-import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class PacketSetEntryState {
 	private boolean isRead;
@@ -17,12 +17,12 @@ public class PacketSetEntryState {
 		this.entryId = id;
 	}
 
-	public static void encode(PacketSetEntryState msg, PacketBuffer buf) {
+	public static void encode(PacketSetEntryState msg, FriendlyByteBuf buf) {
 		buf.writeBoolean(msg.isRead);
 		buf.writeUtf(msg.entryId);
 	}
 
-	public static PacketSetEntryState decode(PacketBuffer buf) {
+	public static PacketSetEntryState decode(FriendlyByteBuf buf) {
 		return new PacketSetEntryState(buf.readBoolean(), buf.readUtf());
 	}
 

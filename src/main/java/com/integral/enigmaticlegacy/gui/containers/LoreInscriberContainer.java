@@ -15,6 +15,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -41,6 +42,10 @@ public class LoreInscriberContainer extends AbstractContainerMenu {
 	private String unparsedInputField;
 
 	public LoreInscriberContainer(int syncID, Inventory playerInv) {
+		this(syncID, playerInv, ContainerLevelAccess.create(playerInv.player.level, playerInv.player.blockPosition()));
+	}
+
+	public LoreInscriberContainer(int syncID, Inventory playerInv, FriendlyByteBuf extras) {
 		this(syncID, playerInv, ContainerLevelAccess.create(playerInv.player.level, playerInv.player.blockPosition()));
 	}
 

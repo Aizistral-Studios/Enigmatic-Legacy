@@ -19,9 +19,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class CrossbowHelper {
 
@@ -72,7 +72,7 @@ public class CrossbowHelper {
 		return true;
 	}
 
-	public static void fireProjectiles(World worldIn, LivingEntity shooter, Hand handIn, ItemStack stack, float velocityIn, float inaccuracyIn) {
+	public static void fireProjectiles(Level worldIn, LivingEntity shooter, Hand handIn, ItemStack stack, float velocityIn, float inaccuracyIn) {
 		List<ItemStack> list = CrossbowItem.getChargedProjectiles(stack);
 		float[] afloat = CrossbowItem.getShotPitches(shooter.getRandom());
 
@@ -93,7 +93,7 @@ public class CrossbowHelper {
 		CrossbowItem.onCrossbowShot(worldIn, shooter, stack);
 	}
 
-	private static void fireProjectile(World worldIn, LivingEntity shooter, Hand handIn, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean isCreativeMode, float velocity, float inaccuracy, float projectileAngle) {
+	private static void fireProjectile(Level worldIn, LivingEntity shooter, Hand handIn, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean isCreativeMode, float velocity, float inaccuracy, float projectileAngle) {
 		if (!worldIn.isClientSide) {
 			boolean flag = projectile.getItem() == Items.FIREWORK_ROCKET;
 			ProjectileEntity projectileentity;
@@ -114,9 +114,9 @@ public class CrossbowHelper {
 				ICrossbowUser icrossbowuser = (ICrossbowUser)shooter;
 				icrossbowuser.shootCrossbowProjectile(icrossbowuser.getTarget(), crossbow, projectileentity, projectileAngle);
 			} else {
-				Vector3d vector3d1 = shooter.getUpVector(1.0F);
+				Vec3 vector3d1 = shooter.getUpVector(1.0F);
 				Quaternion quaternion = new Quaternion(new Vector3f(vector3d1), projectileAngle, true);
-				Vector3d vector3d = shooter.getViewVector(1.0F);
+				Vec3 vector3d = shooter.getViewVector(1.0F);
 				Vector3f vector3f = new Vector3f(vector3d);
 				vector3f.transform(quaternion);
 				projectileentity.shoot(vector3f.x(), vector3f.y(), vector3f.z(), velocity, inaccuracy);

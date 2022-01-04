@@ -8,8 +8,8 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 public class PacketSyncOptions {
 	private Map<String, String> synchronizedParameters = new HashMap<>();
@@ -33,7 +33,7 @@ public class PacketSyncOptions {
 		}
 	}
 
-	public static void encode(PacketSyncOptions msg, PacketBuffer buf) {
+	public static void encode(PacketSyncOptions msg, FriendlyByteBuf buf) {
 		buf.writeUtf(msg.fileName, 512);
 		buf.writeUtf(String.valueOf(msg.configVersion), 512);
 
@@ -45,7 +45,7 @@ public class PacketSyncOptions {
 		}
 	}
 
-	public static PacketSyncOptions decode(PacketBuffer buf) {
+	public static PacketSyncOptions decode(FriendlyByteBuf buf) {
 		String fileName = buf.readUtf(512);
 		String configVersion = buf.readUtf(512);
 		long entryAmount = buf.readLong();

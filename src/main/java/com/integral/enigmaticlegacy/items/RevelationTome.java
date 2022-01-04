@@ -15,30 +15,30 @@ import com.integral.enigmaticlegacy.triggers.RevelationGainTrigger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.world.item.enchantment.IVanishable;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.ServerPlayer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class RevelationTome extends ItemBase implements IVanishable {
+public class RevelationTome extends ItemBase implements Vanishable {
 
 	public static final String revelationPointsTag = "revelationPoints";
 	public static final String xpPointsTag = "xpPoints";
@@ -78,7 +78,7 @@ public class RevelationTome extends ItemBase implements IVanishable {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		if (entityIn instanceof ServerPlayer) {
 			ItemNBTHelper.setUUID(stack, lastHolderTag, entityIn.getUUID());
 		}
@@ -86,7 +86,7 @@ public class RevelationTome extends ItemBase implements IVanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, Player player, Hand hand) {
+	public ActionResult<ItemStack> use(Level world, Player player, Hand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		player.startUsingItem(hand);
 
@@ -119,7 +119,7 @@ public class RevelationTome extends ItemBase implements IVanishable {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> list, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTome1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.revelationTome2");
@@ -161,11 +161,11 @@ public class RevelationTome extends ItemBase implements IVanishable {
 	public static boolean havePlayerRead(Player player, ItemStack tome) {
 		boolean haveReadBefore = false;
 
-		CompoundNBT nbt = ItemNBTHelper.getNBT(tome);
+		CompoundTag nbt = ItemNBTHelper.getNBT(tome);
 
-		INBT uncheckedList = nbt.contains(RevelationTome.formerReadersTag) ? nbt.get(RevelationTome.formerReadersTag) : new ListNBT();
-		if (uncheckedList instanceof ListNBT) {
-			ListNBT list = (ListNBT) uncheckedList;
+		INBT uncheckedList = nbt.contains(RevelationTome.formerReadersTag) ? nbt.get(RevelationTome.formerReadersTag) : new ListTag();
+		if (uncheckedList instanceof ListTag) {
+			ListTag list = (ListTag) uncheckedList;
 
 			for (INBT entry : list) {
 				if (entry.getAsString().equals(player.getGameProfile().getName())) {
@@ -179,10 +179,10 @@ public class RevelationTome extends ItemBase implements IVanishable {
 	}
 
 	public static void markRead(Player player, ItemStack tome) {
-		CompoundNBT nbt = ItemNBTHelper.getNBT(tome);
-		ListNBT list = (nbt.get(RevelationTome.formerReadersTag) instanceof ListNBT) ? (ListNBT) nbt.get(RevelationTome.formerReadersTag) : new ListNBT();
+		CompoundTag nbt = ItemNBTHelper.getNBT(tome);
+		ListTag list = (nbt.get(RevelationTome.formerReadersTag) instanceof ListTag) ? (ListTag) nbt.get(RevelationTome.formerReadersTag) : new ListTag();
 
-		list.add(StringNBT.valueOf(player.getGameProfile().getName()));
+		list.add(StringTag.valueOf(player.getGameProfile().getName()));
 		nbt.put(RevelationTome.formerReadersTag, list);
 		tome.setTag(nbt);
 	}
