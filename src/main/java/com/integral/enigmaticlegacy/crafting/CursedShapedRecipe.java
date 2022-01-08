@@ -4,13 +4,13 @@ import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.api.items.ITaintable;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 
-import net.minecraft.world.inventory.CraftingInventory;
+import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.IRecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -24,12 +24,12 @@ public class CursedShapedRecipe extends ShapedRecipe {
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return EnigmaticRecipeSerializers.CURSED_SHAPED;
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, Level worldIn) {
+	public boolean matches(CraftingContainer inv, Level worldIn) {
 		boolean isAllTainted = true;
 
 		for (int i = 0; i < inv.getContainerSize(); i++) {
@@ -44,11 +44,11 @@ public class CursedShapedRecipe extends ShapedRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingInventory inv) {
+	public ItemStack assemble(CraftingContainer inv) {
 		return super.assemble(inv);
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>>  implements IRecipeSerializer<CursedShapedRecipe> {
+	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>  implements RecipeSerializer<CursedShapedRecipe> {
 
 		private NonNullList<Ingredient> handleTainted(NonNullList<Ingredient> ingredientList) {
 			for (Ingredient ing : ingredientList) {

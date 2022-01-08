@@ -6,16 +6,16 @@ import java.util.List;
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
-import net.minecraft.world.inventory.CraftingInventory;
+import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.IRecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -31,7 +31,7 @@ public class EnchantmentTransposingRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingInventory inv) {
+	public ItemStack assemble(CraftingContainer inv) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		ItemStack transposer = null;
 
@@ -66,7 +66,7 @@ public class EnchantmentTransposingRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, Level world) {
+	public boolean matches(CraftingContainer inv, Level world) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		ItemStack transposer = null;
 
@@ -94,7 +94,7 @@ public class EnchantmentTransposingRecipe extends ShapelessRecipe {
 	}
 	
 	@Override
-	public NonNullList<ItemStack> getRemainingItems(CraftingInventory inv) {
+	public NonNullList<ItemStack> getRemainingItems(CraftingContainer inv) {
 		NonNullList<ItemStack> nonnulllist = NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
 
 	      for(int i = 0; i < nonnulllist.size(); ++i) {
@@ -124,11 +124,11 @@ public class EnchantmentTransposingRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return EnigmaticRecipeSerializers.ENCHANTMENT_TRANSPOSING;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<EnchantmentTransposingRecipe> {
+	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<EnchantmentTransposingRecipe> {
 		@Override
 		public EnchantmentTransposingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			return new EnchantmentTransposingRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());

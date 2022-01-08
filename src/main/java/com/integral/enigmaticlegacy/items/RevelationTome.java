@@ -24,7 +24,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.util.ActionResult;
@@ -163,11 +163,11 @@ public class RevelationTome extends ItemBase implements Vanishable {
 
 		CompoundTag nbt = ItemNBTHelper.getNBT(tome);
 
-		INBT uncheckedList = nbt.contains(RevelationTome.formerReadersTag) ? nbt.get(RevelationTome.formerReadersTag) : new ListTag();
+		Tag uncheckedList = nbt.contains(RevelationTome.formerReadersTag) ? nbt.get(RevelationTome.formerReadersTag) : new ListTag();
 		if (uncheckedList instanceof ListTag) {
 			ListTag list = (ListTag) uncheckedList;
 
-			for (INBT entry : list) {
+			for (Tag entry : list) {
 				if (entry.getAsString().equals(player.getGameProfile().getName())) {
 					haveReadBefore = true;
 					break;

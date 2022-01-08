@@ -13,12 +13,12 @@ import net.minecraft.world.entity.projectile.AbstractArrowEntity;
 import net.minecraft.world.entity.projectile.DamagingProjectileEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.ItemLootEntry;
-import net.minecraft.world.level.storage.loot.LootEntry;
+import net.minecraft.world.level.storage.loot.LootItem;
+import net.minecraft.world.level.storage.loot.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.LootTables;
-import net.minecraft.world.level.storage.loot.RandomValueRange;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.UniformGenerator;
 import net.minecraft.world.level.storage.loot.LootPool.Builder;
 import net.minecraft.world.level.storage.loot.functions.SetCount;
 import net.minecraft.world.effect.MobEffects;
@@ -91,11 +91,11 @@ public class EtheriumEventHandler {
 		if (!this.config.isStandalone())
 			return;
 
-		if (event.getName().equals(LootTables.END_CITY_TREASURE)) {
+		if (event.getName().equals(BuiltInLootTables.END_CITY_TREASURE)) {
 			LootPool epic = constructLootPool("etherium", -11F, 2F,
-					ItemLootEntry.lootTableItem(this.etheriumOre)
+					LootItem.lootTableItem(this.etheriumOre)
 					.setWeight(60)
-					.apply(SetCount.setCount(RandomValueRange.between(1.0F, 2F)))
+					.apply(SetCount.setCount(UniformGenerator.between(1.0F, 2F)))
 					);
 
 			LootTable modified = event.getTable();
@@ -104,12 +104,12 @@ public class EtheriumEventHandler {
 		}
 	}
 
-	private static LootPool constructLootPool(String poolName, float minRolls, float maxRolls, @Nullable LootEntry.Builder<?>... entries) {
+	private static LootPool constructLootPool(String poolName, float minRolls, float maxRolls, @Nullable LootPoolEntryContainer.Builder<?>... entries) {
 		Builder poolBuilder = LootPool.lootPool();
 		poolBuilder.name(poolName);
-		poolBuilder.setRolls(RandomValueRange.between(minRolls, maxRolls));
+		poolBuilder.setRolls(UniformGenerator.between(minRolls, maxRolls));
 
-		for (LootEntry.Builder<?> entry : entries) {
+		for (LootPoolEntryContainer.Builder<?> entry : entries) {
 			if (entry != null) {
 				poolBuilder.add(entry);
 			}

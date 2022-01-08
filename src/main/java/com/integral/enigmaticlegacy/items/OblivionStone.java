@@ -27,7 +27,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.util.ActionResult;
@@ -110,7 +110,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 				int counter = 0;
 
 				if (arr.size() <= itemSoftcap.getValue()) {
-					for (INBT s_uncast : arr) {
+					for (Tag s_uncast : arr) {
 						String s = ((StringTag) s_uncast).getAsString();
 						Item something = ForgeRegistries.ITEMS.getValue(new ResourceLocation(s));
 						if (something != null) {
@@ -212,7 +212,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 			return;
 
 		if (mode == 0) {
-			for (INBT sID : list) {
+			for (Tag sID : list) {
 				String str = ((StringTag) sID).getAsString();
 
 				for (int slot : stackMap.keySet()) {
@@ -224,7 +224,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 			}
 		} else if (mode == 1) {
 
-			for (INBT sID : list) {
+			for (Tag sID : list) {
 				String str = ((StringTag) sID).getAsString();
 
 				HashMap<Integer, ItemStack> localStackMap = new HashMap<Integer, ItemStack>(stackMap);
@@ -255,7 +255,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 		} else if (mode == 2) {
 			if (filledStacks >= player.inventory.items.size()) {
 
-				for (INBT sID : list) {
+				for (Tag sID : list) {
 					String str = ((StringTag) sID).getAsString();
 					HashMap<Integer, ItemStack> localStackMap = new HashMap<Integer, ItemStack>(stackMap);
 					Multimap<Integer, Integer> stackSizeMultimap = ArrayListMultimap.create();

@@ -18,7 +18,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseContext;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.level.storage.loot.LootTables;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.tileentity.ChestTileEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
@@ -42,58 +42,58 @@ public class TestLootGenerator extends Item implements Vanishable {
 		this.setRegistryName(new ResourceLocation(EtheriumMod.MODID, "loot_generator"));
 
 		/*
-		for (ResourceLocation table : LootTables.getReadOnlyLootTables()) {
+		for (ResourceLocation table : BuiltInLootTables.getReadOnlyLootTables()) {
 			if (table.getPath().startsWith("chests/") && !table.getPath().startsWith("chests/village/"))
 				this.lootList.add(table);
 		}
 
-		for (ResourceLocation table : LootTables.getReadOnlyLootTables()) {
+		for (ResourceLocation table : BuiltInLootTables.getReadOnlyLootTables()) {
 			if (table.getPath().startsWith("chests/village/"))
 				this.lootList.add(table);
 		}
 		 */
 
-		this.lootList.add(LootTables.SPAWN_BONUS_CHEST);
-		this.lootList.add(LootTables.END_CITY_TREASURE);
-		this.lootList.add(LootTables.SIMPLE_DUNGEON);
-		this.lootList.add(LootTables.ABANDONED_MINESHAFT);
-		this.lootList.add(LootTables.NETHER_BRIDGE);
-		this.lootList.add(LootTables.STRONGHOLD_LIBRARY);
-		this.lootList.add(LootTables.STRONGHOLD_CROSSING);
-		this.lootList.add(LootTables.STRONGHOLD_CORRIDOR);
-		this.lootList.add(LootTables.DESERT_PYRAMID);
-		this.lootList.add(LootTables.JUNGLE_TEMPLE);
-		this.lootList.add(LootTables.JUNGLE_TEMPLE_DISPENSER);
-		this.lootList.add(LootTables.IGLOO_CHEST);
-		this.lootList.add(LootTables.WOODLAND_MANSION);
-		this.lootList.add(LootTables.UNDERWATER_RUIN_SMALL);
-		this.lootList.add(LootTables.UNDERWATER_RUIN_BIG);
-		this.lootList.add(LootTables.BURIED_TREASURE);
-		this.lootList.add(LootTables.SHIPWRECK_MAP);
-		this.lootList.add(LootTables.SHIPWRECK_SUPPLY);
-		this.lootList.add(LootTables.SHIPWRECK_TREASURE);
-		this.lootList.add(LootTables.PILLAGER_OUTPOST);
-		this.lootList.add(LootTables.BASTION_TREASURE);
-		this.lootList.add(LootTables.BASTION_OTHER);
-		this.lootList.add(LootTables.BASTION_BRIDGE);
-		this.lootList.add(LootTables.BASTION_HOGLIN_STABLE);
-		this.lootList.add(LootTables.RUINED_PORTAL);
-		this.lootList.add(LootTables.VILLAGE_WEAPONSMITH);
-		this.lootList.add(LootTables.VILLAGE_TOOLSMITH);
-		this.lootList.add(LootTables.VILLAGE_ARMORER);
-		this.lootList.add(LootTables.VILLAGE_CARTOGRAPHER);
-		this.lootList.add(LootTables.VILLAGE_MASON);
-		this.lootList.add(LootTables.VILLAGE_SHEPHERD);
-		this.lootList.add(LootTables.VILLAGE_BUTCHER);
-		this.lootList.add(LootTables.VILLAGE_FLETCHER);
-		this.lootList.add(LootTables.VILLAGE_FISHER);
-		this.lootList.add(LootTables.VILLAGE_TANNERY);
-		this.lootList.add(LootTables.VILLAGE_TEMPLE);
-		this.lootList.add(LootTables.VILLAGE_DESERT_HOUSE);
-		this.lootList.add(LootTables.VILLAGE_PLAINS_HOUSE);
-		this.lootList.add(LootTables.VILLAGE_TAIGA_HOUSE);
-		this.lootList.add(LootTables.VILLAGE_SNOWY_HOUSE);
-		this.lootList.add(LootTables.VILLAGE_SAVANNA_HOUSE);
+		this.lootList.add(BuiltInLootTables.SPAWN_BONUS_CHEST);
+		this.lootList.add(BuiltInLootTables.END_CITY_TREASURE);
+		this.lootList.add(BuiltInLootTables.SIMPLE_DUNGEON);
+		this.lootList.add(BuiltInLootTables.ABANDONED_MINESHAFT);
+		this.lootList.add(BuiltInLootTables.NETHER_BRIDGE);
+		this.lootList.add(BuiltInLootTables.STRONGHOLD_LIBRARY);
+		this.lootList.add(BuiltInLootTables.STRONGHOLD_CROSSING);
+		this.lootList.add(BuiltInLootTables.STRONGHOLD_CORRIDOR);
+		this.lootList.add(BuiltInLootTables.DESERT_PYRAMID);
+		this.lootList.add(BuiltInLootTables.JUNGLE_TEMPLE);
+		this.lootList.add(BuiltInLootTables.JUNGLE_TEMPLE_DISPENSER);
+		this.lootList.add(BuiltInLootTables.IGLOO_CHEST);
+		this.lootList.add(BuiltInLootTables.WOODLAND_MANSION);
+		this.lootList.add(BuiltInLootTables.UNDERWATER_RUIN_SMALL);
+		this.lootList.add(BuiltInLootTables.UNDERWATER_RUIN_BIG);
+		this.lootList.add(BuiltInLootTables.BURIED_TREASURE);
+		this.lootList.add(BuiltInLootTables.SHIPWRECK_MAP);
+		this.lootList.add(BuiltInLootTables.SHIPWRECK_SUPPLY);
+		this.lootList.add(BuiltInLootTables.SHIPWRECK_TREASURE);
+		this.lootList.add(BuiltInLootTables.PILLAGER_OUTPOST);
+		this.lootList.add(BuiltInLootTables.BASTION_TREASURE);
+		this.lootList.add(BuiltInLootTables.BASTION_OTHER);
+		this.lootList.add(BuiltInLootTables.BASTION_BRIDGE);
+		this.lootList.add(BuiltInLootTables.BASTION_HOGLIN_STABLE);
+		this.lootList.add(BuiltInLootTables.RUINED_PORTAL);
+		this.lootList.add(BuiltInLootTables.VILLAGE_WEAPONSMITH);
+		this.lootList.add(BuiltInLootTables.VILLAGE_TOOLSMITH);
+		this.lootList.add(BuiltInLootTables.VILLAGE_ARMORER);
+		this.lootList.add(BuiltInLootTables.VILLAGE_CARTOGRAPHER);
+		this.lootList.add(BuiltInLootTables.VILLAGE_MASON);
+		this.lootList.add(BuiltInLootTables.VILLAGE_SHEPHERD);
+		this.lootList.add(BuiltInLootTables.VILLAGE_BUTCHER);
+		this.lootList.add(BuiltInLootTables.VILLAGE_FLETCHER);
+		this.lootList.add(BuiltInLootTables.VILLAGE_FISHER);
+		this.lootList.add(BuiltInLootTables.VILLAGE_TANNERY);
+		this.lootList.add(BuiltInLootTables.VILLAGE_TEMPLE);
+		this.lootList.add(BuiltInLootTables.VILLAGE_DESERT_HOUSE);
+		this.lootList.add(BuiltInLootTables.VILLAGE_PLAINS_HOUSE);
+		this.lootList.add(BuiltInLootTables.VILLAGE_TAIGA_HOUSE);
+		this.lootList.add(BuiltInLootTables.VILLAGE_SNOWY_HOUSE);
+		this.lootList.add(BuiltInLootTables.VILLAGE_SAVANNA_HOUSE);
 	}
 
 	@Override

@@ -140,7 +140,7 @@ public class RelicOfTesting extends ItemBase {
 	 *
 	 *
 	 * if (context.getFace() != Direction.UP) { chest.clear(); } else {
-	 * chest.setLootTable(LootTables.CHESTS_SIMPLE_DUNGEON,
+	 * chest.setLootTable(BuiltInLootTables.CHESTS_SIMPLE_DUNGEON,
 	 * lootRandomizer.nextLong()); chest.fillWithLoot(player); }
 	 *
 	 * return ActionResultType.SUCCESS; } }

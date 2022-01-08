@@ -8,11 +8,10 @@ import static com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack.*;
 
 import net.minecraft.world.item.enchantment.DamageEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentType;
-import net.minecraft.world.item.enchantment.ImpalingEnchantment;
-import net.minecraft.world.entity.CreatureAttribute;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.TridentImpalerEnchantment;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.CrossbowItem;
@@ -21,7 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class TorrentEnchantment extends Enchantment {
 	public TorrentEnchantment(EquipmentSlot... slots) {
-		super(Enchantment.Rarity.RARE, EnchantmentType.TRIDENT, slots);
+		super(Enchantment.Rarity.RARE, EnchantmentCategory.TRIDENT, slots);
 
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "torrent"));
 	}
@@ -48,7 +47,7 @@ public class TorrentEnchantment extends Enchantment {
 
 	@Override
 	public boolean checkCompatibility(Enchantment ench) {
-		return !(ench instanceof DamageEnchantment) && !(ench instanceof ImpalingEnchantment) && !(ench instanceof WrathEnchantment) && super.checkCompatibility(ench);
+		return !(ench instanceof DamageEnchantment) && !(ench instanceof TridentImpalerEnchantment) && !(ench instanceof WrathEnchantment) && super.checkCompatibility(ench);
 	}
 
 	@Override
@@ -67,7 +66,7 @@ public class TorrentEnchantment extends Enchantment {
 	}
 
 	public float bonusDamageByCreature(LivingEntity attacker, LivingEntity living, int level) {
-		float calculated = (living.fireImmune() || living.isSensitiveToWater() || living instanceof EnderDragonEntity) ? level * 2.5F : 0F;
+		float calculated = (living.fireImmune() || living.isSensitiveToWater() || living instanceof EnderDragon) ? level * 2.5F : 0F;
 		calculated*= getRegisteredAttackStregth(attacker);
 
 		return calculated;

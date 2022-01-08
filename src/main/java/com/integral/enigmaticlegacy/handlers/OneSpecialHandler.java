@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fml.LogicalSidedProvider;
+import net.minecraftforge.fmllegacy.LogicalSidedProvider;
 
 /**
  * Did you get the reference?
@@ -15,23 +15,25 @@ import net.minecraftforge.fml.LogicalSidedProvider;
  */
 
 public class OneSpecialHandler {
-	
+
 	Random rand = new Random();
-	
+
 	public Player nextMan() {
 		MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
-		
+
 		List<ServerPlayer> players = server.getPlayerList().getPlayers();
 		Player man;
-		
+
 		if (players.size() > 0) {
-			if (players.size() == 1)
+			if (players.size() == 1) {
 				man	= players.get(0);
-			else
-				man = players.get(rand.nextInt(players.size() - 1));
-		} else
+			} else {
+				man = players.get(this.rand.nextInt(players.size() - 1));
+			}
+		} else {
 			man = null;
-		
+		}
+
 		return man;
 	}
 

@@ -99,7 +99,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.entity.CreatureAttribute;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.CreatureEntity;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -170,14 +170,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.IRecipe;
 import net.minecraft.world.item.crafting.ServerRecipeBook;
-import net.minecraft.world.level.storage.loot.ItemLootEntry;
+import net.minecraft.world.level.storage.loot.LootItem;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.LootTables;
-import net.minecraft.world.level.storage.loot.RandomValueRange;
-import net.minecraft.world.level.storage.loot.functions.EnchantWithLevels;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.UniformGenerator;
+import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetCount;
-import net.minecraft.world.level.storage.loot.functions.SetDamage;
+import net.minecraft.world.level.storage.loot.functions.SetItemDamageFunction;
 import net.minecraft.world.level.storage.loot.functions.SetNBT;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -1634,11 +1634,11 @@ public class EnigmaticEventHandler {
 
 					if (event.getSource().msgId.startsWith("explosion") && advancedCurio == EnigmaticLegacy.golemHeart && SuperpositionHandler.hasAnyArmor(player)) {
 						continue;
-					} else if (advancedCurio == magmaHeart && trueSource != null && (trueSource.getMobType() == CreatureAttribute.WATER || trueSource instanceof DrownedEntity)) {
+					} else if (advancedCurio == magmaHeart && trueSource != null && (trueSource.getMobType() == MobType.WATER || trueSource instanceof DrownedEntity)) {
 						event.setAmount(event.getAmount() * 2F);
 					} else if (advancedCurio == eyeOfNebula && player.isInWater()) {
 						event.setAmount(event.getAmount() * 2F);
-					} else if (advancedCurio == oceanStone && trueSource != null && (trueSource.getMobType() == CreatureAttribute.WATER || trueSource instanceof DrownedEntity)) {
+					} else if (advancedCurio == oceanStone && trueSource != null && (trueSource.getMobType() == MobType.WATER || trueSource instanceof DrownedEntity)) {
 						event.setAmount(event.getAmount() * OceanStone.underwaterCreaturesResistance.getValue().asModifierInverted());
 					}
 
@@ -1831,7 +1831,7 @@ public class EnigmaticEventHandler {
 			TransientPlayerData.get(player).syncToPlayer();
 		}
 
-		if (entity instanceof CreatureEntity && ((CreatureEntity)entity).getMobType() == CreatureAttribute.ARTHROPOD) {
+		if (entity instanceof CreatureEntity && ((CreatureEntity)entity).getMobType() == MobType.ARTHROPOD) {
 			((CreatureEntity)entity).goalSelector.addGoal(3, new AvoidEntityGoal<>((CreatureEntity)entity, Player.class, (targetEntity) -> targetEntity instanceof Player && SuperpositionHandler.hasAntiInsectAcknowledgement((Player)targetEntity), 6, 1, 1.3, EntityPredicates.NO_CREATIVE_OR_SPECTATOR::test));
 		}
 
@@ -2084,20 +2084,20 @@ public class EnigmaticEventHandler {
 			return;
 
 		List<ResourceLocation> underwaterRuins = new ArrayList<ResourceLocation>();
-		underwaterRuins.add(LootTables.UNDERWATER_RUIN_BIG);
-		underwaterRuins.add(LootTables.UNDERWATER_RUIN_SMALL);
+		underwaterRuins.add(BuiltInLootTables.UNDERWATER_RUIN_BIG);
+		underwaterRuins.add(BuiltInLootTables.UNDERWATER_RUIN_SMALL);
 
 		LootPool overworldLiterature = !OmniconfigHandler.isItemEnabled(EnigmaticLegacy.overworldRevelationTome) ? null :
 			SuperpositionHandler.constructLootPool("overworldLiterature", -7F, 2F,
-					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.overworldRevelationTome, 100).apply(LootFunctionRevelation.of(RandomValueRange.between(1, 3), RandomValueRange.between(50, 500))));
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.overworldRevelationTome, 100).apply(LootFunctionRevelation.of(UniformGenerator.between(1, 3), UniformGenerator.between(50, 500))));
 
 		LootPool netherLiterature = !OmniconfigHandler.isItemEnabled(EnigmaticLegacy.netherRevelationTome) ? null :
 			SuperpositionHandler.constructLootPool("netherLiterature", -7F, 2F,
-					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.netherRevelationTome, 100).apply(LootFunctionRevelation.of(RandomValueRange.between(1, 3), RandomValueRange.between(100, 700))));
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.netherRevelationTome, 100).apply(LootFunctionRevelation.of(UniformGenerator.between(1, 3), UniformGenerator.between(100, 700))));
 
 		LootPool endLiterature = !OmniconfigHandler.isItemEnabled(EnigmaticLegacy.endRevelationTome) ? null :
 			SuperpositionHandler.constructLootPool("endLiterature", -7F, 2F,
-					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.endRevelationTome, 100).apply(LootFunctionRevelation.of(RandomValueRange.between(1, 4), RandomValueRange.between(200, 1000))));
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.endRevelationTome, 100).apply(LootFunctionRevelation.of(UniformGenerator.between(1, 4), UniformGenerator.between(200, 1000))));
 
 		/*
 		 * Handlers for adding spellstones to dungeon loot.
@@ -2165,25 +2165,25 @@ public class EnigmaticEventHandler {
 					SuperpositionHandler.itemEntryBuilderED(Items.IRON_SHOVEL, 10, 20F, 30F, 1.0F, 0.8F),
 					SuperpositionHandler.itemEntryBuilderED(Items.BOW, 10, 20F, 30F, 1.0F, 0.8F),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.ironRing, 20),
-					ItemLootEntry.lootTableItem(EnigmaticLegacy.commonPotionBase).setWeight(20).apply(SetNBT.setTag(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE).getTag())),
+					LootItem.lootTableItem(EnigmaticLegacy.commonPotionBase).setWeight(20).apply(SetNBT.setTag(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE).getTag())),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.magnetRing, 8),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.unholyGrail, 4),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.loreInscriber, 5),
 					// TODO Maybe reconsider
 					// SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.oblivionStone, 4),
-					ItemLootEntry.lootTableItem(Items.CLOCK).setWeight(10),
-					ItemLootEntry.lootTableItem(Items.COMPASS).setWeight(10),
-					ItemLootEntry.lootTableItem(Items.EMERALD).setWeight(20).apply(SetCount.setCount(RandomValueRange.between(1.0F, 4F))),
-					ItemLootEntry.lootTableItem(Items.SLIME_BALL).setWeight(20).apply(SetCount.setCount(RandomValueRange.between(2.0F, 10F))),
-					ItemLootEntry.lootTableItem(Items.LEATHER).setWeight(35).apply(SetCount.setCount(RandomValueRange.between(3.0F, 8F))),
-					ItemLootEntry.lootTableItem(Items.PUMPKIN_PIE).setWeight(25).apply(SetCount.setCount(RandomValueRange.between(4.0F, 16F))),
-					SuperpositionHandler.getWaterDungeons().contains(event.getName()) || event.getName().equals(LootTables.PILLAGER_OUTPOST) ? null : SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.earthHeart, 7)
+					LootItem.lootTableItem(Items.CLOCK).setWeight(10),
+					LootItem.lootTableItem(Items.COMPASS).setWeight(10),
+					LootItem.lootTableItem(Items.EMERALD).setWeight(20).apply(SetCount.setCount(UniformGenerator.between(1.0F, 4F))),
+					LootItem.lootTableItem(Items.SLIME_BALL).setWeight(20).apply(SetCount.setCount(UniformGenerator.between(2.0F, 10F))),
+					LootItem.lootTableItem(Items.LEATHER).setWeight(35).apply(SetCount.setCount(UniformGenerator.between(3.0F, 8F))),
+					LootItem.lootTableItem(Items.PUMPKIN_PIE).setWeight(25).apply(SetCount.setCount(UniformGenerator.between(4.0F, 16F))),
+					SuperpositionHandler.getWaterDungeons().contains(event.getName()) || event.getName().equals(BuiltInLootTables.PILLAGER_OUTPOST) ? null : SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.earthHeart, 7)
 					);
 
 			LootTable modified = event.getTable();
 			modified.addPool(epic);
 
-			if (event.getName() != LootTables.SHIPWRECK_SUPPLY) {
+			if (event.getName() != BuiltInLootTables.SHIPWRECK_SUPPLY) {
 				if (overworldLiterature != null) {
 					modified.addPool(overworldLiterature);
 				}
@@ -2201,21 +2201,21 @@ public class EnigmaticEventHandler {
 					SuperpositionHandler.itemEntryBuilderED(Items.GOLDEN_SWORD, 10, 25F, 30F, 1.0F, 1.0F),
 					SuperpositionHandler.itemEntryBuilderED(Items.GOLDEN_SHOVEL, 10, 25F, 30F, 1.0F, 1.0F),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.oblivionStone, 8),
-					ItemLootEntry.lootTableItem(Items.EMERALD).setWeight(30).apply(SetCount.setCount(RandomValueRange.between(2.0F, 7F))),
-					ItemLootEntry.lootTableItem(Items.WITHER_ROSE).setWeight(25).apply(SetCount.setCount(RandomValueRange.between(1.0F, 4F))),
-					ItemLootEntry.lootTableItem(Items.GHAST_TEAR).setWeight(10).apply(SetCount.setCount(RandomValueRange.between(1.0F, 2F))),
-					ItemLootEntry.lootTableItem(Items.LAVA_BUCKET).setWeight(30),
-					ItemLootEntry.lootTableItem(Items.POTION).setWeight(15).apply(SetNBT.setTag(fireResistancePotion.getTag())),
-					SuperpositionHandler.getBastionChests().contains(event.getName()) ? ItemLootEntry.lootTableItem(forbiddenFruit).setWeight(4) : null
+					LootItem.lootTableItem(Items.EMERALD).setWeight(30).apply(SetCount.setCount(UniformGenerator.between(2.0F, 7F))),
+					LootItem.lootTableItem(Items.WITHER_ROSE).setWeight(25).apply(SetCount.setCount(UniformGenerator.between(1.0F, 4F))),
+					LootItem.lootTableItem(Items.GHAST_TEAR).setWeight(10).apply(SetCount.setCount(UniformGenerator.between(1.0F, 2F))),
+					LootItem.lootTableItem(Items.LAVA_BUCKET).setWeight(30),
+					LootItem.lootTableItem(Items.POTION).setWeight(15).apply(SetNBT.setTag(fireResistancePotion.getTag())),
+					SuperpositionHandler.getBastionChests().contains(event.getName()) ? LootItem.lootTableItem(forbiddenFruit).setWeight(4) : null
 					);
 
 			LootTable modified = event.getTable();
 
-			if (!event.getName().equals(LootTables.BASTION_TREASURE)) {
+			if (!event.getName().equals(BuiltInLootTables.BASTION_TREASURE)) {
 				modified.addPool(epic);
 			} else {
 				LootPool scroll = SuperpositionHandler.constructLootPool("darkest_scroll", 0F, 1F,
-						ItemLootEntry.lootTableItem(EnigmaticLegacy.darkestScroll).setWeight(100).apply(SetCount.setCount(RandomValueRange.between(1F, 1F)))
+						LootItem.lootTableItem(EnigmaticLegacy.darkestScroll).setWeight(100).apply(SetCount.setCount(UniformGenerator.between(1F, 1F)))
 						);
 
 				modified.addPool(scroll);
@@ -2226,16 +2226,16 @@ public class EnigmaticEventHandler {
 			}
 			event.setTable(modified);
 
-		} else if (event.getName().equals(LootTables.END_CITY_TREASURE)) {
+		} else if (event.getName().equals(BuiltInLootTables.END_CITY_TREASURE)) {
 			LootPool epic = SuperpositionHandler.constructLootPool("epic", 1F, 2F,
-					ItemLootEntry.lootTableItem(Items.ENDER_PEARL).setWeight(40).apply(SetCount.setCount(RandomValueRange.between(2.0F, 5F))),
-					ItemLootEntry.lootTableItem(Items.ENDER_EYE).setWeight(20).apply(SetCount.setCount(RandomValueRange.between(1.0F, 2F))),
-					ItemLootEntry.lootTableItem(Items.GLISTERING_MELON_SLICE).setWeight(30).apply(SetCount.setCount(RandomValueRange.between(1.0F, 4F))),
-					ItemLootEntry.lootTableItem(Items.GOLDEN_CARROT).setWeight(30).apply(SetCount.setCount(RandomValueRange.between(1.0F, 4F))),
-					ItemLootEntry.lootTableItem(Items.PHANTOM_MEMBRANE).setWeight(25).apply(SetCount.setCount(RandomValueRange.between(3.0F, 7F))),
-					ItemLootEntry.lootTableItem(Items.ENCHANTING_TABLE).setWeight(10),
-					ItemLootEntry.lootTableItem(Items.CAKE).setWeight(15),
-					ItemLootEntry.lootTableItem(Items.END_CRYSTAL).setWeight(7),
+					LootItem.lootTableItem(Items.ENDER_PEARL).setWeight(40).apply(SetCount.setCount(UniformGenerator.between(2.0F, 5F))),
+					LootItem.lootTableItem(Items.ENDER_EYE).setWeight(20).apply(SetCount.setCount(UniformGenerator.between(1.0F, 2F))),
+					LootItem.lootTableItem(Items.GLISTERING_MELON_SLICE).setWeight(30).apply(SetCount.setCount(UniformGenerator.between(1.0F, 4F))),
+					LootItem.lootTableItem(Items.GOLDEN_CARROT).setWeight(30).apply(SetCount.setCount(UniformGenerator.between(1.0F, 4F))),
+					LootItem.lootTableItem(Items.PHANTOM_MEMBRANE).setWeight(25).apply(SetCount.setCount(UniformGenerator.between(3.0F, 7F))),
+					LootItem.lootTableItem(Items.ENCHANTING_TABLE).setWeight(10),
+					LootItem.lootTableItem(Items.CAKE).setWeight(15),
+					LootItem.lootTableItem(Items.END_CRYSTAL).setWeight(7),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.loreInscriber, 10),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.recallPotion, 15),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.mendingMixture, 40),
@@ -2259,8 +2259,8 @@ public class EnigmaticEventHandler {
 
 		if (SuperpositionHandler.getLibraries().contains(event.getName())) {
 			LootPool special = SuperpositionHandler.constructLootPool("el_special", 2F, 3F,
-					ItemLootEntry.lootTableItem(EnigmaticLegacy.thiccScroll).setWeight(20).apply(SetCount.setCount(RandomValueRange.between(2F, 6F))),
-					ItemLootEntry.lootTableItem(EnigmaticLegacy.loreFragment).setWeight(10).apply(SetCount.setCount(RandomValueRange.between(1F, 2F))));
+					LootItem.lootTableItem(EnigmaticLegacy.thiccScroll).setWeight(20).apply(SetCount.setCount(UniformGenerator.between(2F, 6F))),
+					LootItem.lootTableItem(EnigmaticLegacy.loreFragment).setWeight(10).apply(SetCount.setCount(UniformGenerator.between(1F, 2F))));
 
 
 			LootTable modified = event.getTable();
@@ -2268,7 +2268,7 @@ public class EnigmaticEventHandler {
 
 			if (OmniconfigHandler.isItemEnabled(overworldRevelationTome)) {
 				LootPool literature = SuperpositionHandler.constructLootPool("literature", -4F, 3F,
-						SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.overworldRevelationTome, 100).apply(LootFunctionRevelation.of(RandomValueRange.between(1, 3), RandomValueRange.between(50, 500))));
+						SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.overworldRevelationTome, 100).apply(LootFunctionRevelation.of(UniformGenerator.between(1, 3), UniformGenerator.between(50, 500))));
 
 				modified.addPool(literature);
 			}
@@ -2277,9 +2277,9 @@ public class EnigmaticEventHandler {
 		}
 
 
-		if (event.getName().equals(LootTables.UNDERWATER_RUIN_BIG) || event.getName().equals(LootTables.UNDERWATER_RUIN_SMALL)) {
+		if (event.getName().equals(BuiltInLootTables.UNDERWATER_RUIN_BIG) || event.getName().equals(BuiltInLootTables.UNDERWATER_RUIN_SMALL)) {
 			LootPool special = SuperpositionHandler.constructLootPool("el_special", -5F, 1F,
-					ItemLootEntry.lootTableItem(Items.TRIDENT).apply(SetDamage.setDamage(RandomValueRange.between(0.5F, 1.0F))).apply(EnchantWithLevels.enchantWithLevels(RandomValueRange.between(15F, 40F)).allowTreasure())
+					LootItem.lootTableItem(Items.TRIDENT).apply(SetItemDamageFunction.setDamage(UniformGenerator.between(0.5F, 1.0F))).apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(15F, 40F)).allowTreasure())
 					);
 
 			LootTable modified = event.getTable();
@@ -2461,7 +2461,7 @@ public class EnigmaticEventHandler {
 			if (event.getEntityLiving() instanceof MobEntity) {
 				MobEntity insect = (MobEntity) event.getEntityLiving();
 
-				if (insect.getMobType() == CreatureAttribute.ARTHROPOD)
+				if (insect.getMobType() == MobType.ARTHROPOD)
 					if (SuperpositionHandler.hasAntiInsectAcknowledgement(player)) {
 						insect.setTarget(null);
 					}

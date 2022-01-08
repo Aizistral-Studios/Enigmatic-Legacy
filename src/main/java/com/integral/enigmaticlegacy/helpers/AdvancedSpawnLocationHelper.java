@@ -6,25 +6,23 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.player.SpawnLocationHelper;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.RegistryKey;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.ChunkPos;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.GameType;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.server.level.ServerLevel;
 
 public class AdvancedSpawnLocationHelper {
 
-	public static RegistryKey<World> getPlayerRespawnDimension(ServerPlayer player) {
+	public static ResourceKey<Level> getPlayerRespawnDimension(ServerPlayer player) {
 		return player.getRespawnDimension();
 	}
 
@@ -103,7 +101,7 @@ public class AdvancedSpawnLocationHelper {
 
 	@Nullable
 	protected static BlockPos getOverworldRespawnPos(ServerLevel p_241092_0_, int p_241092_1_, int p_241092_2_, boolean p_241092_3_) {
-		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable(p_241092_1_, 0, p_241092_2_);
+		BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos(p_241092_1_, 0, p_241092_2_);
 		Biome biome = p_241092_0_.getBiome(blockpos$mutable);
 		boolean flag = p_241092_0_.dimensionType().hasCeiling();
 		BlockState blockstate = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
@@ -115,8 +113,8 @@ public class AdvancedSpawnLocationHelper {
 			if (i < 0)
 				return null;
 			else {
-				int j = chunk.getHeight(Heightmap.Type.WORLD_SURFACE, p_241092_1_ & 15, p_241092_2_ & 15);
-				if (j <= i && j > chunk.getHeight(Heightmap.Type.OCEAN_FLOOR, p_241092_1_ & 15, p_241092_2_ & 15))
+				int j = chunk.getHeight(Heightmap.Types.WORLD_SURFACE, p_241092_1_ & 15, p_241092_2_ & 15);
+				if (j <= i && j > chunk.getHeight(Heightmap.Types.OCEAN_FLOOR, p_241092_1_ & 15, p_241092_2_ & 15))
 					return null;
 				else {
 					for(int k = i + 1; k >= 0; --k) {

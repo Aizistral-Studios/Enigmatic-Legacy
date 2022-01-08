@@ -41,62 +41,65 @@ import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.ParticleStatus;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.settings.ParticleStatus;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityPredicate;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.storage.loot.ItemLootEntry;
-import net.minecraft.world.level.storage.loot.LootEntry;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootPool.Builder;
-import net.minecraft.world.level.storage.loot.LootTables;
-import net.minecraft.world.level.storage.loot.RandomValueRange;
-import net.minecraft.world.level.storage.loot.StandaloneLootEntry;
-import net.minecraft.world.level.storage.loot.functions.EnchantWithLevels;
-import net.minecraft.world.level.storage.loot.functions.SetCount;
-import net.minecraft.world.level.storage.loot.functions.SetDamage;
-import net.minecraft.nbt.ByteNBT;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.entries.LootPoolSingletonContainer;
+import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemDamageFunction;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.nbt.ByteTag;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.IntNBT;
-import net.minecraft.world.item.alchemy.Effect;
+import net.minecraft.nbt.IntTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.item.alchemy.EffectUtils;
+import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.BeaconTileEntity;
+import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.util.RegistryKey;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.math.ClipContext;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.text.TextComponent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.GameRules;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ChunkHolder;
+import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -104,7 +107,7 @@ import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraftforge.fmllegacy.server.ServerLifecycleHooks;
 import net.minecraftforge.forgespi.language.ModFileScanData;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.CuriosApi;
@@ -120,7 +123,6 @@ import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
  */
 
 public class SuperpositionHandler {
-
 	public static final Random random = new Random();
 	public static final char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
 
@@ -349,7 +351,7 @@ public class SuperpositionHandler {
 		vector3d1 = vector3d1.normalize();
 		double d1 = vector3d.dot(vector3d1);
 
-		return d1 > 1.0D - 0.025D / d0 ? player.canSee(entity) : false;
+		return d1 > 1.0D - 0.025D / d0 ? player.hasLineOfSight(entity) : false;
 	}
 
 
@@ -401,8 +403,8 @@ public class SuperpositionHandler {
 		yaw = yaw * 180.0 / Math.PI;
 
 		yaw += 90f;
-		me.xRot = (float) pitch;
-		me.yRot = (float) yaw;
+		me.setXRot((float) pitch);
+		me.setYRot((float) yaw);
 		// me.rotationYawHead = (float)yaw;
 	}
 
@@ -495,13 +497,13 @@ public class SuperpositionHandler {
 	 * Builds standart loot pool with any amount of ItemLootEntries.
 	 */
 
-	public static LootPool constructLootPool(String poolName, float minRolls, float maxRolls, @Nullable LootEntry.Builder<?>... entries) {
+	public static LootPool constructLootPool(String poolName, float minRolls, float maxRolls, @Nullable LootPoolEntryContainer.Builder<?>... entries) {
 
 		Builder poolBuilder = LootPool.lootPool();
 		poolBuilder.name(poolName);
-		poolBuilder.setRolls(RandomValueRange.between(minRolls, maxRolls));
+		poolBuilder.setRolls(UniformGenerator.between(minRolls, maxRolls));
 
-		for (LootEntry.Builder<?> entry : entries) {
+		for (LootPoolEntryContainer.Builder<?> entry : entries) {
 			if (entry != null) {
 				poolBuilder.add(entry);
 			}
@@ -514,174 +516,174 @@ public class SuperpositionHandler {
 	}
 
 	/**
-	 * Creates ItemLootEntry builder for an item. If item is disabled in config,
+	 * Creates LootItem builder for an item. If item is disabled in config,
 	 * returns null instead. Count-sensitive version, allows you to specifiy min-max
 	 * amounts of items generated per entry.
 	 */
 
 	@Nullable
-	public static StandaloneLootEntry.Builder<?> createOptionalLootEntry(Item item, int weight, float minCount, float maxCount) {
+	public static LootPoolSingletonContainer.Builder<?> createOptionalLootEntry(Item item, int weight, float minCount, float maxCount) {
 		if (!OmniconfigHandler.isItemEnabled(item))
 			return null;
 
-		return ItemLootEntry.lootTableItem(item).setWeight(weight).apply(SetCount.setCount(RandomValueRange.between(minCount, maxCount)));
+		return LootItem.lootTableItem(item).setWeight(weight).apply(SetItemCountFunction.setCount(UniformGenerator.between(minCount, maxCount)));
 	}
 
 	/**
-	 * Creates ItemLootEntry builder for an item. If item is disabled in config,
+	 * Creates LootItem builder for an item. If item is disabled in config,
 	 * returns null instead.
 	 */
 
 	@Nullable
-	public static StandaloneLootEntry.Builder<?> createOptionalLootEntry(Item item, int weight) {
+	public static LootPoolSingletonContainer.Builder<?> createOptionalLootEntry(Item item, int weight) {
 		if (!OmniconfigHandler.isItemEnabled(item))
 			return null;
 
-		return ItemLootEntry.lootTableItem(item).setWeight(weight);
+		return LootItem.lootTableItem(item).setWeight(weight);
 	}
 
 	/**
-	 * Creates ItemLootEntry with a given weight, randomly ranged damage and
+	 * Creates LootItem with a given weight, randomly ranged damage and
 	 * level-based enchantments. Damage should be specified as modifier, where 1.0
 	 * is full durability.
 	 *
 	 * @return
 	 */
 
-	public static StandaloneLootEntry.Builder<?> itemEntryBuilderED(Item item, int weight, float enchantLevelMin, float enchantLevelMax, float damageMin, float damageMax) {
-		StandaloneLootEntry.Builder<?> builder = ItemLootEntry.lootTableItem(item);
+	public static LootPoolSingletonContainer.Builder<?> itemEntryBuilderED(Item item, int weight, float enchantLevelMin, float enchantLevelMax, float damageMin, float damageMax) {
+		LootPoolSingletonContainer.Builder<?> builder = LootItem.lootTableItem(item);
 
 		builder.setWeight(weight);
-		builder.apply(SetDamage.setDamage(RandomValueRange.between(damageMax, damageMin)));
-		builder.apply(EnchantWithLevels.enchantWithLevels(RandomValueRange.between(enchantLevelMin, enchantLevelMax)).allowTreasure());
+		builder.apply(SetItemDamageFunction.setDamage(UniformGenerator.between(damageMax, damageMin)));
+		builder.apply(EnchantWithLevelsFunction.enchantWithLevels(UniformGenerator.between(enchantLevelMin, enchantLevelMax)).allowTreasure());
 
 		return builder;
 	}
 
 	public static List<ResourceLocation> getEarthenDungeons() {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
-		lootChestList.add(LootTables.SIMPLE_DUNGEON);
-		lootChestList.add(LootTables.ABANDONED_MINESHAFT);
-		lootChestList.add(LootTables.VILLAGE_ARMORER);
+		lootChestList.add(BuiltInLootTables.SIMPLE_DUNGEON);
+		lootChestList.add(BuiltInLootTables.ABANDONED_MINESHAFT);
+		lootChestList.add(BuiltInLootTables.VILLAGE_ARMORER);
 
 		return lootChestList;
 	}
 
 	public static List<ResourceLocation> getWaterDungeons() {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
-		lootChestList.add(LootTables.UNDERWATER_RUIN_BIG);
-		lootChestList.add(LootTables.UNDERWATER_RUIN_SMALL);
-		lootChestList.add(LootTables.SHIPWRECK_TREASURE);
-		lootChestList.add(LootTables.BURIED_TREASURE);
+		lootChestList.add(BuiltInLootTables.UNDERWATER_RUIN_BIG);
+		lootChestList.add(BuiltInLootTables.UNDERWATER_RUIN_SMALL);
+		lootChestList.add(BuiltInLootTables.SHIPWRECK_TREASURE);
+		lootChestList.add(BuiltInLootTables.BURIED_TREASURE);
 
 		return lootChestList;
 	}
 
 	public static List<ResourceLocation> getLibraries() {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
-		lootChestList.add(LootTables.STRONGHOLD_LIBRARY);
-		lootChestList.add(LootTables.SHIPWRECK_MAP);
+		lootChestList.add(BuiltInLootTables.STRONGHOLD_LIBRARY);
+		lootChestList.add(BuiltInLootTables.SHIPWRECK_MAP);
 
 		return lootChestList;
 	}
 
 	public static List<ResourceLocation> getBastionChests() {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
-		lootChestList.add(LootTables.BASTION_TREASURE);
-		lootChestList.add(LootTables.BASTION_OTHER);
-		lootChestList.add(LootTables.BASTION_BRIDGE);
-		lootChestList.add(LootTables.BASTION_HOGLIN_STABLE);
+		lootChestList.add(BuiltInLootTables.BASTION_TREASURE);
+		lootChestList.add(BuiltInLootTables.BASTION_OTHER);
+		lootChestList.add(BuiltInLootTables.BASTION_BRIDGE);
+		lootChestList.add(BuiltInLootTables.BASTION_HOGLIN_STABLE);
 
 		return lootChestList;
 	}
 
 	public static List<ResourceLocation> getNetherDungeons() {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
-		lootChestList.add(LootTables.NETHER_BRIDGE);
-		lootChestList.add(LootTables.BASTION_TREASURE);
-		lootChestList.add(LootTables.BASTION_OTHER);
-		lootChestList.add(LootTables.BASTION_BRIDGE);
-		lootChestList.add(LootTables.BASTION_HOGLIN_STABLE);
-		lootChestList.add(LootTables.RUINED_PORTAL);
+		lootChestList.add(BuiltInLootTables.NETHER_BRIDGE);
+		lootChestList.add(BuiltInLootTables.BASTION_TREASURE);
+		lootChestList.add(BuiltInLootTables.BASTION_OTHER);
+		lootChestList.add(BuiltInLootTables.BASTION_BRIDGE);
+		lootChestList.add(BuiltInLootTables.BASTION_HOGLIN_STABLE);
+		lootChestList.add(BuiltInLootTables.RUINED_PORTAL);
 
 		return lootChestList;
 	}
 
 	public static List<ResourceLocation> getAirDungeons() {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
-		lootChestList.add(LootTables.VILLAGE_TEMPLE);
+		lootChestList.add(BuiltInLootTables.VILLAGE_TEMPLE);
 
 		return lootChestList;
 	}
 
 	public static List<ResourceLocation> getEnderDungeons() {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
-		lootChestList.add(LootTables.END_CITY_TREASURE);
+		lootChestList.add(BuiltInLootTables.END_CITY_TREASURE);
 
 		return lootChestList;
 	}
 
 	public static List<ResourceLocation> getMergedAir$EarthenDungeons() {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
-		lootChestList.add(LootTables.DESERT_PYRAMID);
-		lootChestList.add(LootTables.JUNGLE_TEMPLE);
+		lootChestList.add(BuiltInLootTables.DESERT_PYRAMID);
+		lootChestList.add(BuiltInLootTables.JUNGLE_TEMPLE);
 
 		return lootChestList;
 	}
 
 	public static List<ResourceLocation> getMergedEnder$EarthenDungeons() {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
-		lootChestList.add(LootTables.STRONGHOLD_CORRIDOR);
-		lootChestList.add(LootTables.STRONGHOLD_CROSSING);
+		lootChestList.add(BuiltInLootTables.STRONGHOLD_CORRIDOR);
+		lootChestList.add(BuiltInLootTables.STRONGHOLD_CROSSING);
 
 		return lootChestList;
 	}
 
 	public static List<ResourceLocation> getOverworldDungeons() {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
-		lootChestList.add(LootTables.SIMPLE_DUNGEON);
-		lootChestList.add(LootTables.ABANDONED_MINESHAFT);
-		lootChestList.add(LootTables.STRONGHOLD_CROSSING);
-		lootChestList.add(LootTables.STRONGHOLD_CORRIDOR);
-		lootChestList.add(LootTables.DESERT_PYRAMID);
-		lootChestList.add(LootTables.JUNGLE_TEMPLE);
-		lootChestList.add(LootTables.IGLOO_CHEST);
-		lootChestList.add(LootTables.WOODLAND_MANSION);
-		lootChestList.add(LootTables.UNDERWATER_RUIN_SMALL);
-		lootChestList.add(LootTables.UNDERWATER_RUIN_BIG);
-		lootChestList.add(LootTables.SHIPWRECK_SUPPLY);
-		lootChestList.add(LootTables.PILLAGER_OUTPOST);
+		lootChestList.add(BuiltInLootTables.SIMPLE_DUNGEON);
+		lootChestList.add(BuiltInLootTables.ABANDONED_MINESHAFT);
+		lootChestList.add(BuiltInLootTables.STRONGHOLD_CROSSING);
+		lootChestList.add(BuiltInLootTables.STRONGHOLD_CORRIDOR);
+		lootChestList.add(BuiltInLootTables.DESERT_PYRAMID);
+		lootChestList.add(BuiltInLootTables.JUNGLE_TEMPLE);
+		lootChestList.add(BuiltInLootTables.IGLOO_CHEST);
+		lootChestList.add(BuiltInLootTables.WOODLAND_MANSION);
+		lootChestList.add(BuiltInLootTables.UNDERWATER_RUIN_SMALL);
+		lootChestList.add(BuiltInLootTables.UNDERWATER_RUIN_BIG);
+		lootChestList.add(BuiltInLootTables.SHIPWRECK_SUPPLY);
+		lootChestList.add(BuiltInLootTables.PILLAGER_OUTPOST);
 
 		return lootChestList;
 	}
 
 	public static List<ResourceLocation> getVillageChests() {
 		List<ResourceLocation> lootChestList = new ArrayList<ResourceLocation>();
-		lootChestList.add(LootTables.VILLAGE_WEAPONSMITH);
-		lootChestList.add(LootTables.VILLAGE_TOOLSMITH);
-		lootChestList.add(LootTables.VILLAGE_ARMORER);
-		lootChestList.add(LootTables.VILLAGE_CARTOGRAPHER);
-		lootChestList.add(LootTables.VILLAGE_MASON);
-		lootChestList.add(LootTables.VILLAGE_SHEPHERD);
-		lootChestList.add(LootTables.VILLAGE_BUTCHER);
-		lootChestList.add(LootTables.VILLAGE_FLETCHER);
-		lootChestList.add(LootTables.VILLAGE_FISHER);
-		lootChestList.add(LootTables.VILLAGE_TANNERY);
-		lootChestList.add(LootTables.VILLAGE_TEMPLE);
-		lootChestList.add(LootTables.VILLAGE_DESERT_HOUSE);
-		lootChestList.add(LootTables.VILLAGE_PLAINS_HOUSE);
-		lootChestList.add(LootTables.VILLAGE_TAIGA_HOUSE);
-		lootChestList.add(LootTables.VILLAGE_SNOWY_HOUSE);
-		lootChestList.add(LootTables.VILLAGE_SAVANNA_HOUSE);
+		lootChestList.add(BuiltInLootTables.VILLAGE_WEAPONSMITH);
+		lootChestList.add(BuiltInLootTables.VILLAGE_TOOLSMITH);
+		lootChestList.add(BuiltInLootTables.VILLAGE_ARMORER);
+		lootChestList.add(BuiltInLootTables.VILLAGE_CARTOGRAPHER);
+		lootChestList.add(BuiltInLootTables.VILLAGE_MASON);
+		lootChestList.add(BuiltInLootTables.VILLAGE_SHEPHERD);
+		lootChestList.add(BuiltInLootTables.VILLAGE_BUTCHER);
+		lootChestList.add(BuiltInLootTables.VILLAGE_FLETCHER);
+		lootChestList.add(BuiltInLootTables.VILLAGE_FISHER);
+		lootChestList.add(BuiltInLootTables.VILLAGE_TANNERY);
+		lootChestList.add(BuiltInLootTables.VILLAGE_TEMPLE);
+		lootChestList.add(BuiltInLootTables.VILLAGE_DESERT_HOUSE);
+		lootChestList.add(BuiltInLootTables.VILLAGE_PLAINS_HOUSE);
+		lootChestList.add(BuiltInLootTables.VILLAGE_TAIGA_HOUSE);
+		lootChestList.add(BuiltInLootTables.VILLAGE_SNOWY_HOUSE);
+		lootChestList.add(BuiltInLootTables.VILLAGE_SAVANNA_HOUSE);
 
 		return lootChestList;
 	}
 
 	/**
-	 * Retrieves the given INBT type from the player's persistent NBT.
+	 * Retrieves the given Tag type from the player's persistent NBT.
 	 */
 
-	public static INBT getPersistentTag(Player player, String tag, INBT expectedValue) {
+	public static Tag getPersistentTag(Player player, String tag, Tag expectedValue) {
 		CompoundTag data = player.getPersistentData();
 		CompoundTag persistent;
 
@@ -701,10 +703,10 @@ public class SuperpositionHandler {
 	}
 
 	/**
-	 * Sets the given INBT type to the player's persistent NBT.
+	 * Sets the given Tag type to the player's persistent NBT.
 	 */
 
-	public static void setPersistentTag(Player player, String tag, INBT value) {
+	public static void setPersistentTag(Player player, String tag, Tag value) {
 		CompoundTag data = player.getPersistentData();
 		CompoundTag persistent;
 
@@ -722,7 +724,7 @@ public class SuperpositionHandler {
 	 */
 
 	public static void setPersistentBoolean(Player player, String tag, boolean value) {
-		SuperpositionHandler.setPersistentTag(player, tag, ByteNBT.valueOf(value));
+		SuperpositionHandler.setPersistentTag(player, tag, ByteTag.valueOf(value));
 	}
 
 	/**
@@ -730,17 +732,17 @@ public class SuperpositionHandler {
 	 */
 
 	public static boolean getPersistentBoolean(Player player, String tag, boolean expectedValue) {
-		INBT theTag = SuperpositionHandler.getPersistentTag(player, tag, ByteNBT.valueOf(expectedValue));
-		return theTag instanceof ByteNBT ? ((ByteNBT) theTag).getAsByte() != 0 : expectedValue;
+		Tag theTag = SuperpositionHandler.getPersistentTag(player, tag, ByteTag.valueOf(expectedValue));
+		return theTag instanceof ByteTag ? ((ByteTag) theTag).getAsByte() != 0 : expectedValue;
 	}
 
 	public static void setPersistentInteger(Player player, String tag, int value) {
-		SuperpositionHandler.setPersistentTag(player, tag, IntNBT.valueOf(value));
+		SuperpositionHandler.setPersistentTag(player, tag, IntTag.valueOf(value));
 	}
 
 	public static int getPersistentInteger(Player player, String tag, int expectedValue) {
-		INBT theTag = SuperpositionHandler.getPersistentTag(player, tag, IntNBT.valueOf(expectedValue));
-		return theTag instanceof IntNBT ? ((IntNBT) theTag).getAsInt() : expectedValue;
+		Tag theTag = SuperpositionHandler.getPersistentTag(player, tag, IntTag.valueOf(expectedValue));
+		return theTag instanceof IntTag ? ((IntTag) theTag).getAsInt() : expectedValue;
 	}
 
 	/**
@@ -863,8 +865,8 @@ public class SuperpositionHandler {
 			lores.add((new TranslatableComponent("effect.none")).withStyle(ChatFormatting.GRAY));
 		} else {
 			for (MobEffectInstance effectinstance : list) {
-				IFormattableTextComponent iformattabletextcomponent = new TranslatableComponent(effectinstance.getDescriptionId());
-				Effect effect = effectinstance.getEffect();
+				MutableComponent iformattabletextcomponent = new TranslatableComponent(effectinstance.getDescriptionId());
+				MobEffect effect = effectinstance.getEffect();
 				Map<Attribute, AttributeModifier> map = effect.getAttributeModifiers();
 				if (!map.isEmpty()) {
 					for (Entry<Attribute, AttributeModifier> entry : map.entrySet()) {
@@ -879,7 +881,7 @@ public class SuperpositionHandler {
 				}
 
 				if (effectinstance.getDuration() > 20) {
-					iformattabletextcomponent.append(" (").append(EffectUtils.formatDuration(effectinstance, durationFactor)).append(")");
+					iformattabletextcomponent.append(" (").append(MobEffectUtil.formatDuration(effectinstance, durationFactor)).append(")");
 				}
 
 				lores.add(iformattabletextcomponent.withStyle(effect.getCategory().getTooltipFormatting()));
@@ -917,18 +919,17 @@ public class SuperpositionHandler {
 	 */
 
 	public static boolean canPickStack(Player player, ItemStack stack) {
-
-		if (player.inventory.getFreeSlot() >= 0)
+		if (player.getInventory().getFreeSlot() >= 0)
 			return true;
 		else {
 			List<ItemStack> allInventories = new ArrayList<ItemStack>();
 
 			// allInventories.addAll(player.inventory.armorInventory);
-			allInventories.addAll(player.inventory.items);
-			allInventories.addAll(player.inventory.offhand);
+			allInventories.addAll(player.getInventory().items);
+			allInventories.addAll(player.getInventory().offhand);
 
 			for (ItemStack invStack : allInventories) {
-				if (SuperpositionHandler.canMergeStacks(invStack, stack, player.inventory.getMaxStackSize()))
+				if (SuperpositionHandler.canMergeStacks(invStack, stack, player.getInventory().getMaxStackSize()))
 					return true;
 			}
 		}
@@ -968,27 +969,34 @@ public class SuperpositionHandler {
 	 */
 
 	public static boolean isInBeaconRange(Player player) {
-		List<BeaconTileEntity> list = new ArrayList<BeaconTileEntity>();
+		if (player.level.isClientSide)
+			return false;
+
+		List<BeaconBlockEntity> list = new ArrayList<BeaconBlockEntity>();
 		boolean inRange = false;
 
-		for (BlockEntity tile : player.level.blockEntityList) {
-			if (tile instanceof BeaconTileEntity) {
-				list.add((BeaconTileEntity) tile);
+		ServerChunkCache cache = (ServerChunkCache) player.level.getChunkSource();
+
+		for (ChunkHolder holder : cache.chunkMap.visibleChunkMap.values()) {
+			for (BlockEntity tile : holder.getTickingChunk().getBlockEntities().values()) {
+				if (tile instanceof BeaconBlockEntity) {
+					list.add((BeaconBlockEntity) tile);
+				}
 			}
 		}
 
 		if (list.size() > 0) {
-			for (BeaconTileEntity beacon : list)
-				if (beacon.getLevels() > 0) {
+			for (BeaconBlockEntity beacon : list)
+				if (beacon.levels> 0) {
 					try {
-						if (beacon.beamSections.isEmpty()) {
+						if (beacon.getBeamSections().isEmpty()) {
 							continue;
 						}
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
 
-					int range = (beacon.getLevels() + 1) * 10;
+					int range = (beacon.levels + 1) * 10;
 					double distance = Math.sqrt(beacon.getBlockPos().distSqr(player.getX(), beacon.getBlockPos().getY(), player.getZ(), true));
 
 					if (distance <= range) {
@@ -1001,7 +1009,7 @@ public class SuperpositionHandler {
 	}
 
 	public static boolean hasItem(Player player, Item item) {
-		return player.inventory.contains(new ItemStack(item));
+		return player.getInventory().contains(new ItemStack(item));
 	}
 
 	/**
@@ -1039,7 +1047,7 @@ public class SuperpositionHandler {
 		return false;
 	}
 
-	public static ServerLevel getWorld(RegistryKey<World> key) {
+	public static ServerLevel getWorld(ResourceKey<Level> key) {
 		return ServerLifecycleHooks.getCurrentServer().getLevel(key);
 	}
 
@@ -1056,7 +1064,7 @@ public class SuperpositionHandler {
 	}
 
 	public static ServerLevel backToSpawn(ServerPlayer serverPlayer) {
-		RegistryKey<World> respawnDimension = AdvancedSpawnLocationHelper.getPlayerRespawnDimension(serverPlayer);
+		ResourceKey<Level> respawnDimension = AdvancedSpawnLocationHelper.getPlayerRespawnDimension(serverPlayer);
 		ServerLevel respawnWorld = SuperpositionHandler.getWorld(respawnDimension);
 
 		serverPlayer.level.playSound(null, serverPlayer.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
@@ -1095,7 +1103,7 @@ public class SuperpositionHandler {
 	}
 
 	public static DimensionalPosition getRespawnPoint(ServerPlayer serverPlayer) {
-		RegistryKey<World> respawnDimension = AdvancedSpawnLocationHelper.getPlayerRespawnDimension(serverPlayer);
+		ResourceKey<Level> respawnDimension = AdvancedSpawnLocationHelper.getPlayerRespawnDimension(serverPlayer);
 		ServerLevel respawnWorld = SuperpositionHandler.getWorld(respawnDimension);
 
 		Optional<Vec3> currentDimensionRespawnCoords = AdvancedSpawnLocationHelper.getValidSpawn(respawnWorld, serverPlayer);
@@ -1122,7 +1130,7 @@ public class SuperpositionHandler {
 			 */
 			trueVec = new Vec3(destinationWorld.getSharedSpawnPos().getX() + 0.5, destinationWorld.getSharedSpawnPos().getY() + 0.5, destinationWorld.getSharedSpawnPos().getZ() + 0.5);
 
-			while (!destinationWorld.getBlockState(new BlockPos(trueVec)).isAir(destinationWorld, new BlockPos(trueVec)) && trueVec.y < 255.0D) {
+			while (!destinationWorld.getBlockState(new BlockPos(trueVec)).isAir() && trueVec.y < 255.0D) {
 				trueVec = trueVec.add(0, 1D, 0);
 			}
 
@@ -1132,12 +1140,12 @@ public class SuperpositionHandler {
 	}
 
 	public static void removeAttributeMap(Player player, Multimap<Attribute, AttributeModifier> attributes) {
-		AttributeModifierManager map = player.getAttributes();
+		AttributeMap map = player.getAttributes();
 		map.removeAttributeModifiers(attributes);
 	}
 
 	public static void applyAttributeMap(Player player, Multimap<Attribute, AttributeModifier> attributes) {
-		AttributeModifierManager map = player.getAttributes();
+		AttributeMap map = player.getAttributes();
 
 		map.addTransientAttributeModifiers(attributes);
 	}
@@ -1184,7 +1192,7 @@ public class SuperpositionHandler {
 
 		equipmentStacks.add(player.getMainHandItem());
 		equipmentStacks.add(player.getOffhandItem());
-		equipmentStacks.addAll(player.inventory.armor);
+		equipmentStacks.addAll(player.getInventory().armor);
 
 		if (CuriosApi.getCuriosHelper().getCuriosHandler(player).isPresent()) {
 			ICuriosItemHandler handler = CuriosApi.getCuriosHelper().getCuriosHandler(player).orElse(null);
@@ -1283,7 +1291,7 @@ public class SuperpositionHandler {
 		List<ModFileScanData.AnnotationData> list = new ArrayList<>();
 
 		for (ModFileScanData.AnnotationData annotation : modFileInfo.getAnnotations()) {
-			if (annotation.getAnnotationType().getClassName().equals(annotationClass.getName())) {
+			if (annotation.annotationType().getClassName().equals(annotationClass.getName())) {
 				list.add(annotation);
 			}
 		}
@@ -1302,13 +1310,13 @@ public class SuperpositionHandler {
 	public static void dispatchWrapperToHolders(String modid, OmniconfigWrapper wrapper) {
 		for (ModFileScanData.AnnotationData annotationData : retainConfigHolderAnnotations(modid)) {
 			try {
-				Class<?> retainerClass = Class.forName(annotationData.getClassType().getClassName());
-				String methodName = annotationData.getMemberName().split("\\(")[0];
+				Class<?> retainerClass = Class.forName(annotationData.clazz().getClassName());
+				String methodName = annotationData.memberName().split("\\(")[0];
 
 				boolean receiveClient;
 
-				if (annotationData.getAnnotationData().get("receiveClient") != null) {
-					receiveClient = (boolean) annotationData.getAnnotationData().get("receiveClient");
+				if (annotationData.annotationData().get("receiveClient") != null) {
+					receiveClient = (boolean) annotationData.annotationData().get("receiveClient");
 				} else {
 					receiveClient = SubscribeConfig.defaultReceiveClient;
 				}
@@ -1329,9 +1337,9 @@ public class SuperpositionHandler {
 
 		for (ModFileScanData.AnnotationData annotationData : retainConfigurableItemAnnotations(modid)) {
 			try {
-				Class<?> retainerClass = Class.forName(annotationData.getClassType().getClassName());
-				String itemName = (String) annotationData.getAnnotationData().get("value");
-				String fieldName = annotationData.getMemberName();
+				Class<?> retainerClass = Class.forName(annotationData.clazz().getClassName());
+				String itemName = (String) annotationData.annotationData().get("value");
+				String fieldName = annotationData.memberName();
 
 				Field field = retainerClass.getDeclaredField(fieldName);
 				if (!itemName.isEmpty()) {
@@ -1364,7 +1372,7 @@ public class SuperpositionHandler {
 		double d0 = vector3d1.length();
 		vector3d1 = vector3d1.normalize();
 		double d1 = vector3d.dot(vector3d1);
-		return d1 > 1.0D - 0.025D / d0 ? player.canSee(living) : false;
+		return d1 > 1.0D - 0.025D / d0 ? player.hasLineOfSight(living) : false;
 	}
 
 	public static double getRandomNegative() {

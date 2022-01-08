@@ -24,7 +24,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifierManager;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -101,13 +101,13 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, Vanishab
 
 	public void applyPlayerSoulMap(Player player) {
 		Multimap<Attribute, AttributeModifier> soulMap = this.getOrCreateSoulMap(player);
-		AttributeModifierManager attributeManager = player.getAttributes();
+		AttributeMap attributeManager = player.getAttributes();
 		attributeManager.addTransientAttributeModifiers(soulMap);
 	}
 
 	public void updatePlayerSoulMap(Player player) {
 		Multimap<Attribute, AttributeModifier> soulMap = this.getOrCreateSoulMap(player);
-		AttributeModifierManager attributeManager = player.getAttributes();
+		AttributeMap attributeManager = player.getAttributes();
 
 		// Removes former attributes
 		attributeManager.removeAttributeModifiers(soulMap);

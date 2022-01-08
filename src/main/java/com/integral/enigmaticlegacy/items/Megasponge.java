@@ -95,7 +95,7 @@ public class Megasponge extends ItemBaseCurio implements Vanishable {
 			return null;
 		else {
 			try {
-				net.minecraft.core.BlockPos.Mutable blockpos$pooledmutableblockpos = new BlockPos.Mutable();
+				net.minecraft.core.BlockPos.MutableBlockPos blockpos$pooledmutableblockpos = new BlockPos.MutableBlockPos();
 
 				for (int l1 = i; l1 < j; ++l1) {
 					for (int i2 = k; i2 < l; ++i2) {

@@ -219,7 +219,6 @@ import net.minecraftforge.registries.ObjectHolder;
 
 @Mod(EnigmaticLegacy.MODID)
 public class EnigmaticLegacy {
-
 	public static final String MODID = "enigmaticlegacy";
 	public static final String VERSION = "2.11.9";
 	public static final String RELEASE_TYPE = "Release";

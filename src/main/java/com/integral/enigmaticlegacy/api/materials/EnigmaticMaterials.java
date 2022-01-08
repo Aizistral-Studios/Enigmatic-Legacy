@@ -6,19 +6,17 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.etherium.core.IEtheriumConfig;
 
-import net.minecraft.world.item.IItemTier;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.util.LazyValue;
 
 /**
  * Tools material provider.
  * @author Integral
  */
 
-public enum EnigmaticMaterials implements IItemTier {
+public enum EnigmaticMaterials implements Tier {
 	FORBIDDENAXE(0, 2000, 6.0F, 3.0F, 16, () -> Ingredient.EMPTY),
-
-	ETHERIUM(4, 3000, 8.0F, 5.0F, 32, () -> getEtheriumConfig().getRepairMaterial());
+	ETHERIUM(4, 3000, 8.0F, 5.0F, 32, getEtheriumConfig()::getRepairMaterial);
 
 	private static IEtheriumConfig etheriumConfig;
 
@@ -27,7 +25,7 @@ public enum EnigmaticMaterials implements IItemTier {
 	private final float efficiency;
 	private final float attackDamage;
 	private final int enchantability;
-	private final LazyValue<Ingredient> repairMaterial;
+	private final Supplier<Ingredient> repairMaterial;
 
 	private EnigmaticMaterials(int harvestLevelIn, int maxUsesIn, float efficiencyIn, float attackDamageIn, int enchantabilityIn, Supplier<Ingredient> repairMaterialIn) {
 		this.harvestLevel = harvestLevelIn;
@@ -35,7 +33,7 @@ public enum EnigmaticMaterials implements IItemTier {
 		this.efficiency = efficiencyIn;
 		this.attackDamage = attackDamageIn;
 		this.enchantability = enchantabilityIn;
-		this.repairMaterial = new LazyValue<>(repairMaterialIn);
+		this.repairMaterial = repairMaterialIn;
 	}
 
 	@Override

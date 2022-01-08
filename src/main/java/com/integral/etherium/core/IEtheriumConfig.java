@@ -9,8 +9,8 @@ import com.integral.etherium.items.EtheriumPickaxe;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.IItemTier;
-import net.minecraft.world.item.ItemGroup;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.fml.ModList;
@@ -19,13 +19,13 @@ public interface IEtheriumConfig {
 
 	public Ingredient getRepairMaterial();
 
-	public ItemGroup getCreativeTab();
+	public CreativeModeTab getCreativeTab();
 
 	public String getOwnerMod();
 
 	public ArmorMaterial getArmorMaterial();
 
-	public IItemTier getToolMaterial();
+	public Tier getToolMaterial();
 
 	public Perhaps getShieldThreshold();
 

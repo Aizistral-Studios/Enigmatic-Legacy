@@ -5,9 +5,9 @@ import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 
 import net.minecraft.world.item.enchantment.DamageEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentType;
-import net.minecraft.world.item.enchantment.ImpalingEnchantment;
-import net.minecraft.world.entity.CreatureAttribute;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.TridentImpalerEnchantment;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class WrathEnchantment extends Enchantment {
 	public WrathEnchantment(EquipmentSlot... slots) {
-		super(Enchantment.Rarity.RARE, EnchantmentType.TRIDENT, slots);
+		super(Enchantment.Rarity.RARE, EnchantmentCategory.TRIDENT, slots);
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "wrath"));
 	}
 
@@ -41,7 +41,7 @@ public class WrathEnchantment extends Enchantment {
 
 	@Override
 	public boolean checkCompatibility(Enchantment ench) {
-		return !(ench instanceof DamageEnchantment) && !(ench instanceof ImpalingEnchantment) && !(ench instanceof TorrentEnchantment) && super.checkCompatibility(ench);
+		return !(ench instanceof DamageEnchantment) && !(ench instanceof TridentImpalerEnchantment) && !(ench instanceof TorrentEnchantment) && super.checkCompatibility(ench);
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class WrathEnchantment extends Enchantment {
 	}
 
 	@Override
-	public float getDamageBonus(int level, CreatureAttribute creatureType) {
+	public float getDamageBonus(int level, MobType creatureType) {
 		return level * 1.25F;
 	}
 }

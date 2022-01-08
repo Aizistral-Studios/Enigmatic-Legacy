@@ -4,24 +4,24 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.items.RevelationTome;
 
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.IRandomRange;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.LootFunction;
-import net.minecraft.world.level.storage.loot.LootFunctionType;
-import net.minecraft.world.level.storage.loot.conditions.ILootCondition;
-import net.minecraft.world.level.storage.loot.functions.ILootFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 
-public class LootFunctionRevelation implements ILootFunction {
-	private final IRandomRange randomPoints;
-	private final IRandomRange randomXP;
+public class LootFunctionRevelation implements LootItemFunction {
+	private final NumberProvider randomPoints;
+	private final NumberProvider randomXP;
 
-	private LootFunctionRevelation(ILootCondition[] conditions, IRandomRange minMaxPoints, IRandomRange minMaxXP) {
+	private LootFunctionRevelation(LootItemCondition[] conditions, NumberProvider minMaxPoints, NumberProvider minMaxXP) {
 		this.randomPoints = minMaxPoints;
 		this.randomXP = minMaxXP;
 	}
 
 	@Override
-	public LootFunctionType getType() {
+	public LootItemFunctionType getType() {
 		//return LootFunctionManager.ENCHANT_WITH_LEVELS;
 		EnigmaticLegacy.logger.info("Substituting LootFunctionType with null...");
 
@@ -35,21 +35,22 @@ public class LootFunctionRevelation implements ILootFunction {
 
 	@Override
 	public ItemStack apply(ItemStack stack, LootContext context) {
-		if (stack.getItem() instanceof RevelationTome)
-			stack.setTag(((RevelationTome)stack.getItem()).createTome(this.randomPoints.getInt(context.getRandom()), this.randomXP.getInt(context.getRandom())).getTag().copy());
+		if (stack.getItem() instanceof RevelationTome) {
+			stack.setTag(((RevelationTome)stack.getItem()).createTome(this.randomPoints.getInt(context), this.randomXP.getInt(context)).getTag().copy());
+		}
 
 		return stack;
 	}
 
-	public static LootFunctionRevelation.Builder of(IRandomRange minMaxPoints, IRandomRange minMaxXP) {
+	public static LootFunctionRevelation.Builder of(NumberProvider minMaxPoints, NumberProvider minMaxXP) {
 		return new LootFunctionRevelation.Builder(minMaxPoints, minMaxXP);
 	}
 
-	public static class Builder extends LootFunction.Builder<LootFunctionRevelation.Builder> {
-		private final IRandomRange randomPoints;
-		private final IRandomRange randomXP;
+	public static class Builder extends LootItemConditionalFunction.Builder<LootFunctionRevelation.Builder> {
+		private final NumberProvider randomPoints;
+		private final NumberProvider randomXP;
 
-		public Builder(IRandomRange minMaxPoints, IRandomRange minMaxXP) {
+		public Builder(NumberProvider minMaxPoints, NumberProvider minMaxXP) {
 			this.randomPoints = minMaxPoints;
 			this.randomXP = minMaxXP;
 		}
@@ -60,7 +61,7 @@ public class LootFunctionRevelation implements ILootFunction {
 		}
 
 		@Override
-		public ILootFunction build() {
+		public LootItemFunction build() {
 			return new LootFunctionRevelation(this.getConditions(), this.randomPoints, this.randomXP);
 		}
 	}

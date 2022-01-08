@@ -2,13 +2,13 @@ package com.integral.enigmaticlegacy.crafting;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.world.inventory.CraftingInventory;
+import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.IRecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -32,17 +32,17 @@ public class ShapelessNoReturnRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public NonNullList<ItemStack> getRemainingItems(CraftingInventory inv) {
+	public NonNullList<ItemStack> getRemainingItems(CraftingContainer inv) {
 		NonNullList<ItemStack> nonnulllist = NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
 		return nonnulllist;
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return EnigmaticRecipeSerializers.SHAPELESS_NO_RETURN;
 	}
 
-	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ShapelessNoReturnRecipe> {
+	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ShapelessNoReturnRecipe> {
 		@Override
 		public ShapelessNoReturnRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			ShapelessRecipe recipe = SHAPELESS_RECIPE.fromJson(recipeId, json);

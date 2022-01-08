@@ -6,13 +6,13 @@ import java.util.List;
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
-import net.minecraft.world.inventory.CraftingInventory;
+import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.IRecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -28,7 +28,7 @@ public class MendingMixtureRepairRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingInventory inv) {
+	public ItemStack assemble(CraftingContainer inv) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		
 		for (int i = 0; i < inv.getContainerSize(); i++) {
@@ -51,7 +51,7 @@ public class MendingMixtureRepairRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, Level world) {
+	public boolean matches(CraftingContainer inv, Level world) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		
 		for (int i = 0; i < inv.getContainerSize(); i++) {
@@ -80,11 +80,11 @@ public class MendingMixtureRepairRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return EnigmaticRecipeSerializers.CRAFTING_MENDING_MIXTURE_REPAIR;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<MendingMixtureRepairRecipe> {
+	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<MendingMixtureRepairRecipe> {
 		@Override
 		public MendingMixtureRepairRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			return new MendingMixtureRepairRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());

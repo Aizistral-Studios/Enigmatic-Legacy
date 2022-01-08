@@ -24,7 +24,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifierManager;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -175,7 +175,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 		if (living instanceof Player) {
 			Player player = (Player) living;
 
-			AttributeModifierManager map = player.getAttributes();
+			AttributeMap map = player.getAttributes();
 			map.removeAttributeModifiers(this.attributesDefault);
 			map.removeAttributeModifiers(this.attributesNoArmor);
 		}
@@ -186,7 +186,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 		if (living instanceof Player) {
 			Player player = (Player) living;
 
-			AttributeModifierManager map = player.getAttributes();
+			AttributeMap map = player.getAttributes();
 
 			if (SuperpositionHandler.hasAnyArmor(player)) {
 				// Removes attributes

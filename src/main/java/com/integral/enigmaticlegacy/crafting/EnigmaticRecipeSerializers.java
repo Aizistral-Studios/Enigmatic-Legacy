@@ -3,22 +3,22 @@ package com.integral.enigmaticlegacy.crafting;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.objects.EnabledCondition;
 
-import net.minecraft.world.item.crafting.IRecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnigmaticRecipeSerializers {
-	public static final IRecipeSerializer<MendingMixtureRepairRecipe> CRAFTING_MENDING_MIXTURE_REPAIR = new MendingMixtureRepairRecipe.Serializer();
-	public static final IRecipeSerializer<ShapelessNoReturnRecipe> SHAPELESS_NO_RETURN = new ShapelessNoReturnRecipe.Serializer();
-	public static final IRecipeSerializer<OblivionStoneCombineRecipe> OBLIVION_STONE_COMBINE = new OblivionStoneCombineRecipe.Serializer();
-	public static final IRecipeSerializer<EnchantmentTransposingRecipe> ENCHANTMENT_TRANSPOSING = new EnchantmentTransposingRecipe.Serializer();
-	public static final IRecipeSerializer<BindToPlayerRecipe> BIND_TO_PLAYER = new BindToPlayerRecipe.Serializer();
-	public static final IRecipeSerializer<CursedShapedRecipe> CURSED_SHAPED = new CursedShapedRecipe.Serializer();
+	public static final RecipeSerializer<MendingMixtureRepairRecipe> CRAFTING_MENDING_MIXTURE_REPAIR = new MendingMixtureRepairRecipe.Serializer();
+	public static final RecipeSerializer<ShapelessNoReturnRecipe> SHAPELESS_NO_RETURN = new ShapelessNoReturnRecipe.Serializer();
+	public static final RecipeSerializer<OblivionStoneCombineRecipe> OBLIVION_STONE_COMBINE = new OblivionStoneCombineRecipe.Serializer();
+	public static final RecipeSerializer<EnchantmentTransposingRecipe> ENCHANTMENT_TRANSPOSING = new EnchantmentTransposingRecipe.Serializer();
+	public static final RecipeSerializer<BindToPlayerRecipe> BIND_TO_PLAYER = new BindToPlayerRecipe.Serializer();
+	public static final RecipeSerializer<CursedShapedRecipe> CURSED_SHAPED = new CursedShapedRecipe.Serializer();
 
 	@SubscribeEvent
-	public void onRegisterSerializers(RegistryEvent.Register<IRecipeSerializer<?>> event) {
+	public void onRegisterSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
 		EnigmaticLegacy.logger.info("Initializing recipe serializers registration...");
 		CraftingHelper.register(EnabledCondition.Serializer.INSTANCE);
 

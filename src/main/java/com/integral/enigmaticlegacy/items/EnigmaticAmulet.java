@@ -27,7 +27,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifierManager;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.brain.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.HoglinEntity;
@@ -39,7 +39,7 @@ import net.minecraft.world.item.ItemGroup;
 import net.minecraft.world.item.ItemModelsProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
@@ -288,7 +288,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		if (living instanceof Player) {
 			Player player = (Player) living;
 
-			AttributeModifierManager map = player.getAttributes();
+			AttributeMap map = player.getAttributes();
 			map.removeAttributeModifiers(this.getAllModifiers());
 		}
 	}
@@ -301,7 +301,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 			ItemStack amulet = SuperpositionHandler.getCurioStack(player, this);
 
 			if (amulet != null) {
-				AttributeModifierManager map = player.getAttributes();
+				AttributeMap map = player.getAttributes();
 				map.addTransientAttributeModifiers(this.getCurrentModifiers(amulet, player));
 			}
 		}

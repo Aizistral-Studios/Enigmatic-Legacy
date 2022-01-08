@@ -4,34 +4,32 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.Registry;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.item.enchantment.EnchantmentData;
+import net.minecraft.world.level.block.EnchantmentTableBlock;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.inventory.EnchantmentMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.inventory.IInventory;
-import net.minecraft.world.inventory.Inventory;
-import net.minecraft.world.inventory.container.Container;
-import net.minecraft.world.inventory.container.EnchantmentContainer;
-import net.minecraft.world.inventory.container.Slot;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ContainerLevelAccess;
-import net.minecraft.util.IntReferenceHolder;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.registry.Registry;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
-
-	private IInventory tableInventory = new Inventory(2) {
-
+public class EnigmaticEnchantmentContainer extends EnchantmentMenu {
+	private Container tableInventory = new SimpleContainer(2) {
 		@Override
 		public void setChanged() {
 			super.setChanged();
@@ -41,13 +39,13 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 
 	private ContainerLevelAccess worldPosCallable;
 	private Random rand = new Random();
-	private IntReferenceHolder xpSeed = IntReferenceHolder.standalone();
+	private DataSlot xpSeed = DataSlot.standalone();
 	public int[] enchantLevels = new int[3];
 	public int[] enchantClue = new int[] { -1, -1, -1 };
 	public int[] worldClue = new int[] { -1, -1, -1 };
 
-	public static EnigmaticEnchantmentContainer fromOld(EnchantmentContainer oldContainer, Player player) throws IllegalArgumentException, IllegalAccessException {
-		EnigmaticEnchantmentContainer newContainer = new EnigmaticEnchantmentContainer(oldContainer.containerId, player.inventory, oldContainer.access);
+	public static EnigmaticEnchantmentContainer fromOld(EnchantmentMenu oldContainer, Player player) throws IllegalArgumentException, IllegalAccessException {
+		EnigmaticEnchantmentContainer newContainer = new EnigmaticEnchantmentContainer(oldContainer.containerId, player.getInventory(), oldContainer.access);
 
 		newContainer.tableInventory = oldContainer.enchantSlots;
 		newContainer.enchantLevels = oldContainer.costs;
@@ -99,20 +97,20 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 			this.addSlot(new Slot(Inventory, k, 8 + k * 18, 142));
 		}
 
-		this.addDataSlot(IntReferenceHolder.shared(this.enchantLevels, 0));
-		this.addDataSlot(IntReferenceHolder.shared(this.enchantLevels, 1));
-		this.addDataSlot(IntReferenceHolder.shared(this.enchantLevels, 2));
+		this.addDataSlot(DataSlot.shared(this.enchantLevels, 0));
+		this.addDataSlot(DataSlot.shared(this.enchantLevels, 1));
+		this.addDataSlot(DataSlot.shared(this.enchantLevels, 2));
 		this.addDataSlot(this.xpSeed).set(Inventory.player.getEnchantmentSeed());
-		this.addDataSlot(IntReferenceHolder.shared(this.enchantClue, 0));
-		this.addDataSlot(IntReferenceHolder.shared(this.enchantClue, 1));
-		this.addDataSlot(IntReferenceHolder.shared(this.enchantClue, 2));
-		this.addDataSlot(IntReferenceHolder.shared(this.worldClue, 0));
-		this.addDataSlot(IntReferenceHolder.shared(this.worldClue, 1));
-		this.addDataSlot(IntReferenceHolder.shared(this.worldClue, 2));
+		this.addDataSlot(DataSlot.shared(this.enchantClue, 0));
+		this.addDataSlot(DataSlot.shared(this.enchantClue, 1));
+		this.addDataSlot(DataSlot.shared(this.enchantClue, 2));
+		this.addDataSlot(DataSlot.shared(this.worldClue, 0));
+		this.addDataSlot(DataSlot.shared(this.worldClue, 1));
+		this.addDataSlot(DataSlot.shared(this.worldClue, 2));
 	}
 
 	@Override
-	public void slotsChanged(IInventory inventoryIn) {
+	public void slotsChanged(Container inventoryIn) {
 		if (inventoryIn == this.tableInventory) {
 			ItemStack itemstack = inventoryIn.getItem(0);
 			if (!itemstack.isEmpty() && itemstack.isEnchantable()) {
@@ -149,9 +147,9 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 
 					for (int j1 = 0; j1 < 3; ++j1) {
 						if (this.enchantLevels[j1] > 0) {
-							List<EnchantmentData> list = this.getEnchantmentList(itemstack, j1, this.enchantLevels[j1]);
+							List<EnchantmentInstance> list = this.getEnchantmentList(itemstack, j1, this.enchantLevels[j1]);
 							if (list != null && !list.isEmpty()) {
-								EnchantmentData enchantmentdata = list.get(this.rand.nextInt(list.size()));
+								EnchantmentInstance enchantmentdata = list.get(this.rand.nextInt(list.size()));
 								this.enchantClue[j1] = Registry.ENCHANTMENT.getId(enchantmentdata.enchantment);
 								this.worldClue[j1] = enchantmentdata.level;
 							}
@@ -182,14 +180,14 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 		ItemStack itemstack = this.tableInventory.getItem(0);
 		ItemStack itemstack1 = this.tableInventory.getItem(1);
 		int i = id + 1;
-		if ((itemstack1.isEmpty() || itemstack1.getCount() < i) && !playerIn.abilities.instabuild)
+		if ((itemstack1.isEmpty() || itemstack1.getCount() < i) && !playerIn.getAbilities().instabuild)
 			return false;
-		else if (this.enchantLevels[id] <= 0 || itemstack.isEmpty() || (playerIn.experienceLevel < i || playerIn.experienceLevel < this.enchantLevels[id]) && !playerIn.abilities.instabuild)
+		else if (this.enchantLevels[id] <= 0 || itemstack.isEmpty() || (playerIn.experienceLevel < i || playerIn.experienceLevel < this.enchantLevels[id]) && !playerIn.getAbilities().instabuild)
 			return false;
 		else {
 			this.worldPosCallable.execute((p_217003_6_, p_217003_7_) -> {
 				ItemStack itemstack2 = itemstack;
-				List<EnchantmentData> list = this.getEnchantmentList(itemstack, id, this.enchantLevels[id]);
+				List<EnchantmentInstance> list = this.getEnchantmentList(itemstack, id, this.enchantLevels[id]);
 				if (!list.isEmpty()) {
 					playerIn.onEnchantmentPerformed(itemstack, i);
 					boolean flag = itemstack.getItem() == Items.BOOK;
@@ -203,8 +201,7 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 						this.tableInventory.setItem(0, itemstack2);
 					}
 
-					for (int j = 0; j < list.size(); ++j) {
-						EnchantmentData enchantmentdata = list.get(j);
+					for (EnchantmentInstance enchantmentdata : list) {
 						if (flag) {
 							EnchantedBookItem.addEnchantment(itemstack2, enchantmentdata);
 						} else {
@@ -212,7 +209,7 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 						}
 					}
 
-					if (!playerIn.abilities.instabuild) {
+					if (!playerIn.getAbilities().instabuild) {
 						itemstack1.shrink(i);
 						if (itemstack1.isEmpty()) {
 							this.tableInventory.setItem(1, ItemStack.EMPTY);
@@ -236,9 +233,9 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 	}
 
 	@Override
-	public List<EnchantmentData> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
+	public List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int enchantSlot, int level) {
 		this.rand.setSeed(this.xpSeed.get() + enchantSlot);
-		List<EnchantmentData> list = EnchantmentHelper.selectEnchantment(this.rand, stack, level, false);
+		List<EnchantmentInstance> list = EnchantmentHelper.selectEnchantment(this.rand, stack, level, false);
 		if (stack.getItem() == Items.BOOK && list.size() > 1) {
 			list.remove(this.rand.nextInt(list.size()));
 		}
@@ -266,7 +263,7 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 	public void removed(Player playerIn) {
 		super.removed(playerIn);
 		this.worldPosCallable.execute((p_217004_2_, p_217004_3_) -> {
-			this.clearContainer(playerIn, playerIn.level, this.tableInventory);
+			this.clearContainer(playerIn, this.tableInventory);
 		});
 	}
 
@@ -275,7 +272,7 @@ public class EnigmaticEnchantmentContainer extends EnchantmentContainer {
 	 */
 	@Override
 	public boolean stillValid(Player playerIn) {
-		return Container.stillValid(this.worldPosCallable, playerIn, Blocks.ENCHANTING_TABLE);
+		return stillValid(this.worldPosCallable, playerIn, Blocks.ENCHANTING_TABLE);
 	}
 
 	/**

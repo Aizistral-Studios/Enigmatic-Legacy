@@ -8,10 +8,10 @@ import com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack;
 
 import net.minecraft.world.item.enchantment.DamageEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentType;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.MonsterEntity;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.AxeItem;
@@ -22,7 +22,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class SlayerEnchantment extends Enchantment {
 	public SlayerEnchantment(EquipmentSlot... slots) {
-		super(Enchantment.Rarity.COMMON, EnchantmentType.WEAPON, slots);
+		super(Enchantment.Rarity.COMMON, EnchantmentCategory.WEAPON, slots);
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "slayer"));
 	}
 
@@ -67,7 +67,7 @@ public class SlayerEnchantment extends Enchantment {
 	}
 
 	public float bonusDamageByCreature(LivingEntity attacker, LivingEntity living, int level) {
-		float calculated = living instanceof MonsterEntity ? level * 1.5F : 0F;
+		float calculated = living instanceof Monster ? level * 1.5F : 0F;
 		calculated*= getRegisteredAttackStregth(attacker);
 		return calculated;
 	}

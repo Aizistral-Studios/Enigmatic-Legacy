@@ -8,17 +8,17 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.items.OblivionStone;
 
-import net.minecraft.world.inventory.CraftingInventory;
+import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.IRecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -35,7 +35,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingInventory inv) {
+	public ItemStack assemble(CraftingContainer inv) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		ItemStack voidStone = null;
 
@@ -67,7 +67,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 			if (arr.size() >= OblivionStone.itemHardcap.getValue())
 				return null;
 
-			for (INBT s_uncast : arr) {
+			for (Tag s_uncast : arr) {
 				counter++;
 
 				String s = ((StringTag)s_uncast).getAsString();
@@ -98,7 +98,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, Level world) {
+	public boolean matches(CraftingContainer inv, Level world) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		ItemStack voidStone = null;
 
@@ -130,7 +130,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 			if (arr.size() >= OblivionStone.itemHardcap.getValue())
 				return false;
 
-			for (INBT s_uncast : arr) {
+			for (Tag s_uncast : arr) {
 				counter++;
 
 				String s = ((StringTag)s_uncast).getAsString();
@@ -148,7 +148,7 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public NonNullList<ItemStack> getRemainingItems(CraftingInventory inv) {
+	public NonNullList<ItemStack> getRemainingItems(CraftingContainer inv) {
 		NonNullList<ItemStack> nonnulllist = NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
 		return nonnulllist;
 	}
@@ -164,11 +164,11 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return EnigmaticRecipeSerializers.OBLIVION_STONE_COMBINE;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<OblivionStoneCombineRecipe> {
+	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<OblivionStoneCombineRecipe> {
 		@Override
 		public OblivionStoneCombineRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			return new OblivionStoneCombineRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());

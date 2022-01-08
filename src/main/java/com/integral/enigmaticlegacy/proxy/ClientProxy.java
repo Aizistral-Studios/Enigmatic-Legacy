@@ -36,7 +36,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAction;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.core.Direction;
-import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceKey;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
@@ -118,7 +118,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public boolean isInDimension(Player player, RegistryKey<World> world) {
+	public boolean isInDimension(Player player, ResourceKey<Level> world) {
 		return player.level.dimension().equals(world);
 	}
 

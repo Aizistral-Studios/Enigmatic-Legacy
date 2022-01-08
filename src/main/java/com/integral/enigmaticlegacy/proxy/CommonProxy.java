@@ -14,12 +14,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAction;
-import net.minecraft.util.RegistryKey;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraftforge.fmllegacy.server.ServerLifecycleHooks;
 
 public class CommonProxy {
 
@@ -54,7 +53,7 @@ public class CommonProxy {
 		return serverPlayer.getLevel().dimension().equals(this.getOverworldKey()) || serverPlayer.getLevel().dimension().equals(this.getNetherKey()) || serverPlayer.getLevel().dimension().equals(this.getEndKey());
 	}
 
-	public boolean isInDimension(Player player, RegistryKey<World> world) {
+	public boolean isInDimension(Player player, ResourceKey<Level> world) {
 		ServerPlayer serverPlayer = (ServerPlayer) player;
 		return serverPlayer.getLevel().dimension().equals(world);
 	}
@@ -63,16 +62,16 @@ public class CommonProxy {
 		return SuperpositionHandler.getOverworld();
 	}
 
-	public RegistryKey<World> getOverworldKey() {
-		return World.OVERWORLD;
+	public ResourceKey<Level> getOverworldKey() {
+		return Level.OVERWORLD;
 	}
 
-	public RegistryKey<World> getNetherKey() {
-		return World.NETHER;
+	public ResourceKey<Level> getNetherKey() {
+		return Level.NETHER;
 	}
 
-	public RegistryKey<World> getEndKey() {
-		return World.END;
+	public ResourceKey<Level> getEndKey() {
+		return Level.END;
 	}
 
 	public UseAction getVisualBlockAction() {
