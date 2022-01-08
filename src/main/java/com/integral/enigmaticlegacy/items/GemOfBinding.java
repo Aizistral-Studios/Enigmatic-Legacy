@@ -16,8 +16,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.util.InteractionResult;
+import net.minecraft.util.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
@@ -56,7 +56,7 @@ public class GemOfBinding extends ItemBase implements Vanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player player, Hand hand) {
+	public ActionResult<ItemStack> use(Level worldIn, Player player, InteractionHand hand) {
 		ItemStack itemstack = player.getItemInHand(hand);
 
 		if (player.isCrouching()) {
@@ -66,10 +66,10 @@ public class GemOfBinding extends ItemBase implements Vanishable {
 			worldIn.playSound(null, player.blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 
 			player.swing(hand);
-			return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
+			return new ActionResult<>(InteractionResult.SUCCESS, itemstack);
 		}
 
-		return new ActionResult<>(ActionResultType.FAIL, itemstack);
+		return new ActionResult<>(InteractionResult.FAIL, itemstack);
 	}
 
 }

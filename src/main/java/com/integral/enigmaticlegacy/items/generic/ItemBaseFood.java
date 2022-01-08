@@ -10,8 +10,8 @@ import net.minecraft.world.item.UseAction;
 import net.minecraft.world.item.Food;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.util.InteractionResult;
+import net.minecraft.util.InteractionHand;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -44,11 +44,11 @@ public abstract class ItemBaseFood extends ItemBase {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		if (this.canEat(worldIn, playerIn, playerIn.getItemInHand(handIn)))
 			return super.use(worldIn, playerIn, handIn);
 		else
-			return new ActionResult<>(ActionResultType.PASS, playerIn.getItemInHand(handIn));
+			return new ActionResult<>(InteractionResult.PASS, playerIn.getItemInHand(handIn));
 	}
 
 	protected static Food buildDefaultFood() {

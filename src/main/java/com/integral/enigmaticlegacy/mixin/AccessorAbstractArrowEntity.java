@@ -3,9 +3,9 @@ package com.integral.enigmaticlegacy.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
-import net.minecraft.world.entity.projectile.AbstractArrowEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 
-@Mixin(AbstractArrowEntity.class)
+@Mixin(AbstractArrow.class)
 public interface AccessorAbstractArrowEntity {
 
 	@Invoker("resetPiercedEntities")

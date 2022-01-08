@@ -7,7 +7,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
-import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.EntitySelector;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.resources.ResourceLocation;
@@ -26,7 +26,7 @@ public class RevelationTomeBurntTrigger extends SimpleCriterionTrigger<Revelatio
 
 	@Nonnull
 	@Override
-	public RevelationTomeBurntTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.Composite playerPred, DeserializationContext conditions) {
+	public RevelationTomeBurntTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntitySelector.Composite playerPred, DeserializationContext conditions) {
 		return new RevelationTomeBurntTrigger.Instance(playerPred);
 	}
 
@@ -35,7 +35,7 @@ public class RevelationTomeBurntTrigger extends SimpleCriterionTrigger<Revelatio
 	}
 
 	static class Instance extends AbstractCriterionTriggerInstance {
-		Instance(EntityPredicate.Composite playerPred) {
+		Instance(EntitySelector.Composite playerPred) {
 			super(RevelationTomeBurntTrigger.ID, playerPred);
 		}
 

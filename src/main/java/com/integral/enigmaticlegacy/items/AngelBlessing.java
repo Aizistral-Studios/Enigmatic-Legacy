@@ -23,9 +23,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.projectile.AbstractArrowEntity;
-import net.minecraft.world.entity.projectile.DamagingProjectileEntity;
-import net.minecraft.world.entity.projectile.TridentEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.entity.projectile.WitherSkullEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -142,14 +142,14 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
 		/*
-		List<DamagingProjectileEntity> projectileEntities = living.world.getEntitiesWithinAABB(DamagingProjectileEntity.class, new AABB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));
-		List<AbstractArrowEntity> arrowEntities = living.world.getEntitiesWithinAABB(AbstractArrowEntity.class, new AABB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));
+		List<AbstractHurtingProjectile> projectileEntities = living.world.getEntitiesWithinAABB(AbstractHurtingProjectile.class, new AABB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));
+		List<AbstractArrow> arrowEntities = living.world.getEntitiesWithinAABB(AbstractArrow.class, new AABB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));
 		List<PotionEntity> potionEntities = living.world.getEntitiesWithinAABB(PotionEntity.class, new AABB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));
 
-		for (DamagingProjectileEntity entity : projectileEntities)
+		for (AbstractHurtingProjectile entity : projectileEntities)
 			this.redirect(living, entity);
 
-		for (AbstractArrowEntity entity : arrowEntities)
+		for (AbstractArrow entity : arrowEntities)
 			this.redirect(living, entity);
 
 		for (PotionEntity entity : potionEntities)
@@ -162,8 +162,8 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 			return;
 
 		/*
-		 * if (redirected instanceof TridentEntity) if
-		 * (((TridentEntity)redirected).getShooter() == bearer) return;
+		 * if (redirected instanceof ThrownTrident) if
+		 * (((ThrownTrident)redirected).getShooter() == bearer) return;
 		 */
 
 		Vector3 entityPos = Vector3.fromEntityCenter(redirected);
@@ -172,10 +172,10 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 		Vector3 redirection = entityPos.subtract(bearerPos);
 		redirection = redirection.normalize();
 
-		if (redirected instanceof AbstractArrowEntity && ((AbstractArrowEntity) redirected).getOwner() == bearer) {
+		if (redirected instanceof AbstractArrow && ((AbstractArrow) redirected).getOwner() == bearer) {
 
-			if (redirected instanceof TridentEntity) {
-				TridentEntity trident = (TridentEntity) redirected;
+			if (redirected instanceof ThrownTrident) {
+				ThrownTrident trident = (ThrownTrident) redirected;
 
 				if (trident.clientSideReturnTridentTickCount > 0)
 					return;
@@ -186,8 +186,8 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 			redirected.setDeltaMovement(redirection.x, redirection.y, redirection.z);
 		}
 
-		if (redirected instanceof DamagingProjectileEntity) {
-			DamagingProjectileEntity redirectedProjectile = (DamagingProjectileEntity) redirected;
+		if (redirected instanceof AbstractHurtingProjectile) {
+			AbstractHurtingProjectile redirectedProjectile = (AbstractHurtingProjectile) redirected;
 			redirectedProjectile.xPower = (redirection.x / 4.0);
 			redirectedProjectile.yPower = (redirection.y / 4.0);
 			redirectedProjectile.zPower = (redirection.z / 4.0);

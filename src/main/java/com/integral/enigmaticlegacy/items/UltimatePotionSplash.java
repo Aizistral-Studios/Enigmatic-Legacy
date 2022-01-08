@@ -22,8 +22,8 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.util.InteractionResult;
+import net.minecraft.util.InteractionHand;
 import net.minecraft.core.NonNullList;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
@@ -91,7 +91,7 @@ public class UltimatePotionSplash extends ItemBase implements IAdvancedPotionIte
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		ItemStack throwed = playerIn.abilities.instabuild ? itemstack.copy() : itemstack.split(1);
 
@@ -104,7 +104,7 @@ public class UltimatePotionSplash extends ItemBase implements IAdvancedPotionIte
 		}
 
 		playerIn.awardStat(Stats.ITEM_USED.get(this));
-		return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
+		return new ActionResult<>(InteractionResult.SUCCESS, itemstack);
 	}
 
 	@Override

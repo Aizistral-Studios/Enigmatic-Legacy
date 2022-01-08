@@ -23,8 +23,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.api.items.IItemCurio;
-import com.integral.enigmaticlegacy.api.items.ItemizedCurioInstance;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 import com.integral.enigmaticlegacy.config.JsonConfigHandler;
@@ -78,132 +76,116 @@ import com.integral.enigmaticlegacy.triggers.RevelationTomeBurntTrigger;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Matrix4f;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.toasts.Toast;
-import net.minecraft.client.gui.components.toasts.Toast;
-import net.minecraft.client.gui.screens.CreateWorldScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
-import net.minecraft.client.gui.screens.inventory.ContainerScreen;
-import net.minecraft.client.gui.screens.inventory.CreativeScreen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
-import net.minecraft.client.gui.widget.EditBox;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.CreatureEntity;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.IAngerable;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobEntity;
-import net.minecraft.world.entity.ai.brain.Brain;
-import net.minecraft.world.entity.ai.brain.BrainUtil;
-import net.minecraft.world.entity.ai.brain.memory.MemoryModuleType;
-import net.minecraft.world.entity.ai.brain.schedule.Activity;
-import net.minecraft.world.entity.ai.brain.task.FindInteractionAndLookTargetTask;
-import net.minecraft.world.entity.ai.brain.task.ForgetAttackTargetTask;
-import net.minecraft.world.entity.ai.brain.task.LookAtEntityTask;
-import net.minecraft.world.entity.ai.brain.task.SupplementedTask;
-import net.minecraft.world.entity.ai.brain.task.Task;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.world.entity.boss.WitherEntity;
-import net.minecraft.world.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.merchant.villager.VillagerEntity;
-import net.minecraft.world.entity.monster.BlazeEntity;
-import net.minecraft.world.entity.monster.CaveSpiderEntity;
-import net.minecraft.world.entity.monster.CreeperEntity;
-import net.minecraft.world.entity.monster.DrownedEntity;
-import net.minecraft.world.entity.monster.ElderGuardianEntity;
-import net.minecraft.world.entity.monster.EndermanEntity;
-import net.minecraft.world.entity.monster.EvokerEntity;
-import net.minecraft.world.entity.monster.GhastEntity;
+import net.minecraft.world.entity.monster.Blaze;
+import net.minecraft.world.entity.monster.CaveSpider;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Drowned;
+import net.minecraft.world.entity.monster.ElderGuardian;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Evoker;
+import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.Guardian;
-import net.minecraft.world.entity.monster.HoglinEntity;
-import net.minecraft.world.entity.monster.HuskEntity;
-import net.minecraft.world.entity.monster.MagmaCubeEntity;
-import net.minecraft.world.entity.monster.MonsterEntity;
-import net.minecraft.world.entity.monster.PhantomEntity;
-import net.minecraft.world.entity.monster.PillagerEntity;
-import net.minecraft.world.entity.monster.RavagerEntity;
-import net.minecraft.world.entity.monster.ShulkerEntity;
-import net.minecraft.world.entity.monster.SilverfishEntity;
-import net.minecraft.world.entity.monster.SkeletonEntity;
-import net.minecraft.world.entity.monster.SpiderEntity;
-import net.minecraft.world.entity.monster.StrayEntity;
-import net.minecraft.world.entity.monster.VexEntity;
-import net.minecraft.world.entity.monster.VindicatorEntity;
-import net.minecraft.world.entity.monster.WitchEntity;
-import net.minecraft.world.entity.monster.WitherSkeletonEntity;
-import net.minecraft.world.entity.monster.ZoglinEntity;
-import net.minecraft.world.entity.monster.ZombieEntity;
-import net.minecraft.world.entity.monster.ZombifiedPiglinEntity;
-import net.minecraft.world.entity.monster.piglin.AbstractPiglinEntity;
-import net.minecraft.world.entity.monster.piglin.PiglinBruteEntity;
-import net.minecraft.world.entity.monster.piglin.PiglinEntity;
-import net.minecraft.world.entity.monster.piglin.PiglinTasks;
-import net.minecraft.world.entity.passive.AnimalEntity;
-import net.minecraft.world.entity.passive.BeeEntity;
-import net.minecraft.world.entity.passive.ChickenEntity;
-import net.minecraft.world.entity.passive.TameableEntity;
-import net.minecraft.world.entity.passive.WolfEntity;
+import net.minecraft.world.entity.monster.Husk;
+import net.minecraft.world.entity.monster.MagmaCube;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Phantom;
+import net.minecraft.world.entity.monster.Pillager;
+import net.minecraft.world.entity.monster.Ravager;
+import net.minecraft.world.entity.monster.Shulker;
+import net.minecraft.world.entity.monster.Silverfish;
+import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.entity.monster.Spider;
+import net.minecraft.world.entity.monster.Stray;
+import net.minecraft.world.entity.monster.Vex;
+import net.minecraft.world.entity.monster.Vindicator;
+import net.minecraft.world.entity.monster.Witch;
+import net.minecraft.world.entity.monster.WitherSkeleton;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.ZombifiedPiglin;
+import net.minecraft.world.entity.monster.hoglin.Hoglin;
+import net.minecraft.world.entity.monster.piglin.Piglin;
+import net.minecraft.world.entity.monster.piglin.PiglinBrute;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.entity.projectile.Fireball;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ThrownTrident;
+import net.minecraft.world.food.FoodData;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.entity.projectile.AbstractArrowEntity;
-import net.minecraft.world.entity.projectile.DamagingProjectileEntity;
-import net.minecraft.world.entity.projectile.ProjectileEntity;
-import net.minecraft.world.entity.projectile.TridentEntity;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.IRecipe;
-import net.minecraft.world.item.crafting.ServerRecipeBook;
-import net.minecraft.world.level.storage.loot.LootItem;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.UniformGenerator;
 import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
-import net.minecraft.world.level.storage.loot.functions.SetCount;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemDamageFunction;
-import net.minecraft.world.level.storage.loot.functions.SetNBT;
+import net.minecraft.world.level.storage.loot.functions.SetNbtFunction;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.core.Direction;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.FoodStats;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.ServerRecipeBook;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.util.Mth;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.text.ITextProperties;
-import net.minecraft.util.text.LanguageMap;
-import net.minecraft.util.text.Style;
 import net.minecraft.ChatFormatting;
-import net.minecraft.world.GameRules;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -224,6 +206,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
+import net.minecraftforge.event.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -248,11 +231,11 @@ import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
+import net.minecraftforge.fmlclient.gui.GuiUtils;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraftforge.fmllegacy.server.ServerLifecycleHooks;
+import net.minecraftforge.fmlserverevents.FMLServerStartedEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.event.DropRulesEvent;
@@ -304,6 +287,7 @@ public class EnigmaticEventHandler {
 	}
 	 */
 
+	/* TODO Redo
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onTooltipRendering(RenderTooltipEvent.Pre event) {
@@ -315,7 +299,7 @@ public class EnigmaticEventHandler {
 		if (stack != null && !stack.isEmpty()) { // cause I don't trust you Forge
 			if (stack.getItem().getRegistryName().getNamespace().equals(EnigmaticLegacy.MODID)) {
 				event.setCanceled(handlingTooltip = true);
-				drawHoveringText(event.getStack(), event.getPoseStack(), event.getLines(), event.getX(),
+				drawHoveringText(event.getStack(), event.getMatrixStack(), event.getLines(), event.getX(),
 						event.getY(), event.getScreenWidth(), event.getScreenHeight(), event.getMaxWidth(),
 						GuiUtils.DEFAULT_BACKGROUND_COLOR, GuiUtils.DEFAULT_BORDER_COLOR_START,
 						GuiUtils.DEFAULT_BORDER_COLOR_END, event.getFontRenderer(), false);
@@ -323,14 +307,16 @@ public class EnigmaticEventHandler {
 			}
 		}
 	}
+	 */
 
 	/**
 	 * Fucking shame I have to do this manually to fix blasted autowrapping.
 	 * No idea how this works but at least it does.
 	 */
 
+	/*
 	@OnlyIn(Dist.CLIENT)
-	public static void drawHoveringText(ItemStack stack, PoseStack mStack, List<? extends ITextProperties> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, int backgroundColor, int borderColorStart, int borderColorEnd, FontRenderer font, boolean secondary) {
+	public static void drawHoveringText(ItemStack stack, PoseStack mStack, List<? extends FormattedText> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, int backgroundColor, int borderColorStart, int borderColorEnd, Font font, boolean secondary) {
 		if (!textLines.isEmpty()) {
 			if (!secondary) {
 				RenderTooltipEvent.Pre event = new RenderTooltipEvent.Pre(stack, textLines, mStack, mouseX, mouseY, screenWidth, screenHeight, maxTextWidth, font);
@@ -346,7 +332,7 @@ public class EnigmaticEventHandler {
 			}
 			int tooltipTextWidth = 0;
 
-			for (ITextProperties textLine : textLines) {
+			for (FormattedText textLine : textLines) {
 				int textLineWidth = font.width(textLine);
 				if (textLineWidth > tooltipTextWidth) {
 					tooltipTextWidth = textLineWidth;
@@ -385,15 +371,15 @@ public class EnigmaticEventHandler {
 
 			if (needsWrap) {
 				int wrappedTooltipWidth = 0;
-				List<ITextProperties> wrappedTextLines = new ArrayList<>();
+				List<FormattedText> wrappedTextLines = new ArrayList<>();
 				for (int i = 0; i < textLines.size(); i++) {
-					ITextProperties textLine = textLines.get(i);
-					List<ITextProperties> wrappedLine = font.getSplitter().splitLines(textLine, tooltipTextWidth, Style.EMPTY);
+					FormattedText textLine = textLines.get(i);
+					List<FormattedText> wrappedLine = font.getSplitter().splitLines(textLine, tooltipTextWidth, Style.EMPTY);
 					if (i == 0) {
 						titleLinesCount = wrappedLine.size();
 					}
 
-					for (ITextProperties line : wrappedLine) {
+					for (FormattedText line : wrappedLine) {
 						int lineWidth = font.width(line);
 						if (lineWidth > wrappedTooltipWidth) {
 							wrappedTooltipWidth = lineWidth;
@@ -442,7 +428,7 @@ public class EnigmaticEventHandler {
 				tooltipY -= 2;
 			}
 
-			RenderSystem.disableRescaleNormal();
+			//RenderSystem.disableRescaleNormal();
 			RenderSystem.disableDepthTest();
 
 			mStack.pushPose();
@@ -466,7 +452,7 @@ public class EnigmaticEventHandler {
 			int tooltipTop = tooltipY;
 
 			for (int lineNumber = 0; lineNumber < textLines.size(); ++lineNumber) {
-				ITextProperties line = textLines.get(lineNumber);
+				FormattedText line = textLines.get(lineNumber);
 				if (line != null) {
 					font.drawInBatch(LanguageMap.getInstance().getVisualOrder(line), tooltipX, tooltipY, -1, true, mat, renderType, false, 0, 15728880);
 				}
@@ -487,6 +473,7 @@ public class EnigmaticEventHandler {
 			RenderSystem.enableRescaleNormal();
 		}
 	}
+	 */
 
 	@SubscribeEvent
 	public void onApplyPotion(PotionEvent.PotionApplicableEvent event) {
@@ -583,16 +570,16 @@ public class EnigmaticEventHandler {
 				if (CrossbowItem.isCharged(itemstack)) {
 					CrossbowHelper.fireProjectiles(event.getWorld(), event.getPlayer(), event.getHand(), itemstack, CrossbowItem.getShootingPower(itemstack), 1.0F);
 					CrossbowItem.setCharged(itemstack, false);
-					event.setCancellationResult(ActionResultType.CONSUME);
+					event.setCancellationResult(InteractionResult.CONSUME);
 				} else if (!event.getPlayer().getProjectile(itemstack).isEmpty() || (CeaselessEnchantment.allowNoArrow.getValue() && EnigmaticEnchantmentHelper.hasCeaselessEnchantment(itemstack))) {
 					if (!CrossbowItem.isCharged(itemstack)) {
 						((CrossbowItem) Items.CROSSBOW).startSoundPlayed = false;
 						((CrossbowItem) Items.CROSSBOW).midLoadSoundPlayed = false;
 						event.getPlayer().startUsingItem(event.getHand());
 					}
-					event.setCancellationResult(ActionResultType.CONSUME);
+					event.setCancellationResult(InteractionResult.CONSUME);
 				} else {
-					event.setCancellationResult(ActionResultType.FAIL);
+					event.setCancellationResult(InteractionResult.FAIL);
 				}
 			}
 		}
@@ -603,7 +590,8 @@ public class EnigmaticEventHandler {
 	public void onOverlayRender(RenderGameOverlayEvent.Pre event) {
 		Minecraft mc = Minecraft.getInstance();
 
-		if (event.getType() == RenderGameOverlayEvent.ElementType.EXPERIENCE) {
+		// TODO Where did ElementType.EXPERIENCE go?
+		if (event.getType() == RenderGameOverlayEvent.ElementType.LAYER) {
 			TransientPlayerData data = TransientPlayerData.get(mc.player);
 
 			if (data.getFireImmunityTimer() <= 0 || !SuperpositionHandler.hasCurio(mc.player, EnigmaticLegacy.magmaHeart))
@@ -611,7 +599,7 @@ public class EnigmaticEventHandler {
 
 			float partialTick = event.getPartialTicks();
 			float barFiller = data.getFireImmunityFraction(partialTick);
-			PoseStack PoseStack = event.getPoseStack();
+			PoseStack PoseStack = event.getMatrixStack();
 			int x = event.getWindow().getGuiScaledWidth() / 2 - 91;
 
 			int xCorrection = 0;
@@ -622,14 +610,14 @@ public class EnigmaticEventHandler {
 				event.setCanceled(true);
 			}
 
-			mc.getTextureManager().bind(FIREBAR_LOCATION);
+			mc.getTextureManager().bindForSetup(FIREBAR_LOCATION);
 
 			if (true) {
 				int k = (int)(barFiller * 183.0F);
 				int l = event.getWindow().getGuiScaledHeight() - 32 + 3;
-				AbstractGui.blit(PoseStack, x+xCorrection, l+yCorrection, 0, 0, 182, 5, 256, 256);
+				GuiComponent.blit(PoseStack, x+xCorrection, l+yCorrection, 0, 0, 182, 5, 256, 256);
 				if (k > 0) {
-					AbstractGui.blit(PoseStack, x+xCorrection, l+yCorrection, 0, 5, k, 5, 256, 256);
+					GuiComponent.blit(PoseStack, x+xCorrection, l+yCorrection, 0, 5, k, 5, 256, 256);
 				}
 			}
 
@@ -677,7 +665,7 @@ public class EnigmaticEventHandler {
 					return;
 
 				event.setCanceled(true);
-				mc.getTextureManager().bind(ICONS_LOCATION);
+				mc.getTextureManager().bindForSetup(ICONS_LOCATION);
 
 				int width = event.getWindow().getGuiScaledWidth();
 				int height = event.getWindow().getGuiScaledHeight();
@@ -685,12 +673,12 @@ public class EnigmaticEventHandler {
 				Player player = mc.player;
 				RenderSystem.enableBlend();
 				int left = width / 2 + 91;
-				int top = height - ForgeIngameGui.right_height;
+				int top = height - ((ForgeIngameGui)Minecraft.getInstance().gui).right_height;
 
-				ForgeIngameGui.right_height += 10;
+				((ForgeIngameGui)Minecraft.getInstance().gui).right_height += 10;
 				boolean unused = false;// Unused flag in vanilla, seems to be part of a 'fade out' mechanic
 
-				FoodStats stats = mc.player.getFoodData();
+				FoodData stats = mc.player.getFoodData();
 				int level = stats.getFoodLevel();
 
 				int barPx = 8;
@@ -721,7 +709,7 @@ public class EnigmaticEventHandler {
 						y = top + (theySeeMeRollin.nextInt(3) - 1);
 					}
 
-					mc.gui.blit(event.getPoseStack(), x, y, 0, 0, 9, 9);
+					mc.gui.blit(event.getMatrixStack(), x, y, 0, 0, 9, 9);
 
 					/*
 					if (idx < level) {
@@ -733,7 +721,7 @@ public class EnigmaticEventHandler {
 				}
 				RenderSystem.disableBlend();
 
-				mc.getTextureManager().bind(AbstractGui.GUI_ICONS_LOCATION);
+				mc.getTextureManager().bindForSetup(GuiComponent.GUI_ICONS_LOCATION);
 			}
 
 		}
@@ -778,9 +766,9 @@ public class EnigmaticEventHandler {
 	public void onInventoryGuiInit(GuiScreenEvent.InitGuiEvent.Post evt) {
 		Screen screen = evt.getGui();
 
-		if (screen instanceof InventoryScreen || screen instanceof CreativeScreen || screen instanceof CuriosScreen) {
-			ContainerScreen<?> gui = (ContainerScreen<?>) screen;
-			boolean isCreative = screen instanceof CreativeScreen;
+		if (screen instanceof InventoryScreen || screen instanceof CreativeModeInventoryScreen || screen instanceof CuriosScreen) {
+			AbstractContainerScreen<?> gui = (AbstractContainerScreen<?>) screen;
+			boolean isCreative = screen instanceof CreativeModeInventoryScreen;
 			Tuple<Integer, Integer> offsets = EnderChestInventoryButton.getOffsets(isCreative);
 			int x = offsets.getA();
 			int y = offsets.getB();
@@ -797,12 +785,10 @@ public class EnigmaticEventHandler {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onFogRender(EntityViewRenderEvent.FogDensity event) {
-
-		if (event.getInfo().getFluidInCamera().is(FluidTags.LAVA) && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.magmaHeart)) {
+		if (event.getInfo().getFluidInCamera() == FogType.LAVA && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.magmaHeart)) {
 			event.setCanceled(true);
 			event.setDensity((float) MagmaHeart.lavafogDensity.getValue());
 		}
-
 	}
 
 	@SubscribeEvent
@@ -968,7 +954,7 @@ public class EnigmaticEventHandler {
 			}
 
 			if (EnigmaticLegacy.forbiddenFruit.haveConsumedFruit(player)) {
-				FoodStats foodStats = player.getFoodData();
+				FoodData foodStats = player.getFoodData();
 				foodStats.setFoodLevel(20);
 				foodStats.saturationLevel = 0F;
 
@@ -1050,33 +1036,6 @@ public class EnigmaticEventHandler {
 
 	}
 
-	@SubscribeEvent
-	public void attachCapabilities(AttachCapabilitiesEvent<ItemStack> evt) {
-		ItemStack stack = evt.getObject();
-
-		/*
-		 * Handler for registering item's capabilities implemented in ICurio interface,
-		 * for Enigmatic Legacy's namespace specifically.
-		 *
-		 * Insisting on bad design choices since 2016!
-		 */
-
-		if (stack.getItem() instanceof IItemCurio) {
-			ItemizedCurioInstance itemizedCurio = new ItemizedCurioInstance((IItemCurio)stack.getItem(), stack);
-
-			evt.addCapability(CuriosCapability.ID_ITEM, new ICapabilityProvider() {
-				LazyOptional<ICurio> curio = LazyOptional.of(() -> itemizedCurio);
-
-				@Nonnull
-				@Override
-				public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-					return CuriosCapability.ITEM.orEmpty(cap, this.curio);
-				}
-			});
-		}
-
-	}
-
 	/**
 	 * This was done solely to fix interaction with Corpse Complex.
 	 * Still needs a more elegant workaround, but should do the trick for now.
@@ -1115,7 +1074,7 @@ public class EnigmaticEventHandler {
 			if (SuperpositionHandler.hasItem(player, cursedStone)) {
 				postmortalPossession.put(player, cursedStone);
 
-				for(List<ItemStack> list : player.inventory.compartments) {
+				for(List<ItemStack> list : player.getInventory().compartments) {
 					for(ItemStack itemstack : list) {
 						if (!itemstack.isEmpty() && itemstack.getItem() == cursedStone) {
 							itemstack.setCount(0);
@@ -1210,7 +1169,7 @@ public class EnigmaticEventHandler {
 			 * Immortality handler for Heart of Creation and Pearl of the Void.
 			 */
 
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticItem) || player.inventory.contains(new ItemStack(EnigmaticLegacy.enigmaticItem)) || event.getSource() instanceof DamageSourceNemesisCurse) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticItem) || player.getInventory().contains(new ItemStack(EnigmaticLegacy.enigmaticItem)) || event.getSource() instanceof DamageSourceNemesisCurse) {
 				event.setCanceled(true);
 				player.setHealth(1);
 			} else if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.voidPearl) && Math.random() <= VoidPearl.undeadProbability.getValue().asMultiplier(false)) {
@@ -1262,8 +1221,8 @@ public class EnigmaticEventHandler {
 				Entity arrow = event.getEntity();
 
 				if (!player.level.isClientSide) {
-					if (arrow instanceof ProjectileEntity) {
-						ProjectileEntity projectile = (ProjectileEntity) arrow;
+					if (arrow instanceof Projectile) {
+						Projectile projectile = (Projectile) arrow;
 
 						if (projectile.getOwner() == player) {
 							for (String tag : arrow.getTags()) {
@@ -1298,27 +1257,27 @@ public class EnigmaticEventHandler {
 						event.setCanceled(true);
 
 						arrow.setDeltaMovement(arrow.getDeltaMovement().scale(-1.0D));
-						arrow.yRotO = arrow.yRot + 180.0F;
-						arrow.yRot = arrow.yRot + 180.0F;
+						arrow.yRotO = arrow.getYRot() + 180.0F;
+						arrow.setYRot(arrow.getYRot() + 180.0F);;
 
-						if (arrow instanceof AbstractArrowEntity) {
-							if (!(arrow instanceof TridentEntity)) {
-								((AbstractArrowEntity) arrow).setOwner(player);
+						if (arrow instanceof AbstractArrow) {
+							if (!(arrow instanceof ThrownTrident)) {
+								((AbstractArrow) arrow).setOwner(player);
 							}
 
 							((AccessorAbstractArrowEntity)arrow).clearHitEntities();
-						} else if (arrow instanceof DamagingProjectileEntity) {
-							((DamagingProjectileEntity) arrow).setOwner(player);
+						} else if (arrow instanceof AbstractHurtingProjectile) {
+							((AbstractHurtingProjectile) arrow).setOwner(player);
 
-							((DamagingProjectileEntity) arrow).xPower = -((DamagingProjectileEntity) arrow).xPower;
-							((DamagingProjectileEntity) arrow).yPower = -((DamagingProjectileEntity) arrow).yPower;
-							((DamagingProjectileEntity) arrow).zPower = -((DamagingProjectileEntity) arrow).zPower;
+							((AbstractHurtingProjectile) arrow).xPower = -((AbstractHurtingProjectile) arrow).xPower;
+							((AbstractHurtingProjectile) arrow).yPower = -((AbstractHurtingProjectile) arrow).yPower;
+							((AbstractHurtingProjectile) arrow).zPower = -((AbstractHurtingProjectile) arrow).zPower;
 						}
 
 						arrow.getTags().removeIf(tag -> tag.startsWith("AB_DEFLECTED"));
 						arrow.addTag("AB_DEFLECTED:" + arrow.tickCount);
 
-						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64.0D, player.level.dimension())), new PacketForceArrowRotations(arrow.getId(), arrow.yRot, arrow.xRot, arrow.getDeltaMovement().x, arrow.getDeltaMovement().y, arrow.getDeltaMovement().z, arrow.getX(), arrow.getY(), arrow.getZ()));
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64.0D, player.level.dimension())), new PacketForceArrowRotations(arrow.getId(), arrow.getYRot(), arrow.getXRot(), arrow.getDeltaMovement().x, arrow.getDeltaMovement().y, arrow.getDeltaMovement().z, arrow.getX(), arrow.getY(), arrow.getZ()));
 						player.level.playSound(null, player.blockPosition(), EnigmaticLegacy.DEFLECT, SoundSource.PLAYERS, 1.0F, 0.95F + (float) (Math.random() * 0.1D));
 					}
 				} /*else {
@@ -1344,7 +1303,7 @@ public class EnigmaticEventHandler {
 		if (event.getEntityLiving() instanceof Player) {
 			Player player = (Player) event.getEntityLiving();
 
-			if (event.getSource().getDirectEntity() instanceof DamagingProjectileEntity || event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
+			if (event.getSource().getDirectEntity() instanceof AbstractHurtingProjectile || event.getSource().getDirectEntity() instanceof AbstractArrow) {
 
 				/*if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.angelBlessing) && Math.random() <= ConfigHandler.ANGEL_BLESSING_DEFLECT_CHANCE.getValue().asModifier(false)) {
 					event.setCanceled(true);
@@ -1361,14 +1320,14 @@ public class EnigmaticEventHandler {
 						entity.rotationYaw = arrow.rotationYaw + 180.0F;
 						entity.prevRotationYaw = arrow.rotationYaw + 180.0F;
 
-						if (entity instanceof AbstractArrowEntity && !(entity instanceof TridentEntity)) {
-							((AbstractArrowEntity) entity).setShooter(player);
-						} else if (entity instanceof DamagingProjectileEntity) {
-							((DamagingProjectileEntity) entity).setShooter(player);
+						if (entity instanceof AbstractArrow && !(entity instanceof ThrownTrident)) {
+							((AbstractArrow) entity).setShooter(player);
+						} else if (entity instanceof AbstractHurtingProjectile) {
+							((AbstractHurtingProjectile) entity).setShooter(player);
 
-							((DamagingProjectileEntity) entity).accelerationX = -((DamagingProjectileEntity) arrow).accelerationX;
-							((DamagingProjectileEntity) entity).accelerationY = -((DamagingProjectileEntity) arrow).accelerationY;
-							((DamagingProjectileEntity) entity).accelerationZ = -((DamagingProjectileEntity) arrow).accelerationZ;
+							((AbstractHurtingProjectile) entity).accelerationX = -((AbstractHurtingProjectile) arrow).accelerationX;
+							((AbstractHurtingProjectile) entity).accelerationY = -((AbstractHurtingProjectile) arrow).accelerationY;
+							((AbstractHurtingProjectile) entity).accelerationZ = -((AbstractHurtingProjectile) arrow).accelerationZ;
 						}
 
 						arrow.remove();
@@ -1432,7 +1391,7 @@ public class EnigmaticEventHandler {
 				}
 			}
 
-			if (!player.abilities.invulnerable && player.getEffect(MobEffects.FIRE_RESISTANCE) == null)
+			if (!player.getAbilities().invulnerable && player.getEffect(MobEffects.FIRE_RESISTANCE) == null)
 				if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.magmaHeart) && !event.isCanceled() && event.getSource().msgId.equals(DamageSource.LAVA.msgId)) {
 					TransientPlayerData data = TransientPlayerData.get(player);
 
@@ -1473,26 +1432,26 @@ public class EnigmaticEventHandler {
 
 						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntityLiving().getX(), event.getEntityLiving().getY(), event.getEntityLiving().getZ(), 128, event.getEntityLiving().level.dimension())), new PacketRecallParticles(event.getEntityLiving().getX(), event.getEntityLiving().getY() + (event.getEntityLiving().getBbHeight() / 2), event.getEntityLiving().getZ(), 48, false));
 
-						if (!player.abilities.instabuild) {
+						if (!player.getAbilities().instabuild) {
 							stack.shrink(1);
 						}
 					}
 
 			if (player.getMainHandItem() != null && player.getMainHandItem().getItem() == EnigmaticLegacy.theTwist && SuperpositionHandler.isTheCursedOne(player)) {
 				float knockbackPower = TheTwist.knockbackBonus.getValue().asModifier(true);
-				knockbackThatBastard.put(event.getEntityLiving(), (event.getEntityLiving() instanceof PhantomEntity ? (knockbackPower*1.5F) : knockbackPower));
+				knockbackThatBastard.put(event.getEntityLiving(), (event.getEntityLiving() instanceof Phantom ? (knockbackPower*1.5F) : knockbackPower));
 			}
 		}
 
-		if (event.getEntityLiving() instanceof AnimalEntity) {
+		if (event.getEntityLiving() instanceof Animal) {
 			if (event.getSource().getEntity() instanceof Player) {
 				Player player = (Player) event.getSource().getEntity();
 
 				if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide)) {
-					if (!(event.getEntityLiving() instanceof IAngerable)
-							|| event.getEntityLiving() instanceof HoglinEntity
-							|| event.getEntityLiving() instanceof BeeEntity
-							|| event.getEntityLiving() instanceof WolfEntity) {
+					if (!(event.getEntityLiving() instanceof NeutralMob)
+							|| event.getEntityLiving() instanceof Hoglin
+							|| event.getEntityLiving() instanceof Bee
+							|| event.getEntityLiving() instanceof Wolf) {
 						event.setCanceled(true);
 					}
 				}
@@ -1535,11 +1494,11 @@ public class EnigmaticEventHandler {
 			LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
 			Entity immediateSource = event.getSource().getDirectEntity();
 
-			if (immediateSource instanceof TridentEntity || immediateSource instanceof LivingEntity) {
+			if (immediateSource instanceof ThrownTrident || immediateSource instanceof LivingEntity) {
 				ItemStack mainhandStack = ItemStack.EMPTY;
-				if (immediateSource instanceof TridentEntity) {
-					if (((TridentEntity)immediateSource).tridentItem != null) {
-						mainhandStack = ((TridentEntity)immediateSource).tridentItem;
+				if (immediateSource instanceof ThrownTrident) {
+					if (((ThrownTrident)immediateSource).tridentItem != null) {
+						mainhandStack = ((ThrownTrident)immediateSource).tridentItem;
 					}
 				} else {
 					if (((LivingEntity)immediateSource).getMainHandItem() != null) {
@@ -1560,8 +1519,8 @@ public class EnigmaticEventHandler {
 			}
 		}
 
-		if (event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
-			AbstractArrowEntity arrow = (AbstractArrowEntity) event.getSource().getDirectEntity();
+		if (event.getSource().getDirectEntity() instanceof AbstractArrow) {
+			AbstractArrow arrow = (AbstractArrow) event.getSource().getDirectEntity();
 
 			for (String tag : arrow.getTags()) {
 
@@ -1604,7 +1563,7 @@ public class EnigmaticEventHandler {
 				if ((slayerLevel = EnchantmentHelper.getItemEnchantmentLevel(slayerEnchantment, mainhandStack)) > 0) {
 					event.setAmount(event.getAmount() + slayerEnchantment.bonusDamageByCreature(player, event.getEntityLiving(), slayerLevel));
 
-					if (event.getEntityLiving() instanceof MonsterEntity) {
+					if (event.getEntityLiving() instanceof Monster) {
 						int i = 20 + player.getRandom().nextInt(10 * slayerLevel);
 						event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, i, 3));
 					}
@@ -1630,15 +1589,15 @@ public class EnigmaticEventHandler {
 			if (advancedCurios.size() > 0) {
 				for (ItemStack advancedCurioStack : advancedCurios) {
 					ItemSpellstoneCurio advancedCurio = (ItemSpellstoneCurio) advancedCurioStack.getItem();
-					CreatureEntity trueSource = event.getSource().getEntity() instanceof CreatureEntity ? (CreatureEntity)event.getSource().getEntity() : null;
+					Mob trueSource = event.getSource().getEntity() instanceof Mob ? (Mob)event.getSource().getEntity() : null;
 
 					if (event.getSource().msgId.startsWith("explosion") && advancedCurio == EnigmaticLegacy.golemHeart && SuperpositionHandler.hasAnyArmor(player)) {
 						continue;
-					} else if (advancedCurio == magmaHeart && trueSource != null && (trueSource.getMobType() == MobType.WATER || trueSource instanceof DrownedEntity)) {
+					} else if (advancedCurio == magmaHeart && trueSource != null && (trueSource.getMobType() == MobType.WATER || trueSource instanceof Drowned)) {
 						event.setAmount(event.getAmount() * 2F);
 					} else if (advancedCurio == eyeOfNebula && player.isInWater()) {
 						event.setAmount(event.getAmount() * 2F);
-					} else if (advancedCurio == oceanStone && trueSource != null && (trueSource.getMobType() == MobType.WATER || trueSource instanceof DrownedEntity)) {
+					} else if (advancedCurio == oceanStone && trueSource != null && (trueSource.getMobType() == MobType.WATER || trueSource instanceof Drowned)) {
 						event.setAmount(event.getAmount() * OceanStone.underwaterCreaturesResistance.getValue().asModifierInverted());
 					}
 
@@ -1681,8 +1640,8 @@ public class EnigmaticEventHandler {
 				event.setAmount(event.getAmount()*CursedRing.painMultiplier.getValue().asModifier());
 			}
 
-		} else if (event.getEntityLiving() instanceof MonsterEntity) {
-			MonsterEntity monster = (MonsterEntity) event.getEntityLiving();
+		} else if (event.getEntityLiving() instanceof Monster) {
+			Monster monster = (Monster) event.getEntityLiving();
 
 			if (event.getSource().getEntity() instanceof Player) {
 				Player player = (Player) event.getSource().getEntity();
@@ -1694,9 +1653,9 @@ public class EnigmaticEventHandler {
 				if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.monsterCharm)) {
 					if (monster.isInvertedHealAndHarm()) {
 						event.setAmount(event.getAmount() * MonsterCharm.undeadDamageBonus.getValue().asModifier(true));
-					} else if (monster.isAggressive() || monster instanceof CreeperEntity) {
+					} else if (monster.isAggressive() || monster instanceof Creeper) {
 
-						if (monster instanceof EndermanEntity || monster instanceof ZombifiedPiglinEntity || monster instanceof BlazeEntity || monster instanceof Guardian || monster instanceof ElderGuardianEntity || !monster.canChangeDimensions()) {
+						if (monster instanceof EnderMan || monster instanceof ZombifiedPiglin || monster instanceof Blaze || monster instanceof Guardian || monster instanceof ElderGuardian || !monster.canChangeDimensions()) {
 							// NO-OP
 						} else {
 							event.setAmount(event.getAmount() * MonsterCharm.hostileDamageBonus.getValue().asModifier(true));
@@ -1735,8 +1694,8 @@ public class EnigmaticEventHandler {
 			event.setAmount(event.getAmount()+damageBoost);
 		}
 
-		if (event.getEntityLiving() instanceof TameableEntity) {
-			TameableEntity pet = (TameableEntity) event.getEntityLiving();
+		if (event.getEntityLiving() instanceof TamableAnimal) {
+			TamableAnimal pet = (TamableAnimal) event.getEntityLiving();
 
 			if (pet.isTame()) {
 				LivingEntity owner = pet.getOwner();
@@ -1831,11 +1790,15 @@ public class EnigmaticEventHandler {
 			TransientPlayerData.get(player).syncToPlayer();
 		}
 
-		if (entity instanceof CreatureEntity && ((CreatureEntity)entity).getMobType() == MobType.ARTHROPOD) {
-			((CreatureEntity)entity).goalSelector.addGoal(3, new AvoidEntityGoal<>((CreatureEntity)entity, Player.class, (targetEntity) -> targetEntity instanceof Player && SuperpositionHandler.hasAntiInsectAcknowledgement((Player)targetEntity), 6, 1, 1.3, EntityPredicates.NO_CREATIVE_OR_SPECTATOR::test));
+		if (entity instanceof Mob && ((Mob)entity).getMobType() == MobType.ARTHROPOD) {
+			Mob mob = (Mob) entity;
+			mob.goalSelector.addGoal(3, new AvoidEntityGoal<>((PathfinderMob)entity, Player.class,
+					(targetEntity) -> targetEntity instanceof Player &&
+					SuperpositionHandler.hasAntiInsectAcknowledgement((Player)targetEntity),
+					6, 1, 1.3, EntitySelector.NO_CREATIVE_OR_SPECTATOR::test));
 		}
 
-		if (entity instanceof PiglinEntity) {
+		if (entity instanceof Piglin) {
 			// NO-OP
 		}
 
@@ -1851,7 +1814,7 @@ public class EnigmaticEventHandler {
 			if (this.hadEnigmaticAmulet((Player) event.getEntityLiving()) && !event.getEntityLiving().level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
 				event.setCanceled(true);
 			}
-		} else if (event.getEntityLiving() instanceof MonsterEntity) {
+		} else if (event.getEntityLiving() instanceof Monster) {
 			if (player != null && SuperpositionHandler.hasCurio(player, EnigmaticLegacy.monsterCharm)) {
 				bonusExp += event.getOriginalExperience() * (EnigmaticLegacy.monsterCharm.bonusXPModifier-1.0F);
 			}
@@ -1933,7 +1896,7 @@ public class EnigmaticEventHandler {
 		 * Beheading handler for Axe of Executioner.
 		 */
 
-		if (event.getEntityLiving().getClass() == SkeletonEntity.class && event.isRecentlyHit() && event.getSource().getEntity() != null && event.getSource().getEntity() instanceof Player) {
+		if (event.getEntityLiving().getClass() == Skeleton.class && event.isRecentlyHit() && event.getSource().getEntity() != null && event.getSource().getEntity() instanceof Player) {
 			ItemStack weap = ((Player) event.getSource().getEntity()).getMainHandItem();
 			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !SuperpositionHandler.ifDroplistContainsItem(event.getDrops(), Items.SKELETON_SKULL) && this.theySeeMeRollin(event.getLootingLevel())) {
 				this.addDrop(event, new ItemStack(Items.SKELETON_SKULL, 1));
@@ -1942,7 +1905,7 @@ public class EnigmaticEventHandler {
 					BeheadingTrigger.INSTANCE.trigger((ServerPlayer) event.getSource().getEntity());
 				}
 			}
-		} else if (event.getEntityLiving().getClass() == WitherSkeletonEntity.class && event.isRecentlyHit() && event.getSource().getEntity() != null && event.getSource().getEntity() instanceof Player) {
+		} else if (event.getEntityLiving().getClass() == WitherSkeleton.class && event.isRecentlyHit() && event.getSource().getEntity() != null && event.getSource().getEntity() instanceof Player) {
 			ItemStack weap = ((Player) event.getSource().getEntity()).getMainHandItem();
 			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe) {
 
@@ -1954,7 +1917,7 @@ public class EnigmaticEventHandler {
 					BeheadingTrigger.INSTANCE.trigger((ServerPlayer) event.getSource().getEntity());
 				}
 			}
-		} else if (event.getEntityLiving().getClass() == ZombieEntity.class && event.isRecentlyHit() && event.getSource().getEntity() != null && event.getSource().getEntity() instanceof Player) {
+		} else if (event.getEntityLiving().getClass() == Zombie.class && event.isRecentlyHit() && event.getSource().getEntity() != null && event.getSource().getEntity() instanceof Player) {
 			ItemStack weap = ((Player) event.getSource().getEntity()).getMainHandItem();
 			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !SuperpositionHandler.ifDroplistContainsItem(event.getDrops(), Items.ZOMBIE_HEAD) && this.theySeeMeRollin(event.getLootingLevel())) {
 				this.addDrop(event, new ItemStack(Items.ZOMBIE_HEAD, 1));
@@ -1963,7 +1926,7 @@ public class EnigmaticEventHandler {
 					BeheadingTrigger.INSTANCE.trigger((ServerPlayer) event.getSource().getEntity());
 				}
 			}
-		} else if (event.getEntityLiving().getClass() == CreeperEntity.class && event.isRecentlyHit() && event.getSource().getEntity() != null && event.getSource().getEntity() instanceof Player) {
+		} else if (event.getEntityLiving().getClass() == Creeper.class && event.isRecentlyHit() && event.getSource().getEntity() != null && event.getSource().getEntity() instanceof Player) {
 			ItemStack weap = ((Player) event.getSource().getEntity()).getMainHandItem();
 			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !SuperpositionHandler.ifDroplistContainsItem(event.getDrops(), Items.CREEPER_HEAD) && this.theySeeMeRollin(event.getLootingLevel())) {
 				this.addDrop(event, new ItemStack(Items.CREEPER_HEAD, 1));
@@ -1972,7 +1935,7 @@ public class EnigmaticEventHandler {
 					BeheadingTrigger.INSTANCE.trigger((ServerPlayer) event.getSource().getEntity());
 				}
 			}
-		} else if (event.getEntityLiving().getClass() == EnderDragonEntity.class && event.isRecentlyHit() && event.getSource().getEntity() != null && event.getSource().getEntity() instanceof Player) {
+		} else if (event.getEntityLiving().getClass() == EnderDragon.class && event.isRecentlyHit() && event.getSource().getEntity() != null && event.getSource().getEntity() instanceof Player) {
 			ItemStack weap = ((Player) event.getSource().getEntity()).getMainHandItem();
 			if (weap != null && weap.getItem() == EnigmaticLegacy.forbiddenAxe && !SuperpositionHandler.ifDroplistContainsItem(event.getDrops(), Items.DRAGON_HEAD) && this.theySeeMeRollin(event.getLootingLevel())) {
 				this.addDrop(event, new ItemStack(Items.DRAGON_HEAD, 1));
@@ -1998,18 +1961,18 @@ public class EnigmaticEventHandler {
 			if (!CursedRing.enableSpecialDrops.getValue())
 				return;
 
-			if (killed.getClass() == ShulkerEntity.class) {
+			if (killed.getClass() == Shulker.class) {
 				this.addDropWithChance(event, new ItemStack(EnigmaticLegacy.astralDust, 1), 20);
-			} else if (killed.getClass() == SkeletonEntity.class || killed.getClass() == StrayEntity.class) {
+			} else if (killed.getClass() == Skeleton.class || killed.getClass() == Stray.class) {
 				this.addDrop(event, this.getRandomSizeStack(Items.ARROW, 3, 15));
-			} else if (killed.getClass() == ZombieEntity.class || killed.getClass() == HuskEntity.class) {
+			} else if (killed.getClass() == Zombie.class || killed.getClass() == Husk.class) {
 				this.addDropWithChance(event, this.getRandomSizeStack(Items.SLIME_BALL, 1, 3), 25);
-			} else if (killed.getClass() == SpiderEntity.class || killed.getClass() == CaveSpiderEntity.class) {
+			} else if (killed.getClass() == Spider.class || killed.getClass() == CaveSpider.class) {
 				this.addDrop(event, this.getRandomSizeStack(Items.STRING, 2, 12));
 			} else if (killed.getClass() == Guardian.class) {
 				this.addDropWithChance(event, new ItemStack(Items.NAUTILUS_SHELL, 1), 15);
 				this.addDrop(event, this.getRandomSizeStack(Items.PRISMARINE_CRYSTALS, 2, 5));
-			} else if (killed.getClass() == ElderGuardianEntity.class) {
+			} else if (killed.getClass() == ElderGuardian.class) {
 				this.addDrop(event, this.getRandomSizeStack(Items.PRISMARINE_CRYSTALS, 4, 16));
 				this.addDrop(event, this.getRandomSizeStack(Items.PRISMARINE_SHARD, 7, 28));
 				this.addOneOf(event,
@@ -2018,61 +1981,61 @@ public class EnigmaticEventHandler {
 						new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, 1),
 						new ItemStack(Items.ENDER_EYE, 1),
 						EnchantmentHelper.enchantItem(theySeeMeRollin, new ItemStack(Items.TRIDENT, 1), 25+theySeeMeRollin.nextInt(15), true));
-			} else if (killed.getClass() == EndermanEntity.class) {
+			} else if (killed.getClass() == EnderMan.class) {
 				this.addDropWithChance(event, this.getRandomSizeStack(Items.ENDER_EYE, 1, 2), 40);
-			} else if (killed.getClass() == BlazeEntity.class) {
+			} else if (killed.getClass() == Blaze.class) {
 				this.addDrop(event, this.getRandomSizeStack(Items.BLAZE_POWDER, 0, 5));
 				//this.addDropWithChance(event, new ItemStack(EnigmaticLegacy.livingFlame, 1), 15);
-			} else if (killed.getClass() == ZombifiedPiglinEntity.class) {
+			} else if (killed.getClass() == ZombifiedPiglin.class) {
 				this.addDropWithChance(event, this.getRandomSizeStack(Items.GOLD_INGOT, 1, 3), 40);
 				this.addDropWithChance(event, this.getRandomSizeStack(Items.GLOWSTONE_DUST, 1, 7), 30);
-			} else if (killed.getClass() == WitchEntity.class) {
+			} else if (killed.getClass() == Witch.class) {
 				this.addDropWithChance(event, new ItemStack(Items.GHAST_TEAR, 1), 30);
 				this.addDrop(event, this.getRandomSizeStack(Items.PHANTOM_MEMBRANE, 1, 3));
-			} else if (killed.getClass() == WitchEntity.class) {
+			} else if (killed.getClass() == Witch.class) {
 				this.addDropWithChance(event, new ItemStack(Items.GHAST_TEAR, 1), 30);
 				this.addDropWithChance(event, this.getRandomSizeStack(Items.PHANTOM_MEMBRANE, 1, 3), 50);
-			} else if (killed.getClass() == PillagerEntity.class || killed.getClass() == VindicatorEntity.class) {
+			} else if (killed.getClass() == Pillager.class || killed.getClass() == Vindicator.class) {
 				this.addDrop(event, this.getRandomSizeStack(Items.EMERALD, 0, 4));
-			} else if (killed.getClass() == VillagerEntity.class) {
+			} else if (killed.getClass() == Villager.class) {
 				this.addDrop(event, this.getRandomSizeStack(Items.EMERALD, 2, 6));
-			} else if (killed.getClass() == CreeperEntity.class) {
+			} else if (killed.getClass() == Creeper.class) {
 				this.addDrop(event, this.getRandomSizeStack(Items.GUNPOWDER, 4, 12));
-			} else if (killed.getClass() == PiglinBruteEntity.class) {
+			} else if (killed.getClass() == PiglinBrute.class) {
 				this.addDropWithChance(event, new ItemStack(Items.NETHERITE_SCRAP, 1), 20);
-			} else if (killed.getClass() == EvokerEntity.class) {
+			} else if (killed.getClass() == Evoker.class) {
 				this.addDrop(event, new ItemStack(Items.TOTEM_OF_UNDYING, 1));
 				this.addDrop(event, this.getRandomSizeStack(Items.EMERALD, 5, 20));
 				this.addDropWithChance(event, new ItemStack(Items.ENCHANTED_GOLDEN_APPLE, 1), 10);
 				this.addDropWithChance(event, this.getRandomSizeStack(Items.ENDER_PEARL, 1, 3), 30);
 				this.addDropWithChance(event, this.getRandomSizeStack(Items.BLAZE_ROD, 2, 4), 30);
 				this.addDropWithChance(event, this.getRandomSizeStack(Items.EXPERIENCE_BOTTLE, 4, 10), 50);
-			} else if (killed.getClass() == WitherSkeletonEntity.class) {
+			} else if (killed.getClass() == WitherSkeleton.class) {
 				this.addDrop(event, this.getRandomSizeStack(Items.BLAZE_POWDER, 0, 3));
 				this.addDropWithChance(event, new ItemStack(Items.GHAST_TEAR, 1), 20);
 				this.addDropWithChance(event, new ItemStack(Items.NETHERITE_SCRAP, 1), 7);
-			} else if (killed.getClass() == GhastEntity.class) {
+			} else if (killed.getClass() == Ghast.class) {
 				this.addDrop(event, this.getRandomSizeStack(Items.PHANTOM_MEMBRANE, 1, 4));
-			} else if (killed.getClass() == DrownedEntity.class) {
+			} else if (killed.getClass() == Drowned.class) {
 				this.addDropWithChance(event, this.getRandomSizeStack(Items.LAPIS_LAZULI, 1, 3), 30);
-			} else if (killed.getClass() == VexEntity.class) {
+			} else if (killed.getClass() == Vex.class) {
 				this.addDrop(event, this.getRandomSizeStack(Items.GLOWSTONE_DUST, 0, 2));
 				this.addDropWithChance(event, new ItemStack(Items.PHANTOM_MEMBRANE, 1), 30);
-			} else if (killed.getClass() == PhantomEntity.class) {
+			} else if (killed.getClass() == Phantom.class) {
 				// NO-OP
-			} else if (killed.getClass() == PiglinEntity.class) {
+			} else if (killed.getClass() == Piglin.class) {
 				this.addDropWithChance(event, this.getRandomSizeStack(Items.GOLD_INGOT, 2, 4), 50);
-			} else if (killed.getClass() == RavagerEntity.class) {
+			} else if (killed.getClass() == Ravager.class) {
 				this.addDrop(event, this.getRandomSizeStack(Items.EMERALD, 3, 10));
 				this.addDrop(event, this.getRandomSizeStack(Items.LEATHER, 2, 7));
 				this.addDropWithChance(event, this.getRandomSizeStack(Items.DIAMOND, 0, 4), 50);
-			} else if (killed.getClass() == SilverfishEntity.class) {
+			} else if (killed.getClass() == Silverfish.class) {
 				// NO-OP
-			} else if (killed.getClass() == MagmaCubeEntity.class) {
+			} else if (killed.getClass() == MagmaCube.class) {
 				this.addDrop(event, this.getRandomSizeStack(Items.BLAZE_POWDER, 0, 1));
-			} else if (killed.getClass() == ChickenEntity.class) {
+			} else if (killed.getClass() == Chicken.class) {
 				this.addDropWithChance(event, new ItemStack(Items.EGG, 1), 50);
-			} else if (killed.getClass() == WitherEntity.class) {
+			} else if (killed.getClass() == WitherBoss.class) {
 				this.addDrop(event, this.getRandomSizeStack(evilEssence, 1, 4));
 			}
 		}
@@ -2165,7 +2128,7 @@ public class EnigmaticEventHandler {
 					SuperpositionHandler.itemEntryBuilderED(Items.IRON_SHOVEL, 10, 20F, 30F, 1.0F, 0.8F),
 					SuperpositionHandler.itemEntryBuilderED(Items.BOW, 10, 20F, 30F, 1.0F, 0.8F),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.ironRing, 20),
-					LootItem.lootTableItem(EnigmaticLegacy.commonPotionBase).setWeight(20).apply(SetNBT.setTag(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE).getTag())),
+					LootItem.lootTableItem(EnigmaticLegacy.commonPotionBase).setWeight(20).apply(SetNbtFunction.setTag(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE).getTag())),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.magnetRing, 8),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.unholyGrail, 4),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.loreInscriber, 5),
@@ -2173,10 +2136,10 @@ public class EnigmaticEventHandler {
 					// SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.oblivionStone, 4),
 					LootItem.lootTableItem(Items.CLOCK).setWeight(10),
 					LootItem.lootTableItem(Items.COMPASS).setWeight(10),
-					LootItem.lootTableItem(Items.EMERALD).setWeight(20).apply(SetCount.setCount(UniformGenerator.between(1.0F, 4F))),
-					LootItem.lootTableItem(Items.SLIME_BALL).setWeight(20).apply(SetCount.setCount(UniformGenerator.between(2.0F, 10F))),
-					LootItem.lootTableItem(Items.LEATHER).setWeight(35).apply(SetCount.setCount(UniformGenerator.between(3.0F, 8F))),
-					LootItem.lootTableItem(Items.PUMPKIN_PIE).setWeight(25).apply(SetCount.setCount(UniformGenerator.between(4.0F, 16F))),
+					LootItem.lootTableItem(Items.EMERALD).setWeight(20).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4F))),
+					LootItem.lootTableItem(Items.SLIME_BALL).setWeight(20).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 10F))),
+					LootItem.lootTableItem(Items.LEATHER).setWeight(35).apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 8F))),
+					LootItem.lootTableItem(Items.PUMPKIN_PIE).setWeight(25).apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 16F))),
 					SuperpositionHandler.getWaterDungeons().contains(event.getName()) || event.getName().equals(BuiltInLootTables.PILLAGER_OUTPOST) ? null : SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.earthHeart, 7)
 					);
 
@@ -2201,11 +2164,11 @@ public class EnigmaticEventHandler {
 					SuperpositionHandler.itemEntryBuilderED(Items.GOLDEN_SWORD, 10, 25F, 30F, 1.0F, 1.0F),
 					SuperpositionHandler.itemEntryBuilderED(Items.GOLDEN_SHOVEL, 10, 25F, 30F, 1.0F, 1.0F),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.oblivionStone, 8),
-					LootItem.lootTableItem(Items.EMERALD).setWeight(30).apply(SetCount.setCount(UniformGenerator.between(2.0F, 7F))),
-					LootItem.lootTableItem(Items.WITHER_ROSE).setWeight(25).apply(SetCount.setCount(UniformGenerator.between(1.0F, 4F))),
-					LootItem.lootTableItem(Items.GHAST_TEAR).setWeight(10).apply(SetCount.setCount(UniformGenerator.between(1.0F, 2F))),
+					LootItem.lootTableItem(Items.EMERALD).setWeight(30).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 7F))),
+					LootItem.lootTableItem(Items.WITHER_ROSE).setWeight(25).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4F))),
+					LootItem.lootTableItem(Items.GHAST_TEAR).setWeight(10).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2F))),
 					LootItem.lootTableItem(Items.LAVA_BUCKET).setWeight(30),
-					LootItem.lootTableItem(Items.POTION).setWeight(15).apply(SetNBT.setTag(fireResistancePotion.getTag())),
+					LootItem.lootTableItem(Items.POTION).setWeight(15).apply(SetNbtFunction.setTag(fireResistancePotion.getTag())),
 					SuperpositionHandler.getBastionChests().contains(event.getName()) ? LootItem.lootTableItem(forbiddenFruit).setWeight(4) : null
 					);
 
@@ -2215,7 +2178,7 @@ public class EnigmaticEventHandler {
 				modified.addPool(epic);
 			} else {
 				LootPool scroll = SuperpositionHandler.constructLootPool("darkest_scroll", 0F, 1F,
-						LootItem.lootTableItem(EnigmaticLegacy.darkestScroll).setWeight(100).apply(SetCount.setCount(UniformGenerator.between(1F, 1F)))
+						LootItem.lootTableItem(EnigmaticLegacy.darkestScroll).setWeight(100).apply(SetItemCountFunction.setCount(UniformGenerator.between(1F, 1F)))
 						);
 
 				modified.addPool(scroll);
@@ -2228,11 +2191,11 @@ public class EnigmaticEventHandler {
 
 		} else if (event.getName().equals(BuiltInLootTables.END_CITY_TREASURE)) {
 			LootPool epic = SuperpositionHandler.constructLootPool("epic", 1F, 2F,
-					LootItem.lootTableItem(Items.ENDER_PEARL).setWeight(40).apply(SetCount.setCount(UniformGenerator.between(2.0F, 5F))),
-					LootItem.lootTableItem(Items.ENDER_EYE).setWeight(20).apply(SetCount.setCount(UniformGenerator.between(1.0F, 2F))),
-					LootItem.lootTableItem(Items.GLISTERING_MELON_SLICE).setWeight(30).apply(SetCount.setCount(UniformGenerator.between(1.0F, 4F))),
-					LootItem.lootTableItem(Items.GOLDEN_CARROT).setWeight(30).apply(SetCount.setCount(UniformGenerator.between(1.0F, 4F))),
-					LootItem.lootTableItem(Items.PHANTOM_MEMBRANE).setWeight(25).apply(SetCount.setCount(UniformGenerator.between(3.0F, 7F))),
+					LootItem.lootTableItem(Items.ENDER_PEARL).setWeight(40).apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 5F))),
+					LootItem.lootTableItem(Items.ENDER_EYE).setWeight(20).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2F))),
+					LootItem.lootTableItem(Items.GLISTERING_MELON_SLICE).setWeight(30).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4F))),
+					LootItem.lootTableItem(Items.GOLDEN_CARROT).setWeight(30).apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4F))),
+					LootItem.lootTableItem(Items.PHANTOM_MEMBRANE).setWeight(25).apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 7F))),
 					LootItem.lootTableItem(Items.ENCHANTING_TABLE).setWeight(10),
 					LootItem.lootTableItem(Items.CAKE).setWeight(15),
 					LootItem.lootTableItem(Items.END_CRYSTAL).setWeight(7),
@@ -2259,8 +2222,8 @@ public class EnigmaticEventHandler {
 
 		if (SuperpositionHandler.getLibraries().contains(event.getName())) {
 			LootPool special = SuperpositionHandler.constructLootPool("el_special", 2F, 3F,
-					LootItem.lootTableItem(EnigmaticLegacy.thiccScroll).setWeight(20).apply(SetCount.setCount(UniformGenerator.between(2F, 6F))),
-					LootItem.lootTableItem(EnigmaticLegacy.loreFragment).setWeight(10).apply(SetCount.setCount(UniformGenerator.between(1F, 2F))));
+					LootItem.lootTableItem(EnigmaticLegacy.thiccScroll).setWeight(20).apply(SetItemCountFunction.setCount(UniformGenerator.between(2F, 6F))),
+					LootItem.lootTableItem(EnigmaticLegacy.loreFragment).setWeight(10).apply(SetItemCountFunction.setCount(UniformGenerator.between(1F, 2F))));
 
 
 			LootTable modified = event.getTable();
@@ -2322,7 +2285,7 @@ public class EnigmaticEventHandler {
 
 			ServerRecipeBook book = player.getRecipeBook();
 			if (OmniconfigHandler.retriggerRecipeUnlocks.getValue()) {
-				for (IRecipe<?> theRecipe : player.level.getRecipeManager().getRecipes()) {
+				for (Recipe<?> theRecipe : player.level.getRecipeManager().getRecipes()) {
 					if (book.contains(theRecipe)) {
 						CriteriaTriggers.RECIPE_UNLOCKED.trigger(player, theRecipe);
 					}
@@ -2458,15 +2421,15 @@ public class EnigmaticEventHandler {
 		if (event.getTarget() instanceof Player) {
 			Player player = (Player) event.getTarget();
 
-			if (event.getEntityLiving() instanceof MobEntity) {
-				MobEntity insect = (MobEntity) event.getEntityLiving();
+			if (event.getEntityLiving() instanceof Mob) {
+				Mob insect = (Mob) event.getEntityLiving();
 
 				if (insect.getMobType() == MobType.ARTHROPOD)
 					if (SuperpositionHandler.hasAntiInsectAcknowledgement(player)) {
 						insect.setTarget(null);
 					}
 
-				if (insect instanceof Guardian && insect.getClass() != ElderGuardianEntity.class) {
+				if (insect instanceof Guardian && insect.getClass() != ElderGuardian.class) {
 					if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.guardianHeart) && SuperpositionHandler.isTheCursedOne(player)) {
 						boolean isBlacklisted = angeredGuardians.containsEntry(player, insect);
 
@@ -2533,10 +2496,10 @@ public class EnigmaticEventHandler {
 					EnigmaticLegacy.enigmaticAmulet.setSeededColor(enigmaticAmulet);
 				}
 
-				if (player.inventory.getItem(8).isEmpty()) {
-					player.inventory.setItem(8, enigmaticAmulet);
+				if (player.getInventory().getItem(8).isEmpty()) {
+					player.getInventory().setItem(8, enigmaticAmulet);
 				} else {
-					if (!player.inventory.add(enigmaticAmulet)) {
+					if (!player.getInventory().add(enigmaticAmulet)) {
 						ItemEntity dropAmulet = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), enigmaticAmulet);
 						player.level.addFreshEntity(dropAmulet);
 					}
@@ -2554,10 +2517,10 @@ public class EnigmaticEventHandler {
 				ItemStack cursedRingStack = new ItemStack(EnigmaticLegacy.cursedRing);
 
 				if (!CursedRing.ultraHardcore.getValue()) {
-					if (player.inventory.getItem(7).isEmpty()) {
-						player.inventory.setItem(7, cursedRingStack);
+					if (player.getInventory().getItem(7).isEmpty()) {
+						player.getInventory().setItem(7, cursedRingStack);
 					} else {
-						if (!player.inventory.add(cursedRingStack)) {
+						if (!player.getInventory().add(cursedRingStack)) {
 							ItemEntity dropRing = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), cursedRingStack);
 							player.level.addFreshEntity(dropRing);
 						}

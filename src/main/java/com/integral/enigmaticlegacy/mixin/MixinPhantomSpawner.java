@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ILivingEntityData;
 import net.minecraft.world.entity.SpawnReason;
-import net.minecraft.world.entity.monster.PhantomEntity;
+import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.material.FluidState;
@@ -70,7 +70,7 @@ public class MixinPhantomSpawner {
 												int l = 1 + random.nextInt(difficulty.getDifficulty().getId() + 1);
 
 												for(int i1 = 0; i1 < l; ++i1) {
-													PhantomEntity phantomentity = EntityType.PHANTOM.create(world);
+													Phantom phantomentity = EntityType.PHANTOM.create(world);
 													phantomentity.moveTo(blockpos1, 0.0F, 0.0F);
 													ilivingentitydata = phantomentity.finalizeSpawn(world, difficulty, SpawnReason.NATURAL, ilivingentitydata, (CompoundTag)null);
 													world.addFreshEntityWithPassengers(phantomentity);

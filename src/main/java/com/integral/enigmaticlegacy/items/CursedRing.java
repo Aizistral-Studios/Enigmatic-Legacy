@@ -27,7 +27,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.IAngerable;
+import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -36,11 +36,11 @@ import net.minecraft.world.entity.ai.brain.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.EndermanEntity;
 import net.minecraft.world.entity.monster.VindicatorEntity;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglinEntity;
-import net.minecraft.world.entity.monster.piglin.PiglinEntity;
+import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.monster.piglin.PiglinTasks;
 import net.minecraft.world.entity.passive.BeeEntity;
 import net.minecraft.world.entity.passive.IronGolemEntity;
-import net.minecraft.world.entity.passive.TameableEntity;
+import net.minecraft.world.entity.passive.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -299,8 +299,8 @@ public class CursedRing extends ItemBaseCurio {
 				continue;
 			}
 
-			if (checkedEntity instanceof PiglinEntity && !SuperpositionHandler.hasCurio(player, EnigmaticLegacy.avariceScroll)) {
-				PiglinEntity piglin = (PiglinEntity) checkedEntity;
+			if (checkedEntity instanceof Piglin && !SuperpositionHandler.hasCurio(player, EnigmaticLegacy.avariceScroll)) {
+				Piglin piglin = (Piglin) checkedEntity;
 
 				if (piglin.getTarget() == null || !piglin.getTarget().isAlive()) {
 					if (player.canSee(checkedEntity) || player.distanceTo(checkedEntity) <= neutralXRayRange.getValue()) {
@@ -310,11 +310,11 @@ public class CursedRing extends ItemBaseCurio {
 					}
 				}
 
-			} else if (checkedEntity instanceof IAngerable) {
-				IAngerable neutral = (IAngerable) checkedEntity;
+			} else if (checkedEntity instanceof NeutralMob) {
+				NeutralMob neutral = (NeutralMob) checkedEntity;
 
-				if (neutral instanceof TameableEntity) {
-					if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide) || ((TameableEntity)neutral).isTame()) {
+				if (neutral instanceof TamableAnimal) {
+					if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide) || ((TamableAnimal)neutral).isTame()) {
 						continue;
 					}
 				} else if (neutral instanceof IronGolemEntity) {

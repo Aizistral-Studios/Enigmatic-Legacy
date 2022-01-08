@@ -104,7 +104,7 @@ public class EnderRing extends ItemBaseCurio {
 
 	/*
 	 * @Override public ActionResult<ItemStack> onItemRightClick(Level worldIn,
-	 * Player player, Hand handIn) {
+	 * Player player, InteractionHand handIn) {
 	 *
 	 * ItemStack itemstack = player.getHeldItem(handIn);
 	 * player.setActiveHand(handIn);
@@ -128,7 +128,7 @@ public class EnderRing extends ItemBaseCurio {
 	 * EnigmaticLegacy.enigmaticLogger.info("Item used: " +
 	 * CuriosAPI.getCurioTags(itemstack.getItem()));
 	 *
-	 * return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
+	 * return new ActionResult<>(InteractionResult.SUCCESS, itemstack);
 	 *
 	 * }
 	 */

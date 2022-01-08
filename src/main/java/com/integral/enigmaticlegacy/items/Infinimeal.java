@@ -26,7 +26,7 @@ import net.minecraft.world.item.ItemUseContext;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.util.InteractionResult;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -57,14 +57,14 @@ public class Infinimeal extends ItemBase implements Vanishable {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public ActionResultType useOn(ItemUseContext context) {
+	public InteractionResult useOn(ItemUseContext context) {
 		ItemStack stack = context.getItemInHand();
 		int savedCount = stack.getCount();
 
-		ActionResultType result = Items.BONE_MEAL.useOn(context);
+		InteractionResult result = Items.BONE_MEAL.useOn(context);
 		stack.setCount(savedCount);
 
-		if (result == ActionResultType.PASS) {
+		if (result == InteractionResult.PASS) {
 			BlockPos pos = context.getClickedPos();
 			Level world = context.getLevel();
 			BlockState state = world.getBlockState(pos);
@@ -94,7 +94,7 @@ public class Infinimeal extends ItemBase implements Vanishable {
 						block.randomTick(world.getBlockState(topMostPos), (ServerLevel)world, topMostPos, random);
 					}
 
-					return ActionResultType.sidedSuccess(world.isClientSide);
+					return InteractionResult.sidedSuccess(world.isClientSide);
 				}
 			} else if (block instanceof VineBlock) {
 				if (!block.isRandomlyTicking(state))
@@ -114,7 +114,7 @@ public class Infinimeal extends ItemBase implements Vanishable {
 					state.updateNeighbourShapes(world, pos, 4);
 				}
 
-				return ActionResultType.sidedSuccess(world.isClientSide);
+				return InteractionResult.sidedSuccess(world.isClientSide);
 			} else if (block instanceof NetherWartBlock) {
 				if (!block.isRandomlyTicking(state))
 					return result;
@@ -132,7 +132,7 @@ public class Infinimeal extends ItemBase implements Vanishable {
 					}
 				}
 
-				return ActionResultType.sidedSuccess(world.isClientSide);
+				return InteractionResult.sidedSuccess(world.isClientSide);
 			}
 		}
 

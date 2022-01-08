@@ -24,8 +24,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.util.InteractionResult;
+import net.minecraft.util.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
@@ -107,15 +107,15 @@ public class XPScroll extends ItemBaseCurio {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level world, Player player, Hand handIn) {
+	public ActionResult<ItemStack> use(Level world, Player player, InteractionHand handIn) {
 		ItemStack stack = player.getItemInHand(handIn);
 		this.trigger(world, stack, player, handIn, true);
 
-		return new ActionResult<>(ActionResultType.SUCCESS, stack);
+		return new ActionResult<>(InteractionResult.SUCCESS, stack);
 
 	}
 
-	public void trigger(Level world, ItemStack stack, Player player, Hand hand, boolean swing) {
+	public void trigger(Level world, ItemStack stack, Player player, InteractionHand hand, boolean swing) {
 
 		if (!player.isCrouching()) {
 

@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
-import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
@@ -143,7 +143,7 @@ public class LoreInscriberScreen extends AbstractContainerScreen<LoreInscriberCo
 			if (flag) {
 				int k = this.xSize - 8 - this.font.getStringWidth(s) - 2;
 				int l = 69;
-				AbstractGui.fill(PoseStack, k - 2, 67, this.xSize - 8, 79, 1325400064);
+				GuiComponent.fill(PoseStack, k - 2, 67, this.xSize - 8, 79, 1325400064);
 				this.font.drawStringWithShadow(PoseStack, s, k, 69.0F, j);
 			}
 

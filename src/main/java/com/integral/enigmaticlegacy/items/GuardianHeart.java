@@ -23,19 +23,19 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.IAngerable;
+import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.brain.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.ElderGuardianEntity;
 import net.minecraft.world.entity.monster.Guardian;
-import net.minecraft.world.entity.monster.MonsterEntity;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.ZombifiedPiglinEntity;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglinEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinBruteBrain;
 import net.minecraft.world.entity.monster.piglin.PiglinBruteEntity;
-import net.minecraft.world.entity.monster.piglin.PiglinEntity;
+import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.monster.piglin.PiglinTasks;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
@@ -46,9 +46,9 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.util.InteractionResult;
 import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.Hand;
+import net.minecraft.util.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
@@ -125,12 +125,12 @@ public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
 		if (entity instanceof Player && !world.isClientSide) {
 			Player player = (Player) entity;
-			List<MonsterEntity> genericMobs = player.level.getEntitiesOfClass(MonsterEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, abilityRange.getValue()));
+			List<Monster> genericMobs = player.level.getEntitiesOfClass(Monster.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, abilityRange.getValue()));
 
 			if (SuperpositionHandler.isTheCursedOne(player) && Inventory.isHotbarSlot(itemSlot) && !player.getCooldowns().isOnCooldown(this)) {
-				MonsterEntity oneWatched = null;
+				Monster oneWatched = null;
 
-				for (MonsterEntity monster : genericMobs) {
+				for (Monster monster : genericMobs) {
 					if (SuperpositionHandler.doesObserveEntity(player, monster) && !this.isExcluded(monster)) {
 						oneWatched = monster;
 						break;
@@ -140,10 +140,10 @@ public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 				//System.out.println("The One: " + oneWatched);
 
 				if (oneWatched != null && oneWatched.isAlive()) {
-					final MonsterEntity theOne = oneWatched;
+					final Monster theOne = oneWatched;
 					Vector3 vec = Vector3.fromEntityCenter(theOne);
-					List<MonsterEntity> surroundingMobs = player.level.getEntitiesOfClass(MonsterEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(theOne, enrageRange.getValue()), (living) -> { return living.isAlive() && theOne.canSee(living); });
-					MonsterEntity closestMonster = SuperpositionHandler.getClosestEntity(surroundingMobs, (monster) -> monster != theOne, vec.x, vec.y, vec.z);
+					List<Monster> surroundingMobs = player.level.getEntitiesOfClass(Monster.class, SuperpositionHandler.getBoundingBoxAroundEntity(theOne, enrageRange.getValue()), (living) -> { return living.isAlive() && theOne.canSee(living); });
+					Monster closestMonster = SuperpositionHandler.getClosestEntity(surroundingMobs, (monster) -> monster != theOne, vec.x, vec.y, vec.z);
 
 					//System.out.println("Closest monster: " + closestMonster);
 
@@ -154,7 +154,7 @@ public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 						theOne.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 300, 1, false, false));
 						//theOne.addPotionEffect(new MobEffectInstance(MobEffects., 400, 1, false, true));
 
-						for (MonsterEntity otherMonster : surroundingMobs) {
+						for (Monster otherMonster : surroundingMobs) {
 							this.setAttackTarget(otherMonster, theOne);
 						}
 
@@ -171,13 +171,13 @@ public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 
 			}
 
-			for (MonsterEntity monster : genericMobs) {
+			for (Monster monster : genericMobs) {
 				if (monster instanceof Guardian && monster.getClass() != ElderGuardianEntity.class) {
 					final Guardian guardian = (Guardian) monster;
 
 					if (guardian.getTarget() == null) {
-						List<MonsterEntity> surroundingMobs = player.level.getEntitiesOfClass(MonsterEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(guardian, 12), (living) -> { return living.isAlive() && guardian.canSee(living); });
-						MonsterEntity closestMonster = SuperpositionHandler.getClosestEntity(surroundingMobs, (checked) -> { return !(checked instanceof Guardian); }, guardian.getX(), guardian.getY(), guardian.getZ());
+						List<Monster> surroundingMobs = player.level.getEntitiesOfClass(Monster.class, SuperpositionHandler.getBoundingBoxAroundEntity(guardian, 12), (living) -> { return living.isAlive() && guardian.canSee(living); });
+						Monster closestMonster = SuperpositionHandler.getClosestEntity(surroundingMobs, (checked) -> { return !(checked instanceof Guardian); }, guardian.getX(), guardian.getY(), guardian.getZ());
 
 						if (closestMonster != null) {
 							this.setAttackTarget(guardian, closestMonster);
@@ -200,7 +200,7 @@ public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 		return excluded;
 	}
 
-	private void setAttackTarget(MonsterEntity monster, MonsterEntity otherMonster) {
+	private void setAttackTarget(Monster monster, Monster otherMonster) {
 		if (monster != null && otherMonster != null && monster != otherMonster) {
 			if (monster instanceof AbstractPiglinEntity) {
 				((AbstractPiglinEntity)monster).getBrain().setMemory(MemoryModuleType.ATTACK_TARGET, otherMonster);
@@ -209,13 +209,13 @@ public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 
 				if (monster instanceof PiglinBruteEntity) {
 					PiglinBruteBrain.wasHurtBy((PiglinBruteEntity) monster, otherMonster);
-				} else if (monster instanceof PiglinEntity) {
-					PiglinTasks.wasHurtBy((PiglinEntity) monster, otherMonster);
+				} else if (monster instanceof Piglin) {
+					PiglinTasks.wasHurtBy((Piglin) monster, otherMonster);
 				}
 
-				//monster.goalSelector.addGoal(1, new NearestAttackableTargetGoal<>(monster, MonsterEntity.class, true));
-			} else if (monster instanceof IAngerable) {
-				((IAngerable)monster).setTarget(otherMonster);
+				//monster.goalSelector.addGoal(1, new NearestAttackableTargetGoal<>(monster, Monster.class, true));
+			} else if (monster instanceof NeutralMob) {
+				((NeutralMob)monster).setTarget(otherMonster);
 			} else {
 				monster.setTarget(otherMonster);
 				monster.setLastHurtByMob(otherMonster);
@@ -224,7 +224,7 @@ public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		return super.use(worldIn, playerIn, handIn);
 	}
 

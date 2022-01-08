@@ -23,7 +23,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseContext;
@@ -31,9 +31,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
+import net.minecraft.util.InteractionResult;
 import net.minecraft.core.Direction;
-import net.minecraft.util.Hand;
+import net.minecraft.util.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
@@ -99,31 +99,31 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level world, Player player, Hand hand) {
+	public ActionResult<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		player.startUsingItem(hand);
 
 		if (player.isCrouching()) {
 			this.toggleAreaEffects(player, stack);
 
-			return new ActionResult<>(ActionResultType.SUCCESS, stack);
+			return new ActionResult<>(InteractionResult.SUCCESS, stack);
 		} else
 			return super.use(world, player, hand);
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context) {
+	public InteractionResult useOn(ItemUseContext context) {
 		if (context.getPlayer().isCrouching())
 			return this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
 
-		ActionResultType type = Items.DIAMOND_HOE.useOn(context);
+		InteractionResult type = Items.DIAMOND_HOE.useOn(context);
 
 		if (!this.areaEffectsEnabled(context.getPlayer(), context.getItemInHand()))
 			return type;
 
 		int supRad = (this.config.getScytheMiningVolume() - 1) / 2;
 
-		if (type == ActionResultType.CONSUME) {
+		if (type == InteractionResult.CONSUME) {
 			for (int x = -supRad; x <= supRad; x++) {
 				for (int z = -supRad; z <= supRad; z++) {
 					if (x == 0 & z == 0) {
@@ -144,7 +144,7 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 			Direction face = Direction.UP;
 
 			AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos.offset(0, (this.config.getScytheMiningVolume() - 1) / 2, 0), this.effectiveMaterials, this.config.getScytheMiningVolume(), this.config.getScytheMiningVolume(), false, pos, stack, (objPos, objState) -> {
-				stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(MobEntity.getEquipmentSlotForItem(stack)));
+				stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 			});
 		}
 

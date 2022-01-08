@@ -9,7 +9,7 @@ import com.integral.enigmaticlegacy.items.XPScroll;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.Hand;
+import net.minecraft.util.InteractionHand;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
@@ -40,7 +40,7 @@ public class PacketXPScrollKey {
 				
 		      	 if (SuperpositionHandler.hasCurio(playerServ, EnigmaticLegacy.xpScroll)) {
 		      		 ItemStack scroll = SuperpositionHandler.getCurioStack(playerServ, EnigmaticLegacy.xpScroll);
-		      		 ((XPScroll)EnigmaticLegacy.xpScroll).trigger(playerServ.level, scroll, playerServ, Hand.MAIN_HAND, false);
+		      		 ((XPScroll)EnigmaticLegacy.xpScroll).trigger(playerServ.level, scroll, playerServ, InteractionHand.MAIN_HAND, false);
 		      	 }
 		      	 
 		    });

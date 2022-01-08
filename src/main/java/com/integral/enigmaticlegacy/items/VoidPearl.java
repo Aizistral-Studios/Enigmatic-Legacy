@@ -152,7 +152,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 
 			/*
 
-			FoodStats stats = player.getFoodStats();
+			FoodData stats = player.getFoodStats();
 			stats.setFoodLevel(20);
 
 			//((AccessorFoodStats) stats).setFoodSaturationLevel(0);

@@ -17,7 +17,7 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAction;
-import net.minecraft.util.Hand;
+import net.minecraft.util.InteractionHand;
 import net.minecraft.util.HandSide;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -67,8 +67,8 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayer, PlayerM
 				 */
 
 				this.witherModel.crouching = entitylivingbaseIn.isCrouching();
-				BipedModel.ArmPose bipedmodel$armpose = this.func_217766_a(entitylivingbaseIn, itemstack, itemstack1, Hand.MAIN_HAND);
-				BipedModel.ArmPose bipedmodel$armpose1 = this.func_217766_a(entitylivingbaseIn, itemstack, itemstack1, Hand.OFF_HAND);
+				BipedModel.ArmPose bipedmodel$armpose = this.func_217766_a(entitylivingbaseIn, itemstack, itemstack1, InteractionHand.MAIN_HAND);
+				BipedModel.ArmPose bipedmodel$armpose1 = this.func_217766_a(entitylivingbaseIn, itemstack, itemstack1, InteractionHand.OFF_HAND);
 				if (entitylivingbaseIn.getMainArm() == HandSide.RIGHT) {
 					this.witherModel.rightArmPose = bipedmodel$armpose;
 					this.witherModel.leftArmPose = bipedmodel$armpose1;
@@ -86,9 +86,9 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayer, PlayerM
 
 	}
 
-	private BipedModel.ArmPose func_217766_a(AbstractClientPlayer playerIn, ItemStack itemStackMain, ItemStack itemStackOff, Hand handIn) {
+	private BipedModel.ArmPose func_217766_a(AbstractClientPlayer playerIn, ItemStack itemStackMain, ItemStack itemStackOff, InteractionHand handIn) {
 		BipedModel.ArmPose bipedmodel$armpose = BipedModel.ArmPose.EMPTY;
-		ItemStack itemstack = handIn == Hand.MAIN_HAND ? itemStackMain : itemStackOff;
+		ItemStack itemstack = handIn == InteractionHand.MAIN_HAND ? itemStackMain : itemStackOff;
 		if (!itemstack.isEmpty()) {
 			bipedmodel$armpose = BipedModel.ArmPose.ITEM;
 			if (playerIn.getUseItemRemainingTicks() > 0) {

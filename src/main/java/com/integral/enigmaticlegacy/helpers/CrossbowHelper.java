@@ -4,23 +4,23 @@ import java.util.List;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 
-import net.minecraft.world.entity.ICrossbowUser;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.CrossbowAttackMob;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrowEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
-import net.minecraft.world.entity.projectile.ProjectileEntity;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.util.Hand;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.level.Level;
 
 public class CrossbowHelper {
@@ -36,7 +36,7 @@ public class CrossbowHelper {
 			if (!creativeUsingArrows && !isCreative && !bonusCycles) {
 				itemstack = ammo.split(1);
 				if (ammo.isEmpty() && living instanceof Player) {
-					((Player) living).inventory.removeItem(ammo);
+					((Player) living).getInventory().removeItem(ammo);
 				}
 			} else {
 				itemstack = ammo.copy();
@@ -49,7 +49,7 @@ public class CrossbowHelper {
 
 	public static boolean hasAmmo(LivingEntity entityIn, ItemStack weaponStack) {
 		int requestedAmmo = 1;
-		boolean isCreative = entityIn instanceof Player && ((Player) entityIn).abilities.instabuild;
+		boolean isCreative = entityIn instanceof Player && ((Player) entityIn).getAbilities().instabuild;
 		ItemStack itemstack = entityIn.getProjectile(weaponStack);
 		ItemStack itemstack1 = itemstack.copy();
 
@@ -72,13 +72,13 @@ public class CrossbowHelper {
 		return true;
 	}
 
-	public static void fireProjectiles(Level worldIn, LivingEntity shooter, Hand handIn, ItemStack stack, float velocityIn, float inaccuracyIn) {
+	public static void fireProjectiles(Level worldIn, LivingEntity shooter, InteractionHand handIn, ItemStack stack, float velocityIn, float inaccuracyIn) {
 		List<ItemStack> list = CrossbowItem.getChargedProjectiles(stack);
 		float[] afloat = CrossbowItem.getShotPitches(shooter.getRandom());
 
 		for (int i = 0; i < list.size(); ++i) {
 			ItemStack itemstack = list.get(i);
-			boolean flag = shooter instanceof Player && ((Player) shooter).abilities.instabuild;
+			boolean flag = shooter instanceof Player && ((Player) shooter).getAbilities().instabuild;
 			if (!itemstack.isEmpty()) {
 				if (i == 0) {
 					CrossbowHelper.fireProjectile(worldIn, shooter, handIn, stack, itemstack, afloat[i], flag, velocityIn, inaccuracyIn, 0.0F);
@@ -93,25 +93,25 @@ public class CrossbowHelper {
 		CrossbowItem.onCrossbowShot(worldIn, shooter, stack);
 	}
 
-	private static void fireProjectile(Level worldIn, LivingEntity shooter, Hand handIn, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean isCreativeMode, float velocity, float inaccuracy, float projectileAngle) {
+	private static void fireProjectile(Level worldIn, LivingEntity shooter, InteractionHand handIn, ItemStack crossbow, ItemStack projectile, float soundPitch, boolean isCreativeMode, float velocity, float inaccuracy, float projectileAngle) {
 		if (!worldIn.isClientSide) {
 			boolean flag = projectile.getItem() == Items.FIREWORK_ROCKET;
-			ProjectileEntity projectileentity;
+			Projectile projectileentity;
 			if (flag) {
 				projectileentity = new FireworkRocketEntity(worldIn, projectile, shooter, shooter.getX(), shooter.getEyeY() - 0.15F, shooter.getZ(), true);
 			} else {
 				projectileentity = CrossbowItem.getArrow(worldIn, shooter, crossbow, projectile);
 				if (isCreativeMode || projectileAngle != 0.0F || EnigmaticEnchantmentHelper.hasCeaselessEnchantment(crossbow)) {
-					((AbstractArrowEntity) projectileentity).pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;	
+					((AbstractArrow) projectileentity).pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
 				}
-				
+
 				if (EnigmaticEnchantmentHelper.hasSharpshooterEnchantment(crossbow)) {
-					((AbstractArrowEntity) projectileentity).addTag(CrossbowHelper.sharpshooterTagPrefix + EnigmaticEnchantmentHelper.getSharpshooterLevel(crossbow));
+					((AbstractArrow) projectileentity).addTag(CrossbowHelper.sharpshooterTagPrefix + EnigmaticEnchantmentHelper.getSharpshooterLevel(crossbow));
 				}
 			}
 
-			if (shooter instanceof ICrossbowUser) {
-				ICrossbowUser icrossbowuser = (ICrossbowUser)shooter;
+			if (shooter instanceof CrossbowAttackMob) {
+				CrossbowAttackMob icrossbowuser = (CrossbowAttackMob)shooter;
 				icrossbowuser.shootCrossbowProjectile(icrossbowuser.getTarget(), crossbow, projectileentity, projectileAngle);
 			} else {
 				Vec3 vector3d1 = shooter.getUpVector(1.0F);

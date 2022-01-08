@@ -17,8 +17,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.util.InteractionResult;
+import net.minecraft.util.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
@@ -94,12 +94,12 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, Vanis
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		playerIn.startUsingItem(handIn);
 
 		if (!worldIn.isClientSide) {}
 
-		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getItemInHand(handIn));
+		return new ActionResult<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
 	}
 
 }

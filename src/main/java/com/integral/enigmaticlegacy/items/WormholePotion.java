@@ -24,8 +24,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAction;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.util.InteractionResult;
+import net.minecraft.util.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
@@ -116,17 +116,17 @@ public class WormholePotion extends ItemBase implements IBound {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level world, Player player, Hand hand) {
+	public ActionResult<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 
 		Player receiver = this.getBoundPlayer(world, stack);
 
 		if (receiver != null/* && receiver != player */) {
 			player.startUsingItem(hand);
-			return new ActionResult<>(ActionResultType.SUCCESS, stack);
+			return new ActionResult<>(InteractionResult.SUCCESS, stack);
 		}
 
-		return new ActionResult<>(ActionResultType.FAIL, stack);
+		return new ActionResult<>(InteractionResult.FAIL, stack);
 	}
 
 	@Override

@@ -32,8 +32,9 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 import net.minecraft.world.item.Item.Properties;
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
 import top.theillusivec4.curios.api.type.capability.ICurio.RenderHelper;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
-public abstract class ItemBaseCurio extends ItemBase implements IItemCurio, Vanishable {
+public abstract class ItemBaseCurio extends ItemBase implements ICurioItem, Vanishable {
 
 	public ItemBaseCurio() {
 		this(getDefaultProperties());

@@ -18,21 +18,21 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.merchant.villager.VillagerEntity;
-import net.minecraft.world.entity.monster.piglin.PiglinEntity;
+import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.monster.piglin.PiglinTasks;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.MerchantOffer;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.util.InteractionResult;
+import net.minecraft.util.InteractionHand;
 import net.minecraft.server.level.ServerLevel;
 
 @Mixin(PiglinTasks.class)
 public class MixinPiglinTasks {
 	private static final String AVARICE_SCROLL_TAG = EnigmaticLegacy.MODID + ":avarice_scroll_effect";
 
-	private static void markPiglinWithCondition(PiglinEntity piglin, Player player) {
+	private static void markPiglinWithCondition(Piglin piglin, Player player) {
 		if (player != null && piglin != null && SuperpositionHandler.hasCurio(player, EnigmaticLegacy.avariceScroll))
 			if (!piglin.getTags().contains(AVARICE_SCROLL_TAG)) {
 				piglin.addTag(AVARICE_SCROLL_TAG);
@@ -50,7 +50,7 @@ public class MixinPiglinTasks {
 	}
 
 	@Inject(at = @At("RETURN"), method = "pickUpItem")
-	private static void onPiglinItemPickup(PiglinEntity piglin, ItemEntity itemEntity, CallbackInfo info) {
+	private static void onPiglinItemPickup(Piglin piglin, ItemEntity itemEntity, CallbackInfo info) {
 		UUID ownerID = itemEntity.getThrower();
 
 		if (!itemEntity.isAlive() && itemEntity.level instanceof ServerLevel && ownerID != null) {
@@ -61,15 +61,15 @@ public class MixinPiglinTasks {
 	}
 
 	@Inject(at = @At("RETURN"), method = "mobInteract")
-	private static void onBarterByHand(PiglinEntity piglin, Player player, Hand hand, CallbackInfoReturnable<ActionResultType> info) {
-		if (info.getReturnValue() == ActionResultType.CONSUME) {
+	private static void onBarterByHand(Piglin piglin, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> info) {
+		if (info.getReturnValue() == InteractionResult.CONSUME) {
 			markPiglinWithCondition(piglin, player);
 		}
 	}
 
 	@Inject(at = @At("HEAD"), method = "stopHoldingOffHandItem", cancellable = true)
-	private static void onPiglinBarter(PiglinEntity piglin, boolean repay, CallbackInfo info) {
-		ItemStack stack = piglin.getItemInHand(Hand.OFF_HAND);
+	private static void onPiglinBarter(Piglin piglin, boolean repay, CallbackInfo info) {
+		ItemStack stack = piglin.getItemInHand(InteractionHand.OFF_HAND);
 
 		if (piglin.level instanceof ServerLevel && piglin.getTags().contains(AVARICE_SCROLL_TAG)) {
 			piglin.removeTag(AVARICE_SCROLL_TAG);
@@ -78,7 +78,7 @@ public class MixinPiglinTasks {
 				if (repay && stack.isPiglinCurrency()) {
 					info.cancel();
 
-					piglin.setItemInHand(Hand.OFF_HAND, ItemStack.EMPTY);
+					piglin.setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
 					List<ItemStack> generatedLoot = PiglinTasks.getBarterResponseItems(piglin);
 					List<ItemStack> newStacks = new ArrayList<>();
 

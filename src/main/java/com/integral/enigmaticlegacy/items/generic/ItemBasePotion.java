@@ -19,8 +19,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAction;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
+import net.minecraft.util.InteractionResult;
+import net.minecraft.util.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
@@ -75,12 +75,12 @@ public abstract class ItemBasePotion extends ItemBase {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, Hand handIn) {
+	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		if (this.canDrink(worldIn, playerIn, playerIn.getItemInHand(handIn))) {
 			playerIn.startUsingItem(handIn);
 			return super.use(worldIn, playerIn, handIn);
 		} else
-			return new ActionResult<>(ActionResultType.PASS, playerIn.getItemInHand(handIn));
+			return new ActionResult<>(InteractionResult.PASS, playerIn.getItemInHand(handIn));
 	}
 
 	@Override

@@ -6,11 +6,11 @@ import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.etherium.items.EtheriumArmor;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.PhantomEntity;
+import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.passive.AnimalEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrowEntity;
-import net.minecraft.world.entity.projectile.DamagingProjectileEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootItem;
@@ -76,7 +76,7 @@ public class EtheriumEventHandler {
 		if (event.getEntityLiving() instanceof Player) {
 			Player player = (Player) event.getEntityLiving();
 
-			if (event.getSource().getDirectEntity() instanceof DamagingProjectileEntity || event.getSource().getDirectEntity() instanceof AbstractArrowEntity) {
+			if (event.getSource().getDirectEntity() instanceof AbstractHurtingProjectile || event.getSource().getDirectEntity() instanceof AbstractArrow) {
 				if (EtheriumArmor.hasShield(player)) {
 					event.setCanceled(true);
 
