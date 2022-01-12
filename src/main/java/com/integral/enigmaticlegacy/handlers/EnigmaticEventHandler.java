@@ -538,8 +538,8 @@ public class EnigmaticEventHandler {
 			float f = CrossbowItem.getPowerForTime(i, crossbowStack);
 			if (f >= 1.0F && !CrossbowItem.isCharged(crossbowStack) && CrossbowHelper.hasAmmo(event.getEntityLiving(), crossbowStack)) {
 				CrossbowItem.setCharged(crossbowStack, true);
-				SoundSource SoundSource = event.getEntityLiving() instanceof Player ? SoundSource.PLAYERS : SoundSource.HOSTILE;
-				event.getEntityLiving().level.playSound((Player) null, event.getEntityLiving().getX(), event.getEntityLiving().getY(), event.getEntityLiving().getZ(), SoundEvents.CROSSBOW_LOADING_END, SoundSource, 1.0F, 1.0F / (theySeeMeRollin.nextFloat() * 0.5F + 1.0F) + 0.2F);
+				SoundSource soundSource = event.getEntityLiving() instanceof Player ? SoundSource.PLAYERS : SoundSource.HOSTILE;
+				event.getEntityLiving().level.playSound((Player) null, event.getEntityLiving().getX(), event.getEntityLiving().getY(), event.getEntityLiving().getZ(), SoundEvents.CROSSBOW_LOADING_END, soundSource, 1.0F, 1.0F / (theySeeMeRollin.nextFloat() * 0.5F + 1.0F) + 0.2F);
 			}
 
 		}
@@ -587,11 +587,11 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent(receiveCanceled = true)
 	@OnlyIn(Dist.CLIENT)
-	public void onOverlayRender(RenderGameOverlayEvent.Pre event) {
+	public void onOverlayRender(RenderGameOverlayEvent.PreLayer event) {
 		Minecraft mc = Minecraft.getInstance();
 
 		// TODO Where did ElementType.EXPERIENCE go?
-		if (event.getType() == RenderGameOverlayEvent.ElementType.LAYER) {
+		if (event.getOverlay() == ForgeIngameGui.EXPERIENCE_BAR_ELEMENT) {
 			TransientPlayerData data = TransientPlayerData.get(mc.player);
 
 			if (data.getFireImmunityTimer() <= 0 || !SuperpositionHandler.hasCurio(mc.player, EnigmaticLegacy.magmaHeart))
@@ -648,13 +648,13 @@ public class EnigmaticEventHandler {
 				mc.font.draw(PoseStack, title, i1, j1, 16770638);
 			}
 
-		} else if (event.getType() == RenderGameOverlayEvent.ElementType.AIR) {
+		} else if (event.getOverlay() == ForgeIngameGui.AIR_LEVEL_ELEMENT) {
 			if (SuperpositionHandler.hasCurio(mc.player, EnigmaticLegacy.oceanStone) || SuperpositionHandler.hasCurio(mc.player, EnigmaticLegacy.voidPearl)) {
 				if (OceanStone.preventOxygenBarRender.getValue()) {
 					event.setCanceled(true);
 				}
 			}
-		} else if (event.getType() == RenderGameOverlayEvent.ElementType.FOOD) {
+		} else if (event.getOverlay() == ForgeIngameGui.FOOD_LEVEL_ELEMENT) {
 
 			if (EnigmaticLegacy.forbiddenFruit.haveConsumedFruit(mc.player)) {
 
