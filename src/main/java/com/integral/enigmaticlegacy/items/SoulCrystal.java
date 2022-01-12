@@ -29,7 +29,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
@@ -127,7 +127,7 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, Vanishab
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level world, Player player, InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		player.startUsingItem(hand);
 
@@ -139,9 +139,9 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, Vanishab
 
 			player.swing(hand);
 			stack.setCount(0);
-			return new ActionResult<>(InteractionResult.SUCCESS, stack);
+			return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 		} else
-			return new ActionResult<>(InteractionResult.PASS, stack);
+			return new InteractionResultHolder<>(InteractionResult.PASS, stack);
 	}
 
 }

@@ -21,7 +21,7 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
@@ -82,9 +82,9 @@ public class UnholyGrail extends ItemBase implements Vanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		playerIn.startUsingItem(handIn);
-		return new ActionResult<>(InteractionResult.CONSUME, playerIn.getItemInHand(handIn));
+		return new InteractionResultHolder<>(InteractionResult.CONSUME, playerIn.getItemInHand(handIn));
 	}
 
 }

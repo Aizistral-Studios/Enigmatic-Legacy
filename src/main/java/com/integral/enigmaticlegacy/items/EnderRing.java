@@ -12,8 +12,8 @@ import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -89,21 +89,15 @@ public class EnderRing extends ItemBaseCurio {
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", ChatFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.enderRing").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", ChatFormatting.LIGHT_PURPLE, KeyMapping.createNameSupplier("key.enderRing").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
 
 	}
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
-		return false;
-	}
-
 	/*
-	 * @Override public ActionResult<ItemStack> onItemRightClick(Level worldIn,
+	 * @Override public InteractionResultHolder<ItemStack> onItemRightClick(Level worldIn,
 	 * Player player, InteractionHand handIn) {
 	 *
 	 * ItemStack itemstack = player.getHeldItem(handIn);
@@ -128,7 +122,7 @@ public class EnderRing extends ItemBaseCurio {
 	 * EnigmaticLegacy.enigmaticLogger.info("Item used: " +
 	 * CuriosAPI.getCurioTags(itemstack.getItem()));
 	 *
-	 * return new ActionResult<>(InteractionResult.SUCCESS, itemstack);
+	 * return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
 	 *
 	 * }
 	 */

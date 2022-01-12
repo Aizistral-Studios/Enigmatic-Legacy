@@ -16,12 +16,12 @@ import com.integral.enigmaticlegacy.objects.AdvancedPotion;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemGroup;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SplashPotionItem;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.NonNullList;
@@ -69,7 +69,7 @@ public class UltimatePotionSplash extends ItemBase implements IAdvancedPotionIte
 	}
 
 	@Override
-	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
 		if (this.allowdedIn(group)) {
 
 			if (this.potionType == PotionType.COMMON) {
@@ -91,7 +91,7 @@ public class UltimatePotionSplash extends ItemBase implements IAdvancedPotionIte
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		ItemStack throwed = playerIn.abilities.instabuild ? itemstack.copy() : itemstack.split(1);
 
@@ -104,7 +104,7 @@ public class UltimatePotionSplash extends ItemBase implements IAdvancedPotionIte
 		}
 
 		playerIn.awardStat(Stats.ITEM_USED.get(this));
-		return new ActionResult<>(InteractionResult.SUCCESS, itemstack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
 	}
 
 	@Override

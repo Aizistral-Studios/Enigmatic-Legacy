@@ -11,7 +11,7 @@ import com.integral.etherium.items.EtheriumShovel;
 import com.integral.etherium.items.EtheriumSword;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemGroup;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Item.Properties;
 
@@ -25,13 +25,13 @@ public class EtheriumUtil {
 
 		if (config.isStandalone()) {
 			if (isAmong(itemClass, EnderRod.class, EtheriumOre.class, EtheriumIngot.class)) {
-				props.tab(ItemGroup.TAB_MATERIALS);
+				props.tab(CreativeModeTab.TAB_MATERIALS);
 			} else if (isAmong(itemClass, EtheriumAxe.class, EtheriumPickaxe.class, EtheriumScythe.class, EtheriumShovel.class)) {
-				props.tab(ItemGroup.TAB_TOOLS);
+				props.tab(CreativeModeTab.TAB_TOOLS);
 			} else if (isAmong(itemClass, EtheriumSword.class, EtheriumArmor.class)) {
-				props.tab(ItemGroup.TAB_COMBAT);
+				props.tab(CreativeModeTab.TAB_COMBAT);
 			} else {
-				props.tab(ItemGroup.TAB_MISC);
+				props.tab(CreativeModeTab.TAB_MISC);
 			}
 		} else {
 			props.tab(config.getCreativeTab());

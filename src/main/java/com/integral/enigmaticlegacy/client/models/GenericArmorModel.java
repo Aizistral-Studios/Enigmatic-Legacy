@@ -3,7 +3,7 @@ package com.integral.enigmaticlegacy.client.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ArmorStandEntity;
@@ -16,7 +16,7 @@ import net.minecraft.world.entity.EquipmentSlot;
  * @author Integral
  */
 
-public class GenericArmorModel extends BipedModel<LivingEntity> {
+public class GenericArmorModel extends HumanoidModel<LivingEntity> {
 	protected final EquipmentSlot slot;
 
 	protected List<SpecialArmorModelRenderer> helmetParts = new ArrayList<>();

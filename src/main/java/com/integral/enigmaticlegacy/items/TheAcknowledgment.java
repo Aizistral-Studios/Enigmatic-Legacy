@@ -28,7 +28,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
@@ -101,7 +101,7 @@ public class TheAcknowledgment extends ItemBase implements Vanishable {
 
 	@Nonnull
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack stack = playerIn.getItemInHand(handIn);
 
 		if (playerIn instanceof ServerPlayer) {
@@ -109,7 +109,7 @@ public class TheAcknowledgment extends ItemBase implements Vanishable {
 			PatchouliAPI.instance.openBookGUI((ServerPlayer) playerIn, bookID);
 		}
 
-		return new ActionResult<>(InteractionResult.SUCCESS, stack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 	}
 
 	@Override

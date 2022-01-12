@@ -23,11 +23,11 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseContext;
+import net.minecraft.world.item.UseOnContext;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ToolItem;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -115,7 +115,7 @@ public class EtheriumShovel extends ItemEtheriumTool {
 	}
 
 	@Override
-	public InteractionResult useOn(ItemUseContext context) {
+	public InteractionResult useOn(UseOnContext context) {
 		if (context.getPlayer().isCrouching())
 			return this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
 		else
@@ -128,14 +128,14 @@ public class EtheriumShovel extends ItemEtheriumTool {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level world, Player player, InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		player.startUsingItem(hand);
 
 		if (player.isCrouching()) {
 			this.toggleAreaEffects(player, stack);
 
-			return new ActionResult<>(InteractionResult.SUCCESS, stack);
+			return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 		} else
 			return super.use(world, player, hand);
 	}

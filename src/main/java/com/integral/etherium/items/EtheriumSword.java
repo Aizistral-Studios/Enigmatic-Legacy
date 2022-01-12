@@ -16,10 +16,10 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseContext;
+import net.minecraft.world.item.UseOnContext;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SwordItem;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
@@ -74,16 +74,16 @@ public class EtheriumSword extends SwordItem implements IEtheriumTool {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level world, Player player, InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 
 		if (hand == InteractionHand.OFF_HAND)
-			return new ActionResult<>(InteractionResult.PASS, player.getItemInHand(hand));
+			return new InteractionResultHolder<>(InteractionResult.PASS, player.getItemInHand(hand));
 
 		if (player.isCrouching()) {
 			this.toggleAreaEffects(player, stack);
 
-			return new ActionResult<>(InteractionResult.SUCCESS, stack);
+			return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 		} else if (!player.level.isClientSide) {
 			if (!player.getCooldowns().isOnCooldown(this) && this.areaEffectsEnabled(player, stack)) {
 				Vector3 look = new Vector3(player.getLookAngle());
@@ -95,16 +95,16 @@ public class EtheriumSword extends SwordItem implements IEtheriumTool {
 				player.getCooldowns().addCooldown(this, this.config.getSwordCooldown());
 
 				player.startUsingItem(hand);
-				return new ActionResult<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
+				return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
 			}
 		}
 
 		player.startUsingItem(hand);
-		return new ActionResult<>(InteractionResult.PASS, player.getItemInHand(hand));
+		return new InteractionResultHolder<>(InteractionResult.PASS, player.getItemInHand(hand));
 	}
 
 	@Override
-	public InteractionResult useOn(ItemUseContext context) {
+	public InteractionResult useOn(UseOnContext context) {
 		if (context.getPlayer().isCrouching())
 			return this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
 		else

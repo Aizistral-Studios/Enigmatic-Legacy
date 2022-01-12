@@ -17,8 +17,8 @@ import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,7 +26,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.entity.projectile.ThrownTrident;
-import net.minecraft.world.entity.projectile.WitherSkullEntity;
+import net.minecraft.world.entity.projectile.WitherSkull;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.damagesource.DamageSource;
@@ -108,7 +108,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", ChatFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.spellstoneAbility").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", ChatFormatting.LIGHT_PURPLE, KeyMapping.createNameSupplier("key.spellstoneAbility").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
@@ -158,7 +158,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 	}
 
 	public void redirect(LivingEntity bearer, Entity redirected) {
-		if (redirected instanceof UltimateWitherSkullEntity || redirected instanceof WitherSkullEntity)
+		if (redirected instanceof UltimateWitherSkullEntity || redirected instanceof WitherSkull)
 			return;
 
 		/*
@@ -192,12 +192,6 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 			redirectedProjectile.yPower = (redirection.y / 4.0);
 			redirectedProjectile.zPower = (redirection.z / 4.0);
 		}
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
-		return false;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.integral.enigmaticlegacy.items.generic;
 
+import java.util.Random;
+
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
@@ -17,6 +19,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.item.Item.Properties;
 
 public abstract class ItemBase extends Item {
+	protected static final Random random = new Random();
 	protected boolean isPlaceholder;
 
 	public ItemBase() {

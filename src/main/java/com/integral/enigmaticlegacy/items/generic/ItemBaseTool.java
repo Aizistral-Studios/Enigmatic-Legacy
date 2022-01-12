@@ -10,47 +10,44 @@ import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.item.IItemTier;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.ToolItem;
-import net.minecraftforge.common.ToolType;
-
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.Item.Properties;
 
-public abstract class ItemBaseTool extends ToolItem {
+public abstract class ItemBaseTool extends DiggerItem {
 	public Set<Material> effectiveMaterials;
+	public Set<ToolAction> toolActions;
 	public ItemStack defaultInstance;
 
-	public ItemBaseTool(float attackDamageIn, float attackSpeedIn, IItemTier tier, Set<Block> effectiveBlocksIn, Properties builder) {
+	public ItemBaseTool(float attackDamageIn, float attackSpeedIn, Tier tier, Tag<Block> effectiveBlocksIn, Properties builder) {
 		super(attackDamageIn, attackSpeedIn, tier, effectiveBlocksIn, builder);
 
 		this.effectiveMaterials = Sets.newHashSet();
+		this.toolActions = Sets.newHashSet();
 		this.defaultInstance = new ItemStack(this);
 	}
 
-	public ItemBaseTool(IItemTier tier) {
-		this(4F, -2.8F, tier, new HashSet<>(), ItemBaseTool.getDefaultProperties().addToolType(ToolType.PICKAXE, tier.getLevel()));
+	public ItemBaseTool(Tier tier) {
+		this(4F, -2.8F, tier, BlockTags.MINEABLE_WITH_PICKAXE, ItemBaseTool.getDefaultProperties());
 	}
 
 	public ItemBaseTool() {
-		this(4F, -2.8F, EnigmaticMaterials.ETHERIUM, new HashSet<>(), ItemBaseTool.getDefaultProperties().addToolType(ToolType.PICKAXE, EnigmaticMaterials.ETHERIUM.getLevel()));
+		this(4F, -2.8F, EnigmaticMaterials.ETHERIUM, BlockTags.MINEABLE_WITH_PICKAXE, ItemBaseTool.getDefaultProperties());
 	}
 
 	@Override
-	public boolean isCorrectToolForDrops(BlockState blockIn) {
-		int i = this.getTier().getLevel();
-
-		if (this.getToolTypes(this.defaultInstance).contains(blockIn.getHarvestTool())) {
-			if (blockIn.getHarvestTool() == ToolType.PICKAXE)
-				return i >= blockIn.getHarvestLevel();
-				else
-					return true;
-		}
-
-		Material material = blockIn.getMaterial();
-		return this.effectiveMaterials.contains(material);
+	public boolean isCorrectToolForDrops(ItemStack stack, BlockState blockIn) {
+		return super.isCorrectToolForDrops(stack, blockIn) || this.effectiveMaterials.contains(blockIn.getMaterial());
 	}
 
 	@Override
@@ -59,6 +56,10 @@ public abstract class ItemBaseTool extends ToolItem {
 		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.speed;
 	}
 
+	@Override
+	public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+		return super.canPerformAction(stack, toolAction) || this.toolActions.contains(toolAction);
+	}
 
 	public static Properties getDefaultProperties() {
 		Properties props = new Item.Properties();

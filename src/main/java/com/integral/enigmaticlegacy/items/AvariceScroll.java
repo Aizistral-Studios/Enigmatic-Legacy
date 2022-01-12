@@ -71,12 +71,6 @@ public class AvariceScroll extends ItemBaseCurio implements ICursed {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
-		return false;
-	}
-
-	@Override
 	public boolean canEquip(String identifier, LivingEntity living, ItemStack stack) {
 		return super.canEquip(identifier, living, stack) && living instanceof Player && SuperpositionHandler.isTheCursedOne((Player)living);
 	}

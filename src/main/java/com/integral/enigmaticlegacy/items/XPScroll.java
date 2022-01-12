@@ -16,7 +16,7 @@ import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.client.settings.KeyMapping;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,7 +24,7 @@ import net.minecraft.world.entity.item.ExperienceOrbEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
@@ -100,18 +100,18 @@ public class XPScroll extends ItemBaseCurio {
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", ChatFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.xpScroll").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", ChatFormatting.LIGHT_PURPLE, KeyMapping.createNameSupplier("key.xpScroll").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level world, Player player, InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand handIn) {
 		ItemStack stack = player.getItemInHand(handIn);
 		this.trigger(world, stack, player, handIn, true);
 
-		return new ActionResult<>(InteractionResult.SUCCESS, stack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 
 	}
 

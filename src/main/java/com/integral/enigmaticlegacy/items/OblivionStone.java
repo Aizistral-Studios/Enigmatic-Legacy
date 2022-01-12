@@ -30,7 +30,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
@@ -155,7 +155,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level world, Player player, InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 
 		ItemStack stack = player.getItemInHand(hand);
 		int mode = ItemNBTHelper.getInt(stack, "ConsumptionMode", 0);
@@ -174,7 +174,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 		}
 
 		player.swing(hand);
-		return new ActionResult<>(InteractionResult.SUCCESS, stack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 
 	}
 

@@ -11,8 +11,8 @@ import com.integral.omniconfig.wrappers.Omniconfig;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.IItemTier;
-import net.minecraft.world.item.ItemGroup;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.phys.Vec3;
@@ -89,7 +89,7 @@ public class EtheriumConfig implements IEtheriumConfig {
 	}
 
 	@Override
-	public ItemGroup getCreativeTab() {
+	public CreativeModeTab getCreativeTab() {
 		return null;
 	}
 
@@ -104,7 +104,7 @@ public class EtheriumConfig implements IEtheriumConfig {
 	}
 
 	@Override
-	public IItemTier getToolMaterial() {
+	public Tier getToolMaterial() {
 		return EnigmaticMaterials.ETHERIUM;
 	}
 

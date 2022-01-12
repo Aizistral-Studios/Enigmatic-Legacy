@@ -62,8 +62,8 @@ public class ShieldAuraLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
 				 */
 
 				this.witherModel.crouching = entitylivingbaseIn.isCrouching();
-				BipedModel.ArmPose bipedmodel$armpose = this.func_217766_a(entitylivingbaseIn, itemstack, itemstack1, InteractionHand.MAIN_HAND);
-				BipedModel.ArmPose bipedmodel$armpose1 = this.func_217766_a(entitylivingbaseIn, itemstack, itemstack1, InteractionHand.OFF_HAND);
+				HumanoidModel.ArmPose bipedmodel$armpose = this.func_217766_a(entitylivingbaseIn, itemstack, itemstack1, InteractionHand.MAIN_HAND);
+				HumanoidModel.ArmPose bipedmodel$armpose1 = this.func_217766_a(entitylivingbaseIn, itemstack, itemstack1, InteractionHand.OFF_HAND);
 				if (entitylivingbaseIn.getMainArm() == HandSide.RIGHT) {
 					this.witherModel.rightArmPose = bipedmodel$armpose;
 					this.witherModel.leftArmPose = bipedmodel$armpose1;
@@ -81,21 +81,21 @@ public class ShieldAuraLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
 
 	}
 
-	private BipedModel.ArmPose func_217766_a(AbstractClientPlayer playerIn, ItemStack itemStackMain, ItemStack itemStackOff, InteractionHand handIn) {
-		BipedModel.ArmPose bipedmodel$armpose = BipedModel.ArmPose.EMPTY;
+	private HumanoidModel.ArmPose func_217766_a(AbstractClientPlayer playerIn, ItemStack itemStackMain, ItemStack itemStackOff, InteractionHand handIn) {
+		HumanoidModel.ArmPose bipedmodel$armpose = HumanoidModel.ArmPose.EMPTY;
 		ItemStack itemstack = handIn == InteractionHand.MAIN_HAND ? itemStackMain : itemStackOff;
 		if (!itemstack.isEmpty()) {
-			bipedmodel$armpose = BipedModel.ArmPose.ITEM;
+			bipedmodel$armpose = HumanoidModel.ArmPose.ITEM;
 			if (playerIn.getUseItemRemainingTicks() > 0) {
 				UseAnim useaction = itemstack.getUseAnimation();
 				if (useaction == UseAnim.BLOCK) {
-					bipedmodel$armpose = BipedModel.ArmPose.BLOCK;
+					bipedmodel$armpose = HumanoidModel.ArmPose.BLOCK;
 				} else if (useaction == UseAnim.BOW) {
-					bipedmodel$armpose = BipedModel.ArmPose.BOW_AND_ARROW;
+					bipedmodel$armpose = HumanoidModel.ArmPose.BOW_AND_ARROW;
 				} else if (useaction == UseAnim.SPEAR) {
-					bipedmodel$armpose = BipedModel.ArmPose.THROW_SPEAR;
+					bipedmodel$armpose = HumanoidModel.ArmPose.THROW_SPEAR;
 				} else if (useaction == UseAnim.CROSSBOW && handIn == playerIn.getUsedItemHand()) {
-					bipedmodel$armpose = BipedModel.ArmPose.CROSSBOW_CHARGE;
+					bipedmodel$armpose = HumanoidModel.ArmPose.CROSSBOW_CHARGE;
 				}
 			} else {
 				boolean flag3 = itemStackMain.getItem() == Items.CROSSBOW;
@@ -103,11 +103,11 @@ public class ShieldAuraLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
 				boolean flag1 = itemStackOff.getItem() == Items.CROSSBOW;
 				boolean flag2 = CrossbowItem.isCharged(itemStackOff);
 				if (flag3 && flag) {
-					bipedmodel$armpose = BipedModel.ArmPose.CROSSBOW_HOLD;
+					bipedmodel$armpose = HumanoidModel.ArmPose.CROSSBOW_HOLD;
 				}
 
 				if (flag1 && flag2 && itemStackMain.getItem().getUseAnimation(itemStackMain) == UseAnim.NONE) {
-					bipedmodel$armpose = BipedModel.ArmPose.CROSSBOW_HOLD;
+					bipedmodel$armpose = HumanoidModel.ArmPose.CROSSBOW_HOLD;
 				}
 			}
 		}

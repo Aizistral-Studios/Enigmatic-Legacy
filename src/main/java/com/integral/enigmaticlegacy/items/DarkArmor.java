@@ -7,7 +7,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.client.models.DarkArmorModel;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseArmor;
 
-import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorMaterial;
@@ -15,8 +15,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.IItemRenderProperties;
 
-public class DarkArmor extends ItemBaseArmor {
+public class DarkArmor extends ItemBaseArmor implements IItemRenderProperties {
 	public final String TEXTURE = EnigmaticLegacy.MODID + ":textures/models/armor/dark_armor.png";
 
 	public DarkArmor(ArmorMaterial materialIn, EquipmentSlot slot) {
@@ -25,8 +26,7 @@ public class DarkArmor extends ItemBaseArmor {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	@Nullable
-	public BipedModel<?> provideArmorModelForSlot(EquipmentSlot slot) {
+	public HumanoidModel<?> provideArmorModelForSlot(EquipmentSlot slot, HumanoidModel<?> original) {
 		DarkArmorModel model = new DarkArmorModel(slot);
 		return model;
 	}

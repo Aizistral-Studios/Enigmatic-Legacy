@@ -19,7 +19,7 @@ import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.client.settings.KeyMapping;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -163,7 +163,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 		try {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", ChatFormatting.LIGHT_PURPLE, KeyBinding.createNameSupplier("key.spellstoneAbility").get().getString().toUpperCase());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.currentKeybind", ChatFormatting.LIGHT_PURPLE, KeyMapping.createNameSupplier("key.spellstoneAbility").get().getString().toUpperCase());
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}

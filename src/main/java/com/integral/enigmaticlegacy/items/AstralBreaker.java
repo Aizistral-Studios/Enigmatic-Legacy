@@ -21,27 +21,29 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseContext;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.InteractionResult;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.util.math.ClipContext;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool {
@@ -75,16 +77,18 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 		builder.popPrefix();
 	}
 
+
 	public AstralBreaker() {
-		super(4F, -2.8F, EnigmaticMaterials.ETHERIUM, new HashSet<>(),
+		super(4F, -2.8F, EnigmaticMaterials.ETHERIUM, BlockTags.MINEABLE_WITH_PICKAXE,
 				ItemBaseTool.getDefaultProperties()
-				.addToolType(ToolType.PICKAXE, EnigmaticMaterials.ETHERIUM.getLevel())
-				.addToolType(ToolType.AXE, EnigmaticMaterials.ETHERIUM.getLevel())
-				.addToolType(ToolType.SHOVEL, EnigmaticMaterials.ETHERIUM.getLevel())
 				.defaultDurability(4000)
 				.rarity(Rarity.EPIC)
 				.fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_breaker"));
+
+		this.toolActions.add(ToolActions.AXE_DIG);
+		this.toolActions.add(ToolActions.PICKAXE_DIG);
+		this.toolActions.add(ToolActions.SHOVEL_DIG);
 
 		this.effectiveMaterials.addAll(EnigmaticLegacy.etheriumPickaxe.effectiveMaterials);
 		this.effectiveMaterials.addAll(EnigmaticLegacy.etheriumAxe.effectiveMaterials);
@@ -143,20 +147,20 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level world, Player player, InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		player.startUsingItem(hand);
 
 		if (player.isCrouching()) {
 			this.toggleAreaEffects(player, stack);
 
-			return new ActionResult<>(InteractionResult.SUCCESS, stack);
+			return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 		} else
 			return super.use(world, player, hand);
 	}
 
 	@Override
-	public InteractionResult useOn(ItemUseContext context) {
+	public InteractionResult useOn(UseOnContext context) {
 		if (context.getPlayer().isCrouching())
 			return this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
 		else

@@ -15,7 +15,7 @@ import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
@@ -78,7 +78,7 @@ public class ExtradimensionalEye extends ItemBase implements Vanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 
 		if (playerIn.isCrouching() && ItemNBTHelper.getString(itemstack, "BoundDimension", null) == null) {
@@ -88,10 +88,10 @@ public class ExtradimensionalEye extends ItemBase implements Vanishable {
 
 			ItemNBTHelper.setString(itemstack, "BoundDimension", playerIn.level.dimension().location().toString());
 			playerIn.swing(handIn);
-			return new ActionResult<>(InteractionResult.SUCCESS, itemstack);
+			return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
 		}
 
-		return new ActionResult<>(InteractionResult.FAIL, itemstack);
+		return new InteractionResultHolder<>(InteractionResult.FAIL, itemstack);
 	}
 
 }

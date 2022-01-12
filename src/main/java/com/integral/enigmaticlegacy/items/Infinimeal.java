@@ -22,7 +22,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseContext;
+import net.minecraft.world.item.UseOnContext;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -57,7 +57,7 @@ public class Infinimeal extends ItemBase implements Vanishable {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	public InteractionResult useOn(ItemUseContext context) {
+	public InteractionResult useOn(UseOnContext context) {
 		ItemStack stack = context.getItemInHand();
 		int savedCount = stack.getCount();
 

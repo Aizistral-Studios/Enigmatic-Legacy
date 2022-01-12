@@ -35,7 +35,7 @@ import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemGroup;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemModelsProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -189,7 +189,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	}
 
 	@Override
-	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
 		if (group == EnigmaticLegacy.enigmaticTab) {
 			for (AmuletColor color : AmuletColor.values()) {
 				items.add(this.setColor(new ItemStack(this), color));
@@ -318,12 +318,6 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 	@Override
 	public boolean showAttributesTooltip(String identifier, ItemStack stack) {
-		return false;
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
 		return false;
 	}
 

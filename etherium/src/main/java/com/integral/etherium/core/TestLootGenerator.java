@@ -16,11 +16,11 @@ import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUseContext;
+import net.minecraft.world.item.UseOnContext;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -121,7 +121,7 @@ public class TestLootGenerator extends Item implements Vanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level world, Player player, InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 
 		ItemStack itemstack = player.getItemInHand(hand);
 
@@ -145,12 +145,12 @@ public class TestLootGenerator extends Item implements Vanishable {
 			player.swing(hand);
 		}
 
-		return new ActionResult<>(InteractionResult.SUCCESS, itemstack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
 
 	}
 
 	@Override
-	public InteractionResult useOn(ItemUseContext context) {
+	public InteractionResult useOn(UseOnContext context) {
 		Player player = context.getPlayer();
 		Level world = context.getLevel();
 		ItemStack stack = context.getItemInHand();

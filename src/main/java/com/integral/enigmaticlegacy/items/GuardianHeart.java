@@ -45,7 +45,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.world.InteractionHand;
@@ -224,7 +224,7 @@ public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		return super.use(worldIn, playerIn, handIn);
 	}
 

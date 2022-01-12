@@ -28,19 +28,16 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.brain.memory.MemoryModuleType;
-import net.minecraft.world.entity.monster.EndermanEntity;
-import net.minecraft.world.entity.monster.VindicatorEntity;
-import net.minecraft.world.entity.monster.piglin.AbstractPiglinEntity;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.piglin.Piglin;
-import net.minecraft.world.entity.monster.piglin.PiglinTasks;
-import net.minecraft.world.entity.passive.BeeEntity;
-import net.minecraft.world.entity.passive.IronGolemEntity;
-import net.minecraft.world.entity.passive.TamableAnimal;
+import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
@@ -208,13 +205,6 @@ public class CursedRing extends ItemBaseCurio {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
-		return false;
-	}
-
-
-	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier, ItemStack stack) {
 		Multimap<Attribute, AttributeModifier> atrributeMap = ArrayListMultimap.create();
 
@@ -280,11 +270,11 @@ public class CursedRing extends ItemBaseCurio {
 			return;
 
 		List<LivingEntity> genericMobs = livingPlayer.level.getEntitiesOfClass(LivingEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, neutralAngerRange.getValue()));
-		List<EndermanEntity> endermen = livingPlayer.level.getEntitiesOfClass(EndermanEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, endermenRandomportRange.getValue()));
+		List<EnderMan> endermen = livingPlayer.level.getEntitiesOfClass(EnderMan.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, endermenRandomportRange.getValue()));
 
-		for (EndermanEntity enderman : endermen) {
-			if (random.nextDouble() <= (0.002 * endermenRandomportFrequency.getValue())) {
-				if (enderman.teleportTowards(player) && player.canSee(enderman)) {
+		for (EnderMan enderman : endermen) {
+			if (this.random.nextDouble() <= (0.002 * endermenRandomportFrequency.getValue())) {
+				if (enderman.teleportTowards(player) && player.hasLineOfSight(enderman)) {
 					enderman.setTarget(player);
 				}
 			}
@@ -303,8 +293,8 @@ public class CursedRing extends ItemBaseCurio {
 				Piglin piglin = (Piglin) checkedEntity;
 
 				if (piglin.getTarget() == null || !piglin.getTarget().isAlive()) {
-					if (player.canSee(checkedEntity) || player.distanceTo(checkedEntity) <= neutralXRayRange.getValue()) {
-						PiglinTasks.wasHurtBy(piglin, player);
+					if (player.hasLineOfSight(checkedEntity) || player.distanceTo(checkedEntity) <= neutralXRayRange.getValue()) {
+						PiglinAi.wasHurtBy(piglin, player);
 					} else {
 						continue;
 					}
@@ -317,18 +307,18 @@ public class CursedRing extends ItemBaseCurio {
 					if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide) || ((TamableAnimal)neutral).isTame()) {
 						continue;
 					}
-				} else if (neutral instanceof IronGolemEntity) {
-					if (((IronGolemEntity)neutral).isPlayerCreated()) {
+				} else if (neutral instanceof IronGolem) {
+					if (((IronGolem)neutral).isPlayerCreated()) {
 						continue;
 					}
-				} else if (neutral instanceof BeeEntity) {
+				} else if (neutral instanceof Bee) {
 					if (saveTheBees.getValue() || SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide)) {
 						continue;
 					}
 				}
 
 				if (neutral.getTarget() == null || !neutral.getTarget().isAlive()) {
-					if (player.canSee(checkedEntity) || player.distanceTo(checkedEntity) <= neutralXRayRange.getValue()) {
+					if (player.hasLineOfSight(checkedEntity) || player.distanceTo(checkedEntity) <= neutralXRayRange.getValue()) {
 						neutral.setTarget(player);
 					} else {
 						continue;

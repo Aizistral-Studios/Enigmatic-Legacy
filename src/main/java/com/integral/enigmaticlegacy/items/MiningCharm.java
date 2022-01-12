@@ -28,7 +28,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
@@ -127,7 +127,7 @@ public class MiningCharm extends ItemBaseCurio {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level world, Player player, InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand handIn) {
 
 		ItemStack stack = player.getItemInHand(handIn);
 
@@ -141,7 +141,7 @@ public class MiningCharm extends ItemBaseCurio {
 
 		player.swing(handIn);
 
-		return new ActionResult<>(InteractionResult.SUCCESS, stack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 
 	}
 

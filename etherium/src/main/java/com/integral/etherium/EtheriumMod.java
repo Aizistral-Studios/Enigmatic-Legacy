@@ -23,7 +23,7 @@ import com.integral.etherium.proxy.ClientProxy;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemGroup;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;

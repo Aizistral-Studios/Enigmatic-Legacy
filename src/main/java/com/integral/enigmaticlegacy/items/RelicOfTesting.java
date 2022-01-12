@@ -20,7 +20,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.world.InteractionHand;
@@ -53,7 +53,7 @@ public class RelicOfTesting extends ItemBase {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		playerIn.startUsingItem(handIn);
@@ -92,7 +92,7 @@ public class RelicOfTesting extends ItemBase {
 
 		playerIn.swing(handIn);
 
-		return new ActionResult<>(InteractionResult.SUCCESS, itemstack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
 
 	}
 
@@ -129,7 +129,7 @@ public class RelicOfTesting extends ItemBase {
 	}
 
 	/*
-	 * public InteractionResult onItemUse(ItemUseContext context) { Player
+	 * public InteractionResult onItemUse(UseOnContext context) { Player
 	 * player = context.getPlayer(); Level world = context.getWorld(); //ItemStack
 	 * stack = context.getItem();
 	 *

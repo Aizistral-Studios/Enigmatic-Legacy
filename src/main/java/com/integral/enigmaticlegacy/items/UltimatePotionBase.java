@@ -17,14 +17,14 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.ItemGroup;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.NonNullList;
@@ -70,7 +70,7 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 	}
 
 	@Override
-	public void fillItemCategory(ItemGroup group, NonNullList<ItemStack> items) {
+	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
 		if (this.allowdedIn(group)) {
 
 			if (this.potionType == PotionType.COMMON) {
@@ -139,9 +139,9 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		playerIn.startUsingItem(handIn);
-		return new ActionResult<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
 	}
 
 	@Override

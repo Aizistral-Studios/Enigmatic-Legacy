@@ -1,11 +1,16 @@
 package com.integral.enigmaticlegacy.items.generic;
 
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.client.models.UnseenArmorModel;
 
-import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -15,23 +20,20 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.LazyValue;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.IItemRenderProperties;
 import net.minecraftforge.fml.DistExecutor;
 
 import net.minecraft.world.item.Item.Properties;
 
 @SuppressWarnings("deprecation")
-public abstract class ItemBaseArmor extends ArmorItem {
-
-	private final LazyValue<BipedModel<?>> model;
+public abstract class ItemBaseArmor extends ArmorItem implements IItemRenderProperties {
+	@OnlyIn(Dist.CLIENT)
+	private HumanoidModel<?> model;
 
 	public ItemBaseArmor(ArmorMaterial materialIn, EquipmentSlot slot, Properties builder) {
 		super(materialIn, slot, builder);
-
-		this.model = DistExecutor.runForDist(() -> () -> new LazyValue<>(() -> this.provideArmorModelForSlot(slot)),
-				() -> () -> null);
 	}
 
 	public ItemBaseArmor(ArmorMaterial materialIn, EquipmentSlot slot) {
@@ -40,22 +42,25 @@ public abstract class ItemBaseArmor extends ArmorItem {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	@SuppressWarnings("unchecked")
-	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A original) {
-		return (A) this.model.get();
-		//return super.getArmorModel(entityLiving, itemStack, armorSlot, original);
+	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+		consumer.accept(this);
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	@Nullable
-	public BipedModel<?> provideArmorModelForSlot(EquipmentSlot slot) {
-		BipedModel<LivingEntity> model = new BipedModel<LivingEntity>(0.5F);
-		model.setAllVisible(false);
-		return model;
-	}
-
-	@Nonnull
 	@Override
+	@OnlyIn(Dist.CLIENT)
+	@SuppressWarnings("unchecked")
+	public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A original) {
+		return (A) this.provideArmorModelForSlot(armorSlot, original);
+	}
+
+	@Nullable
+	@OnlyIn(Dist.CLIENT)
+	public HumanoidModel<?> provideArmorModelForSlot(EquipmentSlot slot, HumanoidModel<?> original) {
+		return this.model != null ? this.model : (this.model = new UnseenArmorModel<>(original));
+	}
+
+	@Override
+	@OnlyIn(Dist.CLIENT)
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
 		return EnigmaticLegacy.MODID + ":textures/models/armor/unseen_armor.png";
 	}

@@ -19,7 +19,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.Component;
@@ -90,9 +90,9 @@ public class HastePotion extends ItemBase {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		playerIn.startUsingItem(handIn);
-		return new ActionResult<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, playerIn.getItemInHand(handIn));
 	}
 
 	@Override

@@ -15,7 +15,7 @@ import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ActionResult;
+import net.minecraft.util.InteractionResultHolder;
 import net.minecraft.util.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
@@ -58,7 +58,7 @@ public class LoreInscriber extends ItemBase implements Vanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		ItemStack stack = playerIn.getItemInHand(handIn);
 		playerIn.startUsingItem(handIn);
 
@@ -68,7 +68,7 @@ public class LoreInscriber extends ItemBase implements Vanishable {
 			playerIn.openMenu(new LoreInscriberContainerProvider(name));
 		}
 
-		return new ActionResult<>(InteractionResult.SUCCESS, stack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 	}
 
 }

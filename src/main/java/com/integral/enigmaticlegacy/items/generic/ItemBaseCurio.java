@@ -5,14 +5,8 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.api.items.IItemCurio;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -31,7 +25,6 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 
 import net.minecraft.world.item.Item.Properties;
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
-import top.theillusivec4.curios.api.type.capability.ICurio.RenderHelper;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 public abstract class ItemBaseCurio extends ItemBase implements ICurioItem, Vanishable {
@@ -104,37 +97,4 @@ public abstract class ItemBaseCurio extends ItemBase implements ICurioItem, Vani
 			return super.isBookEnchantable(stack, book);
 	}
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public abstract boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack);
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public void render(String identifier, int index, PoseStack PoseStack, IRenderTypeBuffer renderTypeBuffer,
-			int light, LivingEntity living, float limbSwing, float limbSwingAmount, float partialTicks,
-			float ageInTicks, float netHeadYaw, float headPitch, ItemStack stack) {
-
-		if (this.canRender(identifier, index, living, stack))
-			return;
-
-		BipedModel<LivingEntity> model = this.getModel();
-		model.setupAnim(living, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-		model.prepareMobModel(living, limbSwing, limbSwingAmount, partialTicks);
-		RenderHelper.followBodyRotations(living, model);
-		IVertexBuilder vertexBuilder = ItemRenderer.getFoilBuffer(renderTypeBuffer, model.renderType(this.getTexture()),
-				false, false);
-		model.renderToBuffer(PoseStack, vertexBuilder, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
-	}
-
-	@Nullable
-	@OnlyIn(Dist.CLIENT)
-	protected BipedModel<LivingEntity> getModel() {
-		return null;
-	}
-
-	@Nullable
-	@OnlyIn(Dist.CLIENT)
-	protected ResourceLocation getTexture() {
-		return null;
-	}
 }

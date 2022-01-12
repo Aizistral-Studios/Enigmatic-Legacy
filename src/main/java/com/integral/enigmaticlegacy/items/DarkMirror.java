@@ -17,9 +17,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.InteractionResult;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
@@ -86,7 +86,7 @@ public class DarkMirror extends ItemBase implements ICursed, Vanishable {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level world, Player player, InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		if (EnigmaticLegacy.proxy.isInVanillaDimension(player) && SuperpositionHandler.isTheCursedOne(player) && !player.getCooldowns().isOnCooldown(this)) {
 			player.startUsingItem(hand);
 
@@ -95,9 +95,9 @@ public class DarkMirror extends ItemBase implements ICursed, Vanishable {
 				player.getCooldowns().addCooldown(this, 200);
 			}
 
-			return new ActionResult<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
+			return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));
 		} else
-			return new ActionResult<>(InteractionResult.PASS, player.getItemInHand(hand));
+			return new InteractionResultHolder<>(InteractionResult.PASS, player.getItemInHand(hand));
 	}
 
 }

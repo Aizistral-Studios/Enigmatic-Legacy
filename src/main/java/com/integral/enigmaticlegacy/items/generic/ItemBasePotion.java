@@ -18,9 +18,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.InteractionResult;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
@@ -50,13 +50,13 @@ public abstract class ItemBasePotion extends ItemBase {
 				CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
 			}
 
-			if (!player.abilities.instabuild) {
+			if (!player.getAbilities().instabuild) {
 				stack.shrink(1);
 
 				if (stack.isEmpty())
 					return new ItemStack(Items.GLASS_BOTTLE);
 
-				player.inventory.add(new ItemStack(Items.GLASS_BOTTLE));
+				player.getInventory().add(new ItemStack(Items.GLASS_BOTTLE));
 			}
 
 		}
@@ -75,12 +75,12 @@ public abstract class ItemBasePotion extends ItemBase {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
 		if (this.canDrink(worldIn, playerIn, playerIn.getItemInHand(handIn))) {
 			playerIn.startUsingItem(handIn);
 			return super.use(worldIn, playerIn, handIn);
 		} else
-			return new ActionResult<>(InteractionResult.PASS, playerIn.getItemInHand(handIn));
+			return new InteractionResultHolder<>(InteractionResult.PASS, playerIn.getItemInHand(handIn));
 	}
 
 	@Override
