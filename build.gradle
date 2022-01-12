@@ -7,8 +7,11 @@ buildscript {
             url "https://repo.spongepowered.org/repository/maven-public/"
             content { includeGroup "org.spongepowered" }
         }
-        maven { url 'https://plugins.gradle.org/m2/' }
-        jcenter()
+        maven {
+			name "Gradle Plugin Portal"
+			url 'https://plugins.gradle.org/m2/'
+			content { includeGroup "gradle.plugin.com.matthewprenger" }
+		}
         mavenCentral()
     }
     dependencies {
@@ -33,20 +36,6 @@ subprojects {
     version_mc    = rootProject.version_mc
     version_forge = rootProject.version_forge
     version_mcp   = rootProject.version_mcp
-}
-
-gradle.taskGraph.beforeTask { task ->
-    if ( task.name == "eclipseFactoryPath"
-	) {
-        println "Task $task.name is being rendered useless"
-    }
-}
-
-project.afterEvaluate {
-    tasks.named('eclipse').get().dependsOn -= tasks.eclipseFactoryPath
-	tasks.named('eclipse').get().dependsOn.each(tsk -> {
-		println(tsk)
-	})
 }
 
 mixin {

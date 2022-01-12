@@ -37,3 +37,4 @@ old_changelog.txt
 *.bat
 !gradlew.bat
 !updateResources.bat
+/.apt_generated_tests/

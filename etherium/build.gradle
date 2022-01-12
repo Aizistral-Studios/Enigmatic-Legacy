@@ -1,12 +1,15 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
+        maven { url = 'https://maven.minecraftforge.net' }
         maven {
             name "Sponge"
             url "https://repo.spongepowered.org/repository/maven-public/"
         }
-        maven { url 'https://plugins.gradle.org/m2/' }
-        jcenter()
+        maven {
+			name "Gradle Plugin Portal"
+			url 'https://plugins.gradle.org/m2/'
+			content { includeGroup "gradle.plugin.com.matthewprenger" }
+		}
         mavenCentral()
     }
     dependencies {
