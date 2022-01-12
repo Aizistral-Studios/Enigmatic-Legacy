@@ -2,34 +2,29 @@ package com.integral.etherium.client;
 
 import com.integral.etherium.items.EtheriumArmor;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.IEntityRenderer;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.entity.model.PlayerModel;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.UseAction;
-import net.minecraft.util.InteractionHand;
-import net.minecraft.util.HandSide;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
+public class ShieldAuraLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 	private static final ResourceLocation WITHER_ARMOR = new ResourceLocation("enigmaticlegacy", "textures/models/misc/ultimate_wither_armor.png");
 	private final PlayerModel<AbstractClientPlayer> witherModel = new PlayerModel<AbstractClientPlayer>(0.5F, false);
 
-	public ShieldAuraLayer(IEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderer) {
+	public ShieldAuraLayer(LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderer) {
 		super(renderer);
 	}
 
@@ -92,14 +87,14 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayer, PlayerM
 		if (!itemstack.isEmpty()) {
 			bipedmodel$armpose = BipedModel.ArmPose.ITEM;
 			if (playerIn.getUseItemRemainingTicks() > 0) {
-				UseAction useaction = itemstack.getUseAnimation();
-				if (useaction == UseAction.BLOCK) {
+				UseAnim useaction = itemstack.getUseAnimation();
+				if (useaction == UseAnim.BLOCK) {
 					bipedmodel$armpose = BipedModel.ArmPose.BLOCK;
-				} else if (useaction == UseAction.BOW) {
+				} else if (useaction == UseAnim.BOW) {
 					bipedmodel$armpose = BipedModel.ArmPose.BOW_AND_ARROW;
-				} else if (useaction == UseAction.SPEAR) {
+				} else if (useaction == UseAnim.SPEAR) {
 					bipedmodel$armpose = BipedModel.ArmPose.THROW_SPEAR;
-				} else if (useaction == UseAction.CROSSBOW && handIn == playerIn.getUsedItemHand()) {
+				} else if (useaction == UseAnim.CROSSBOW && handIn == playerIn.getUsedItemHand()) {
 					bipedmodel$armpose = BipedModel.ArmPose.CROSSBOW_CHARGE;
 				}
 			} else {
@@ -111,7 +106,7 @@ public class ShieldAuraLayer extends LayerRenderer<AbstractClientPlayer, PlayerM
 					bipedmodel$armpose = BipedModel.ArmPose.CROSSBOW_HOLD;
 				}
 
-				if (flag1 && flag2 && itemStackMain.getItem().getUseAnimation(itemStackMain) == UseAction.NONE) {
+				if (flag1 && flag2 && itemStackMain.getItem().getUseAnimation(itemStackMain) == UseAnim.NONE) {
 					bipedmodel$armpose = BipedModel.ArmPose.CROSSBOW_HOLD;
 				}
 			}

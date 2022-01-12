@@ -6,14 +6,14 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ChestMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.inventory.container.ChestContainer;
-import net.minecraft.world.inventory.container.MenuType;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.play.server.SOpenWindowPacket;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
 
 /**
@@ -45,7 +45,7 @@ public class PacketEnderRingKey {
 			//if (playerServ.openContainer.windowId == 0)
 			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticLegacy.enderRing) || SuperpositionHandler.hasCurio(playerServ, EnigmaticLegacy.cursedRing)) {
 				//ChestContainer container = ChestContainer.createGeneric9X3(playerServ.currentWindowId+1, playerServ.inventory, playerServ.getInventoryEnderChest());
-				ChestContainer container = new ChestContainer(MenuType.GENERIC_9x3, playerServ.containerCounter + 1, playerServ.inventory, playerServ.getEnderChestInventory(), 3) {
+				ChestMenu container = new ChestMenu(MenuType.GENERIC_9x3, playerServ.containerCounter + 1, playerServ.getInventory(), playerServ.getEnderChestInventory(), 3) {
 					@Override
 					public void removed(Player playerIn) {
 						super.removed(playerIn);
@@ -57,8 +57,8 @@ public class PacketEnderRingKey {
 				};
 
 				playerServ.containerCounter = container.containerId;
-				playerServ.connection.send(new SOpenWindowPacket(container.containerId, container.getType(), new TranslatableComponent("container.enderchest")));
-				container.addSlotListener(playerServ);
+				playerServ.connection.send(new ClientboundOpenScreenPacket(container.containerId, container.getType(), new TranslatableComponent("container.enderchest")));
+				playerServ.initMenu(container);
 				playerServ.containerMenu = container;
 				net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.player.PlayerContainerEvent.Open(playerServ, playerServ.containerMenu));
 

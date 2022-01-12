@@ -8,7 +8,8 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.model.GenericHeadModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
@@ -24,15 +25,15 @@ public class UltimateWitherSkullRenderer extends EntityRenderer<UltimateWitherSk
 	private static final ResourceLocation WITHER_TEXTURES = new ResourceLocation("textures/entity/wither/wither.png");
 	private final GenericHeadModel skeletonHeadModel = new GenericHeadModel();
 
-	public UltimateWitherSkullRenderer(EntityRendererManager renderManagerIn) {
+	public UltimateWitherSkullRenderer(EntityRendererProvider.Context renderManagerIn) {
 		super(renderManagerIn);
 	}
-	
+
 	@Override
 	protected int getBlockLightLevel(UltimateWitherSkullEntity entityIn, BlockPos partialTicks) {
 		return 15;
 	}
-	
+
 	@Override
 	public void render(UltimateWitherSkullEntity entityIn, float entityYaw, float partialTicks, PoseStack PoseStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
 		PoseStackIn.pushPose();
@@ -70,8 +71,8 @@ public class UltimateWitherSkullRenderer extends EntityRenderer<UltimateWitherSk
 	}
 
 	/**
-	* Returns the location of an entity's texture.
-	*/
+	 * Returns the location of an entity's texture.
+	 */
 	@Override
 	public ResourceLocation getTextureLocation(UltimateWitherSkullEntity entity) {
 		//return entity.isSkullInvulnerable() ? UltimateWitherSkullRenderer.INVULNERABLE_WITHER_TEXTURES : UltimateWitherSkullRenderer.WITHER_TEXTURES;

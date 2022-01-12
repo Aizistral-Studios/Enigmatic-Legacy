@@ -3,7 +3,7 @@ package com.integral.enigmaticlegacy.packets.clients;
 import java.util.function.Supplier;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.fmllegacy.network.NetworkEvent;
@@ -49,9 +49,8 @@ public class PacketForceArrowRotations {
 	}
 
 	public static void handle(PacketForceArrowRotations msg, Supplier<NetworkEvent.Context> ctx) {
-
 		ctx.get().enqueueWork(() -> {
-			ClientWorld theWorld = Minecraft.getInstance().level;
+			ClientLevel theWorld = Minecraft.getInstance().level;
 			Entity arrow = theWorld.getEntity(msg.entityID);
 
 			if (arrow != null) {
@@ -59,9 +58,9 @@ public class PacketForceArrowRotations {
 
 				arrow.teleportTo(msg.posX, msg.posY, msg.posZ);
 				arrow.setDeltaMovement(msg.motionX, msg.motionY, msg.motionZ);
-				arrow.yRot = msg.rotationYaw;
+				arrow.setYRot(msg.rotationYaw);
 				arrow.yRotO = msg.rotationYaw;
-				arrow.xRot = msg.rotationPitch;
+				arrow.setXRot(msg.rotationPitch);
 				arrow.xRotO = msg.rotationPitch;
 			}
 

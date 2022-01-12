@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
@@ -74,8 +75,8 @@ public class CommonProxy {
 		return Level.END;
 	}
 
-	public UseAction getVisualBlockAction() {
-		return UseAction.BOW;
+	public UseAnim getVisualBlockAction() {
+		return UseAnim.BOW;
 	}
 
 	public Player getPlayer(UUID playerID) {

@@ -2,15 +2,11 @@ package com.integral.enigmaticlegacy.client.fx;
 
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 
-import net.minecraft.client.particle.IParticleRenderType;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.renderer.ActiveRenderInfo;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderTypeBuffers;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.world.ClientWorld;
+import net.minecraft.client.renderer.RenderBuffers;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.util.Mth;
@@ -20,17 +16,17 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class PermanentItemPickupParticle extends Particle {
-	private final RenderTypeBuffers renderTypeBuffers;
+	private final RenderBuffers renderTypeBuffers;
 	private final Entity item;
 	private final Entity target;
 	private int particleAge;
-	private final EntityRendererManager renderManager;
+	private final EntityRenderDispatcher renderManager;
 
-	public PermanentItemPickupParticle(EntityRendererManager entityRenderManager, RenderTypeBuffers buffers, ClientWorld world, Entity item, Entity target) {
+	public PermanentItemPickupParticle(EntityRenderDispatcher entityRenderManager, RenderBuffers buffers, ClientLevel world, Entity item, Entity target) {
 		this(entityRenderManager, buffers, world, item, target, item.getDeltaMovement());
 	}
 
-	private PermanentItemPickupParticle(EntityRendererManager entityRenderManager, RenderTypeBuffers buffers, ClientWorld world, Entity item, Entity target, Vec3 motionVector) {
+	private PermanentItemPickupParticle(EntityRenderDispatcher entityRenderManager, RenderBuffers buffers, ClientLevel world, Entity item, Entity target, Vec3 motionVector) {
 		super(world, item.getX(), item.getY(), item.getZ(), motionVector.x, motionVector.y, motionVector.z);
 		this.renderTypeBuffers = buffers;
 		this.item = this.getSafeCopy(item);

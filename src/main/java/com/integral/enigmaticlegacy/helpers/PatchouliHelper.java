@@ -2,8 +2,8 @@ package com.integral.enigmaticlegacy.helpers;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import vazkii.patchouli.client.base.PersistentData;
 import vazkii.patchouli.client.base.PersistentData.DataHolder.BookData;
 import vazkii.patchouli.client.book.BookEntry;
@@ -22,7 +22,7 @@ public class PatchouliHelper {
 
 	private static void setEntryState(ResourceLocation entryLocation, boolean read) {
 		Book theBook = PatchouliHelper.getAknowledgment();
-		BookEntry entry = theBook.contents.entries.get(entryLocation);
+		BookEntry entry = theBook.getContents().entries.get(entryLocation);
 		BookData data = PersistentData.data.getBookData(theBook);
 
 		if (data == null || data.viewedEntries == null || entry == null || entry.getId() == null)
@@ -48,7 +48,7 @@ public class PatchouliHelper {
 	public static void markEverythingRead() {
 		Book theBook = PatchouliHelper.getAknowledgment();
 
-		for (ResourceLocation location :  theBook.contents.entries.keySet()) {
+		for (ResourceLocation location :  theBook.getContents().entries.keySet()) {
 			PatchouliHelper.markEntryRead(location);
 		}
 	}
@@ -56,7 +56,7 @@ public class PatchouliHelper {
 	public static void markEverythingUnread() {
 		Book theBook = PatchouliHelper.getAknowledgment();
 
-		for (ResourceLocation location :  theBook.contents.entries.keySet()) {
+		for (ResourceLocation location :  theBook.getContents().entries.keySet()) {
 			PatchouliHelper.markEntryUnread(location);
 		}
 	}

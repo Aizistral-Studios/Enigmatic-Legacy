@@ -7,13 +7,14 @@ import java.util.Objects;
 
 import org.lwjgl.opengl.GL11;
 
+import com.mojang.math.Vector3f;
+import com.mojang.math.Vector4f;
+
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.math.vector.Vector4f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -66,10 +67,11 @@ public class Vector3 {
 	public double dotProduct(Vector3 vec) {
 		double d = vec.x * this.x + vec.y * this.y + vec.z * this.z;
 
-		if (d > 1 && d < 1.00001)
+		if (d > 1 && d < 1.00001) {
 			d = 1;
-		else if (d < -1 && d > -1.00001)
+		} else if (d < -1 && d > -1.00001) {
 			d = -1;
+		}
 		return d;
 	}
 
@@ -210,9 +212,8 @@ public class Vector3 {
 
 	public Vector3 project(Vector3 b) {
 		double l = b.magSquared();
-		if (l == 0) {
+		if (l == 0)
 			return Vector3.ZERO;
-		}
 
 		double m = this.dotProduct(b) / l;
 		return b.multiply(m);

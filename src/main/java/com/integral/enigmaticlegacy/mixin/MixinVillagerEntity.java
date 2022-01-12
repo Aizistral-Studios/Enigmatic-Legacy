@@ -12,25 +12,25 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.entity.merchant.villager.VillagerEntity;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.MerchantOffer;
 
-@Mixin(VillagerEntity.class)
+@Mixin(Villager.class)
 public class MixinVillagerEntity {
 
 	@Inject(at = @At("RETURN"), method = "updateSpecialPrices")
 	private void onSpecialPrices(Player player, CallbackInfo info) {
 		Object forgottenObject = this;
 
-		if (forgottenObject instanceof VillagerEntity) {
-			VillagerEntity villager = (VillagerEntity) forgottenObject;
+		if (forgottenObject instanceof Villager) {
+			Villager villager = (Villager) forgottenObject;
 
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.avariceScroll)) {
-				for(MerchantOffer trade : villager.getOffers()) {
+				for (MerchantOffer trade : villager.getOffers()) {
 					double discountValue = 0.35;
-					int discount = (int)Math.floor(discountValue * trade.getBaseCostA().getCount());
+					int discount = (int) Math.floor(discountValue * trade.getBaseCostA().getCount());
 					trade.addToSpecialPriceDiff(-Math.max(discount, 1));
 				}
 			}

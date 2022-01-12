@@ -16,19 +16,17 @@ import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.merchant.villager.VillagerEntity;
 import net.minecraft.world.entity.monster.piglin.Piglin;
-import net.minecraft.world.entity.monster.piglin.PiglinTasks;
+import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.MerchantOffer;
-import net.minecraft.util.InteractionResult;
-import net.minecraft.util.InteractionHand;
 import net.minecraft.server.level.ServerLevel;
 
-@Mixin(PiglinTasks.class)
+@Mixin(PiglinAi.class)
 public class MixinPiglinTasks {
 	private static final String AVARICE_SCROLL_TAG = EnigmaticLegacy.MODID + ":avarice_scroll_effect";
 
@@ -79,7 +77,7 @@ public class MixinPiglinTasks {
 					info.cancel();
 
 					piglin.setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
-					List<ItemStack> generatedLoot = PiglinTasks.getBarterResponseItems(piglin);
+					List<ItemStack> generatedLoot = PiglinAi.getBarterResponseItems(piglin);
 					List<ItemStack> newStacks = new ArrayList<>();
 
 					generatedLoot.forEach(lootStack -> {
@@ -95,7 +93,7 @@ public class MixinPiglinTasks {
 					});
 
 					generatedLoot.addAll(newStacks);
-					PiglinTasks.throwItems(piglin, generatedLoot);
+					PiglinAi.throwItems(piglin, generatedLoot);
 				}
 			}
 		}

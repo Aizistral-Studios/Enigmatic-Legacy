@@ -8,10 +8,10 @@ import com.integral.enigmaticlegacy.items.RevelationTome;
 
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
-import net.minecraft.advancements.critereon.EntitySelector;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.advancements.critereon.DeserializationContext;
-import net.minecraft.util.JSONUtils;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.resources.ResourceLocation;
 
 public class RevelationGainTrigger extends SimpleCriterionTrigger<RevelationGainTrigger.Instance> {
@@ -28,8 +28,8 @@ public class RevelationGainTrigger extends SimpleCriterionTrigger<RevelationGain
 
 	@Nonnull
 	@Override
-	public RevelationGainTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntitySelector.Composite playerPred, DeserializationContext conditions) {
-		return new RevelationGainTrigger.Instance(playerPred, JSONUtils.getAsString(json, "point_type"), JSONUtils.getAsInt(json, "point_amount"));
+	public RevelationGainTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.Composite playerPred, DeserializationContext conditions) {
+		return new RevelationGainTrigger.Instance(playerPred, GsonHelper.getAsString(json, "point_type"), GsonHelper.getAsInt(json, "point_amount"));
 	}
 
 	public void trigger(ServerPlayer player, RevelationTome.TomeType type, int amount) {
@@ -40,7 +40,7 @@ public class RevelationGainTrigger extends SimpleCriterionTrigger<RevelationGain
 		private final String revelationType;
 		private final int requiredAmount;
 
-		Instance(EntitySelector.Composite playerPred, String type, int amount) {
+		Instance(EntityPredicate.Composite playerPred, String type, int amount) {
 			super(RevelationGainTrigger.ID, playerPred);
 			this.revelationType = type;
 			this.requiredAmount = amount;

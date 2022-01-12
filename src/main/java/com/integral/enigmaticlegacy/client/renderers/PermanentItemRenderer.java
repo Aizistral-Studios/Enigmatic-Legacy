@@ -9,7 +9,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
@@ -34,7 +35,7 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 	private final ItemRenderer itemRenderer;
 	private final Random random = new Random();
 
-	public PermanentItemRenderer(EntityRendererManager renderManagerIn, net.minecraft.client.renderer.ItemRenderer itemRendererIn) {
+	public PermanentItemRenderer(EntityRendererProvider.Context renderManagerIn, ItemRenderer itemRendererIn) {
 		super(renderManagerIn);
 		this.itemRenderer = itemRendererIn;
 		this.shadowRadius = 0.15F;

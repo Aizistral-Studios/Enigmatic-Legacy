@@ -13,15 +13,14 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.brain.Brain;
-import net.minecraft.world.entity.ai.brain.memory.MemoryModuleType;
-import net.minecraft.world.entity.ai.brain.sensor.PiglinMobsSensor;
-import net.minecraft.world.entity.monster.piglin.PiglinTasks;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.sensing.PiglinSpecificSensor;
+import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.util.EntityPredicates;
 import net.minecraft.server.level.ServerLevel;
 
-@Mixin(PiglinMobsSensor.class)
+@Mixin(PiglinSpecificSensor.class)
 public class MixinPiglinMobsSensor {
 
 	@Inject(at = @At("RETURN"), method = "doTick")
@@ -35,15 +34,13 @@ public class MixinPiglinMobsSensor {
 
 				// Cycle through visible mobs again in order to replace removed player,
 				// since there might be other players nearby not wearing gold or ring
-				for(LivingEntity livingentity : brain.getMemory(MemoryModuleType.VISIBLE_LIVING_ENTITIES).orElse(ImmutableList.of())) {
+				// TODO Check if Curios implementation does this
+				for (LivingEntity livingentity : brain.getMemory(MemoryModuleType.NEAREST_VISIBLE_LIVING_ENTITIES).orElse(ImmutableList.of())) {
 					if (livingentity instanceof Player) {
-						Player Player = (Player)livingentity;
+						Player otherPlayer = (Player) livingentity;
 
-						if (EntityPredicates.ATTACK_ALLOWED.test(livingentity) &&
-								!PiglinTasks.isWearingGold(Player) &&
-								!SuperpositionHandler.hasCurio(Player, EnigmaticLegacy.gemRing)) {
-
-							brain.setMemory(MemoryModuleType.NEAREST_TARGETABLE_PLAYER_NOT_WEARING_GOLD, Optional.of(Player));
+						if (entityIn.canAttack(livingentity) && !PiglinAi.isWearingGold(otherPlayer) && !SuperpositionHandler.hasCurio(otherPlayer, EnigmaticLegacy.gemRing)) {
+							brain.setMemory(MemoryModuleType.NEAREST_TARGETABLE_PLAYER_NOT_WEARING_GOLD, Optional.of(otherPlayer));
 						}
 					}
 				}

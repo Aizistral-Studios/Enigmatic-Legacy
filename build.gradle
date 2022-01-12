@@ -64,7 +64,7 @@ dependencies {
 	println("Processing dependencies...")
    
 	// Mixin
-    annotationProcessor 'org.spongepowered:mixin:0.8'
+    annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
     annotationProcessor 'com.google.code.gson:gson:2.8.0'
     annotationProcessor 'com.google.guava:guava:21.0'
     annotationProcessor 'org.ow2.asm:asm-tree:7.2'

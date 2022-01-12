@@ -12,17 +12,16 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.brain.sensor.PiglinMobsSensor;
-import net.minecraft.world.entity.monster.HoglinEntity;
-import net.minecraft.world.entity.monster.HoglinTasks;
+import net.minecraft.world.entity.monster.hoglin.Hoglin;
+import net.minecraft.world.entity.monster.hoglin.HoglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerLevel;
 
-@Mixin(HoglinTasks.class)
+@Mixin(HoglinAi.class)
 public class MixinHoglinTasks {
 
 	@Inject(at = @At("RETURN"), method = "findNearestValidAttackTarget", cancellable = true)
-	private static void onHoglinShallAttack(HoglinEntity hoglin, CallbackInfoReturnable<Optional<? extends LivingEntity>> info) {
+	private static void onHoglinShallAttack(Hoglin hoglin, CallbackInfoReturnable<Optional<? extends LivingEntity>> info) {
 		Optional<? extends LivingEntity> returnedTarget = info.getReturnValue();
 
 		if (returnedTarget.isPresent() && returnedTarget.orElse(null) instanceof Player) {

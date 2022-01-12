@@ -13,21 +13,20 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.world.item.enchantment.EnchantmentData;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.inventory.container.EnchantmentContainer;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ContainerLevelAccess;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 /**
  * No, if I said player gets more enchantments - they will get their enchantments.
@@ -36,7 +35,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 @Pseudo
 @Mixin(targets="shadows.apotheosis.ench.table.ApothEnchantContainer")
-public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
+public class MixinApotheosisEnchantmentContainer extends EnchantmentMenu {
 
 	public MixinApotheosisEnchantmentContainer(int id, Inventory Inventory) {
 		super(id, Inventory);
@@ -56,14 +55,14 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
 				ItemStack toEnchant = this.enchantSlots.getItem(0);
 				int i = id + 1;
 
-				if (this.costs[id] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < i || player.experienceLevel < this.costs[id]) && !player.abilities.instabuild) {
+				if (this.costs[id] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < i || player.experienceLevel < this.costs[id]) && !player.getAbilities().instabuild) {
 					info.setReturnValue(false);
 					return;// false;
 				}
 
 				this.access.execute((world, pos) -> {
 					ItemStack enchanted = toEnchant;
-					List<EnchantmentData> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
+					List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
 					if (!list.isEmpty()) {
 						ItemStack firstRoll = this.enchantStack(player, enchanted, id, true);
 						ItemStack secondRoll = this.enchantStack(player, enchanted, id, false);
@@ -104,7 +103,7 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
 		ItemStack toEnchant = stack.copy();
 
 		int i = id + 1;
-		List<EnchantmentData> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
+		List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
 		if (!list.isEmpty()) {
 			ItemStack doubleRoll = EnchantmentHelper.enchantItem(player.getRandom(), toEnchant.copy(), (int) Math.min(this.costs[id]/1.5, 40), true);
 			player.onEnchantmentPerformed(toEnchant, i);
@@ -125,8 +124,7 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
 				toEnchant = new ItemStack(Items.ENCHANTED_BOOK);
 			}
 
-			for (int j = 0; j < list.size(); ++j) {
-				EnchantmentData enchantmentdata = list.get(j);
+			for (EnchantmentInstance enchantmentdata : list) {
 				if (flag) {
 					EnchantedBookItem.addEnchantment(toEnchant, enchantmentdata);
 				} else {

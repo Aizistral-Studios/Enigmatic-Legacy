@@ -7,9 +7,9 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
-import net.minecraft.advancements.critereon.EntitySelector;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -31,7 +31,7 @@ public class UseUnholyGrailTrigger extends SimpleCriterionTrigger<UseUnholyGrail
 
 	@Nonnull
 	@Override
-	public UseUnholyGrailTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntitySelector.Composite playerPred, DeserializationContext conditions) {
+	public UseUnholyGrailTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.Composite playerPred, DeserializationContext conditions) {
 		return new UseUnholyGrailTrigger.Instance(playerPred);
 	}
 
@@ -40,7 +40,7 @@ public class UseUnholyGrailTrigger extends SimpleCriterionTrigger<UseUnholyGrail
 	}
 
 	static class Instance extends AbstractCriterionTriggerInstance {
-		Instance(EntitySelector.Composite playerPred) {
+		Instance(EntityPredicate.Composite playerPred) {
 			super(UseUnholyGrailTrigger.ID, playerPred);
 		}
 

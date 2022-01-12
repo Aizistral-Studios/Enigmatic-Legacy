@@ -6,6 +6,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -105,11 +106,11 @@ public class AdvancedSpawnLocationHelper {
 		Biome biome = p_241092_0_.getBiome(blockpos$mutable);
 		boolean flag = p_241092_0_.dimensionType().hasCeiling();
 		BlockState blockstate = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
-		if (p_241092_3_ && !blockstate.getBlock().is(BlockTags.VALID_SPAWN))
+		if (p_241092_3_ && !blockstate.is(BlockTags.VALID_SPAWN))
 			return null;
 		else {
-			Chunk chunk = p_241092_0_.getChunk(p_241092_1_ >> 4, p_241092_2_ >> 4);
-			int i = flag ? p_241092_0_.getChunkSource().getGenerator().getSpawnHeight() : chunk.getHeight(Heightmap.Type.MOTION_BLOCKING, p_241092_1_ & 15, p_241092_2_ & 15);
+			LevelChunk chunk = p_241092_0_.getChunk(p_241092_1_ >> 4, p_241092_2_ >> 4);
+			int i = flag ? p_241092_0_.getChunkSource().getGenerator().getSpawnHeight(p_241092_0_) : chunk.getHeight(Heightmap.Types.MOTION_BLOCKING, p_241092_1_ & 15, p_241092_2_ & 15);
 			if (i < 0)
 				return null;
 			else {

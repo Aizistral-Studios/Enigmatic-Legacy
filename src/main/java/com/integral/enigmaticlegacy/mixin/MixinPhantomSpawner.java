@@ -10,24 +10,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.PhantomSpawner;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ILivingEntityData;
-import net.minecraft.world.entity.SpawnReason;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.stats.ServerStatisticsManager;
+import net.minecraft.stats.ServerStatsCounter;
 import net.minecraft.stats.Stats;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.GameRules;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.spawner.PhantomSpawner;
-import net.minecraft.world.spawner.WorldEntitySpawner;
 
 @Mixin(PhantomSpawner.class)
 public class MixinPhantomSpawner {
@@ -57,7 +57,7 @@ public class MixinPhantomSpawner {
 							if (!world.dimensionType().hasSkyLight() || blockpos.getY() >= world.getSeaLevel() && world.canSeeSky(blockpos)) {
 								DifficultyInstance difficulty = world.getCurrentDifficultyAt(blockpos);
 								if (difficulty.isHarderThan(random.nextFloat() * 3.0F)) {
-									ServerStatisticsManager serverstatisticsmanager = player.getStats();
+									ServerStatsCounter serverstatisticsmanager = player.getStats();
 									int ticksSinceRest = Mth.clamp(serverstatisticsmanager.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)), 1, Integer.MAX_VALUE);
 
 									if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing))
@@ -65,14 +65,14 @@ public class MixinPhantomSpawner {
 											BlockPos blockpos1 = blockpos.above(20 + random.nextInt(15)).east(-10 + random.nextInt(21)).south(-10 + random.nextInt(21));
 											BlockState blockstate = world.getBlockState(blockpos1);
 											FluidState fluidstate = world.getFluidState(blockpos1);
-											if (WorldEntitySpawner.isValidEmptySpawnBlock(world, blockpos1, blockstate, fluidstate, EntityType.PHANTOM)) {
-												ILivingEntityData ilivingentitydata = null;
+											if (NaturalSpawner.isValidEmptySpawnBlock(world, blockpos1, blockstate, fluidstate, EntityType.PHANTOM)) {
+												SpawnGroupData ilivingentitydata = null;
 												int l = 1 + random.nextInt(difficulty.getDifficulty().getId() + 1);
 
 												for(int i1 = 0; i1 < l; ++i1) {
 													Phantom phantomentity = EntityType.PHANTOM.create(world);
 													phantomentity.moveTo(blockpos1, 0.0F, 0.0F);
-													ilivingentitydata = phantomentity.finalizeSpawn(world, difficulty, SpawnReason.NATURAL, ilivingentitydata, (CompoundTag)null);
+													ilivingentitydata = phantomentity.finalizeSpawn(world, difficulty, MobSpawnType.NATURAL, ilivingentitydata, (CompoundTag)null);
 													world.addFreshEntityWithPassengers(phantomentity);
 												}
 

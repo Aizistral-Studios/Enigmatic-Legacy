@@ -14,6 +14,12 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraftforge.common.ForgeHooks;
 
+/**
+ * TODO Do we still need this?
+ *
+ * @author Aizistral
+ */
+
 @Mixin(LootTable.class)
 @SuppressWarnings("unused")
 public class MixinLootTable {

@@ -22,27 +22,25 @@ import com.integral.etherium.client.ShieldAuraLayer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.AbstractClientPlayer;
-import net.minecraft.client.gui.toasts.ToastGui;
+import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.particle.ItemPickupParticle;
-import net.minecraft.client.renderer.entity.PlayerRenderer;
-import net.minecraft.client.renderer.entity.SpriteRenderer;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.client.renderer.entity.model.PlayerModel;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAction;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.core.Direction;
-import net.minecraft.util.ResourceKey;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 public class ClientProxy extends CommonProxy {
@@ -86,13 +84,13 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void initAuxiliaryRender() {
-		Map<String, PlayerRenderer> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
+		Map<String, EntityRenderer<? extends Player>> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
 
 		PlayerRenderer renderSteve;
 		PlayerRenderer renderAlex;
 
-		renderSteve = skinMap.get("default");
-		renderAlex = skinMap.get("slim");
+		renderSteve = (PlayerRenderer) skinMap.get("default");
+		renderAlex = (PlayerRenderer) skinMap.get("slim");
 
 		renderSteve.addLayer(new ShieldAuraLayer(renderSteve));
 		renderAlex.addLayer(new ShieldAuraLayer(renderAlex));
@@ -102,9 +100,9 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void initEntityRendering() {
-		RenderingRegistry.registerEntityRenderingHandler(PermanentItemEntity.TYPE, renderManager -> new PermanentItemRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
-		RenderingRegistry.registerEntityRenderingHandler(EnigmaticPotionEntity.TYPE, renderManager -> new SpriteRenderer<>(renderManager, Minecraft.getInstance().getItemRenderer()));
-		RenderingRegistry.registerEntityRenderingHandler(UltimateWitherSkullEntity.TYPE, UltimateWitherSkullRenderer::new);
+		EntityRenderers.register(PermanentItemEntity.TYPE, renderManager -> new PermanentItemRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
+		EntityRenderers.register(EnigmaticPotionEntity.TYPE, ThrownItemRenderer::new);
+		EntityRenderers.register(UltimateWitherSkullEntity.TYPE, UltimateWitherSkullRenderer::new);
 	}
 
 	@Override
@@ -128,8 +126,8 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public UseAction getVisualBlockAction() {
-		return UseAction.BLOCK;
+	public UseAnim getVisualBlockAction() {
+		return UseAnim.BLOCK;
 	}
 
 	@Override
@@ -142,7 +140,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void pushRevelationToast(ItemStack renderedStack, int xp, int knowledge) {
-		ToastGui gui = Minecraft.getInstance().getToasts();
+		ToastComponent gui = Minecraft.getInstance().getToasts();
 		gui.addToast(new RevelationTomeToast(renderedStack, xp, knowledge));
 	}
 
@@ -154,7 +152,7 @@ public class ClientProxy extends CommonProxy {
 		}
 
 		BlockState blockstate = world.getBlockState(pos);
-		if (!blockstate.isAir(world, pos)) {
+		if (!blockstate.isAir()) {
 			double d0 = 0.5D;
 			double d1;
 			if (blockstate.is(Blocks.WATER)) {

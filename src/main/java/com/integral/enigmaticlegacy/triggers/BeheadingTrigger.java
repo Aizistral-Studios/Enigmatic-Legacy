@@ -7,9 +7,10 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
-import net.minecraft.advancements.critereon.EntitySelector;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.advancements.critereon.DeserializationContext;
+import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -31,7 +32,7 @@ public class BeheadingTrigger extends SimpleCriterionTrigger<BeheadingTrigger.In
 
 	@Nonnull
 	@Override
-	public BeheadingTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntitySelector.Composite playerPred, DeserializationContext conditions) {
+	public BeheadingTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.Composite playerPred, DeserializationContext conditions) {
 		return new BeheadingTrigger.Instance(playerPred);
 	}
 
@@ -40,7 +41,7 @@ public class BeheadingTrigger extends SimpleCriterionTrigger<BeheadingTrigger.In
 	}
 
 	static class Instance extends AbstractCriterionTriggerInstance {
-		Instance(EntitySelector.Composite playerPred) {
+		Instance(EntityPredicate.Composite playerPred) {
 			super(BeheadingTrigger.ID, playerPred);
 		}
 

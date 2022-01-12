@@ -1,7 +1,5 @@
 package com.integral.enigmaticlegacy.objects;
 
-import static com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack.getRegisteredMeleeAttack;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;

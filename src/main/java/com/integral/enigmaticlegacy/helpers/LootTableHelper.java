@@ -8,8 +8,9 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
+// TODO This is fucked up, we need better way for doing it
 public class LootTableHelper {
 	public static Field isFrozenTable = null;
 	public static Field isFrozenPool = null;

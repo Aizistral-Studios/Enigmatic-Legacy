@@ -5,8 +5,8 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.util.JSONUtils;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
 import net.minecraftforge.common.crafting.conditions.ICondition;
 import net.minecraftforge.common.crafting.conditions.IConditionSerializer;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -51,7 +51,7 @@ public class EnabledCondition implements ICondition {
 
 		@Override
 		public EnabledCondition read(JsonObject json) {
-			return new EnabledCondition(new ResourceLocation(JSONUtils.getAsString(json, "item")));
+			return new EnabledCondition(new ResourceLocation(GsonHelper.getAsString(json, "item")));
 		}
 
 		@Override

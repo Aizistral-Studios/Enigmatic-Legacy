@@ -14,34 +14,30 @@ import net.minecraftforge.fmllegacy.network.NetworkEvent;
  */
 
 public class PacketHandleItemPickup {
-	  
-	  static Random random = new Random();
-	  private int item_id;
-	  private int pickuper_id;
+	private int item_id;
+	private int pickuper_id;
 
-	  public PacketHandleItemPickup(int itemID, int pickuperID) {
-		  this.item_id = itemID;
-		  this.pickuper_id = pickuperID;
-	  }
+	public PacketHandleItemPickup(int itemID, int pickuperID) {
+		this.item_id = itemID;
+		this.pickuper_id = pickuperID;
+	}
 
-	  public static void encode(PacketHandleItemPickup msg, FriendlyByteBuf buf) {
-		  buf.writeInt(msg.item_id);
-		  buf.writeInt(msg.pickuper_id);
-	  }
+	public static void encode(PacketHandleItemPickup msg, FriendlyByteBuf buf) {
+		buf.writeInt(msg.item_id);
+		buf.writeInt(msg.pickuper_id);
+	}
 
-	  public static PacketHandleItemPickup decode(FriendlyByteBuf buf) {
-	    return new PacketHandleItemPickup(buf.readInt(), buf.readInt());
-	 }
+	public static PacketHandleItemPickup decode(FriendlyByteBuf buf) {
+		return new PacketHandleItemPickup(buf.readInt(), buf.readInt());
+	}
 
-	  public static void handle(PacketHandleItemPickup msg, Supplier<NetworkEvent.Context> ctx) {
+	public static void handle(PacketHandleItemPickup msg, Supplier<NetworkEvent.Context> ctx) {
+		ctx.get().enqueueWork(() -> {
+			EnigmaticLegacy.proxy.handleItemPickup(msg.pickuper_id, msg.item_id);
+		});
 
-		    ctx.get().enqueueWork(() -> {
-		      
-		    	EnigmaticLegacy.proxy.handleItemPickup(msg.pickuper_id, msg.item_id);
-		    	
-		      });
-		    ctx.get().setPacketHandled(true);
-	  }
+		ctx.get().setPacketHandled(true);
+	}
 
 }
 
