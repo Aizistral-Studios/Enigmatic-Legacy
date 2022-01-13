@@ -14,7 +14,7 @@ import net.minecraft.sounds.SoundEvents;
 
 public enum EnigmaticArmorMaterials implements ArmorMaterial {
 	ETHERIUM(EnigmaticLegacy.MODID + ":etherium", 132, new int[] { 4, 7, 9, 4 }, 24,
-			SoundEvents.ARMOR_EQUIP_IRON, 4F, 0, getEtheriumConfig()::getRepairMaterial);
+			SoundEvents.ARMOR_EQUIP_IRON, 4F, 0, () -> getEtheriumConfig().getRepairMaterial());
 
 	private static final int[] MAX_DAMAGE_ARRAY = new int[] { 13, 15, 16, 11 };
 	private static IEtheriumConfig etheriumConfig;

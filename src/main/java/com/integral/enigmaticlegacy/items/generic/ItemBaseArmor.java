@@ -28,7 +28,7 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraft.world.item.Item.Properties;
 
 @SuppressWarnings("deprecation")
-public abstract class ItemBaseArmor extends ArmorItem implements IItemRenderProperties {
+public abstract class ItemBaseArmor extends ArmorItem {
 	@OnlyIn(Dist.CLIENT)
 	private HumanoidModel<?> model;
 
@@ -43,14 +43,15 @@ public abstract class ItemBaseArmor extends ArmorItem implements IItemRenderProp
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-		consumer.accept(this);
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	@SuppressWarnings("unchecked")
-	public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A original) {
-		return (A) this.provideArmorModelForSlot(armorSlot, original);
+		// TODO Make our way around exception thrown when implementing IItemRenderProperties on item itself
+		consumer.accept(new IItemRenderProperties() {
+			@Override
+			@OnlyIn(Dist.CLIENT)
+			@SuppressWarnings("unchecked")
+			public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A original) {
+				return (A) ItemBaseArmor.this.provideArmorModelForSlot(armorSlot, original);
+			}
+		});
 	}
 
 	@Nullable

@@ -6,24 +6,28 @@ import com.integral.etherium.client.ShieldAuraLayer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 public class ClientProxy extends CommonProxy {
 	
-	@Override
-	public void initAuxiliaryRender() {
-		Map<String, EntityRenderer<? extends Player>> skinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
+	@SubscribeEvent
+	public static void addLayers(EntityRenderersEvent.AddLayers evt) {
+		addPlayerLayer(evt, "default");
+		addPlayerLayer(evt, "slim");
+	}
 
-		PlayerRenderer renderSteve;
-		PlayerRenderer renderAlex;
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	private static void addPlayerLayer(EntityRenderersEvent.AddLayers evt, String skin) {
+		EntityRenderer<? extends Player> renderer = evt.getSkin(skin);
 
-		renderSteve = (PlayerRenderer) skinMap.get("default");
-		renderAlex = (PlayerRenderer) skinMap.get("slim");
-
-		renderSteve.addLayer(new ShieldAuraLayer(renderSteve, Minecraft.getInstance().getEntityModels()));
-		renderAlex.addLayer(new ShieldAuraLayer(renderAlex, Minecraft.getInstance().getEntityModels()));
+		if (renderer instanceof LivingEntityRenderer livingRenderer) {
+			livingRenderer.addLayer(new ShieldAuraLayer(livingRenderer, Minecraft.getInstance().getEntityModels()));
+		}
 	}
 	
 	@Override

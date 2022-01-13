@@ -561,8 +561,8 @@ public class EnigmaticLegacy {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::intermodStuff);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onLoadComplete);
 		FMLJavaModLoadingContext.get().getModEventBus().register(new EnigmaticRecipeSerializers());
-
 		FMLJavaModLoadingContext.get().getModEventBus().register(this);
+		FMLJavaModLoadingContext.get().getModEventBus().register(proxy);
 
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(enigmaticHandler);

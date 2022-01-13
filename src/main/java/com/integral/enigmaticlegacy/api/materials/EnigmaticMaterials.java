@@ -16,7 +16,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 public enum EnigmaticMaterials implements Tier {
 	FORBIDDENAXE(0, 2000, 6.0F, 3.0F, 16, () -> Ingredient.EMPTY),
-	ETHERIUM(4, 3000, 8.0F, 5.0F, 32, getEtheriumConfig()::getRepairMaterial);
+	ETHERIUM(4, 3000, 8.0F, 5.0F, 32, () -> getEtheriumConfig().getRepairMaterial());
 
 	private static IEtheriumConfig etheriumConfig;
 

@@ -100,6 +100,7 @@ public class EtheriumMod {
 		
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onLoadComplete);
+		FMLJavaModLoadingContext.get().getModEventBus().register(proxy);
 		MinecraftForge.EVENT_BUS.register(new EtheriumEventHandler(etheriumConfig, etheriumOre));
 		
 		logger.info("Mod instance constructed successfully.");
