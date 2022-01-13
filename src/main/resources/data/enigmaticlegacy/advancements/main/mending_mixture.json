@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-             "item": "enigmaticlegacy:mending_mixture"
+             "items": ["enigmaticlegacy:mending_mixture"]
           }
         ]
       }

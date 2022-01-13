@@ -7,7 +7,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:quartz"
+            "items": ["minecraft:quartz"]
           }
         ]
       }

@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-             "item": "enigmaticlegacy:recall_potion"
+             "items": ["enigmaticlegacy:recall_potion"]
           }
         ]
       }

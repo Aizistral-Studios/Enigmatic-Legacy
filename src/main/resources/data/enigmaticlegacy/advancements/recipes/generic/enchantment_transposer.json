@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:prismarine_crystals"
+            "items": ["minecraft:prismarine_crystals"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:enchantment_transposer"
+            "items": ["enigmaticlegacy:enchantment_transposer"]
           }
         ]
       }

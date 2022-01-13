@@ -12,7 +12,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:shroomlight"
+            "items": ["minecraft:shroomlight"]
           }
         ]
       }
@@ -22,7 +22,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:big_shroomlamp"
+            "items": ["enigmaticlegacy:big_shroomlamp"]
           }
         ]
       }

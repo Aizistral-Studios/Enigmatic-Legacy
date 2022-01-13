@@ -7,7 +7,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:void_pearl"
+            "items": ["enigmaticlegacy:void_pearl"]
           }
         ]
       }

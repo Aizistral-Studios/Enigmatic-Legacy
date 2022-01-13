@@ -7,7 +7,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:angel_blessing"
+            "items": ["enigmaticlegacy:angel_blessing"]
           }
         ]
       }

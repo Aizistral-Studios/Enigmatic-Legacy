@@ -14,7 +14,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:netherite_scrap"
+            "items": ["minecraft:netherite_scrap"]
           }
         ]
       }
@@ -24,7 +24,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:netherite_ingot"
+            "items": ["minecraft:netherite_ingot"]
           }
         ]
       }

@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-             "item": "enigmaticlegacy:super_magnet_ring"
+             "items": ["enigmaticlegacy:super_magnet_ring"]
           }
         ]
       }

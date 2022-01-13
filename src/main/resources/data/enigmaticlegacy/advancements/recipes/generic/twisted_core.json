@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:earth_heart"
+            "items": ["enigmaticlegacy:earth_heart"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:twisted_core"
+            "items": ["enigmaticlegacy:twisted_core"]
           }
         ]
       }

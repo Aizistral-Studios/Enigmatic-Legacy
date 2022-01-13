@@ -7,7 +7,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:astral_dust"
+            "items": ["enigmaticlegacy:astral_dust"]
           }
         ]
       }

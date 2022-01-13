@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:astral_dust"
+            "items": ["enigmaticlegacy:astral_dust"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:ender_rod"
+            "items": ["enigmaticlegacy:ender_rod"]
           }
         ]
       }

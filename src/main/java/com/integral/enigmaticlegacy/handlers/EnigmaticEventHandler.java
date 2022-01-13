@@ -585,12 +585,11 @@ public class EnigmaticEventHandler {
 		}
 	}
 
-	@SubscribeEvent(receiveCanceled = true)
 	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent(receiveCanceled = true)
 	public void onOverlayRender(RenderGameOverlayEvent.PreLayer event) {
 		Minecraft mc = Minecraft.getInstance();
 
-		// TODO Where did ElementType.EXPERIENCE go?
 		if (event.getOverlay() == ForgeIngameGui.EXPERIENCE_BAR_ELEMENT) {
 			TransientPlayerData data = TransientPlayerData.get(mc.player);
 

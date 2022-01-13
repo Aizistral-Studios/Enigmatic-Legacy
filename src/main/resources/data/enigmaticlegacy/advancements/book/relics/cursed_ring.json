@@ -7,7 +7,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:cursed_ring"
+            "items": ["enigmaticlegacy:cursed_ring"]
           }
         ]
       }

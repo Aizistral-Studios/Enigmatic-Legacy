@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:twisted_core"
+            "items": ["enigmaticlegacy:twisted_core"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:dark_mirror"
+            "items": ["enigmaticlegacy:dark_mirror"]
           }
         ]
       }

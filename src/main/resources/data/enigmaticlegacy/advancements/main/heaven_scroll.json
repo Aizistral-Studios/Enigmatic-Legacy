@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-             "item": "enigmaticlegacy:heaven_scroll"
+             "items": ["enigmaticlegacy:heaven_scroll"]
           }
         ]
       }

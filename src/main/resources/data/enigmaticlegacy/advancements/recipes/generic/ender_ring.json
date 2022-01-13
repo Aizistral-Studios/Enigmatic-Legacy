@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:ender_chest"
+            "items": ["minecraft:ender_chest"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:ender_ring"
+            "items": ["enigmaticlegacy:ender_ring"]
           }
         ]
       }

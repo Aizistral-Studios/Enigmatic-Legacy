@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:ender_pearl"
+            "items": ["minecraft:ender_pearl"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:hunter_guide"
+            "items": ["enigmaticlegacy:hunter_guide"]
           }
         ]
       }

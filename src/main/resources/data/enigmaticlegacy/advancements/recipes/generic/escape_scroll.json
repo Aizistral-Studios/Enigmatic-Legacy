@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:eye_of_nebula"
+            "items": ["enigmaticlegacy:eye_of_nebula"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:escape_scroll"
+            "items": ["enigmaticlegacy:escape_scroll"]
           }
         ]
       }

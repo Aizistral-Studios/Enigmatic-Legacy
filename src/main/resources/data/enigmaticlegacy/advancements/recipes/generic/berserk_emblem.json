@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:twisted_core"
+            "items": ["enigmaticlegacy:twisted_core"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:netherite_ingot"
+            "items": ["minecraft:netherite_ingot"]
           }
         ]
       }
@@ -31,7 +31,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:berserk_emblem"
+            "items": ["enigmaticlegacy:berserk_emblem"]
           }
         ]
       }

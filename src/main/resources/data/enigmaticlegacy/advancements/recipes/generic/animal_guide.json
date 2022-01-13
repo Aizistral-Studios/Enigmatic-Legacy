@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:book"
+            "items": ["minecraft:book"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:animal_guide"
+            "items": ["enigmaticlegacy:animal_guide"]
           }
         ]
       }

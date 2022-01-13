@@ -24,16 +24,16 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:etherium_helmet"
+            "items": ["enigmaticlegacy:etherium_helmet"]
           },
 		  {
-            "item": "enigmaticlegacy:etherium_chestplate"
+            "items": ["enigmaticlegacy:etherium_chestplate"]
           },
 		  {
-            "item": "enigmaticlegacy:etherium_leggings"
+            "items": ["enigmaticlegacy:etherium_leggings"]
           },
 		  {
-            "item": "enigmaticlegacy:etherium_boots"
+            "items": ["enigmaticlegacy:etherium_boots"]
           }
         ]
       }

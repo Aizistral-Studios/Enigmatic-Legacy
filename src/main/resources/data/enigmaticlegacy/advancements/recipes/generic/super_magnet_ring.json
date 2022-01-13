@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:ender_eye"
+            "items": ["minecraft:ender_eye"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:super_magnet_ring"
+            "items": ["enigmaticlegacy:super_magnet_ring"]
           }
         ]
       }

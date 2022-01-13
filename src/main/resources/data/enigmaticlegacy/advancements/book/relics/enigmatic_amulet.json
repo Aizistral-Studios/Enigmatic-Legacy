@@ -7,7 +7,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:enigmatic_amulet"
+            "items": ["enigmaticlegacy:enigmatic_amulet"]
           }
         ]
       }

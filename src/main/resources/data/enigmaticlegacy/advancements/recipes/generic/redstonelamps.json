@@ -12,7 +12,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:redstone_lamp"
+            "items": ["minecraft:redstone_lamp"]
           }
         ]
       }
@@ -22,7 +22,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:big_redstonelamp"
+            "items": ["enigmaticlegacy:big_redstonelamp"]
           }
         ]
       }

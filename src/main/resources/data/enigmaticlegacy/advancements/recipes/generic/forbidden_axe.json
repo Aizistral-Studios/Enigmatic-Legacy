@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:netherite_ingot"
+            "items": ["minecraft:netherite_ingot"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:forbidden_axe"
+            "items": ["enigmaticlegacy:forbidden_axe"]
           }
         ]
       }

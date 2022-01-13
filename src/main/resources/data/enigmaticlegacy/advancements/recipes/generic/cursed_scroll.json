@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:darkest_scroll"
+            "items": ["enigmaticlegacy:darkest_scroll"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:twisted_core"
+            "items": ["enigmaticlegacy:twisted_core"]
           }
         ]
       }
@@ -31,7 +31,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:cursed_scroll"
+            "items": ["enigmaticlegacy:cursed_scroll"]
           }
         ]
       }

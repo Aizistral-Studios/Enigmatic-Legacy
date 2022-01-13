@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:diamond"
+            "items": ["minecraft:diamond"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:magnet_ring"
+            "items": ["enigmaticlegacy:magnet_ring"]
           }
         ]
       }

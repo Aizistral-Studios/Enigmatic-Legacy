@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:gold_ingot"
+            "items": ["minecraft:gold_ingot"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:gem_ring"
+            "items": ["enigmaticlegacy:gem_ring"]
           }
         ]
       }

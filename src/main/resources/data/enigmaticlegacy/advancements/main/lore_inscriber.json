@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-             "item": "enigmaticlegacy:lore_inscriber"
+             "items": ["enigmaticlegacy:lore_inscriber"]
           }
         ]
       }

@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:etherium_ore"
+            "items": ["enigmaticlegacy:etherium_ore"]
           }
         ]
       }

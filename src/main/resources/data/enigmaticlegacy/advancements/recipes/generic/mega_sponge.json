@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:heart_of_the_sea"
+            "items": ["minecraft:heart_of_the_sea"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:mega_sponge"
+            "items": ["enigmaticlegacy:mega_sponge"]
           }
         ]
       }

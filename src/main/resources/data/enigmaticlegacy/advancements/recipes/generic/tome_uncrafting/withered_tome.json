@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:withered_tome"
+            "items": ["enigmaticlegacy:withered_tome"]
           }
         ]
       }

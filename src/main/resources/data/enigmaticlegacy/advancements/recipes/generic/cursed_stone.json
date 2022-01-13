@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:twisted_core"
+            "items": ["enigmaticlegacy:twisted_core"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:evil_essence"
+            "items": ["enigmaticlegacy:evil_essence"]
           }
         ]
       }
@@ -31,7 +31,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:cursed_stone"
+            "items": ["enigmaticlegacy:cursed_stone"]
           }
         ]
       }

@@ -7,7 +7,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:eye_of_nebula"
+            "items": ["enigmaticlegacy:eye_of_nebula"]
           }
         ]
       }

@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:iron_ingot"
+            "items": ["minecraft:iron_ingot"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:iron_ring"
+            "items": ["enigmaticlegacy:iron_ring"]
           }
         ]
       }

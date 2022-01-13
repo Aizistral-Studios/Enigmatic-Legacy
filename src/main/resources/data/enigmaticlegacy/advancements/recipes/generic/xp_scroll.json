@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:experience_bottle"
+            "items": ["minecraft:experience_bottle"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:xp_scroll"
+            "items": ["enigmaticlegacy:xp_scroll"]
           }
         ]
       }

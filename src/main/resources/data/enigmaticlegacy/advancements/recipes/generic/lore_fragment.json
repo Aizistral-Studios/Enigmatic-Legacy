@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:paper"
+            "items": ["minecraft:paper"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:lore_fragment"
+            "items": ["enigmaticlegacy:lore_fragment"]
           }
         ]
       }

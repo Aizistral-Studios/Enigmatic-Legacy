@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-             "item": "enigmaticlegacy:etherium_pickaxe"
+             "items": ["enigmaticlegacy:etherium_pickaxe"]
           }
         ]
       }
@@ -31,7 +31,7 @@
       "conditions": {
         "items": [
           {
-             "item": "enigmaticlegacy:etherium_scythe"
+             "items": ["enigmaticlegacy:etherium_scythe"]
           }
         ]
       }
@@ -41,7 +41,7 @@
       "conditions": {
         "items": [
           {
-             "item": "enigmaticlegacy:etherium_shovel"
+             "items": ["enigmaticlegacy:etherium_shovel"]
           }
         ]
       }
@@ -51,7 +51,7 @@
       "conditions": {
         "items": [
           {
-             "item": "enigmaticlegacy:etherium_axe"
+             "items": ["enigmaticlegacy:etherium_axe"]
           }
         ]
       }
@@ -61,7 +61,7 @@
       "conditions": {
         "items": [
           {
-             "item": "enigmaticlegacy:etherium_sword"
+             "items": ["enigmaticlegacy:etherium_sword"]
           }
         ]
       }

@@ -7,7 +7,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:darkest_scroll"
+            "items": ["enigmaticlegacy:darkest_scroll"]
           }
         ]
       }

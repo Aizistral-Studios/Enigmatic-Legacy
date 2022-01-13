@@ -20,7 +20,7 @@
       "conditions": {
         "items": [
           {
-             "item": "enigmaticlegacy:mega_sponge"
+             "items": ["enigmaticlegacy:mega_sponge"]
           }
         ]
       }

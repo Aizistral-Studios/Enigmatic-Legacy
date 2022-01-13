@@ -22,7 +22,7 @@
       "conditions": {
         "items": [
           {
-             "item": "enigmaticlegacy:ultimate_potion"
+             "items": ["enigmaticlegacy:ultimate_potion"]
           }
         ]
       }
@@ -32,7 +32,7 @@
       "conditions": {
         "items": [
           {
-             "item": "enigmaticlegacy:ultimate_potion_splash"
+             "items": ["enigmaticlegacy:ultimate_potion_splash"]
           }
         ]
       }
@@ -42,7 +42,7 @@
       "conditions": {
         "items": [
           {
-             "item": "enigmaticlegacy:ultimate_potion_lingering"
+             "items": ["enigmaticlegacy:ultimate_potion_lingering"]
           }
         ]
       }

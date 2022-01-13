@@ -12,7 +12,7 @@
       "conditions": {
         "items": [
           {
-            "item": "minecraft:glowstone"
+            "items": ["minecraft:glowstone"]
           }
         ]
       }
@@ -22,7 +22,7 @@
       "conditions": {
         "items": [
           {
-            "item": "enigmaticlegacy:big_lamp"
+            "items": ["enigmaticlegacy:big_lamp"]
           }
         ]
       }
