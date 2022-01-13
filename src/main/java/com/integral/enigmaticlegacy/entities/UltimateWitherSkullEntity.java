@@ -197,7 +197,7 @@ public class UltimateWitherSkullEntity extends AbstractHurtingProjectile {
 			this.initMotion((LivingEntity) this.getOwner(), res.x - this.getX(), res.y - this.getY(), res.z - this.getZ(), 1.5F);
 		} else if (this.tickCount >= 400) {
 
-			this.onHit(BlockHitResult.miss(this.position(), Direction.DOWN, this.getOnPos()));
+			this.onHit(BlockHitResult.miss(this.position(), Direction.DOWN, this.blockPosition()));
 
 		}
 

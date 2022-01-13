@@ -86,13 +86,13 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@SubscribeEvent
-	public static void addLayers(EntityRenderersEvent.AddLayers evt) {
-		addPlayerLayer(evt, "default");
-		addPlayerLayer(evt, "slim");
+	public void addLayers(EntityRenderersEvent.AddLayers evt) {
+		this.addPlayerLayer(evt, "default");
+		this.addPlayerLayer(evt, "slim");
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
-	private static void addPlayerLayer(EntityRenderersEvent.AddLayers evt, String skin) {
+	private void addPlayerLayer(EntityRenderersEvent.AddLayers evt, String skin) {
 		EntityRenderer<? extends Player> renderer = evt.getSkin(skin);
 
 		if (renderer instanceof LivingEntityRenderer livingRenderer) {

@@ -38,7 +38,7 @@ public class ShieldAuraLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
 	}
 
 	@Override
-	public void render(PoseStack PoseStackIn, MultiBufferSource bufferIn, int packedLightIn, AbstractClientPlayer entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void render(PoseStack poseStackIn, MultiBufferSource bufferIn, int packedLightIn, AbstractClientPlayer entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (EtheriumArmor.hasShield(entitylivingbaseIn)) {
 			float f;
 
@@ -62,12 +62,12 @@ public class ShieldAuraLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
 				this.witherModel.setAllVisible(true);
 
 				/*
-				this.witherModel.bipedHeadwear.showModel = false;
-				this.witherModel.bipedBodyWear.showModel = false;
-				this.witherModel.bipedLeftLegwear.showModel = false;
-				this.witherModel.bipedRightLegwear.showModel = false;
-				this.witherModel.bipedLeftArmwear.showModel = false;
-				this.witherModel.bipedRightArmwear.showModel = false;
+				this.witherModel.hat.visible = false;
+				this.witherModel.jacket.visible = false;
+				this.witherModel.leftPants.visible = false;
+				this.witherModel.rightPants.visible = false;
+				this.witherModel.rightSleeve.visible = false;
+				this.witherModel.leftSleeve.visible = false;
 				 */
 
 				this.witherModel.crouching = entitylivingbaseIn.isCrouching();
@@ -82,10 +82,17 @@ public class ShieldAuraLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
 				}
 			}
 
+			float scale = 1.05F;
+
+			poseStackIn.pushPose();
+			poseStackIn.scale(scale, scale, scale);
+			poseStackIn.translate(0, -(scale-1F)/2F, 0);
+
 			this.getParentModel().copyPropertiesTo(entitymodel);
 			VertexConsumer ivertexbuilder = bufferIn.getBuffer(RenderType.energySwirl(ShieldAuraLayer.getTextureLocation(), ShieldAuraLayer.xOffset(f), f * 0.01F));
 			entitymodel.setupAnim(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-			entitymodel.renderToBuffer(PoseStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
+			entitymodel.renderToBuffer(poseStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
+			poseStackIn.popPose();
 		}
 
 	}

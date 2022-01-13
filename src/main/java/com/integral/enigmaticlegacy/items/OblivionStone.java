@@ -150,7 +150,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 			mode = new TranslatableComponent("tooltip.enigmaticlegacy.oblivionStoneModeInactive");
 		}
 
-		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneModeDesc", null, mode);
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneModeDesc", null, mode.getString());
 	}
 
 	@Override

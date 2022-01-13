@@ -13,6 +13,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -124,7 +125,7 @@ public class EnigmaticPotionEntity extends ThrowableItemProjectile implements It
 				}
 			}
 
-			this.level.levelEvent(i, new BlockPos(this.getOnPos()), PotionHelper.getColor(itemstack));
+			this.level.levelEvent(i, new BlockPos(this.blockPosition()), PotionHelper.getColor(itemstack));
 			this.discard();
 		}
 	}

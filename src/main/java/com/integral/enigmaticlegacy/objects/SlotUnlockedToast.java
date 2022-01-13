@@ -32,7 +32,7 @@ public class SlotUnlockedToast implements Toast {
 
 	@Override
 	public Toast.Visibility render(PoseStack PoseStack, ToastComponent toastGui, long delta) {
-		toastGui.getMinecraft().getTextureManager().bindForSetup(new ResourceLocation(EnigmaticLegacy.MODID, "textures/gui/enigmatic_toasts.png"));
+		RenderSystem.setShaderTexture(0, new ResourceLocation(EnigmaticLegacy.MODID, "textures/gui/enigmatic_toasts.png"));
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
 		toastGui.blit(PoseStack, 0, 0, 0, 0, 160, 43);

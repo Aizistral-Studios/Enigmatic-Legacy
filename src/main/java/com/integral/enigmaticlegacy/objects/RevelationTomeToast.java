@@ -28,7 +28,7 @@ public class RevelationTomeToast implements Toast {
 	@SuppressWarnings("resource")
 	public Visibility render(PoseStack ms, ToastComponent toastGui, long delta) {
 		Minecraft mc = Minecraft.getInstance();
-		mc.getTextureManager().bindForSetup(TEXTURE);
+		RenderSystem.setShaderTexture(0, TEXTURE);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 		toastGui.blit(ms, 0, 0, 0, 32, 160, 32);
 

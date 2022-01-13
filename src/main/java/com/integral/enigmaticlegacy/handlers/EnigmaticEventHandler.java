@@ -610,7 +610,7 @@ public class EnigmaticEventHandler {
 				event.setCanceled(true);
 			}
 
-			mc.getTextureManager().bindForSetup(FIREBAR_LOCATION);
+			RenderSystem.setShaderTexture(0, FIREBAR_LOCATION);
 
 			if (true) {
 				int k = (int)(barFiller * 183.0F);
@@ -665,7 +665,7 @@ public class EnigmaticEventHandler {
 					return;
 
 				event.setCanceled(true);
-				mc.getTextureManager().bindForSetup(ICONS_LOCATION);
+				RenderSystem.setShaderTexture(0, ICONS_LOCATION);
 
 				int width = event.getWindow().getGuiScaledWidth();
 				int height = event.getWindow().getGuiScaledHeight();
@@ -721,7 +721,7 @@ public class EnigmaticEventHandler {
 				}
 				RenderSystem.disableBlend();
 
-				mc.getTextureManager().bindForSetup(GuiComponent.GUI_ICONS_LOCATION);
+				RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
 			}
 
 		}

@@ -18,6 +18,7 @@ import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -34,8 +35,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -72,7 +73,6 @@ public class MiningCharm extends ItemBaseCurio {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
-
 		TranslatableComponent mode = new TranslatableComponent("tooltip.enigmaticlegacy.enabled");
 
 		if (ItemNBTHelper.verifyExistance(stack, "nightVisionEnabled"))
@@ -95,7 +95,7 @@ public class MiningCharm extends ItemBaseCurio {
 		}
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharmNightVision", null, mode);
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharmNightVision", null, mode.getString());
 	}
 
 	public void removeNightVisionEffect(Player player, int duration) {
@@ -111,7 +111,6 @@ public class MiningCharm extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-
 		if (living instanceof Player & !living.level.isClientSide)
 			if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.miningCharm)) {
 				Player player = (Player) living;
@@ -128,7 +127,6 @@ public class MiningCharm extends ItemBaseCurio {
 
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand handIn) {
-
 		ItemStack stack = player.getItemInHand(handIn);
 
 		if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
@@ -142,7 +140,6 @@ public class MiningCharm extends ItemBaseCurio {
 		player.swing(handIn);
 
 		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
-
 	}
 
 	@Override

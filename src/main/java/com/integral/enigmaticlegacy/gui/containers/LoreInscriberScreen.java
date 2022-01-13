@@ -80,7 +80,7 @@ public class LoreInscriberScreen extends AbstractContainerScreen<LoreInscriberCo
 	@Override
 	protected void renderBg(PoseStack PoseStack, float partialTicks, int x, int y) {
 		RenderSystem.clearColor(1.0F, 1.0F, 1.0F, 1.0F);
-		this.minecraft.getTextureManager().bindForSetup(this.guiTexture);
+		RenderSystem.setShaderTexture(0, this.guiTexture);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		this.blit(PoseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
