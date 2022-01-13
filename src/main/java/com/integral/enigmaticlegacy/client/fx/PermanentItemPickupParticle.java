@@ -2,9 +2,13 @@ package com.integral.enigmaticlegacy.client.fx;
 
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderBuffers;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.entity.Entity;
@@ -39,12 +43,12 @@ public class PermanentItemPickupParticle extends Particle {
 	}
 
 	@Override
-	public IParticleRenderType getRenderType() {
-		return IParticleRenderType.CUSTOM;
+	public ParticleRenderType getRenderType() {
+		return ParticleRenderType.CUSTOM;
 	}
 
 	@Override
-	public void render(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks) {
+	public void render(VertexConsumer buffer, Camera renderInfo, float partialTicks) {
 		try {
 			float f = (this.particleAge + partialTicks) / 3.0F;
 			f = f * f;
@@ -54,9 +58,9 @@ public class PermanentItemPickupParticle extends Particle {
 			double d3 = Mth.lerp(f, this.item.getX(), d0);
 			double d4 = Mth.lerp(f, this.item.getY(), d1);
 			double d5 = Mth.lerp(f, this.item.getZ(), d2);
-			IRenderTypeBuffer.Impl ibuffer = this.renderTypeBuffers.bufferSource();
+			MultiBufferSource.BufferSource ibuffer = this.renderTypeBuffers.bufferSource();
 			Vec3 vector3d = renderInfo.getPosition();
-			this.renderManager.render(this.item, d3 - vector3d.x(), d4 - vector3d.y(), d5 - vector3d.z(), this.item.yRot, partialTicks, new PoseStack(), ibuffer, this.renderManager.getPackedLightCoords(this.item, partialTicks));
+			this.renderManager.render(this.item, d3 - vector3d.x(), d4 - vector3d.y(), d5 - vector3d.z(), this.item.getYRot(), partialTicks, new PoseStack(), ibuffer, this.renderManager.getPackedLightCoords(this.item, partialTicks));
 			ibuffer.endBatch();
 		} catch (Throwable ex) {
 			// NO-OP

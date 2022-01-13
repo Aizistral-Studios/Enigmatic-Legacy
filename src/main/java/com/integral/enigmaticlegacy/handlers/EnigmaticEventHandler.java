@@ -1729,13 +1729,13 @@ public class EnigmaticEventHandler {
 				NonNullList<ItemStack> inventoryList = null;
 
 				if (i == 0) {
-					inventoryList = player.inventory.mainInventory;
+					inventoryList = player.getInventory().mainInventory;
 				}
 				if (i == 1) {
-					//inventoryList = player.inventory.armorInventory;
+					//inventoryList = player.getInventory().armorInventory;
 				}
 				if (i == 2) {
-					//inventoryList = player.inventory.offHandInventory;
+					//inventoryList = player.getInventory().offHandInventory;
 				}
 
 				if (inventoryList != null) {

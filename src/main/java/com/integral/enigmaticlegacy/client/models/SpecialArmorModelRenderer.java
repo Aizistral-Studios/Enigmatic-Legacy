@@ -3,11 +3,10 @@ package com.integral.enigmaticlegacy.client.models;
 import java.util.List;
 
 import javax.annotation.Nullable;
-
-import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+/*
 @OnlyIn(Dist.CLIENT)
 @SuppressWarnings("unchecked")
 public class SpecialArmorModelRenderer extends ModelRenderer {
@@ -119,3 +118,5 @@ public class SpecialArmorModelRenderer extends ModelRenderer {
 		this.z = rotationPointZIn + offsetZ;
 	}
 }
+
+ */

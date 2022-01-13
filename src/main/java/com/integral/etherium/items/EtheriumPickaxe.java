@@ -15,35 +15,34 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseOnContext;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.InteractionResultHolder;
-import net.minecraft.util.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.util.math.ClipContext;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.ToolType;
 
 public class EtheriumPickaxe extends ItemEtheriumTool {
 
 	public EtheriumPickaxe(IEtheriumConfig config) {
-		super(1F, -2.8F, config, new HashSet<>(),
+		super(1F, -2.8F, config, BlockTags.MINEABLE_WITH_PICKAXE,
 				EtheriumUtil.defaultProperties(config, EtheriumPickaxe.class)
 				.defaultDurability((int) (config.getToolMaterial().getUses() * 1.5))
-				.addToolType(ToolType.PICKAXE, config.getToolMaterial().getLevel())
 				.fireResistant());
 
 		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_pickaxe"));
@@ -91,11 +90,9 @@ public class EtheriumPickaxe extends ItemEtheriumTool {
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-
 		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getPickaxeMiningRadius() != -1) {
 
 			HitResult trace = AOEMiningHelper.calcRayTrace(world, (Player) entityLiving, ClipContext.Fluid.ANY);
-
 			if (trace.getType() == HitResult.Type.BLOCK) {
 				BlockHitResult blockTrace = (BlockHitResult) trace;
 				Direction face = blockTrace.getDirection();

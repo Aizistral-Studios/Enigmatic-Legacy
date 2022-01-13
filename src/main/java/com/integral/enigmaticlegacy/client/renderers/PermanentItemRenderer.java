@@ -5,25 +5,26 @@ import java.util.Random;
 import com.integral.enigmaticlegacy.api.items.IPermanentCrystal;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.ItemEntityRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.ItemRenderer;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 
 /**
  * Copy of default ItemRenderer for PermanentItemEntity.
@@ -31,6 +32,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
  */
 
 @OnlyIn(Dist.CLIENT)
+@SuppressWarnings({ "deprecation", "unused" })
 public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 	private final ItemRenderer itemRenderer;
 	private final Random random = new Random();
@@ -57,9 +59,8 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 		return i;
 	}
 
-	@SuppressWarnings({ "deprecation", "unused" })
 	@Override
-	public void render(PermanentItemEntity entityIn, float entityYaw, float partialTicks, PoseStack PoseStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+	public void render(PermanentItemEntity entityIn, float entityYaw, float partialTicks, PoseStack PoseStackIn, MultiBufferSource bufferIn, int packedLightIn) {
 		if (!Minecraft.getInstance().player.isAlive() && Math.sqrt(entityIn.distanceToSqr(Minecraft.getInstance().player.getX(), Minecraft.getInstance().player.getEyeY(), Minecraft.getInstance().player.getZ())) <= 1.0)
 			return;
 
@@ -73,12 +74,12 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 
 		int i = itemstack.isEmpty() ? 187 : Item.getId(itemstack.getItem()) + itemstack.getDamageValue();
 		this.random.setSeed(i);
-		IBakedModel ibakedmodel = this.itemRenderer.getModel(itemstack, entityIn.level, (LivingEntity) null);
+		BakedModel ibakedmodel = this.itemRenderer.getModel(itemstack, entityIn.level, null, entityIn.getId());
 		boolean flag = ibakedmodel.isGui3d();
 		int j = this.getModelCount(itemstack);
 		float f = 0.25F;
 		float f1 = Mth.sin((entityIn.getAge() + partialTicks) / 10.0F + entityIn.hoverStart) * 0.1F + 0.1F;
-		float f2 = this.shouldBob() ? ibakedmodel.getTransforms().getTransform(ItemCameraTransforms.TransformType.GROUND).scale.y() : 0;
+		float f2 = this.shouldBob() ? ibakedmodel.getTransforms().getTransform(ItemTransforms.TransformType.GROUND).scale.y() : 0;
 		PoseStackIn.translate(0.0D, f1 + 0.25F * f2, 0.0D);
 		float f3 = entityIn.getItemHover(partialTicks);
 		PoseStackIn.mulPose(Vector3f.YP.rotation(f3));
@@ -104,7 +105,7 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 				}
 			}
 
-			this.itemRenderer.render(itemstack, ItemCameraTransforms.TransformType.GROUND, false, PoseStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY, ibakedmodel);
+			this.itemRenderer.render(itemstack, ItemTransforms.TransformType.GROUND, false, PoseStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY, ibakedmodel);
 			PoseStackIn.popPose();
 			if (!flag) {
 				PoseStackIn.translate(0.0, 0.0, 0.09375F);
@@ -118,10 +119,10 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 	/**
 	 * Returns the location of an entity's texture.
 	 */
-	@SuppressWarnings("deprecation")
+
 	@Override
 	public ResourceLocation getTextureLocation(PermanentItemEntity entity) {
-		return AtlasTexture.LOCATION_BLOCKS;
+		return TextureAtlas.LOCATION_BLOCKS;
 	}
 
 	/*==================================== FORGE START ===========================================*/

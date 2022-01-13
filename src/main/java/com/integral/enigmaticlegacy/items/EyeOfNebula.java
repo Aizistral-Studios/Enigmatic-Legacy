@@ -19,8 +19,8 @@ import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.settings.KeyMapping;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.server.level.ServerPlayer;
@@ -113,12 +113,6 @@ public class EyeOfNebula extends ItemSpellstoneCurio implements ISpellstone {
 		} catch (NullPointerException ex) {
 			// Just don't do it lol
 		}
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
-		return false;
 	}
 
 	@Override

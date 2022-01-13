@@ -2,12 +2,11 @@ package com.integral.enigmaticlegacy.client.models;
 
 import java.util.HashMap;
 
-import com.integral.enigmaticlegacy.client.models.SpecialArmorModelRenderer.AnchorType;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
 
 import net.minecraft.world.entity.EquipmentSlot;
 
+/*
 public class DarkArmorModel extends GenericArmorModel {
 
 	public static final HashMap<String, Float> darkArmorOffsetMap;
@@ -234,6 +233,5 @@ public class DarkArmorModel extends GenericArmorModel {
 
 	}
 
-
-
 }
+ */

@@ -21,7 +21,7 @@ import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.screens.WorldOptionsScreen;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,14 +29,11 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.brain.memory.MemoryModuleType;
-import net.minecraft.world.entity.monster.HoglinEntity;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemModelsProperties;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.core.NonNullList;
@@ -183,7 +180,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 	@OnlyIn(Dist.CLIENT)
 	public void registerVariants() {
-		ItemModelsProperties.register(this, new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet_color"), (stack, world, entity) -> {
+		ItemProperties.register(this, new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet_color"), (stack, world, entity, numberlol) -> {
 			return ItemNBTHelper.getFloat(stack, amuletColorTag, 0F);
 		});
 	}

@@ -127,14 +127,14 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 		try {
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticItem)) {
 				this.flightMap.put(player, true);
-				if (!player.abilities.mayfly) {
-					player.abilities.mayfly = true;
+				if (!player.getAbilities().mayfly) {
+					player.getAbilities().mayfly = true;
 					player.onUpdateAbilities();
 				}
 			} else if (this.flightMap.get(player)) {
 				if (!player.isCreative()) {
-					player.abilities.mayfly = false;
-					player.abilities.flying = false;
+					player.getAbilities().mayfly = false;
+					player.getAbilities().flying = false;
 					player.onUpdateAbilities();
 				}
 				this.flightMap.put(player, false);
@@ -149,14 +149,8 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 		if (world.isClientSide || SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
-		this.launchWitherSkull(world, player, Item.random.nextDouble() <= 0.25);
+		this.launchWitherSkull(world, player, random.nextDouble() <= 0.25);
 		SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
-		return false;
 	}
 
 	private void launchWitherSkull(Level world, Player player, boolean invulnerable) {
@@ -164,15 +158,15 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 
 		Vector3 look = new Vector3(player.getLookAngle()).multiply(1, 0, 1);
 
-		double playerRot = Math.toRadians(player.yRot + 90);
+		double playerRot = Math.toRadians(player.getYRot() + 90);
 		if (look.x == 0 && look.z == 0) {
 			look = new Vector3(Math.cos(playerRot), 0, Math.sin(playerRot));
 		}
 
 		look = look.normalize().multiply(-2);
 
-		double div = -0.75 + (Item.random.nextDouble() * 0.75);
-		double mod = -0.5D + (Item.random.nextDouble() * 6D);
+		double div = -0.75 + (random.nextDouble() * 0.75);
+		double mod = -0.5D + (random.nextDouble() * 6D);
 
 		Vector3 pl = look.add(Vector3.fromEntityCenter(player)).add(0, 1.6, div * 0.1);
 

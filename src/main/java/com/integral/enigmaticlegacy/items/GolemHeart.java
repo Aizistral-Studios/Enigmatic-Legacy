@@ -19,7 +19,7 @@ import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.settings.KeyMapping;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -206,13 +206,6 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 		}
 	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
-		return false;
-	}
-
 
 	/*
 	 @Override

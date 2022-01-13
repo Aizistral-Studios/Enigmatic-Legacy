@@ -112,10 +112,4 @@ public class MagnetRing extends ItemBaseCurio {
 		return true;
 	}
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
-		return false;
-	}
-
 }

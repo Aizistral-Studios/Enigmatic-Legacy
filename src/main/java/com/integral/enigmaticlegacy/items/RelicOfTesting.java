@@ -13,20 +13,20 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.world.entity.monster.CreeperEntity;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.InteractionResultHolder;
-import net.minecraft.util.InteractionResult;
-import net.minecraft.util.EntityPredicates;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.text.TextComponent;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -62,7 +62,7 @@ public class RelicOfTesting extends ItemBase {
 
 		SuperpositionHandler.setPersistentInteger(playerIn, EnigmaticLegacy.overworldRevelationTome.persistantPointsTag, 0);
 
-		ItemStack checkTag = playerIn.inventory.offhand.get(0);
+		ItemStack checkTag = playerIn.getInventory().offhand.get(0);
 
 		if (checkTag != null) {
 			playerIn.sendMessage(new TextComponent(checkTag.getOrCreateTag().getAsString()), playerIn.getUUID());
@@ -98,12 +98,12 @@ public class RelicOfTesting extends ItemBase {
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
-		List<CreeperEntity> list = world.getEntitiesOfClass(CreeperEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(entity, 24D));
+		List<Creeper> list = world.getEntitiesOfClass(Creeper.class, SuperpositionHandler.getBoundingBoxAroundEntity(entity, 24D));
 
-		for (CreeperEntity creeper : list) {
+		for (Creeper creeper : list) {
 			creeper.goalSelector.addGoal(1, new AvoidEntityGoal<>(creeper, Player.class, (arg) -> {
 				return arg instanceof Player ? SuperpositionHandler.hasCurio(arg, EnigmaticLegacy.enigmaticAmulet) : false;
-			}, 6.0F, 1.0D, 1.2D, EntityPredicates.NO_CREATIVE_OR_SPECTATOR::test));
+			}, 6.0F, 1.0D, 1.2D, EntitySelector.NO_CREATIVE_OR_SPECTATOR::test));
 
 			if (creeper.getTarget() == entity) {
 				creeper.setTarget(null);

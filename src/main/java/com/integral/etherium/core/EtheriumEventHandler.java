@@ -7,20 +7,19 @@ import com.integral.etherium.items.EtheriumArmor;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Phantom;
-import net.minecraft.world.entity.passive.AnimalEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.LootItem;
-import net.minecraft.world.level.storage.loot.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.UniformGenerator;
 import net.minecraft.world.level.storage.loot.LootPool.Builder;
-import net.minecraft.world.level.storage.loot.functions.SetCount;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.sounds.SoundSource;
@@ -95,7 +94,7 @@ public class EtheriumEventHandler {
 			LootPool epic = constructLootPool("etherium", -11F, 2F,
 					LootItem.lootTableItem(this.etheriumOre)
 					.setWeight(60)
-					.apply(SetCount.setCount(UniformGenerator.between(1.0F, 2F)))
+					.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2F)))
 					);
 
 			LootTable modified = event.getTable();

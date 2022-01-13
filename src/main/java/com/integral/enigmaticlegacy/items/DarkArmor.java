@@ -4,7 +4,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.client.models.DarkArmorModel;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseArmor;
 
 import net.minecraft.client.model.HumanoidModel;
@@ -24,12 +23,14 @@ public class DarkArmor extends ItemBaseArmor implements IItemRenderProperties {
 		super(materialIn, slot, ItemBaseArmor.getDefaultProperties().rarity(Rarity.RARE).fireResistant().tab(null));
 	}
 
+	/*
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public HumanoidModel<?> provideArmorModelForSlot(EquipmentSlot slot, HumanoidModel<?> original) {
 		DarkArmorModel model = new DarkArmorModel(slot);
 		return model;
 	}
+	 */
 
 	@Nonnull
 	@Override

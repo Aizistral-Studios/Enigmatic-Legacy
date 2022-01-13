@@ -42,10 +42,4 @@ public class EscapeScroll extends ItemBaseCurio {
 		}
 	}
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
-		return false;
-	}
-
 }

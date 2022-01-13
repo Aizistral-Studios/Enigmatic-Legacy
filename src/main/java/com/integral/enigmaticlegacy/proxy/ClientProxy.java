@@ -92,8 +92,8 @@ public class ClientProxy extends CommonProxy {
 		renderSteve = (PlayerRenderer) skinMap.get("default");
 		renderAlex = (PlayerRenderer) skinMap.get("slim");
 
-		renderSteve.addLayer(new ShieldAuraLayer(renderSteve));
-		renderAlex.addLayer(new ShieldAuraLayer(renderAlex));
+		renderSteve.addLayer(new ShieldAuraLayer(renderSteve, Minecraft.getInstance().getEntityModels()));
+		renderAlex.addLayer(new ShieldAuraLayer(renderAlex, Minecraft.getInstance().getEntityModels()));
 
 		//render.addLayer(new ShieldAuraLayer(render, false));
 	}

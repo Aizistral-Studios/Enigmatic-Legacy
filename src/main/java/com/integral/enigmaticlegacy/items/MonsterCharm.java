@@ -84,12 +84,6 @@ public class MonsterCharm extends ItemBaseCurio {
 	}
 
 	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
-		return false;
-	}
-
-	@Override
 	public int getLootingBonus(String identifier, LivingEntity livingEntity, ItemStack curio, int index) {
 		return super.getLootingBonus(identifier, livingEntity, curio, index) + 1;
 	}

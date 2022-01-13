@@ -131,7 +131,7 @@ public class LoreInscriberScreen extends AbstractContainerScreen<LoreInscriberCo
 			int j = 8453920;
 			boolean flag = true;
 			String s = I18n.format("container.repair.cost", i);
-			if (i >= 40 && !this.minecraft.player.abilities.isCreativeMode) {
+			if (i >= 40 && !this.minecraft.player.getAbilities().isCreativeMode) {
 				s = I18n.format("container.repair.expensive");
 				j = 16736352;
 			} else if (!this.container.getSlot(2).getHasStack()) {

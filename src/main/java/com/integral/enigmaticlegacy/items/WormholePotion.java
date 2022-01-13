@@ -23,8 +23,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAnim;
-import net.minecraft.util.InteractionResultHolder;
-import net.minecraft.util.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
@@ -77,8 +77,9 @@ public class WormholePotion extends ItemBase implements IBound {
 
 			Vec3 vec = receiver.position();
 
-			while (vec.distanceTo(receiver.position()) < 1.0D)
-				vec = receiver.position().add((Item.random.nextDouble() - 0.5D) * 4D, 0, (Item.random.nextDouble() - 0.5D) * 4D);
+			while (vec.distanceTo(receiver.position()) < 1.0D) {
+				vec = receiver.position().add((random.nextDouble() - 0.5D) * 4D, 0, (random.nextDouble() - 0.5D) * 4D);
+			}
 
 			worldIn.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
@@ -90,15 +91,14 @@ public class WormholePotion extends ItemBase implements IBound {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketRecallParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 48, false));
 		}
 
-		if (!player.abilities.instabuild) {
+		if (!player.getAbilities().instabuild) {
 
 			stack.shrink(1);
 
-			if (stack.isEmpty()) {
+			if (stack.isEmpty())
 				return new ItemStack(Items.GLASS_BOTTLE);
-			}
 
-			player.inventory.add(new ItemStack(Items.GLASS_BOTTLE));
+			player.getInventory().add(new ItemStack(Items.GLASS_BOTTLE));
 
 		}
 

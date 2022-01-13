@@ -83,7 +83,7 @@ public class HeavenScroll extends ItemBaseCurio {
 		if (living instanceof Player) {
 			Player player = (Player) living;
 
-			if (Math.random() <= (this.baseXpConsumptionProbability * xpCostModifier.getValue()) && player.abilities.flying) {
+			if (Math.random() <= (this.baseXpConsumptionProbability * xpCostModifier.getValue()) && player.getAbilities().flying) {
 				ExperienceHelper.drainPlayerXP(player, 1);
 			}
 
@@ -96,8 +96,8 @@ public class HeavenScroll extends ItemBaseCurio {
 		try {
 			if (ExperienceHelper.getPlayerXP(player) > 0 && SuperpositionHandler.isInBeaconRange(player)) {
 
-				if (!player.abilities.mayfly) {
-					player.abilities.mayfly = true;
+				if (!player.getAbilities().mayfly) {
+					player.getAbilities().mayfly = true;
 				}
 
 				player.onUpdateAbilities();
@@ -107,8 +107,8 @@ public class HeavenScroll extends ItemBaseCurio {
 				this.flyMap.put(player, this.flyMap.get(player)-1);
 			} else if (this.flyMap.get(player) == 1) {
 				if (!player.isCreative()) {
-					player.abilities.mayfly = false;
-					player.abilities.flying = false;
+					player.getAbilities().mayfly = false;
+					player.getAbilities().flying = false;
 					player.onUpdateAbilities();
 					player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 200, 0, true, false));
 				}
@@ -128,20 +128,14 @@ public class HeavenScroll extends ItemBaseCurio {
 			Player player = (Player) entityLivingBase;
 
 			if (!player.isCreative()) {
-				player.abilities.mayfly = false;
-				player.abilities.flying = false;
+				player.getAbilities().mayfly = false;
+				player.getAbilities().flying = false;
 				player.onUpdateAbilities();
 			}
 
 			this.flyMap.put(player, 0);
 
 		}
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
-		return false;
 	}
 
 }

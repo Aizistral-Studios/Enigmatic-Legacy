@@ -31,10 +31,4 @@ public class IronRing extends ItemBaseCurio {
 		return atts;
 	}
 
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
-		return false;
-	}
-
 }

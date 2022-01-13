@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ArmorStandEntity;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.EquipmentSlot;
 
 /**
@@ -15,7 +14,7 @@ import net.minecraft.world.entity.EquipmentSlot;
  *
  * @author Integral
  */
-
+/*
 public class GenericArmorModel extends HumanoidModel<LivingEntity> {
 	protected final EquipmentSlot slot;
 
@@ -33,12 +32,12 @@ public class GenericArmorModel extends HumanoidModel<LivingEntity> {
 	// This fixes the armor "breathing" and helmets always facing south on armor stands
 	@Override
 	public void setupAnim(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		if (!(entity instanceof ArmorStandEntity)) {
+		if (!(entity instanceof ArmorStand)) {
 			super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 			return;
 		}
 
-		ArmorStandEntity entityIn = (ArmorStandEntity) entity;
+		ArmorStand entityIn = (ArmorStand) entity;
 		this.head.xRot = ((float) Math.PI / 180F) * entityIn.getHeadPose().getX();
 		this.head.yRot = ((float) Math.PI / 180F) * entityIn.getHeadPose().getY();
 		this.head.zRot = ((float) Math.PI / 180F) * entityIn.getHeadPose().getZ();
@@ -63,11 +62,11 @@ public class GenericArmorModel extends HumanoidModel<LivingEntity> {
 		this.hat.copyFrom(this.head);
 	}
 
-	protected void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.xRot = x;
-		modelRenderer.yRot = y;
-		modelRenderer.zRot = z;
-	}
+	//protected void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
+	//	modelRenderer.xRot = x;
+	//	modelRenderer.yRot = y;
+	//	modelRenderer.zRot = z;
+	//}
 
 	public void setRenderingForType(EquipmentSlot type) {
 
@@ -87,4 +86,4 @@ public class GenericArmorModel extends HumanoidModel<LivingEntity> {
 	}
 
 }
-
+ */

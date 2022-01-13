@@ -24,8 +24,8 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.InteractionResultHolder;
-import net.minecraft.util.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
@@ -92,36 +92,36 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-		Player Player = entityLiving instanceof Player ? (Player) entityLiving : null;
+		Player player = entityLiving instanceof Player ? (Player) entityLiving : null;
 		List<MobEffectInstance> effectList = PotionHelper.getEffects(stack);
-		if (Player == null || !Player.abilities.instabuild) {
+		if (player == null || !player.getAbilities().instabuild) {
 			stack.shrink(1);
 		}
 
-		if (Player instanceof ServerPlayer) {
-			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) Player, stack);
+		if (player instanceof ServerPlayer) {
+			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
 		}
 
 		if (!worldIn.isClientSide) {
 			for (MobEffectInstance effectinstance : effectList) {
 				if (effectinstance.getEffect().isInstantenous()) {
-					effectinstance.getEffect().applyInstantenousEffect(Player, Player, entityLiving, effectinstance.getAmplifier(), 1.0D);
+					effectinstance.getEffect().applyInstantenousEffect(player, player, entityLiving, effectinstance.getAmplifier(), 1.0D);
 				} else {
 					entityLiving.addEffect(new MobEffectInstance(effectinstance));
 				}
 			}
 		}
 
-		if (Player != null) {
-			Player.awardStat(Stats.ITEM_USED.get(this));
+		if (player != null) {
+			player.awardStat(Stats.ITEM_USED.get(this));
 		}
 
-		if (Player == null || !Player.abilities.instabuild) {
+		if (player == null || !player.getAbilities().instabuild) {
 			if (stack.isEmpty())
 				return new ItemStack(Items.GLASS_BOTTLE);
 
-			if (Player != null) {
-				Player.inventory.add(new ItemStack(Items.GLASS_BOTTLE));
+			if (player != null) {
+				player.getInventory().add(new ItemStack(Items.GLASS_BOTTLE));
 			}
 		}
 

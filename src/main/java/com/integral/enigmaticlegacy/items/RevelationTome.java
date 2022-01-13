@@ -17,6 +17,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Vanishable;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -27,8 +28,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
-import net.minecraft.util.InteractionResultHolder;
-import net.minecraft.util.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
@@ -93,7 +94,7 @@ public class RevelationTome extends ItemBase implements Vanishable {
 		if (!RevelationTome.havePlayerRead(player, stack)) {
 			RevelationTome.markRead(player, stack);
 
-			int xp = ItemNBTHelper.getInt(stack, RevelationTome.xpPointsTag, Item.random.nextInt(1000));
+			int xp = ItemNBTHelper.getInt(stack, RevelationTome.xpPointsTag, random.nextInt(1000));
 			int revelation = ItemNBTHelper.getInt(stack, RevelationTome.revelationPointsTag, 1);
 
 			if (player instanceof ServerPlayer) {
@@ -188,7 +189,7 @@ public class RevelationTome extends ItemBase implements Vanishable {
 	}
 
 	@Override
-	public int getBurnTime(ItemStack itemStack) {
+	public int getBurnTime(ItemStack itemStack, RecipeType<?> recipeType) {
 		return 400;
 	}
 

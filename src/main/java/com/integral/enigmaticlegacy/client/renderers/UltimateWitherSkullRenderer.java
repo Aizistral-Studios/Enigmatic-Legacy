@@ -3,14 +3,16 @@ package com.integral.enigmaticlegacy.client.renderers;
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 import com.integral.etherium.client.ShieldAuraLayer;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.model.SkullModel;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.WitherSkullRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.entity.model.GenericHeadModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.BlockPos;
@@ -23,10 +25,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class UltimateWitherSkullRenderer extends EntityRenderer<UltimateWitherSkullEntity> {
 	private static final ResourceLocation INVULNERABLE_WITHER_TEXTURES = new ResourceLocation("textures/entity/wither/wither_invulnerable.png");
 	private static final ResourceLocation WITHER_TEXTURES = new ResourceLocation("textures/entity/wither/wither.png");
-	private final GenericHeadModel skeletonHeadModel = new GenericHeadModel();
+	private final SkullModel skeletonHeadModel;
 
 	public UltimateWitherSkullRenderer(EntityRendererProvider.Context renderManagerIn) {
 		super(renderManagerIn);
+		this.skeletonHeadModel = new SkullModel(renderManagerIn.bakeLayer(ModelLayers.WITHER_SKULL));
 	}
 
 	@Override
@@ -35,16 +38,16 @@ public class UltimateWitherSkullRenderer extends EntityRenderer<UltimateWitherSk
 	}
 
 	@Override
-	public void render(UltimateWitherSkullEntity entityIn, float entityYaw, float partialTicks, PoseStack PoseStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+	public void render(UltimateWitherSkullEntity entityIn, float entityYaw, float partialTicks, PoseStack PoseStackIn, MultiBufferSource bufferIn, int packedLightIn) {
 		PoseStackIn.pushPose();
 
 		float inflate = entityIn.isSkullInvulnerable() ? 1.4F : 1.0F;
 
 		PoseStackIn.scale(-inflate, -inflate, inflate);
 
-		float f = Mth.rotlerp(entityIn.yRotO, entityIn.yRot, partialTicks);
-		float f1 = Mth.lerp(partialTicks, entityIn.xRotO, entityIn.xRot);
-		IVertexBuilder ivertexbuilder = bufferIn.getBuffer(this.skeletonHeadModel.renderType(this.getTextureLocation(entityIn)));
+		float f = Mth.rotlerp(entityIn.yRotO, entityIn.getYRot(), partialTicks);
+		float f1 = Mth.lerp(partialTicks, entityIn.xRotO, entityIn.getXRot());
+		VertexConsumer ivertexbuilder = bufferIn.getBuffer(this.skeletonHeadModel.renderType(this.getTextureLocation(entityIn)));
 		this.skeletonHeadModel.setupAnim(0.0F, f, f1);
 		this.skeletonHeadModel.renderToBuffer(PoseStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
 		PoseStackIn.popPose();
@@ -60,11 +63,11 @@ public class UltimateWitherSkullRenderer extends EntityRenderer<UltimateWitherSk
 		super.render(entityIn, entityYaw, partialTicks, PoseStackIn, bufferIn, packedLightIn);
 	}
 
-	private void renderShield(PoseStack matrix, int light, float fullTicks, float scale, IRenderTypeBuffer bufferIn) {
+	private void renderShield(PoseStack matrix, int light, float fullTicks, float scale, MultiBufferSource bufferIn) {
 		matrix.pushPose();
 		matrix.scale(-scale, -scale, scale);
 
-		IVertexBuilder ivertexbuilder1 = bufferIn.getBuffer(RenderType.energySwirl(ShieldAuraLayer.getTextureLocation(), ShieldAuraLayer.xOffset(fullTicks), fullTicks * 0.01F));
+		VertexConsumer ivertexbuilder1 = bufferIn.getBuffer(RenderType.energySwirl(ShieldAuraLayer.getTextureLocation(), ShieldAuraLayer.xOffset(fullTicks), fullTicks * 0.01F));
 		this.skeletonHeadModel.renderToBuffer(matrix, ivertexbuilder1, light, OverlayTexture.NO_OVERLAY, 0.5F, 0.5F, 0.5F, 1.0F);
 
 		matrix.popPose();

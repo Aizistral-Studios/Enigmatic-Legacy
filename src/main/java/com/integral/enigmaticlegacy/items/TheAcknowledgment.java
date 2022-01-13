@@ -28,12 +28,12 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.util.InteractionResultHolder;
-import net.minecraft.util.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.text.TextComponent;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -60,11 +60,11 @@ public class TheAcknowledgment extends ItemBase implements Vanishable {
 	}
 
 	public static boolean isOpen() {
-		return bookID.equals(PatchouliAPI.instance.getOpenBookGui());
+		return bookID.equals(PatchouliAPI.get().getOpenBookGui());
 	}
 
 	public static Component getEdition() {
-		return PatchouliAPI.instance.getSubtitle(bookID);
+		return PatchouliAPI.get().getSubtitle(bookID);
 	}
 
 	public static Component getTitle(ItemStack stack) {
@@ -106,7 +106,7 @@ public class TheAcknowledgment extends ItemBase implements Vanishable {
 
 		if (playerIn instanceof ServerPlayer) {
 			ServerPlayer player = (ServerPlayer) playerIn;
-			PatchouliAPI.instance.openBookGUI((ServerPlayer) playerIn, bookID);
+			PatchouliAPI.get().openBookGUI((ServerPlayer) playerIn, bookID);
 		}
 
 		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);

@@ -11,23 +11,25 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.Tier;
+import net.minecraft.tags.Tag;
+import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.ToolItem;
 import net.minecraft.world.item.Item.Properties;
-import net.minecraftforge.common.ToolType;
 
-public abstract class ItemEtheriumTool extends ToolItem implements IEtheriumTool {
+public abstract class ItemEtheriumTool extends DiggerItem implements IEtheriumTool {
 	public Set<Material> effectiveMaterials;
+	public Set<Tag<Block>> effectiveTags;
 	public ItemStack defaultInstance;
 	protected final IEtheriumConfig config;
 
-	public ItemEtheriumTool(float attackDamageIn, float attackSpeedIn, IEtheriumConfig config, Set<Block> effectiveBlocksIn, Properties builder) {
-		super(attackDamageIn, attackSpeedIn, config.getToolMaterial(), effectiveBlocksIn, builder);
+	public ItemEtheriumTool(float attackDamageIn, float attackSpeedIn, IEtheriumConfig config, Tag<Block> blocks, Properties builder) {
+		super(attackDamageIn, attackSpeedIn, config.getToolMaterial(), blocks, builder);
 
 		this.config = config;
 		this.effectiveMaterials = Sets.newHashSet();
+		this.effectiveTags = Sets.newHashSet();
 		this.defaultInstance = new ItemStack(this);
 	}
 
@@ -37,18 +39,16 @@ public abstract class ItemEtheriumTool extends ToolItem implements IEtheriumTool
 	}
 
 	@Override
-	public boolean isCorrectToolForDrops(BlockState blockIn) {
-		int i = this.getTier().getLevel();
+	public boolean isCorrectToolForDrops(ItemStack stack, BlockState blockIn) {
+		return super.isCorrectToolForDrops(stack, blockIn) || this.hasAnyTag(blockIn, this.effectiveTags) || this.effectiveMaterials.contains(blockIn.getMaterial());
+	}
 
-		if (this.getToolTypes(this.defaultInstance).contains(blockIn.getHarvestTool())) {
-			if (blockIn.getHarvestTool() == ToolType.PICKAXE)
-				return i >= blockIn.getHarvestLevel();
-				else
-					return true;
-		}
+	protected boolean hasAnyTag(BlockState blockstate, Set<Tag<Block>> tags) {
+		return tags.stream().anyMatch(tag -> this.hasTag(blockstate, tag));
+	}
 
-		Material material = blockIn.getMaterial();
-		return this.effectiveMaterials.contains(material);
+	protected boolean hasTag(BlockState blockstate, Tag<Block> tag) {
+		return tag.contains(blockstate.getBlock());
 	}
 
 	@Override

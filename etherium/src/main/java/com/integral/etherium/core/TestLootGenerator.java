@@ -13,23 +13,23 @@ import com.integral.etherium.EtheriumMod;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Vanishable;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseOnContext;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.tileentity.ChestTileEntity;
-import net.minecraft.util.InteractionResultHolder;
-import net.minecraft.util.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.text.TextComponent;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -158,9 +158,9 @@ public class TestLootGenerator extends Item implements Vanishable {
 		if (world.isClientSide)
 			return InteractionResult.SUCCESS;
 
-		if (world.getBlockState(context.getClickedPos()).hasTileEntity()) {
-			if (world.getBlockEntity(context.getClickedPos()) instanceof ChestTileEntity && player.isCrouching()) {
-				ChestTileEntity chest = (ChestTileEntity) world.getBlockEntity(context.getClickedPos());
+		if (world.getBlockState(context.getClickedPos()).hasBlockEntity()) {
+			if (world.getBlockEntity(context.getClickedPos()) instanceof ChestBlockEntity && player.isCrouching()) {
+				ChestBlockEntity chest = (ChestBlockEntity) world.getBlockEntity(context.getClickedPos());
 				Direction dir = context.getClickedFace();
 
 				if (dir == Direction.UP) {

@@ -30,14 +30,13 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
-import net.minecraft.util.InteractionResultHolder;
-import net.minecraft.util.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.text.TextComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -123,7 +122,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 					}
 				} else {
 					for (int s = 0; s < itemSoftcap.getValue(); s++) {
-						int randomID = Item.random.nextInt(arr.size());
+						int randomID = random.nextInt(arr.size());
 						Item something = ForgeRegistries.ITEMS.getValue(new ResourceLocation(((StringTag) arr.get(randomID)).getAsString()));
 
 						if (something != null) {
@@ -199,11 +198,11 @@ public class OblivionStone extends ItemBase implements Vanishable {
 		int cycleCounter = 0;
 		int filledStacks = 0;
 
-		for (int slot = 0; slot < player.inventory.items.size(); slot++) {
-			if (!player.inventory.items.get(slot).isEmpty()) {
+		for (int slot = 0; slot < player.getInventory().items.size(); slot++) {
+			if (!player.getInventory().items.get(slot).isEmpty()) {
 				filledStacks += 1;
-				if (player.inventory.items.get(slot).getItem() != EnigmaticLegacy.oblivionStone) {
-					stackMap.put(slot, player.inventory.items.get(slot));
+				if (player.getInventory().items.get(slot).getItem() != EnigmaticLegacy.oblivionStone) {
+					stackMap.put(slot, player.getInventory().items.get(slot));
 				}
 			}
 		}
@@ -217,7 +216,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 
 				for (int slot : stackMap.keySet()) {
 					if (stackMap.get(slot).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation(str))) {
-						player.inventory.setItem(slot, ItemStack.EMPTY);
+						player.getInventory().setItem(slot, ItemStack.EMPTY);
 					}
 				}
 				cycleCounter++;
@@ -240,12 +239,12 @@ public class OblivionStone extends ItemBase implements Vanishable {
 					stackSizeMultimap.put(localStackMap.get(slot).getCount(), slot);
 				}
 
-				while (localStackMap.size() > (player.inventory.offhand.get(0).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation(str)) ? 0 : 1)) {
+				while (localStackMap.size() > (player.getInventory().offhand.get(0).getItem() == ForgeRegistries.ITEMS.getValue(new ResourceLocation(str)) ? 0 : 1)) {
 					int smallestStackSize = Collections.min(stackSizeMultimap.keySet());
 					Collection<Integer> smallestStacks = stackSizeMultimap.get(smallestStackSize);
 					int slotWithSmallestStack = Collections.max(smallestStacks);
 
-					player.inventory.setItem(slotWithSmallestStack, ItemStack.EMPTY);
+					player.getInventory().setItem(slotWithSmallestStack, ItemStack.EMPTY);
 					stackSizeMultimap.remove(smallestStackSize, slotWithSmallestStack);
 					localStackMap.remove(slotWithSmallestStack);
 				}
@@ -253,7 +252,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 			}
 
 		} else if (mode == 2) {
-			if (filledStacks >= player.inventory.items.size()) {
+			if (filledStacks >= player.getInventory().items.size()) {
 
 				for (Tag sID : list) {
 					String str = ((StringTag) sID).getAsString();
@@ -275,7 +274,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 						Collection<Integer> smallestStacks = stackSizeMultimap.get(smallestStackSize);
 						int slotWithSmallestStack = Collections.max(smallestStacks);
 
-						player.inventory.setItem(slotWithSmallestStack, ItemStack.EMPTY);
+						player.getInventory().setItem(slotWithSmallestStack, ItemStack.EMPTY);
 						return;
 					}
 

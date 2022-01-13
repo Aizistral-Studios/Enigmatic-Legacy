@@ -17,21 +17,20 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.FlowingFluidBlock;
-import net.minecraft.world.level.block.IBucketPickupHandler;
+import net.minecraft.world.level.block.BucketPickup;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.fluid.Fluid;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.fluid.Fluids;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.ITag.INamedTag;
+import net.minecraft.tags.Tag.Named;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
@@ -43,6 +42,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.Tags.Fluids;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 public class Megasponge extends ItemBaseCurio implements Vanishable {
@@ -80,7 +80,7 @@ public class Megasponge extends ItemBaseCurio implements Vanishable {
 	}
 
 	@SuppressWarnings("deprecation")
-	public BlockPos getCollidedWater(INamedTag<Fluid> fluidTag, Player player) {
+	public BlockPos getCollidedWater(Named<Fluid> fluidTag, Player player) {
 		AABB axisalignedbb = player.getBoundingBox().deflate(0.001D);
 		int i = Mth.floor(axisalignedbb.minX);
 		int j = Mth.ceil(axisalignedbb.maxX);
@@ -173,12 +173,12 @@ public class Megasponge extends ItemBaseCurio implements Vanishable {
 
 	public void absorbWaterBlock(BlockPos pos, BlockState state, Level world) {
 
-		if (state.getBlock() instanceof IBucketPickupHandler && ((IBucketPickupHandler) state.getBlock()).takeLiquid(world, pos, state) != Fluids.EMPTY) {
+		if (state.getBlock() instanceof BucketPickup && !((BucketPickup) state.getBlock()).pickupBlock(world, pos, state).isEmpty()) {
 			// Whatever
-		} else if (state.getBlock() instanceof FlowingFluidBlock) {
+		} else if (state.getBlock() instanceof LiquidBlock) {
 			world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
 		} else if (state.getMaterial() == Material.WATER_PLANT || state.getMaterial() == Material.REPLACEABLE_WATER_PLANT) {
-			BlockEntity tileentity = state.hasTileEntity() ? world.getBlockEntity(pos) : null;
+			BlockEntity tileentity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
 			Block.dropResources(state, world, pos, tileentity);
 			world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
 		}
@@ -202,12 +202,6 @@ public class Megasponge extends ItemBaseCurio implements Vanishable {
 		}
 
 		return waterBlocks;
-	}
-
-	@Override
-	@OnlyIn(Dist.CLIENT)
-	public boolean canRender(String identifier, int index, LivingEntity living, ItemStack stack) {
-		return false;
 	}
 
 }

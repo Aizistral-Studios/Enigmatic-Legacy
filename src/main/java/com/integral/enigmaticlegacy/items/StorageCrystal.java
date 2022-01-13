@@ -16,8 +16,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.InteractionResultHolder;
-import net.minecraft.util.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
@@ -71,7 +71,7 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, Vanis
 		for (int c = counter; c >= 0; c--) {
 			CompoundTag nbt = crystalNBT.getCompound("storedStack" + c);
 			ItemStack stack = ItemStack.of(nbt);
-			if (!player.inventory.add(stack)) {
+			if (!player.getInventory().add(stack)) {
 				ItemEntity drop = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), stack);
 				player.level.addFreshEntity(drop);
 			}

@@ -273,12 +273,11 @@ public class CursedRing extends ItemBaseCurio {
 		List<EnderMan> endermen = livingPlayer.level.getEntitiesOfClass(EnderMan.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, endermenRandomportRange.getValue()));
 
 		for (EnderMan enderman : endermen) {
-			if (this.random.nextDouble() <= (0.002 * endermenRandomportFrequency.getValue())) {
+			if (random.nextDouble() <= (0.002 * endermenRandomportFrequency.getValue())) {
 				if (enderman.teleportTowards(player) && player.hasLineOfSight(enderman)) {
 					enderman.setTarget(player);
 				}
 			}
-
 		}
 
 		for (LivingEntity checkedEntity : genericMobs) {

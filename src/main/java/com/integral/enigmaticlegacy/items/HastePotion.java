@@ -19,8 +19,8 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.util.InteractionResultHolder;
-import net.minecraft.util.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
@@ -53,7 +53,7 @@ public class HastePotion extends ItemBase {
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
 		Player player = entityLiving instanceof Player ? (Player) entityLiving : null;
-		if (player == null || !player.abilities.instabuild) {
+		if (player == null || !player.getAbilities().instabuild) {
 			stack.shrink(1);
 		}
 
@@ -67,12 +67,12 @@ public class HastePotion extends ItemBase {
 			}
 		}
 
-		if (player == null || !player.abilities.instabuild) {
+		if (player == null || !player.getAbilities().instabuild) {
 			if (stack.isEmpty())
 				return new ItemStack(Items.GLASS_BOTTLE);
 
 			if (player != null) {
-				player.inventory.add(new ItemStack(Items.GLASS_BOTTLE));
+				player.getInventory().add(new ItemStack(Items.GLASS_BOTTLE));
 			}
 		}
 
