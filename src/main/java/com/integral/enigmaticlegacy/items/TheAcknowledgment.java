@@ -92,7 +92,6 @@ public class TheAcknowledgment extends ItemBase implements Vanishable {
 
 	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
-
 		if (slot.equals(EquipmentSlot.MAINHAND))
 			return this.attributes;
 		else

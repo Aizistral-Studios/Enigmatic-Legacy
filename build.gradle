@@ -109,12 +109,14 @@ processResources {
             it.replaceAll("~the_acknowledgment_edition", findProperty('the_acknowledgment_edition') ?: 'invalid_edition')
         }
     }
-
-    from("${project.projectDir}/docs") {
+	
+	exclude 'META-INF/mods.toml'
+	
+    from("${project.projectDir}/docs/META-INF") {
 		println("Inflating mods.toml...")	
 	
 		// Replace properties in mods.toml with ones derived from settings.gradle
-        include 'META-INF/mods.toml'
+        include 'mods.toml'
         expand 'mod_license': mod_license, 
 		'mod_version': project.version, 
 		'mod_id' : mod_id, 
@@ -129,10 +131,7 @@ processResources {
 		'dep_minecraft': dep_minecraft, 
 		'dep_patchouli': dep_patchouli, 
 		'dep_curios': dep_curios
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'META-INF/mods.toml'
+		rename 'mods.toml', "META-INF/mods.toml"
     }
 
     from("${project.projectDir}/docs") {
