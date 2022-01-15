@@ -117,6 +117,7 @@ public class HeavenScroll extends ItemBaseCurio {
 			}
 
 		} catch (NullPointerException ex) {
+			ex.printStackTrace();
 			this.flyMap.put(player, 0);
 		}
 	}

@@ -2273,12 +2273,12 @@ public class EnigmaticEventHandler {
 			 */
 
 			if (SuperpositionHandler.hasAdvancement(player, new ResourceLocation(EnigmaticLegacy.MODID, "main/discover_spellstone"))) {
-				CuriosApi.getSlotHelper().unlockSlotType("spellstone", event.getPlayer());
+				//SuperpositionHandler.unlockSpecialSlot("spellstone", event.getPlayer());
 				SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_ENABLESPELLSTONE, true);
 			}
 
 			if (SuperpositionHandler.hasAdvancement(player, new ResourceLocation(EnigmaticLegacy.MODID, "main/discover_scroll"))) {
-				CuriosApi.getSlotHelper().unlockSlotType("scroll", event.getPlayer());
+				//SuperpositionHandler.unlockSpecialSlot("scroll", event.getPlayer());
 				SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL, true);
 			}
 
@@ -2318,14 +2318,14 @@ public class EnigmaticEventHandler {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getPlayer()), new PacketSlotUnlocked("spellstone"));
 			//}
 
-			CuriosApi.getSlotHelper().unlockSlotType("spellstone", player);
+			SuperpositionHandler.unlockSpecialSlot("spellstone", player);
 			SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_ENABLESPELLSTONE, true);
 		} else if (id.equals(EnigmaticLegacy.MODID + ":main/discover_scroll")) {
 			//if (SuperpositionHandler.isSlotLocked("scroll", player)) {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) event.getPlayer()), new PacketSlotUnlocked("scroll"));
 			//}
 
-			CuriosApi.getSlotHelper().unlockSlotType("scroll", player);
+			SuperpositionHandler.unlockSpecialSlot("scroll", player);
 			SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL, true);
 		}
 	}
@@ -2345,12 +2345,11 @@ public class EnigmaticEventHandler {
 				if (!player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
 
 					if (SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL)) {
-						CuriosApi.getSlotHelper().unlockSlotType("scroll", event.getPlayer());
+						//SuperpositionHandler.unlockSpecialSlot("scroll", event.getPlayer());
 					}
 					if (SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENABLESPELLSTONE)) {
-						CuriosApi.getSlotHelper().unlockSlotType("spellstone", event.getPlayer());
+						//SuperpositionHandler.unlockSpecialSlot("spellstone", event.getPlayer());
 					}
-
 				}
 			}
 

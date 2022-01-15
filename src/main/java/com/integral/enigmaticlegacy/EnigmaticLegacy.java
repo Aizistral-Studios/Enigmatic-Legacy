@@ -669,10 +669,10 @@ public class EnigmaticLegacy {
 
 	private void intermodStuff(final InterModEnqueueEvent event) {
 		logger.info("Sending messages to Curios API...");
-		SuperpositionHandler.registerCurioType("charm", 1, true, false, null);
-		SuperpositionHandler.registerCurioType("ring", 2, true, false, null);
-		SuperpositionHandler.registerCurioType("spellstone", 1, false, false, new ResourceLocation(MODID, "slots/empty_spellstone_slot"));
-		SuperpositionHandler.registerCurioType("scroll", 1, false, false, new ResourceLocation(MODID, "slots/empty_scroll_slot"));
+		SuperpositionHandler.registerCurioType("charm", 1, false, null);
+		SuperpositionHandler.registerCurioType("ring", 2, false, null);
+		SuperpositionHandler.registerCurioType("spellstone", 0, false, new ResourceLocation(MODID, "slots/empty_spellstone_slot"));
+		SuperpositionHandler.registerCurioType("scroll", 0, false, new ResourceLocation(MODID, "slots/empty_scroll_slot"));
 		//SuperpositionHandler.registerCurioType("curio", -1, true, false, null);
 
 	}

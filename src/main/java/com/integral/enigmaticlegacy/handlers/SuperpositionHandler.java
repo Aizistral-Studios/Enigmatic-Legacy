@@ -9,12 +9,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 
 import com.google.common.collect.HashMultimap;
@@ -53,6 +55,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.player.Player;
@@ -96,6 +99,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ChunkHolder;
@@ -115,6 +119,8 @@ import top.theillusivec4.curios.api.SlotTypeMessage;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
+import top.theillusivec4.curios.api.type.util.ICuriosHelper;
+import top.theillusivec4.curios.api.type.util.ISlotHelper;
 
 /**
  * The core and vessel for most most of the handling methods in the Enigmatic Legacy.
@@ -125,9 +131,31 @@ import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 public class SuperpositionHandler {
 	public static final Random random = new Random();
 	public static final char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
+	public static final UUID SCROLL_SLOT_UUID = UUID.fromString("ae465e52-ffc2-4f57-b09a-066aa0cea3d4");
+	public static final UUID SPELLSTONE_SLOT_UUID = UUID.fromString("63df175a-0d6d-4163-8ef1-218bcb42feba");
 
 	public static boolean hasAdvancedCurios(final LivingEntity entity) {
 		return SuperpositionHandler.getAdvancedCurios(entity).size() > 0;
+	}
+
+	public static boolean unlockSpecialSlot(String slot, Player player) {
+		if (!slot.equals("scroll") && !slot.equals("spellstone"))
+			throw new IllegalArgumentException("Slot type '" + slot + "' is not supported!");
+
+		MutableBoolean success = new MutableBoolean(false);
+		UUID id = slot.equals("scroll") ? SCROLL_SLOT_UUID : SPELLSTONE_SLOT_UUID;
+
+		ICuriosHelper apiHelper = CuriosApi.getCuriosHelper();
+
+		apiHelper.getCuriosHandler(player).ifPresent(handler -> handler.getStacksHandler(slot).ifPresent(stacks -> {
+			Map<UUID, AttributeModifier> map = stacks.getModifiers();
+			if (!stacks.getModifiers().containsKey(id)) {
+				stacks.addPermanentModifier(new AttributeModifier(id, "Masterslot", 1, Operation.ADDITION));
+				success.setTrue();
+			}
+		}));
+
+		return success.getValue();
 	}
 
 	public static List<ItemStack> getAdvancedCurios(final LivingEntity entity) {
@@ -238,14 +266,11 @@ public class SuperpositionHandler {
 	 *                   default Curio GUI.
 	 * @param icon       Optional resource location for custom icon.
 	 */
-	public static void registerCurioType(final String identifier, final int slots, final boolean isEnabled, final boolean isHidden, @Nullable final ResourceLocation icon) {
+	public static void registerCurioType(final String identifier, final int slots, final boolean isHidden, @Nullable final ResourceLocation icon) {
 		final SlotTypeMessage.Builder message = new SlotTypeMessage.Builder(identifier);
 
 		message.size(slots);
 
-		if (!isEnabled) {
-			message.lock();
-		}
 		if (isHidden) {
 			message.hide();
 		}
@@ -975,12 +1000,21 @@ public class SuperpositionHandler {
 		List<BeaconBlockEntity> list = new ArrayList<BeaconBlockEntity>();
 		boolean inRange = false;
 
+		ServerLevel level = (ServerLevel) player.level;
 		ServerChunkCache cache = (ServerChunkCache) player.level.getChunkSource();
 
 		for (ChunkHolder holder : cache.chunkMap.visibleChunkMap.values()) {
-			for (BlockEntity tile : holder.getTickingChunk().getBlockEntities().values()) {
-				if (tile instanceof BeaconBlockEntity) {
-					list.add((BeaconBlockEntity) tile);
+			ChunkPos pos = holder.getPos();
+
+			if (pos != null) {
+				LevelChunk chunk = holder.getTickingChunk();
+				//ChunkStatus.
+				if (chunk != null) {
+					for (BlockEntity tile : chunk.getBlockEntities().values()) {
+						if (tile instanceof BeaconBlockEntity) {
+							list.add((BeaconBlockEntity) tile);
+						}
+					}
 				}
 			}
 		}

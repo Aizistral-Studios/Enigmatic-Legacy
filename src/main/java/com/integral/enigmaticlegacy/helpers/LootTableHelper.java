@@ -29,7 +29,8 @@ public class LootTableHelper {
 
 			isFrozenTable.setAccessible(true);
 			isFrozenPool.setAccessible(true);
-		} catch (Exception ex) {
+			lootPoolsTable.setAccessible(true);
+		} catch (Throwable ex) {
 			EnigmaticLegacy.logger.fatal("FAILED TO REFLECT LOOTTABLE FIELDS");
 			EnigmaticLegacy.logger.catching(ex);
 			throw new RuntimeException(ex);
@@ -45,7 +46,7 @@ public class LootTableHelper {
 			for (LootPool pool : poolList) {
 				unfreezePlease(pool);
 			}
-		} catch (Exception ex) {
+		} catch (Throwable ex) {
 			EnigmaticLegacy.logger.fatal("FAILED TO UNFREEZE LOOT TABLE");
 			throw new RuntimeException(ex);
 		}
@@ -54,7 +55,7 @@ public class LootTableHelper {
 	public static void unfreezePlease(LootPool pool) {
 		try {
 			isFrozenPool.set(pool, false);
-		} catch (Exception ex) {
+		} catch (Throwable ex) {
 			EnigmaticLegacy.logger.fatal("FAILED TO UNFREEZE LOOT POOL");
 			throw new RuntimeException(ex);
 		}
