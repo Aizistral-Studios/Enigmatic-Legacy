@@ -13,6 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapelessRecipe;
+import net.minecraft.item.crafting.SpecialRecipe;
+import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
@@ -29,9 +31,11 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
  * @author Integral
  */
 
-public class OblivionStoneCombineRecipe extends ShapelessRecipe {
-	public OblivionStoneCombineRecipe(ResourceLocation id, String group, ItemStack output, NonNullList<Ingredient> inputs) {
-		super(id, group, output, inputs);
+public class OblivionStoneCombineRecipe extends SpecialRecipe {
+	static final SpecialRecipeSerializer<OblivionStoneCombineRecipe> SERIALIZER = new SpecialRecipeSerializer<>(OblivionStoneCombineRecipe::new);
+
+	public OblivionStoneCombineRecipe(ResourceLocation id) {
+		super(id);
 	}
 
 	@Override
@@ -154,34 +158,13 @@ public class OblivionStoneCombineRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public ItemStack getResultItem() {
-		return ItemStack.EMPTY;
-	}
-
-	@Override
-	public boolean isSpecial() {
-		return true;
+	public boolean canCraftInDimensions(int width, int height) {
+		return width * height >= 2;
 	}
 
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
-		return EnigmaticRecipeSerializers.OBLIVION_STONE_COMBINE;
+		return SERIALIZER;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<OblivionStoneCombineRecipe> {
-		@Override
-		public OblivionStoneCombineRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-			return new OblivionStoneCombineRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
-		}
-
-		@Override
-		public OblivionStoneCombineRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
-			return new OblivionStoneCombineRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
-		}
-
-		@Override
-		public void toNetwork(PacketBuffer buffer, OblivionStoneCombineRecipe recipe) {
-
-		}
-	}
 }

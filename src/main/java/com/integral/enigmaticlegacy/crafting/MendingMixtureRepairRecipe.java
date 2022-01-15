@@ -11,6 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapelessRecipe;
+import net.minecraft.item.crafting.SpecialRecipe;
+import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -22,82 +24,65 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
  * @author Integral
  */
 
-public class MendingMixtureRepairRecipe extends ShapelessRecipe {
-	public MendingMixtureRepairRecipe(ResourceLocation id, String group, ItemStack output, NonNullList<Ingredient> inputs) {
-		super(id, group, output, inputs);
+public class MendingMixtureRepairRecipe extends SpecialRecipe {
+	static final SpecialRecipeSerializer<MendingMixtureRepairRecipe> SERIALIZER = new SpecialRecipeSerializer<>(MendingMixtureRepairRecipe::new);
+
+	public MendingMixtureRepairRecipe(ResourceLocation id) {
+		super(id);
 	}
 
 	@Override
 	public ItemStack assemble(CraftingInventory inv) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
-		
+
 		for (int i = 0; i < inv.getContainerSize(); i++) {
 			ItemStack slotStack = inv.getItem(i);
-			
-			if (!slotStack.isEmpty())
+
+			if (!slotStack.isEmpty()) {
 				stackList.add(slotStack);
+			}
 		}
-		
+
 		if (stackList.size() == 2)
 			if (stackList.get(0).isDamageableItem() || stackList.get(1).isDamageableItem())
 				if (stackList.get(0).getItem() == EnigmaticLegacy.mendingMixture || stackList.get(1).getItem() == EnigmaticLegacy.mendingMixture) {
 					ItemStack tool = stackList.get(0).isDamageableItem() ? stackList.get(0).copy() : stackList.get(1).copy();
-					
+
 					tool.setDamageValue(0);
 					return tool;
 				}
-					
+
 		return ItemStack.EMPTY;
 	}
 
 	@Override
 	public boolean matches(CraftingInventory inv, World world) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
-		
+
 		for (int i = 0; i < inv.getContainerSize(); i++) {
 			ItemStack slotStack = inv.getItem(i);
-			
-			if (!slotStack.isEmpty())
+
+			if (!slotStack.isEmpty()) {
 				stackList.add(slotStack);
+			}
 		}
-		
+
 		if (stackList.size() == 2)
 			if (stackList.get(0).isDamageableItem() || stackList.get(1).isDamageableItem())
 				if (stackList.get(0).getItem() == EnigmaticLegacy.mendingMixture || stackList.get(1).getItem() == EnigmaticLegacy.mendingMixture)
 					return true;
-					
+
 		return false;
 	}
 
 	@Override
-	public ItemStack getResultItem() {
-		return ItemStack.EMPTY;
-	}
-	
-	@Override
-	public boolean isSpecial() {
-		return true;
+	public boolean canCraftInDimensions(int width, int height) {
+		return width * height >= 2;
 	}
 
 	@Override
 	public IRecipeSerializer<?> getSerializer() {
-		return EnigmaticRecipeSerializers.CRAFTING_MENDING_MIXTURE_REPAIR;
+		return SERIALIZER;
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<MendingMixtureRepairRecipe> {
-		@Override
-		public MendingMixtureRepairRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-			return new MendingMixtureRepairRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
-		}
-
-		@Override
-		public MendingMixtureRepairRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
-			return new MendingMixtureRepairRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
-		}
-
-		@Override
-		public void toNetwork(PacketBuffer buffer, MendingMixtureRepairRecipe recipe) {
-
-		}
-	}
 }
