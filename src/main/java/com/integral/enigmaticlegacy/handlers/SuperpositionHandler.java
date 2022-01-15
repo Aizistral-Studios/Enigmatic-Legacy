@@ -1169,10 +1169,17 @@ public class SuperpositionHandler {
 
 	public static int getCurseAmount(PlayerEntity player) {
 		int count = 0;
+		boolean ringCounted = false;
 
 		for (ItemStack theStack : getFullEquipment(player)) {
 			if (theStack != null) {
-				count += getCurseAmount(theStack);
+				if (theStack.getItem() != EnigmaticLegacy.cursedRing || !ringCounted) {
+					count += getCurseAmount(theStack);
+
+					if (theStack.getItem() == EnigmaticLegacy.cursedRing) {
+						ringCounted = true;
+					}
+				}
 			}
 		}
 
