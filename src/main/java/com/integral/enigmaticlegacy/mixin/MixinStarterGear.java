@@ -18,7 +18,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 
 @Pseudo
 @Mixin(targets = "com.brandon3055.csg.ModEventHandler", remap = false)
-public class MixinModEventHandler {
+public class MixinStarterGear {
 
 	@Inject(method = "playerLogin", at = @At("RETURN"), cancellable = false, require = 1)
 	public void onCSGHandling(PlayerEvent.PlayerLoggedInEvent event, CallbackInfo info) {

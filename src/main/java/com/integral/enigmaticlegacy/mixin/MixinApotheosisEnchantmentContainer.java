@@ -34,7 +34,7 @@ import net.minecraft.sounds.SoundEvents;
  */
 
 @Pseudo
-@Mixin(targets="shadows.apotheosis.ench.table.ApothEnchantContainer")
+@Mixin(targets = "shadows.apotheosis.ench.table.ApothEnchantContainer")
 public class MixinApotheosisEnchantmentContainer extends EnchantmentMenu {
 
 	public MixinApotheosisEnchantmentContainer(int id, Inventory Inventory) {
@@ -45,9 +45,8 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentMenu {
 		super(id, Inventory, worldPosCallable);
 	}
 
-	@Inject(at = @At("HEAD"), method = "enchantItem(Lnet/minecraft/entity/player/Player;I)Z", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "clickMenuButton(Lnet/minecraft/world/entity/player/Player;I)Z", cancellable = true)
 	private void onEnchantedItem(Player player, int id, CallbackInfoReturnable<Boolean> info) {
-
 		if (SuperpositionHandler.isTheCursedOne(player))
 			if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.enchanterPearl) || SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enchanterPearl)) {
 

@@ -64,7 +64,6 @@ public class LoreInscriber extends ItemBase implements Vanishable {
 
 		if (!worldIn.isClientSide) {
 			Component name = new TranslatableComponent("gui.enigmaticlegacy.lore_inscriber");
-
 			playerIn.openMenu(new LoreInscriberContainerProvider(name));
 		}
 

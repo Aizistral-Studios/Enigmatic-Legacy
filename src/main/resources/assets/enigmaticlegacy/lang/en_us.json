@@ -341,9 +341,9 @@
 	"tooltip.enigmaticlegacy.magnetRing2_alt": "§5Only takes effect when holding §6Shift§5.",
 
 	"tooltip.enigmaticlegacy.extradimensionalEyeLocation": "§dBound Location:",
-	"tooltip.enigmaticlegacy.extradimensionalEyeX": "§dX: §6%1$s",
-	"tooltip.enigmaticlegacy.extradimensionalEyeY": "§dY: §6%1$s",
-	"tooltip.enigmaticlegacy.extradimensionalEyeZ": "§dZ: §6%1$s",
+	"tooltip.enigmaticlegacy.extradimensionalEyeX": "§d- X: §6%1$s",
+	"tooltip.enigmaticlegacy.extradimensionalEyeY": "§d- Y: §6%1$s",
+	"tooltip.enigmaticlegacy.extradimensionalEyeZ": "§d- Z: §6%1$s",
 	"tooltip.enigmaticlegacy.extradimensionalEyeDimension": "§6Dimension: §5%1$s",
 
 	"tooltip.enigmaticlegacy.overworld": "§2Overworld",

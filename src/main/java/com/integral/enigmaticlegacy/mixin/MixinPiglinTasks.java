@@ -18,6 +18,7 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
@@ -45,6 +46,15 @@ public class MixinPiglinTasks {
 		}
 
 		return newStacks;
+	}
+
+	@Inject(at = @At("RETURN"), method = "isWearingGold", cancellable = true)
+	private static void onWearingGoldCheck(LivingEntity entity, CallbackInfoReturnable<Boolean> info) {
+		if (entity instanceof Player player) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.gemRing) || SuperpositionHandler.hasCurio(player, EnigmaticLegacy.avariceScroll)) {
+				info.setReturnValue(true);
+			}
+		}
 	}
 
 	@Inject(at = @At("RETURN"), method = "pickUpItem")
@@ -79,6 +89,7 @@ public class MixinPiglinTasks {
 					piglin.setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
 					List<ItemStack> generatedLoot = PiglinAi.getBarterResponseItems(piglin);
 					List<ItemStack> newStacks = new ArrayList<>();
+					System.out.println(generatedLoot);
 
 					generatedLoot.forEach(lootStack -> {
 						if (lootStack != null && !lootStack.isEmpty()) {
@@ -93,6 +104,7 @@ public class MixinPiglinTasks {
 					});
 
 					generatedLoot.addAll(newStacks);
+					System.out.println(generatedLoot);
 					PiglinAi.throwItems(piglin, generatedLoot);
 				}
 			}

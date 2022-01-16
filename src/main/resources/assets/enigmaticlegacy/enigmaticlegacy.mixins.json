@@ -12,12 +12,11 @@
 	"MixinPhantomSpawner",
 	"MixinApotheosisEnchantmentContainer",
 	"MixinEnchantmentContainer",
-	"MixinPiglinMobsSensor",
 	"MixinHoglinTasks",
 	"MixinEnchantment",
 	"MixinLootTable",
 	"MixinCharmEffects",
-	"MixinModEventHandler",
+	"MixinStarterGear",
 	"AccessorAbstractArrowEntity"
   ],
   "client": [],

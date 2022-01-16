@@ -70,7 +70,7 @@ public class ExtradimensionalEye extends ItemBase implements Vanishable {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEyeY", ChatFormatting.GOLD, ItemNBTHelper.getInt(stack, "BoundY", 0));
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEyeZ", ChatFormatting.GOLD, ItemNBTHelper.getInt(stack, "BoundZ", 0));
 			if (boundDimensionName != null) {
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEyeDimension", null, new TranslatableComponent(boundDimensionName));
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEyeDimension", null, new TranslatableComponent(boundDimensionName).getString());
 			} else {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.extradimensionalEyeDimension", ChatFormatting.GOLD, dimensionID);
 			}
