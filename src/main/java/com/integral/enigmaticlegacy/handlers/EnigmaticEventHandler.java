@@ -174,6 +174,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
@@ -287,7 +288,7 @@ public class EnigmaticEventHandler {
 	}
 	 */
 
-	/* TODO Redo
+	/* TODO Redo tooltip fixes
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onTooltipRendering(RenderTooltipEvent.Pre event) {
@@ -1027,6 +1028,29 @@ public class EnigmaticEventHandler {
 
 				EnigmaticLegacy.enigmaticItem.handleEnigmaticFlight(player);
 
+				/*
+				 * Detect Unwitnessed Amulet and turn in into random color;
+				 */
+
+				for (NonNullList<ItemStack> list : player.getInventory().compartments) {
+					for (int i = 0; i < list.size(); ++i) {
+						ItemStack stack = list.get(i);
+
+						// Null check 'cause I don't trust you
+						if (stack != null && stack.getItem() == unwitnessedAmulet) {
+							stack = new ItemStack(enigmaticAmulet);
+							enigmaticAmulet.setInscription(stack, player.getGameProfile().getName());
+
+							if (EnigmaticAmulet.seededColorGen.getValue()) {
+								enigmaticAmulet.setSeededColor(stack);
+							} else {
+								enigmaticAmulet.setRandomColor(stack);
+							}
+
+							list.set(i, stack);
+						}
+					}
+				}
 			}
 
 		}
@@ -2483,20 +2507,21 @@ public class EnigmaticEventHandler {
 		if (OmniconfigHandler.isItemEnabled(EnigmaticLegacy.enigmaticAmulet))
 			if (!SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_FIRSTJOIN)) {
 
-				ItemStack enigmaticAmulet = new ItemStack(EnigmaticLegacy.enigmaticAmulet);
-				EnigmaticLegacy.enigmaticAmulet.setInscription(enigmaticAmulet, player.getGameProfile().getName());
+				ItemStack amuletStack = new ItemStack(EnigmaticLegacy.enigmaticAmulet);
+				enigmaticAmulet.setInscription(amuletStack, player.getGameProfile().getName());
+				enigmaticAmulet.setProperlyGranted(amuletStack);
 
 				if (!EnigmaticAmulet.seededColorGen.getValue()) {
-					EnigmaticLegacy.enigmaticAmulet.setRandomColor(enigmaticAmulet);
+					enigmaticAmulet.setRandomColor(amuletStack);
 				} else {
-					EnigmaticLegacy.enigmaticAmulet.setSeededColor(enigmaticAmulet);
+					enigmaticAmulet.setSeededColor(amuletStack);
 				}
 
 				if (player.getInventory().getItem(8).isEmpty()) {
-					player.getInventory().setItem(8, enigmaticAmulet);
+					player.getInventory().setItem(8, amuletStack);
 				} else {
-					if (!player.getInventory().add(enigmaticAmulet)) {
-						ItemEntity dropAmulet = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), enigmaticAmulet);
+					if (!player.getInventory().add(amuletStack)) {
+						ItemEntity dropAmulet = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), amuletStack);
 						player.level.addFreshEntity(dropAmulet);
 					}
 				}

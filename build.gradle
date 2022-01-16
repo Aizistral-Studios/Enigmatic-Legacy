@@ -61,7 +61,7 @@ dependencies {
     annotationProcessor 'org.ow2.asm:asm-util:7.2'
 	
 	// These are 1.17 dependencies
-	compileOnly fg.deobf('generic:curios:forge-1.17.1-5.0.2.7')
+	compileOnly fg.deobf('generic:curios:forge-1.17.1-5.0.2.7-spec')
 	compileOnly fg.deobf('generic:Patchouli:1.17.1-57')
 	compileOnly fg.deobf('generic:WorldNameRandomizer:FORGE-1.17.1-v1.2.0')
 	

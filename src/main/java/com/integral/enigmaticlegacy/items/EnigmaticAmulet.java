@@ -174,6 +174,13 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		return amulet;
 	}
 
+	public ItemStack setProperlyGranted(ItemStack amulet) {
+		if ((amulet != null) && amulet.getItem().equals(this)) {
+			ItemNBTHelper.setBoolean(amulet, "ProperlyGranted", true);
+		}
+		return amulet;
+	}
+
 	public EnigmaticAmulet() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet"));
@@ -204,7 +211,6 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown() && this.isVesselEnabled()) {
-
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletShift1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletShift2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletShift3");
@@ -218,13 +224,20 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			}
 
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet2");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet3");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet4");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet5");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet6");
+			if (ItemNBTHelper.getBoolean(stack, "ProperlyGranted", false)) {
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet1");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet2");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet3");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet4");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet5");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet6");
+			} else {
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet1_alt");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet2_alt");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet3_alt");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmulet4_alt");
+			}
 
 			if (name != null) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");

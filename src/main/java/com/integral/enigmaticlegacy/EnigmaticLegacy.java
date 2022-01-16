@@ -107,6 +107,7 @@ import com.integral.enigmaticlegacy.items.UltimatePotionBase;
 import com.integral.enigmaticlegacy.items.UltimatePotionLingering;
 import com.integral.enigmaticlegacy.items.UltimatePotionSplash;
 import com.integral.enigmaticlegacy.items.UnholyGrail;
+import com.integral.enigmaticlegacy.items.UnwitnessedAmulet;
 import com.integral.enigmaticlegacy.items.VoidPearl;
 import com.integral.enigmaticlegacy.items.WormholePotion;
 import com.integral.enigmaticlegacy.items.XPScroll;
@@ -358,6 +359,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Pact of Infinite Avarice") public static AvariceScroll avariceScroll;
 	@ConfigurableItem("Essence of Raging Life") public static Infinimeal infinimeal;
 	@ConfigurableItem("Darkest Scroll") public static DarkestScroll darkestScroll;
+	@ConfigurableItem("") public static UnwitnessedAmulet unwitnessedAmulet;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -538,6 +540,7 @@ public class EnigmaticLegacy {
 		avariceScroll = new AvariceScroll();
 		infinimeal = new Infinimeal();
 		darkestScroll = new DarkestScroll();
+		unwitnessedAmulet = new UnwitnessedAmulet();
 
 		sharpshooterEnchantment = new SharpshooterEnchantment(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
 		ceaselessEnchantment = new CeaselessEnchantment(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
@@ -844,6 +847,7 @@ public class EnigmaticLegacy {
 					avariceScroll,
 					infinimeal,
 					darkestScroll,
+					unwitnessedAmulet,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),
