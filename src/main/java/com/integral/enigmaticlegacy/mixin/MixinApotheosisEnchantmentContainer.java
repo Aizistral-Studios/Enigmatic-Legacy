@@ -35,7 +35,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
  */
 
 @Pseudo
-@Mixin(targets="shadows.apotheosis.ench.table.ApothEnchantContainer")
+@Mixin(targets = "shadows.apotheosis.ench.table.ApothEnchantContainer")
 public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
 
 	public MixinApotheosisEnchantmentContainer(int id, PlayerInventory playerInventory) {
@@ -46,7 +46,7 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentContainer {
 		super(id, playerInventory, worldPosCallable);
 	}
 
-	@Inject(at = @At("HEAD"), method = "enchantItem(Lnet/minecraft/entity/player/PlayerEntity;I)Z", cancellable = true)
+	@Inject(at = @At("HEAD"), method = "clickMenuButton(Lnet/minecraft/entity/player/PlayerEntity;I)Z", cancellable = true)
 	private void onEnchantedItem(PlayerEntity player, int id, CallbackInfoReturnable<Boolean> info) {
 
 		if (SuperpositionHandler.isTheCursedOne(player))
