@@ -124,7 +124,7 @@ public class EnigmaticPotionEntity extends ThrowableEntity implements IRendersAs
 				}
 			}
 
-			// Replace getOnPos to blockPosition everywhere
+			// TODO Replace getOnPos to blockPosition everywhere
 			this.level.levelEvent(i, new BlockPos(this.getOnPos()), PotionHelper.getColor(itemstack));
 			this.remove();
 		}
