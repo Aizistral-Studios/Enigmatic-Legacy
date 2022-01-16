@@ -89,7 +89,6 @@ public class MixinPiglinTasks {
 					piglin.setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
 					List<ItemStack> generatedLoot = PiglinAi.getBarterResponseItems(piglin);
 					List<ItemStack> newStacks = new ArrayList<>();
-					System.out.println(generatedLoot);
 
 					generatedLoot.forEach(lootStack -> {
 						if (lootStack != null && !lootStack.isEmpty()) {
@@ -104,7 +103,6 @@ public class MixinPiglinTasks {
 					});
 
 					generatedLoot.addAll(newStacks);
-					System.out.println(generatedLoot);
 					PiglinAi.throwItems(piglin, generatedLoot);
 				}
 			}

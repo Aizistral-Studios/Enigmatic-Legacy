@@ -22,7 +22,7 @@ public class ExperienceHelper {
 	}
 
 	public static int getPlayerXPLevel(Player player) {
-		return getLevelForExperience(getPlayerXP(player));
+		return player.experienceLevel;
 	}
 
 	public static void drainPlayerXP(Player player, int amount) {
@@ -61,7 +61,7 @@ public class ExperienceHelper {
 	}
 
 	public static int getExperienceForLevel(int level) {
-		if (level == 0)
+		if (level <= 0)
 			return 0;
 
 		if (level > 0 && level < 17)
@@ -73,10 +73,14 @@ public class ExperienceHelper {
 	}
 
 	public static int getLevelForExperience(int experience) {
+		if (experience <= 0)
+			return 0;
+
 		int i = 0;
 		while (getExperienceForLevel(i) <= experience) {
 			i++;
 		}
+
 		return i - 1;
 	}
 

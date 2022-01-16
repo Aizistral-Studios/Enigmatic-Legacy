@@ -46,7 +46,7 @@ public class EnderChestInventoryButton extends ImageButton {
 
 			if (lastVisible != this.isRecipeBookVisible) {
 				Tuple<Integer, Integer> offsets = EnderChestInventoryButton.getOffsets(false);
-				this.setPosition(this.parentGui.getGuiLeft() + offsets.getA(), (this.parentGui.height / 2 - 22) + offsets.getB());
+				this.setPosition(this.parentGui.getGuiLeft() + offsets.getA(), this.parentGui.getGuiTop() + offsets.getB());
 			}
 
 		} else if (this.parentGui instanceof CreativeModeInventoryScreen) {

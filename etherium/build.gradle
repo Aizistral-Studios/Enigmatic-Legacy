@@ -70,12 +70,14 @@ processResources {
 	doFirst {
 		println("Processing resources...")
 	}
+	
+	exclude 'META-INF/mods.toml'
 
-    from("${project.projectDir}/docs") {
+    from("${project.projectDir}/docs/META-INF") {
 		println("Inflating mods.toml...")	
 	
 		// Replace properties in mods.toml with ones derived from settings.gradle
-        include 'META-INF/mods.toml'
+        include 'mods.toml'
         expand 'mod_license': mod_license, 
 		'mod_version': project.version, 
 		'mod_id' : mod_id, 
@@ -88,10 +90,7 @@ processResources {
 		'mod_credits': mod_credits, 
 		'dep_forge': dep_forge, 
 		'dep_minecraft': dep_minecraft
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'META-INF/mods.toml'
+		rename 'mods.toml', "META-INF/mods.toml"
     }
 
     from("${project.projectDir}/docs") {
