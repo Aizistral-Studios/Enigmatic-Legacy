@@ -1,5 +1,7 @@
 package com.integral.enigmaticlegacy.items;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -73,6 +75,7 @@ public class CursedRing extends ItemBaseCurio {
 	public static Omniconfig.BooleanParameter enableSpecialDrops;
 
 	public static Omniconfig.BooleanParameter ultraHardcore;
+	public static final List<ResourceLocation> neutralAngerBlacklist = new ArrayList<>();
 
 	@SubscribeConfig
 	public static void onConfig(OmniconfigWrapper builder) {
@@ -158,6 +161,13 @@ public class CursedRing extends ItemBaseCurio {
 		builder.popPrefix();
 		builder.pushCategory(prevCategory);
 
+		// Ugly but gets the job done
+
+		neutralAngerBlacklist.clear();
+		String[] blacklist = builder.config.getStringList("CursedRingNeutralAngerBlacklist", "The Seven Curses", new String[0], "List of entities that should never be affected"
+				+ " by the Second Curse of Ring of the Seven Curses. Examples: minecraft:iron_golem, minecraft:zombified_piglin. Changing this option required game restart to take effect.");
+
+		Arrays.stream(blacklist).forEach(entry -> neutralAngerBlacklist.add(new ResourceLocation(entry)));
 	}
 
 	public CursedRing() {
@@ -312,6 +322,10 @@ public class CursedRing extends ItemBaseCurio {
 
 			} else if (checkedEntity instanceof IAngerable) {
 				IAngerable neutral = (IAngerable) checkedEntity;
+
+				if (neutralAngerBlacklist.contains(checkedEntity.getType().getRegistryName())) {
+					continue;
+				}
 
 				if (neutral instanceof TameableEntity) {
 					if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide) || ((TameableEntity)neutral).isTame()) {
