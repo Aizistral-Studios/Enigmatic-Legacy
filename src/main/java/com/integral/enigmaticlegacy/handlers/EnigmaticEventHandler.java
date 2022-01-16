@@ -76,6 +76,7 @@ import com.integral.enigmaticlegacy.triggers.RevelationTomeBurntTrigger;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.math.Matrix4f;
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -91,6 +92,9 @@ import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -176,6 +180,7 @@ import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.ServerRecipeBook;
@@ -184,6 +189,7 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.GameRules;
@@ -275,20 +281,6 @@ public class EnigmaticEventHandler {
 
 	private static boolean handlingTooltip = false;
 
-	/*
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public void onTooltipEvent(ItemTooltipEvent event) {
-		if (event.getItemStack().getItem() instanceof IItemCurio) {
-			//event.getToolTip().remove(1);
-			//event.getToolTip().remove(1);
-			//while (event.getToolTip().size() > 1) {
-			//	event.getToolTip().remove(event.getToolTip().size()-1);
-			//}
-		}
-	}
-	 */
-
-	/* TODO Redo tooltip fixes
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onTooltipRendering(RenderTooltipEvent.Pre event) {
@@ -300,27 +292,28 @@ public class EnigmaticEventHandler {
 		if (stack != null && !stack.isEmpty()) { // cause I don't trust you Forge
 			if (stack.getItem().getRegistryName().getNamespace().equals(EnigmaticLegacy.MODID)) {
 				event.setCanceled(handlingTooltip = true);
-				drawHoveringText(event.getStack(), event.getMatrixStack(), event.getLines(), event.getX(),
-						event.getY(), event.getScreenWidth(), event.getScreenHeight(), event.getMaxWidth(),
+				drawHoveringText(event.getStack(), event.getMatrixStack(), event.getComponents(), event.getX(),
+						event.getY(), event.getScreenWidth(), event.getScreenHeight(),
 						GuiUtils.DEFAULT_BACKGROUND_COLOR, GuiUtils.DEFAULT_BORDER_COLOR_START,
 						GuiUtils.DEFAULT_BORDER_COLOR_END, event.getFontRenderer(), false);
 				handlingTooltip = false;
 			}
 		}
 	}
-	 */
+
 
 	/**
 	 * Fucking shame I have to do this manually to fix blasted autowrapping.
 	 * No idea how this works but at least it does.
 	 */
 
-	/*
 	@OnlyIn(Dist.CLIENT)
-	public static void drawHoveringText(ItemStack stack, PoseStack mStack, List<? extends FormattedText> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, int backgroundColor, int borderColorStart, int borderColorEnd, Font font, boolean secondary) {
-		if (!textLines.isEmpty()) {
+	public static void drawHoveringText(ItemStack stack, PoseStack mStack, List<ClientTooltipComponent> list, int mouseX, int mouseY, int screenWidth, int screenHeight, int backgroundColor, int borderColorStart, int borderColorEnd, Font font, boolean secondary) {
+		int maxTextWidth = -1;
+
+		if (!list.isEmpty()) {
 			if (!secondary) {
-				RenderTooltipEvent.Pre event = new RenderTooltipEvent.Pre(stack, textLines, mStack, mouseX, mouseY, screenWidth, screenHeight, maxTextWidth, font);
+				RenderTooltipEvent.Pre event = new RenderTooltipEvent.Pre(stack, mStack, mouseX, mouseY, screenWidth, screenHeight, font, list);
 				if (MinecraftForge.EVENT_BUS.post(event))
 					return;
 
@@ -328,13 +321,12 @@ public class EnigmaticEventHandler {
 				mouseY = event.getY();
 				screenWidth = event.getScreenWidth();
 				screenHeight = event.getScreenHeight();
-				maxTextWidth = event.getMaxWidth();
 				font = event.getFontRenderer();
 			}
 			int tooltipTextWidth = 0;
 
-			for (FormattedText textLine : textLines) {
-				int textLineWidth = font.width(textLine);
+			for (ClientTooltipComponent textLine : list) {
+				int textLineWidth = textLine.getWidth(font);
 				if (textLineWidth > tooltipTextWidth) {
 					tooltipTextWidth = textLineWidth;
 				}
@@ -351,59 +343,26 @@ public class EnigmaticEventHandler {
 				if (tooltipX < 4) {
 					if (mouseX > screenWidth / 2) {
 						if (!secondary) {
-							drawHoveringText(stack, mStack, textLines, tooltipTextWidthReal + 20, mouseY, screenWidth,
-									screenHeight, maxTextWidth, backgroundColor, borderColorStart, borderColorEnd, font, true);
+							drawHoveringText(stack, mStack, list, tooltipTextWidthReal + 20, mouseY, screenWidth,
+									screenHeight, backgroundColor, borderColorStart, borderColorEnd, font, true);
 							return;
 						}
 					} else {
 						if (!secondary) {
-							drawHoveringText(stack, mStack, textLines, tooltipTextWidthReal + 20, mouseY, screenWidth,
-									screenHeight, maxTextWidth, backgroundColor, borderColorStart, borderColorEnd, font, true);
+							drawHoveringText(stack, mStack, list, tooltipTextWidthReal + 20, mouseY, screenWidth,
+									screenHeight, backgroundColor, borderColorStart, borderColorEnd, font, true);
 							return;
 						}
 					}
-				}
-			}
-
-			if (maxTextWidth > 0 && tooltipTextWidth > maxTextWidth) {
-				tooltipTextWidth = maxTextWidth;
-				needsWrap = true;
-			}
-
-			if (needsWrap) {
-				int wrappedTooltipWidth = 0;
-				List<FormattedText> wrappedTextLines = new ArrayList<>();
-				for (int i = 0; i < textLines.size(); i++) {
-					FormattedText textLine = textLines.get(i);
-					List<FormattedText> wrappedLine = font.getSplitter().splitLines(textLine, tooltipTextWidth, Style.EMPTY);
-					if (i == 0) {
-						titleLinesCount = wrappedLine.size();
-					}
-
-					for (FormattedText line : wrappedLine) {
-						int lineWidth = font.width(line);
-						if (lineWidth > wrappedTooltipWidth) {
-							wrappedTooltipWidth = lineWidth;
-						}
-						wrappedTextLines.add(line);
-					}
-				}
-				tooltipTextWidth = wrappedTooltipWidth;
-				textLines = wrappedTextLines;
-
-				if (mouseX > screenWidth / 2) {
-					tooltipX = mouseX - 16 - tooltipTextWidth;
-				} else {
-					tooltipX = mouseX + 12;
 				}
 			}
 
 			int tooltipY = mouseY - 12;
 			int tooltipHeight = 8;
 
-			if (textLines.size() > 1) {
-				tooltipHeight += (textLines.size() - 1) * 10;
-				if (textLines.size() > titleLinesCount)
+			if (list.size() > 1) {
+				tooltipHeight += (list.size() - 1) * 10;
+				if (list.size() > titleLinesCount)
 				{
 					tooltipHeight += 2; // gap between title lines and next lines
 				}
@@ -416,9 +375,9 @@ public class EnigmaticEventHandler {
 			}
 
 			final int zLevel = 400;
-			RenderTooltipEvent.Color colorEvent = new RenderTooltipEvent.Color(stack, textLines, mStack, tooltipX, tooltipY, font, backgroundColor, borderColorStart, borderColorEnd);
+			RenderTooltipEvent.Color colorEvent = new RenderTooltipEvent.Color(stack, mStack, tooltipX, tooltipY, font, backgroundColor, borderColorStart, borderColorEnd, list);
 			MinecraftForge.EVENT_BUS.post(colorEvent);
-			backgroundColor = colorEvent.getBackground();
+			backgroundColor = colorEvent.getBackgroundStart();
 			borderColorStart = colorEvent.getBorderStart();
 			borderColorEnd = colorEvent.getBorderEnd();
 
@@ -445,17 +404,16 @@ public class EnigmaticEventHandler {
 			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY - 3, tooltipX + tooltipTextWidth + 3, tooltipY - 3 + 1, borderColorStart, borderColorStart);
 			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY + tooltipHeight + 2, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3, borderColorEnd, borderColorEnd);
 
-			MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.PostBackground(stack, textLines, mStack, tooltipX, tooltipY, font, tooltipTextWidth, tooltipHeight));
-
-			IRenderTypeBuffer.Impl renderType = IRenderTypeBuffer.immediate(Tessellator.getInstance().getBuilder());
+			MultiBufferSource.BufferSource renderType = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 			mStack.translate(0.0D, 0.0D, zLevel);
 
 			int tooltipTop = tooltipY;
 
-			for (int lineNumber = 0; lineNumber < textLines.size(); ++lineNumber) {
-				FormattedText line = textLines.get(lineNumber);
-				if (line != null) {
-					font.drawInBatch(LanguageMap.getInstance().getVisualOrder(line), tooltipX, tooltipY, -1, true, mat, renderType, false, 0, 15728880);
+			for (int lineNumber = 0; lineNumber < list.size(); ++lineNumber) {
+				ClientTooltipComponent component = list.get(lineNumber);
+				if (component != null) {
+					component.renderText(font, tooltipX, tooltipY, mat, renderType);
+					//font.drawInBatch(line, tooltipX, tooltipY, -1, true, mat, renderType, false, 0, 15728880);
 				}
 
 				if (lineNumber + 1 == titleLinesCount) {
@@ -463,18 +421,17 @@ public class EnigmaticEventHandler {
 				}
 
 				tooltipY += 10;
+
 			}
 
 			renderType.endBatch();
 			mStack.popPose();
 
-			MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.PostText(stack, textLines, mStack, tooltipX, tooltipTop, font, tooltipTextWidth, tooltipHeight));
-
 			RenderSystem.enableDepthTest();
-			RenderSystem.enableRescaleNormal();
+			//RenderSystem.enableRescaleNormal();
 		}
 	}
-	 */
+
 
 	@SubscribeEvent
 	public void onApplyPotion(PotionEvent.PotionApplicableEvent event) {

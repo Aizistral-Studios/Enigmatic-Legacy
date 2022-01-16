@@ -19,7 +19,9 @@
 	"MixinStarterGear",
 	"AccessorAbstractArrowEntity"
   ],
-  "client": [],
+  "client": [
+	"MixinForgeHooksClient"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
