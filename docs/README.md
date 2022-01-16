@@ -1,6 +1,6 @@
 # Enigmatic Legacy [![](http://cf.way2muchnoise.eu/versions/enigmatic-legacy.svg)](https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy) [![](http://cf.way2muchnoise.eu/full_enigmatic-legacy_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy/files)
 
-**Current Version:** 2.11.10
+**Current Version:** 2.11.11
 
 **Minecraft Version:** 1.16.5
 
