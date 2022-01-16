@@ -95,29 +95,29 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 	}
 
 	/**
-	* Return the motion factor for this projectile. The factor is multiplied by the original motion.
-	*/
+	 * Return the motion factor for this projectile. The factor is multiplied by the original motion.
+	 */
 	@Override
 	protected float getInertia() {
 		return super.getInertia();
 	}
 
 	/**
-	* Returns true if the entity is on fire. Used by render to add the fire effect on rendering.
-	*/
+	 * Returns true if the entity is on fire. Used by render to add the fire effect on rendering.
+	 */
 	@Override
 	public boolean isOnFire() {
 		return false;
 	}
 
 	/**
-	* Explosion resistance of a block relative to this entity
-	*/
+	 * Explosion resistance of a block relative to this entity
+	 */
 	@Override
 	public float getBlockExplosionResistance(Explosion explosionIn, IBlockReader worldIn, BlockPos pos, BlockState blockStateIn, FluidState fluidState, float explosionPower) {
 		return this.isSkullInvulnerable() && !BlockTags.WITHER_IMMUNE.contains(blockStateIn.getBlock()) ? Math.min(0.8F, explosionPower) : explosionPower;
 	}
-	
+
 
 	@Override
 	public void tick() {
@@ -159,7 +159,7 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 				motionY = MathHelper.clamp((float) motionY, -0.25f, 0.25f);
 				motionZ = MathHelper.clamp((float) motionZ, -0.25f, 0.25f);
 
-				*/
+				 */
 
 				final Vector3 thisVec = Vector3.fromEntityCenter(this);
 				final Vector3 targetVec = Vector3.fromEntityCenter(this.target);
@@ -169,8 +169,9 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 				double distance = this.distanceTo(this.target);
 				Vector3 formerMotion = new Vector3(this.getDeltaMovement()).multiply(0.6);
 
-				if (distance < 6D && distance != 0)
+				if (distance < 6D && distance != 0) {
 					this.setDeltaMovement(new Vector3d(formerMotion.x + (motionVec.x * 2D / distance), formerMotion.y + (motionVec.y * 2D / distance), formerMotion.z + (motionVec.z * 2D / distance)).normalize().multiply(1.4D, 1.4D, 1.4D));
+				}
 
 				//this.setMotion(motionX, motionY, motionZ);
 				this.xPower = motionVec.x / 3.0D;
@@ -195,15 +196,15 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 			this.initMotion((LivingEntity) this.getOwner(), res.x - this.getX(), res.y - this.getY(), res.z - this.getZ(), 1.5F);
 		} else if (this.tickCount >= 400) {
 
-			this.onHit(BlockRayTraceResult.miss(this.position(), Direction.DOWN, this.getOnPos()));
+			this.onHit(BlockRayTraceResult.miss(this.position(), Direction.DOWN, this.blockPosition()));
 
 		}
 
 	}
 
 	/**
-	* Called when this EntityFireball hits a block or entity.
-	*/
+	 * Called when this EntityFireball hits a block or entity.
+	 */
 	@Override
 	protected void onHit(RayTraceResult result) {
 		if (!this.level.isClientSide) {
@@ -236,16 +237,16 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 			float explosionRadius = this.isSkullInvulnerable() ? 1.5F : 1.0F;
 			WitherExplosion explosion = new WitherExplosion(this.level, this, this.getX(), this.getY(), this.getZ(), explosionRadius, false, Explosion.Mode.DESTROY);
 
-			
+
 			if (!net.minecraftforge.event.ForgeEventFactory.onExplosionStart(this.level, explosion)) {
 				explosion.explode();
 				explosion.finalizeExplosion(true);
 
 				for(ServerPlayerEntity serverplayerentity : this.level.getServer().getLevel(this.level.dimension()).players()) {
-			         if (serverplayerentity.distanceToSqr(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z) < 4096.0D) {
-			        	 serverplayerentity.connection.send(new SExplosionPacket(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z, explosionRadius, explosion.getToBlow(), explosion.getHitPlayers().get(serverplayerentity)));
-			         }
-			      }
+					if (serverplayerentity.distanceToSqr(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z) < 4096.0D) {
+						serverplayerentity.connection.send(new SExplosionPacket(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z, explosionRadius, explosion.getToBlow(), explosion.getHitPlayers().get(serverplayerentity)));
+					}
+				}
 			}
 
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY(), this.getZ(), 64, this.level.dimension())), new PacketWitherParticles(this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), this.isSkullInvulnerable() ? 20 : 16, false));
@@ -264,16 +265,16 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 	}
 
 	/**
-	* Returns true if other Entities should be prevented from moving through this Entity.
-	*/
+	 * Returns true if other Entities should be prevented from moving through this Entity.
+	 */
 	@Override
 	public boolean isPickable() {
 		return false;
 	}
 
 	/**
-	* Called when the entity is attacked.
-	*/
+	 * Called when the entity is attacked.
+	 */
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		return false;
@@ -286,15 +287,15 @@ public class UltimateWitherSkullEntity extends DamagingProjectileEntity {
 	}
 
 	/**
-	* Return whether this skull comes from an invulnerable (aura) wither boss.
-	*/
+	 * Return whether this skull comes from an invulnerable (aura) wither boss.
+	 */
 	public boolean isSkullInvulnerable() {
 		return this.entityData.get(UltimateWitherSkullEntity.INVULNERABLE);
 	}
 
 	/**
-	* Set whether this skull comes from an invulnerable (aura) wither boss.
-	*/
+	 * Set whether this skull comes from an invulnerable (aura) wither boss.
+	 */
 	public void setSkullInvulnerable(boolean invulnerable) {
 		this.entityData.set(UltimateWitherSkullEntity.INVULNERABLE, invulnerable);
 	}
