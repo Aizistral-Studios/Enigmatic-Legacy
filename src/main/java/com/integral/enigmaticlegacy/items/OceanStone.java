@@ -46,6 +46,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeMod;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	public static Omniconfig.IntParameter spellstoneCooldown;
@@ -195,20 +196,17 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof Player) {
-			EnigmaticLegacy.miningCharm.removeNightVisionEffect((Player) living, this.nightVisionDuration);
-			living.getAttributes().removeAttributeModifiers(this.createAttributeMap((Player)living));
+	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
+		if (context.entity() instanceof Player player) {
+			EnigmaticLegacy.miningCharm.removeNightVisionEffect(player, this.nightVisionDuration);
+			player.getAttributes().removeAttributeModifiers(this.createAttributeMap(player));
 		}
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-
-		if (living instanceof Player & !living.level.isClientSide)
-			if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.oceanStone)) {
-				Player player = (Player) living;
-
+	public void curioTick(SlotContext context, ItemStack stack) {
+		if (context.entity() instanceof Player player && !player.level.isClientSide)
+			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.oceanStone)) {
 				if (player.isEyeInFluid(FluidTags.WATER)) {
 					player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
 					player.setAirSupply(300);
@@ -218,11 +216,10 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 
 				player.getAttributes().addTransientAttributeModifiers(this.createAttributeMap(player));
 			}
-
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier, ItemStack stack) {
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
 		atts.put(net.minecraftforge.common.ForgeMod.SWIM_SPEED.get(), new AttributeModifier(UUID.fromString("13faf191-bf38-4654-b369-cc1f4f1143bf"), "Swim speed bonus", swimminSpeedBoost.getValue().asMultiplier(false), AttributeModifier.Operation.MULTIPLY_BASE));
@@ -231,8 +228,9 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public boolean showAttributesTooltip(String identifier, ItemStack stack) {
-		return false;
+	public List<Component> getAttributesTooltip(List<Component> tooltips, ItemStack stack) {
+		tooltips.clear();
+		return tooltips;
 	}
 
 }

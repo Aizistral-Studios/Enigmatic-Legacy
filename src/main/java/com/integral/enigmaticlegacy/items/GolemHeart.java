@@ -36,6 +36,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 	public static Omniconfig.IntParameter spellstoneCooldown;
@@ -171,10 +172,8 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof Player) {
-			Player player = (Player) living;
-
+	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
+		if (context.entity() instanceof Player player) {
 			AttributeMap map = player.getAttributes();
 			map.removeAttributeModifiers(this.attributesDefault);
 			map.removeAttributeModifiers(this.attributesNoArmor);
@@ -182,10 +181,8 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof Player) {
-			Player player = (Player) living;
-
+	public void curioTick(SlotContext context, ItemStack stack) {
+		if (context.entity() instanceof Player player) {
 			AttributeMap map = player.getAttributes();
 
 			if (SuperpositionHandler.hasAnyArmor(player)) {

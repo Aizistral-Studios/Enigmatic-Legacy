@@ -30,7 +30,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
+import top.theillusivec4.curios.api.SlotContext;
 import net.minecraft.world.item.Item.Properties;
 
 public class HeavenScroll extends ItemBaseCurio {
@@ -76,13 +76,11 @@ public class HeavenScroll extends ItemBaseCurio {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living.level.isClientSide)
+	public void curioTick(SlotContext context, ItemStack stack) {
+		if (context.entity().level.isClientSide)
 			return;
 
-		if (living instanceof Player) {
-			Player player = (Player) living;
-
+		if (context.entity() instanceof Player player) {
 			if (Math.random() <= (this.baseXpConsumptionProbability * xpCostModifier.getValue()) && player.getAbilities().flying) {
 				ExperienceHelper.drainPlayerXP(player, 1);
 			}
@@ -123,11 +121,8 @@ public class HeavenScroll extends ItemBaseCurio {
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
-
-		if (entityLivingBase instanceof Player) {
-			Player player = (Player) entityLivingBase;
-
+	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
+		if (context.entity() instanceof Player player) {
 			if (!player.isCreative()) {
 				player.getAbilities().mayfly = false;
 				player.getAbilities().flying = false;
@@ -135,7 +130,6 @@ public class HeavenScroll extends ItemBaseCurio {
 			}
 
 			this.flyMap.put(player, 0);
-
 		}
 	}
 

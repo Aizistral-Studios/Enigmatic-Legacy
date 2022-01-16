@@ -44,6 +44,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.Tags.Fluids;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class Megasponge extends ItemBaseCurio implements Vanishable {
 	public static Omniconfig.IntParameter radius;
@@ -118,10 +119,8 @@ public class Megasponge extends ItemBaseCurio implements Vanishable {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof Player & !living.level.isClientSide) {
-			Player player = (Player) living;
-
+	public void curioTick(SlotContext context, ItemStack stack) {
+		if (context.entity() instanceof Player player && !player.level.isClientSide) {
 			if (!player.getCooldowns().isOnCooldown(this)) {
 				List<BlockPos> doomedWaterBlocks = new ArrayList<BlockPos>();
 				BlockPos initialPos = this.getCollidedWater(FluidTags.WATER, player);
@@ -172,7 +171,6 @@ public class Megasponge extends ItemBaseCurio implements Vanishable {
 	}
 
 	public void absorbWaterBlock(BlockPos pos, BlockState state, Level world) {
-
 		if (state.getBlock() instanceof BucketPickup && !((BucketPickup) state.getBlock()).pickupBlock(world, pos, state).isEmpty()) {
 			// Whatever
 		} else if (state.getBlock() instanceof LiquidBlock) {

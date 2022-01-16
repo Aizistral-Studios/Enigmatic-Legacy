@@ -32,6 +32,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 	public static Omniconfig.DoubleParameter attackDamage;
@@ -118,24 +119,22 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof Player) {
-			Player player = (Player) living;
-
-			living.getAttributes().addTransientAttributeModifiers(this.createAttributeMap(player));
+	public void curioTick(SlotContext context, ItemStack stack) {
+		if (context.entity() instanceof Player player) {
+			player.getAttributes().addTransientAttributeModifiers(this.createAttributeMap(player));
 		}
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof Player) {
-			living.getAttributes().removeAttributeModifiers(this.createAttributeMap((Player) living));
+	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
+		if (context.entity() instanceof Player player) {
+			player.getAttributes().removeAttributeModifiers(this.createAttributeMap(player));
 		}
 	}
 
 	@Override
-	public boolean canEquip(String identifier, LivingEntity living, ItemStack stack) {
-		return super.canEquip(identifier, living, stack) && living instanceof Player && SuperpositionHandler.isTheCursedOne((Player)living);
+	public boolean canEquip(SlotContext context, ItemStack stack) {
+		return super.canEquip(context, stack) && context.entity() instanceof Player player && SuperpositionHandler.isTheCursedOne(player);
 	}
 
 }

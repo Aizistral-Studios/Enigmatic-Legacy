@@ -12,6 +12,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.Vanishable;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -21,6 +22,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio;
 
 import net.minecraft.world.item.Item.Properties;
@@ -38,17 +40,17 @@ public abstract class ItemBaseCurio extends ItemBase implements ICurioItem, Vani
 	}
 
 	@Override
-	public void onEquip(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
+	public void onEquip(SlotContext context, ItemStack prevStack, ItemStack stack) {
 		// Insert existential void here
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
+	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
 		// Insert existential void here
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
+	public void curioTick(SlotContext context, ItemStack stack) {
 		// Insert existential void here
 	}
 
@@ -58,22 +60,22 @@ public abstract class ItemBaseCurio extends ItemBase implements ICurioItem, Vani
 	}
 
 	@Override
-	public boolean canRightClickEquip(ItemStack stack) {
+	public boolean canEquipFromUse(SlotContext context, ItemStack stack) {
 		return true;
 	}
 
 	@Override
-	public boolean canEquip(String identifier, LivingEntity living, ItemStack stack) {
-		return !SuperpositionHandler.hasCurio(living, this);
+	public boolean canEquip(SlotContext context, ItemStack stack) {
+		return !SuperpositionHandler.hasCurio(context.entity(), this);
 	}
 
 	@Override
-	public boolean canUnequip(String identifier, LivingEntity living, ItemStack stack) {
+	public boolean canUnequip(SlotContext context, ItemStack stack) {
 		return true;
 	}
 
 	@Override
-	public DropRule getDropRule(LivingEntity livingEntity, ItemStack stack) {
+	public DropRule getDropRule(SlotContext slotContext, DamageSource source, int lootingLevel, boolean recentlyHit, ItemStack stack) {
 		return DropRule.DEFAULT;
 	}
 

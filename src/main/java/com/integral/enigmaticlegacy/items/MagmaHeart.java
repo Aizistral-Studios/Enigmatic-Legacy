@@ -27,6 +27,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class MagmaHeart extends ItemSpellstoneCurio implements ISpellstone {
 	public static Omniconfig.IntParameter spellstoneCooldown;
@@ -125,9 +126,9 @@ public class MagmaHeart extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living.isOnFire()) {
-			living.clearFire();
+	public void curioTick(SlotContext context, ItemStack stack) {
+		if (context.entity().isOnFire()) {
+			context.entity().clearFire();
 		}
 	}
 

@@ -74,9 +74,6 @@ public class OblivionStone extends ItemBase implements Vanishable {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
-
-		//LoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-
 		if (Screen.hasShiftDown()) {
 
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone1");

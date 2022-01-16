@@ -26,6 +26,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.TamableAnimal;
@@ -47,9 +48,10 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
+import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
 
 public class CursedRing extends ItemBaseCurio {
@@ -205,7 +207,7 @@ public class CursedRing extends ItemBaseCurio {
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier, ItemStack stack) {
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
 		Multimap<Attribute, AttributeModifier> atrributeMap = ArrayListMultimap.create();
 
 		atrributeMap.put(Attributes.ARMOR, new AttributeModifier(UUID.fromString("457d0ac3-69e4-482f-b636-22e0802da6bd"), "enigmaticlegacy:armor_modifier", -armorDebuff.getValue().asModifier(), AttributeModifier.Operation.MULTIPLY_TOTAL));
@@ -215,38 +217,39 @@ public class CursedRing extends ItemBaseCurio {
 	}
 
 	@Override
-	public boolean showAttributesTooltip(String identifier, ItemStack stack) {
-		return false;
+	public List<Component> getAttributesTooltip(List<Component> tooltips, ItemStack stack) {
+		tooltips.clear();
+		return tooltips;
 	}
 
 	@Override
-	public boolean canUnequip(String identifier, LivingEntity living, ItemStack stack) {
-		if (living instanceof Player && ((Player) living).isCreative())
-			return super.canUnequip(identifier, living, stack);
+	public boolean canUnequip(SlotContext context, ItemStack stack) {
+		if (context.entity() instanceof Player player && player.isCreative())
+			return super.canUnequip(context, stack);
 		else
 			return false;
 	}
 
 	@Override
-	public boolean canRightClickEquip(ItemStack stack) {
+	public boolean canEquipFromUse(SlotContext context, ItemStack stack) {
 		return false;
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
+	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
 		// NO-OP
 	}
 
 	@Override
-	public void onEquip(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
+	public void onEquip(SlotContext context, ItemStack prevStack, ItemStack stack) {
 		// TODO Use Curios trigger for this
-		if (entityLivingBase instanceof ServerPlayer) {
-			CursedRingEquippedTrigger.INSTANCE.trigger((ServerPlayer) entityLivingBase);
+		if (context.entity() instanceof ServerPlayer player) {
+			CursedRingEquippedTrigger.INSTANCE.trigger(player);
 		}
 	}
 
 	@Override
-	public DropRule getDropRule(LivingEntity livingEntity, ItemStack stack) {
+	public DropRule getDropRule(SlotContext slotContext, DamageSource source, int lootingLevel, boolean recentlyHit, ItemStack stack) {
 		return DropRule.ALWAYS_KEEP;
 	}
 
@@ -260,17 +263,17 @@ public class CursedRing extends ItemBaseCurio {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity livingPlayer, ItemStack stack) {
-		if (livingPlayer.level.isClientSide || !(livingPlayer instanceof Player))
+	public void curioTick(SlotContext context, ItemStack stack) {
+		if (context.entity().level.isClientSide || !(context.entity() instanceof Player))
 			return;
 
-		Player player = (Player) livingPlayer;
+		Player player = (Player) context.entity();
 
 		if (player.isCreative() || player.isSpectator())
 			return;
 
-		List<LivingEntity> genericMobs = livingPlayer.level.getEntitiesOfClass(LivingEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, neutralAngerRange.getValue()));
-		List<EnderMan> endermen = livingPlayer.level.getEntitiesOfClass(EnderMan.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, endermenRandomportRange.getValue()));
+		List<LivingEntity> genericMobs = player.level.getEntitiesOfClass(LivingEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, neutralAngerRange.getValue()));
+		List<EnderMan> endermen = player.level.getEntitiesOfClass(EnderMan.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, endermenRandomportRange.getValue()));
 
 		for (EnderMan enderman : endermen) {
 			if (random.nextDouble() <= (0.002 * endermenRandomportFrequency.getValue())) {
@@ -343,13 +346,13 @@ public class CursedRing extends ItemBaseCurio {
 	}
 
 	@Override
-	public int getFortuneBonus(String identifier, LivingEntity livingEntity, ItemStack curio, int index) {
-		return super.getFortuneBonus(identifier, livingEntity, curio, index) + fortuneBonus.getValue();
+	public int getFortuneLevel(SlotContext slotContext, LootContext lootContext, ItemStack curio) {
+		return super.getFortuneLevel(slotContext, lootContext, curio) + fortuneBonus.getValue();
 	}
 
 	@Override
-	public int getLootingBonus(String identifier, LivingEntity livingEntity, ItemStack curio, int index) {
-		return super.getLootingBonus(identifier, livingEntity, curio, index) + lootingBonus.getValue();
+	public int getLootingLevel(SlotContext slotContext, DamageSource source, LivingEntity target, int baseLooting, ItemStack curio) {
+		return super.getLootingLevel(slotContext, source, target, baseLooting, curio) + lootingBonus.getValue();
 	}
 
 }

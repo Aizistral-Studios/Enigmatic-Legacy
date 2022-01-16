@@ -38,6 +38,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 	public static Omniconfig.IntParameter spellstoneCooldown;
@@ -144,13 +145,9 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-
-		if (living instanceof Player) {
-			Player player = (Player) living;
-
+	public void curioTick(SlotContext context, ItemStack stack) {
+		if (context.entity() instanceof Player player) {
 			/*
-
 			FoodData stats = player.getFoodStats();
 			stats.setFoodLevel(20);
 
@@ -186,7 +183,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 			}
 
 			if (player.tickCount % 10 == 0) {
-				List<LivingEntity> entities = living.level.getEntitiesOfClass(LivingEntity.class, new AABB(player.getX() - shadowRange.getValue(), player.getY() - shadowRange.getValue(), player.getZ() - shadowRange.getValue(), player.getX() + shadowRange.getValue(), player.getY() + shadowRange.getValue(), player.getZ() + shadowRange.getValue()));
+				List<LivingEntity> entities = player.level.getEntitiesOfClass(LivingEntity.class, new AABB(player.getX() - shadowRange.getValue(), player.getY() - shadowRange.getValue(), player.getZ() - shadowRange.getValue(), player.getX() + shadowRange.getValue(), player.getY() + shadowRange.getValue(), player.getZ() + shadowRange.getValue()));
 
 				if (entities.contains(player)) {
 					entities.remove(player);
@@ -210,7 +207,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 							boolean attack = victim.hurt(darkness, (float) baseDarknessDamage.getValue());
 
 							if (attack) {
-								living.level.playSound(null, victim.blockPosition(), SoundEvents.PHANTOM_BITE, SoundSource.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
+								player.level.playSound(null, victim.blockPosition(), SoundEvents.PHANTOM_BITE, SoundSource.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
 
 								victim.addEffect(new MobEffectInstance(MobEffects.WITHER, 80, 1, false, true));
 								victim.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2, false, true));

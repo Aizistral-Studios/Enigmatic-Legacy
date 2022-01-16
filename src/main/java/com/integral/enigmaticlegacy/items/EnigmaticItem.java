@@ -40,6 +40,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 	public static Omniconfig.IntParameter spellstoneCooldown;
@@ -104,12 +105,12 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living.isOnFire()) {
-			living.clearFire();
+	public void curioTick(SlotContext context, ItemStack stack) {
+		if (context.entity().isOnFire()) {
+			context.entity().clearFire();
 		}
 
-		List<MobEffectInstance> effects = new ArrayList<MobEffectInstance>(living.getActiveEffects());
+		List<MobEffectInstance> effects = new ArrayList<MobEffectInstance>(context.entity().getActiveEffects());
 
 		for (MobEffectInstance effect : effects) {
 			if (effect.getEffect().getRegistryName().equals(new ResourceLocation("mana-and-artifice", "chrono-exhaustion"))) {
@@ -117,7 +118,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 			}
 
 			if (!effect.getEffect().isBeneficial()) {
-				living.removeEffect(effect.getEffect());
+				context.entity().removeEffect(effect.getEffect());
 			}
 		}
 

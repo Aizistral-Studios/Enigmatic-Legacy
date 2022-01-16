@@ -38,8 +38,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class MiningCharm extends ItemBaseCurio {
 	public static Omniconfig.PerhapsParameter breakSpeedBonus;
@@ -110,11 +112,9 @@ public class MiningCharm extends ItemBaseCurio {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof Player & !living.level.isClientSide)
-			if (SuperpositionHandler.hasCurio(living, EnigmaticLegacy.miningCharm)) {
-				Player player = (Player) living;
-
+	public void curioTick(SlotContext context, ItemStack stack) {
+		if (context.entity() instanceof Player player && !context.entity().level.isClientSide)
+			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.miningCharm)) {
 				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) && player.getY() < 50 && !player.level.dimension().location().toString().equals("minecraft:the_nether") && !player.level.dimension().location().toString().equals("minecraft:the_end") && !player.isEyeInFluid(FluidTags.WATER) && !player.level.canSeeSkyFromBelowWater(player.blockPosition()) && player.level.getMaxLocalRawBrightness(player.blockPosition(), 0) <= 8) {
 
 					player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
@@ -143,20 +143,19 @@ public class MiningCharm extends ItemBaseCurio {
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof Player) {
-			this.removeNightVisionEffect((Player) living, this.nightVisionDuration);
+	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
+		if (context.entity() instanceof Player player) {
+			this.removeNightVisionEffect(player, this.nightVisionDuration);
 		}
 	}
 
 	@Override
-	public boolean canRightClickEquip(ItemStack stack) {
+	public boolean canEquipFromUse(SlotContext context, ItemStack stack) {
 		return false;
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(String identifier, ItemStack stack) {
-
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
 		atts.put(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(UUID.fromString("08c3c83d-7137-4b42-880f-b146bcb64d2e"), "Reach bonus", reachDistanceBonus.getValue(), AttributeModifier.Operation.ADDITION));
@@ -165,8 +164,8 @@ public class MiningCharm extends ItemBaseCurio {
 	}
 
 	@Override
-	public int getFortuneBonus(String identifier, LivingEntity livingEntity, ItemStack curio, int index) {
-		return super.getFortuneBonus(identifier, livingEntity, curio, index) + 1;
+	public int getFortuneLevel(SlotContext slotContext, LootContext lootContext, ItemStack curio) {
+		return super.getFortuneLevel(slotContext, lootContext, curio) + 1;
 	}
 
 }

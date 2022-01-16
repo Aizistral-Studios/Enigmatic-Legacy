@@ -27,6 +27,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class SuperMagnetRing extends MagnetRing {
 	public static Omniconfig.IntParameter range;
@@ -57,7 +58,6 @@ public class SuperMagnetRing extends MagnetRing {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
-
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
@@ -70,7 +70,9 @@ public class SuperMagnetRing extends MagnetRing {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
+	public void curioTick(SlotContext context, ItemStack stack) {
+		LivingEntity living = context.entity();
+
 		if (invertShift.getValue() ? !living.isCrouching() : living.isCrouching() || living.level.isClientSide || !(living instanceof Player))
 			return;
 

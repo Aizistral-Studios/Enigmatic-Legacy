@@ -45,6 +45,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeMod;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class EnigmaticAmulet extends ItemBaseCurio {
 	public static Omniconfig.DoubleParameter damageBonus;
@@ -281,10 +282,8 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof Player) {
-			Player player = (Player) living;
-
+	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
+		if (context.entity() instanceof Player player) {
 			AttributeMap map = player.getAttributes();
 			map.removeAttributeModifiers(this.getAllModifiers());
 		}
@@ -292,9 +291,8 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living instanceof Player) {
-			Player player = (Player) living;
+	public void curioTick(SlotContext context, ItemStack stack) {
+		if (context.entity() instanceof Player player) {
 			ItemStack amulet = SuperpositionHandler.getCurioStack(player, this);
 
 			if (amulet != null) {
@@ -306,16 +304,17 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	}
 
 	@Override
-	public boolean canEquip(String identifier, LivingEntity living, ItemStack stack) {
+	public boolean canEquip(SlotContext context, ItemStack stack) {
 		if (multiequip.getValue())
 			return true;
 		else
-			return super.canEquip(identifier, living, stack);
+			return super.canEquip(context, stack);
 	}
 
 	@Override
-	public boolean showAttributesTooltip(String identifier, ItemStack stack) {
-		return false;
+	public List<Component> getAttributesTooltip(List<Component> tooltips, ItemStack stack) {
+		tooltips.clear();
+		return tooltips;
 	}
 
 	public boolean isVesselEnabled() {

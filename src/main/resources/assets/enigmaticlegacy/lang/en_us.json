@@ -82,6 +82,7 @@
 	"item.enigmaticlegacy.avarice_scroll": "Pact of Infinite Avarice",
 	"item.enigmaticlegacy.infinimeal": "Essence of Raging Life",
 	"item.enigmaticlegacy.darkest_scroll": "Darkest Scroll",
+	"item.enigmaticlegacy.unwitnessed_amulet": "Unwitnessed Amulet",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -320,6 +321,10 @@
 	"tooltip.enigmaticlegacy.enigmaticAmulet4": "§5any - time slowly washes away hazy scraps",
 	"tooltip.enigmaticlegacy.enigmaticAmulet5": "§5of shattered memories.",
 	"tooltip.enigmaticlegacy.enigmaticAmulet6": "§5Memories about something important...",
+	"tooltip.enigmaticlegacy.enigmaticAmulet1_alt": "§5It appears oddly reminiscent of something, yet",
+	"tooltip.enigmaticlegacy.enigmaticAmulet2_alt": "§5you still remain unable to recall what exactly.",
+	"tooltip.enigmaticlegacy.enigmaticAmulet3_alt": "§5Time slowly washes away last traces of those",
+	"tooltip.enigmaticlegacy.enigmaticAmulet4_alt": "§5lost memories...",
 	"tooltip.enigmaticlegacy.enigmaticAmuletInscription": "§5Name is engraved upon it: §4%1$s",
 	"tooltip.enigmaticlegacy.enigmaticAmuletShift1": "§5Whenever you die while having it equipped or",
 	"tooltip.enigmaticlegacy.enigmaticAmuletShift2": "§5in your inventory, summons §6Extradimensional",
@@ -728,6 +733,12 @@
 	"tooltip.enigmaticlegacy.infinimeal1": "§5Functions as infinite §6Bone Meal.",
 	"tooltip.enigmaticlegacy.infinimeal2": "§5Effective on §6Cactuses§5, §6Vines§5,",
 	"tooltip.enigmaticlegacy.infinimeal3": "§6Nether Wart§5 and §6Sugar Cane.",
+	
+	"tooltip.enigmaticlegacy.unwitnessedAmuletHoldShift": "§5The §6Shift §5shall be held.",
+	"tooltip.enigmaticlegacy.unwitnessedAmuletShift1": "§5It shall become bound to the first one who",
+	"tooltip.enigmaticlegacy.unwitnessedAmuletShift2": "§5dares lay their claim upon this relic, and in",
+	"tooltip.enigmaticlegacy.unwitnessedAmuletShift3": "§5that glorious minute fate of it's chosen",
+	"tooltip.enigmaticlegacy.unwitnessedAmuletShift4": "§5bearer shall be preordained.",
 
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",

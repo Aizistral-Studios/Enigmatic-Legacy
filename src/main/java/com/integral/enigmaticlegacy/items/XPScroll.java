@@ -35,6 +35,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class XPScroll extends ItemBaseCurio {
 	public static Omniconfig.DoubleParameter xpCollectionRange;
@@ -62,7 +63,6 @@ public class XPScroll extends ItemBaseCurio {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
-
 		TranslatableComponent cMode;
 		if (!ItemNBTHelper.getBoolean(stack, "IsActive", false)) {
 			cMode = new TranslatableComponent("tooltip.enigmaticlegacy.xpTomeDeactivated");
@@ -150,14 +150,13 @@ public class XPScroll extends ItemBaseCurio {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity entity, ItemStack stack) {
+	public void curioTick(SlotContext context, ItemStack stack) {
+		ItemStack itemstack = SuperpositionHandler.getCurioStack(context.entity(), EnigmaticLegacy.xpScroll);
 
-		ItemStack itemstack = SuperpositionHandler.getCurioStack(entity, EnigmaticLegacy.xpScroll);
-
-		if (!(entity instanceof Player) || entity.level.isClientSide || !ItemNBTHelper.getBoolean(itemstack, "IsActive", false))
+		if (!(context.entity() instanceof Player) || context.entity().level.isClientSide || !ItemNBTHelper.getBoolean(itemstack, "IsActive", false))
 			return;
 
-		Player player = (Player) entity;
+		Player player = (Player) context.entity();
 		Level world = player.level;
 
 		if (ItemNBTHelper.getBoolean(itemstack, "AbsorptionMode", true)) {
@@ -197,7 +196,7 @@ public class XPScroll extends ItemBaseCurio {
 	}
 
 	@Override
-	public boolean canRightClickEquip(ItemStack stack) {
+	public boolean canEquipFromUse(SlotContext context, ItemStack stack) {
 		return false;
 	}
 

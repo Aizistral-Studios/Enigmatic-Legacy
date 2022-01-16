@@ -14,6 +14,7 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -23,6 +24,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class MonsterCharm extends ItemBaseCurio {
 	public static Omniconfig.PerhapsParameter undeadDamageBonus;
@@ -65,7 +67,6 @@ public class MonsterCharm extends ItemBaseCurio {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
-
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
@@ -84,8 +85,8 @@ public class MonsterCharm extends ItemBaseCurio {
 	}
 
 	@Override
-	public int getLootingBonus(String identifier, LivingEntity livingEntity, ItemStack curio, int index) {
-		return super.getLootingBonus(identifier, livingEntity, curio, index) + 1;
+	public int getLootingLevel(SlotContext slotContext, DamageSource source, LivingEntity target, int baseLooting, ItemStack curio) {
+		return super.getLootingLevel(slotContext, source, target, baseLooting, curio) + 1;
 	}
 
 }

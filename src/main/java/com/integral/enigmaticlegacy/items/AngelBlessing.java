@@ -39,6 +39,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class AngelBlessing extends ItemSpellstoneCurio  {
 	public static Omniconfig.IntParameter spellstoneCooldown;
@@ -140,7 +141,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
+	public void curioTick(SlotContext context, ItemStack stack) {
 		/*
 		List<AbstractHurtingProjectile> projectileEntities = living.world.getEntitiesWithinAABB(AbstractHurtingProjectile.class, new AABB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));
 		List<AbstractArrow> arrowEntities = living.world.getEntitiesWithinAABB(AbstractArrow.class, new AABB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));

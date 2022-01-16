@@ -16,7 +16,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-
+import top.theillusivec4.curios.api.SlotContext;
 import net.minecraft.world.item.Item.Properties;
 
 public abstract class ItemSpellstoneCurio extends ItemBaseCurio implements ISpellstone {
@@ -59,11 +59,11 @@ public abstract class ItemSpellstoneCurio extends ItemBaseCurio implements ISpel
 	}
 
 	@Override
-	public boolean canEquip(String identifier, LivingEntity living, ItemStack stack) {
+	public boolean canEquip(SlotContext context, ItemStack stack) {
 		if (multiequip.getValue())
-			return super.canEquip(identifier, living, stack);
+			return super.canEquip(context, stack);
 		else
-			return super.canEquip(identifier, living, stack) && SuperpositionHandler.getSpellstone(living) == null;
+			return super.canEquip(context, stack) && SuperpositionHandler.getSpellstone(context.entity()) == null;
 	}
 
 }

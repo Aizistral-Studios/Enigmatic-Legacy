@@ -24,6 +24,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class FabulousScroll extends HeavenScroll {
 
@@ -50,13 +51,11 @@ public class FabulousScroll extends HeavenScroll {
 	}
 
 	@Override
-	public void curioTick(String identifier, int index, LivingEntity living, ItemStack stack) {
-		if (living.level.isClientSide)
+	public void curioTick(SlotContext context, ItemStack stack) {
+		if (context.entity().level.isClientSide)
 			return;
 
-		if (living instanceof Player) {
-			Player player = (Player) living;
-
+		if (context.entity() instanceof Player player) {
 			boolean inRange = SuperpositionHandler.isInBeaconRange(player);
 
 			if (!SuperpositionHandler.isInBeaconRange(player))
@@ -66,7 +65,6 @@ public class FabulousScroll extends HeavenScroll {
 
 			this.handleFabulousFlight(player, inRange);
 		}
-
 	}
 
 	protected void handleFabulousFlight(Player player, boolean inRange) {
@@ -99,11 +97,8 @@ public class FabulousScroll extends HeavenScroll {
 	}
 
 	@Override
-	public void onUnequip(String identifier, int index, LivingEntity entityLivingBase, ItemStack stack) {
-
-		if (entityLivingBase instanceof Player) {
-			Player player = (Player) entityLivingBase;
-
+	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
+		if (context.entity() instanceof Player player) {
 			if (!player.isCreative()) {
 				player.getAbilities().mayfly = false;
 				player.getAbilities().flying = false;
@@ -111,7 +106,6 @@ public class FabulousScroll extends HeavenScroll {
 			}
 
 			this.flyMap.put(player, 0);
-
 		}
 	}
 

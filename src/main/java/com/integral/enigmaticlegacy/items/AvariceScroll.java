@@ -25,8 +25,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import top.theillusivec4.curios.api.SlotContext;
 
 public class AvariceScroll extends ItemBaseCurio implements ICursed {
 	public static Omniconfig.IntParameter emeraldChance;
@@ -71,13 +73,13 @@ public class AvariceScroll extends ItemBaseCurio implements ICursed {
 	}
 
 	@Override
-	public boolean canEquip(String identifier, LivingEntity living, ItemStack stack) {
-		return super.canEquip(identifier, living, stack) && living instanceof Player && SuperpositionHandler.isTheCursedOne((Player)living);
+	public boolean canEquip(SlotContext context, ItemStack stack) {
+		return super.canEquip(context, stack) && context.entity() instanceof Player player && SuperpositionHandler.isTheCursedOne(player);
 	}
 
 	@Override
-	public int getFortuneBonus(String identifier, LivingEntity livingEntity, ItemStack curio, int index) {
-		return super.getFortuneBonus(identifier, livingEntity, curio, index) + 1;
+	public int getFortuneLevel(SlotContext slotContext, LootContext lootContext, ItemStack curio) {
+		return super.getFortuneLevel(slotContext, lootContext, curio) + 1;
 	}
 
 }
