@@ -10,11 +10,11 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class EnigmaticRecipeSerializers {
-	public static final RecipeSerializer<MendingMixtureRepairRecipe> CRAFTING_MENDING_MIXTURE_REPAIR = new MendingMixtureRepairRecipe.Serializer();
+	public static final RecipeSerializer<MendingMixtureRepairRecipe> CRAFTING_MENDING_MIXTURE_REPAIR = MendingMixtureRepairRecipe.SERIALIZER;
+	public static final RecipeSerializer<EnchantmentTransposingRecipe> ENCHANTMENT_TRANSPOSING = EnchantmentTransposingRecipe.SERIALIZER;
+	public static final RecipeSerializer<OblivionStoneCombineRecipe> OBLIVION_STONE_COMBINE = OblivionStoneCombineRecipe.SERIALIZER;
+	public static final RecipeSerializer<BindToPlayerRecipe> BIND_TO_PLAYER = BindToPlayerRecipe.SERIALIZER;
 	public static final RecipeSerializer<ShapelessNoReturnRecipe> SHAPELESS_NO_RETURN = new ShapelessNoReturnRecipe.Serializer();
-	public static final RecipeSerializer<OblivionStoneCombineRecipe> OBLIVION_STONE_COMBINE = new OblivionStoneCombineRecipe.Serializer();
-	public static final RecipeSerializer<EnchantmentTransposingRecipe> ENCHANTMENT_TRANSPOSING = new EnchantmentTransposingRecipe.Serializer();
-	public static final RecipeSerializer<BindToPlayerRecipe> BIND_TO_PLAYER = new BindToPlayerRecipe.Serializer();
 	public static final RecipeSerializer<CursedShapedRecipe> CURSED_SHAPED = new CursedShapedRecipe.Serializer();
 
 	@SubscribeEvent

@@ -14,8 +14,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
+import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
@@ -27,9 +29,11 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
  * @author Integral
  */
 
-public class BindToPlayerRecipe extends ShapelessRecipe {
-	public BindToPlayerRecipe(ResourceLocation id, String group, ItemStack output, NonNullList<Ingredient> inputs) {
-		super(id, group, output, inputs);
+public class BindToPlayerRecipe extends CustomRecipe {
+	static final SimpleRecipeSerializer<BindToPlayerRecipe> SERIALIZER = new SimpleRecipeSerializer<>(BindToPlayerRecipe::new);
+
+	public BindToPlayerRecipe(ResourceLocation id) {
+		super(id);
 	}
 
 	@Override
@@ -92,35 +96,13 @@ public class BindToPlayerRecipe extends ShapelessRecipe {
 	}
 
 	@Override
-	public ItemStack getResultItem() {
-		return ItemStack.EMPTY;
-	}
-
-	@Override
-	public boolean isSpecial() {
-		return true;
+	public boolean canCraftInDimensions(int width, int height) {
+		return width * height >= 2;
 	}
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return EnigmaticRecipeSerializers.BIND_TO_PLAYER;
-	}
-
-	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<BindToPlayerRecipe> {
-		@Override
-		public BindToPlayerRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-			return new BindToPlayerRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
-		}
-
-		@Override
-		public BindToPlayerRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-			return new BindToPlayerRecipe(recipeId, "", ItemStack.EMPTY, NonNullList.create());
-		}
-
-		@Override
-		public void toNetwork(FriendlyByteBuf buffer, BindToPlayerRecipe recipe) {
-
-		}
+		return SERIALIZER;
 	}
 
 	public interface IBound {
