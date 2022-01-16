@@ -654,13 +654,11 @@ public class EnigmaticEventHandler {
 				}
 			}
 		} else if (event.getOverlay() == ForgeIngameGui.FOOD_LEVEL_ELEMENT) {
-
 			if (EnigmaticLegacy.forbiddenFruit.haveConsumedFruit(mc.player)) {
-
 				if (!ForbiddenFruit.renderHungerBar.getValue()) {
 					event.setCanceled(true);
 					return;
-				} else if (!ForbiddenFruit.replaceHungerBar.getValue())
+				} else if (mc.player.isCreative() || !ForbiddenFruit.replaceHungerBar.getValue())
 					return;
 
 				event.setCanceled(true);
