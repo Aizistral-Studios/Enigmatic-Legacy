@@ -189,6 +189,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.FoodStats;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
@@ -243,6 +244,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -949,7 +951,6 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onPlayerTick(LivingEvent.LivingUpdateEvent event) {
-
 		if (event.getEntityLiving() instanceof PlayerEntity) {
 			PlayerEntity player = (PlayerEntity) event.getEntityLiving();
 
@@ -1043,6 +1044,30 @@ public class EnigmaticEventHandler {
 
 				EnigmaticLegacy.enigmaticItem.handleEnigmaticFlight(player);
 
+				/**
+				 * Detect Unwitnessed Amulet and turn in into random color;
+				 */
+
+				for (NonNullList<ItemStack> list : player.inventory.compartments) {
+					for (int i = 0; i < list.size(); ++i) {
+						ItemStack stack = list.get(i);
+
+						// Null check 'cause I don't trust you
+						if (stack != null && stack.getItem() == unwitnessedAmulet) {
+							stack = new ItemStack(enigmaticAmulet);
+							enigmaticAmulet.setInscription(stack, player.getGameProfile().getName());
+							//enigmaticAmulet.setUnwitnessed(stack, true);
+
+							if (EnigmaticAmulet.seededColorGen.getValue()) {
+								enigmaticAmulet.setSeededColor(stack);
+							} else {
+								enigmaticAmulet.setRandomColor(stack);
+							}
+
+							list.set(i, stack);
+						}
+					}
+				}
 			}
 
 		}

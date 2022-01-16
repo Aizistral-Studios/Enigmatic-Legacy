@@ -135,6 +135,7 @@ import com.integral.enigmaticlegacy.packets.server.PacketEnderRingKey;
 import com.integral.enigmaticlegacy.packets.server.PacketInkwellField;
 import com.integral.enigmaticlegacy.packets.server.PacketSpellstoneKey;
 import com.integral.enigmaticlegacy.packets.server.PacketXPScrollKey;
+import com.integral.enigmaticlegacy.items.UnwitnessedAmulet;
 import com.integral.enigmaticlegacy.proxy.ClientProxy;
 import com.integral.enigmaticlegacy.proxy.CommonProxy;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
@@ -216,7 +217,7 @@ import net.minecraft.block.AbstractBlock;
 @Mod(EnigmaticLegacy.MODID)
 public class EnigmaticLegacy {
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.11.10";
+	public static final String VERSION = "2.11.11";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -356,6 +357,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Pact of Infinite Avarice") public static AvariceScroll avariceScroll;
 	@ConfigurableItem("Essence of Raging Life") public static Infinimeal infinimeal;
 	@ConfigurableItem("Darkest Scroll") public static DarkestScroll darkestScroll;
+	@ConfigurableItem("") public static UnwitnessedAmulet unwitnessedAmulet;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -536,6 +538,8 @@ public class EnigmaticLegacy {
 		avariceScroll = new AvariceScroll();
 		infinimeal = new Infinimeal();
 		darkestScroll = new DarkestScroll();
+
+		unwitnessedAmulet = new UnwitnessedAmulet();
 
 		sharpshooterEnchantment = new SharpshooterEnchantment(EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND);
 		ceaselessEnchantment = new CeaselessEnchantment(EquipmentSlotType.MAINHAND, EquipmentSlotType.OFFHAND);
@@ -845,6 +849,7 @@ public class EnigmaticLegacy {
 					avariceScroll,
 					infinimeal,
 					darkestScroll,
+					unwitnessedAmulet,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),
