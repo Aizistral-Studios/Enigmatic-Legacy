@@ -1768,8 +1768,7 @@ public class EnigmaticEventHandler {
 			TransientPlayerData.get(player).syncToPlayer();
 		}
 
-		if (entity instanceof Mob && ((Mob)entity).getMobType() == MobType.ARTHROPOD) {
-			Mob mob = (Mob) entity;
+		if (entity instanceof PathfinderMob mob && ((PathfinderMob)entity).getMobType() == MobType.ARTHROPOD) {
 			mob.goalSelector.addGoal(3, new AvoidEntityGoal<>((PathfinderMob)entity, Player.class,
 					(targetEntity) -> targetEntity instanceof Player &&
 					SuperpositionHandler.hasAntiInsectAcknowledgement((Player)targetEntity),
