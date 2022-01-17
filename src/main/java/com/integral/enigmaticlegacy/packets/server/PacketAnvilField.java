@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Packet for updating stored anvil field for targeted player on server side.

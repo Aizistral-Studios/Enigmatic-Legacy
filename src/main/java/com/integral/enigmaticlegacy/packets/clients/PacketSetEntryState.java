@@ -6,7 +6,7 @@ import com.integral.enigmaticlegacy.helpers.PatchouliHelper;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 public class PacketSetEntryState {
 	private boolean isRead;

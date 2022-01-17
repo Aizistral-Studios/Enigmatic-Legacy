@@ -39,7 +39,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 import top.theillusivec4.curios.api.SlotContext;
 
 public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {

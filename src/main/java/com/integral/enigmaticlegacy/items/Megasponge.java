@@ -43,7 +43,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.Tags.Fluids;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 import top.theillusivec4.curios.api.SlotContext;
 
 public class Megasponge extends ItemBaseCurio implements Vanishable {

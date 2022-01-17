@@ -10,7 +10,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Packet for displaying Curio slot unlock notification.

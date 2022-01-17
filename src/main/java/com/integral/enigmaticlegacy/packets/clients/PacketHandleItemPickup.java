@@ -5,7 +5,7 @@ import java.util.function.Supplier;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Packet for playing respective sound and animation on client side,

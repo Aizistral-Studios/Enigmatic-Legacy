@@ -197,9 +197,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.common.extensions.IForgeContainerType;
+import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
@@ -210,16 +211,15 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.fmllegacy.network.NetworkRegistry;
-import net.minecraftforge.fmllegacy.network.simple.SimpleChannel;
-import net.minecraftforge.fmlserverevents.FMLServerAboutToStartEvent;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
 @Mod(EnigmaticLegacy.MODID)
 public class EnigmaticLegacy {
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.12.1";
+	public static final String VERSION = "2.13.0";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
@@ -680,7 +680,7 @@ public class EnigmaticLegacy {
 
 	}
 
-	private void onServerStart(FMLServerAboutToStartEvent event) {
+	private void onServerStart(ServerAboutToStartEvent event) {
 		this.performCleanup();
 	}
 
@@ -717,14 +717,14 @@ public class EnigmaticLegacy {
 
 			registry.registerAll(
 					PORTABLE_CRAFTER.setRegistryName(MODID, "portable_crafter"),
-					IForgeContainerType.create(LoreInscriberContainer::new).setRegistryName(MODID, "enigmatic_repair_container")
+					IForgeMenuType.create(LoreInscriberContainer::new).setRegistryName(MODID, "enigmatic_repair_container")
 					);
 		}
 
 		@OnlyIn(Dist.CLIENT)
 		@SubscribeEvent
 		public static void stitchTextures(TextureStitchEvent.Pre evt) {
-			if (evt.getMap().location() == InventoryMenu.BLOCK_ATLAS) {
+			if (evt.getAtlas().location() == InventoryMenu.BLOCK_ATLAS) {
 				evt.addSprite(new ResourceLocation(MODID, "slots/empty_spellstone_slot"));
 				evt.addSprite(new ResourceLocation(MODID, "slots/empty_scroll_slot"));
 			}

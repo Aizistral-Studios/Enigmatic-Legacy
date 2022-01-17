@@ -31,7 +31,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 public class EtheriumSword extends SwordItem implements IEtheriumTool {
 	public CooldownMap etheriumSwordCooldowns = new CooldownMap();

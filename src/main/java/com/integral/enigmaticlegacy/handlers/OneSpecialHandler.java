@@ -6,8 +6,9 @@ import java.util.Random;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.common.util.LogicalSidedProvider;
 import net.minecraftforge.fml.LogicalSide;
-import net.minecraftforge.fmllegacy.LogicalSidedProvider;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 /**
  * Did you get the reference?
@@ -19,7 +20,7 @@ public class OneSpecialHandler {
 	Random rand = new Random();
 
 	public Player nextMan() {
-		MinecraftServer server = LogicalSidedProvider.INSTANCE.get(LogicalSide.SERVER);
+		MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 
 		List<ServerPlayer> players = server.getPlayerList().getPlayers();
 		Player man;

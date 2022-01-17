@@ -19,7 +19,7 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 public class EtheriumConfigHandler implements IEtheriumConfig {
 	private static EtheriumConfigHandler instance;

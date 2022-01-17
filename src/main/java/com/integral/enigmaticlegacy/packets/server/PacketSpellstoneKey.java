@@ -8,7 +8,7 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 /**
  * Packet for triggering active ability of the spellstone.

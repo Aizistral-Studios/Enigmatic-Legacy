@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
@@ -105,34 +107,30 @@ public class AdvancedSpawnLocationHelper {
 		BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos(p_241092_1_, 0, p_241092_2_);
 		Biome biome = p_241092_0_.getBiome(blockpos$mutable);
 		boolean flag = p_241092_0_.dimensionType().hasCeiling();
-		BlockState blockstate = biome.getGenerationSettings().getSurfaceBuilderConfig().getTopMaterial();
-		if (p_241092_3_ && !blockstate.is(BlockTags.VALID_SPAWN))
+		LevelChunk chunk = p_241092_0_.getChunk(p_241092_1_ >> 4, p_241092_2_ >> 4);
+		int i = flag ? p_241092_0_.getChunkSource().getGenerator().getSpawnHeight(p_241092_0_) : chunk.getHeight(Heightmap.Types.MOTION_BLOCKING, p_241092_1_ & 15, p_241092_2_ & 15);
+		if (i < 0)
 			return null;
 		else {
-			LevelChunk chunk = p_241092_0_.getChunk(p_241092_1_ >> 4, p_241092_2_ >> 4);
-			int i = flag ? p_241092_0_.getChunkSource().getGenerator().getSpawnHeight(p_241092_0_) : chunk.getHeight(Heightmap.Types.MOTION_BLOCKING, p_241092_1_ & 15, p_241092_2_ & 15);
-			if (i < 0)
+			int j = chunk.getHeight(Heightmap.Types.WORLD_SURFACE, p_241092_1_ & 15, p_241092_2_ & 15);
+			if (j <= i && j > chunk.getHeight(Heightmap.Types.OCEAN_FLOOR, p_241092_1_ & 15, p_241092_2_ & 15))
 				return null;
 			else {
-				int j = chunk.getHeight(Heightmap.Types.WORLD_SURFACE, p_241092_1_ & 15, p_241092_2_ & 15);
-				if (j <= i && j > chunk.getHeight(Heightmap.Types.OCEAN_FLOOR, p_241092_1_ & 15, p_241092_2_ & 15))
-					return null;
-				else {
-					for(int k = i + 1; k >= 0; --k) {
-						blockpos$mutable.set(p_241092_1_, k, p_241092_2_);
-						BlockState blockstate1 = p_241092_0_.getBlockState(blockpos$mutable);
-						if (!blockstate1.getFluidState().isEmpty()) {
-							break;
-						}
-
-						if (blockstate1.equals(blockstate))
-							return blockpos$mutable.above().immutable();
+				for(int k = i + 1; k >= 0; --k) {
+					blockpos$mutable.set(p_241092_1_, k, p_241092_2_);
+					BlockState blockstate = p_241092_0_.getBlockState(blockpos$mutable);
+					if (!blockstate.getFluidState().isEmpty()) {
+						break;
 					}
 
-					return null;
+					if (Block.isFaceFull(blockstate.getCollisionShape(p_241092_0_, blockpos$mutable), Direction.UP))
+						return blockpos$mutable.above().immutable();
 				}
+
+				return null;
 			}
 		}
+
 	}
 
 	@Nullable

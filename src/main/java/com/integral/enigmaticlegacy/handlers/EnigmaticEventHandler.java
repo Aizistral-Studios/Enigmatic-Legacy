@@ -198,7 +198,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent.LoggedInEvent;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
-import net.minecraftforge.client.event.GuiScreenEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.gui.ForgeIngameGui;
@@ -234,15 +234,15 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fmlclient.gui.GuiUtils;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
-import net.minecraftforge.fmllegacy.server.ServerLifecycleHooks;
-import net.minecraftforge.fmlserverevents.FMLServerStartedEvent;
+import net.minecraftforge.client.gui.GuiUtils;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.event.DropRulesEvent;
@@ -287,15 +287,15 @@ public class EnigmaticEventHandler {
 		if (handlingTooltip)
 			return;
 
-		ItemStack stack = event.getStack();
+		ItemStack stack = event.getItemStack();
 
 		if (stack != null && !stack.isEmpty()) { // cause I don't trust you Forge
 			if (stack.getItem().getRegistryName().getNamespace().equals(EnigmaticLegacy.MODID)) {
 				event.setCanceled(handlingTooltip = true);
-				drawHoveringText(event.getStack(), event.getMatrixStack(), event.getComponents(), event.getX(),
+				drawHoveringText(event.getItemStack(), event.getPoseStack(), event.getComponents(), event.getX(),
 						event.getY(), event.getScreenWidth(), event.getScreenHeight(),
 						GuiUtils.DEFAULT_BACKGROUND_COLOR, GuiUtils.DEFAULT_BORDER_COLOR_START,
-						GuiUtils.DEFAULT_BORDER_COLOR_END, event.getFontRenderer(), false);
+						GuiUtils.DEFAULT_BORDER_COLOR_END, event.getFont(), false);
 				handlingTooltip = false;
 			}
 		}
@@ -321,7 +321,7 @@ public class EnigmaticEventHandler {
 				mouseY = event.getY();
 				screenWidth = event.getScreenWidth();
 				screenHeight = event.getScreenHeight();
-				font = event.getFontRenderer();
+				font = event.getFont();
 			}
 			int tooltipTextWidth = 0;
 
@@ -451,7 +451,7 @@ public class EnigmaticEventHandler {
 	}
 
 	@SubscribeEvent
-	public void serverStarted(final FMLServerStartedEvent event) {
+	public void serverStarted(ServerStartedEvent event) {
 		if (!exceptionList.isEmpty()) {
 			EnigmaticLegacy.logger.fatal("Some stupid mods once again attempted to add unnamed LootPools to loot tables!");
 			for (Triple<LootTable, LootPool, Exception> triple : exceptionList) {
@@ -718,8 +718,8 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
-	public void onInventoryGuiInit(GuiScreenEvent.InitGuiEvent.Post evt) {
-		Screen screen = evt.getGui();
+	public void onInventoryGuiInit(ScreenEvent.InitScreenEvent.Post evt) {
+		Screen screen = evt.getScreen();
 
 		if (screen instanceof InventoryScreen || screen instanceof CreativeModeInventoryScreen || screen instanceof CuriosScreen) {
 			AbstractContainerScreen<?> gui = (AbstractContainerScreen<?>) screen;
@@ -728,7 +728,7 @@ public class EnigmaticEventHandler {
 			int x = offsets.getA();
 			int y = offsets.getB();
 
-			evt.addWidget(new EnderChestInventoryButton(gui, gui.getGuiLeft() + x, gui.getGuiTop() + y, 20, 18, 0, 0, 19,
+			evt.addListener(new EnderChestInventoryButton(gui, gui.getGuiLeft() + x, gui.getGuiTop() + y, 20, 18, 0, 0, 19,
 					new ResourceLocation(
 							"enigmaticlegacy:textures/gui/ender_chest_button.png"),(button) -> {
 								EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketEnderRingKey(true));
@@ -740,7 +740,7 @@ public class EnigmaticEventHandler {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onFogRender(EntityViewRenderEvent.FogDensity event) {
-		if (event.getInfo().getFluidInCamera() == FogType.LAVA && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.magmaHeart)) {
+		if (event.getCamera().getFluidInCamera() == FogType.LAVA && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.magmaHeart)) {
 			event.setCanceled(true);
 			event.setDensity((float) MagmaHeart.lavafogDensity.getValue());
 		}
@@ -2336,10 +2336,10 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
-	public void onAnvilOpen(GuiScreenEvent.InitGuiEvent event) {
-		if (event.getGui() instanceof AnvilScreen) {
+	public void onAnvilOpen(ScreenEvent.InitScreenEvent event) {
+		if (event.getScreen() instanceof AnvilScreen) {
 
-			AnvilScreen screen = (AnvilScreen) event.getGui();
+			AnvilScreen screen = (AnvilScreen) event.getScreen();
 
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketAnvilField(""));
 

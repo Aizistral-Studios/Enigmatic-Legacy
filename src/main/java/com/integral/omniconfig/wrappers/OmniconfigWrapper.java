@@ -23,7 +23,7 @@ import com.integral.omniconfig.wrappers.Omniconfig.StringParameter;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 public class OmniconfigWrapper {
 	public static final Map<String, OmniconfigWrapper> wrapperRegistry = new HashMap<>();
