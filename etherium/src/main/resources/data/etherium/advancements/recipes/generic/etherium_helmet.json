@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": "etherium:etherium_ingot"
+            "items": ["etherium:etherium_ingot"]
           }
         ]
       }
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "item": "etherium:etherium_helmet"
+            "items": ["etherium:etherium_helmet"]
           }
         ]
       }
