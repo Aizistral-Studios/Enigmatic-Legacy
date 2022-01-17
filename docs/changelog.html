@@ -1,10 +1,43 @@
 <h3><b>The Changelog:</b></h3><br/>
 
+<h5><b>[Release 2.12.1]:</b></h5>
+<p>
+&nbsp;- Ported features and fixes from 2.11.10 and 2.11.11;<br/>
+&nbsp;- Altered unlocking methods for spellstone and arcane scroll slots to make use of more modern utilities provided by Curios API. This unfortunately means that if these slots were unlocked when using 2.12.0, another pair will be added for the player;<br/>
+&nbsp;- Enigmatic Amulet now has more specific lore if received upon entering the world (compared to last 1.16 releases where it now has more generic lore at all times);<br/>
+&nbsp;- Fixed minor spelling mistake in English localization;<br/>
+&nbsp;- Fixed incorrect display of bound coordinates in tooltip of Extradimensional Eye;<br/>
+&nbsp;- Fixed hunger bar being rendered in creative mode after consuming The Forbidden Fruit;<br/>
+&nbsp;- Corrected some of the compatibility mixins;<br/>
+&nbsp;- Redone tooltip fixes from 2.11.7.<br/>
+<p/><br/><br/>
+
+
 <h5><b>[Release 2.12.0]:</b></h5>
 <p>
 &nbsp;- Initial 1.17 port. Due to overwhelming amount of changes in Forge and Minecraft itself, this is an experimental beta version released to let people test it, find and report bugs; don't expect unwavering stability yet.<br/>
 <p/><br/><br/>
 
+
+<h5><b>[Release 2.11.11]:</b></h5>
+<p>
+&nbsp;- Fixed startup error when Apotheosis is present (#238);<br/>
+&nbsp;- Fixed datapack loading error when loading into the world (#239);<br/>
+&nbsp;- Fixed incorrect effect positioning by custom wither skulls/thrown potions;<br/>
+&nbsp;- Fixed minor spelling mistake in English localization;<br/>
+&nbsp;- Altered lore of Enigmatic Amulet to be more generic;<br/>
+&nbsp;- Implemented Unwitnessed Amulet (#186);<br/>
+&nbsp;- Implemented entity blacklist for Second Curse of Ring of the Seven Curses (#180).<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.11.10]:</b></h5>
+<p>
+&nbsp;- Fixed possibility of game freezing when using ancient tomes (#230);<br/>
+&nbsp;- Fixed special recipes in the mod (Tome of Hungering Knowledge/Mending Mixture/Keystone of the Oblivion) not working properly on some Bukkit servers, including Mohist (#231);<br/>
+&nbsp;- Fixed exploit with Scroll of a Thousand Curses, where holding another Ring of the Seven Curses in offhand would account for +7 curses (#235);<br/>
+&nbsp;- Fixed incorrect positioning of Ender Chest button when opening recipe book (#237).<br/>
+<p/><br/><br/>
 
 
 <h5><b>[Release 2.11.9]:</b></h5>
@@ -13,12 +46,10 @@
 <p/><br/><br/>
 
 
-
 <h5><b>[Release 2.11.8]:</b></h5>
 <p>
 &nbsp;- Fixed crash upon dedicated server startup (#226).<br/>
 <p/><br/><br/>
-
 
 
 <h5><b>[Release 2.11.7]:</b></h5>
@@ -32,7 +63,6 @@
 <p/><br/><br/>
 
 
-
 <h5><b>[Release 2.11.6]:</b></h5>
 <p>
 &nbsp;- Fixed severe increase in RAM usage incurred when repeatedly logging into and out of the world (#208);<br/>
@@ -40,7 +70,6 @@
 &nbsp;- Fixed soul loss mechanic not working properly with Corpse Complex installed (#209);<br/>
 &nbsp;- Implemented highly efficient state-of-art defense system to prevent Custom Starter Gear from tampering with Enigmatic Legacy's starter gear.<br/>
 <p/><br/><br/>
-
 
 
 <h5><b>[Release 2.11.5]:</b></h5>
@@ -58,10 +87,12 @@
 &nbsp;- Status effect immunity provided by Heart of Creation/Pearl of the Void now prevents effects from being applied in addition to clearing them out every tick. Furthermore, they no longer protect against Chrono Exhaustion debuff from Mana and Artifice (#196).<br/>
 <p/><br/><br/>
 
+
 <h5><b>[Release 2.11.4]:</b></h5>
 <p>
 &nbsp;- Fixed crash upon dedicated server startup.<br/>
 <p/><br/><br/>
+
 
 <h5><b>[Release 2.11.3]:</b></h5>
 <p>
@@ -71,15 +102,18 @@
 &nbsp;- Restored proper equip check that disallows duplicate accessories, now that problematic behavior is fixed on the of Curios.<br/>
 <p/><br/><br/>
 
+
 <h5><b>[Release 2.11.2]:</b></h5>
 <p>
 &nbsp;- Fixed bug with all equipped accessories being ejected into player inventory when re-entering the world (thanks wchen1990, #161).<br/>
 <p/><br/><br/>
 
+
 <h5><b>[Release 2.11.1]:</b></h5>
 <p>
 &nbsp;- Fixed mod crashing on dedicated server startup.<br/>
 <p/><br/><br/>
+
 
 <h5><b>[Release 2.11.0]:</b></h5>
 <p>
@@ -98,13 +132,15 @@
 
 <h5><b>[Release 2.10.3]:</b></h5>
 <p>
-&nbsp;- Implemented handler that purposefully crashes client whenever any mod attempts to inject unnamed LootPool into any loot table (which is an error state), printing out stacktraces that can be examined to see what mod have done this. Such cases have proven incredibly difficult to debug on the side of user, so should be a useful feature. Also added config option that allows to turn it off.<br/>
+&nbsp;- Implemented handler that purposefully crashes client whenever any mod attempts to inject unnamed LootPool into any loot table (which is an error state), printing out stacktraces that can be examined to see what mod have done this. Such cases have proven incredibly difficult to debug on the side of user, so should be a useful feature. Also added config option that allows to turn it off.
 <p/><br/><br/>
+
 
 <h5><b>[Release 2.10.2]:</b></h5>
 <p>
 &nbsp;- Fixed Encased Lanterns incorrectly rendering underwater (#121).<br/>
 <p/><br/><br/>
+
 
 <h5><b>[Release 2.10.1]:</b></h5>
 <p>
@@ -115,6 +151,7 @@
 &nbsp;- Re-added simplified Chinese localization (thanks FierceManul, #111).<br/>
 &nbsp;- The Acknowledgment edition raised to 7.<br/>
 <p/><br/><br/>
+
 
 <h5><b>[Release 2.10.0]:</b></h5>
 <p>
@@ -129,12 +166,14 @@
 &nbsp;- Altered project building to make Eclipse runs properly work.<br/>
 <p/><br/><br/>
 
+
 <h5><b>[Release 2.9.2]:</b></h5>
 <p>
 &nbsp;- This and all subsequent releases will now be marked as 1.16.3-compatible when uploading;<br/>
 &nbsp;- The Seventh Curse of Ring of the Seven Curses now causes Phantoms to spawn regardless of when player have last visited their bed;<br/>
 &nbsp;- Excluded next major Minecraft release from being listed as compatible in mods.toml.<br/>
 <p/><br/><br/>
+
 
 <h5><b>[Release 2.9.1]:</b></h5>
 <p>
@@ -150,6 +189,7 @@
 &nbsp;- A bit overhauled Unholy Grail texture;<br/>
 &nbsp;- Ennobled project building and changelog file format.<br/>
 <p/><br/><br/>
+
 
 <h5><b>[Release 2.9.0]:</b></h5>
 <p>
@@ -387,8 +427,6 @@
 * I know it's "Dependecy-Free" and all, but I already ended up using multiple hooks outside of generic API, and that number will likely only increase as I attempt to tweak more custom functionality into our Enigmatinomicon. Besides, I never wanted it to be optional addition in the first place.<br/>
 <p/><br/><br/>
 
-<p/><br/><br/>
-
 
 <h5><b>[Release 1.8.7]:</b></h5>
 <p>
@@ -498,7 +536,7 @@
 <h5><b>[Release 1.6.1]:</b></h5>
 <p>
 &nbsp;- Removed Universal Clock HUD. Now available as a separate mod: https://www.curseforge.com/minecraft/mc-mods/universal-clock-hud
-
+<p/><br/><br/>
 
 
 <h5><b>[Release 1.6.0]:</b></h5>
