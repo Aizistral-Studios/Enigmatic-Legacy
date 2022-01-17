@@ -42,6 +42,8 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -86,11 +88,13 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
 	public void addLayers(EntityRenderersEvent.AddLayers evt) {
 		this.addPlayerLayer(evt, "default");
 		this.addPlayerLayer(evt, "slim");
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	private void addPlayerLayer(EntityRenderersEvent.AddLayers evt, String skin) {
 		EntityRenderer<? extends Player> renderer = evt.getSkin(skin);

@@ -45,13 +45,8 @@ import net.minecraftforge.registries.IForgeRegistry;
 @Mod(EtheriumMod.MODID)
 public class EtheriumMod {
 	public static final String MODID = "etherium";
-	public static final String VERSION = "1.0.0";
-	public static final String RELEASE_TYPE = "Release";
-	public static final String NAME = "Etherium";
-	private static final String PTC_VERSION = "1";
-
 	public static final Logger logger = LogManager.getLogger("Etherium");
-	public static final CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+	public static final CommonProxy proxy = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	public static SimpleChannel packetInstance;
 
 	public static SoundEvent HHON;
@@ -102,12 +97,13 @@ public class EtheriumMod {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onLoadComplete);
 		FMLJavaModLoadingContext.get().getModEventBus().register(proxy);
 		MinecraftForge.EVENT_BUS.register(new EtheriumEventHandler(etheriumConfig, etheriumOre));
+		MinecraftForge.EVENT_BUS.register(proxy);
 		
 		logger.info("Mod instance constructed successfully.");
 	}
 	
 	private void setup(final FMLCommonSetupEvent event) {
-		packetInstance = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MODID, "main")).networkProtocolVersion(() -> PTC_VERSION).clientAcceptedVersions(PTC_VERSION::equals).serverAcceptedVersions(PTC_VERSION::equals).simpleChannel();
+		packetInstance = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MODID, "main")).networkProtocolVersion(() -> "1").clientAcceptedVersions("1"::equals).serverAcceptedVersions("1"::equals).simpleChannel();
 		
 		packetInstance.registerMessage(1, PacketPlayerMotion.class, PacketPlayerMotion::encode, PacketPlayerMotion::decode, PacketPlayerMotion::handle);
 	}
@@ -135,7 +131,8 @@ public class EtheriumMod {
 					etheriumShovel,
 					etheriumSword,
 					etheriumScythe,
-					enderRod
+					enderRod,
+					lootGenerator
 					);
 
 			logger.info("Items registered successfully.");

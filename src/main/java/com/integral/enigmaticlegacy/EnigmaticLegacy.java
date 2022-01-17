@@ -404,7 +404,7 @@ public class EnigmaticLegacy {
 
 	private static final String PTC_VERSION = "1";
 
-	public static final CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+	public static final CommonProxy proxy = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	public static final List<Triple<LootTable, LootPool, Exception>> exceptionList = new ArrayList<>();
 
 	@SuppressWarnings("deprecation")
