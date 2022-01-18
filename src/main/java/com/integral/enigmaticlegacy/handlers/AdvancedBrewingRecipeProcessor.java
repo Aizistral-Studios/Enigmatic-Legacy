@@ -16,7 +16,6 @@ import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
 
 public class AdvancedBrewingRecipeProcessor implements IComponentProcessor {
-
 	private AbstractBrewingRecipe recipe;
 
 	public static List<IVariable> wrapStackList(ItemStack... stackList) {
@@ -41,17 +40,14 @@ public class AdvancedBrewingRecipeProcessor implements IComponentProcessor {
 
 	@Override
 	public void setup(IVariableProvider variables) {
-
 		ResourceLocation recipeId = new ResourceLocation(variables.get("recipe").asString());
 		int index = variables.get("index").asNumber().intValue();
-
 
 		this.recipe = AbstractBrewingRecipe.recipeMap.containsKey(recipeId) ? AbstractBrewingRecipe.recipeMap.get(recipeId).get(index) : AbstractBrewingRecipe.EMPTY_RECIPE;
 	}
 
 	@Override
 	public IVariable process(String key) {
-
 		if (this.recipe instanceof SpecialBrewingRecipe) {
 			SpecialBrewingRecipe special = (SpecialBrewingRecipe) this.recipe;
 
