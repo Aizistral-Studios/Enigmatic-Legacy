@@ -63,9 +63,9 @@ public class PermanentItemEntity extends Entity {
 		super(type, world);
 	}
 
-	public PermanentItemEntity(Level worldIn, double x, double y, double z) {
-		this(PermanentItemEntity.TYPE, worldIn);
-		this.setPos(x, y <= 0 ? 1 : y, z);
+	public PermanentItemEntity(Level world, double x, double y, double z) {
+		this(PermanentItemEntity.TYPE, world);
+		this.setPos(x, y <= world.getMinBuildHeight() ? world.getMinBuildHeight() + 1 : y, z);
 		this.setYRot(this.random.nextFloat() * 360.0F);
 		this.setInvulnerable(true);
 
