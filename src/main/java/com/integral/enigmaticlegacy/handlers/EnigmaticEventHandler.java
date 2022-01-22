@@ -616,7 +616,7 @@ public class EnigmaticEventHandler {
 				if (!ForbiddenFruit.renderHungerBar.getValue()) {
 					event.setCanceled(true);
 					return;
-				} else if (mc.player.isCreative() || !ForbiddenFruit.replaceHungerBar.getValue())
+				} else if (mc.player.isCreative() || mc.player.isSpectator() || !ForbiddenFruit.replaceHungerBar.getValue())
 					return;
 
 				event.setCanceled(true);
