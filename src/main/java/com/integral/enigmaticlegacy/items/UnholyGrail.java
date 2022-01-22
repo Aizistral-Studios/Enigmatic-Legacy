@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
@@ -55,15 +56,27 @@ public class UnholyGrail extends ItemBase implements Vanishable {
 		Player player = (Player) entityLiving;
 
 		if (!worldIn.isClientSide) {
-			player.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 2, false, true));
-			player.addEffect(new MobEffectInstance(MobEffects.POISON, 160, 1, false, true));
-			player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 240, 0, false, true));
-			player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 1, false, true));
-			player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 160, 2, false, true));
-			player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 240, 0, false, true));
+			boolean isTheWorthyOne = SuperpositionHandler.isTheCursedOne(player) && EnigmaticLegacy.forbiddenFruit.haveConsumedFruit(player);
 
-			UseUnholyGrailTrigger.INSTANCE.trigger((ServerPlayer) player);
+			if (!isTheWorthyOne) {
+				player.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 2, false, true));
+				player.addEffect(new MobEffectInstance(MobEffects.POISON, 160, 1, false, true));
+				player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 240, 0, false, true));
+				player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 1, false, true));
+				player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 160, 2, false, true));
+				player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 240, 0, false, true));
 
+				UseUnholyGrailTrigger.INSTANCE.trigger((ServerPlayer) player, false);
+			} else {
+				player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 1000/2, 2, false, true));
+				player.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, 1600/2, 1, false, true));
+				player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 2400/2, 1, false, true));
+				player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 2000/2, 1, false, true));
+				player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 2400/2, 0, false, true));
+				//player.addEffect(new MobEffectInstance(MobEffects.HEAL, 1, 0, false, true));
+
+				UseUnholyGrailTrigger.INSTANCE.trigger((ServerPlayer) player, true);
+			}
 		}
 
 		player.awardStat(Stats.ITEM_USED.get(this));
