@@ -13,6 +13,7 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.integral.enigmaticlegacy.objects.Vector3;
+import com.integral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
@@ -20,11 +21,13 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.entity.projectile.WitherSkull;
 import net.minecraft.world.item.ItemStack;
@@ -36,6 +39,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.PacketDistributor;
@@ -142,30 +146,31 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		/*
-		List<AbstractHurtingProjectile> projectileEntities = living.world.getEntitiesWithinAABB(AbstractHurtingProjectile.class, new AABB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));
-		List<AbstractArrow> arrowEntities = living.world.getEntitiesWithinAABB(AbstractArrow.class, new AABB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));
-		List<PotionEntity> potionEntities = living.world.getEntitiesWithinAABB(PotionEntity.class, new AABB(living.getPosX() - this.range, living.getPosY() - this.range, living.getPosZ() - this.range, living.getPosX() + this.range, living.getPosY() + this.range, living.getPosZ() + this.range));
+		LivingEntity living = context.entity();
 
-		for (AbstractHurtingProjectile entity : projectileEntities)
-			this.redirect(living, entity);
+		if (living.level.isClientSide)
+			return;
 
-		for (AbstractArrow entity : arrowEntities)
-			this.redirect(living, entity);
+		List<AbstractHurtingProjectile> projectileEntities = living.level.getEntitiesOfClass(AbstractHurtingProjectile.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
+		List<AbstractArrow> arrowEntities = living.level.getEntitiesOfClass(AbstractArrow.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
+		List<ThrownPotion> potionEntities = living.level.getEntitiesOfClass(ThrownPotion.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
 
-		for (PotionEntity entity : potionEntities)
+		for (AbstractHurtingProjectile entity : projectileEntities) {
 			this.redirect(living, entity);
-		 */
+		}
+
+		for (AbstractArrow entity : arrowEntities) {
+			this.redirect(living, entity);
+		}
+
+		for (ThrownPotion entity : potionEntities) {
+			this.redirect(living, entity);
+		}
 	}
 
 	public void redirect(LivingEntity bearer, Entity redirected) {
 		if (redirected instanceof UltimateWitherSkullEntity || redirected instanceof WitherSkull)
 			return;
-
-		/*
-		 * if (redirected instanceof ThrownTrident) if
-		 * (((ThrownTrident)redirected).getShooter() == bearer) return;
-		 */
 
 		Vector3 entityPos = Vector3.fromEntityCenter(redirected);
 		Vector3 bearerPos = Vector3.fromEntityCenter(bearer);
@@ -174,7 +179,6 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 		redirection = redirection.normalize();
 
 		if (redirected instanceof AbstractArrow && ((AbstractArrow) redirected).getOwner() == bearer) {
-
 			if (redirected instanceof ThrownTrident) {
 				ThrownTrident trident = (ThrownTrident) redirected;
 
@@ -183,16 +187,19 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 			}
 
 			redirected.setDeltaMovement(redirected.getDeltaMovement().x * 1.75D, redirected.getDeltaMovement().y * 1.75D, redirected.getDeltaMovement().z * 1.75D);
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(bearer.getX(), bearer.getY(), bearer.getZ(), 64.0D, bearer.level.dimension())), new PacketForceArrowRotations(redirected.getId(), redirected.getYRot(), redirected.getXRot(), redirected.getDeltaMovement().x, redirected.getDeltaMovement().y, redirected.getDeltaMovement().z, redirected.getX(), redirected.getY(), redirected.getZ()));
 		} else {
-			redirected.setDeltaMovement(redirection.x, redirection.y, redirection.z);
+			// redirected.setDeltaMovement(redirection.x, redirection.y, redirection.z);
 		}
 
+		/*
 		if (redirected instanceof AbstractHurtingProjectile) {
 			AbstractHurtingProjectile redirectedProjectile = (AbstractHurtingProjectile) redirected;
 			redirectedProjectile.xPower = (redirection.x / 4.0);
 			redirectedProjectile.yPower = (redirection.y / 4.0);
 			redirectedProjectile.zPower = (redirection.z / 4.0);
 		}
+		 */
 	}
 
 }
