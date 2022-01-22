@@ -43,7 +43,6 @@ public abstract class ItemBaseArmor extends ArmorItem {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
-		// TODO Make our way around exception thrown when implementing IItemRenderProperties on item itself
 		consumer.accept(new IItemRenderProperties() {
 			@Override
 			@OnlyIn(Dist.CLIENT)
