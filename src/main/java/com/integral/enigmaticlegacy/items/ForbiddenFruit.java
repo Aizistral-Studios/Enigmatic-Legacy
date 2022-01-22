@@ -35,6 +35,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class ForbiddenFruit extends ItemBaseFood implements Vanishable {
 	public static final String consumedFruitTag = "ConsumedForbiddenFruit";
 	public static Omniconfig.PerhapsParameter regenerationSubtraction;
+	public static Omniconfig.DoubleParameter debuffDurationMultiplier;
 	public static Omniconfig.BooleanParameter renderHungerBar;
 	public static Omniconfig.BooleanParameter replaceHungerBar;
 
@@ -46,6 +47,10 @@ public class ForbiddenFruit extends ItemBaseFood implements Vanishable {
 					.comment("How much should be subtracted from regeneration of player who have consumed The Forbidden Fruit. ")
 					.max(100)
 					.getPerhaps("RegenerationSubtraction", 80);
+
+			debuffDurationMultiplier = builder
+					.comment("Multiplier for duration of debuffs applied upon consumption of The Forbidden Fruit. Setting it to 0 will disable debuffs entirely.")
+					.getDouble("DebuffDurationMultiplier", 1.0);
 		} else {
 			renderHungerBar = builder
 					.comment("Whether or not hunger bar should be rendered at all after Forbidden Fruit was consumed.")
@@ -92,10 +97,12 @@ public class ForbiddenFruit extends ItemBaseFood implements Vanishable {
 		this.defineConsumedFruit(player, true);
 
 		if (player instanceof ServerPlayer) {
-			player.addEffect(new MobEffectInstance(MobEffects.WITHER, 300, 3, false, true));
-			player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 300, 2, false, true));
-			player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 400, 2, false, true));
-			player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 500, 2, false, true));
+			double multiplier = debuffDurationMultiplier.getValue();
+
+			player.addEffect(new MobEffectInstance(MobEffects.WITHER,            (int) (300 * multiplier), 3, false, true));
+			player.addEffect(new MobEffectInstance(MobEffects.CONFUSION,         (int) (300 * multiplier), 2, false, true));
+			player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,          (int) (400 * multiplier), 3, false, true));
+			player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (500 * multiplier), 2, false, true));
 		}
 	}
 
