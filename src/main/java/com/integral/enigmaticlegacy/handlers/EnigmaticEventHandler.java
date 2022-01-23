@@ -107,7 +107,11 @@ import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Chicken;
@@ -179,6 +183,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
@@ -1421,22 +1426,39 @@ public class EnigmaticEventHandler {
 			}
 		}
 
-		if (event.getEntityLiving() instanceof Animal) {
-			if (event.getSource().getEntity() instanceof Player) {
-				Player player = (Player) event.getSource().getEntity();
-
-				if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide)) {
-					if (!(event.getEntityLiving() instanceof NeutralMob)
-							|| event.getEntityLiving() instanceof Hoglin
-							|| event.getEntityLiving() instanceof Bee
-							|| event.getEntityLiving() instanceof Wolf) {
+		if (event.getEntityLiving() instanceof Animal animal && event.getSource().getEntity() instanceof Player player) {
+			if (SuperpositionHandler.hasItem(player, animalGuide)) {
+				if (!(animal instanceof NeutralMob) || animal instanceof Hoglin || animal instanceof Bee || animal instanceof Wolf) {
+					if (player.getMainHandItem().getItem() == animalGuide) {
 						event.setCanceled(true);
+
+						if (animal.getTarget() == player) {
+							event.setCanceled(false);
+						} else {
+							for (WrappedGoal goal : animal.targetSelector.getAvailableGoals())
+								if (goal.getGoal() instanceof TargetGoal targetGoal) {
+									if (targetGoal.targetMob == player) {
+										event.setCanceled(false);
+									}
+								}
+						}
+
+						Brain<?> brain = animal.getBrain();
+
+						if (brain != null) {
+							try {
+								var memory = brain.getMemory(MemoryModuleType.ATTACK_TARGET);
+								if (memory.isPresent() && memory.get() == player) {
+									event.setCanceled(false);
+								}
+							} catch (NullPointerException ex) {
+								// I don't get why it happens here but it does lol
+							}
+						}
 					}
 				}
-
 			}
 		}
-
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOW)
