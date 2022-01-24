@@ -12,6 +12,7 @@ import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseFood;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
+import com.integral.enigmaticlegacy.triggers.ForbiddenFruitTrigger;
 import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
@@ -96,7 +97,8 @@ public class ForbiddenFruit extends ItemBaseFood implements Vanishable {
 	public void onConsumed(Level worldIn, Player player, ItemStack food) {
 		this.defineConsumedFruit(player, true);
 
-		if (player instanceof ServerPlayer) {
+		if (player instanceof ServerPlayer playerMP) {
+			ForbiddenFruitTrigger.INSTANCE.trigger(playerMP);
 			double multiplier = debuffDurationMultiplier.getValue();
 
 			player.addEffect(new MobEffectInstance(MobEffects.WITHER,            (int) (300 * multiplier), 3, false, true));

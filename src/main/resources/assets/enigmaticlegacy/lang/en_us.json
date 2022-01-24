@@ -258,6 +258,9 @@
 	"advancement.enigmaticlegacy:unholyGrail": "Ignoring the Advices",
 	"advancement.enigmaticlegacy:unholyGrail.desc": "Drink from Unholy Grail",
 	
+	"advancement.enigmaticlegacy:unholyGrailWorthy": "Unholy Supremacy",
+	"advancement.enigmaticlegacy:unholyGrailWorthy.desc": "Harness the power of Unholy Grail... but at what cost?",
+	
 	"advancement.enigmaticlegacy:astralDust": "Primal Catalyst",
 	"advancement.enigmaticlegacy:astralDust.desc": "Discover the Astral Dust",
 	
@@ -278,6 +281,24 @@
 	
 	"advancement.enigmaticlegacy:burnTheTome": "How Dare You",
 	"advancement.enigmaticlegacy:burnTheTome.desc": "Try and use ancient tome as a furnace fuel",
+	
+	"advancement.enigmaticlegacy:forbiddenFruit": "Primordial Sin",
+	"advancement.enigmaticlegacy:forbiddenFruit.desc": "Consume The Forbidden Fruit and rid yourself of the curse of hunger",
+	
+	"advancement.enigmaticlegacy:cursedRing": "Darkness Lies Ahead",
+	"advancement.enigmaticlegacy:cursedRing.desc": "Equip the Ring and embrace the Seven Curses",
+	
+	"advancement.enigmaticlegacy:twistedHeart": "It Will Betray You",
+	"advancement.enigmaticlegacy:twistedHeart.desc": "Create the Twisted Heart",
+	
+	"advancement.enigmaticlegacy:guardianHeart": "The Baleful Eye",
+	"advancement.enigmaticlegacy:guardianHeart.desc": "Slay the Elder Guardian and claim Heart of the Guardian",
+	
+	"advancement.enigmaticlegacy:twistedMirror": "Warped Beaty",
+	"advancement.enigmaticlegacy:twistedMirror.desc": "Create the Twisted Mirror",
+	
+	"advancement.enigmaticlegacy:theTwist": "Fateful Twist",
+	"advancement.enigmaticlegacy:theTwist.desc": "Slay the Wither and create The Twist using Nefarious Essence",
 
 	"tooltip.enigmaticlegacy.holdShift": "§5Hold §6Shift§5 to see details.",
 	

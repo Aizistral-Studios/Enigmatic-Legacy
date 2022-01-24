@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:unholy_grail"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:unholyGrailWorthy"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:unholyGrailWorthy.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+	"frame": "challenge"
+  },
+  "rewards": {
+    "experience": 4000
+  },
+  "parent": "enigmaticlegacy:main/unholy_grail",
+  "criteria": {
+    "spellstone": {
+      "trigger": "enigmaticlegacy:unholy_grail_drink",
+	  "conditions": {
+		  "is_the_worthy_one": true
+	  }
+    }
+  }
+}

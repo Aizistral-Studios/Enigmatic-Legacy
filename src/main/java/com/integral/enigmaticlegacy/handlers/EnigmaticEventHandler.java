@@ -72,6 +72,7 @@ import com.integral.enigmaticlegacy.packets.clients.PacketWitherParticles;
 import com.integral.enigmaticlegacy.packets.server.PacketAnvilField;
 import com.integral.enigmaticlegacy.packets.server.PacketEnderRingKey;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
+import com.integral.enigmaticlegacy.triggers.ForbiddenFruitTrigger;
 import com.integral.enigmaticlegacy.triggers.RevelationTomeBurntTrigger;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
@@ -2298,6 +2299,9 @@ public class EnigmaticEventHandler {
 				}
 			}
 
+			if (forbiddenFruit.haveConsumedFruit(player)) {
+				ForbiddenFruitTrigger.INSTANCE.trigger(player);
+			}
 		} catch (Exception ex) {
 			EnigmaticLegacy.logger.error("Failed to check player's advancements upon joining the world!");
 			ex.printStackTrace();

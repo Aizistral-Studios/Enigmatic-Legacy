@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:cursed_ring"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:cursedRing"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:cursedRing.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "parent": "enigmaticlegacy:main/root",
+  "criteria": {
+    "fruit": {
+      "trigger": "enigmaticlegacy:equip_cursed_ring"
+    }
+  }
+}
