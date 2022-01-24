@@ -83,6 +83,7 @@
 	"item.enigmaticlegacy.infinimeal": "Essence of Raging Life",
 	"item.enigmaticlegacy.darkest_scroll": "Darkest Scroll",
 	"item.enigmaticlegacy.unwitnessed_amulet": "Unwitnessed Amulet",
+	"item.enigmaticlegacy.twisted_potion": "Potion of Twisted Mercy",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -739,6 +740,10 @@
 	"tooltip.enigmaticlegacy.unwitnessedAmuletShift2": "§5dares lay their claim upon this relic, and in",
 	"tooltip.enigmaticlegacy.unwitnessedAmuletShift3": "§5that glorious minute fate of it's chosen",
 	"tooltip.enigmaticlegacy.unwitnessedAmuletShift4": "§5bearer shall be preordained.",
+	
+	"tooltip.enigmaticlegacy.twistedPotion1": "§5Teleports you to the location of your last",
+	"tooltip.enigmaticlegacy.twistedPotion2": "§5demise, at the cost of leaving you on the",
+	"tooltip.enigmaticlegacy.twistedPotion3": "§5edge of death.",
 
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",
@@ -1187,6 +1192,13 @@
 	"book.enigmaticlegacy.entry.recall_potion.page.1": "Journeying into the unknown lands is always somewhat interesting and exciting. Journeying back home from those lands, covering the route you once already taken - usually not nearly as much.<br2/>But having this potion at a hand can help you skip that boring part of covering all the distance on the way back, as it instantly teleports you",
 	"book.enigmaticlegacy.entry.recall_potion.page.2": "back home when you drink it. Or, well, at least to a place you can technically call home.<br2/>If you don't have one, you will instead end up somewhere around the place where your",
 	"book.enigmaticlegacy.entry.recall_potion.page.3": "journey across this world's lands has first started. Though you cannot be sure where exactly you will end up, apart from knowing it's somewhere close to that place.<br2/>The potion takes effect regardless of the distance that separates you and your destination, and regardless of whether you even are in the same dimension.",
+	
+	
+	"book.enigmaticlegacy.entry.twisted_potion.name": "Potion of Twisted Mercy",
+	"book.enigmaticlegacy.entry.twisted_potion.heading.1": "The Potion Brewing",
+	"book.enigmaticlegacy.entry.twisted_potion.page.1": "With the power of the Twisted Heart you can now mutate the essence of Potion of Recall, providing it with a new purpose.<br2/>Potion of Twisted Mercy, as you call it, will permit you to warp back to wherever exactly your last death occured, and hopefully recollect your possesings along with a part of your soul you have",
+	"book.enigmaticlegacy.entry.twisted_potion.page.2": "probably left there. Beware, however, for such opportunity comes at a cost - as soon as teleportation is complete you will find yourself almost dead again, and it may not be long before whatever killed you",
+	"book.enigmaticlegacy.entry.twisted_potion.page.3": "last time gets you once more.",
 	
 	
 	"book.enigmaticlegacy.entry.haste_potion.name": "Potion of Haste",

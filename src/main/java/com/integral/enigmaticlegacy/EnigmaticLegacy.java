@@ -103,6 +103,7 @@ import com.integral.enigmaticlegacy.items.TheAcknowledgment;
 import com.integral.enigmaticlegacy.items.TheTwist;
 import com.integral.enigmaticlegacy.items.ThiccScroll;
 import com.integral.enigmaticlegacy.items.TwistedCore;
+import com.integral.enigmaticlegacy.items.TwistedPotion;
 import com.integral.enigmaticlegacy.items.UltimatePotionBase;
 import com.integral.enigmaticlegacy.items.UltimatePotionLingering;
 import com.integral.enigmaticlegacy.items.UltimatePotionSplash;
@@ -140,6 +141,7 @@ import com.integral.enigmaticlegacy.proxy.ClientProxy;
 import com.integral.enigmaticlegacy.proxy.CommonProxy;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
 import com.integral.enigmaticlegacy.triggers.CursedRingEquippedTrigger;
+import com.integral.enigmaticlegacy.triggers.ForbiddenFruitTrigger;
 import com.integral.enigmaticlegacy.triggers.RevelationGainTrigger;
 import com.integral.enigmaticlegacy.triggers.RevelationTomeBurntTrigger;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
@@ -174,6 +176,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.InventoryMenu;
@@ -360,6 +363,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Essence of Raging Life") public static Infinimeal infinimeal;
 	@ConfigurableItem("Darkest Scroll") public static DarkestScroll darkestScroll;
 	@ConfigurableItem("") public static UnwitnessedAmulet unwitnessedAmulet;
+	@ConfigurableItem("Potion of Twisted Mercy") public static TwistedPotion twistedPotion;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -541,6 +545,7 @@ public class EnigmaticLegacy {
 		infinimeal = new Infinimeal();
 		darkestScroll = new DarkestScroll();
 		unwitnessedAmulet = new UnwitnessedAmulet();
+		twistedPotion = new TwistedPotion();
 
 		sharpshooterEnchantment = new SharpshooterEnchantment(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
 		ceaselessEnchantment = new CeaselessEnchantment(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
@@ -587,6 +592,10 @@ public class EnigmaticLegacy {
 			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.AWKWARD)), Ingredient.of(Items.ENDER_EYE), new ItemStack(recallPotion), new ResourceLocation(MODID, "recall_potion")));
 		}
 
+		if (OmniconfigHandler.isItemEnabled(twistedPotion)) {
+			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.of(recallPotion), Ingredient.of(twistedCore), new ItemStack(twistedPotion), new ResourceLocation(MODID, "twisted_potion")));
+		}
+
 		if (OmniconfigHandler.isItemEnabled(commonPotionBase)) {
 			PotionHelper.registerCommonPotions();
 		}
@@ -597,7 +606,7 @@ public class EnigmaticLegacy {
 			PotionHelper.registerLingeringUltimatePotions();
 		}
 
-		BrewingRecipeRegistry.addRecipe(new ValidationBrewingRecipe(Ingredient.of(hastePotionExtendedEmpowered, recallPotion, ultimatePotionLingering, commonPotionLingering), null));
+		BrewingRecipeRegistry.addRecipe(new ValidationBrewingRecipe(Ingredient.of(hastePotionExtendedEmpowered, recallPotion, twistedPotion, ultimatePotionLingering, commonPotionLingering), null));
 
 		EnigmaticUpdateHandler.init();
 
@@ -649,6 +658,7 @@ public class EnigmaticLegacy {
 		CriteriaTriggers.register(RevelationGainTrigger.INSTANCE);
 		CriteriaTriggers.register(CursedRingEquippedTrigger.INSTANCE);
 		CriteriaTriggers.register(RevelationTomeBurntTrigger.INSTANCE);
+		CriteriaTriggers.register(ForbiddenFruitTrigger.INSTANCE);
 
 		logger.info("Common setup phase finished successfully.");
 	}
@@ -848,6 +858,7 @@ public class EnigmaticLegacy {
 					infinimeal,
 					darkestScroll,
 					unwitnessedAmulet,
+					twistedPotion,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),

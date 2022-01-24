@@ -1447,7 +1447,8 @@ public class EnigmaticEventHandler {
 
 						if (brain != null) {
 							try {
-								var memory = brain.getMemory(MemoryModuleType.ATTACK_TARGET);
+								var memory = brain.hasMemoryValue(MemoryModuleType.ATTACK_TARGET)
+										? brain.getMemory(MemoryModuleType.ATTACK_TARGET) : Optional.empty();
 								if (memory.isPresent() && memory.get() == player) {
 									event.setCanceled(false);
 								}
@@ -1828,9 +1829,15 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onLivingDrops(LivingDropsEvent event) {
+		if (event.getEntityLiving() instanceof ServerPlayer player) {
+			CompoundTag deathLocation = new CompoundTag();
+			deathLocation.putDouble("x", player.getX());
+			deathLocation.putDouble("y", player.getY());
+			deathLocation.putDouble("z", player.getZ());
+			deathLocation.putString("dimension", player.level.dimension().location().toString());
 
-		if (event.getEntityLiving() instanceof ServerPlayer) {
-			ServerPlayer player = (ServerPlayer) event.getEntityLiving();
+			SuperpositionHandler.setPersistentTag(player, "LastDeathLocation", deathLocation);
+
 			boolean droppedCrystal = false;
 			boolean hadEscapeScroll = this.hadEscapeScroll(player);
 

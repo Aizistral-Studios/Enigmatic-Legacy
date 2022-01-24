@@ -1,0 +1,15 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "criteria": {
+	"has_core": {
+	  "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+		  {
+            "items": ["enigmaticlegacy:twisted_core"]
+          }
+        ]
+      }
+    }
+  }
+}

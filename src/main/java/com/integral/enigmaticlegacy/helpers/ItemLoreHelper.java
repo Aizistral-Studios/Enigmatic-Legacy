@@ -150,7 +150,6 @@ public class ItemLoreHelper {
 	}
 
 	public static class AnvilParser {
-
 		private boolean isLore;
 		private int loreIndex;
 		private boolean removeString;

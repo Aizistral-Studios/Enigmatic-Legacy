@@ -1,0 +1,34 @@
+{
+    "name": "book.enigmaticlegacy.entry.twisted_potion.name",
+    "icon": "enigmaticlegacy:twisted_potion",
+    "category": "enigmaticlegacy:brewing",
+	"advancement": "enigmaticlegacy:book/brewing/twisted_potion",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 30,
+	"extra_recipe_mappings": {
+			"enigmaticlegacy:twisted_potion": 1
+		},
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.twisted_potion.page.1"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:twisted_potion",
+			"index": 0,
+            "heading": "book.enigmaticlegacy.entry.twisted_potion.heading.1",
+            "text": "book.enigmaticlegacy.entry.twisted_potion.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.twisted_potion.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

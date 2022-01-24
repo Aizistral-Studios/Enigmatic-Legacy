@@ -720,10 +720,9 @@ public class SuperpositionHandler {
 
 		if (persistent.contains(tag))
 			return persistent.get(tag);
-		else {
-			persistent.put(tag, expectedValue);
+		else
+			//persistent.put(tag, expectedValue);
 			return expectedValue;
-		}
 
 	}
 
@@ -1095,6 +1094,15 @@ public class SuperpositionHandler {
 
 	public static ServerLevel getEnd() {
 		return SuperpositionHandler.getWorld(EnigmaticLegacy.proxy.getEndKey());
+	}
+
+	public static void sendToDimension(ServerPlayer player, ResourceKey<Level> dimension) {
+		if (!player.level.dimension().equals(dimension)) {
+			ServerLevel world = SuperpositionHandler.getWorld(dimension);
+			if (world != null) {
+				player.changeDimension(world, new RealSmoothTeleporter());
+			}
+		}
 	}
 
 	public static ServerLevel backToSpawn(ServerPlayer serverPlayer) {
