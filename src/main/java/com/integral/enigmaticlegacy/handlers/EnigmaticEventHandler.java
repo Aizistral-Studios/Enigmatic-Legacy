@@ -1430,32 +1430,30 @@ public class EnigmaticEventHandler {
 		if (event.getEntityLiving() instanceof Animal animal && event.getSource().getEntity() instanceof Player player) {
 			if (SuperpositionHandler.hasItem(player, animalGuide)) {
 				if (!(animal instanceof NeutralMob) || animal instanceof Hoglin || animal instanceof Bee || animal instanceof Wolf) {
-					if (player.getMainHandItem().getItem() == animalGuide) {
-						event.setCanceled(true);
+					event.setCanceled(true);
 
-						if (animal.getTarget() == player) {
-							event.setCanceled(false);
-						} else {
-							for (WrappedGoal goal : animal.targetSelector.getAvailableGoals())
-								if (goal.getGoal() instanceof TargetGoal targetGoal) {
-									if (targetGoal.targetMob == player) {
-										event.setCanceled(false);
-									}
-								}
-						}
-
-						Brain<?> brain = animal.getBrain();
-
-						if (brain != null) {
-							try {
-								var memory = brain.hasMemoryValue(MemoryModuleType.ATTACK_TARGET)
-										? brain.getMemory(MemoryModuleType.ATTACK_TARGET) : Optional.empty();
-								if (memory.isPresent() && memory.get() == player) {
+					if (animal.getTarget() == player) {
+						event.setCanceled(false);
+					} else {
+						for (WrappedGoal goal : animal.targetSelector.getAvailableGoals())
+							if (goal.getGoal() instanceof TargetGoal targetGoal) {
+								if (targetGoal.targetMob == player) {
 									event.setCanceled(false);
 								}
-							} catch (NullPointerException ex) {
-								// I don't get why it happens here but it does lol
 							}
+					}
+
+					Brain<?> brain = animal.getBrain();
+
+					if (brain != null) {
+						try {
+							var memory = brain.hasMemoryValue(MemoryModuleType.ATTACK_TARGET)
+									? brain.getMemory(MemoryModuleType.ATTACK_TARGET) : Optional.empty();
+							if (memory.isPresent() && memory.get() == player) {
+								event.setCanceled(false);
+							}
+						} catch (NullPointerException ex) {
+							// I don't get why it happens here but it does lol
 						}
 					}
 				}
