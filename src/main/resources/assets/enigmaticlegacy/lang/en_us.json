@@ -497,9 +497,10 @@
 	"tooltip.enigmaticlegacy.voidPearl8": "§5- Your attacks inflict §6Withering.",
 	"tooltip.enigmaticlegacy.voidPearl9": "§5- Any living creatures nearby you, if they",
 	"tooltip.enigmaticlegacy.voidPearl10": "§5  are exposed to darkness, receive massive",
-	"tooltip.enigmaticlegacy.voidPearl11": "§5  damage and heavy debuffs.",
-	"tooltip.enigmaticlegacy.voidPearl12": "§5- §6%1$s§d Chance§5 that otherwise lethal damage",
-	"tooltip.enigmaticlegacy.voidPearl13": "§5  won't kill you.",
+	"tooltip.enigmaticlegacy.voidPearl11": "§5  damage and heavy debuffs. §6Skyflaps§5 are",
+	"tooltip.enigmaticlegacy.voidPearl12": "§5  affected regradless of light level.",
+	"tooltip.enigmaticlegacy.voidPearl13": "§5- §6%1$s§d Chance§5 that otherwise lethal damage",
+	"tooltip.enigmaticlegacy.voidPearl14": "§5  won't kill you.",
 	
 	"tooltip.enigmaticlegacy.monsterCharm1": "§6+%1$s§d Damage§5 against undead creatures.",
 	"tooltip.enigmaticlegacy.monsterCharm2": "§6+%1$s§d Damage§5 against other aggressive creatures.",

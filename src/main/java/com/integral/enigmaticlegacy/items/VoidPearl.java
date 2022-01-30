@@ -21,6 +21,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -130,8 +131,9 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl9");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl10");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl11");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl12", ChatFormatting.GOLD, undeadProbability.getValue().asPercentage() + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl13");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl12");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl13", ChatFormatting.GOLD, undeadProbability.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidPearl14");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -190,7 +192,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 				}
 
 				for (LivingEntity victim : entities) {
-					if (victim.level.getMaxLocalRawBrightness(victim.blockPosition(), 0) < 3) {
+					if (victim.level.getMaxLocalRawBrightness(victim.blockPosition(), 0) < 3 || (victim instanceof Phantom && !victim.isOnFire())) {
 
 						if (victim instanceof Player) {
 							Player playerVictim = (Player) victim;
