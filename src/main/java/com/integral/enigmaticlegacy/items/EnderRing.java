@@ -40,7 +40,6 @@ public class EnderRing extends ItemBaseCurio {
 		if (builder.config.getSidedType() != Configuration.SidedConfigType.CLIENT) {
 			// NO-OP
 		} else {
-
 			inventoryButtonEnabled = builder
 					.comment("Whether or not button for accessing Ender Chest should be added to inventory GUI when player has Ring of Ender equipped.")
 					.getBoolean("ButtonEnabled", true);

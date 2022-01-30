@@ -28,6 +28,7 @@ import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.gui.EnderChestInventoryButton;
+import com.integral.enigmaticlegacy.gui.ToggleMagnetEffectsButton;
 import com.integral.enigmaticlegacy.helpers.CrossbowHelper;
 import com.integral.enigmaticlegacy.helpers.EnigmaticEnchantmentHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -71,6 +72,7 @@ import com.integral.enigmaticlegacy.packets.clients.PacketSlotUnlocked;
 import com.integral.enigmaticlegacy.packets.clients.PacketWitherParticles;
 import com.integral.enigmaticlegacy.packets.server.PacketAnvilField;
 import com.integral.enigmaticlegacy.packets.server.PacketEnderRingKey;
+import com.integral.enigmaticlegacy.packets.server.PacketToggleMagnetEffects;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
 import com.integral.enigmaticlegacy.triggers.ForbiddenFruitTrigger;
 import com.integral.enigmaticlegacy.triggers.RevelationTomeBurntTrigger;
@@ -730,15 +732,36 @@ public class EnigmaticEventHandler {
 		if (screen instanceof InventoryScreen || screen instanceof CreativeModeInventoryScreen || screen instanceof CuriosScreen) {
 			AbstractContainerScreen<?> gui = (AbstractContainerScreen<?>) screen;
 			boolean isCreative = screen instanceof CreativeModeInventoryScreen;
-			Tuple<Integer, Integer> offsets = EnderChestInventoryButton.getOffsets(isCreative);
-			int x = offsets.getA();
-			int y = offsets.getB();
 
-			evt.addListener(new EnderChestInventoryButton(gui, gui.getGuiLeft() + x, gui.getGuiTop() + y, 20, 18, 0, 0, 19,
+			EnderChestInventoryButton enderButton = new EnderChestInventoryButton(gui, 0, 0, 20, 18, 0, 0, 19,
 					new ResourceLocation(
-							"enigmaticlegacy:textures/gui/ender_chest_button.png"),(button) -> {
+							"enigmaticlegacy:textures/gui/ender_chest_button.png"),(input) -> {
 								EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketEnderRingKey(true));
-							}));
+							});
+
+			Tuple<Integer, Integer> enderOffsets = enderButton.getOffsets(isCreative);
+			int x = enderOffsets.getA();
+			int y = enderOffsets.getB();
+
+			enderButton.x = gui.getGuiLeft() + x;
+			enderButton.y = gui.getGuiTop() + y;
+
+			evt.addListener(enderButton);
+
+			ToggleMagnetEffectsButton magnetButton = new ToggleMagnetEffectsButton(gui, 0, 0, 20, 18, 21, 0, 19,
+					new ResourceLocation(
+							"enigmaticlegacy:textures/gui/ender_chest_button.png"),(input) -> {
+								EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketToggleMagnetEffects());
+							});
+
+			Tuple<Integer, Integer> magnetOffsets = magnetButton.getOffsets(isCreative);
+			x = magnetOffsets.getA();
+			y = magnetOffsets.getB();
+
+			magnetButton.x = gui.getGuiLeft() + x;
+			magnetButton.y = gui.getGuiTop() + y;
+
+			evt.addListener(magnetButton);
 		}
 	}
 

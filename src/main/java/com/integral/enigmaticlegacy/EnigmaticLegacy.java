@@ -136,6 +136,7 @@ import com.integral.enigmaticlegacy.packets.server.PacketConfirmTeleportation;
 import com.integral.enigmaticlegacy.packets.server.PacketEnderRingKey;
 import com.integral.enigmaticlegacy.packets.server.PacketInkwellField;
 import com.integral.enigmaticlegacy.packets.server.PacketSpellstoneKey;
+import com.integral.enigmaticlegacy.packets.server.PacketToggleMagnetEffects;
 import com.integral.enigmaticlegacy.packets.server.PacketXPScrollKey;
 import com.integral.enigmaticlegacy.proxy.ClientProxy;
 import com.integral.enigmaticlegacy.proxy.CommonProxy;
@@ -651,6 +652,7 @@ public class EnigmaticLegacy {
 		packetInstance.registerMessage(20, PacketSyncOptions.class, PacketSyncOptions::encode, PacketSyncOptions::decode, PacketSyncOptions::handle);
 		packetInstance.registerMessage(21, PacketGenericParticleEffect.class, PacketGenericParticleEffect::encode, PacketGenericParticleEffect::decode, PacketGenericParticleEffect::handle);
 		packetInstance.registerMessage(22, PacketUpdateExperience.class, PacketUpdateExperience::encode, PacketUpdateExperience::decode, PacketUpdateExperience::handle);
+		packetInstance.registerMessage(23, PacketToggleMagnetEffects.class, PacketToggleMagnetEffects::encode, PacketToggleMagnetEffects::decode, PacketToggleMagnetEffects::handle);
 
 		logger.info("Registering triggers...");
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);

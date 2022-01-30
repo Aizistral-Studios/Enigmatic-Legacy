@@ -7,6 +7,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.ForbiddenFruit;
 import com.integral.enigmaticlegacy.items.MagmaHeart;
+import com.integral.enigmaticlegacy.items.MagnetRing;
 import com.integral.enigmaticlegacy.packets.clients.PacketSyncTransientData;
 
 import net.minecraft.world.entity.player.Player;
@@ -66,6 +67,7 @@ public class TransientPlayerData {
 	public int spellstoneCooldown;
 	private int fireImmunityTimerLast;
 	private Boolean consumedForbiddenFruit;
+	private Boolean disabledMagnetEffects;
 
 	public boolean needsSync = false;
 
@@ -145,8 +147,18 @@ public class TransientPlayerData {
 		return this.consumedForbiddenFruit != null ? this.consumedForbiddenFruit : (this.consumedForbiddenFruit = SuperpositionHandler.getPersistentBoolean(this.player.get(), ForbiddenFruit.consumedFruitTag, false));
 	}
 
-	public void setConsumedForbiddenFruit(Boolean consumedForbiddenFruit){
+	public void setConsumedForbiddenFruit(Boolean consumedForbiddenFruit) {
 		this.consumedForbiddenFruit = consumedForbiddenFruit;
+		SuperpositionHandler.setPersistentBoolean(this.player.get(), ForbiddenFruit.consumedFruitTag, consumedForbiddenFruit);
+	}
+
+	public Boolean getDisabledMagnetRingEffects() {
+		return this.disabledMagnetEffects != null ? this.disabledMagnetEffects : (this.disabledMagnetEffects = SuperpositionHandler.getPersistentBoolean(this.player.get(), MagnetRing.disabledMagnetTag, false));
+	}
+
+	public void setDisabledMagnetRingEffects(Boolean disabledMagnetEffects) {
+		this.disabledMagnetEffects = disabledMagnetEffects;
+		SuperpositionHandler.setPersistentBoolean(this.player.get(), MagnetRing.disabledMagnetTag, disabledMagnetEffects);
 	}
 
 	public Player getPlayer() {
@@ -160,6 +172,7 @@ public class TransientPlayerData {
 		buf.writeInt(data.fireImmunityTimerCap);
 		buf.writeInt(data.fireImmunityTimerLast);
 		buf.writeBoolean(data.getConsumedForbiddenFruit());
+		buf.writeBoolean(data.getDisabledMagnetRingEffects());
 
 		return buf;
 	}
@@ -171,6 +184,7 @@ public class TransientPlayerData {
 		int fireImmunityTimerCap = buf.readInt();
 		int fireImmunityTimerLast = buf.readInt();
 		boolean consumedForbiddenFruit = buf.readBoolean();
+		boolean disabledMagnetEffects = buf.readBoolean();
 
 		Player player = EnigmaticLegacy.proxy.getPlayer(playerID);
 
@@ -181,6 +195,7 @@ public class TransientPlayerData {
 			data.fireImmunityTimerCap = fireImmunityTimerCap;
 			data.fireImmunityTimerLast = fireImmunityTimerLast;
 			data.consumedForbiddenFruit = consumedForbiddenFruit;
+			data.disabledMagnetEffects = disabledMagnetEffects;
 
 			return data;
 		}

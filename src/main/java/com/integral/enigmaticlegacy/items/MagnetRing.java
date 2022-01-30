@@ -10,7 +10,9 @@ import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
+import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.enigmaticlegacy.objects.Vector3;
+import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
@@ -32,20 +34,53 @@ import top.theillusivec4.curios.api.SlotContext;
 import net.minecraft.world.item.Item.Properties;
 
 public class MagnetRing extends ItemBaseCurio {
+	public static final String disabledMagnetTag = "DisabledMagnetEffects";
 	public static Omniconfig.IntParameter range;
 	public static Omniconfig.BooleanParameter invertShift;
+	public static Omniconfig.BooleanParameter inventoryButtonEnabled;
+	public static Omniconfig.IntParameter buttonOffsetX;
+	public static Omniconfig.IntParameter buttonOffsetY;
+	public static Omniconfig.IntParameter buttonOffsetXCreative;
+	public static Omniconfig.IntParameter buttonOffsetYCreative;
 
-	@SubscribeConfig
+	@SubscribeConfig(receiveClient = true)
 	public static void onConfig(OmniconfigWrapper builder) {
 		builder.pushPrefix("MagnetRing");
 
-		range = builder.comment("The radius in which Magnetic Ring will attract items.")
-				.min(1)
-				.max(256)
-				.getInt("Range", 8);
+		if (builder.config.getSidedType() != Configuration.SidedConfigType.CLIENT) {
+			range = builder.comment("The radius in which Magnetic Ring will attract items.")
+					.min(1)
+					.max(256)
+					.getInt("Range", 8);
 
-		invertShift = builder.comment("Inverts the Shift behaviour of Magnetic Ring and Dislocation Ring.")
-				.getBoolean("InvertShift", false);
+			invertShift = builder.comment("Inverts the Shift behaviour of Magnetic Ring and Dislocation Ring.")
+					.getBoolean("InvertShift", false);
+		} else {
+			inventoryButtonEnabled = builder
+					.comment("Whether or not button for toggling magnet effects should be added to inventory GUI when player has Ring of Ender equipped.")
+					.getBoolean("ButtonEnabled", true);
+
+			buttonOffsetX = builder
+					.comment("Allows to set offset for Magnet Effects button on X axis.")
+					.minMax(32768)
+					.getInt("ButtonOffsetX", 0);
+
+			buttonOffsetY = builder
+					.comment("Allows to set offset for Magnet Effects button on Y axis.")
+					.minMax(32768)
+					.getInt("ButtonOffsetY", 0);
+
+			buttonOffsetXCreative = builder
+					.comment("Allows to set offset for Magnet Effects button on X axis, for creative inventory specifically.")
+					.minMax(32768)
+					.getInt("ButtonOffsetXCreative", 0);
+
+			buttonOffsetYCreative = builder
+					.comment("Allows to set offset for Magnet Effects button on Y axis, for creative inventory specifically.")
+					.minMax(32768)
+					.getInt("ButtonOffsetYCreative", 0);
+
+		}
 
 		builder.popPrefix();
 	}
@@ -80,6 +115,9 @@ public class MagnetRing extends ItemBaseCurio {
 		if ((invertShift.getValue() ? !living.isShiftKeyDown() : living.isShiftKeyDown()) || !(living instanceof Player))
 			return;
 
+		if (this.hasMagnetEffectsDisabled((Player) living))
+			return;
+
 		double x = living.getX();
 		double y = living.getY() + 0.75;
 		double z = living.getZ();
@@ -104,6 +142,15 @@ public class MagnetRing extends ItemBaseCurio {
 				pulled++;
 			}
 
+	}
+
+	@Override
+	public boolean canEquip(SlotContext context, ItemStack stack) {
+		return super.canEquip(context, stack) && !SuperpositionHandler.hasCurio(context.entity(), EnigmaticLegacy.superMagnetRing);
+	}
+
+	public boolean hasMagnetEffectsDisabled(Player player) {
+		return TransientPlayerData.get(player).getDisabledMagnetRingEffects();
 	}
 
 	protected boolean canPullItem(ItemEntity item) {

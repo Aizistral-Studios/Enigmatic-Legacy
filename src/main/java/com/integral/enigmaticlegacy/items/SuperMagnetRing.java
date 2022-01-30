@@ -78,6 +78,9 @@ public class SuperMagnetRing extends MagnetRing {
 
 		Player player = (Player) living;
 
+		if (this.hasMagnetEffectsDisabled(player))
+			return;
+
 		double x = living.getX();
 		double y = living.getY() + 0.75;
 		double z = living.getZ();
@@ -107,6 +110,11 @@ public class SuperMagnetRing extends MagnetRing {
 				pulled++;
 			}
 
+	}
+
+	@Override
+	public boolean canEquip(SlotContext context, ItemStack stack) {
+		return super.canEquip(context, stack) && !SuperpositionHandler.hasCurio(context.entity(), EnigmaticLegacy.magnetRing);
 	}
 
 	@Override

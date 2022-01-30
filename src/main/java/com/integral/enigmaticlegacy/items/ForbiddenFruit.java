@@ -89,7 +89,6 @@ public class ForbiddenFruit extends ItemBaseFood implements Vanishable {
 	}
 
 	public void defineConsumedFruit(Player player, boolean consumedOrNot) {
-		SuperpositionHandler.setPersistentBoolean(player, consumedFruitTag, consumedOrNot);
 		TransientPlayerData.get(player).setConsumedForbiddenFruit(consumedOrNot);
 	}
 

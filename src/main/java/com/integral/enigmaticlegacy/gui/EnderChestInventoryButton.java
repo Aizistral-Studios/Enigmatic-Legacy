@@ -20,56 +20,26 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.item.CreativeModeTab;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
-public class EnderChestInventoryButton extends ImageButton {
+public class EnderChestInventoryButton extends PlayerInventoryButton {
 
-	private final AbstractContainerScreen<?> parentGui;
-	private boolean isRecipeBookVisible = false;
-
-	public EnderChestInventoryButton(AbstractContainerScreen<?> gui, int xIn, int yIn, int widthIn, int heightIn, int xTexStartIn, int yTexStartIn, int yDiffTextIn, ResourceLocation resourceLocationIn, Button.OnPress onPressIn) {
-		super(xIn, yIn, widthIn, heightIn, xTexStartIn, yTexStartIn, yDiffTextIn, resourceLocationIn, 256, 256, onPressIn);
-
-		this.parentGui = gui;
+	public EnderChestInventoryButton(AbstractContainerScreen<?> gui, int xIn, int yIn, int widthIn, int heightIn, int xTexStartIn, int yTexStartIn, int yDiffTextIn, ResourceLocation resourceLocationIn, OnPress onPressIn) {
+		super(gui, xIn, yIn, widthIn, heightIn, xTexStartIn, yTexStartIn, yDiffTextIn, resourceLocationIn, onPressIn);
 	}
 
 	@Override
-	public void renderButton(@Nonnull PoseStack PoseStack, int mouseX, int mouseY, float partialTicks) {
-		this.active = true;
-
-		if (this.parentGui instanceof InventoryScreen || this.parentGui instanceof CuriosScreen) {
-			boolean lastVisible = this.isRecipeBookVisible;
-
-			if (this.parentGui instanceof InventoryScreen) {
-				this.isRecipeBookVisible = ((InventoryScreen)this.parentGui).getRecipeBookComponent().isVisible();
-			} else if (this.parentGui instanceof CuriosScreen) {
-				this.isRecipeBookVisible = ((CuriosScreen)this.parentGui).getRecipeBookComponent().isVisible();
-			}
-
-			if (lastVisible != this.isRecipeBookVisible) {
-				Tuple<Integer, Integer> offsets = EnderChestInventoryButton.getOffsets(false);
-				this.setPosition(this.parentGui.getGuiLeft() + offsets.getA(), this.parentGui.getGuiTop() + offsets.getB());
-			}
-
-		} else if (this.parentGui instanceof CreativeModeInventoryScreen) {
-			CreativeModeInventoryScreen gui = (CreativeModeInventoryScreen) this.parentGui;
-			boolean isInventoryTab = gui.getSelectedTab() == CreativeModeTab.TAB_INVENTORY.getId();
-
-			if (!isInventoryTab) {
-				this.active = false;
-				return;
-			}
-		}
-
+	protected boolean beforeRender(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
 		boolean hasRing = SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.enderRing) || SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.cursedRing);
 
 		if (!hasRing || !EnderRing.inventoryButtonEnabled.getValue()) {
 			this.active = false;
-			return;
+			return false;
 		}
 
-		super.renderButton(PoseStack, mouseX, mouseY, partialTicks);
+		return true;
 	}
 
-	public static Tuple<Integer, Integer> getOffsets(boolean creative) {
+	@Override
+	public Tuple<Integer, Integer> getOffsets(boolean creative) {
 		int x = creative ? 170 + EnderRing.buttonOffsetXCreative.getValue() : 150 + EnderRing.buttonOffsetX.getValue();
 		int y = creative ? 5 + EnderRing.buttonOffsetYCreative.getValue() : 61 + EnderRing.buttonOffsetY.getValue();
 
