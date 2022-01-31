@@ -28,6 +28,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
@@ -100,12 +101,18 @@ public class TheAcknowledgment extends ItemBase implements Vanishable {
 
 	@Nonnull
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-		ItemStack stack = playerIn.getItemInHand(handIn);
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+		if (hand == InteractionHand.MAIN_HAND) {
+			ItemStack offhandStack = player.getOffhandItem();
 
-		if (playerIn instanceof ServerPlayer) {
-			ServerPlayer player = (ServerPlayer) playerIn;
-			PatchouliAPI.get().openBookGUI((ServerPlayer) playerIn, bookID);
+			if (offhandStack != null && (offhandStack.getItem() instanceof InfernalShield || offhandStack.getItem() instanceof ShieldItem))
+				return new InteractionResultHolder<ItemStack>(InteractionResult.PASS, player.getItemInHand(hand));
+		}
+
+		ItemStack stack = player.getItemInHand(hand);
+
+		if (player instanceof ServerPlayer playerMP) {
+			PatchouliAPI.get().openBookGUI(playerMP, bookID);
 		}
 
 		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
