@@ -29,6 +29,7 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
@@ -37,6 +38,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
@@ -45,8 +47,11 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class ClientProxy extends CommonProxy {
 	private static final Random random = new Random();
@@ -55,6 +60,9 @@ public class ClientProxy extends CommonProxy {
 	public ClientProxy() {
 		super();
 		this.clientTransientPlayerData = new WeakHashMap<>();
+
+		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
+		modBus.addListener(this::onClientSetup);
 	}
 
 	@Override
@@ -102,6 +110,13 @@ public class ClientProxy extends CommonProxy {
 		if (renderer instanceof LivingEntityRenderer livingRenderer) {
 			livingRenderer.addLayer(new ShieldAuraLayer(livingRenderer, Minecraft.getInstance().getEntityModels()));
 		}
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public void onClientSetup(FMLClientSetupEvent event) {
+		ItemProperties.register(EnigmaticLegacy.infernalShield, new ResourceLocation("blocking"),
+				(stack, world, entity, seed) -> entity != null && entity.isUsingItem()
+				&& entity.getUseItem() == stack ? 1 : 0);
 	}
 
 	@Override

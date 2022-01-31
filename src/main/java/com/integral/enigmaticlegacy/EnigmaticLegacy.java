@@ -79,6 +79,7 @@ import com.integral.enigmaticlegacy.items.GuardianHeart;
 import com.integral.enigmaticlegacy.items.HastePotion;
 import com.integral.enigmaticlegacy.items.HeavenScroll;
 import com.integral.enigmaticlegacy.items.HunterGuide;
+import com.integral.enigmaticlegacy.items.InfernalShield;
 import com.integral.enigmaticlegacy.items.Infinimeal;
 import com.integral.enigmaticlegacy.items.IronRing;
 import com.integral.enigmaticlegacy.items.LootGenerator;
@@ -365,6 +366,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Darkest Scroll") public static DarkestScroll darkestScroll;
 	@ConfigurableItem("") public static UnwitnessedAmulet unwitnessedAmulet;
 	@ConfigurableItem("Potion of Twisted Mercy") public static TwistedPotion twistedPotion;
+	@ConfigurableItem("INFERNAL_SHIELD") public static InfernalShield infernalShield;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -547,6 +549,7 @@ public class EnigmaticLegacy {
 		darkestScroll = new DarkestScroll();
 		unwitnessedAmulet = new UnwitnessedAmulet();
 		twistedPotion = new TwistedPotion();
+		infernalShield = new InfernalShield();
 
 		sharpshooterEnchantment = new SharpshooterEnchantment(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
 		ceaselessEnchantment = new CeaselessEnchantment(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
@@ -861,6 +864,7 @@ public class EnigmaticLegacy {
 					darkestScroll,
 					unwitnessedAmulet,
 					twistedPotion,
+					infernalShield,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),
