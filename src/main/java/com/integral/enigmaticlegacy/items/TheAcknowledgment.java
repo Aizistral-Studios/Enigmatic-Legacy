@@ -14,6 +14,7 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -102,13 +103,6 @@ public class TheAcknowledgment extends ItemBase implements Vanishable {
 	@Nonnull
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-		if (hand == InteractionHand.MAIN_HAND) {
-			ItemStack offhandStack = player.getOffhandItem();
-
-			if (offhandStack != null && (offhandStack.getItem() instanceof InfernalShield || offhandStack.getItem() instanceof ShieldItem))
-				return new InteractionResultHolder<ItemStack>(InteractionResult.PASS, player.getItemInHand(hand));
-		}
-
 		ItemStack stack = player.getItemInHand(hand);
 
 		if (player instanceof ServerPlayer playerMP) {

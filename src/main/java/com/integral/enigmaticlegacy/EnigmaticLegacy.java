@@ -28,6 +28,7 @@ import com.integral.enigmaticlegacy.brewing.ValidationBrewingRecipe;
 import com.integral.enigmaticlegacy.config.EtheriumConfigHandler;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.crafting.EnigmaticRecipeSerializers;
+import com.integral.enigmaticlegacy.effects.BlazingStrengthEffect;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 import com.integral.enigmaticlegacy.enchantments.NemesisCurseEnchantment;
 import com.integral.enigmaticlegacy.enchantments.SharpshooterEnchantment;
@@ -173,11 +174,16 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.AttackDamageMobEffect;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.inventory.ContainerLevelAccess;
@@ -366,7 +372,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Darkest Scroll") public static DarkestScroll darkestScroll;
 	@ConfigurableItem("") public static UnwitnessedAmulet unwitnessedAmulet;
 	@ConfigurableItem("Potion of Twisted Mercy") public static TwistedPotion twistedPotion;
-	@ConfigurableItem("INFERNAL_SHIELD") public static InfernalShield infernalShield;
+	@ConfigurableItem("Bulwark of Blazing Pride") public static InfernalShield infernalShield;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -391,6 +397,8 @@ public class EnigmaticLegacy {
 
 	public static AdvancedPotion EMPTY;
 	public static AdvancedPotion testingPotion;
+
+	public static BlazingStrengthEffect blazingStrengthEffect;
 
 	@ConfigurableItem("Sharpshooter Enchantment") public static SharpshooterEnchantment sharpshooterEnchantment;
 	@ConfigurableItem("Ceaseless Enchantment") public static CeaselessEnchantment ceaselessEnchantment;
@@ -550,6 +558,8 @@ public class EnigmaticLegacy {
 		unwitnessedAmulet = new UnwitnessedAmulet();
 		twistedPotion = new TwistedPotion();
 		infernalShield = new InfernalShield();
+
+		blazingStrengthEffect = new BlazingStrengthEffect();
 
 		sharpshooterEnchantment = new SharpshooterEnchantment(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
 		ceaselessEnchantment = new CeaselessEnchantment(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
@@ -897,8 +907,12 @@ public class EnigmaticLegacy {
 		}
 
 		@SubscribeEvent
-		public static void registerBrewing(final RegistryEvent.Register<Potion> event) {
+		public static void registerEffects(final RegistryEvent.Register<MobEffect> event) {
+			event.getRegistry().register(blazingStrengthEffect);
+		}
 
+		@SubscribeEvent
+		public static void registerBrewing(final RegistryEvent.Register<Potion> event) {
 			logger.info("Initializing advanced potion system...");
 
 			ULTIMATE_NIGHT_VISION = new AdvancedPotion("ultimate_night_vision", new MobEffectInstance(MobEffects.NIGHT_VISION, 19200));

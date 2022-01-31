@@ -17,6 +17,8 @@
 	"MixinLootTable",
 	"MixinCharmEffects",
 	"MixinStarterGear",
+	"MixinPlayer",
+	"MixinLivingEntity",
 	"AccessorAbstractArrowEntity"
   ],
   "client": [

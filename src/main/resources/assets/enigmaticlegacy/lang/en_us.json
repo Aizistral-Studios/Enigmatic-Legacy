@@ -84,6 +84,7 @@
 	"item.enigmaticlegacy.darkest_scroll": "Darkest Scroll",
 	"item.enigmaticlegacy.unwitnessed_amulet": "Unwitnessed Amulet",
 	"item.enigmaticlegacy.twisted_potion": "Potion of Twisted Mercy",
+	"item.enigmaticlegacy.infernal_shield": "Bulwark of Blazing Pride",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -91,6 +92,8 @@
 	"block.enigmaticlegacy.massive_shroomlamp": "Encased Shroomlamp",
 	"block.enigmaticlegacy.big_redstonelamp": "Redstone Lantern",
 	"block.enigmaticlegacy.massive_redstonelamp": "Encased Redstone Lantern",
+	
+	"effect.enigmaticlegacy.blazing_strength": "Blazing Might",
 	
 	"item.enigmaticlegacy.common_potion.effect.empty": "Hollow Potion",
 	"item.enigmaticlegacy.common_potion.effect.haste": "Potion of Haste",
@@ -766,6 +769,23 @@
 	"tooltip.enigmaticlegacy.twistedPotion1": "§5Teleports you to the location of your last",
 	"tooltip.enigmaticlegacy.twistedPotion2": "§5demise, at the cost of leaving you on the",
 	"tooltip.enigmaticlegacy.twistedPotion3": "§5edge of death.",
+	
+	"tooltip.enigmaticlegacy.infernalShield1": "§5It shall become bound to the first one who",
+	"tooltip.enigmaticlegacy.infernalShield2": "§5dares lay their claim upon this relic, and in",
+	"tooltip.enigmaticlegacy.infernalShield3": "§5that glorious minute fate of its chosen",
+	"tooltip.enigmaticlegacy.infernalShield4": "§5bearer shall be preordained.",
+	
+	"tooltip.enigmaticlegacy.infernalShield1": "§6When equipped:",
+	"tooltip.enigmaticlegacy.infernalShield2": "§5- Extinguishes you when on fire.",
+	"tooltip.enigmaticlegacy.infernalShield3": "§6When blocking:",
+	"tooltip.enigmaticlegacy.infernalShield4": "§5- Can block attacks immediately after being raised.",
+	"tooltip.enigmaticlegacy.infernalShield5": "§5- Can block §6Piercing§5-enchanted arrows.",
+	"tooltip.enigmaticlegacy.infernalShield6": "§5- Cannot be disabled by weapons normally effective",
+	"tooltip.enigmaticlegacy.infernalShield7": "§5  against shields.",
+	"tooltip.enigmaticlegacy.infernalShield8": "§5- Burns attackers when blocking melee damage;",
+	"tooltip.enigmaticlegacy.infernalShield9": "§5- Successful blocks grant increasing §6Blazing Might§5",
+	"tooltip.enigmaticlegacy.infernalShield10": "§5  effect, but any damage received takes it away.",
+	"tooltip.enigmaticlegacy.infernalShield11": "§5- Enemy attacks from behind deal §650%§5 more damage.",
 
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",

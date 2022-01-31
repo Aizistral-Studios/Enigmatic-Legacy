@@ -23,6 +23,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.quack.IProperShieldUser;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 import com.integral.enigmaticlegacy.config.JsonConfigHandler;
@@ -48,6 +49,7 @@ import com.integral.enigmaticlegacy.items.EyeOfNebula;
 import com.integral.enigmaticlegacy.items.ForbiddenAxe;
 import com.integral.enigmaticlegacy.items.ForbiddenFruit;
 import com.integral.enigmaticlegacy.items.HunterGuide;
+import com.integral.enigmaticlegacy.items.InfernalShield;
 import com.integral.enigmaticlegacy.items.MagmaHeart;
 import com.integral.enigmaticlegacy.items.MiningCharm;
 import com.integral.enigmaticlegacy.items.MonsterCharm;
@@ -197,6 +199,7 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.ChatFormatting;
@@ -300,10 +303,15 @@ public class EnigmaticEventHandler {
 		if (stack != null && !stack.isEmpty()) { // cause I don't trust you Forge
 			if (stack.getItem().getRegistryName().getNamespace().equals(EnigmaticLegacy.MODID)) {
 				event.setCanceled(handlingTooltip = true);
+				int background = GuiUtils.DEFAULT_BACKGROUND_COLOR;
+				int borderStart = GuiUtils.DEFAULT_BORDER_COLOR_START;
+				int borderEnd = GuiUtils.DEFAULT_BORDER_COLOR_END;
+
+				// TODO Custom colors for cursed items
+
 				drawHoveringText(event.getItemStack(), event.getPoseStack(), event.getComponents(), event.getX(),
 						event.getY(), event.getScreenWidth(), event.getScreenHeight(),
-						GuiUtils.DEFAULT_BACKGROUND_COLOR, GuiUtils.DEFAULT_BORDER_COLOR_START,
-						GuiUtils.DEFAULT_BORDER_COLOR_END, event.getFont(), false);
+						background, borderStart, borderEnd, event.getFont(), false);
 				handlingTooltip = false;
 			}
 		}
@@ -1502,6 +1510,19 @@ public class EnigmaticEventHandler {
 		}
 	}
 
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
+	public void onPlayerHurt(LivingHurtEvent event) {
+		if (event.getEntityLiving() instanceof Player player && event.getAmount() > 0) {
+			/*
+			 * Handler for stripping away Blazing Strength.
+			 */
+
+			if (player.hasEffect(EnigmaticLegacy.blazingStrengthEffect)) {
+				player.removeEffect(EnigmaticLegacy.blazingStrengthEffect);
+			}
+		}
+	}
+
 	@SubscribeEvent
 	public void onEntityHurt(LivingHurtEvent event) {
 
@@ -1661,6 +1682,24 @@ public class EnigmaticEventHandler {
 
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing)) {
 				event.setAmount(event.getAmount()*CursedRing.painMultiplier.getValue().asModifier());
+			}
+
+			/*
+			 * Handler for increasing damage on users of Bulwark of Blazing Pride.
+			 */
+
+			if (player.getUseItem().getItem() instanceof InfernalShield && ((IProperShieldUser) player).isActuallyReallyBlocking()) {
+				if (event.getSource().getEntity() != null) {
+					Vec3 sourcePos = event.getSource().getSourcePosition();
+					if (sourcePos != null) {
+						Vec3 lookVec = player.getViewVector(1.0F);
+						Vec3 sourceToSelf = sourcePos.vectorTo(player.position()).normalize();
+						sourceToSelf = new Vec3(sourceToSelf.x, 0.0D, sourceToSelf.z);
+						if (!(sourceToSelf.dot(lookVec) < 0.0D)) {
+							event.setAmount(event.getAmount() * 1.5F);
+						}
+					}
+				}
 			}
 
 		} else if (event.getEntityLiving() instanceof Monster) {

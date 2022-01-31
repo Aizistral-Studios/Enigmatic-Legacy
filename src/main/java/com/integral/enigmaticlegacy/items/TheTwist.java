@@ -12,6 +12,11 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.network.chat.Component;
@@ -83,6 +88,18 @@ public class TheTwist extends TheAcknowledgment implements ICursed {
 		} catch (Exception ex) {
 			// Just don't do it lol
 		}
+	}
+
+	@Override
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+		if (hand == InteractionHand.MAIN_HAND) {
+			ItemStack offhandStack = player.getOffhandItem();
+
+			if (offhandStack != null && (offhandStack.getItem().getUseAnimation(offhandStack) == UseAnim.BLOCK))
+				return new InteractionResultHolder<ItemStack>(InteractionResult.PASS, player.getItemInHand(hand));
+		}
+
+		return super.use(world, player, hand);
 	}
 
 }
