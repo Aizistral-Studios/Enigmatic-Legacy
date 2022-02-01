@@ -3,6 +3,7 @@ package com.integral.enigmaticlegacy.items;
 import java.util.List;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.ICursed;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
@@ -14,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.Level;
 
-public class TwistedCore extends ItemBase implements Vanishable {
+public class TwistedCore extends ItemBase implements ICursed, Vanishable {
 
 	public TwistedCore() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1));

@@ -31,6 +31,8 @@ public class ItemLoreHelper {
 		} else {
 			format = ChatFormatting.DARK_RED;
 		}
+		// TODO God do I hate making stylistic choices
+		//format = ChatFormatting.DARK_RED;
 
 		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.cursedOnesOnly1").withStyle(format));
 		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.cursedOnesOnly2").withStyle(format));

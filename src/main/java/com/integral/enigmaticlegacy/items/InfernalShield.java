@@ -3,6 +3,7 @@ package com.integral.enigmaticlegacy.items;
 import java.util.List;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.ICursed;
 import com.integral.enigmaticlegacy.api.items.ITaintable;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -30,7 +31,7 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 
-public class InfernalShield extends ItemBase implements Vanishable {
+public class InfernalShield extends ItemBase implements ICursed, Vanishable {
 
 	public InfernalShield() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).durability(10000));
@@ -89,7 +90,7 @@ public class InfernalShield extends ItemBase implements Vanishable {
 
 	@Override
 	public boolean isValidRepairItem(ItemStack stack, ItemStack repairStack) {
-		// TODO Proper repair material
+		// TODO Proper shield repair material
 		return repairStack.is(ItemTags.PLANKS) || super.isValidRepairItem(stack, repairStack);
 	}
 

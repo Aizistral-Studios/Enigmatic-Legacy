@@ -23,6 +23,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.items.ICursed;
 import com.integral.enigmaticlegacy.api.quack.IProperShieldUser;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
@@ -310,6 +311,13 @@ public class EnigmaticEventHandler {
 				int borderEnd = GuiUtils.DEFAULT_BORDER_COLOR_END;
 
 				// TODO Custom colors for cursed items
+				if (stack.getItem() instanceof ICursed || stack.getItem() instanceof CursedRing) {
+					background = 0xF7101010;
+					borderStart = 0x50FF0C00;
+					borderEnd = borderStart;
+					//borderStart = 0x50656565;
+					//borderEnd = (borderStart & 0xFEFEFE) >> 1 | borderStart & 0xFF000000;
+				}
 
 				drawHoveringText(event.getItemStack(), event.getPoseStack(), event.getComponents(), event.getX(),
 						event.getY(), event.getScreenWidth(), event.getScreenHeight(),
