@@ -501,7 +501,7 @@
 	"tooltip.enigmaticlegacy.voidPearl9": "§5- Any living creatures nearby you, if they",
 	"tooltip.enigmaticlegacy.voidPearl10": "§5  are exposed to darkness, receive massive",
 	"tooltip.enigmaticlegacy.voidPearl11": "§5  damage and heavy debuffs. §6Skyflaps§5 are",
-	"tooltip.enigmaticlegacy.voidPearl12": "§5  affected regradless of light level.",
+	"tooltip.enigmaticlegacy.voidPearl12": "§5  affected regardless of light level.",
 	"tooltip.enigmaticlegacy.voidPearl13": "§5- §6%1$s§d Chance§5 that otherwise lethal damage",
 	"tooltip.enigmaticlegacy.voidPearl14": "§5  won't kill you.",
 	
@@ -782,7 +782,7 @@
 	"tooltip.enigmaticlegacy.infernalShield5": "§5- Can block §6Piercing§5-enchanted arrows.",
 	"tooltip.enigmaticlegacy.infernalShield6": "§5- Cannot be disabled by weapons normally effective",
 	"tooltip.enigmaticlegacy.infernalShield7": "§5  against shields.",
-	"tooltip.enigmaticlegacy.infernalShield8": "§5- Burns attackers when blocking melee damage;",
+	"tooltip.enigmaticlegacy.infernalShield8": "§5- Burns attackers when blocking melee damage.",
 	"tooltip.enigmaticlegacy.infernalShield9": "§5- Successful blocks grant increasing §6Blazing Might§5",
 	"tooltip.enigmaticlegacy.infernalShield10": "§5  effect, but any damage received takes it away.",
 	"tooltip.enigmaticlegacy.infernalShield11": "§5- Enemy attacks from behind deal §650%§5 more damage.",
