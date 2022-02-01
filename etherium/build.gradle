@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://maven.parchmentmc.org' }
         maven {
             name "Sponge"
             url "https://repo.spongepowered.org/repository/maven-public/"
@@ -15,6 +16,7 @@ buildscript {
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
 		classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
+		classpath 'org.parchmentmc:librarian:1.+'
     }
 }
 
@@ -23,6 +25,7 @@ println("Applying plugins...")
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'com.matthewprenger.cursegradle'
 apply from: '../common.gradle'
 
