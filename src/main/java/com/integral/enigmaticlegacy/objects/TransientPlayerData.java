@@ -68,6 +68,7 @@ public class TransientPlayerData {
 	private int fireImmunityTimerLast;
 	private Boolean consumedForbiddenFruit;
 	private Boolean disabledMagnetEffects;
+	private transient boolean hasEyeOfNebulaPower;
 
 	public boolean needsSync = false;
 
@@ -159,6 +160,14 @@ public class TransientPlayerData {
 	public void setDisabledMagnetRingEffects(Boolean disabledMagnetEffects) {
 		this.disabledMagnetEffects = disabledMagnetEffects;
 		SuperpositionHandler.setPersistentBoolean(this.player.get(), MagnetRing.disabledMagnetTag, disabledMagnetEffects);
+	}
+
+	public boolean hasEyeOfNebulaPower() {
+		return this.hasEyeOfNebulaPower;
+	}
+
+	public void setEyeOfNebulaPower(boolean hasOrNo) {
+		this.hasEyeOfNebulaPower = hasOrNo;
 	}
 
 	public Player getPlayer() {

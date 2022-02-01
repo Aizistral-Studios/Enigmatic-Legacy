@@ -12,6 +12,7 @@ import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
+import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerSetlook;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
@@ -23,6 +24,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrownEnderpearl;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -43,6 +45,8 @@ public class EyeOfNebula extends ItemSpellstoneCurio implements ISpellstone {
 	public static Omniconfig.DoubleParameter dodgeRange;
 	public static Omniconfig.DoubleParameter phaseRange;
 	public static Omniconfig.PerhapsParameter magicResistance;
+	public static Omniconfig.PerhapsParameter magicBoost;
+	public static Omniconfig.PerhapsParameter attackEmpower;
 
 	@SubscribeConfig
 	public static void onConfig(OmniconfigWrapper builder) {
@@ -74,6 +78,14 @@ public class EyeOfNebula extends ItemSpellstoneCurio implements ISpellstone {
 				.max(100)
 				.getPerhaps("MagicResistance", 65);
 
+		magicBoost = builder
+				.comment("Magic Damage boost provided by Eye of the Nebula. Defined as percentage.")
+				.getPerhaps("MagicBoost", 40);
+
+		attackEmpower = builder
+				.comment("Attack damage increase for next attack after using active ability. Defined as percentage.")
+				.getPerhaps("AttackEmpower", 150);
+
 		builder.popPrefix();
 	}
 
@@ -100,9 +112,13 @@ public class EyeOfNebula extends ItemSpellstoneCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebulaCooldown", ChatFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula3");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula4", ChatFormatting.GOLD, magicResistance.getValue().asPercentage() + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula5", ChatFormatting.GOLD, dodgeProbability.getValue().asPercentage() + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula6");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula4", ChatFormatting.GOLD, magicBoost.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula5", ChatFormatting.GOLD, magicResistance.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula6", ChatFormatting.GOLD, dodgeProbability.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula7");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula8", ChatFormatting.GOLD, attackEmpower.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula9");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eyeOfNebula10");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -142,6 +158,7 @@ public class EyeOfNebula extends ItemSpellstoneCurio implements ISpellstone {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketRecallParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 24, false));
 
 			SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
+			TransientPlayerData.get(player).setEyeOfNebulaPower(true);
 		}
 
 	}

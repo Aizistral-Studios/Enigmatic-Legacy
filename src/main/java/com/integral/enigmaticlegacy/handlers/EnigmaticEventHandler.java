@@ -223,6 +223,8 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.EntityTeleportEvent;
+import net.minecraftforge.event.entity.EntityTeleportEvent.EnderPearl;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -448,6 +450,12 @@ public class EnigmaticEventHandler {
 		}
 	}
 
+	@SubscribeEvent
+	public void onEnderPearlTeleport(EntityTeleportEvent.EnderPearl event) {
+		if (SuperpositionHandler.hasCurio(event.getPlayer(), eyeOfNebula)) {
+			event.setAttackDamage(0);
+		}
+	}
 
 	@SubscribeEvent
 	public void onApplyPotion(PotionEvent.PotionApplicableEvent event) {
@@ -1739,8 +1747,7 @@ public class EnigmaticEventHandler {
 			}
 		}
 
-		if (event.getSource().getEntity() instanceof Player) {
-			Player player = (Player) event.getSource().getEntity();
+		if (event.getSource().getEntity() instanceof Player player) {
 			Entity immediateSource = event.getSource().getDirectEntity();
 
 			float damageBoost = 0F;
@@ -1754,6 +1761,17 @@ public class EnigmaticEventHandler {
 			}
 
 			event.setAmount(event.getAmount()+damageBoost);
+
+			if (SuperpositionHandler.hasCurio(player, eyeOfNebula)) {
+				if (event.getSource().isMagic() || event.getSource().msgId == DamageSource.WITHER.msgId || event.getSource().msgId == DamageSource.DRAGON_BREATH.msgId) {
+					event.setAmount(event.getAmount() * EyeOfNebula.magicBoost.getValue().asModifier(true));
+				}
+			}
+
+			if (TransientPlayerData.get(player).hasEyeOfNebulaPower()) {
+				event.setAmount(event.getAmount() * EyeOfNebula.attackEmpower.getValue().asModifier(true));
+				TransientPlayerData.get(player).setEyeOfNebulaPower(false);
+			}
 		}
 
 		if (event.getEntityLiving() instanceof TamableAnimal) {
