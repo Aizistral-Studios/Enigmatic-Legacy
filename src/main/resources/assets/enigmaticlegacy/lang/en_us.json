@@ -199,6 +199,7 @@
 	"tooltip.enigmaticlegacy.seconds": "seconds",
 	"death.attack.darkness": "%1$s was devoured by darkness",
 	"message.enigmaticlegacy.gen_sim_complete": "Estimated generation complete in §632768§5 instances; check §6latest.log§5 file to see the results.",
+	"message.enigmaticlegacy.animal_analysis_complete": "Entity registry analysis is complete; check §6latest.log§5 file to see the results.",
 	"status.enigmaticlegacy.outdated": "New version of §6Enigmatic Legacy§5 was established: %1$s. You must behold its greatness!",
 	"status.enigmaticlegacy.noconnection": "Enigmatic Legacy was unable to check for updates.",
 	"world.enigmaticlegacy.name": "World #",
@@ -702,7 +703,9 @@
 	"tooltip.enigmaticlegacy.animalGuide2": "§5deal damage to animals.",
 	"tooltip.enigmaticlegacy.animalGuide3": "§6Hoglins§5 around you are rendered passive.",
 	"tooltip.enigmaticlegacy.animalGuide4": "§dAlteration of the §6Second Curse§d:",
-	"tooltip.enigmaticlegacy.animalGuide5": "§5- Wolves and bees stay neutral towards you.",
+	"tooltip.enigmaticlegacy.animalGuide5": "§5- Tamable animals stay neutral towards you.",
+	"tooltip.enigmaticlegacy.animalGuideCreative1": "§6Right-Click any entity to see whether it is",
+	"tooltip.enigmaticlegacy.animalGuideCreative2": "§6considered tamable for curse-altering effect.",
 	
 	"tooltip.enigmaticlegacy.hunterGuide1": "§5While in your inventory, all damage your pets",
 	"tooltip.enigmaticlegacy.hunterGuide2": "§5receive within §6%1$s§6 blocks§5 from you is redirected",

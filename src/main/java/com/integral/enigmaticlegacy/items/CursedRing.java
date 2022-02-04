@@ -319,14 +319,14 @@ public class CursedRing extends ItemBaseCurio {
 					continue;
 				}
 
-				if (neutral instanceof TamableAnimal) {
-					if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide) || ((TamableAnimal)neutral).isTame()) {
+				if (neutral instanceof TamableAnimal tamable && tamable.isTame()) {
+					continue;
+				} else if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide)) {
+					if (EnigmaticLegacy.animalGuide.isTamableAnimal(checkedEntity)) {
 						continue;
 					}
-				} else if (neutral instanceof IronGolem) {
-					if (((IronGolem)neutral).isPlayerCreated()) {
-						continue;
-					}
+				} else if (neutral instanceof IronGolem golem && golem.isPlayerCreated()) {
+					continue;
 				} else if (neutral instanceof Bee) {
 					if (saveTheBees.getValue() || SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide)) {
 						continue;
