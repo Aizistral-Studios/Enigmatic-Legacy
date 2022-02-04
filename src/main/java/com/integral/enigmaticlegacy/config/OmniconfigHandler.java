@@ -71,7 +71,7 @@ public class OmniconfigHandler {
 
 		configBuilder.setReloadable();
 
-		OmniconfigWrapper clientBuilder = OmniconfigWrapper.setupBuilder("enigmaticlegacy-client", true, "2.0");
+		OmniconfigWrapper clientBuilder = OmniconfigWrapper.setupBuilder("enigmaticlegacy-client", true, "2.1");
 		clientBuilder.pushSidedType(Configuration.SidedConfigType.CLIENT);
 		clientBuilder.pushVersioningPolicy(Configuration.VersioningPolicy.AGGRESSIVE);
 		clientBuilder.pushTerminateNonInvokedKeys(true);
