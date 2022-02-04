@@ -311,6 +311,9 @@
 	"advancement.enigmaticlegacy:guardianHeart": "The Baleful Eye",
 	"advancement.enigmaticlegacy:guardianHeart.desc": "Slay the Elder Guardian and claim Heart of the Guardian",
 	
+	"advancement.enigmaticlegacy:infernalShield": "You Try Penetrating THIS!",
+	"advancement.enigmaticlegacy:infernalShield.desc": "Forge Bulwark of Blazing Pride, the ultimate tool of defense",
+	
 	"advancement.enigmaticlegacy:twistedMirror": "Warped Beaty",
 	"advancement.enigmaticlegacy:twistedMirror.desc": "Create the Twisted Mirror",
 	
@@ -1224,6 +1227,13 @@
 	"book.enigmaticlegacy.entry.the_twist.page.2": "as The Acknowledgment, allowing you to access your knowledge of this world's greatest mysteries, just wrapped into a different cover.<br2/>The true twist comes from its less scholastic purpose,",
 	"book.enigmaticlegacy.entry.the_twist.page.3": "specifically from abilities it has as weapon rather than book. Attacking with it deals heavy damage and even heavier knockback, which combined with hight attack speed allows for truly devastating series of strikes.<br2/>Being infused with essence of the curse and empowered with energy of the Wither's being, this relic draws power from the Ring of the Seven Curses, allowing you to overcome effects of the Second Curse",
 	"book.enigmaticlegacy.entry.the_twist.page.4": "if you choose it as your weapon, always dealing its full damage to monsters, just as any other creatures.<br2/>Furthermore, that essence eagerly eats into vessels and souls of higher beings, burning and tearing them apart, and higher beings just so happen to conveniently include demigods, as much as the Wither itself.",
+	
+	
+	"book.enigmaticlegacy.entry.infernal_shield.name": "Infernal Shield",
+	"book.enigmaticlegacy.entry.infernal_shield.page.1": "Forged from toughest materials and imbued with cursed power that your soul is bound with, this shield can turn you into a walking fortress.<br2/>Conventional means of counteracting shields, like Piercing-enchanted arrows or axes, are completely powerless against it; it defends you as soon as you raise it, and those who dare approach too",
+	"book.enigmaticlegacy.entry.infernal_shield.page.2": "close in their foolish attempt at harming you will be burned by the hellish flame that it contains. To top it all off, every failed attempt of your enemy to get through it will increase your own power, allowing you to retaliate",
+	"book.enigmaticlegacy.entry.infernal_shield.page.3": "violently and without mercy.<br2/>But such powerful defense comes at a perilous cost. Should you fail to hold this shield firmly between you and attacker, and their strike finds you in spite of your attempts to defend against it - your flesh and your pride will be shattered with equal brutality.<br2/>Another thing worth knowing - its durability is immense, but not limitless. Among the means",
+	"book.enigmaticlegacy.entry.infernal_shield.page.4": "to restore it, however, is to combine it with obsidian in an Anvil, or to have enchantment like Mending take care of that for you.<br2/>Bear it with pride, but remind yourself that overconfidence is a slow and insidious killer.",
 	
 	
 	"book.enigmaticlegacy.entry.ancient_tomes.name": "Ancient Tomes",

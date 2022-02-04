@@ -20,13 +20,19 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Vanishable;
+import net.minecraft.world.item.enchantment.DigDurabilityEnchantment;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
@@ -90,8 +96,10 @@ public class InfernalShield extends ItemBase implements ICursed, Vanishable {
 
 	@Override
 	public boolean isValidRepairItem(ItemStack stack, ItemStack repairStack) {
-		// TODO Proper shield repair material
-		return repairStack.is(ItemTags.PLANKS) || super.isValidRepairItem(stack, repairStack);
+		if (repairStack.getItem() instanceof BlockItem blockItem)
+			return blockItem.getBlock() == Blocks.OBSIDIAN;
+		else
+			return super.isValidRepairItem(stack, repairStack);
 	}
 
 	@Override
@@ -101,6 +109,21 @@ public class InfernalShield extends ItemBase implements ICursed, Vanishable {
 				player.clearFire();
 			}
 		}
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		return enchantment instanceof DigDurabilityEnchantment || super.canApplyAtEnchantingTable(stack, enchantment);
+	}
+
+	@Override
+	public boolean isEnchantable(ItemStack pStack) {
+		return true;
+	}
+
+	@Override
+	public int getItemEnchantability(ItemStack stack) {
+		return 16;
 	}
 
 }
