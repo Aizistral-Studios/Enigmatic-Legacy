@@ -137,8 +137,6 @@ public class PotionHelper {
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.STRONG_HASTE)
 						));
 
-
-
 		BrewingRecipeRegistry.addRecipe(
 				new ComplexBrewingRecipe(
 						PotionHelper.constructIngredientMap(
@@ -205,6 +203,68 @@ public class PotionHelper {
 								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.STRONG_HASTE)
+						));
+
+		BrewingRecipeRegistry.addRecipe(
+				new ComplexBrewingRecipe(
+						PotionHelper.constructIngredientMap(
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.MUNDANE)),
+								Ingredient.of(Items.BLAZE_ROD)
+								),
+						PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.MOLTEN_HEART)
+						));
+
+		BrewingRecipeRegistry.addRecipe(
+				new ComplexBrewingRecipe(
+						PotionHelper.constructIngredientMap(
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.MOLTEN_HEART)),
+								Ingredient.of(Items.REDSTONE)
+								),
+						PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.LONG_MOLTEN_HEART)
+						));
+
+		BrewingRecipeRegistry.addRecipe(
+				new ComplexBrewingRecipe(
+						PotionHelper.constructIngredientMap(
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.SPLASH_POTION, Potions.MUNDANE)),
+								Ingredient.of(Items.BLAZE_ROD),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.MOLTEN_HEART)),
+								Ingredient.of(Items.GUNPOWDER)
+								),
+						PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.MOLTEN_HEART)
+						));
+
+		BrewingRecipeRegistry.addRecipe(
+				new ComplexBrewingRecipe(
+						PotionHelper.constructIngredientMap(
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.MOLTEN_HEART)),
+								Ingredient.of(Items.REDSTONE),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.LONG_MOLTEN_HEART)),
+								Ingredient.of(Items.GUNPOWDER)
+								),
+						PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.LONG_MOLTEN_HEART)
+						));
+
+		BrewingRecipeRegistry.addRecipe(
+				new ComplexBrewingRecipe(
+						PotionHelper.constructIngredientMap(
+								Ingredient.of(PotionHelper.createVanillaPotion(Items.LINGERING_POTION, Potions.MUNDANE)),
+								Ingredient.of(Items.BLAZE_ROD),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.MOLTEN_HEART)),
+								Ingredient.of(Items.DRAGON_BREATH)
+								),
+						PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.MOLTEN_HEART)
+						));
+
+		BrewingRecipeRegistry.addRecipe(
+				new ComplexBrewingRecipe(
+						PotionHelper.constructIngredientMap(
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.MOLTEN_HEART)),
+								Ingredient.of(Items.REDSTONE),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.LONG_MOLTEN_HEART)),
+								Ingredient.of(Items.DRAGON_BREATH)
+								),
+						PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.LONG_MOLTEN_HEART)
 						));
 	}
 
@@ -369,6 +429,15 @@ public class PotionHelper {
 								Ingredient.of(EnigmaticLegacy.astralDust)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_HASTE)
+						));
+
+		BrewingRecipeRegistry.addRecipe(
+				new ComplexBrewingRecipe(
+						PotionHelper.constructIngredientMap(
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.LONG_MOLTEN_HEART)),
+								Ingredient.of(EnigmaticLegacy.astralDust)
+								),
+						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_MOLTEN_HEART)
 						));
 	}
 
@@ -569,6 +638,17 @@ public class PotionHelper {
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_HASTE)
 						));
+
+		BrewingRecipeRegistry.addRecipe(
+				new ComplexBrewingRecipe(
+						PotionHelper.constructIngredientMap(
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionSplash, EnigmaticLegacy.LONG_MOLTEN_HEART)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionBase, EnigmaticLegacy.ULTIMATE_MOLTEN_HEART)),
+								Ingredient.of(Items.GUNPOWDER)
+								),
+						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_MOLTEN_HEART)
+						));
 	}
 
 
@@ -768,6 +848,17 @@ public class PotionHelper {
 								Ingredient.of(Items.DRAGON_BREATH)
 								),
 						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_HASTE)
+						));
+
+		BrewingRecipeRegistry.addRecipe(
+				new ComplexBrewingRecipe(
+						PotionHelper.constructIngredientMap(
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionLingering, EnigmaticLegacy.LONG_MOLTEN_HEART)),
+								Ingredient.of(EnigmaticLegacy.astralDust),
+								Ingredient.of(PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionSplash, EnigmaticLegacy.ULTIMATE_MOLTEN_HEART)),
+								Ingredient.of(Items.DRAGON_BREATH)
+								),
+						PotionHelper.createAdvancedPotion(EnigmaticLegacy.ultimatePotionLingering, EnigmaticLegacy.ULTIMATE_MOLTEN_HEART)
 						));
 	}
 

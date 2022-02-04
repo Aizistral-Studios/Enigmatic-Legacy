@@ -94,6 +94,7 @@
 	"block.enigmaticlegacy.massive_redstonelamp": "Encased Redstone Lantern",
 	
 	"effect.enigmaticlegacy.blazing_strength": "Blazing Might",
+	"effect.enigmaticlegacy.molten_heart": "Molten Heart",
 	
 	"item.enigmaticlegacy.common_potion.effect.empty": "Hollow Potion",
 	"item.enigmaticlegacy.common_potion.effect.haste": "Potion of Haste",
@@ -163,6 +164,18 @@
 	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_weakness": "Lingering Potion of Weakness",
 	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_slow_falling": "Lingering Potion of Slow Falling",
 	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_haste": "Lingering Potion of Haste",
+	
+	"item.enigmaticlegacy.common_potion.effect.molten_heart": "Potion of Molten Heart",
+	"item.enigmaticlegacy.common_potion.effect.long_molten_heart": "Potion of Molten Heart",
+	"item.enigmaticlegacy.ultimate_potion.effect.ultimate_molten_heart": "Potion of Molten Heart",
+	
+	"item.enigmaticlegacy.common_potion_splash.effect.molten_heart": "Splash Potion of Molten Heart",
+	"item.enigmaticlegacy.common_potion_splash.effect.long_molten_heart": "Splash Potion of Molten Heart",
+	"item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_molten_heart": "Splash Potion of Molten Heart",
+	
+	"item.enigmaticlegacy.common_potion_lingering.effect.molten_heart": "Lingering Potion of Molten Heart",
+	"item.enigmaticlegacy.common_potion_lingering.effect.long_molten_heart": "Lingering Potion of Molten Heart",
+	"item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_molten_heart": "Lingering Potion of Molten Heart",
 	
 	"enchantment.enigmaticlegacy.nemesis_curse": "Curse of Nemesis",
 	"enchantment.enigmaticlegacy.sharpshooter": "Sharpshooter",
@@ -477,8 +490,8 @@
 	"tooltip.enigmaticlegacy.magmaHeart6": "§5- Burns those who attack you in melee.",
 	"tooltip.enigmaticlegacy.magmaHeart7": "§5- Heavily improved visibility in lava.",
 	"tooltip.enigmaticlegacy.magmaHeart8": "§5- Any status effects applied to you tick",
-	"tooltip.enigmaticlegacy.magmaHeart9": "§5  down twice as fast, except §6Fire Resistance§5.",
-	"tooltip.enigmaticlegacy.magmaHeart10": "§5- §6Fire Resistance§5 lasts twice as long.",
+	"tooltip.enigmaticlegacy.magmaHeart9": "§5  down twice as fast, except §6Molten Heart§5.",
+	"tooltip.enigmaticlegacy.magmaHeart10": "§5- §6Molten Heart§5 lasts twice as long.",
 	"tooltip.enigmaticlegacy.magmaHeart11": "§5- You are vulnerable to underwater creatures.",
 	
 	"tooltip.enigmaticlegacy.golemHeart1": "§dActive ability:",

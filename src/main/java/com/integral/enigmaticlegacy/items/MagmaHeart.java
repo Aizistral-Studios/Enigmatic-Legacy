@@ -58,12 +58,11 @@ public class MagmaHeart extends ItemSpellstoneCurio implements ISpellstone {
 					.getInt("IgnitionFeedback", 4);
 
 		} else {
-
 			lavafogDensity = builder
-					.comment("Controls how obscured your vision is in lava when Blazing Core is equipped. Lower value equals more visibility.")
+					.comment("Controls how obscured your vision is in lava when Blazing Core is equipped. Higher value equals more visibility.")
 					.max(1024)
 					.clientOnly()
-					.getDouble("LavaDensity", 0.3);
+					.getDouble("LavaDensity", 4);
 
 			traitorBar = builder
 					.comment("Flips the parabolic function bearing responsibility for heat bar rendering when temporary fire resistance from Blazing Core is active. Instead of default behavior, it will start decreasing slowly, but will expotentially speed up the closer to the end it is. This is a purely visual effect - raw fire immunity time provided stays unchanged.")

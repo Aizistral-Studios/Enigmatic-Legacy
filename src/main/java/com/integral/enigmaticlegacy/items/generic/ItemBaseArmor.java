@@ -47,8 +47,8 @@ public abstract class ItemBaseArmor extends ArmorItem {
 			@Override
 			@OnlyIn(Dist.CLIENT)
 			@SuppressWarnings("unchecked")
-			public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A original) {
-				return (A) ItemBaseArmor.this.provideArmorModelForSlot(armorSlot, original);
+			public HumanoidModel<?> getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> original) {
+				return ItemBaseArmor.this.provideArmorModelForSlot(armorSlot, original);
 			}
 		});
 	}

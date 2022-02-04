@@ -27,6 +27,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.ICursed;
 import com.integral.enigmaticlegacy.api.quack.IProperShieldUser;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
+import com.integral.enigmaticlegacy.effects.MoltenHeartEffect;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
@@ -772,7 +773,6 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent(receiveCanceled = true)
 	public void onItemBurnt(FurnaceFuelBurnTimeEvent event) {
-
 		if (event.getItemStack() != null && event.getItemStack().getItem() instanceof RevelationTome) {
 			if (ServerLifecycleHooks.getCurrentServer() != null && ItemNBTHelper.verifyExistance(event.getItemStack(), RevelationTome.lastHolderTag)) {
 				ServerPlayer player = ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(ItemNBTHelper.getUUID(event.getItemStack(), RevelationTome.lastHolderTag, Mth.createInsecureUUID()));
@@ -782,7 +782,6 @@ public class EnigmaticEventHandler {
 				}
 			}
 		}
-
 	}
 
 
@@ -831,9 +830,21 @@ public class EnigmaticEventHandler {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onFogRender(EntityViewRenderEvent.FogDensity event) {
-		if (event.getCamera().getFluidInCamera() == FogType.LAVA && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.magmaHeart)) {
-			event.setCanceled(true);
-			event.setDensity((float) MagmaHeart.lavafogDensity.getValue());
+		// NO-OP
+	}
+
+
+	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
+	public void onFogRender(EntityViewRenderEvent.RenderFogEvent event) {
+		if (event.getCamera().getFluidInCamera() == FogType.LAVA) {
+			if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.magmaHeart)) {
+				RenderSystem.setShaderFogStart(0.0F);
+				RenderSystem.setShaderFogEnd((float) MagmaHeart.lavafogDensity.getValue());
+			} else if (Minecraft.getInstance().player.hasEffect(EnigmaticLegacy.moltenHeartEffect)) {
+				RenderSystem.setShaderFogStart(0.0F);
+				RenderSystem.setShaderFogEnd((float) MoltenHeartEffect.lavafogDensity.getValue());
+			}
 		}
 	}
 
@@ -1027,7 +1038,7 @@ public class EnigmaticEventHandler {
 					effects.addAll(player.getActiveEffects());
 
 					for (MobEffectInstance effect : effects) {
-						if (effect.getEffect().equals(MobEffects.FIRE_RESISTANCE)) {
+						if (effect.getEffect().equals(moltenHeartEffect)) {
 							if (player.tickCount % 2 == 0 && effect.duration > 0) {
 								effect.duration += 1;
 							}
@@ -1361,7 +1372,6 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onEntityAttacked(LivingAttackEvent event) {
-
 		if (event.getEntityLiving().level.isClientSide)
 			return;
 
@@ -1369,11 +1379,13 @@ public class EnigmaticEventHandler {
 		 * Handler for immunities and projectile deflection.
 		 */
 
-		if (event.getEntityLiving() instanceof Player) {
-			Player player = (Player) event.getEntityLiving();
+		if (event.getEntityLiving() instanceof Player player) {
+			if (event.getSource().msgId.equals(DamageSource.LAVA.msgId) && player.hasEffect(moltenHeartEffect)) {
+				event.setCanceled(true);
+				return;
+			}
 
 			if (event.getSource().getDirectEntity() instanceof AbstractHurtingProjectile || event.getSource().getDirectEntity() instanceof AbstractArrow) {
-
 				/*if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.angelBlessing) && Math.random() <= ConfigHandler.ANGEL_BLESSING_DEFLECT_CHANCE.getValue().asModifier(false)) {
 					event.setCanceled(true);
 					Entity arrow = event.getSource().getImmediateSource();

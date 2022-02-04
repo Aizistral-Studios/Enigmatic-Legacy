@@ -29,6 +29,7 @@ import com.integral.enigmaticlegacy.config.EtheriumConfigHandler;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.crafting.EnigmaticRecipeSerializers;
 import com.integral.enigmaticlegacy.effects.BlazingStrengthEffect;
+import com.integral.enigmaticlegacy.effects.MoltenHeartEffect;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 import com.integral.enigmaticlegacy.enchantments.NemesisCurseEnchantment;
 import com.integral.enigmaticlegacy.enchantments.SharpshooterEnchantment;
@@ -396,10 +397,15 @@ public class EnigmaticLegacy {
 	public static AdvancedPotion STRONG_HASTE;
 	public static AdvancedPotion ULTIMATE_HASTE;
 
+	public static AdvancedPotion MOLTEN_HEART;
+	public static AdvancedPotion LONG_MOLTEN_HEART;
+	public static AdvancedPotion ULTIMATE_MOLTEN_HEART;
+
 	public static AdvancedPotion EMPTY;
 	public static AdvancedPotion testingPotion;
 
 	public static BlazingStrengthEffect blazingStrengthEffect;
+	public static MoltenHeartEffect moltenHeartEffect;
 
 	@ConfigurableItem("Sharpshooter Enchantment") public static SharpshooterEnchantment sharpshooterEnchantment;
 	@ConfigurableItem("Ceaseless Enchantment") public static CeaselessEnchantment ceaselessEnchantment;
@@ -561,6 +567,7 @@ public class EnigmaticLegacy {
 		infernalShield = new InfernalShield();
 
 		blazingStrengthEffect = new BlazingStrengthEffect();
+		moltenHeartEffect = new MoltenHeartEffect();
 
 		sharpshooterEnchantment = new SharpshooterEnchantment(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
 		ceaselessEnchantment = new CeaselessEnchantment(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
@@ -910,6 +917,7 @@ public class EnigmaticLegacy {
 		@SubscribeEvent
 		public static void registerEffects(final RegistryEvent.Register<MobEffect> event) {
 			event.getRegistry().register(blazingStrengthEffect);
+			event.getRegistry().register(moltenHeartEffect);
 		}
 
 		@SubscribeEvent
@@ -937,6 +945,10 @@ public class EnigmaticLegacy {
 			STRONG_HASTE = new AdvancedPotion("strong_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 1800, 1));
 			ULTIMATE_HASTE = new AdvancedPotion("ultimate_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 9600, 1));
 
+			MOLTEN_HEART = new AdvancedPotion("molten_heart", new MobEffectInstance(moltenHeartEffect, 3600));
+			LONG_MOLTEN_HEART = new AdvancedPotion("long_molten_heart", new MobEffectInstance(moltenHeartEffect, 9600));
+			ULTIMATE_MOLTEN_HEART = new AdvancedPotion("ultimate_molten_heart", new MobEffectInstance(moltenHeartEffect, 19200));
+
 			EMPTY = new AdvancedPotion("empty");
 
 			ultimatePotionTypes.add(ULTIMATE_NIGHT_VISION);
@@ -959,6 +971,10 @@ public class EnigmaticLegacy {
 			commonPotionTypes.add(LONG_HASTE);
 			commonPotionTypes.add(STRONG_HASTE);
 			ultimatePotionTypes.add(ULTIMATE_HASTE);
+
+			commonPotionTypes.add(MOLTEN_HEART);
+			commonPotionTypes.add(LONG_MOLTEN_HEART);
+			ultimatePotionTypes.add(ULTIMATE_MOLTEN_HEART);
 
 			logger.info("Advanced potion system initialized successfully.");
 		}
