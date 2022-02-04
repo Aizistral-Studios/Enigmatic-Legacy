@@ -72,101 +72,109 @@ public class CursedRing extends ItemBaseCurio {
 	public static Omniconfig.DoubleParameter endermenRandomportFrequency;
 	public static Omniconfig.BooleanParameter saveTheBees;
 	public static Omniconfig.BooleanParameter enableSpecialDrops;
+	public static Omniconfig.BooleanParameter enableLore;
 
 	public static Omniconfig.BooleanParameter ultraHardcore;
 	public static final List<ResourceLocation> neutralAngerBlacklist = new ArrayList<>();
 
-	@SubscribeConfig
+	@SubscribeConfig(receiveClient = true)
 	public static void onConfig(OmniconfigWrapper builder) {
 		String prevCategory = builder.getCurrentCategory();
 		builder.popCategory();
+
 		builder.pushCategory("The Seven Curses", "Config options directly affecting Ring of the Seven Curses");
 		builder.pushPrefix("CursedRing");
 
-		painMultiplier = builder
-				.comment("Defines how much damage bearers of the ring receive from any source. Measured as percentage.")
-				.getPerhaps("PainModifier", 200);
+		if (builder.config.getSidedType() != Configuration.SidedConfigType.CLIENT) {
+			enableLore = builder
+					.comment("Set to false to disable displaying lore on Ring of the Seven Curses. Useful if you are a modpack"
+							+ " developer wanting to have your own.")
+					.getBoolean("DisplayLore", true);
+		} else {
+			painMultiplier = builder
+					.comment("Defines how much damage bearers of the ring receive from any source. Measured as percentage.")
+					.getPerhaps("PainModifier", 200);
 
-		monsterDamageDebuff = builder
-				.comment("How much damage monsters receive from bearers of the ring will be decreased, in percents.")
-				.getPerhaps("MonsterDamageDebuff", 50);
+			monsterDamageDebuff = builder
+					.comment("How much damage monsters receive from bearers of the ring will be decreased, in percents.")
+					.getPerhaps("MonsterDamageDebuff", 50);
 
-		armorDebuff = builder
-				.comment("How much less effective armor will be for those who bear the ring. Measured as percetage.")
-				.max(100)
-				.getPerhaps("ArmorDebuff", 30);
+			armorDebuff = builder
+					.comment("How much less effective armor will be for those who bear the ring. Measured as percetage.")
+					.max(100)
+					.getPerhaps("ArmorDebuff", 30);
 
-		experienceBonus = builder
-				.comment("How much experience will drop from mobs to bearers of the ring, measured in percents.")
-				.getPerhaps("ExperienceBonus", 400);
+			experienceBonus = builder
+					.comment("How much experience will drop from mobs to bearers of the ring, measured in percents.")
+					.getPerhaps("ExperienceBonus", 400);
 
-		fortuneBonus = builder
-				.comment("How many bonus Fortune levels ring provides")
-				.getInt("FortuneBonus", 1);
+			fortuneBonus = builder
+					.comment("How many bonus Fortune levels ring provides")
+					.getInt("FortuneBonus", 1);
 
-		lootingBonus = builder
-				.comment("How many bonus Looting levels ring provides")
-				.getInt("LootingBonus", 1);
+			lootingBonus = builder
+					.comment("How many bonus Looting levels ring provides")
+					.getInt("LootingBonus", 1);
 
-		enchantingBonus = builder
-				.comment("How much additional Enchanting Power ring provides in Enchanting Table.")
-				.getInt("EnchantingBonus", 10);
+			enchantingBonus = builder
+					.comment("How much additional Enchanting Power ring provides in Enchanting Table.")
+					.getInt("EnchantingBonus", 10);
 
-		enableSpecialDrops = builder
-				.comment("Set to false to disable ALL special drops that can be obtained from vanilla mobs when "
-						+ "bearing Ring of the Seven Curses.")
-				.getBoolean("EnableSpecialDrops", true);
+			enableSpecialDrops = builder
+					.comment("Set to false to disable ALL special drops that can be obtained from vanilla mobs when "
+							+ "bearing Ring of the Seven Curses.")
+					.getBoolean("EnableSpecialDrops", true);
 
-		ultraHardcore = builder
-				.comment("If true, Ring of the Seven Curses will be equipped into player's ring slot right away when "
-						+ "entering a new world, instead of just being added to their inventory.")
-				.getBoolean("UltraHardcode", false);
+			ultraHardcore = builder
+					.comment("If true, Ring of the Seven Curses will be equipped into player's ring slot right away when "
+							+ "entering a new world, instead of just being added to their inventory.")
+					.getBoolean("UltraHardcode", false);
 
 
 
-		knockbackDebuff = builder
-				.comment("How much knockback bearers of the ring take, measured in percents.")
-				.getPerhaps("KnockbackDebuff", 200);
+			knockbackDebuff = builder
+					.comment("How much knockback bearers of the ring take, measured in percents.")
+					.getPerhaps("KnockbackDebuff", 200);
 
-		neutralAngerRange = builder
-				.comment("Range in which neutral creatures are angered against bearers of the ring.")
-				.min(4)
-				.getDouble("NeutralAngerRange", 24);
+			neutralAngerRange = builder
+					.comment("Range in which neutral creatures are angered against bearers of the ring.")
+					.min(4)
+					.getDouble("NeutralAngerRange", 24);
 
-		neutralXRayRange = builder
-				.comment("Range in which neutral creatures can see and target bearers of the ring even if they can't directly see them.")
-				.getDouble("NeutralXRayRange", 4);
+			neutralXRayRange = builder
+					.comment("Range in which neutral creatures can see and target bearers of the ring even if they can't directly see them.")
+					.getDouble("NeutralXRayRange", 4);
 
-		endermenRandomportFrequency = builder
-				.comment("Allows to adjust how frequently Endermen will try to randomly teleport to player bearing the ring, even "
-						+ "if they can't see the player and are not angered yet. Lower value = less probability of this happening.")
-				.min(0.01)
-				.getDouble("EndermenRandomportFrequency", 1);
+			endermenRandomportFrequency = builder
+					.comment("Allows to adjust how frequently Endermen will try to randomly teleport to player bearing the ring, even "
+							+ "if they can't see the player and are not angered yet. Lower value = less probability of this happening.")
+					.min(0.01)
+					.getDouble("EndermenRandomportFrequency", 1);
 
-		endermenRandomportRange = builder
-				.comment("Range in which Endermen can try to randomly teleport to bearers of the ring.")
-				.min(8)
-				.getDouble("EndermenRandomportRange", 32);
+			endermenRandomportRange = builder
+					.comment("Range in which Endermen can try to randomly teleport to bearers of the ring.")
+					.min(8)
+					.getDouble("EndermenRandomportRange", 32);
 
-		builder.popCategory();
-		builder.pushCategory("Save the Bees", "This category exists solely because of Jusey1z who really wanted to protect his bees."
-				+ Configuration.NEW_LINE + "Btw Jusey, when I said 'very cute though', I meant you. Bees are cute either of course.");
+			builder.popCategory();
+			builder.pushCategory("Save the Bees", "This category exists solely because of Jusey1z who really wanted to protect his bees."
+					+ Configuration.NEW_LINE + "Btw Jusey, when I said 'very cute though', I meant you. Bees are cute either of course.");
 
-		saveTheBees = builder
-				.comment("If true, bees will never affected by the Second Curse of Ring of the Seven Curses.")
-				.getBoolean("DontTouchMyBees", false);
+			saveTheBees = builder
+					.comment("If true, bees will never affected by the Second Curse of Ring of the Seven Curses.")
+					.getBoolean("DontTouchMyBees", false);
+
+			// Ugly but gets the job done
+			neutralAngerBlacklist.clear();
+			String[] blacklist = builder.config.getStringList("CursedRingNeutralAngerBlacklist", "The Seven Curses", new String[0], "List of entities that should never be affected"
+					+ " by the Second Curse of Ring of the Seven Curses. Examples: minecraft:iron_golem, minecraft:zombified_piglin. Changing this option required game restart to take effect.");
+
+			Arrays.stream(blacklist).forEach(entry -> neutralAngerBlacklist.add(new ResourceLocation(entry)));
+		}
 
 		builder.popCategory();
 		builder.popPrefix();
 		builder.pushCategory(prevCategory);
-
-		// Ugly but gets the job done
-
-		neutralAngerBlacklist.clear();
-		String[] blacklist = builder.config.getStringList("CursedRingNeutralAngerBlacklist", "The Seven Curses", new String[0], "List of entities that should never be affected"
-				+ " by the Second Curse of Ring of the Seven Curses. Examples: minecraft:iron_golem, minecraft:zombified_piglin. Changing this option required game restart to take effect.");
-
-		Arrays.stream(blacklist).forEach(entry -> neutralAngerBlacklist.add(new ResourceLocation(entry)));
 	}
 
 	public CursedRing() {
@@ -202,6 +210,14 @@ public class CursedRing extends ItemBaseCurio {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing17");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing18");
 		} else {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore4");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore5");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore6");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore7");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing1");
 
 			if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.isCreative()) {
