@@ -19,7 +19,8 @@
 	"MixinStarterGear",
 	"MixinPlayer",
 	"MixinLivingEntity",
-	"AccessorAbstractArrowEntity"
+	"AccessorAbstractArrowEntity",
+	"AccessorAdvancementCommands"
   ],
   "client": [
 	"MixinForgeHooksClient"

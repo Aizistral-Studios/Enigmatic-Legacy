@@ -796,7 +796,6 @@ public class SuperpositionHandler {
 	 */
 
 	public static boolean hasAdvancement(@Nonnull ServerPlayer player, @Nonnull ResourceLocation location) {
-
 		try {
 			if (player.getAdvancements().getOrStartProgress(player.server.getAdvancements().getAdvancement(location)).isDone())
 				return true;
@@ -805,6 +804,10 @@ public class SuperpositionHandler {
 		}
 
 		return false;
+	}
+
+	public static boolean doesAdvancementExist(@Nonnull ResourceLocation location) {
+		return ServerLifecycleHooks.getCurrentServer().getAdvancements().getAdvancement(location) != null;
 	}
 
 	/**

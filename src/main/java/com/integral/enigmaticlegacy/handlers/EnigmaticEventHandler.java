@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +61,7 @@ import com.integral.enigmaticlegacy.items.TheTwist;
 import com.integral.enigmaticlegacy.items.VoidPearl;
 import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.integral.enigmaticlegacy.mixin.AccessorAbstractArrowEntity;
+import com.integral.enigmaticlegacy.mixin.AccessorAdvancementCommands;
 import com.integral.enigmaticlegacy.objects.CooldownMap;
 import com.integral.enigmaticlegacy.objects.DamageSourceNemesisCurse;
 import com.integral.enigmaticlegacy.objects.DimensionalPosition;
@@ -83,9 +85,12 @@ import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.math.Matrix4f;
 import com.mojang.blaze3d.systems.RenderSystem;
 
+import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
@@ -102,6 +107,10 @@ import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.MobType;
@@ -192,6 +201,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.ServerRecipeBook;
@@ -205,6 +215,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -221,6 +232,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.AnvilUpdateEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -310,7 +322,6 @@ public class EnigmaticEventHandler {
 				int borderStart = GuiUtils.DEFAULT_BORDER_COLOR_START;
 				int borderEnd = GuiUtils.DEFAULT_BORDER_COLOR_END;
 
-				// TODO Custom colors for cursed items
 				if (stack.getItem() instanceof ICursed || stack.getItem() instanceof CursedRing) {
 					background = 0xF7101010;
 					borderStart = 0x50FF0C00;
@@ -456,6 +467,33 @@ public class EnigmaticEventHandler {
 			RenderSystem.enableDepthTest();
 			//RenderSystem.enableRescaleNormal();
 		}
+	}
+
+	@SubscribeEvent
+	public void onCommandRegistry(RegisterCommandsEvent event) {
+		LiteralArgumentBuilder<CommandSourceStack> builder = Commands.literal("haveadv").requires((source) -> {
+			return source.hasPermission(2);
+		});
+
+		builder.then(Commands.argument("advancement", ResourceLocationArgument.id())
+				.suggests(AccessorAdvancementCommands.getAdvancementSuggestions()).executes(source -> {
+					ServerPlayer player = source.getSource().getPlayerOrException();
+					Advancement adv = ResourceLocationArgument.getAdvancement(source, "advancement");
+
+					if (adv != null) {
+						boolean have = SuperpositionHandler.hasAdvancement(player, adv.getId());
+						TextComponent reply = new TextComponent("Advancement exists, and you "
+								+ (have ? "do" : "don't") + " have it.");
+						source.getSource().sendSuccess(reply.withStyle(have ? ChatFormatting.GREEN : ChatFormatting.RED), true);
+						return 1;
+					} else {
+						TextComponent reply = new TextComponent("Advancement does not exist.");
+						source.getSource().sendFailure(reply);
+						return 0;
+					}
+				}));
+
+		event.getDispatcher().register(builder);
 	}
 
 	@SubscribeEvent
