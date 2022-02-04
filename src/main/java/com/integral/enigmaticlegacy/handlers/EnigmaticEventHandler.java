@@ -1380,7 +1380,7 @@ public class EnigmaticEventHandler {
 		 */
 
 		if (event.getEntityLiving() instanceof Player player) {
-			if (event.getSource().msgId.equals(DamageSource.LAVA.msgId) && player.hasEffect(moltenHeartEffect)) {
+			if (player.hasEffect(moltenHeartEffect) && moltenHeartEffect.providesImmunity(event.getSource())) {
 				event.setCanceled(true);
 				return;
 			}

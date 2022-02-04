@@ -1284,6 +1284,18 @@
 	"book.enigmaticlegacy.entry.haste_potion.page.6": "...or lingering types, just like you can any other regular potion.",
 	
 	
+	"book.enigmaticlegacy.entry.molten_heart_potion.name": "Potion of Molten Heart",
+	"book.enigmaticlegacy.entry.molten_heart_potion.heading.1": "Brewing the Potion",
+	"book.enigmaticlegacy.entry.molten_heart_potion.heading.2": "Extending Duration",
+	"book.enigmaticlegacy.entry.molten_heart_potion.heading.3": "Splash Version",
+	"book.enigmaticlegacy.entry.molten_heart_potion.heading.4": "Lingering Version",
+	"book.enigmaticlegacy.entry.molten_heart_potion.page.1": "This one serves as an improved version of Fire Resistance potion, should you find yourself willing to invest less common ingredients in order to obtain greater effect.<br2/>Besides granting you complete immunity to fire and lava, it extinguishes you when you are on fire, and improves your sense of surroundings in molten magmatic currents to noticeable extent.",
+	"book.enigmaticlegacy.entry.molten_heart_potion.page.2": "Ultimately, it should make the experience of stewing in lava oceans of the Nether considerably more enjoyable.",
+	"book.enigmaticlegacy.entry.molten_heart_potion.page.3": "Its effect can be extended using redstone dust.",
+	"book.enigmaticlegacy.entry.molten_heart_potion.page.4": "You can also brew it into splash...",
+	"book.enigmaticlegacy.entry.molten_heart_potion.page.5": "...or lingering types, just like you can any other regular potion.",
+	
+	
 	"book.enigmaticlegacy.entry.advanced_brewing.name": "Advanced Potions",
 	"book.enigmaticlegacy.entry.advanced_brewing.heading.1": "Ultimate Potion Brewing",
 	"book.enigmaticlegacy.entry.advanced_brewing.heading.2": "Ultimate Strength",
