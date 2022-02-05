@@ -85,7 +85,7 @@ public class CursedRing extends ItemBaseCurio {
 		builder.pushCategory("The Seven Curses", "Config options directly affecting Ring of the Seven Curses");
 		builder.pushPrefix("CursedRing");
 
-		if (builder.config.getSidedType() != Configuration.SidedConfigType.CLIENT) {
+		if (builder.config.getSidedType() == Configuration.SidedConfigType.CLIENT) {
 			enableLore = builder
 					.comment("Set to false to disable displaying lore on Ring of the Seven Curses. Useful if you are a modpack"
 							+ " developer wanting to have your own.")
