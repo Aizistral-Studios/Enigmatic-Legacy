@@ -838,12 +838,12 @@ public class EnigmaticEventHandler {
 	@OnlyIn(Dist.CLIENT)
 	public void onFogRender(EntityViewRenderEvent.RenderFogEvent event) {
 		if (event.getCamera().getFluidInCamera() == FogType.LAVA) {
-			if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.magmaHeart)) {
-				RenderSystem.setShaderFogStart(0.0F);
-				RenderSystem.setShaderFogEnd((float) MagmaHeart.lavafogDensity.getValue());
-			} else if (Minecraft.getInstance().player.hasEffect(EnigmaticLegacy.moltenHeartEffect)) {
+			if (Minecraft.getInstance().player.hasEffect(EnigmaticLegacy.moltenHeartEffect)) {
 				RenderSystem.setShaderFogStart(0.0F);
 				RenderSystem.setShaderFogEnd((float) MoltenHeartEffect.lavafogDensity.getValue());
+			} else if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.magmaHeart)) {
+				RenderSystem.setShaderFogStart(0.0F);
+				RenderSystem.setShaderFogEnd((float) MagmaHeart.lavafogDensity.getValue());
 			}
 		}
 	}
