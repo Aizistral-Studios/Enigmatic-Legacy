@@ -744,8 +744,8 @@
 	"tooltip.enigmaticlegacy.guardianHeart6": "§5become temporarily enraged, gaining greater",
 	"tooltip.enigmaticlegacy.guardianHeart7": "§5strength and switching target to other closest",
 	"tooltip.enigmaticlegacy.guardianHeart8": "§5monster within §6%1$s§6 blocks§5 from it.",
-	"tooltip.enigmaticlegacy.guardianHeart9": "§5Other monsters within this radius will",
-	"tooltip.enigmaticlegacy.guardianHeart10": "§5instantly prioritize attacking enraged monster.",
+	"tooltip.enigmaticlegacy.guardianHeart9": "§5Other monsters within this radius will instantly",
+	"tooltip.enigmaticlegacy.guardianHeart10": "§5prioritize attacking enraged monster.",
 	"tooltip.enigmaticlegacy.guardianHeart11": "§6Some monsters are immune to being enraged.",
 	"tooltip.enigmaticlegacy.guardianHeart12": "§5This ability has §6%1$s§6 seconds§5 cooldown.",
 	
