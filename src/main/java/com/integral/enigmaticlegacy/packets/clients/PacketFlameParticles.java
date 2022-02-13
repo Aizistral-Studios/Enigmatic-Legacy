@@ -17,7 +17,6 @@ import net.minecraftforge.network.NetworkEvent;
  */
 
 public class PacketFlameParticles {
-
 	public static final Random random = new Random();
 
 	private double x;
@@ -56,11 +55,11 @@ public class PacketFlameParticles {
 
 				if (msg.check) {
 					if (Minecraft.getInstance().options.particles == ParticleStatus.MINIMAL) {
-						modifier = 0.20F;
+						modifier = 0.10F;
 					} else if (Minecraft.getInstance().options.particles == ParticleStatus.DECREASED) {
-						modifier = 0.35F;
+						modifier = 0.25F;
 					} else {
-						modifier = 0.65F;
+						modifier = 0.35F;
 					}
 				}
 
