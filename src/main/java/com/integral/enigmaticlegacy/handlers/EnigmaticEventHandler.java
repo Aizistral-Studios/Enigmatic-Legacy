@@ -2273,7 +2273,7 @@ public class EnigmaticEventHandler {
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.ironRing, 20),
 					LootItem.lootTableItem(EnigmaticLegacy.commonPotionBase).setWeight(20).apply(SetNbtFunction.setTag(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE).getTag())),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.magnetRing, 8),
-					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.unholyGrail, 4),
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.unholyGrail, 1),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.loreInscriber, 5),
 					// TODO Maybe reconsider
 					// SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.oblivionStone, 4),
