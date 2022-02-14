@@ -1,7 +1,12 @@
 package com.integral.enigmaticlegacy.proxy;
 
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 import java.util.WeakHashMap;
@@ -15,6 +20,8 @@ import com.integral.enigmaticlegacy.client.renderers.UltimateWitherSkullRenderer
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.objects.RevelationTomeToast;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.etherium.client.ShieldAuraLayer;
@@ -24,6 +31,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.particle.ItemPickupParticle;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -39,8 +47,10 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -56,10 +66,12 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class ClientProxy extends CommonProxy {
 	private static final Random random = new Random();
 	protected final Map<Player, TransientPlayerData> clientTransientPlayerData;
+	protected final List<InfinitumCounterEntry> theInfinitumHoldTicks;
 
 	public ClientProxy() {
 		super();
 		this.clientTransientPlayerData = new WeakHashMap<>();
+		this.theInfinitumHoldTicks = new ArrayList<>();
 
 		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modBus.addListener(this::onClientSetup);
@@ -69,6 +81,7 @@ public class ClientProxy extends CommonProxy {
 	public void clearTransientData() {
 		super.clearTransientData();
 		this.clientTransientPlayerData.clear();
+		this.theInfinitumHoldTicks.clear();
 	}
 
 	@Override
@@ -117,6 +130,74 @@ public class ClientProxy extends CommonProxy {
 		ItemProperties.register(EnigmaticLegacy.infernalShield, new ResourceLocation("blocking"),
 				(stack, world, entity, seed) -> entity != null && entity.isUsingItem()
 				&& entity.getUseItem() == stack ? 1 : 0);
+
+		ItemProperties.register(EnigmaticLegacy.theInfinitum, new ResourceLocation(EnigmaticLegacy.MODID, "the_infinitum_open"), (stack, world, entity, seed) -> {
+			if (entity instanceof Player player) {
+				for (InfinitumCounterEntry entry : this.theInfinitumHoldTicks) {
+					if (entry.getPlayer() == player && entry.getStack() == stack)
+						return entry.animValue;
+				}
+
+				ItemStack mainhand = player.getMainHandItem();
+				ItemStack offhand = player.getOffhandItem();
+
+				if (mainhand == stack || offhand == stack)
+					if (SuperpositionHandler.isTheWorthyOne(player)) {
+						this.theInfinitumHoldTicks.add(new InfinitumCounterEntry(player, stack));
+					}
+			}
+
+			return 0;
+		});
+	}
+
+	@Override
+	public void updateInfinitumCounters() {
+		for (InfinitumCounterEntry entry : new ArrayList<>(this.theInfinitumHoldTicks)) {
+			if (entry.getPlayer() == null || entry.getStack() == null) {
+				this.theInfinitumHoldTicks.remove(entry);
+				continue;
+			}
+
+			ItemStack stack = entry.getStack();
+			Player player = entry.getPlayer();
+			int holdTicks = entry.counter;
+			ItemStack mainhand = player.getMainHandItem();
+			ItemStack offhand = player.getOffhandItem();
+
+			if (mainhand == stack || offhand == stack)
+				if (SuperpositionHandler.isTheWorthyOne(player)) {
+					if (entry.counter > 5) {
+						entry.animValue = 1F;
+					} else if (entry.counter == 5) {
+						entry.animValue = 0.5F;
+					} else {
+						entry.animValue = 0F;
+					}
+
+					entry.counter++;
+					continue;
+				}
+
+			if (entry.counter <= 0) {
+				this.theInfinitumHoldTicks.remove(entry);
+			} else {
+				if (entry.counter > 5) {
+					entry.counter = 5;
+				}
+
+				if (entry.counter > 1) {
+					entry.animValue = 1F;
+				} else if (entry.counter == 1) {
+					entry.animValue = 0.5F;
+				} else {
+					entry.animValue = 0F;
+				}
+
+				entry.counter--;
+
+			}
+		}
 	}
 
 	@Override
@@ -204,12 +285,39 @@ public class ClientProxy extends CommonProxy {
 			}
 
 		}
-
 	}
 
 	@Override
 	public Player getClientPlayer() {
 		return Minecraft.getInstance().player;
+	}
+
+	@Override
+	public int getStats(Player player, ResourceLocation stat) {
+		if (player instanceof LocalPlayer playerLP)
+			return playerLP.getStats().getValue(Stats.CUSTOM.get(stat));
+		else
+			return super.getStats(player, stat);
+	}
+
+	private static class InfinitumCounterEntry {
+		private final WeakReference<ItemStack> stack;
+		private final WeakReference<Player> player;
+		private int counter = 0;
+		private float animValue = 0F;
+
+		public InfinitumCounterEntry(Player player, ItemStack stack) {
+			this.player = new WeakReference<>(player);
+			this.stack = new WeakReference<>(stack);
+		}
+
+		public Player getPlayer() {
+			return this.player.get();
+		}
+
+		public ItemStack getStack() {
+			return this.stack.get();
+		}
 	}
 
 }

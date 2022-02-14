@@ -109,7 +109,7 @@ public class EtheriumConfig implements IEtheriumConfig {
 	}
 
 	@Override
-	public Perhaps getShieldThreshold() {
+	public Perhaps getShieldThreshold(Player player) {
 		return new Perhaps(shieldThreshold.get());
 	}
 
@@ -186,6 +186,11 @@ public class EtheriumConfig implements IEtheriumConfig {
 	@Override
 	public boolean isStandalone() {
 		return true;
+	}
+	
+	@Override
+	public int getAOEBoost(Player player) {
+		return 0;
 	}
 	
 }

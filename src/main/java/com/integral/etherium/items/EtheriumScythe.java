@@ -20,6 +20,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
@@ -81,7 +82,7 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 			return;
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe1", ChatFormatting.GOLD, this.config.getScytheMiningVolume());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe1", ChatFormatting.GOLD, this.config.getScytheMiningVolume() + this.config.getAOEBoost(Minecraft.getInstance().player));
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe2", ChatFormatting.GOLD, this.config.getScytheMiningVolume());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			if (!this.config.disableAOEShiftInhibition()) {
@@ -142,8 +143,9 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getScytheMiningVolume() != -1) {
 			Direction face = Direction.UP;
+			int volume = this.config.getScytheMiningVolume() + (this.config.getAOEBoost((Player) entityLiving));
 
-			AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos.offset(0, (this.config.getScytheMiningVolume() - 1) / 2, 0), this.effectiveMaterials, this.config.getScytheMiningVolume(), this.config.getScytheMiningVolume(), false, pos, stack, (objPos, objState) -> {
+			AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos.offset(0, (volume - 1) / 2, 0), this.effectiveMaterials, volume, volume, false, pos, stack, (objPos, objState) -> {
 				stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 			});
 		}

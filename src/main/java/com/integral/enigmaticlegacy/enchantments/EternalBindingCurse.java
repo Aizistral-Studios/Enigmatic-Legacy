@@ -3,17 +3,18 @@ package com.integral.enigmaticlegacy.enchantments;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
 
-public class NemesisCurseEnchantment extends Enchantment {
-	public NemesisCurseEnchantment(final EquipmentSlot... slots) {
-		super(Enchantment.Rarity.RARE, EnchantmentCategory.WEAPON, slots);
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "nemesis_curse"));
+public class EternalBindingCurse extends Enchantment {
+
+	public EternalBindingCurse(EquipmentSlot... slots) {
+		super(Enchantment.Rarity.RARE, EnchantmentCategory.WEARABLE, slots);
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "eternal_binding_curse"));
 	}
 
 	@Override
@@ -38,7 +39,7 @@ public class NemesisCurseEnchantment extends Enchantment {
 
 	@Override
 	public boolean canEnchant(ItemStack stack) {
-		return OmniconfigHandler.isItemEnabled(this) && (super.canEnchant(stack) || Enchantments.SHARPNESS.canEnchant(stack));
+		return OmniconfigHandler.isItemEnabled(this) && !stack.is(EnigmaticLegacy.cursedRing) && super.canEnchant(stack);
 	}
 
 	@Override
@@ -58,11 +59,12 @@ public class NemesisCurseEnchantment extends Enchantment {
 
 	@Override
 	public boolean isDiscoverable() {
-		return OmniconfigHandler.isItemEnabled(this);
+		return false;
 	}
 
 	@Override
 	protected boolean checkCompatibility(Enchantment ench) {
-		return super.checkCompatibility(ench);
+		return ench != Enchantments.BINDING_CURSE ? super.checkCompatibility(ench) : false;
 	}
+
 }

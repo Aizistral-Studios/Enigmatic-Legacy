@@ -62,6 +62,10 @@ public class EnigmaticKeybindHandler {
 			}
 		}
 
+		if (Minecraft.getInstance().player.isFallFlying()) {
+			jumpClicked = Minecraft.getInstance().options.keyJump.isDown();
+		}
+
 		if (this.enderRingKey.consumeClick()) {
 			if (Minecraft.getInstance().isWindowActive()) {
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketEnderRingKey(true));

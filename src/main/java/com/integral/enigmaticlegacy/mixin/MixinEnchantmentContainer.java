@@ -82,6 +82,8 @@ public abstract class MixinEnchantmentContainer extends AbstractContainerMenu {
 								}
 
 								enchantedItem = SuperpositionHandler.mergeEnchantments(enchantedItem, doubleRoll, false, false);
+								enchantedItem = SuperpositionHandler.maybeApplyEternalBinding(enchantedItem);
+
 								container.enchantSlots.setItem(0, enchantedItem);
 
 								player.awardStat(Stats.ENCHANT_ITEM);

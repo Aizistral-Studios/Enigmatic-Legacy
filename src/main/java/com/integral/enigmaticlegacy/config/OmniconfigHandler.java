@@ -1,7 +1,10 @@
 package com.integral.enigmaticlegacy.config;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Objects;
@@ -15,6 +18,11 @@ import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import vazkii.patchouli.common.base.PatchouliConfig.TextOverflowMode;
+
 public class OmniconfigHandler {
 	private static final Map<Field, Omniconfig.BooleanParameter> itemsOptions = new HashMap<>();
 
@@ -27,9 +35,11 @@ public class OmniconfigHandler {
 	public static Omniconfig.IntParameter soulCrystalsMode;
 	public static Omniconfig.IntParameter maxSoulCrystalLoss;
 
-	public static Omniconfig.EnumParameter<AnchorPoint> testEnumParam;
+	private static final List<ResourceLocation> bossList = new ArrayList<>();
 
-	// Client-Only (not method)
+	// Client-Only
+
+	public static Omniconfig.EnumParameter<TextOverflowMode> acknowledgmentOverflowMode;
 
 	public static boolean isItemEnabled(Object item) {
 		if (item == null)
@@ -85,12 +95,13 @@ public class OmniconfigHandler {
 		client.loadConfigFile();
 		client.pushCategory("Generic Config", "Some more different stuff");
 
-		/*
-		testEnumParam = client
-				.comment("Test enum option")
+		acknowledgmentOverflowMode = client
+				.comment("Text overflow mode which should be used by The Acknowledgment specifically. This is separate from Patchouli's"
+						+ " global setting since it uses RESIZE by default, which unpromptly attempts to rescale font even when no rescaling"
+						+ " is neccessary, and it is never neccessary for The Acknowledgment thanks to my continuous efforts to make texts fit"
+						+ " perfectly on each and every page.")
 				.clientOnly()
-				.getEnum("testEnum", AnchorPoint.BOTTOM, AnchorPoint.BOTTOM, AnchorPoint.CENTER, AnchorPoint.TOP);
-		 */
+				.getEnum("AcknowledgmentOverflowMode", TextOverflowMode.OVERFLOW, TextOverflowMode.values());
 
 		SuperpositionHandler.dispatchWrapperToHolders(EnigmaticLegacy.MODID, client);
 
@@ -166,6 +177,12 @@ public class OmniconfigHandler {
 				.max(10)
 				.getInt("MaxSoulCrystalLoss", 9);
 
+		bossList.clear();
+		String[] bosses = builder.config.getStringList("CompleteBossList", "Generic Config", new String[] { "minecraft:ender_dragon", "minecraft:wither", "minecraft:elder_guardian" }, "List of entities that should be accounted for as bosses"
+				+ " by The Twist and The Infinitum. Changing this option requires game restart to take effect.");
+
+		Arrays.stream(bosses).forEach(entry -> bossList.add(new ResourceLocation(entry)));
+
 		builder.popCategory();
 
 
@@ -180,6 +197,14 @@ public class OmniconfigHandler {
 		//builder.comment("Balancing and other option for all the spellstones").push("Spellstones Options");
 		//builder.pop();
 
+	}
+
+	public static boolean isBoss(LivingEntity entity) {
+		return bossList.stream().anyMatch(id -> id.equals(entity.getType().getRegistryName()));
+	}
+
+	public static boolean isBossOrPlayer(LivingEntity entity) {
+		return entity instanceof Player || isBoss(entity);
 	}
 
 }

@@ -13,17 +13,22 @@
 	"MixinApotheosisEnchantmentContainer",
 	"MixinEnchantmentContainer",
 	"MixinHoglinTasks",
-	"MixinEnchantment",
+	"MixinEnchantmentHelper",
 	"MixinLootTable",
 	"MixinCharmEffects",
 	"MixinStarterGear",
 	"MixinPlayer",
 	"MixinLivingEntity",
+	"MixinEnderDragon",
+	"MixinInventoryChangeTrigger",
 	"AccessorAbstractArrowEntity",
 	"AccessorAdvancementCommands"
   ],
   "client": [
-	"MixinForgeHooksClient"
+	"MixinForgeHooksClient",
+	"MixinGuiBookLanding",
+	"MixinBookTextRenderer",
+	"MixinItemRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

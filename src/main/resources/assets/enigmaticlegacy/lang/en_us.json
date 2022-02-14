@@ -85,6 +85,11 @@
 	"item.enigmaticlegacy.unwitnessed_amulet": "Unwitnessed Amulet",
 	"item.enigmaticlegacy.twisted_potion": "Potion of Twisted Mercy",
 	"item.enigmaticlegacy.infernal_shield": "Bulwark of Blazing Pride",
+	"item.enigmaticlegacy.cosmic_heart": "Heart of the Cosmos",
+	"item.enigmaticlegacy.cosmic_scroll": "The Architect's Favor",
+	"item.enigmaticlegacy.abyssal_heart": "Heart of the Abyss",
+	"item.enigmaticlegacy.the_infinitum": "The Infinitum",
+	"item.enigmaticlegacy.astral_fruit": "Celestial Fruit",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -95,6 +100,9 @@
 	
 	"effect.enigmaticlegacy.blazing_strength": "Blazing Might",
 	"effect.enigmaticlegacy.molten_heart": "Molten Heart",
+	
+	"stat.enigmaticlegacy.play_time_with_seven_curses": "Time Played with Seven Curses",
+	"stat.enigmaticlegacy.play_time_without_seven_curses": "Time Played without Seven Curses",
 	
 	"item.enigmaticlegacy.common_potion.effect.empty": "Hollow Potion",
 	"item.enigmaticlegacy.common_potion.effect.haste": "Potion of Haste",
@@ -183,6 +191,8 @@
 	"enchantment.enigmaticlegacy.torrent": "Torrent",
 	"enchantment.enigmaticlegacy.wrath": "Wrath",
 	"enchantment.enigmaticlegacy.slayer": "Slayer",
+	"enchantment.enigmaticlegacy.eternal_binding_curse": "Curse of Eternal Binding",
+	"enchantment.enigmaticlegacy.sorrow_curse": "Curse of Sorrow",
 	
 	"enchantment.enigmaticlegacy.nemesis_curse.desc": "Deals 35% of damage back to you for each melee attack.",
 	"enchantment.enigmaticlegacy.sharpshooter.desc": "Increased and less random arrow damage.",
@@ -319,6 +329,21 @@
 	
 	"advancement.enigmaticlegacy:theTwist": "Fateful Twist",
 	"advancement.enigmaticlegacy:theTwist.desc": "Slay the Wither and create The Twist using Nefarious Essence",
+	
+	"advancement.enigmaticlegacy:astralFruit": "Fabulous Apple",
+	"advancement.enigmaticlegacy:astralFruit.desc": "Find Celestial Fruit among treasures of the End City, and consume it",
+	
+	"advancement.enigmaticlegacy:abyssalHeart": "Eldritch Horror",
+	"advancement.enigmaticlegacy:abyssalHeart.desc": "Slay the Ender Dragon and claim Heart of the Abyss",
+	
+	"advancement.enigmaticlegacy:theInfinitum": "Beyond Time and Space",
+	"advancement.enigmaticlegacy:theInfinitum.desc": "Acquire The Infinitum and become the herald of the Abyss",
+	
+	"advancement.enigmaticlegacy:allSpellstones": "Stone Grimoire",
+	"advancement.enigmaticlegacy:allSpellstones.desc": "Collect every unique spellstone. Would there have been a way to combine them all...",
+	
+	"advancement.enigmaticlegacy:cosmicScroll": "Retainer of the Divine",
+	"advancement.enigmaticlegacy:cosmicScroll.desc": "Perform pilgrimage to The Architect's domain and become his devoted believer, earning the right to bear his mark and blessing",
 
 	"tooltip.enigmaticlegacy.holdShift": "§5Hold §6Shift§5 to see details.",
 	
@@ -457,7 +482,9 @@
 	"tooltip.enigmaticlegacy.angelBlessing4": "§5- Immunity to fall and collision damage.",
 	"tooltip.enigmaticlegacy.angelBlessing5": "§5- §6%1$s§d Chance§5 to deflect incoming projectile.",
 	"tooltip.enigmaticlegacy.angelBlessing6": "§5- Your own projectiles are greatly accelerated.",
-	"tooltip.enigmaticlegacy.angelBlessing7": "§5- You are vulnerable to §6Withering§5 and §6Void Damage.",
+	"tooltip.enigmaticlegacy.angelBlessing7": "§5- Active ability can be triggered by pressing jump",
+	"tooltip.enigmaticlegacy.angelBlessing8": "§5  key while in mid-air.",
+	"tooltip.enigmaticlegacy.angelBlessing9": "§5- You are vulnerable to §6Withering§5 and §6Void Damage.",
 	
 	"tooltip.enigmaticlegacy.eyeOfNebula1": "§dActive ability:",
 	"tooltip.enigmaticlegacy.eyeOfNebula2": "§6- Teleports you behind creature you are looking at.",
@@ -711,8 +738,18 @@
 	"tooltip.enigmaticlegacy.cursedOnesOnly1": "Only those who bear the Seven Curses",
 	"tooltip.enigmaticlegacy.cursedOnesOnly2": "hold power to obtain and use this item.",
 	
+	"tooltip.enigmaticlegacy.blessedOnesOnly1": "Only those chosen by The Architect",
+	"tooltip.enigmaticlegacy.blessedOnesOnly2": "hold power to obtain and use this item.",
+	
+	"tooltip.enigmaticlegacy.worthyOnesOnly1": "§5The sacrifice neccessary to aquire this item",
+	"tooltip.enigmaticlegacy.worthyOnesOnly2": "§5is immense - you have to spend §699.5%§5 of your",
+	"tooltip.enigmaticlegacy.worthyOnesOnly3": "§5time in the world suffering the §6Seven Curses.",
+	"tooltip.enigmaticlegacy.worthyOnesOnly4": "For now, your time measures at:",
+	
 	"tooltip.enigmaticlegacy.tainted1": "§5Slightly tainted by cursed one's presence.",
 	"tooltip.enigmaticlegacy.tainted2": "§5Tainted by the touch of a cursed being.",
+	"tooltip.enigmaticlegacy.blessed1": "§5It's power is magnified by presence of",
+	"tooltip.enigmaticlegacy.blessed2": "§5one chosen by The Architect himself.",
 	
 	"tooltip.enigmaticlegacy.theTwist1": "§5On a path to take it all away,",
 	"tooltip.enigmaticlegacy.theTwist2": "§5there can be no better way of knowing...",
@@ -752,6 +789,8 @@
 	"tooltip.enigmaticlegacy.forbiddenFruit1": "§5After consuming the fruit you shall never",
 	"tooltip.enigmaticlegacy.forbiddenFruit2": "§5experience hunger again, but any form of",
 	"tooltip.enigmaticlegacy.forbiddenFruit3": "§5regeneration will have §6%1$s§5 weaker effect.",
+	
+	"tooltip.enigmaticlegacy.astralFruit1": "§5Consume to obtain §6+1§d Ring Slot §5permanently.",
 	
 	"tooltip.enigmaticlegacy.antiforbiddenPotion1": "§5Allows you to atone for the sin committed",
 	"tooltip.enigmaticlegacy.antiforbiddenPotion2": "§5by tasting §6The Forbidden Fruit§5.",
@@ -816,7 +855,46 @@
 	"tooltip.enigmaticlegacy.infernalShield9": "§5- Successful blocks grant increasing §6Blazing Might§5",
 	"tooltip.enigmaticlegacy.infernalShield10": "§5  effect, but any damage received takes it away.",
 	"tooltip.enigmaticlegacy.infernalShield11": "§5- Enemy attacks from behind deal §650%§5 more damage.",
-
+	
+	"tooltip.enigmaticlegacy.cosmicScrollLore1": "§5Observing loss of faith pains my heart, but",
+	"tooltip.enigmaticlegacy.cosmicScrollLore2": "§5may it not cast into doubt those who remain.",
+	"tooltip.enigmaticlegacy.cosmicScroll1": "§6+1 §dArcane Scroll Slot",
+	"tooltip.enigmaticlegacy.cosmicScroll2": "§6+1 §dLuck",
+	"tooltip.enigmaticlegacy.cosmicScroll3": "§5If you wear full set of §6Etherium Armor§5, shield",
+	"tooltip.enigmaticlegacy.cosmicScroll4": "§5only requires you to be below §6%1$s§5 of maximum",
+	"tooltip.enigmaticlegacy.cosmicScroll5": "§5health to appear.",
+	"tooltip.enigmaticlegacy.cosmicScroll6": "§5Active ability cooldown of most spellstones is",
+	"tooltip.enigmaticlegacy.cosmicScroll7": "§5substantially reduced.",
+	"tooltip.enigmaticlegacy.cosmicScroll8": "§6Etherium Tools§5 mine in increased area.",
+	"tooltip.enigmaticlegacy.cosmicScroll9": "§5When you receive lethal damage, your health is",
+	"tooltip.enigmaticlegacy.cosmicScroll10": "§5restored to §650%§5 and powerful buffs are applied.",
+	"tooltip.enigmaticlegacy.cosmicScroll11": "§5This ability has §6%1$s §6seconds§5 cooldown.",
+	"tooltip.enigmaticlegacy.cosmicScroll12": "§5You deal §6+%1$s §dDamage§5 and §6+%2$s §dKnockback§5 to",
+	"tooltip.enigmaticlegacy.cosmicScroll13": "§5players who are not chosen, and your melee",
+	"tooltip.enigmaticlegacy.cosmicScroll14": "§5attacks set them ablaze.",
+	"tooltip.enigmaticlegacy.cosmicScrollCooldown": "§dRemaining Cooldown: §6%1$s §6seconds",
+	
+	"tooltip.enigmaticlegacy.abyssalHeart1": "§5It is alive. It is watching. Never before have",
+	"tooltip.enigmaticlegacy.abyssalHeart2": "§5this realm shuddered beneath the gaze of",
+	"tooltip.enigmaticlegacy.abyssalHeart3": "§5something so alien, so unholy, so unknowable",
+	"tooltip.enigmaticlegacy.abyssalHeart4": "§5and madness-inducing.",
+	
+	"tooltip.enigmaticlegacy.abyssalHeart1_obf": "§5§kIt is alive. It is watching. Never before have",
+	"tooltip.enigmaticlegacy.abyssalHeart2_obf": "§5§kthis realm shuddered beneath the gaze of",
+	"tooltip.enigmaticlegacy.abyssalHeart3_obf": "§5§ksomething so alien, so unholy, so unknowable",
+	"tooltip.enigmaticlegacy.abyssalHeart4_obf": "§5§kand madness-inducing.",
+	
+	"tooltip.enigmaticlegacy.theInfinitum1": "§5Abyss returns even the boldest gaze.",
+	"tooltip.enigmaticlegacy.theInfinitum2": "§5Alteration of the §6Fourth Curse§5:",
+	"tooltip.enigmaticlegacy.theInfinitum3": "§5- Always deals its full damage.",
+	"tooltip.enigmaticlegacy.theInfinitum4": "§6+%1$s §dDamage§5 against players and bosses.",
+	"tooltip.enigmaticlegacy.theInfinitum5": "§6+%1$s §dKnockback",
+	"tooltip.enigmaticlegacy.theInfinitum6": "§6+%1$s §dLifesteal",
+	"tooltip.enigmaticlegacy.theInfinitum7": "§5Can bear most sword enchantments.",
+	"tooltip.enigmaticlegacy.theInfinitum8": "§5Each attack inflicts horrific debuffs.",
+	"tooltip.enigmaticlegacy.theInfinitum9": "§5When held, provides §685% §dChance§5 that otherwise",
+	"tooltip.enigmaticlegacy.theInfinitum10": "§5lethal damage won't kill you.",
+	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",
 	"gui.enigmaticlegacy.blazing_core_bar_offsetX": "0",
@@ -1218,7 +1296,7 @@
 	
 	"book.enigmaticlegacy.entry.hunter_guide.name": "Hunter's Guide",
 	"book.enigmaticlegacy.entry.hunter_guide.page.1": "Another comprehensive guide, this one will help you learn how to hunt side-by-side with beastly companions that you might have tamed. You are probably already aware that despite all loyalty and courage they are capable of showing in battle, animals are much less sentient than you and aren't capable of developing complex combat techniques and effectively",
-	"book.enigmaticlegacy.entry.hunter_guide.page.2": "dodging unoubvious attack patterns.<br2/>This book outlines many unique approaches to combat that you can learn as their master, which will allow you to take hits they normally would on",
+	"book.enigmaticlegacy.entry.hunter_guide.page.2": "dodging unobvious attack patterns.<br2/>This book outlines many unique approaches to combat that you can learn as their master, which will allow you to take hits they normally would on",
 	"book.enigmaticlegacy.entry.hunter_guide.page.3": "yourself, saving them from being slain by attacks stronger than they can bear.<br2/>Hopefully your means of defense are much more elaborate and effective, and you can heal yourself much quicker in battle with use potions for instance.",
 	
 	

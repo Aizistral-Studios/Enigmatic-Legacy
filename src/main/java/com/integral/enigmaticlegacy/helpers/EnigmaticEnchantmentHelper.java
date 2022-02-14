@@ -32,6 +32,6 @@ public class EnigmaticEnchantmentHelper {
 	}
 
 	public static int getNemesisCurseLevel(ItemStack stack) {
-		return EnchantmentHelper.getItemEnchantmentLevel(EnigmaticLegacy.nemesisCurseEnchantment, stack);
+		return EnchantmentHelper.getItemEnchantmentLevel(EnigmaticLegacy.nemesisCurse, stack);
 	}
 }

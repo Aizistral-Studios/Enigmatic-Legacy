@@ -133,17 +133,18 @@ public class SuperpositionHandler {
 	public static final char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
 	public static final UUID SCROLL_SLOT_UUID = UUID.fromString("ae465e52-ffc2-4f57-b09a-066aa0cea3d4");
 	public static final UUID SPELLSTONE_SLOT_UUID = UUID.fromString("63df175a-0d6d-4163-8ef1-218bcb42feba");
+	public static final UUID RING_SLOT_UUID = UUID.fromString("76012386-aa31-4c17-8d6a-e9dd29affcb0");
 
 	public static boolean hasAdvancedCurios(final LivingEntity entity) {
 		return SuperpositionHandler.getAdvancedCurios(entity).size() > 0;
 	}
 
 	public static boolean unlockSpecialSlot(String slot, Player player) {
-		if (!slot.equals("scroll") && !slot.equals("spellstone"))
+		if (!slot.equals("scroll") && !slot.equals("spellstone") && !slot.equals("ring"))
 			throw new IllegalArgumentException("Slot type '" + slot + "' is not supported!");
 
 		MutableBoolean success = new MutableBoolean(false);
-		UUID id = slot.equals("scroll") ? SCROLL_SLOT_UUID : SPELLSTONE_SLOT_UUID;
+		UUID id = slot.equals("scroll") ? SCROLL_SLOT_UUID : (slot.equals("spellstone") ? SPELLSTONE_SLOT_UUID : RING_SLOT_UUID);
 
 		ICuriosHelper apiHelper = CuriosApi.getCuriosHelper();
 
@@ -1199,6 +1200,76 @@ public class SuperpositionHandler {
 		return SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing);
 	}
 
+	public static boolean isTheWorthyOne(Player player) {
+		if (isTheCursedOne(player)) {
+			int timeWithRing = EnigmaticLegacy.proxy.getTimeWithCurses(player);
+			int timeWithoutRing = EnigmaticLegacy.proxy.getTimeWithoutCurses(player);
+
+			if (timeWithRing <= 0)
+				return false;
+			else if (timeWithoutRing <= 0)
+				return true;
+
+			return timeWithRing/timeWithoutRing >= 199;
+		} else
+			return false;
+	}
+
+	public static boolean isTheBlessedOne(Player player) {
+		//if (true)
+		//	return player.getGameProfile().getName().equals("Dev");
+
+		if (EnigmaticLegacy.SOUL_OF_THE_ARCHITECT.equals(player.getUUID()))
+			return true;
+		else
+			return DevotedBelieversHandler.isDevotedBeliever(player);
+	}
+
+	public static boolean hasArchitectsFavor(Player player) {
+		return isTheBlessedOne(player) && hasCurio(player, EnigmaticLegacy.cosmicScroll);
+	}
+
+	public static String getSufferingTime(@Nullable Player player) {
+		if (player == null)
+			return "0%";
+		else {
+			int timeWithRing = EnigmaticLegacy.proxy.getTimeWithCurses(player);
+			int timeWithoutRing = EnigmaticLegacy.proxy.getTimeWithoutCurses(player);
+
+			if (timeWithRing <= 0)
+				return "0%";
+			else if (timeWithoutRing <= 0)
+				return "100%";
+
+			if (timeWithRing > 100000 || timeWithoutRing > 100000) {
+				timeWithRing = timeWithRing / 100;
+				timeWithoutRing = timeWithoutRing / 100;
+
+				if (timeWithRing <= 0)
+					return "0%";
+				else if (timeWithoutRing <= 0)
+					return "100%";
+			}
+
+			double total = timeWithRing + timeWithoutRing;
+			double ringPercent = (timeWithRing / total) * 100;
+			ringPercent = Math.round(ringPercent * 10.0)/10.0;
+			String text = "";
+
+			if (ringPercent - Math.round(ringPercent) == 0) {
+				text += ((int)ringPercent) + "%";
+			} else {
+				text += ringPercent + "%";
+			}
+
+			if ("99.5%".equals(text) && !isTheWorthyOne(player)) {
+				text = "99.4%";
+			}
+
+			return text;
+		}
+	}
+
 	public static float getMissingHealthPool(Player player) {
 		return (player.getMaxHealth() - Math.min(player.getHealth(), player.getMaxHealth()))/player.getMaxHealth();
 	}
@@ -1487,6 +1558,19 @@ public class SuperpositionHandler {
 
 		EnchantmentHelper.setEnchantments(inputEnchants, returnedStack);
 		return returnedStack;
+	}
+
+	public static ItemStack maybeApplyEternalBinding(ItemStack stack) {
+		if (Math.random() < 0.5)
+			if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BINDING_CURSE, stack) > 0) {
+				Map<Enchantment, Integer> map =  EnchantmentHelper.getEnchantments(stack);
+
+				int level = map.remove(Enchantments.BINDING_CURSE);
+				map.put(EnigmaticLegacy.eternalBindingCurse, level);
+				EnchantmentHelper.setEnchantments(map, stack);
+			}
+
+		return stack;
 	}
 
 }

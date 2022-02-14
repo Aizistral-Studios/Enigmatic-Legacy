@@ -163,6 +163,11 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	@Override
+	public boolean canChangeDimensions() {
+		return false;
+	}
+
+	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if (this.level.isClientSide || !this.isAlive())
 			return false;

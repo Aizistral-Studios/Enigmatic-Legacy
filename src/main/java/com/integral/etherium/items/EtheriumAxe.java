@@ -14,6 +14,7 @@ import com.integral.etherium.core.IEtheriumTool;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
@@ -71,7 +72,7 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool {
 			return;
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumAxe1", ChatFormatting.GOLD, this.config.getAxeMiningVolume());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumAxe1", ChatFormatting.GOLD, this.config.getAxeMiningVolume() + this.config.getAOEBoost(Minecraft.getInstance().player));
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 			if (!this.config.disableAOEShiftInhibition()) {
@@ -92,8 +93,9 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool {
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getAxeMiningVolume() != -1) {
 			Direction face = Direction.UP;
+			int volume = this.config.getAxeMiningVolume() + (this.config.getAOEBoost((Player) entityLiving));
 
-			AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos.offset(0, (this.config.getAxeMiningVolume() - 1) / 2, 0), this.effectiveMaterials, this.config.getAxeMiningVolume(), this.config.getAxeMiningVolume(), false, pos, stack, (objPos, objState) -> {
+			AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos.offset(0, (volume - 1) / 2, 0), this.effectiveMaterials, volume, volume, false, pos, stack, (objPos, objState) -> {
 				stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 			});
 		}

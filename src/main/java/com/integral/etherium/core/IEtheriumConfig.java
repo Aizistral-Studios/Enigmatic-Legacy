@@ -2,6 +2,8 @@ package com.integral.etherium.core;
 
 import java.util.Optional;
 
+import javax.annotation.Nullable;
+
 import com.integral.enigmaticlegacy.objects.Perhaps;
 import com.integral.etherium.items.EtheriumAxe;
 import com.integral.etherium.items.EtheriumPickaxe;
@@ -27,7 +29,7 @@ public interface IEtheriumConfig {
 
 	public Tier getToolMaterial();
 
-	public Perhaps getShieldThreshold();
+	public Perhaps getShieldThreshold(@Nullable Player player);
 
 	public Perhaps getShieldReduction();
 
@@ -52,6 +54,8 @@ public interface IEtheriumConfig {
 	public int getShovelMiningDepth();
 
 	public int getSwordCooldown();
+
+	public int getAOEBoost(@Nullable Player player);
 
 	public void knockBack(Player entityIn, float strength, double xRatio, double zRatio);
 

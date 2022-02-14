@@ -18,6 +18,10 @@ public class LoggerWrapper {
 		this.logger = LogManager.getLogger(name);
 	}
 
+	public Logger getInternal() {
+		return this.logger;
+	}
+
 	public void info(String line) {
 		this.logger.info(this.markInfo, line);
 	}

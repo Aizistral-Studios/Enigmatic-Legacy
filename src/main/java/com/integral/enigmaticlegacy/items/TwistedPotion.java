@@ -34,7 +34,6 @@ import net.minecraftforge.network.PacketDistributor;
 
 public class TwistedPotion extends ItemBasePotion implements ICursed {
 
-	// TODO The Acknowledgment entry
 	public TwistedPotion() {
 		super(getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "twisted_potion"));

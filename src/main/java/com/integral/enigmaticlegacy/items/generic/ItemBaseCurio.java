@@ -12,6 +12,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.Vanishable;
+import net.minecraft.world.item.Wearable;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -29,7 +30,7 @@ import net.minecraft.world.item.Item.Properties;
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
-public abstract class ItemBaseCurio extends ItemBase implements ICurioItem, Vanishable {
+public abstract class ItemBaseCurio extends ItemBase implements ICurioItem, Vanishable, Wearable {
 
 	public ItemBaseCurio() {
 		this(getDefaultProperties());

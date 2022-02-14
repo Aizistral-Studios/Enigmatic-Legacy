@@ -14,11 +14,13 @@ import com.integral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseTool;
 import com.integral.enigmaticlegacy.packets.clients.PacketFlameParticles;
+import com.integral.etherium.core.IEtheriumConfig;
 import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
@@ -77,14 +79,16 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 		builder.popPrefix();
 	}
 
+	private final IEtheriumConfig config;
 
-	public AstralBreaker() {
+	public AstralBreaker(IEtheriumConfig config) {
 		super(4F, -2.8F, EnigmaticMaterials.ETHERIUM, BlockTags.MINEABLE_WITH_PICKAXE,
 				ItemBaseTool.getDefaultProperties()
 				.defaultDurability(4000)
 				.rarity(Rarity.EPIC)
 				.fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_breaker"));
+		this.config = config;
 
 		this.toolActions.add(ToolActions.AXE_DIG);
 		this.toolActions.add(ToolActions.PICKAXE_DIG);
@@ -99,7 +103,7 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker1", ChatFormatting.GOLD, miningRadius.getValue(), miningDepth.getValue());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker1", ChatFormatting.GOLD, miningRadius.getValue() + this.config.getAOEBoost(Minecraft.getInstance().player), miningDepth.getValue());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.astralBreaker3");
@@ -121,24 +125,20 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-
 		if (!world.isClientSide) {
 			this.spawnFlameParticles(world, pos);
 		}
 
-		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && miningRadius.getValue() != -1) {
-
-			HitResult trace = AOEMiningHelper.calcRayTrace(world, (Player) entityLiving, ClipContext.Fluid.ANY);
+		if (entityLiving instanceof Player player && this.areaEffectsEnabled(player, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && miningRadius.getValue() != -1) {
+			HitResult trace = AOEMiningHelper.calcRayTrace(world, player, ClipContext.Fluid.ANY);
 
 			if (trace.getType() == HitResult.Type.BLOCK) {
 				BlockHitResult blockTrace = (BlockHitResult) trace;
 				Direction face = blockTrace.getDirection();
 
-				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, this.effectiveMaterials, miningRadius.getValue(), miningDepth.getValue(), true, pos, stack, (objPos, objState) -> {
-
+				AOEMiningHelper.harvestCube(world, player, face, pos, this.effectiveMaterials, miningRadius.getValue() + this.config.getAOEBoost(player), miningDepth.getValue(), true, pos, stack, (objPos, objState) -> {
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 					this.spawnFlameParticles(world, objPos);
-
 				});
 			}
 		}

@@ -63,7 +63,7 @@ public class EtheriumArmor extends ArmorItem {
 
 	public static boolean hasShield(@Nonnull Player player) {
 		if (player != null)
-			if (hasFullSet(player) && player.getHealth() / player.getMaxHealth() <= config.getShieldThreshold().asMultiplier(false))
+			if (hasFullSet(player) && player.getHealth() / player.getMaxHealth() <= config.getShieldThreshold(player).asMultiplier(false))
 				return true;
 
 		return false;
@@ -90,7 +90,7 @@ public class EtheriumArmor extends ArmorItem {
 		if (hasFullSet(Minecraft.getInstance().player) || (ItemNBTHelper.verifyExistance(stack, "forceDisplaySetBonus") && ItemNBTHelper.getBoolean(stack, "forceDisplaySetBonus", false))) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus2", ChatFormatting.GOLD, config.getShieldThreshold().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus2", ChatFormatting.GOLD, config.getShieldThreshold(Minecraft.getInstance().player).asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus4", ChatFormatting.GOLD, config.getShieldReduction().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus5");

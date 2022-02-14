@@ -1,0 +1,34 @@
+{
+    "name": "book.enigmaticlegacy.entry.cosmic_scroll.name",
+    "icon": "enigmaticlegacy:cosmic_scroll",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/cosmic_scroll",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 180,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cosmic_scroll.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:cosmic_scroll",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.cosmic_scroll.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cosmic_scroll.page.3"
+        },
+		{
+            "type": "text",
+			"text": "book.enigmaticlegacy.entry.cosmic_scroll.page.4"
+		},
+		{
+            "type": "text",
+			"text": "book.enigmaticlegacy.entry.cosmic_scroll.page.5"
+		}
+    ]
+}

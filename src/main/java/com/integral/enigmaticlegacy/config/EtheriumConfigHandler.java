@@ -1,10 +1,14 @@
 package com.integral.enigmaticlegacy.config;
 
+import javax.annotation.Nullable;
+
 import com.google.common.base.Preconditions;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.items.CosmicScroll;
 import com.integral.enigmaticlegacy.objects.Perhaps;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
 import com.integral.etherium.core.IEtheriumConfig;
@@ -148,8 +152,11 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 	}
 
 	@Override
-	public Perhaps getShieldThreshold() {
-		return shieldThreshold.getValue();
+	public Perhaps getShieldThreshold(@Nullable Player player) {
+		if (player != null && SuperpositionHandler.hasArchitectsFavor(player))
+			return CosmicScroll.etheriumShieldThreshold.getValue();
+		else
+			return shieldThreshold.getValue();
 	}
 
 	@Override
@@ -220,6 +227,11 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 	@Override
 	public boolean isStandalone() {
 		return false;
+	}
+
+	@Override
+	public int getAOEBoost(@Nullable Player player) {
+		return player != null ? (SuperpositionHandler.hasArchitectsFavor(player) ? 2 : 0) : 0;
 	}
 
 }

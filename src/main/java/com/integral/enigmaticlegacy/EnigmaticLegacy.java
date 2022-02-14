@@ -31,9 +31,11 @@ import com.integral.enigmaticlegacy.crafting.EnigmaticRecipeSerializers;
 import com.integral.enigmaticlegacy.effects.BlazingStrengthEffect;
 import com.integral.enigmaticlegacy.effects.MoltenHeartEffect;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
-import com.integral.enigmaticlegacy.enchantments.NemesisCurseEnchantment;
+import com.integral.enigmaticlegacy.enchantments.EternalBindingCurse;
+import com.integral.enigmaticlegacy.enchantments.NemesisCurse;
 import com.integral.enigmaticlegacy.enchantments.SharpshooterEnchantment;
 import com.integral.enigmaticlegacy.enchantments.SlayerEnchantment;
+import com.integral.enigmaticlegacy.enchantments.SorrowCurse;
 import com.integral.enigmaticlegacy.enchantments.TorrentEnchantment;
 import com.integral.enigmaticlegacy.enchantments.WrathEnchantment;
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
@@ -42,19 +44,24 @@ import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 import com.integral.enigmaticlegacy.gui.containers.LoreInscriberContainer;
 import com.integral.enigmaticlegacy.gui.containers.LoreInscriberScreen;
 import com.integral.enigmaticlegacy.gui.containers.PortableCrafterContainer;
+import com.integral.enigmaticlegacy.handlers.DevotedBelieversHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticKeybindHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticUpdateHandler;
 import com.integral.enigmaticlegacy.handlers.OneSpecialHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
+import com.integral.enigmaticlegacy.items.AbyssalHeart;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
 import com.integral.enigmaticlegacy.items.AnimalGuide;
 import com.integral.enigmaticlegacy.items.AntiforbiddenPotion;
 import com.integral.enigmaticlegacy.items.AstralBreaker;
 import com.integral.enigmaticlegacy.items.AstralDust;
+import com.integral.enigmaticlegacy.items.AstralFruit;
 import com.integral.enigmaticlegacy.items.AvariceScroll;
 import com.integral.enigmaticlegacy.items.BerserkEmblem;
+import com.integral.enigmaticlegacy.items.CosmicHeart;
+import com.integral.enigmaticlegacy.items.CosmicScroll;
 import com.integral.enigmaticlegacy.items.CursedRing;
 import com.integral.enigmaticlegacy.items.CursedScroll;
 import com.integral.enigmaticlegacy.items.CursedStone;
@@ -103,6 +110,7 @@ import com.integral.enigmaticlegacy.items.SoulCrystal;
 import com.integral.enigmaticlegacy.items.StorageCrystal;
 import com.integral.enigmaticlegacy.items.SuperMagnetRing;
 import com.integral.enigmaticlegacy.items.TheAcknowledgment;
+import com.integral.enigmaticlegacy.items.TheInfinitum;
 import com.integral.enigmaticlegacy.items.TheTwist;
 import com.integral.enigmaticlegacy.items.ThiccScroll;
 import com.integral.enigmaticlegacy.items.TwistedCore;
@@ -119,10 +127,13 @@ import com.integral.enigmaticlegacy.items.generic.GenericBlockItem;
 import com.integral.enigmaticlegacy.objects.AdvancedPotion;
 import com.integral.enigmaticlegacy.objects.LoggerWrapper;
 import com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack;
+import com.integral.enigmaticlegacy.objects.SpecialLootModifier;
+import com.integral.enigmaticlegacy.packets.clients.PacketCosmicScollRevive;
 import com.integral.enigmaticlegacy.packets.clients.PacketFlameParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketGenericParticleEffect;
 import com.integral.enigmaticlegacy.packets.clients.PacketHandleItemPickup;
+import com.integral.enigmaticlegacy.packets.clients.PacketPatchouliForce;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerSetlook;
@@ -130,6 +141,7 @@ import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketSetEntryState;
 import com.integral.enigmaticlegacy.packets.clients.PacketSlotUnlocked;
+import com.integral.enigmaticlegacy.packets.clients.PacketSyncPlayTime;
 import com.integral.enigmaticlegacy.packets.clients.PacketSyncTransientData;
 import com.integral.enigmaticlegacy.packets.clients.PacketUpdateExperience;
 import com.integral.enigmaticlegacy.packets.clients.PacketUpdateNotification;
@@ -144,6 +156,7 @@ import com.integral.enigmaticlegacy.packets.server.PacketXPScrollKey;
 import com.integral.enigmaticlegacy.proxy.ClientProxy;
 import com.integral.enigmaticlegacy.proxy.CommonProxy;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
+import com.integral.enigmaticlegacy.triggers.CursedInventoryChangedTrigger;
 import com.integral.enigmaticlegacy.triggers.CursedRingEquippedTrigger;
 import com.integral.enigmaticlegacy.triggers.ForbiddenFruitTrigger;
 import com.integral.enigmaticlegacy.triggers.RevelationGainTrigger;
@@ -173,6 +186,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.CraftingScreen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.core.Registry;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.AttackDamageMobEffect;
@@ -204,6 +218,9 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.stats.StatFormatter;
+import net.minecraft.stats.StatType;
+import net.minecraft.stats.Stats;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -375,6 +392,11 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("") public static UnwitnessedAmulet unwitnessedAmulet;
 	@ConfigurableItem("Potion of Twisted Mercy") public static TwistedPotion twistedPotion;
 	@ConfigurableItem("Bulwark of Blazing Pride") public static InfernalShield infernalShield;
+	@ConfigurableItem("Heart of the Cosmos") public static CosmicHeart cosmicHeart;
+	@ConfigurableItem("The Architect's Favor") public static CosmicScroll cosmicScroll;
+	@ConfigurableItem("Heart of the Abyss") public static AbyssalHeart abyssalHeart;
+	@ConfigurableItem("The Infinitum") public static TheInfinitum theInfinitum;
+	@ConfigurableItem("Celestial Fruit") public static AstralFruit astralFruit;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -407,15 +429,19 @@ public class EnigmaticLegacy {
 	public static BlazingStrengthEffect blazingStrengthEffect;
 	public static MoltenHeartEffect moltenHeartEffect;
 
+	public static ResourceLocation timeWithCursesStat;
+	public static ResourceLocation timeWithoutCursesStat;
+
 	@ConfigurableItem("Sharpshooter Enchantment") public static SharpshooterEnchantment sharpshooterEnchantment;
 	@ConfigurableItem("Ceaseless Enchantment") public static CeaselessEnchantment ceaselessEnchantment;
 	@ConfigurableItem("Torrent Enchantment") public static TorrentEnchantment torrentEnchantment;
 	@ConfigurableItem("Wrath Enchantment") public static WrathEnchantment wrathEnchantment;
 	@ConfigurableItem("Slayer Enchantment") public static SlayerEnchantment slayerEnchantment;
-	@ConfigurableItem("Nemesis Curse") public static NemesisCurseEnchantment nemesisCurseEnchantment;
+	@ConfigurableItem("Curse of Nemesis") public static NemesisCurse nemesisCurse;
+	@ConfigurableItem("Curse of Eternal Binding") public static EternalBindingCurse eternalBindingCurse;
+	@ConfigurableItem("Curse of Sorrow") public static SorrowCurse sorrowCurse;
 
-	public static ItemStack universalClock;
-	public static UUID soulOfTheArchitect;
+	public static final UUID SOUL_OF_THE_ARCHITECT = UUID.fromString("bfa45411-874a-4ee0-b3bd-00c716059d95");
 
 	public static List<Item> spellstoneList;
 
@@ -509,7 +535,7 @@ public class EnigmaticLegacy {
 		loreFragment = new LoreFragment();
 		enderRod = new EnderRod(etheriumConfig);
 
-		astralBreaker = new AstralBreaker();
+		astralBreaker = new AstralBreaker(etheriumConfig);
 		oblivionStone = new OblivionStone();
 		enchantmentTransposer = new EnchantmentTransposer();
 
@@ -565,16 +591,23 @@ public class EnigmaticLegacy {
 		unwitnessedAmulet = new UnwitnessedAmulet();
 		twistedPotion = new TwistedPotion();
 		infernalShield = new InfernalShield();
+		cosmicHeart = new CosmicHeart();
+		cosmicScroll = new CosmicScroll();
+		abyssalHeart = new AbyssalHeart();
+		theInfinitum = new TheInfinitum();
+		astralFruit = new AstralFruit();
 
 		blazingStrengthEffect = new BlazingStrengthEffect();
 		moltenHeartEffect = new MoltenHeartEffect();
 
 		sharpshooterEnchantment = new SharpshooterEnchantment(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
 		ceaselessEnchantment = new CeaselessEnchantment(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND);
-		nemesisCurseEnchantment = new NemesisCurseEnchantment(EquipmentSlot.MAINHAND);
+		nemesisCurse = new NemesisCurse(EquipmentSlot.MAINHAND);
 		torrentEnchantment = new TorrentEnchantment(EquipmentSlot.MAINHAND);
 		wrathEnchantment = new WrathEnchantment(EquipmentSlot.MAINHAND);
 		slayerEnchantment = new SlayerEnchantment(EquipmentSlot.MAINHAND);
+		eternalBindingCurse = new EternalBindingCurse(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET);
+		sorrowCurse = new SorrowCurse(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET);
 
 		spellstoneList = Lists.newArrayList(
 				angelBlessing,
@@ -601,6 +634,10 @@ public class EnigmaticLegacy {
 		MinecraftForge.EVENT_BUS.register(new EnigmaticUpdateHandler());
 		MinecraftForge.EVENT_BUS.register(new EtheriumEventHandler(etheriumConfig, etheriumOre));
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStart);
+
+		DevotedBelieversHandler.getDevotedBelievers().entrySet().forEach(entry -> {
+			logger.getInternal().info("Believer: {}, UUID: {}", entry.getKey(), entry.getValue());
+		});
 
 		logger.info("Mod instance constructed successfully.");
 	}
@@ -633,9 +670,6 @@ public class EnigmaticLegacy {
 		EnigmaticUpdateHandler.init();
 
 		proxy.loadComplete(event);
-
-		universalClock = new ItemStack(Items.CLOCK);
-		soulOfTheArchitect = UUID.fromString("3efc546d-30bb-4c29-bb61-b3081a118408");
 
 		logger.info("Load completion phase finished successfully");
 	}
@@ -674,6 +708,9 @@ public class EnigmaticLegacy {
 		packetInstance.registerMessage(21, PacketGenericParticleEffect.class, PacketGenericParticleEffect::encode, PacketGenericParticleEffect::decode, PacketGenericParticleEffect::handle);
 		packetInstance.registerMessage(22, PacketUpdateExperience.class, PacketUpdateExperience::encode, PacketUpdateExperience::decode, PacketUpdateExperience::handle);
 		packetInstance.registerMessage(23, PacketToggleMagnetEffects.class, PacketToggleMagnetEffects::encode, PacketToggleMagnetEffects::decode, PacketToggleMagnetEffects::handle);
+		packetInstance.registerMessage(24, PacketPatchouliForce.class, PacketPatchouliForce::encode, PacketPatchouliForce::decode, PacketPatchouliForce::handle);
+		packetInstance.registerMessage(25, PacketSyncPlayTime.class, PacketSyncPlayTime::encode, PacketSyncPlayTime::decode, PacketSyncPlayTime::handle);
+		packetInstance.registerMessage(26, PacketCosmicScollRevive.class, PacketCosmicScollRevive::encode, PacketCosmicScollRevive::decode, PacketCosmicScollRevive::handle);
 
 		logger.info("Registering triggers...");
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);
@@ -682,6 +719,14 @@ public class EnigmaticLegacy {
 		CriteriaTriggers.register(CursedRingEquippedTrigger.INSTANCE);
 		CriteriaTriggers.register(RevelationTomeBurntTrigger.INSTANCE);
 		CriteriaTriggers.register(ForbiddenFruitTrigger.INSTANCE);
+		CriteriaTriggers.register(CursedInventoryChangedTrigger.INSTANCE);
+
+		logger.info("Registering stats...");
+
+		event.enqueueWork(() -> {
+			timeWithCursesStat = this.makeCustomStat("play_time_with_seven_curses", StatFormatter.TIME);
+			timeWithoutCursesStat = this.makeCustomStat("play_time_without_seven_curses", StatFormatter.TIME);
+		});
 
 		logger.info("Common setup phase finished successfully.");
 	}
@@ -739,6 +784,13 @@ public class EnigmaticLegacy {
 
 	public boolean isCSGPresent() {
 		return ModList.get().isLoaded("customstartinggear");
+	}
+
+	private ResourceLocation makeCustomStat(String pKey, StatFormatter pFormatter) {
+		ResourceLocation resourcelocation = new ResourceLocation(EnigmaticLegacy.MODID, pKey);
+		Registry.register(Registry.CUSTOM_STAT, pKey, resourcelocation);
+		Stats.CUSTOM.get(resourcelocation, pFormatter);
+		return resourcelocation;
 	}
 
 	@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -883,6 +935,11 @@ public class EnigmaticLegacy {
 					unwitnessedAmulet,
 					twistedPotion,
 					infernalShield,
+					cosmicHeart,
+					cosmicScroll,
+					abyssalHeart,
+					theInfinitum,
+					astralFruit,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),
@@ -910,7 +967,7 @@ public class EnigmaticLegacy {
 		}
 
 		@SubscribeEvent
-		public static void onRecipeRegister(final RegistryEvent.Register<RecipeSerializer<?>> e) {
+		public static void onRecipeRegister(final RegistryEvent.Register<RecipeSerializer<?>> event) {
 
 		}
 
@@ -986,18 +1043,20 @@ public class EnigmaticLegacy {
 			registry.registerAll(
 					sharpshooterEnchantment,
 					ceaselessEnchantment,
-					nemesisCurseEnchantment,
+					nemesisCurse,
 					torrentEnchantment,
 					wrathEnchantment,
-					slayerEnchantment);
-
+					slayerEnchantment,
+					eternalBindingCurse,
+					sorrowCurse
+					);
 		}
 
 		@SubscribeEvent
 		public static void registerLootModifiers(final RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
-			final IForgeRegistry<GlobalLootModifierSerializer<?>> registry = event.getRegistry();
+			IForgeRegistry<GlobalLootModifierSerializer<?>> registry = event.getRegistry();
 
-			registry.registerAll();
+			registry.registerAll(new SpecialLootModifier.Serializer().setRegistryName(new ResourceLocation(MODID, "special_loot_modifier")));
 		}
 
 		@SubscribeEvent

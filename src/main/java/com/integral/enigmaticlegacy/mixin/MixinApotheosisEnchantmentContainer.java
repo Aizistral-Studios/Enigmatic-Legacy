@@ -67,6 +67,7 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentMenu {
 						ItemStack secondRoll = this.enchantStack(player, enchanted, id, false);
 
 						enchanted = SuperpositionHandler.mergeEnchantments(firstRoll, secondRoll, true, false);
+						enchanted = SuperpositionHandler.maybeApplyEternalBinding(enchanted);
 						this.enchantSlots.setItem(0, enchanted);
 
 						player.awardStat(Stats.ENCHANT_ITEM);

@@ -22,6 +22,7 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.LivingEntity;
@@ -103,6 +104,14 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 		this.resistanceList.put("fireball", () -> 2F);
 	}
 
+	@Override
+	public int getCooldown(Player player) {
+		if (player != null && SuperpositionHandler.hasArchitectsFavor(player))
+			return 300;
+		else
+			return spellstoneCooldown.getValue();
+	}
+
 	private Multimap<Attribute, AttributeModifier> createAttributeMap(Player player) {
 		Multimap<Attribute, AttributeModifier> attributesDefault = HashMultimap.create();
 
@@ -122,7 +131,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone2");
 			//ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStoneCooldown", ChatFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStoneCooldown", ChatFormatting.GOLD, ((this.getCooldown(Minecraft.getInstance().player))) / 20.0F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone4");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone5", ChatFormatting.GOLD, underwaterCreaturesResistance.getValue().asPercentage() + "%");
@@ -189,7 +198,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 
 					world.playSound(null, player.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.NEUTRAL, 2.0F, (float) (0.7F + (Math.random() * 0.3D)));
 
-					SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
+					SuperpositionHandler.setSpellstoneCooldown(player, this.getCooldown(player));
 				}
 
 			}

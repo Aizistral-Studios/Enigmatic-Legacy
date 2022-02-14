@@ -16,6 +16,7 @@ public class EnigmaticRecipeSerializers {
 	public static final RecipeSerializer<BindToPlayerRecipe> BIND_TO_PLAYER = BindToPlayerRecipe.SERIALIZER;
 	public static final RecipeSerializer<ShapelessNoReturnRecipe> SHAPELESS_NO_RETURN = new ShapelessNoReturnRecipe.Serializer();
 	public static final RecipeSerializer<CursedShapedRecipe> CURSED_SHAPED = new CursedShapedRecipe.Serializer();
+	public static final RecipeSerializer<BlessedShapedRecipe> BLESSED_SHAPED = new BlessedShapedRecipe.Serializer();
 
 	@SubscribeEvent
 	public void onRegisterSerializers(RegistryEvent.Register<RecipeSerializer<?>> event) {
@@ -28,6 +29,7 @@ public class EnigmaticRecipeSerializers {
 		event.getRegistry().register(ENCHANTMENT_TRANSPOSING.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enchantment_transposing")));
 		event.getRegistry().register(BIND_TO_PLAYER.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "bind_to_player")));
 		event.getRegistry().register(CURSED_SHAPED.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "crafting_shaped_cursed")));
+		event.getRegistry().register(BLESSED_SHAPED.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "crafting_shaped_blessed")));
 		EnigmaticLegacy.logger.info("Recipe serializers registered successfully.");
 	}
 }
