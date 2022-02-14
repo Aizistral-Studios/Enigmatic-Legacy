@@ -19,21 +19,29 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.Vanishable;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ForbiddenFruit extends ItemBaseFood implements Vanishable {
+public class ForbiddenFruit extends ItemBase implements Vanishable {
 	public static final String consumedFruitTag = "ConsumedForbiddenFruit";
 	public static Omniconfig.PerhapsParameter regenerationSubtraction;
 	public static Omniconfig.DoubleParameter debuffDurationMultiplier;
@@ -66,8 +74,7 @@ public class ForbiddenFruit extends ItemBaseFood implements Vanishable {
 	}
 
 	public ForbiddenFruit() {
-		super(getDefaultProperties().rarity(Rarity.RARE).fireResistant(), buildDefaultFood());
-
+		super(getDefaultProperties().rarity(Rarity.RARE).fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "forbidden_fruit"));
 	}
 
@@ -93,6 +100,23 @@ public class ForbiddenFruit extends ItemBaseFood implements Vanishable {
 	}
 
 	@Override
+	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+		worldIn.gameEvent(entityLiving, GameEvent.EAT, entityLiving.eyeBlockPosition());
+		worldIn.playSound(null, entityLiving.getX(), entityLiving.getY(), entityLiving.getZ(), SoundEvents.GENERIC_EAT, SoundSource.NEUTRAL, 1.0F, 1.0F + (entityLiving.getRandom().nextFloat() - entityLiving.getRandom().nextFloat()) * 0.4F);
+
+		if (!(entityLiving instanceof Player) || !((Player)entityLiving).getAbilities().instabuild) {
+			stack.shrink(1);
+		}
+
+		entityLiving.gameEvent(GameEvent.EAT);
+
+		if (entityLiving instanceof Player) {
+			this.onConsumed(worldIn, (Player) entityLiving, stack);
+		}
+
+		return super.finishUsingItem(stack, worldIn, entityLiving);
+	}
+
 	public void onConsumed(Level worldIn, Player player, ItemStack food) {
 		this.defineConsumedFruit(player, true);
 
@@ -107,9 +131,27 @@ public class ForbiddenFruit extends ItemBaseFood implements Vanishable {
 		}
 	}
 
-	@Override
 	public boolean canEat(Level world, Player player, ItemStack food) {
 		return !this.haveConsumedFruit(player);
+	}
+
+	@Override
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+		if (this.canEat(worldIn, playerIn, playerIn.getItemInHand(handIn))) {
+			playerIn.startUsingItem(handIn);
+			return InteractionResultHolder.consume(playerIn.getItemInHand(handIn));
+		} else
+			return InteractionResultHolder.pass(playerIn.getItemInHand(handIn));
+	}
+
+	@Override
+	public int getUseDuration(ItemStack pStack) {
+		return 32;
+	}
+
+	@Override
+	public UseAnim getUseAnimation(ItemStack pStack) {
+		return UseAnim.EAT;
 	}
 
 }
