@@ -191,6 +191,12 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 		redirection = redirection.normalize();
 
 		if (redirected instanceof AbstractArrow && ((AbstractArrow) redirected).getOwner() == bearer) {
+			if (redirected.getTags().contains("AB_ACCELERATED"))
+				return;
+
+			if (redirected.getTags().stream().anyMatch(tag -> tag.startsWith("AB_DEFLECTED")))
+				return;
+
 			if (redirected instanceof ThrownTrident) {
 				ThrownTrident trident = (ThrownTrident) redirected;
 
@@ -198,8 +204,10 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 					return;
 			}
 
-			redirected.setDeltaMovement(redirected.getDeltaMovement().x * 1.75D, redirected.getDeltaMovement().y * 1.75D, redirected.getDeltaMovement().z * 1.75D);
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(bearer.getX(), bearer.getY(), bearer.getZ(), 64.0D, bearer.level.dimension())), new PacketForceArrowRotations(redirected.getId(), redirected.getYRot(), redirected.getXRot(), redirected.getDeltaMovement().x, redirected.getDeltaMovement().y, redirected.getDeltaMovement().z, redirected.getX(), redirected.getY(), redirected.getZ()));
+			if (redirected.addTag("AB_ACCELERATED")) {
+				redirected.setDeltaMovement(redirected.getDeltaMovement().x * 1.75D, redirected.getDeltaMovement().y * 1.75D, redirected.getDeltaMovement().z * 1.75D);
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(bearer.getX(), bearer.getY(), bearer.getZ(), 64.0D, bearer.level.dimension())), new PacketForceArrowRotations(redirected.getId(), redirected.getYRot(), redirected.getXRot(), redirected.getDeltaMovement().x, redirected.getDeltaMovement().y, redirected.getDeltaMovement().z, redirected.getX(), redirected.getY(), redirected.getZ()));
+			}
 		} else {
 			// redirected.setDeltaMovement(redirection.x, redirection.y, redirection.z);
 		}
