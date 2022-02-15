@@ -18,6 +18,14 @@
 			"link_recipe": true,
             "title": "book.enigmaticlegacy.entry.abyssal_heart.heading.1",
             "text": "book.enigmaticlegacy.entry.abyssal_heart.page.2"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.abyssal_heart.page.3"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.abyssal_heart.page.4"
         }
     ]
 }

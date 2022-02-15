@@ -18,6 +18,10 @@
 			"link_recipe": false,
 			"title": "book.enigmaticlegacy.entry.curse_of_eternal_binding.heading.1",
             "text": "book.enigmaticlegacy.entry.curse_of_eternal_binding.page.2"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.curse_of_eternal_binding.page.3"
         }
     ]
 }

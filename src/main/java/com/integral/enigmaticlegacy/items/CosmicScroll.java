@@ -154,9 +154,9 @@ public class CosmicScroll extends ItemBaseCurio {
 				UUID.fromString("290d5f76-87aa-4f7c-9c1a-9aef2fe25d05"),
 				EnigmaticLegacy.MODID+":luck_bonus", 1, AttributeModifier.Operation.ADDITION));
 
-		// TODO ARCANE SCROLL SLOT BONUS
-		//CuriosApi.getCuriosHelper().addSlotModifier(attributes, "scroll",
-		//		UUID.fromString("fb4dfa90-1df4-4e26-86a9-481dcdd830c5"), 1, Operation.ADDITION);
+		// ARCANE SCROLL SLOT BONUS
+		CuriosApi.getCuriosHelper().addSlotModifier(attributes, "scroll",
+				UUID.fromString("fb4dfa90-1df4-4e26-86a9-481dcdd830c5"), 1, Operation.ADDITION);
 
 		return attributes;
 	}

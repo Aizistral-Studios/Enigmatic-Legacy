@@ -23,8 +23,8 @@
             "text": "book.enigmaticlegacy.entry.the_infinitum.page.3"
         },
 		{
-            "type": "text",
-            "text": "book.enigmaticlegacy.entry.the_infinitum.page.4"
+            "type": "empty",
+            "draw_filler": false
         }
     ]
 }

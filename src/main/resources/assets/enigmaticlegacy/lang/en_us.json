@@ -800,12 +800,12 @@
 	
 	"tooltip.enigmaticlegacy.gemRing1": "§5Renders §6Piglins§5 neutral when worn.",
 	
-	"tooltip.enigmaticlegacy.enchanterPearl1": "§5While equipped or in your inventory, you",
-	"tooltip.enigmaticlegacy.enchanterPearl2": "§5receive greater amount and power of",
-	"tooltip.enigmaticlegacy.enchanterPearl3": "§5enchantments when using §6Enchanting Table.",
-	"tooltip.enigmaticlegacy.enchanterPearl4": "§5Enchanting has chance to produce both",
-	"tooltip.enigmaticlegacy.enchanterPearl5": "§5curses and treasure enchantments.",
-	"tooltip.enigmaticlegacy.enchanterPearl6": "§5You do not require §6Lapis Lazuli§5 to enchant.",
+	"tooltip.enigmaticlegacy.enchantersPearl1": "§6+1§d Charm Slot",
+	"tooltip.enigmaticlegacy.enchantersPearl2": "§5You receive greater amount and power of",
+	"tooltip.enigmaticlegacy.enchantersPearl3": "§5enchantments when using §6Enchanting Table.",
+	"tooltip.enigmaticlegacy.enchantersPearl4": "§5Enchanting has chance to produce both",
+	"tooltip.enigmaticlegacy.enchantersPearl5": "§5curses and treasure enchantments.",
+	"tooltip.enigmaticlegacy.enchantersPearl6": "§5You do not require §6Lapis Lazuli§5 to enchant.",
 	
 	"tooltip.enigmaticlegacy.cursedStone1": "§5If you die in the §6Nether§5, in the middle of",
 	"tooltip.enigmaticlegacy.cursedStone2": "§5sufficiently large lava lake with this stone",
@@ -858,8 +858,8 @@
 	
 	"tooltip.enigmaticlegacy.cosmicScrollLore1": "§5Observing loss of faith pains my heart, but",
 	"tooltip.enigmaticlegacy.cosmicScrollLore2": "§5may it not cast into doubt those who remain.",
-	"tooltip.enigmaticlegacy.cosmicScroll1": "§6+1 §dArcane Scroll Slot",
-	"tooltip.enigmaticlegacy.cosmicScroll2": "§6+1 §dLuck",
+	"tooltip.enigmaticlegacy.cosmicScroll1": "§6+1 §dLuck",
+	"tooltip.enigmaticlegacy.cosmicScroll2": "§6+1 §dArcane Scroll Slot",
 	"tooltip.enigmaticlegacy.cosmicScroll3": "§5If you wear full set of §6Etherium Armor§5, shield",
 	"tooltip.enigmaticlegacy.cosmicScroll4": "§5only requires you to be below §6%1$s§5 of maximum",
 	"tooltip.enigmaticlegacy.cosmicScroll5": "§5health to appear.",
@@ -976,7 +976,7 @@
 	"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.3": "Sharpshooter does only affect arrows - it will not increase damage of fireworks, for instance.<br2/>Furthermore, it cannot be combined with Multishot or Piercing.",
 	
 	
-	"book.enigmaticlegacy.entry.curse_of_nemesis.name": "Curse of Nemesis",
+	"book.enigmaticlegacy.entry.curse_of_nemesis.name": "Nemesis",
 	"book.enigmaticlegacy.entry.curse_of_nemesis.heading.1": "The Curse",
 	"book.enigmaticlegacy.entry.curse_of_nemesis.page.1": "One of the less known cursed enchantments, this one is more curious and obscure than others.<br2/>It can only be encountered on melee weapons, alike swords or axes. Should you directly attack with the weapon that bears Curses of Nemesis, you will receive around 25 percents of the damage you dealt back upon yourself.<br2/>",
 	"book.enigmaticlegacy.entry.curse_of_nemesis.page.2": "However, no matter how devastating your blows will be, this curse can never kill you.<br2/>It will eventually leave you with just a sliver of health remaining, but something else will have to take this sliver for you to finally die.",
@@ -1509,6 +1509,51 @@
 	"book.enigmaticlegacy.entry.infinimeal.page.1": "One another way to harness the power that rests within Heart of the Earth, this arcane substance embodies the power of nature itself, with its everlasting desire to spread its roots across the earth, to grow and thrive no matter what.<br2/>Letting it come in contact with most forms of plantlife is enough to significantly",
 	"book.enigmaticlegacy.entry.infinimeal.page.2": "accellerate their growth, similar to the effect produced when using Bone Meal. Unlike Bone Meal, however, you only need a mere grains of it to achieve such effect. Left alone, it seems to be able to draw power from surrounding",
 	"book.enigmaticlegacy.entry.infinimeal.page.3": "nature, growing and replenishing itself in quantity after being used - though never to more than there was created originally.<br2/>It also works on certain plants that normal fertilizers have no effect on, specifically Sugar Cane, Cactuses, Vines and Nether Wart.",
+	
+	
+	"book.enigmaticlegacy.entry.cosmic_scroll.name": "The Architect's Favor",
+	"book.enigmaticlegacy.entry.cosmic_scroll.page.1": "The might of this rumor-shadowed scroll is denied to most demigods, even those who have approached the godship rather close. Who is permitted to possess it is at the discretion of The Architect himself, and as rumors would have it - the journey to $(l:https://discord.gg/fuWK8ns)his domain$(/l) is long and full of dangers, and to be noticed by that godly being is an honor few of its dwellers ever had.",
+	"book.enigmaticlegacy.entry.cosmic_scroll.page.2": "Those who did, however, are awarded with power which has no equal; for the world to bask in their glory, and for them to spread the faith to the ears and eyes of others.",
+	
+	
+	"book.enigmaticlegacy.entry.cosmic_heart.name": "Heart of the Cosmos",
+	"book.enigmaticlegacy.entry.cosmic_heart.page.1": "With a fine selection of arcane ingredients, those which contain the power of other dimensions, you can alter the earthly nature of Heart of the Sea, transforming it into something different... Vastly more powerful.<br2/>The power of cosmos itself now rests at the palm of your hand. Only time will tell what unimaginable feats can be",
+	"book.enigmaticlegacy.entry.cosmic_heart.page.2": "achieved with it, what fabulous artifacts can be powered with its reality-bending energies.<br2/>But one thing is for certain - the world will tremble beneath the steps of their bearer.",
+	
+	
+	"book.enigmaticlegacy.entry.abyssal_heart.name": "Heart of the Abyss",
+	"book.enigmaticlegacy.entry.abyssal_heart.heading.1": "The Heart",
+	"book.enigmaticlegacy.entry.abyssal_heart.page.1": "When this unearthly abomination fell into your hands for the first time, description-defying mix of feelings have overcome your mind, among which there was a place for terror and excitement, admiration and disgust. The gaze of its lonely eye befell you with intent impossible to comprehend, but once initial wave of emotions retreated - you have",
+	"book.enigmaticlegacy.entry.abyssal_heart.page.2": "concluded that it poses no threat to you.<br2/>Still, you know not what it truly is, and where it came from. Perhaps your insufferable existence, and efforts to live in spite of Seven Curses were noticed by some unnameable eldritch power, and through your",
+	"book.enigmaticlegacy.entry.abyssal_heart.page.3": "damnable being it have chosen to channel itself into the world. Perhaps it is a mere accident, a fluke in reality itself that allowed something like this to appear. Perhaps it is your ailing mind that have conceived this horror in some nightmarish fever, and with its growth - corruption of the curses have managed to manifest it into the mortal realm?<br2/>Perhaps it's best to never know, for some truths are much",
+	"book.enigmaticlegacy.entry.abyssal_heart.page.4": "more unsettling than anything a man's imagination can come up with.<br2/>Regardless, now you are the rightful owner of this thing. And it will not be long before you can put it to some unimaginably violent, frightening use... The world will suffer tenfold for all the suffering it caused to you.",
+	
+	
+	"book.enigmaticlegacy.entry.astral_fruit.name": "Celestial Fruit",
+	"book.enigmaticlegacy.entry.astral_fruit.heading.1": "The Fruit",
+	"book.enigmaticlegacy.entry.astral_fruit.page.1": "Though many have sought this relic, it appears that you are among the few who found. In fact, it was not even that hard at all. Though a journey itself was nothing short of a feat, once you have made your way to the End City and opened the first treasure chest - there it was, awaiting you.<br2/>It certainly has connection to Seven Curses, but you cannot",
+	"book.enigmaticlegacy.entry.astral_fruit.page.2": "begin to imagine how circumstances aligned in such a way that it was in that exact chest you have opened, and no other. Determinism was never among your favored beliefs, and yet... perhaps it was destiny?<br2/>At any rate, the taste is divine, and the ability it has",
+	"book.enigmaticlegacy.entry.astral_fruit.page.3": "to empower you to bear another ring is undeniably useful.",
+	
+	
+	"book.enigmaticlegacy.entry.curse_of_eternal_binding.name": "Eternal Binding",
+	"book.enigmaticlegacy.entry.curse_of_eternal_binding.heading.1": "The Curse",
+	"book.enigmaticlegacy.entry.curse_of_eternal_binding.page.1": "The similarity of this curse's name to Curse of Binding is no accident - for it does exactly the same thing as the latter, preventing you from removing armor and accessories from yourself once equipped. The twist, however, is in the fact that items bearing this one will persist with you even accross death. This might be less severe in the case of armor, since sooner or later",
+	"book.enigmaticlegacy.entry.curse_of_eternal_binding.page.2": "it will break; for most accessories, however, with this curse applied you condemn yourself to bear them until you die permanently or until the end of time, whichever comes first.<br2/>Unlike most other curses, the only way to obtain this one seems to be by using classical",
+	"book.enigmaticlegacy.entry.curse_of_eternal_binding.page.3": "Enchanting Table, empowered by the Enchanter's Pearl.",
+	
+	
+	"book.enigmaticlegacy.entry.curse_of_sorrow.name": "Sorrow",
+	"book.enigmaticlegacy.entry.curse_of_sorrow.heading.1": "The Curse",
+	"book.enigmaticlegacy.entry.curse_of_sorrow.page.1": "Applicable only to armor, this curse adds an aftermath to the damage you would take from your enemies. Severe debuffs will befall you for every hit that you take, the greater the damage - the greater the debuffs.<br2/>Hopefully, the chance of such happening is only about one in ten for every piece of armor with this curse that you bear.",
+	"book.enigmaticlegacy.entry.curse_of_sorrow.page.2": "As per usual, you can occasionally find items bearing this curse among ancient treasures which you periodically pillage. It might be useful to power Scroll of a Thousand Curses if you have such, but whether or not the tradeoff is worth it is for you to judge.",
+	"book.enigmaticlegacy.entry.curse_of_sorrow.page.3": "Enchanting Table, empowered by the Enchanter's Pearl.",
+	
+	
+	"book.enigmaticlegacy.entry.the_infinitum.name": "The Infinitum",
+	"book.enigmaticlegacy.entry.the_infinitum.page.1": "It is conceived. In union with this dark, flesh-covered book, with horror that its pages conceal, you will wreak havoc upon those who threatened you.<br2/>Upon those who laughed at you, those who underestimated you, those who undertaken every effort to break you, to cleanse the world of your presence, be they disgusted by corruption that you bear or simply",
+	"book.enigmaticlegacy.entry.the_infinitum.page.2": "viewing you as an easy prey. For you are the writings that cannot be burned, knowledge that cannot be forgotten, truth that cannot be denied.<br2/>You will reveal to this realm what it have so persistently",
+	"book.enigmaticlegacy.entry.the_infinitum.page.3": "attempted to unmake and erase, you will engrave upon the tablets of eternity that reality which it have tried to hide.<br2/>You will teach them all a lesson they shall never forget.",
 	
 	
 	"book.enigmaticlegacy.landing_text": "In front of you lies the well of great knowledge, a place where some of this world's greatest mysteries belong, scrupulously researched and carefully catalogized.<br2/>As your journey continues and the world reveals itself to you, you may revisit and behold knowledge you gathered within these pages."

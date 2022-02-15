@@ -17,22 +17,6 @@
 			"recipe": "enigmaticlegacy:cosmic_heart",
             "title": " ",
             "text": "book.enigmaticlegacy.entry.cosmic_heart.page.2"
-        },
-		{
-            "type": "text",
-            "text": "book.enigmaticlegacy.entry.cosmic_heart.page.3"
-        },
-		{
-            "type": "text",
-            "text": "book.enigmaticlegacy.entry.cosmic_heart.page.4"
-        },
-		{
-            "type": "text",
-            "text": "book.enigmaticlegacy.entry.cosmic_heart.page.5"
-        },
-		{
-            "type": "empty",
-            "draw_filler": false
         }
     ]
 }

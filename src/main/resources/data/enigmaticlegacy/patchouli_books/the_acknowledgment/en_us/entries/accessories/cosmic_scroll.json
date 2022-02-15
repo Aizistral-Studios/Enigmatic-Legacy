@@ -17,18 +17,6 @@
 			"recipe": "enigmaticlegacy:cosmic_scroll",
             "title": " ",
             "text": "book.enigmaticlegacy.entry.cosmic_scroll.page.2"
-        },
-		{
-            "type": "text",
-            "text": "book.enigmaticlegacy.entry.cosmic_scroll.page.3"
-        },
-		{
-            "type": "text",
-			"text": "book.enigmaticlegacy.entry.cosmic_scroll.page.4"
-		},
-		{
-            "type": "text",
-			"text": "book.enigmaticlegacy.entry.cosmic_scroll.page.5"
-		}
+        }
     ]
 }

@@ -2602,9 +2602,11 @@ public class EnigmaticEventHandler {
 				ForbiddenFruitTrigger.INSTANCE.trigger(player);
 			}
 
+			/*
 			if (SuperpositionHandler.isTheBlessedOne(player) && !SuperpositionHandler.hasAdvancement(player, new ResourceLocation(MODID, "recipes/generic/cosmic_scroll"))) {
 				SuperpositionHandler.grantAdvancement(player, new ResourceLocation(MODID, "recipes/generic/cosmic_scroll"));
 			}
+			 */
 
 			/*
 			 * Handlers for fixing missing Curios slots upong joining the world.

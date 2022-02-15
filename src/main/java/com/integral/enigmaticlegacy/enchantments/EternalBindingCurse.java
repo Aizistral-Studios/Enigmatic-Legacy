@@ -64,7 +64,7 @@ public class EternalBindingCurse extends Enchantment {
 
 	@Override
 	protected boolean checkCompatibility(Enchantment ench) {
-		return ench != Enchantments.BINDING_CURSE ? super.checkCompatibility(ench) : false;
+		return ench != Enchantments.BINDING_CURSE && ench != Enchantments.VANISHING_CURSE ? super.checkCompatibility(ench) : false;
 	}
 
 }

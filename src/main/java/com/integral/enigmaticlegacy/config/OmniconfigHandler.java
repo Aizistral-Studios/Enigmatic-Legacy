@@ -112,7 +112,14 @@ public class OmniconfigHandler {
 	private static void loadCommon(final OmniconfigWrapper builder) {
 		builder.loadConfigFile();
 		builder.pushCategory("Accessibility Options",
-				"You may disable certain items or features from being obtainable/usable here." + System.lineSeparator() +
+				"You may disable certain items or features from being obtainable/usable here." + System.lineSeparator() + System.lineSeparator() +
+				"A BLASTED WARNING, PLEASE READ CAREFULLY:" + System.lineSeparator() +
+				"This WILL NOT \"delete\" any of the items from the mod. For items, none of the options here do more than" + System.lineSeparator() +
+				"just disable default ways of obtaining them. For stuff in dungeon loot - it is removed from dungeon loot, " + System.lineSeparator() +
+				"for starter items - no longer given at the start, for craftables - default recipe is disabled." + System.lineSeparator() +
+				"If you're a modpack developer or whatever, that is your way to add your own ways of obtaining them." + System.lineSeparator() +
+				"Want to disable Enigmatic Amulet/Ring of the Seven Curses from being granted to player when they spawn?" + System.lineSeparator() +
+				"HERE IS THE PLACE AND TIME, COME ON AND SLAM!" + System.lineSeparator() + System.lineSeparator() +
 				"Please note that as of release 2.6.0 of Enigmatic Legacy, those options are automatically generated" + System.lineSeparator() +
 				"for most items in the mod. They may refer to items that do not exist yet or are not obtainable in any" + System.lineSeparator() +
 				"case, and may not work for certain items due to non-generic obtaining methods or generic oversight." + System.lineSeparator() + System.lineSeparator() +
