@@ -1,5 +1,10 @@
 package com.integral.enigmaticlegacy.enchantments;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 
@@ -11,10 +16,14 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 
 public class EternalBindingCurse extends Enchantment {
+	private final List<String> incompatibleKeywords = new ArrayList<>();
 
 	public EternalBindingCurse(EquipmentSlot... slots) {
 		super(Enchantment.Rarity.RARE, EnchantmentCategory.WEARABLE, slots);
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "eternal_binding_curse"));
+
+		this.incompatibleKeywords.add("soulbound");
+		this.incompatibleKeywords.add("soulbinding");
 	}
 
 	@Override
@@ -66,6 +75,10 @@ public class EternalBindingCurse extends Enchantment {
 
 	@Override
 	protected boolean checkCompatibility(Enchantment ench) {
+		if (this.incompatibleKeywords.stream().anyMatch(keyword ->
+		StringUtils.containsIgnoreCase(keyword, ench.getRegistryName().getPath())))
+			return false;
+
 		return ench != Enchantments.BINDING_CURSE && ench != Enchantments.VANISHING_CURSE ? super.checkCompatibility(ench) : false;
 	}
 

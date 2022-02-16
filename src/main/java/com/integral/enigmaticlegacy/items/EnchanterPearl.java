@@ -60,8 +60,10 @@ public class EnchanterPearl extends ItemBaseCurio implements ICursed {
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
 		Multimap<Attribute, AttributeModifier> attributes = HashMultimap.create();
 
-		CuriosApi.getCuriosHelper().addSlotModifier(attributes, "charm",
-				UUID.fromString("be132e6a-031d-4e61-b15e-652d7051131f"), 1, Operation.ADDITION);
+		if (slotContext.entity() instanceof Player player && SuperpositionHandler.isTheCursedOne(player)) {
+			CuriosApi.getCuriosHelper().addSlotModifier(attributes, "charm",
+					UUID.fromString("be132e6a-031d-4e61-b15e-652d7051131f"), 1, Operation.ADDITION);
+		}
 
 		return attributes;
 	}
@@ -74,6 +76,12 @@ public class EnchanterPearl extends ItemBaseCurio implements ICursed {
 
 	public boolean isPresent(Player player) {
 		return SuperpositionHandler.isTheCursedOne(player) && SuperpositionHandler.hasCurio(player, this);
+	}
+
+	@Override
+	public boolean canEquip(SlotContext context, ItemStack stack) {
+		return context.entity() instanceof Player player && SuperpositionHandler.isTheCursedOne(player)
+				&& super.canEquip(context, stack);
 	}
 
 }

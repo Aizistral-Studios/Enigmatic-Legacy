@@ -194,7 +194,9 @@
 	"enchantment.enigmaticlegacy.eternal_binding_curse": "Curse of Eternal Binding",
 	"enchantment.enigmaticlegacy.sorrow_curse": "Curse of Sorrow",
 	
-	"enchantment.enigmaticlegacy.nemesis_curse.desc": "Deals 35% of damage back to you for each melee attack.",
+	"enchantment.enigmaticlegacy.eternal_binding_curse.desc": "Makes the item impossible to unequip or loose on death.",
+	"enchantment.enigmaticlegacy.sorrow_curse.desc": "Sometimes applies random debuffs when receiving damage.",
+	"enchantment.enigmaticlegacy.nemesis_curse.desc": "Deals 25% of damage back to you for each melee attack.",
 	"enchantment.enigmaticlegacy.sharpshooter.desc": "Increased and less random arrow damage.",
 	"enchantment.enigmaticlegacy.ceaseless.desc": "Can shoot basic arrows without consuming ammunition.",
 	"enchantment.enigmaticlegacy.torrent.desc": "Increased damage against water sensitive of fire immune creatures.",
@@ -1538,7 +1540,7 @@
 	
 	"book.enigmaticlegacy.entry.curse_of_eternal_binding.name": "Eternal Binding",
 	"book.enigmaticlegacy.entry.curse_of_eternal_binding.heading.1": "The Curse",
-	"book.enigmaticlegacy.entry.curse_of_eternal_binding.page.1": "The similarity of this curse's name to Curse of Binding is no accident - for it does exactly the same thing as the latter, preventing you from removing armor and accessories from yourself once equipped. The twist, however, is in the fact that items bearing this one will persist with you even accross death. This might be less severe in the case of armor, since sooner or later",
+	"book.enigmaticlegacy.entry.curse_of_eternal_binding.page.1": "The similarity of this curse's name to Curse of Binding is no accident - for it does exactly the same thing as the latter, preventing you from removing armor and accessories from yourself once equipped. The twist, however, is in the fact that items bearing this one will persist with you even across death. This might be less severe in the case of armor, since sooner or later",
 	"book.enigmaticlegacy.entry.curse_of_eternal_binding.page.2": "it will break; for most accessories, however, with this curse applied you condemn yourself to bear them until you die permanently or until the end of time, whichever comes first.<br2/>Unlike most other curses, the only way to obtain this one seems to be by using classical",
 	"book.enigmaticlegacy.entry.curse_of_eternal_binding.page.3": "Enchanting Table, empowered by the Enchanter's Pearl.",
 	
