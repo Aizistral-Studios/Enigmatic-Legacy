@@ -26,6 +26,8 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerChunkCache;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
@@ -40,6 +42,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.network.protocol.game.ClientboundTeleportEntityPacket;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -166,7 +170,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 
 		List<AbstractHurtingProjectile> projectileEntities = living.level.getEntitiesOfClass(AbstractHurtingProjectile.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
 		List<AbstractArrow> arrowEntities = living.level.getEntitiesOfClass(AbstractArrow.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
-		List<ThrownPotion> potionEntities = living.level.getEntitiesOfClass(ThrownPotion.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
+		List<ThrowableItemProjectile> potionEntities = living.level.getEntitiesOfClass(ThrowableItemProjectile.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
 
 		for (AbstractHurtingProjectile entity : projectileEntities) {
 			this.redirect(living, entity);
@@ -176,7 +180,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 			this.redirect(living, entity);
 		}
 
-		for (ThrownPotion entity : potionEntities) {
+		for (ThrowableItemProjectile entity : potionEntities) {
 			this.redirect(living, entity);
 		}
 	}
@@ -193,8 +197,16 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 
 		if ((redirected instanceof AbstractArrow arrow && arrow.getOwner() == bearer)
 				|| (redirected instanceof ThrowableItemProjectile projectile && projectile.getOwner() == bearer)) {
-			if (redirected.getTags().contains("AB_ACCELERATED"))
+			if (redirected.getTags().contains("AB_ACCELERATED")) {
+				if (redirected.level instanceof ServerLevel level) {
+					//ServerChunkCache cache = level.getChunkSource();
+					//cache.broadcastAndSend(redirected, new ClientboundSetEntityMotionPacket(redirected));
+					//cache.broadcastAndSend(redirected, new ClientboundTeleportEntityPacket(redirected));
+					//EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(bearer.getX(), bearer.getY(), bearer.getZ(), 64.0D, bearer.level.dimension())), new PacketForceArrowRotations(redirected.getId(), redirected.getYRot(), redirected.getXRot(), redirected.getDeltaMovement().x, redirected.getDeltaMovement().y, redirected.getDeltaMovement().z, redirected.getX(), redirected.getY(), redirected.getZ()));
+				}
+
 				return;
+			}
 
 			if (redirected.getTags().stream().anyMatch(tag -> tag.startsWith("AB_DEFLECTED")))
 				return;
@@ -208,7 +220,12 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 
 			if (redirected.addTag("AB_ACCELERATED")) {
 				redirected.setDeltaMovement(redirected.getDeltaMovement().x * 1.75D, redirected.getDeltaMovement().y * 1.75D, redirected.getDeltaMovement().z * 1.75D);
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(bearer.getX(), bearer.getY(), bearer.getZ(), 64.0D, bearer.level.dimension())), new PacketForceArrowRotations(redirected.getId(), redirected.getYRot(), redirected.getXRot(), redirected.getDeltaMovement().x, redirected.getDeltaMovement().y, redirected.getDeltaMovement().z, redirected.getX(), redirected.getY(), redirected.getZ()));
+
+				if (redirected.level instanceof ServerLevel level) {
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(bearer.getX(), bearer.getY(), bearer.getZ(), 64.0D, bearer.level.dimension())), new PacketForceArrowRotations(redirected.getId(), redirected.getYRot(), redirected.getXRot(), redirected.getDeltaMovement().x, redirected.getDeltaMovement().y, redirected.getDeltaMovement().z, redirected.getX(), redirected.getY(), redirected.getZ()));
+				}
+
+				//EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(bearer.getX(), bearer.getY(), bearer.getZ(), 64.0D, bearer.level.dimension())), new PacketForceArrowRotations(redirected.getId(), redirected.getYRot(), redirected.getXRot(), redirected.getDeltaMovement().x, redirected.getDeltaMovement().y, redirected.getDeltaMovement().z, redirected.getX(), redirected.getY(), redirected.getZ()));
 			}
 		} else {
 			// redirected.setDeltaMovement(redirection.x, redirection.y, redirection.z);
