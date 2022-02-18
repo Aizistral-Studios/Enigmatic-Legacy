@@ -3,6 +3,7 @@ package com.integral.enigmaticlegacy.handlers;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
@@ -27,9 +29,11 @@ import com.integral.enigmaticlegacy.api.generic.ConfigurableItem;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.IPerhaps;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
+import com.integral.enigmaticlegacy.api.quack.IProperShieldUser;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
+import com.integral.enigmaticlegacy.items.InfernalShield;
 import com.integral.enigmaticlegacy.items.TheAcknowledgment;
 import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.integral.enigmaticlegacy.objects.DimensionalPosition;
@@ -58,12 +62,15 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootPool.Builder;
@@ -79,6 +86,8 @@ import net.minecraft.nbt.ByteTag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffectUtil;
@@ -1571,6 +1580,70 @@ public class SuperpositionHandler {
 			}
 
 		return stack;
+	}
+
+	public static void onDamageSourceBlocking(LivingEntity blocker, ItemStack useItem, DamageSource source, CallbackInfoReturnable<Boolean> info) {
+		if (blocker instanceof Player player && useItem != null) {
+			boolean blocking = ((IProperShieldUser)blocker).isActuallyReallyBlocking();
+
+			if (blocking && useItem.getItem() instanceof InfernalShield) {
+				boolean piercingArrow = false;
+				Entity entity = source.getDirectEntity();
+
+				if (entity instanceof AbstractArrow) {
+					AbstractArrow abstractarrow = (AbstractArrow)entity;
+					if (abstractarrow.getPierceLevel() > 0) {
+						piercingArrow = true;
+					}
+				}
+
+				piercingArrow = false; // defend against Piercing... for now
+
+				if (!source.isBypassArmor() && ((IProperShieldUser)blocker).isActuallyReallyBlocking() && !piercingArrow) {
+					Vec3 sourcePos = source.getSourcePosition();
+					if (sourcePos != null) {
+						Vec3 lookVec = blocker.getViewVector(1.0F);
+						Vec3 sourceToSelf = sourcePos.vectorTo(blocker.position()).normalize();
+						sourceToSelf = new Vec3(sourceToSelf.x, 0.0D, sourceToSelf.z);
+						if (sourceToSelf.dot(lookVec) < 0.0D) {
+							info.setReturnValue(true);
+
+							int strength = -1;
+
+							if (player.hasEffect(EnigmaticLegacy.blazingStrengthEffect)) {
+								MobEffectInstance effectInstance = player.getEffect(EnigmaticLegacy.blazingStrengthEffect);
+								strength = effectInstance.getAmplifier();
+								player.removeEffect(EnigmaticLegacy.blazingStrengthEffect);
+								strength = strength > 2 ? 2 : strength;
+							}
+
+							player.addEffect(new MobEffectInstance(EnigmaticLegacy.blazingStrengthEffect, 1200, strength + 1, true, true));
+
+							if (source.getDirectEntity() instanceof LivingEntity living && living.isAlive()) {
+								if (!living.fireImmune() && !(living instanceof Guardian)) {
+									StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
+
+									// Ensure that we will not be caught in any sort of StackOverflow because of thorns-like effects
+									if (Arrays.stream(stacktrace).filter(element -> {
+										return SuperpositionHandler.class.getName().equals(element.getClassName());
+									}).count() < 2) {
+										living.invulnerableTime = 0;
+										living.hurt(new EntityDamageSource(DamageSource.ON_FIRE.msgId, player), 4F);
+										living.setSecondsOnFire(4);
+										EnigmaticEventHandler.knockbackThatBastard.remove(living);
+									}
+								}
+							}
+
+							return;
+						}
+					}
+				}
+
+				info.setReturnValue(false);
+				return;
+			}
+		}
 	}
 
 }
