@@ -29,6 +29,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.entity.projectile.WitherSkull;
@@ -190,7 +191,8 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 		Vector3 redirection = entityPos.subtract(bearerPos);
 		redirection = redirection.normalize();
 
-		if (redirected instanceof AbstractArrow && ((AbstractArrow) redirected).getOwner() == bearer) {
+		if ((redirected instanceof AbstractArrow arrow && arrow.getOwner() == bearer)
+				|| (redirected instanceof ThrowableItemProjectile projectile && projectile.getOwner() == bearer)) {
 			if (redirected.getTags().contains("AB_ACCELERATED"))
 				return;
 
