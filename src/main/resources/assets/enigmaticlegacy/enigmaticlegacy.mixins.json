@@ -21,6 +21,7 @@
 	"MixinLivingEntity",
 	"MixinEnderDragon",
 	"MixinInventoryChangeTrigger",
+	"MixinShulker",
 	"AccessorAbstractArrowEntity",
 	"AccessorAdvancementCommands"
   ],

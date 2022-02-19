@@ -72,6 +72,7 @@ import com.integral.enigmaticlegacy.items.EarthHeart;
 import com.integral.enigmaticlegacy.items.EnchanterPearl;
 import com.integral.enigmaticlegacy.items.EnchantmentTransposer;
 import com.integral.enigmaticlegacy.items.EnderRing;
+import com.integral.enigmaticlegacy.items.EnderSlayer;
 import com.integral.enigmaticlegacy.items.EnigmaticAmulet;
 import com.integral.enigmaticlegacy.items.EnigmaticItem;
 import com.integral.enigmaticlegacy.items.EscapeScroll;
@@ -397,6 +398,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Heart of the Abyss") public static AbyssalHeart abyssalHeart;
 	@ConfigurableItem("The Infinitum") public static TheInfinitum theInfinitum;
 	@ConfigurableItem("Celestial Fruit") public static AstralFruit astralFruit;
+	@ConfigurableItem("The Ender Slayer") public static EnderSlayer enderSlayer;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -596,6 +598,7 @@ public class EnigmaticLegacy {
 		abyssalHeart = new AbyssalHeart();
 		theInfinitum = new TheInfinitum();
 		astralFruit = new AstralFruit();
+		enderSlayer = new EnderSlayer();
 
 		blazingStrengthEffect = new BlazingStrengthEffect();
 		moltenHeartEffect = new MoltenHeartEffect();
@@ -940,6 +943,7 @@ public class EnigmaticLegacy {
 					abyssalHeart,
 					theInfinitum,
 					astralFruit,
+					enderSlayer,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),

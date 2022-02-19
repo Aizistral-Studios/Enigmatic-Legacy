@@ -48,6 +48,7 @@ import com.integral.enigmaticlegacy.items.BerserkEmblem;
 import com.integral.enigmaticlegacy.items.CosmicScroll;
 import com.integral.enigmaticlegacy.items.CursedRing;
 import com.integral.enigmaticlegacy.items.CursedScroll;
+import com.integral.enigmaticlegacy.items.EnderSlayer;
 import com.integral.enigmaticlegacy.items.EnigmaticAmulet;
 import com.integral.enigmaticlegacy.items.EnigmaticAmulet.AmuletColor;
 import com.integral.enigmaticlegacy.items.EyeOfNebula;
@@ -127,6 +128,7 @@ import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.Brain;
@@ -518,6 +520,13 @@ public class EnigmaticEventHandler {
 	public void onEnderPearlTeleport(EntityTeleportEvent.EnderPearl event) {
 		if (SuperpositionHandler.hasCurio(event.getPlayer(), eyeOfNebula)) {
 			event.setAttackDamage(0);
+		}
+	}
+
+	@SubscribeEvent
+	public void onEnderTeleport(EntityTeleportEvent.EnderEntity event) {
+		if (event.getEntity().getPersistentData().contains("ELTeleportBlock")) {
+			event.setCanceled(true);
 		}
 	}
 
@@ -1027,8 +1036,21 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onPlayerTick(LivingEvent.LivingUpdateEvent event) {
-		if (event.getEntityLiving() instanceof Player player) {
+		if (!event.getEntity().level.isClientSide) {
+			if (event.getEntity() instanceof EnderMan || event.getEntity() instanceof Shulker) {
+				int cooldown = event.getEntity().getPersistentData().getInt("ELTeleportBlock");
 
+				if (cooldown > 0) {
+					if (--cooldown > 0) {
+						event.getEntity().getPersistentData().putInt("ELTeleportBlock", cooldown);
+					} else {
+						event.getEntity().getPersistentData().remove("ELTeleportBlock");
+					}
+				}
+			}
+		}
+
+		if (event.getEntityLiving() instanceof Player player) {
 			if (!player.level.isClientSide) {
 				if (SuperpositionHandler.isTheCursedOne(player)) {
 					player.awardStat(Stats.CUSTOM.get(timeWithCursesStat), 1);
@@ -1618,6 +1640,10 @@ public class EnigmaticEventHandler {
 				knockbackPower += TheTwist.knockbackBonus.getValue().asModifier(false);
 			} else if (player.getMainHandItem() != null && player.getMainHandItem().getItem() == theInfinitum && SuperpositionHandler.isTheWorthyOne(player)) {
 				knockbackPower += TheInfinitum.knockbackBonus.getValue().asModifier(false);
+			} else if (player.getMainHandItem() != null && player.getMainHandItem().is(enderSlayer) && SuperpositionHandler.isTheCursedOne(player)) {
+				if (enderSlayer.isEndDweller(event.getEntityLiving())) {
+					knockbackPower += EnderSlayer.endKnockbackBonus.getValue().asModifier(false);
+				}
 			}
 
 			if (event.getEntityLiving() instanceof Player victim && SuperpositionHandler.hasArchitectsFavor(player)) {
@@ -1781,7 +1807,7 @@ public class EnigmaticEventHandler {
 			if (player.getMainHandItem() != null) {
 				ItemStack mainhandStack = player.getMainHandItem();
 
-				if (mainhandStack.getItem() == theTwist) {
+				if (mainhandStack.is(theTwist)) {
 					if (SuperpositionHandler.isTheCursedOne(player)) {
 						if (OmniconfigHandler.isBossOrPlayer(event.getEntityLiving())) {
 							bonusDamage += event.getAmount() * TheTwist.bossDamageBonus.getValue().asModifier(false);
@@ -1789,7 +1815,7 @@ public class EnigmaticEventHandler {
 					} else {
 						event.setCanceled(true);
 					}
-				} else if (mainhandStack.getItem() == theInfinitum) {
+				} else if (mainhandStack.is(theInfinitum)) {
 					if (SuperpositionHandler.isTheWorthyOne(player)) {
 						if (OmniconfigHandler.isBossOrPlayer(event.getEntityLiving())) {
 							//event.setAmount(10000000);
@@ -1804,6 +1830,22 @@ public class EnigmaticEventHandler {
 						player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 300, 3, false, true));
 						player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN,      300, 3, false, true));
 						player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS,         100, 3, false, true));
+					}
+				} else if (mainhandStack.is(enderSlayer)) {
+					if (SuperpositionHandler.isTheCursedOne(player)) {
+						if (enderSlayer.isEndDweller(event.getEntityLiving())) {
+							if (player.level.dimension().equals(proxy.getEndKey())) {
+								if (event.getEntityLiving() instanceof EnderMan
+										&& RegisteredMeleeAttack.getRegisteredAttackStregth(player) >= 1F) {
+									event.setAmount((event.getAmount() + 100F) * 10F);
+								}
+								event.getEntityLiving().getPersistentData().putBoolean("EnderSlayerVictim", true);
+							}
+
+							bonusDamage += event.getAmount() * EnderSlayer.endDamageBonus.getValue().asModifier(false);
+						}
+					} else {
+						event.setCanceled(true);
 					}
 				}
 
@@ -2366,7 +2408,34 @@ public class EnigmaticEventHandler {
 					}
 				}
 			}
+
+			if (killed instanceof EnderMan && killed.level.dimension().equals(proxy.getEndKey())
+					&& killed.getPersistentData().getBoolean("EnderSlayerVictim")) {
+				int extraXP = 0;
+
+				for (ItemEntity entity : event.getDrops()) {
+					if (entity.getItem() != null) {
+						if (entity.getItem().is(Items.ENDER_PEARL)) {
+							this.dropXPOrb(killed.level, killed.getX(), killed.getY(), killed.getZ(), 10);
+							extraXP += 10;
+						} else if (entity.getItem().is(Items.ENDER_EYE)) {
+							this.dropXPOrb(killed.level, killed.getX(), killed.getY(), killed.getZ(), 20);
+							extraXP += 20;
+						}
+					}
+				}
+
+				//killed.getPersistentData().remove("EnderSlayerVictim");
+				//killed.getPersistentData().putInt("EnderSlayerExtraXP", extraXP);
+				event.getDrops().clear();
+				event.setCanceled(true);
+			}
 		}
+	}
+
+	private void dropXPOrb(Level level, double x, double y, double z, int xp) {
+		ExperienceOrb orb = new ExperienceOrb(level, x, y, z, xp);
+		level.addFreshEntity(orb);
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
