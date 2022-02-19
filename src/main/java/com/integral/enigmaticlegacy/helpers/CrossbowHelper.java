@@ -106,8 +106,9 @@ public class CrossbowHelper {
 				}
 
 				if (EnigmaticEnchantmentHelper.hasSharpshooterEnchantment(crossbow)) {
-					((AbstractArrow) projectileentity).addTag(CrossbowHelper.sharpshooterTagPrefix + EnigmaticEnchantmentHelper.getSharpshooterLevel(crossbow));
-				}
+                    int dmg = (int) (EnigmaticEnchantmentHelper.getSharpshooterLevel(crossbow) * 3 + ((AbstractArrow) projectileentity).getBaseDamage() * velocity);
+                    projectileentity.addTag(CrossbowHelper.sharpshooterTagPrefix + dmg);
+                }
 			}
 
 			if (shooter instanceof CrossbowAttackMob) {
