@@ -40,6 +40,7 @@ public class OmniconfigHandler {
 	// Client-Only
 
 	public static Omniconfig.EnumParameter<TextOverflowMode> acknowledgmentOverflowMode;
+	public static Omniconfig.BooleanParameter angelBlessingDoubleJump;
 
 	public static boolean isItemEnabled(Object item) {
 		if (item == null)
@@ -102,6 +103,11 @@ public class OmniconfigHandler {
 						+ " perfectly on each and every page.")
 				.clientOnly()
 				.getEnum("AcknowledgmentOverflowMode", TextOverflowMode.OVERFLOW, TextOverflowMode.values());
+
+		angelBlessingDoubleJump = client
+				.comment("If false, active ability of Angel's Blessing will not be triggerable by pressing jump key in mid-air.")
+				.clientOnly()
+				.getBoolean("AngelBlessingDoubleJump", true);
 
 		SuperpositionHandler.dispatchWrapperToHolders(EnigmaticLegacy.MODID, client);
 

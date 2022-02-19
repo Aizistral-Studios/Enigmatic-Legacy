@@ -3,6 +3,7 @@ package com.integral.enigmaticlegacy.handlers;
 import org.lwjgl.glfw.GLFW;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.packets.server.PacketEnderRingKey;
 import com.integral.enigmaticlegacy.packets.server.PacketSpellstoneKey;
 import com.integral.enigmaticlegacy.packets.server.PacketXPScrollKey;
@@ -64,6 +65,10 @@ public class EnigmaticKeybindHandler {
 
 		if (Minecraft.getInstance().player.isFallFlying()) {
 			jumpClicked = Minecraft.getInstance().options.keyJump.isDown();
+		}
+
+		if (!OmniconfigHandler.angelBlessingDoubleJump.getValue()) {
+			jumpClicked = false;
 		}
 
 		if (this.enderRingKey.consumeClick()) {
