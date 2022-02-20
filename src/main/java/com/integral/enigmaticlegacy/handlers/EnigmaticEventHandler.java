@@ -1772,7 +1772,6 @@ public class EnigmaticEventHandler {
 			AbstractArrow arrow = (AbstractArrow) event.getSource().getDirectEntity();
 
 			for (String tag : arrow.getTags()) {
-
 				if (tag.startsWith(CrossbowHelper.sharpshooterTagPrefix)) {
 
 					/*
@@ -1780,8 +1779,9 @@ public class EnigmaticEventHandler {
 					 * that prefix from received String and freely parse remaining Integer.
 					 */
 
-					event.setAmount(6 + (3 * Integer.parseInt(tag.replace(CrossbowHelper.sharpshooterTagPrefix, ""))));
-					break;
+                    int dmg = Integer.parseInt(tag.replace(CrossbowHelper.sharpshooterTagPrefix, ""));
+                    event.setAmount(dmg);
+                    break;
 				}
 			}
 		} else if (event.getSource().getDirectEntity() instanceof Player && "player".equals(event.getSource().msgId)) {
