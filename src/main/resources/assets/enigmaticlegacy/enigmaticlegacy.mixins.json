@@ -29,6 +29,7 @@
 	"MixinForgeHooksClient",
 	"MixinGuiBookLanding",
 	"MixinBookTextRenderer",
+	"MixinAttributeTooltips",
 	"MixinItemRenderer"
   ],
   "injectors": {
