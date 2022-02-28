@@ -30,7 +30,8 @@
 	"MixinGuiBookLanding",
 	"MixinBookTextRenderer",
 	"MixinAttributeTooltips",
-	"MixinItemRenderer"
+	"MixinItemRenderer",
+	"MixinTooltipOverlayHandler"
   ],
   "injectors": {
     "defaultRequire": 1
