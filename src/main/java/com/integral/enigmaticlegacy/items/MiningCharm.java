@@ -65,7 +65,7 @@ public class MiningCharm extends ItemBaseCurio {
 		builder.popPrefix();
 	}
 
-	public final int nightVisionDuration = 210;
+	public final int nightVisionDuration = 310;
 
 	public MiningCharm() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.RARE));
@@ -107,7 +107,6 @@ public class MiningCharm extends ItemBaseCurio {
 			if (effect.getDuration() <= (duration - 1)) {
 				player.removeEffect(MobEffects.NIGHT_VISION);
 			}
-
 		}
 	}
 
@@ -115,11 +114,17 @@ public class MiningCharm extends ItemBaseCurio {
 	public void curioTick(SlotContext context, ItemStack stack) {
 		if (context.entity() instanceof Player player && !context.entity().level.isClientSide)
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.miningCharm)) {
-				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) && player.getY() < 50 && !player.level.dimension().location().toString().equals("minecraft:the_nether") && !player.level.dimension().location().toString().equals("minecraft:the_end") && !player.isEyeInFluid(FluidTags.WATER) && !player.level.canSeeSkyFromBelowWater(player.blockPosition()) && player.level.getMaxLocalRawBrightness(player.blockPosition(), 0) <= 8) {
+				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)
+						&& player.getY() < 50
+						&& !player.level.dimension().equals(Level.NETHER)
+						&& !player.level.dimension().equals(Level.END)
+						&& !player.isEyeInFluid(FluidTags.WATER)
+						&& !player.level.canSeeSkyFromBelowWater(player.blockPosition())
+						/*&& player.level.getMaxLocalRawBrightness(player.blockPosition(), 0) <= 8*/) {
 
 					player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
 				} else {
-					this.removeNightVisionEffect(player, this.nightVisionDuration);
+					//this.removeNightVisionEffect(player, this.nightVisionDuration);
 				}
 
 			}
