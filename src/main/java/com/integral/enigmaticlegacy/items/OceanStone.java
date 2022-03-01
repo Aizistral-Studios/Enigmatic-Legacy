@@ -89,7 +89,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	public final int xpCostBase = 150;
-	public final int nightVisionDuration = 210;
+	public final int nightVisionDuration = 310;
 
 	public OceanStone() {
 		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.RARE));
