@@ -250,7 +250,7 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod(EnigmaticLegacy.MODID)
 public class EnigmaticLegacy {
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.17.0";
+	public static final String VERSION = "2.17.1";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 

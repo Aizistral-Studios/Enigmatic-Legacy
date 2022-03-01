@@ -469,10 +469,9 @@
 	
 	"tooltip.enigmaticlegacy.miningCharm1": "§6+%1$s§d Mining Speed",
 	"tooltip.enigmaticlegacy.miningCharm2": "§6+%1$s§d Fortune Level",
-	"tooltip.enigmaticlegacy.miningCharm3": "§5When you are underground and in dark,",
-	"tooltip.enigmaticlegacy.miningCharm4": "§5applies §6Night Vision§5 effect to you. This",
-	"tooltip.enigmaticlegacy.miningCharm5": "§5feature can be disabled by pressing",
-	"tooltip.enigmaticlegacy.miningCharm6": "§5the §6Right-Click§5 when holding charm.",
+	"tooltip.enigmaticlegacy.miningCharm3": "§5When you are underground, applies §6Night Vision",
+	"tooltip.enigmaticlegacy.miningCharm4": "§5effect to you. This feature can be disabled by",
+	"tooltip.enigmaticlegacy.miningCharm5": "§5pressing §6Right-Click§5 when holding charm.",
 	"tooltip.enigmaticlegacy.miningCharmNightVision": "§dNight Vision: %1$s",
 	
 	"tooltip.enigmaticlegacy.enderRing1": "§5Allows you to remotely acess your",
@@ -1581,7 +1580,7 @@
 	"book.enigmaticlegacy.entry.ender_slayer.page.1": "One of the toughest lessons you have learned ever since first equipping Ring of the Seven Curses is that Endermen are no longer able to tolerate your existence. They have haunted you ever since - screeching, frightening horrors, chasing you in the night under the stars, and in smothering darkness of twisted salt-soaked caverns beneath the ground, possessed by",
 	"book.enigmaticlegacy.entry.ender_slayer.page.2": "unbendable desire to decimate your being. Before long, you have accepted that to restore neutral relations with them is by all means an impossible undertaking, and abandoned any and every attempt to achieve such.",
 	"book.enigmaticlegacy.entry.ender_slayer.page.3": "If that was the end of it - perhaps, to submit yourself to such fate and perpetually suffer their nightmarish onslaught would become nothing more than another part of your routine, and you would bear it with acceptance you have achieved in bearing all other curses.<br2/>If only... Now that The End beckons you to meet its challenges, traverse its lands and claim its treasures, the Endermen have become an",
-	"book.enigmaticlegacy.entry.ender_slayer.page.4": "obstacle in your way equal to which you did not face yet. For that dimension is ihabited fully by their kind, and thus, to even survive entering it seems a feat beyond the limits of your power as a demigod.<br2/>Perhaps, it is time to recede, to finally abandon your hope of surmounting this world's challanges and harnessing corruption of the curses. But the battle may yet be won. With this sword, and your sheer strength of will you may yet",
+	"book.enigmaticlegacy.entry.ender_slayer.page.4": "obstacle in your way equal to which you did not face yet. For that dimension is inhabited fully by their kind, and thus, to even survive entering it seems a feat beyond the limits of your power as a demigod.<br2/>Perhaps, it is time to recede, to finally abandon your hope of surmounting this world's challanges and harnessing corruption of the curses. But the battle may yet be won. With this sword, and your sheer strength of will you may yet",
 	"book.enigmaticlegacy.entry.ender_slayer.page.5": "stand victorious. For if peace cannot be made... it can only mean war.",
 	
 	
