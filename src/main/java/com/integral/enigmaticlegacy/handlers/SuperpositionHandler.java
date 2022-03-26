@@ -1574,6 +1574,7 @@ public class SuperpositionHandler {
 			if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BINDING_CURSE, stack) > 0) {
 				Map<Enchantment, Integer> map =  EnchantmentHelper.getEnchantments(stack);
 
+				map.remove(Enchantments.VANISHING_CURSE);
 				int level = map.remove(Enchantments.BINDING_CURSE);
 				map.put(EnigmaticLegacy.eternalBindingCurse, level);
 				EnchantmentHelper.setEnchantments(map, stack);
