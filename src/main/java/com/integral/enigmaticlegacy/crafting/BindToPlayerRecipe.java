@@ -46,7 +46,7 @@ public class BindToPlayerRecipe extends CustomRecipe {
 			ItemStack slotStack = inv.getItem(i);
 
 			if (!slotStack.isEmpty()) {
-				if (slotStack.getItem() == EnigmaticLegacy.gemOfBinding) {
+				if (/*slotStack.getItem() == EnigmaticLegacy.gemOfBinding*/ false) {
 					if (gem == null) {
 						gem = slotStack;
 					} else
@@ -78,7 +78,7 @@ public class BindToPlayerRecipe extends CustomRecipe {
 			ItemStack slotStack = inv.getItem(i);
 
 			if (!slotStack.isEmpty()) {
-				if (slotStack.getItem() == EnigmaticLegacy.gemOfBinding) {
+				if (/*slotStack.getItem() == EnigmaticLegacy.gemOfBinding*/ false) {
 					if (gem == null) {
 						gem = slotStack;
 					} else

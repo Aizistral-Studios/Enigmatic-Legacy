@@ -340,8 +340,8 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Keystone of The Oblivion") public static OblivionStone oblivionStone;
 	@ConfigurableItem("Tome of Hungering Knowledge") public static EnchantmentTransposer enchantmentTransposer;
 
-	@ConfigurableItem("Gem of Binding") public static GemOfBinding gemOfBinding;
-	@ConfigurableItem("Wormhole Potion") public static WormholePotion wormholePotion;
+	//@ConfigurableItem("Gem of Binding") public static GemOfBinding gemOfBinding;
+	//@ConfigurableItem("Wormhole Potion") public static WormholePotion wormholePotion;
 	@ConfigurableItem("Grace of the Creator") public static FabulousScroll fabulousScroll;
 	@ConfigurableItem("") public static StorageCrystal storageCrystal;
 	@ConfigurableItem("") public static SoulCrystal soulCrystal;
@@ -351,24 +351,24 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Withered Tome") public static RevelationTome netherRevelationTome;
 	@ConfigurableItem("Corrupted Tome") public static RevelationTome endRevelationTome;
 
-	@ConfigurableItem("Dark Armor") public static DarkArmor darkHelmet;
-	@ConfigurableItem("Dark Armor") public static DarkArmor darkChestplate;
-	@ConfigurableItem("Dark Armor") public static DarkArmor darkLeggings;
-	@ConfigurableItem("Dark Armor") public static DarkArmor darkBoots;
+	//	@ConfigurableItem("Dark Armor") public static DarkArmor darkHelmet;
+	//	@ConfigurableItem("Dark Armor") public static DarkArmor darkChestplate;
+	//	@ConfigurableItem("Dark Armor") public static DarkArmor darkLeggings;
+	//	@ConfigurableItem("Dark Armor") public static DarkArmor darkBoots;
 
 	@ConfigurableItem("Ring of the Seven Curses") public static CursedRing cursedRing;
 	@ConfigurableItem("Twisted Mirror") public static DarkMirror darkMirror;
 
-	@ConfigurableItem("Crying Netherite Ingot") public static PlaceholderItem cryingIngot;
-	@ConfigurableItem("Crying Netherite Armor") public static PlaceholderItem cryingHelmet;
-	@ConfigurableItem("Crying Netherite Armor") public static PlaceholderItem cryingChestplate;
-	@ConfigurableItem("Crying Netherite Armor") public static PlaceholderItem cryingLeggings;
-	@ConfigurableItem("Crying Netherite Armor") public static PlaceholderItem cryingBoots;
-	@ConfigurableItem("Crying Netherite Pickaxe") public static PlaceholderItem cryingPickaxe;
-	@ConfigurableItem("Crying Netherite Axe") public static PlaceholderItem cryingAxe;
-	@ConfigurableItem("Crying Netherite Sword") public static PlaceholderItem cryingSword;
-	@ConfigurableItem("Crying Netherite Shovel") public static PlaceholderItem cryingShovel;
-	@ConfigurableItem("Crying Netherite Hoe") public static PlaceholderItem cryingHoe;
+	//	@ConfigurableItem("Crying Netherite Ingot") public static PlaceholderItem cryingIngot;
+	//	@ConfigurableItem("Crying Netherite Armor") public static PlaceholderItem cryingHelmet;
+	//	@ConfigurableItem("Crying Netherite Armor") public static PlaceholderItem cryingChestplate;
+	//	@ConfigurableItem("Crying Netherite Armor") public static PlaceholderItem cryingLeggings;
+	//	@ConfigurableItem("Crying Netherite Armor") public static PlaceholderItem cryingBoots;
+	//	@ConfigurableItem("Crying Netherite Pickaxe") public static PlaceholderItem cryingPickaxe;
+	//	@ConfigurableItem("Crying Netherite Axe") public static PlaceholderItem cryingAxe;
+	//	@ConfigurableItem("Crying Netherite Sword") public static PlaceholderItem cryingSword;
+	//	@ConfigurableItem("Crying Netherite Shovel") public static PlaceholderItem cryingShovel;
+	//	@ConfigurableItem("Crying Netherite Hoe") public static PlaceholderItem cryingHoe;
 
 	@ConfigurableItem("Scroll of a Thousand Curses") public static CursedScroll cursedScroll;
 	@ConfigurableItem("Emblem of Bloodstained Valor") public static BerserkEmblem berserkEmblem;
@@ -386,7 +386,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Exquisite Ring") public static GemRing gemRing;
 	@ConfigurableItem("Unholy Stone") public static CursedStone cursedStone;
 	@ConfigurableItem("Enchanter's Pearl") public static EnchanterPearl enchanterPearl;
-	@ConfigurableItem("Fruit of Ascension") public static PlaceholderItem trueNotchApple;
+	//@ConfigurableItem("Fruit of Ascension") public static PlaceholderItem trueNotchApple;
 	@ConfigurableItem("Pact of Infinite Avarice") public static AvariceScroll avariceScroll;
 	@ConfigurableItem("Essence of Raging Life") public static Infinimeal infinimeal;
 	@ConfigurableItem("Darkest Scroll") public static DarkestScroll darkestScroll;
@@ -757,8 +757,8 @@ public class EnigmaticLegacy {
 			oblivionStone = new OblivionStone();
 			enchantmentTransposer = new EnchantmentTransposer();
 
-			gemOfBinding = new GemOfBinding();
-			wormholePotion = new WormholePotion();
+			//			gemOfBinding = new GemOfBinding();
+			//			wormholePotion = new WormholePotion();
 			fabulousScroll = new FabulousScroll();
 			storageCrystal = new StorageCrystal();
 			soulCrystal = new SoulCrystal();
@@ -768,24 +768,24 @@ public class EnigmaticLegacy {
 			netherRevelationTome = new RevelationTome(Rarity.UNCOMMON, RevelationTome.TomeType.NETHER, "withered_tome");
 			endRevelationTome = new RevelationTome(Rarity.RARE, RevelationTome.TomeType.END, "corrupted_tome");
 
-			darkHelmet = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlot.HEAD).setRegistryName(new ResourceLocation(MODID, "dark_helmet"));
-			darkChestplate = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlot.CHEST).setRegistryName(new ResourceLocation(MODID, "dark_chestplate"));
-			darkLeggings = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlot.LEGS).setRegistryName(new ResourceLocation(MODID, "dark_leggings"));
-			darkBoots = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlot.FEET).setRegistryName(new ResourceLocation(MODID, "dark_boots"));
+			//			darkHelmet = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlot.HEAD).setRegistryName(new ResourceLocation(MODID, "dark_helmet"));
+			//			darkChestplate = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlot.CHEST).setRegistryName(new ResourceLocation(MODID, "dark_chestplate"));
+			//			darkLeggings = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlot.LEGS).setRegistryName(new ResourceLocation(MODID, "dark_leggings"));
+			//			darkBoots = (DarkArmor) new DarkArmor(EnigmaticArmorMaterials.ETHERIUM, EquipmentSlot.FEET).setRegistryName(new ResourceLocation(MODID, "dark_boots"));
 
 			cursedRing = new CursedRing();
 			darkMirror = new DarkMirror();
 
-			cryingIngot = new PlaceholderItem("crying_ingot", Rarity.RARE);
-			cryingHelmet = new PlaceholderItem("crying_helmet", Rarity.RARE);
-			cryingChestplate = new PlaceholderItem("crying_chestplate", Rarity.RARE);
-			cryingLeggings = new PlaceholderItem("crying_leggings", Rarity.RARE);
-			cryingBoots = new PlaceholderItem("crying_boots", Rarity.RARE);
-			cryingPickaxe = new PlaceholderItem("crying_pickaxe", Rarity.RARE);
-			cryingAxe = new PlaceholderItem("crying_axe", Rarity.RARE);
-			cryingSword = new PlaceholderItem("crying_sword", Rarity.RARE);
-			cryingShovel = new PlaceholderItem("crying_shovel", Rarity.RARE);
-			cryingHoe = new PlaceholderItem("crying_hoe", Rarity.RARE);
+			//			cryingIngot = new PlaceholderItem("crying_ingot", Rarity.RARE);
+			//			cryingHelmet = new PlaceholderItem("crying_helmet", Rarity.RARE);
+			//			cryingChestplate = new PlaceholderItem("crying_chestplate", Rarity.RARE);
+			//			cryingLeggings = new PlaceholderItem("crying_leggings", Rarity.RARE);
+			//			cryingBoots = new PlaceholderItem("crying_boots", Rarity.RARE);
+			//			cryingPickaxe = new PlaceholderItem("crying_pickaxe", Rarity.RARE);
+			//			cryingAxe = new PlaceholderItem("crying_axe", Rarity.RARE);
+			//			cryingSword = new PlaceholderItem("crying_sword", Rarity.RARE);
+			//			cryingShovel = new PlaceholderItem("crying_shovel", Rarity.RARE);
+			//			cryingHoe = new PlaceholderItem("crying_hoe", Rarity.RARE);
 
 			cursedScroll = new CursedScroll();
 			berserkEmblem = new BerserkEmblem();
@@ -802,7 +802,7 @@ public class EnigmaticLegacy {
 			gemRing = new GemRing();
 			cursedStone = new CursedStone();
 			enchanterPearl = new EnchanterPearl();
-			trueNotchApple = new PlaceholderItem("true_notch_apple", Rarity.EPIC);
+			//trueNotchApple = new PlaceholderItem("true_notch_apple", Rarity.EPIC);
 			avariceScroll = new AvariceScroll();
 			infinimeal = new Infinimeal();
 			darkestScroll = new DarkestScroll();
