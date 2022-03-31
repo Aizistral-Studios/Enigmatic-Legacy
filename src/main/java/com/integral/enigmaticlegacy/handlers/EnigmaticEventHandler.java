@@ -1779,9 +1779,9 @@ public class EnigmaticEventHandler {
 					 * that prefix from received String and freely parse remaining Integer.
 					 */
 
-                    int dmg = Integer.parseInt(tag.replace(CrossbowHelper.sharpshooterTagPrefix, ""));
-                    event.setAmount(dmg);
-                    break;
+					int dmg = Integer.parseInt(tag.replace(CrossbowHelper.sharpshooterTagPrefix, ""));
+					event.setAmount(dmg);
+					break;
 				}
 			}
 		} else if (event.getSource().getDirectEntity() instanceof Player && "player".equals(event.getSource().msgId)) {
@@ -1949,8 +1949,7 @@ public class EnigmaticEventHandler {
 					}
 				}
 			}
-
-		} else if (event.getEntityLiving() instanceof Monster) {
+		} else if (event.getEntityLiving() instanceof Monster || event.getEntityLiving() instanceof EnderDragon) {
 			Monster monster = (Monster) event.getEntityLiving();
 
 			if (event.getSource().getEntity() instanceof Player) {

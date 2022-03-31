@@ -27,6 +27,7 @@ import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
@@ -101,7 +102,7 @@ public class CursedInventoryChangedTrigger extends SimpleCriterionTrigger<Cursed
 			ItemPredicate[] aitempredicate = new ItemPredicate[pItems.length];
 
 			for(int i = 0; i < pItems.length; ++i) {
-				aitempredicate[i] = new ItemPredicate((Tag<Item>)null, ImmutableSet.of(pItems[i].asItem()), MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, EnchantmentPredicate.NONE, EnchantmentPredicate.NONE, (Potion)null, NbtPredicate.ANY);
+				aitempredicate[i] = new ItemPredicate((TagKey<Item>)null, ImmutableSet.of(pItems[i].asItem()), MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, EnchantmentPredicate.NONE, EnchantmentPredicate.NONE, (Potion)null, NbtPredicate.ANY);
 			}
 
 			return hasItems(aitempredicate);

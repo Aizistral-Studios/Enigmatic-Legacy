@@ -17,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.entity.projectile.WitherSkull;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundExplodePacket;
@@ -116,7 +117,7 @@ public class UltimateWitherSkullEntity extends AbstractHurtingProjectile {
 	 */
 	@Override
 	public float getBlockExplosionResistance(Explosion explosionIn, BlockGetter worldIn, BlockPos pos, BlockState blockStateIn, FluidState fluidState, float explosionPower) {
-		return this.isSkullInvulnerable() && !BlockTags.WITHER_IMMUNE.contains(blockStateIn.getBlock()) ? Math.min(0.8F, explosionPower) : explosionPower;
+		return this.isSkullInvulnerable() && !blockStateIn.is(BlockTags.WITHER_IMMUNE) ? Math.min(0.8F, explosionPower) : explosionPower;
 	}
 
 

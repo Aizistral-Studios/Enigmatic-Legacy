@@ -27,6 +27,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.Tags;
 
 public class EnigmaticEnchantmentContainer extends EnchantmentMenu {
 	private Container tableInventory = new SimpleContainer(2) {
@@ -83,7 +84,7 @@ public class EnigmaticEnchantmentContainer extends EnchantmentMenu {
 			 */
 			@Override
 			public boolean mayPlace(ItemStack stack) {
-				return net.minecraftforge.common.Tags.Items.GEMS_LAPIS.contains(stack.getItem());
+				return stack.is(Tags.Items.GEMS_LAPIS);
 			}
 		});
 

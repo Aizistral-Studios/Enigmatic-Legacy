@@ -1043,7 +1043,7 @@ public class SuperpositionHandler {
 					}
 
 					int range = (beacon.levels + 1) * 10;
-					double distance = Math.sqrt(beacon.getBlockPos().distSqr(player.getX(), beacon.getBlockPos().getY(), player.getZ(), true));
+					double distance = Math.sqrt(beacon.getBlockPos().distToCenterSqr(player.getX(), beacon.getBlockPos().getY(), player.getZ()));
 
 					if (distance <= range) {
 						inRange = true;
