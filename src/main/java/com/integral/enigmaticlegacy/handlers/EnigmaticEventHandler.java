@@ -855,13 +855,6 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
-	public void onFogRender(EntityViewRenderEvent.FogDensity event) {
-		// NO-OP
-	}
-
-
-	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
 	public void onFogRender(EntityViewRenderEvent.RenderFogEvent event) {
 		if (event.getCamera().getFluidInCamera() == FogType.LAVA) {
 			if (Minecraft.getInstance().player.hasEffect(EnigmaticLegacy.moltenHeartEffect)) {
