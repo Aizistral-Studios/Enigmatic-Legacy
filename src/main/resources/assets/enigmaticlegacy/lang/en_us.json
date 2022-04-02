@@ -672,8 +672,6 @@
 	"tooltip.enigmaticlegacy.enchantmentTransposer2": "§5to transfer all enchantments from item to the tome.",
 	"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5The tome will be transformed into §6Enchanted Book§5.",
 	
-	"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5The tome will be transformed into §6Enchanted Book§5.",
-	
 	"tooltip.enigmaticlegacy.boundToPlayer": "§5Bound to: §6%1$s",
 	
 	"tooltip.enigmaticlegacy.revelationTome1": "§5Many pages of this tome were destroyed",
@@ -841,7 +839,7 @@
 	"tooltip.enigmaticlegacy.twistedPotion2": "§5demise, at the cost of leaving you on the",
 	"tooltip.enigmaticlegacy.twistedPotion3": "§5edge of death.",
 	
-	"tooltip.enigmaticlegacy.infernalShield1": "§5It shall become bound to the first one who",
+	"tooltip.enigmaticlegacy.infernalShield1": "§5It shall become bound to the first one who !!! Key 842-845 string = key 847-850 !!!", 
 	"tooltip.enigmaticlegacy.infernalShield2": "§5dares lay their claim upon this relic, and in",
 	"tooltip.enigmaticlegacy.infernalShield3": "§5that glorious minute fate of its chosen",
 	"tooltip.enigmaticlegacy.infernalShield4": "§5bearer shall be preordained.",
@@ -897,8 +895,6 @@
 	"tooltip.enigmaticlegacy.theInfinitum9": "§5When held, provides §685% §dChance§5 that otherwise",
 	"tooltip.enigmaticlegacy.theInfinitum10": "§5lethal damage won't kill you.",
 	
-	"tooltip.enigmaticlegacy.enderSlayer1": "§5To exterminate them all...",
-	"tooltip.enigmaticlegacy.enderSlayer2": "§5Is such the only way?",
 	"tooltip.enigmaticlegacy.enderSlayer1_alt": "§5To slap them all...",
 	"tooltip.enigmaticlegacy.enderSlayer2_alt": "§5Is such the only way?",
 	"tooltip.enigmaticlegacy.enderSlayer1": "§5To exterminate them all...",
