@@ -2132,7 +2132,9 @@ public class EnigmaticEventHandler {
 		if (entity instanceof ServerPlayer) {
 			ServerPlayer player = (ServerPlayer) entity;
 			EnigmaticLegacy.soulCrystal.updatePlayerSoulMap(player);
-			TransientPlayerData.get(player).syncToPlayer();
+			ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers().forEach(serverPlayer -> {
+				TransientPlayerData.get(serverPlayer).syncToPlayer(player);
+			});
 		}
 
 		if (entity instanceof PathfinderMob mob && ((PathfinderMob)entity).getMobType() == MobType.ARTHROPOD) {
