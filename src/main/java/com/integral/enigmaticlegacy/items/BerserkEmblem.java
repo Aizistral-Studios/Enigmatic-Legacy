@@ -27,6 +27,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
@@ -120,14 +121,14 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
+		if (context.entity() instanceof ServerPlayer player) {
 			player.getAttributes().addTransientAttributeModifiers(this.createAttributeMap(player));
 		}
 	}
 
 	@Override
 	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
+		if (context.entity() instanceof ServerPlayer player) {
 			player.getAttributes().removeAttributeModifiers(this.createAttributeMap(player));
 		}
 	}

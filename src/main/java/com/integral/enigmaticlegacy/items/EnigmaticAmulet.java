@@ -38,6 +38,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
@@ -296,7 +297,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 	@Override
 	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
+		if (context.entity() instanceof ServerPlayer player) {
 			AttributeMap map = player.getAttributes();
 			map.removeAttributeModifiers(this.getAllModifiers());
 		}
@@ -305,7 +306,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
+		if (context.entity() instanceof ServerPlayer player) {
 			ItemStack amulet = SuperpositionHandler.getCurioStack(player, this);
 
 			if (amulet != null) {
