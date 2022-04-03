@@ -1943,7 +1943,7 @@ public class EnigmaticEventHandler {
 				}
 			}
 		} else if (event.getEntityLiving() instanceof Monster || event.getEntityLiving() instanceof EnderDragon) {
-			Monster monster = (Monster) event.getEntityLiving();
+			Mob mob = (Mob) event.getEntityLiving();
 
 			if (event.getSource().getEntity() instanceof Player) {
 				Player player = (Player) event.getSource().getEntity();
@@ -1953,11 +1953,11 @@ public class EnigmaticEventHandler {
 				 */
 
 				if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.monsterCharm)) {
-					if (monster.isInvertedHealAndHarm()) {
+					if (mob.isInvertedHealAndHarm()) {
 						event.setAmount(event.getAmount() * MonsterCharm.undeadDamageBonus.getValue().asModifier(true));
-					} else if (monster.isAggressive() || monster instanceof Creeper) {
+					} else if (mob.isAggressive() || mob instanceof Creeper) {
 
-						if (monster instanceof EnderMan || monster instanceof ZombifiedPiglin || monster instanceof Blaze || monster instanceof Guardian || monster instanceof ElderGuardian || !monster.canChangeDimensions()) {
+						if (mob instanceof EnderMan || mob instanceof ZombifiedPiglin || mob instanceof Blaze || mob instanceof Guardian || mob instanceof ElderGuardian || !mob.canChangeDimensions()) {
 							// NO-OP
 						} else {
 							event.setAmount(event.getAmount() * MonsterCharm.hostileDamageBonus.getValue().asModifier(true));
