@@ -841,11 +841,6 @@
 	"tooltip.enigmaticlegacy.twistedPotion2": "§5demise, at the cost of leaving you on the",
 	"tooltip.enigmaticlegacy.twistedPotion3": "§5edge of death.",
 	
-	"tooltip.enigmaticlegacy.infernalShield1": "§5It shall become bound to the first one who",
-	"tooltip.enigmaticlegacy.infernalShield2": "§5dares lay their claim upon this relic, and in",
-	"tooltip.enigmaticlegacy.infernalShield3": "§5that glorious minute fate of its chosen",
-	"tooltip.enigmaticlegacy.infernalShield4": "§5bearer shall be preordained.",
-	
 	"tooltip.enigmaticlegacy.infernalShield1": "§6When equipped:",
 	"tooltip.enigmaticlegacy.infernalShield2": "§5- Extinguishes you when on fire.",
 	"tooltip.enigmaticlegacy.infernalShield3": "§6When blocking:",
@@ -901,8 +896,6 @@
 	"tooltip.enigmaticlegacy.enderSlayer2": "§5Is such the only way?",
 	"tooltip.enigmaticlegacy.enderSlayer1_alt": "§5To slap them all...",
 	"tooltip.enigmaticlegacy.enderSlayer2_alt": "§5Is such the only way?",
-	"tooltip.enigmaticlegacy.enderSlayer1": "§5To exterminate them all...",
-	"tooltip.enigmaticlegacy.enderSlayer2": "§5Is such the only way?",
 	"tooltip.enigmaticlegacy.enderSlayer3": "§6+%1$s §dDamage§5 against dwellers of §6The End.",
 	"tooltip.enigmaticlegacy.enderSlayer4": "§6+%1$s §dKnockback§5 against dwellers of §6The End.",
 	"tooltip.enigmaticlegacy.enderSlayer5": "§5In §6The End§5, fully charged attacks deal",
