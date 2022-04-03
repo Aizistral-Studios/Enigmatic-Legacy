@@ -102,8 +102,7 @@ curseforge {
         changelogType = 'html'
         changelog = file('docs/changelog.html')
 		
-		addGameVersion '1.18.1'
-		addGameVersion '1.18'
+		addGameVersion '1.18.2'
 		
 		relations {
 			if (project.name.equals('EnigmaticLegacy')) {
