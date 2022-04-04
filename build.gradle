@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-		mavenLocal()
+		maven { url "file:///${project.projectDir}/deps/" }
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url = 'https://maven.parchmentmc.org' }
         maven {
