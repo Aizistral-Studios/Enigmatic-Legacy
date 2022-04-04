@@ -1,5 +1,7 @@
 package com.integral.enigmaticlegacy.handlers;
 
+import static com.integral.enigmaticlegacy.EnigmaticLegacy.cursedRing;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -125,7 +128,9 @@ import net.minecraftforge.forgespi.language.ModFileScanData;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.SlotTypeMessage;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
@@ -263,6 +268,42 @@ public class SuperpositionHandler {
 				}
 			}
 		});
+	}
+
+	public static boolean tryForceEquip(LivingEntity entity, ItemStack curio) {
+		if (!(curio.getItem() instanceof ICurioItem))
+			throw new IllegalArgumentException("I fear for now this only works with ICurioItem");
+
+		MutableBoolean equipped = new MutableBoolean(false);
+		ICurioItem item = (ICurioItem) curio.getItem();
+
+		CuriosApi.getCuriosHelper().getCuriosHandler(entity).ifPresent(handler -> {
+			if (!entity.level.isClientSide) {
+				Map<String, ICurioStacksHandler> curios = handler.getCurios();
+
+				cycle: for (Map.Entry<String, ICurioStacksHandler> entry : curios.entrySet()) {
+					IDynamicStackHandler stackHandler = entry.getValue().getStacks();
+
+					for (int i = 0; i < stackHandler.getSlots(); i++) {
+						ItemStack present = stackHandler.getStackInSlot(i);
+						Set<String> tags = CuriosApi.getCuriosHelper().getCurioTags(curio.getItem());
+						String id = entry.getKey();
+
+						SlotContext context = new SlotContext(id, entity, i, false, entry.getValue().isVisible());
+
+						if (present.isEmpty() && (tags.contains(id) || tags.contains("curio")) && item.canEquip(context, curio)) {
+							stackHandler.setStackInSlot(i, curio);
+							item.playRightClickEquipSound(entity, curio);
+							equipped.setTrue();
+							break cycle;
+						}
+					}
+				}
+
+			}
+		});
+
+		return equipped.booleanValue();
 	}
 
 	/**

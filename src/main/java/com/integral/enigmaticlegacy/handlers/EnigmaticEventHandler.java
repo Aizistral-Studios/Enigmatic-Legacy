@@ -1155,17 +1155,26 @@ public class EnigmaticEventHandler {
 						ItemStack stack = list.get(i);
 
 						// Null check 'cause I don't trust you
-						if (stack != null && stack.getItem() == unwitnessedAmulet) {
-							stack = new ItemStack(enigmaticAmulet);
-							enigmaticAmulet.setInscription(stack, player.getGameProfile().getName());
+						if (stack != null) {
+							if (stack.is(unwitnessedAmulet)) {
+								stack = new ItemStack(enigmaticAmulet);
+								enigmaticAmulet.setInscription(stack, player.getGameProfile().getName());
 
-							if (EnigmaticAmulet.seededColorGen.getValue()) {
-								enigmaticAmulet.setSeededColor(stack);
-							} else {
-								enigmaticAmulet.setRandomColor(stack);
+								if (EnigmaticAmulet.seededColorGen.getValue()) {
+									enigmaticAmulet.setSeededColor(stack);
+								} else {
+									enigmaticAmulet.setRandomColor(stack);
+								}
+
+								list.set(i, stack);
+							} else if (CursedRing.autoEquip.getValue() && !player.isCreative() && !player.isSpectator()
+									&& stack.is(cursedRing)) {
+								if (!SuperpositionHandler.hasCurio(player, cursedRing)) {
+									if (SuperpositionHandler.tryForceEquip(player, stack)) {
+										list.set(i, ItemStack.EMPTY);
+									}
+								}
 							}
-
-							list.set(i, stack);
 						}
 					}
 				}
@@ -2936,32 +2945,7 @@ public class EnigmaticEventHandler {
 						}
 					}
 				} else {
-					CuriosApi.getCuriosHelper().getCuriosHandler(player).ifPresent(handler -> {
-						if (!player.level.isClientSide) {
-							Map<String, ICurioStacksHandler> curios = handler.getCurios();
-
-							cycle: for (Map.Entry<String, ICurioStacksHandler> entry : curios.entrySet()) {
-								IDynamicStackHandler stackHandler = entry.getValue().getStacks();
-
-								for (int i = 0; i < stackHandler.getSlots(); i++) {
-									ItemStack present = stackHandler.getStackInSlot(i);
-									Set<String> tags = CuriosApi.getCuriosHelper().getCurioTags(cursedRing);
-									String id = entry.getKey();
-
-									SlotContext context = new SlotContext(id, player, i, false, entry.getValue().isVisible());
-
-									if (present.isEmpty() && (tags.contains(id) || tags.contains("curio")) &&
-											cursedRing.canEquip(context, cursedRingStack)) {
-										stackHandler.setStackInSlot(i, cursedRingStack);
-										//cursedRing.onEquip(id, i, player);
-										cursedRing.playRightClickEquipSound(player, cursedRingStack);
-										break cycle;
-									}
-								}
-							}
-
-						}
-					});
+					SuperpositionHandler.tryForceEquip(player, cursedRingStack);
 				}
 
 				SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_CURSEDGIFT, true);

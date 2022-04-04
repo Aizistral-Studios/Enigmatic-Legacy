@@ -75,6 +75,7 @@ public class CursedRing extends ItemBaseCurio {
 	public static Omniconfig.BooleanParameter enableLore;
 
 	public static Omniconfig.BooleanParameter ultraHardcore;
+	public static Omniconfig.BooleanParameter autoEquip;
 	public static final List<ResourceLocation> neutralAngerBlacklist = new ArrayList<>();
 
 	@SubscribeConfig(receiveClient = true)
@@ -130,7 +131,11 @@ public class CursedRing extends ItemBaseCurio {
 							+ "entering a new world, instead of just being added to their inventory.")
 					.getBoolean("UltraHardcode", false);
 
-
+			autoEquip = builder
+					.comment("If true, Ring of the Seven Curses will be equipped into player's ring slot right away when "
+							+ "it enters their inventory. This is different from ultra hardcore option as the way through "
+							+ "which ring ends up in player's inventory does not matter.")
+					.getBoolean("AutoEquip", false);
 
 			knockbackDebuff = builder
 					.comment("How much knockback bearers of the ring take, measured in percents.")
