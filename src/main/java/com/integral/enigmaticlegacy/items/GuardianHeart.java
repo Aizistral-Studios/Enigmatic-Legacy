@@ -59,6 +59,8 @@ import net.minecraftforge.network.PacketDistributor;
 import top.theillusivec4.curios.api.CuriosApi;
 
 public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
+	public static final List<Class<? extends LivingEntity>> excludedMobs = Lists.newArrayList(
+			AbstractPiglin.class, Guardian.class);
 	public static Omniconfig.IntParameter abilityRange;
 	public static Omniconfig.IntParameter enrageRange;
 	public static Omniconfig.IntParameter abilityCooldown;
@@ -81,9 +83,6 @@ public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 
 		builder.popPrefix();
 	}
-
-	public static final List<Class<? extends LivingEntity>> excludedMobs = Lists.newArrayList(
-			AbstractPiglin.class, Guardian.class);
 
 	public GuardianHeart() {
 		super(getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());

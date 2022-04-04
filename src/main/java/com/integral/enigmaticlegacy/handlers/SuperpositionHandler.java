@@ -33,6 +33,7 @@ import com.integral.enigmaticlegacy.api.quack.IProperShieldUser;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
+import com.integral.enigmaticlegacy.items.GolemHeart;
 import com.integral.enigmaticlegacy.items.InfernalShield;
 import com.integral.enigmaticlegacy.items.TheAcknowledgment;
 import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
@@ -1383,7 +1384,7 @@ public class SuperpositionHandler {
 		int armorAmount = 0;
 
 		for (ItemStack stack : entity.getArmorSlots()) {
-			if (!stack.isEmpty()) {
+			if (!stack.isEmpty() && !GolemHeart.EXCLUDED_ARMOR.stream().anyMatch(stack::is)) {
 				armorAmount++;
 			}
 		}
