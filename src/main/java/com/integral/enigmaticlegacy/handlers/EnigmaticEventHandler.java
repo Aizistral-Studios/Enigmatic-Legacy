@@ -1661,7 +1661,7 @@ public class EnigmaticEventHandler {
 
 		if (event.getEntityLiving() instanceof Animal animal && event.getSource().getEntity() instanceof Player player) {
 			if (SuperpositionHandler.hasItem(player, animalGuide)) {
-				if (!(animal instanceof NeutralMob) || animal instanceof Hoglin || animal instanceof Bee || animal instanceof Wolf) {
+				if (animalGuide.isProtectedAnimal(animal)) {
 					event.setCanceled(true);
 
 					if (animal.getTarget() == player) {

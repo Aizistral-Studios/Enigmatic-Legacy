@@ -26,7 +26,11 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -102,6 +106,10 @@ public class AnimalGuide extends ItemBase implements Vanishable {
 			return InteractionResult.SUCCESS;
 		} else
 			return InteractionResult.PASS;
+	}
+
+	public boolean isProtectedAnimal(LivingEntity animal) {
+		return !(animal instanceof NeutralMob) || animal instanceof Hoglin || animal instanceof Bee || animal instanceof Wolf;
 	}
 
 	public boolean isTamableAnimal(LivingEntity entity) {
