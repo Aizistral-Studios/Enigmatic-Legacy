@@ -71,6 +71,7 @@ import com.integral.enigmaticlegacy.objects.CooldownMap;
 import com.integral.enigmaticlegacy.objects.DamageSourceNemesisCurse;
 import com.integral.enigmaticlegacy.objects.DimensionalPosition;
 import com.integral.enigmaticlegacy.objects.Perhaps;
+import com.integral.enigmaticlegacy.objects.QuarkHelper;
 import com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.enigmaticlegacy.objects.Vector3;
@@ -104,6 +105,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.screens.Screen;
@@ -811,8 +813,8 @@ public class EnigmaticEventHandler {
 	}
 
 
-	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onInventoryGuiInit(ScreenEvent.InitScreenEvent.Post evt) {
 		Screen screen = evt.getScreen();
 
@@ -849,6 +851,15 @@ public class EnigmaticEventHandler {
 			magnetButton.y = gui.getGuiTop() + y;
 
 			evt.addListener(magnetButton);
+
+			if (QuarkHelper.getMiniButtonClass() != null) {
+				evt.getListenersList().forEach(listener -> {
+					if (QuarkHelper.getMiniButtonClass().isInstance(listener)) {
+						Button button = (Button) listener;
+						button.y -= 22;
+					}
+				});
+			}
 		}
 	}
 

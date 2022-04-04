@@ -31,7 +31,8 @@
 	"MixinBookTextRenderer",
 	"MixinAttributeTooltips",
 	"MixinItemRenderer",
-	"MixinTooltipOverlayHandler"
+	"MixinTooltipOverlayHandler",
+	"MixinMiniInventoryButton"
   ],
   "injectors": {
     "defaultRequire": 1
