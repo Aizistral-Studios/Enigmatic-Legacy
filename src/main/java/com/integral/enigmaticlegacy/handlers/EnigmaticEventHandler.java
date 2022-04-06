@@ -321,6 +321,7 @@ public class EnigmaticEventHandler {
 	public static final Multimap<Player, Item> postmortalPossession = ArrayListMultimap.create();
 	public static final Multimap<Player, Guardian> angeredGuardians = ArrayListMultimap.create();
 
+	public static boolean isPoisonHurt = false;
 	private static boolean handlingTooltip = false;
 	private long clientWorldTicks = 0;
 
@@ -863,7 +864,6 @@ public class EnigmaticEventHandler {
 		}
 	}
 
-
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onFogRender(EntityViewRenderEvent.RenderFogEvent event) {
@@ -1340,7 +1340,10 @@ public class EnigmaticEventHandler {
 			 * Immortality handler for Heart of Creation and Pearl of the Void.
 			 */
 
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticItem) || player.getInventory().contains(new ItemStack(EnigmaticLegacy.enigmaticItem)) || event.getSource() instanceof DamageSourceNemesisCurse) {
+			if (isPoisonHurt && event.getSource() == DamageSource.MAGIC) {
+				event.setCanceled(true);
+				player.setHealth(1);
+			} else if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticItem) || player.getInventory().contains(new ItemStack(EnigmaticLegacy.enigmaticItem)) || event.getSource() instanceof DamageSourceNemesisCurse) {
 				event.setCanceled(true);
 				player.setHealth(1);
 			} else if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.voidPearl) && Math.random() <= VoidPearl.undeadProbability.getValue().asMultiplier(false)) {

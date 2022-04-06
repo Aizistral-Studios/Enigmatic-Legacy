@@ -23,7 +23,8 @@
 	"MixinInventoryChangeTrigger",
 	"MixinShulker",
 	"AccessorAbstractArrowEntity",
-	"AccessorAdvancementCommands"
+	"AccessorAdvancementCommands",
+	"MixinMobEffect"
   ],
   "client": [
 	"MixinForgeHooksClient",
