@@ -24,7 +24,8 @@
 	"MixinShulker",
 	"AccessorAbstractArrowEntity",
 	"AccessorAdvancementCommands",
-	"MixinMobEffect"
+	"MixinMobEffect",
+	"MixinImprovedTooltipsModule"
   ],
   "client": [
 	"MixinForgeHooksClient",
