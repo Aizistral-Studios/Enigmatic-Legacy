@@ -85,6 +85,7 @@ import com.integral.enigmaticlegacy.packets.clients.PacketSlotUnlocked;
 import com.integral.enigmaticlegacy.packets.clients.PacketSyncPlayTime;
 import com.integral.enigmaticlegacy.packets.clients.PacketWitherParticles;
 import com.integral.enigmaticlegacy.packets.server.PacketAnvilField;
+import com.integral.enigmaticlegacy.packets.server.PacketEnchantingGUI;
 import com.integral.enigmaticlegacy.packets.server.PacketEnderRingKey;
 import com.integral.enigmaticlegacy.packets.server.PacketToggleMagnetEffects;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
@@ -112,6 +113,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
+import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
@@ -269,6 +271,7 @@ import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -818,6 +821,11 @@ public class EnigmaticEventHandler {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onInventoryGuiInit(ScreenEvent.InitScreenEvent.Post evt) {
 		Screen screen = evt.getScreen();
+
+		if (screen instanceof EnchantmentScreen || (QuarkHelper.getMatrixEnchanterClass() != null
+				&& QuarkHelper.getMatrixEnchanterClass().isInstance(screen))) {
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketEnchantingGUI());
+		}
 
 		if (screen instanceof InventoryScreen || screen instanceof CreativeModeInventoryScreen || screen instanceof CuriosScreen) {
 			AbstractContainerScreen<?> gui = (AbstractContainerScreen<?>) screen;
