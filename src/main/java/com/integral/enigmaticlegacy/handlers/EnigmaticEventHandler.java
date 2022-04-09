@@ -135,6 +135,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
@@ -143,6 +144,7 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.Wolf;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
@@ -250,6 +252,7 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.EntityTeleportEvent.EnderPearl;
@@ -266,6 +269,7 @@ import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
+import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.living.PotionEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
@@ -323,6 +327,7 @@ public class EnigmaticEventHandler {
 	public static final Random theySeeMeRollin = new Random();
 	public static final Multimap<Player, Item> postmortalPossession = ArrayListMultimap.create();
 	public static final Multimap<Player, Guardian> angeredGuardians = ArrayListMultimap.create();
+	public static final Map<Player, AABB> desolationBoxes = new WeakHashMap<>();
 
 	public static boolean isPoisonHurt = false;
 	private static boolean handlingTooltip = false;
@@ -1035,6 +1040,20 @@ public class EnigmaticEventHandler {
 		}
 	}
 
+	@SubscribeEvent
+	public void onEntitySpawn(LivingSpawnEvent.CheckSpawn event) {
+		if (event.getSpawnReason() == MobSpawnType.NATURAL) {
+			LivingEntity entity = event.getEntityLiving();
+
+			if (entity instanceof Piglin || entity instanceof ZombifiedPiglin || entity instanceof IronGolem
+					|| entity instanceof EnderMan) {
+				if (desolationBoxes.values().stream().anyMatch(entity.getBoundingBox()::intersects)) {
+					event.setResult(Result.DENY);
+				}
+			}
+		}
+	}
+
 	private void syncPlayTime(Player player) {
 		if (!player.level.isClientSide) {
 			int withCurses = EnigmaticLegacy.proxy.getStats(player, timeWithCursesStat);
@@ -1068,6 +1087,12 @@ public class EnigmaticEventHandler {
 					player.awardStat(Stats.CUSTOM.get(timeWithCursesStat), 1);
 				} else {
 					player.awardStat(Stats.CUSTOM.get(timeWithoutCursesStat), 1);
+				}
+
+				if (SuperpositionHandler.hasCurio(player, desolationRing) && SuperpositionHandler.isTheWorthyOne(player)) {
+					desolationBoxes.put(player, SuperpositionHandler.getBoundingBoxAroundEntity(player, 128));
+				} else {
+					desolationBoxes.remove(player);
 				}
 
 				if (player.tickCount % 100 == 0) {
@@ -1319,9 +1344,10 @@ public class EnigmaticEventHandler {
 					}
 
 					if (confirmLavaPool) {
-						event.addOverride(stack -> stack != null && stack.getItem() == cursedRing, DropRule.DESTROY);
+						event.addOverride(stack -> stack != null && (stack.is(cursedRing) || stack.is(desolationRing)), DropRule.DESTROY);
 						soulCrystal.setLostCrystals(player, soulCrystal.getLostCrystals(player)+1);
 						SuperpositionHandler.destroyCurio(player, cursedRing);
+						SuperpositionHandler.destroyCurio(player, desolationRing);
 
 						player.level.playSound(null, player.blockPosition(), SoundEvents.WITHER_DEATH, SoundSource.PLAYERS, 1.0F, 0.5F);
 					}

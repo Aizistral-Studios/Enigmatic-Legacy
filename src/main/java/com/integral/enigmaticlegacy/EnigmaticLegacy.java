@@ -68,6 +68,7 @@ import com.integral.enigmaticlegacy.items.CursedStone;
 import com.integral.enigmaticlegacy.items.DarkArmor;
 import com.integral.enigmaticlegacy.items.DarkMirror;
 import com.integral.enigmaticlegacy.items.DarkestScroll;
+import com.integral.enigmaticlegacy.items.DesolationRing;
 import com.integral.enigmaticlegacy.items.EarthHeart;
 import com.integral.enigmaticlegacy.items.EnchanterPearl;
 import com.integral.enigmaticlegacy.items.EnchantmentTransposer;
@@ -111,6 +112,7 @@ import com.integral.enigmaticlegacy.items.SoulCrystal;
 import com.integral.enigmaticlegacy.items.StorageCrystal;
 import com.integral.enigmaticlegacy.items.SuperMagnetRing;
 import com.integral.enigmaticlegacy.items.TheAcknowledgment;
+import com.integral.enigmaticlegacy.items.TheCube;
 import com.integral.enigmaticlegacy.items.TheInfinitum;
 import com.integral.enigmaticlegacy.items.TheTwist;
 import com.integral.enigmaticlegacy.items.ThiccScroll;
@@ -400,6 +402,8 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("The Infinitum") public static TheInfinitum theInfinitum;
 	@ConfigurableItem("Celestial Fruit") public static AstralFruit astralFruit;
 	@ConfigurableItem("The Ender Slayer") public static EnderSlayer enderSlayer;
+	@ConfigurableItem("Non-Euclidean Cube") public static TheCube theCube;
+	@ConfigurableItem("The Burden of Desolation") public static DesolationRing desolationRing;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -632,6 +636,7 @@ public class EnigmaticLegacy {
 		EnigmaticEventHandler.postmortalPossession.clear();
 		EnigmaticEventHandler.knockbackThatBastard.clear();
 		EnigmaticEventHandler.deferredToast.clear();
+		EnigmaticEventHandler.desolationBoxes.clear();
 		soulCrystal.attributeDispatcher.clear();
 		enigmaticItem.flightMap.clear();
 		heavenScroll.flyMap.clear();
@@ -817,6 +822,8 @@ public class EnigmaticLegacy {
 			theInfinitum = new TheInfinitum();
 			astralFruit = new AstralFruit();
 			enderSlayer = new EnderSlayer();
+			theCube = new TheCube();
+			desolationRing = new DesolationRing();
 
 			spellstoneList = Lists.newArrayList(
 					angelBlessing,
@@ -825,6 +832,7 @@ public class EnigmaticLegacy {
 					oceanStone,
 					eyeOfNebula,
 					voidPearl,
+					theCube,
 					enigmaticItem
 					);
 
@@ -933,6 +941,8 @@ public class EnigmaticLegacy {
 					theInfinitum,
 					astralFruit,
 					enderSlayer,
+					theCube,
+					desolationRing,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),

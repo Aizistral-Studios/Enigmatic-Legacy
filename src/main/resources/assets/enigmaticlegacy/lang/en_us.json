@@ -91,6 +91,8 @@
 	"item.enigmaticlegacy.the_infinitum": "The Infinitum",
 	"item.enigmaticlegacy.astral_fruit": "Celestial Fruit",
 	"item.enigmaticlegacy.ender_slayer": "The Ender Slayer",
+	"item.enigmaticlegacy.the_cube": "Non-Euclidean Cube",
+	"item.enigmaticlegacy.desolation_ring": "The Burden of Desolation",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -342,8 +344,14 @@
 	"advancement.enigmaticlegacy:theInfinitum": "Beyond Time and Space",
 	"advancement.enigmaticlegacy:theInfinitum.desc": "Acquire The Infinitum and become the herald of the Abyss",
 	
+	"advancement.enigmaticlegacy:desolationRing": "Reality is Bent",
+	"advancement.enigmaticlegacy:desolationRing.desc": "Forge The Burden of Desolation, and bear it",
+	
 	"advancement.enigmaticlegacy:allSpellstones": "Stone Grimoire",
 	"advancement.enigmaticlegacy:allSpellstones.desc": "Collect every unique spellstone. Would there have been a way to combine them all...",
+	
+	"advancement.enigmaticlegacy:theCube": "This Cube Cured My Mortality",
+	"advancement.enigmaticlegacy:theCube.desc": "Force all spellstones into a shape equally powerful and unnatural, creating Non-Euclidean Cube",
 	
 	"advancement.enigmaticlegacy:cosmicScroll": "Retainer of the Divine",
 	"advancement.enigmaticlegacy:cosmicScroll.desc": "Perform pilgrimage to The Architect's domain and become his devoted believer, earning the right to bear his mark and blessing",
@@ -362,6 +370,28 @@
 	"tooltip.enigmaticlegacy.enigmaticItem9": "§5- Compensates mining speed penalty when flying.",
 	"tooltip.enigmaticlegacy.enigmaticItem10": "§5- You are immortal while having it equipped",
 	"tooltip.enigmaticlegacy.enigmaticItem11": "§5  or in your inventory.",
+	
+	"tooltip.enigmaticlegacy.theCube1": "§dActive ability:",
+	"tooltip.enigmaticlegacy.theCube2": "§6- Teleports you to random location in one of three main dimensions.",
+	"tooltip.enigmaticlegacy.theCube3": "§dСooldown: §6%1$s§6 seconds",
+	"tooltip.enigmaticlegacy.theCube4": "§dPassive abilities:",
+	"tooltip.enigmaticlegacy.theCube5": "§5- §d+50%§6 Sprinting Speed",
+	"tooltip.enigmaticlegacy.theCube6": "§5- §d+100%§6 Swimming Speed",
+	"tooltip.enigmaticlegacy.theCube7": "§5- §d+60%§6 Mining Speed",
+	"tooltip.enigmaticlegacy.theCube8": "§5- §d+40%§6 Attack Speed",
+	"tooltip.enigmaticlegacy.theCube9": "§5- §d+1§6 Fortune Level",
+	"tooltip.enigmaticlegacy.theCube10": "§5- §d+1§6 Luck",
+	"tooltip.enigmaticlegacy.theCube11": "§5- Any attacks that deal above §6100 damage§5 are completely negated.",
+	"tooltip.enigmaticlegacy.theCube12": "§5- §d35%§6 Chance§5 to deflect an incoming attack or projectile.",
+	"tooltip.enigmaticlegacy.theCube13": "§5- When attacked in melee, applies random debuff to attacker.",
+	"tooltip.enigmaticlegacy.theCube14": "§5- Whenever you slay any living creature, you receive random buff.",
+	"tooltip.enigmaticlegacy.theCube15": "§5- You need no air to breathe.",
+	"tooltip.enigmaticlegacy.theCube16": "§5- Immunity to negative status effects.",
+	"tooltip.enigmaticlegacy.theCube17": "§5- Immunity to pressure, fall, collision, pricking, teleportation, fire",
+	"tooltip.enigmaticlegacy.theCube18": "§5  and lava damage.",
+	"tooltip.enigmaticlegacy.theCube19": "§5- When you have more than §61 health§5, you survive any lethal damage",
+	"tooltip.enigmaticlegacy.theCube20": "§5  with §61 health§5 remaining. If you have §61 health§5 or less, attempts",
+	"tooltip.enigmaticlegacy.theCube21": "§5  to trigger active ability to prevent lethal damage.",
 
 	"tooltip.enigmaticlegacy.xpTomeMode": "§dMode: %1$s",
 	"tooltip.enigmaticlegacy.code6": "§6",
@@ -709,9 +739,9 @@
 	"tooltip.enigmaticlegacy.berserk_emblem10": "§6+%1$s §dMovement Speed",
 	"tooltip.enigmaticlegacy.berserk_emblem11": "§6+%1$s §dDamage Resistance",
 	
-	"tooltip.enigmaticlegacy.cursedRing1": "§5Once worn, it becomes a part of you.",
-	"tooltip.enigmaticlegacy.cursedRing2": "§4This ring will persist with you forever.",
-	"tooltip.enigmaticlegacy.cursedRing2_creative": "§6With the power of god, you can unequip it.",
+	"tooltip.enigmaticlegacy.eternallyBound1": "§5Once worn, it becomes a part of you.",
+	"tooltip.enigmaticlegacy.eternallyBound2": "§4This ring will persist with you forever.",
+	"tooltip.enigmaticlegacy.eternallyBound2_creative": "§6With the power of god, you can unequip it.",
 	"tooltip.enigmaticlegacy.cursedRing3": "§dSeven curses will befall whoever bears it:",
 	"tooltip.enigmaticlegacy.cursedRing4": "§5- You receive double damage from §6ANY§5 source.",
 	"tooltip.enigmaticlegacy.cursedRing4_alt": "§5- You receive §6%1$s§5 damage from §6ANY§5 source.",
@@ -906,6 +936,9 @@
 	"tooltip.enigmaticlegacy.enderSlayer10": "§5Temporarily disables active ability of §6Eye of",
 	"tooltip.enigmaticlegacy.enderSlayer11": "§6Nebula§5 and ability to use §6Ender Pearls§5 for",
 	"tooltip.enigmaticlegacy.enderSlayer12": "§5attacked players.",
+	
+	"tooltip.enigmaticlegacy.desolationRing1": "§6Iron Golems, §6Endermen, §6Zombified Piglins§5 and",
+	"tooltip.enigmaticlegacy.desolationRing2": "§6Piglins§5 will not spawn in your proximity.",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",
