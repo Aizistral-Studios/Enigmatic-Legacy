@@ -12,6 +12,7 @@ import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
+import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -217,7 +218,9 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 		if (context.entity() instanceof ServerPlayer player)
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.oceanStone)) {
 				if (player.isEyeInFluid(FluidTags.WATER)) {
+					EnigmaticEventHandler.isApplyingNightVision = true;
 					player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
+					EnigmaticEventHandler.isApplyingNightVision = false;
 					player.setAirSupply(300);
 				} else {
 					EnigmaticLegacy.miningCharm.removeNightVisionEffect(player, this.nightVisionDuration);

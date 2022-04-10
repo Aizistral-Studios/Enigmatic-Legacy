@@ -330,6 +330,7 @@ public class EnigmaticEventHandler {
 	public static final Map<Player, AABB> desolationBoxes = new WeakHashMap<>();
 
 	public static boolean isPoisonHurt = false;
+	public static boolean isApplyingNightVision = false;
 	private static boolean handlingTooltip = false;
 	private long clientWorldTicks = 0;
 
@@ -546,6 +547,9 @@ public class EnigmaticEventHandler {
 		if (event.getEntityLiving() instanceof Player) {
 			Player player = (Player) event.getEntityLiving();
 			MobEffectInstance effect = event.getPotionEffect();
+
+			if (isApplyingNightVision)
+				return;
 
 			if (effect.getEffect().getRegistryName().equals(new ResourceLocation("mana-and-artifice", "chrono-exhaustion")))
 				return;

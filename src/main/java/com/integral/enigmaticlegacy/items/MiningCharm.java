@@ -10,6 +10,7 @@ import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
+import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
@@ -121,7 +122,9 @@ public class MiningCharm extends ItemBaseCurio {
 						&& !player.level.canSeeSkyFromBelowWater(player.blockPosition())
 						/*&& player.level.getMaxLocalRawBrightness(player.blockPosition(), 0) <= 8*/) {
 
+					EnigmaticEventHandler.isApplyingNightVision = true;
 					player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
+					EnigmaticEventHandler.isApplyingNightVision = false;
 				} else {
 					//this.removeNightVisionEffect(player, this.nightVisionDuration);
 				}
