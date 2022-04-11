@@ -2459,7 +2459,7 @@ public class EnigmaticEventHandler {
 			} else if (killed.getClass() == Guardian.class) {
 				this.addDropWithChance(event, new ItemStack(Items.NAUTILUS_SHELL, 1), 15);
 				this.addDrop(event, this.getRandomSizeStack(Items.PRISMARINE_CRYSTALS, 2, 5));
-			} else if (killed.getClass() == ElderGuardian.class) {
+			} else if (killed instanceof ElderGuardian) {
 				this.addDrop(event, this.getRandomSizeStack(Items.PRISMARINE_CRYSTALS, 4, 16));
 				this.addDrop(event, this.getRandomSizeStack(Items.PRISMARINE_SHARD, 7, 28));
 				this.addOneOf(event,
@@ -2522,9 +2522,9 @@ public class EnigmaticEventHandler {
 				this.addDrop(event, this.getRandomSizeStack(Items.BLAZE_POWDER, 0, 1));
 			} else if (killed.getClass() == Chicken.class) {
 				this.addDropWithChance(event, new ItemStack(Items.EGG, 1), 50);
-			} else if (killed.getClass() == WitherBoss.class) {
+			} else if (killed instanceof WitherBoss) {
 				this.addDrop(event, this.getRandomSizeStack(evilEssence, 1, 4));
-			} else if (killed.getClass() == EnderDragon.class) {
+			} else if (killed instanceof EnderDragon) {
 				if (SuperpositionHandler.isTheWorthyOne(player)) {
 					int heartsGained = SuperpositionHandler.getPersistentInteger(player, "AbyssalHeartsGained", 0);
 
