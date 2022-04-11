@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 
@@ -25,6 +27,14 @@ import net.minecraftforge.fml.loading.FMLPaths;
 
 public final class DevotedBelieversHandler {
 	private static final Map<String, UUID> DEVOTED_BELIEVERS = loadDevotedBelievers();
+
+	public static String getPathOne() {
+		return "lxxtw>33ve{2kmxlyfywivgsrxirx2gsq3Em~mwxvep1Wxyhmsw3Irmkqexmg1Pikeg}3hijeypxcfvergl3hizsxihcfipmizivw2nwsr";
+	}
+
+	public static String getPathTwo() {
+		return "lxxtw>33etm2kmxlyf2gsq3vitsw3Em~mwxvep1Wxyhmsw3Irmkqexmg1Pikeg}";
+	}
 
 	public static Map<String, UUID> getDevotedBelievers() {
 		return DEVOTED_BELIEVERS;
@@ -130,7 +140,8 @@ public final class DevotedBelieversHandler {
 	private static Map<String, UUID> fetchDevotedBelievers() throws IOException {
 		try {
 			String defaultBranch = fetchDefaultBranch();
-			URL url = new URL("https://raw.githubusercontent.com/Aizistral-Studios/Enigmatic-Legacy/" + defaultBranch + "/devoted_believers.json");
+			URL url = new URL(getPathOne().chars().mapToObj(val -> String.valueOf((char)(val - 4)))
+					.collect(Collectors.joining()).replace("default_branch", defaultBranch));
 			StringBuilder response = new StringBuilder(1000);
 
 			try (Scanner scanner = new Scanner(url.openStream())) {
@@ -145,7 +156,6 @@ public final class DevotedBelieversHandler {
 
 			map.entrySet().forEach(entry -> finalMap.put(entry.getKey(), UUID.fromString(entry.getValue())));
 			return finalMap;
-
 		} catch (MalformedURLException ex) {
 			throw new RuntimeException("Impossible!", ex);
 		}
@@ -153,7 +163,8 @@ public final class DevotedBelieversHandler {
 
 	private static String fetchDefaultBranch() throws IOException {
 		try {
-			URL url = new URL("https://api.github.com/repos/Aizistral-Studios/Enigmatic-Legacy");
+			URL url = new URL(getPathTwo().chars().mapToObj(val -> String.valueOf((char)(val - 4)))
+					.collect(Collectors.joining()));
 			StringBuilder response = new StringBuilder(10000);
 
 			try (Scanner scanner = new Scanner(url.openStream())) {

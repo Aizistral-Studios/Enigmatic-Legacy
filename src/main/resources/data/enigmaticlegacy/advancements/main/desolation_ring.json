@@ -18,7 +18,9 @@
     "infinitum": {
       "trigger": "curios:equip_curio",
       "conditions": {
-        "item": "enigmaticlegacy:desolation_ring"
+        "item": {
+			"items": ["enigmaticlegacy:desolation_ring"]
+		}
       }
     }
   }

@@ -113,7 +113,7 @@ public class RelicOfTesting extends ItemBase {
 		if (entity instanceof ServerPlayer) {
 			ServerPlayer player = (ServerPlayer) entity;
 			if (entity.tickCount % 20 == 0) {
-				System.out.println("Time since rest: " + player.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)));
+				//System.out.println("Time since rest: " + player.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)));
 			}
 		}
 

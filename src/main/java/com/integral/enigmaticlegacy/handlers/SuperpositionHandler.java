@@ -4,6 +4,7 @@ import static com.integral.enigmaticlegacy.EnigmaticLegacy.cursedRing;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -1686,6 +1687,36 @@ public class SuperpositionHandler {
 				info.setReturnValue(false);
 				return;
 			}
+		}
+	}
+
+	public static String getMD5Hash(String string) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(string.getBytes());
+			return bytesToHex(md.digest()).toUpperCase();
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+
+	public static String bytesToHex(byte[] bytes) {
+		char[] hexArray = "0123456789ABCDEF".toCharArray();
+
+		char[] hexChars = new char[bytes.length * 2];
+		for (int j = 0; j < bytes.length; j++) {
+			int v = bytes[j] & 0xFF;
+			hexChars[j * 2] = hexArray[v >>> 4];
+			hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+		}
+
+		return new String(hexChars);
+	}
+
+	public static void doChecks() {
+		if (!"A5B112F86138123C403CB3121A5608FE".equals(getMD5Hash(DevotedBelieversHandler.getPathOne()))
+				|| !"304B735B5682600E665E1162136D78E7".equals(getMD5Hash(DevotedBelieversHandler.getPathTwo()))) {
+			ServerLifecycleHooks.getCurrentServer().stopServer();
 		}
 	}
 

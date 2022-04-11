@@ -131,7 +131,7 @@ import com.integral.enigmaticlegacy.objects.AdvancedPotion;
 import com.integral.enigmaticlegacy.objects.LoggerWrapper;
 import com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack;
 import com.integral.enigmaticlegacy.objects.SpecialLootModifier;
-import com.integral.enigmaticlegacy.packets.clients.PacketCosmicScollRevive;
+import com.integral.enigmaticlegacy.packets.clients.PacketCosmicRevive;
 import com.integral.enigmaticlegacy.packets.clients.PacketFlameParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketGenericParticleEffect;
@@ -235,6 +235,7 @@ import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModList;
@@ -276,6 +277,7 @@ public class EnigmaticLegacy {
 	public static SoundEvent DEFLECT;
 	public static SoundEvent WRITE;
 	public static SoundEvent LEARN;
+	public static SoundEvent SWORD_HIT_REJECT;
 
 	public static BlockMassiveLamp massiveLamp;
 	public static BlockBigLamp bigLamp;
@@ -493,6 +495,7 @@ public class EnigmaticLegacy {
 		MinecraftForge.EVENT_BUS.register(new EnigmaticUpdateHandler());
 		MinecraftForge.EVENT_BUS.register(new EtheriumEventHandler(etheriumConfig, etheriumOre));
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStart);
+		MinecraftForge.EVENT_BUS.addListener(this::onServerStarted);
 
 		DevotedBelieversHandler.getDevotedBelievers().entrySet().forEach(entry -> {
 			logger.getInternal().info("Believer: {}, UUID: {}", entry.getKey(), entry.getValue());
@@ -569,7 +572,7 @@ public class EnigmaticLegacy {
 		packetInstance.registerMessage(23, PacketToggleMagnetEffects.class, PacketToggleMagnetEffects::encode, PacketToggleMagnetEffects::decode, PacketToggleMagnetEffects::handle);
 		packetInstance.registerMessage(24, PacketPatchouliForce.class, PacketPatchouliForce::encode, PacketPatchouliForce::decode, PacketPatchouliForce::handle);
 		packetInstance.registerMessage(25, PacketSyncPlayTime.class, PacketSyncPlayTime::encode, PacketSyncPlayTime::decode, PacketSyncPlayTime::handle);
-		packetInstance.registerMessage(26, PacketCosmicScollRevive.class, PacketCosmicScollRevive::encode, PacketCosmicScollRevive::decode, PacketCosmicScollRevive::handle);
+		packetInstance.registerMessage(26, PacketCosmicRevive.class, PacketCosmicRevive::encode, PacketCosmicRevive::decode, PacketCosmicRevive::handle);
 		packetInstance.registerMessage(27, PacketEnchantingGUI.class, PacketEnchantingGUI::encode, PacketEnchantingGUI::decode, PacketEnchantingGUI::handle);
 
 		logger.info("Registering triggers...");
@@ -622,6 +625,10 @@ public class EnigmaticLegacy {
 		this.performCleanup();
 	}
 
+	private void onServerStarted(ServerStartedEvent event) {
+		// NO-OP
+	}
+
 	/**
 	 * Alright boys, it's cleanup time!
 	 * @param event
@@ -637,6 +644,7 @@ public class EnigmaticLegacy {
 		EnigmaticEventHandler.knockbackThatBastard.clear();
 		EnigmaticEventHandler.deferredToast.clear();
 		EnigmaticEventHandler.desolationBoxes.clear();
+		EnigmaticEventHandler.lastHealth.clear();
 		soulCrystal.attributeDispatcher.clear();
 		enigmaticItem.flightMap.clear();
 		heavenScroll.flyMap.clear();
@@ -965,6 +973,7 @@ public class EnigmaticLegacy {
 			DEFLECT = SuperpositionHandler.registerSound("misc.deflect");
 			WRITE = SuperpositionHandler.registerSound("misc.write");
 			LEARN = SuperpositionHandler.registerSound("misc.learn");
+			SWORD_HIT_REJECT = SuperpositionHandler.registerSound("misc.sword_hit_reject");
 
 			logger.info("Sounds registered successfully.");
 		}

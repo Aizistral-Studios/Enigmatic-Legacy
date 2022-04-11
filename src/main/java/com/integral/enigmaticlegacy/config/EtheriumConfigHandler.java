@@ -15,6 +15,7 @@ import com.integral.etherium.core.IEtheriumConfig;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ArmorMaterial;
@@ -127,12 +128,14 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 	}
 
 	@Override
-	public void knockBack(Player entityIn, float strength, double xRatio, double zRatio) {
+	public void knockBack(LivingEntity entityIn, float strength, double xRatio, double zRatio) {
 		entityIn.hasImpulse = true;
 		Vec3 vec3d = new Vec3(0D, 0D, 0D);
 		Vec3 vec3d1 = (new Vec3(xRatio, 0.0D, zRatio)).normalize().scale(strength);
 
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) entityIn), new PacketPlayerMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z));
+		if (entityIn instanceof ServerPlayer) {
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) entityIn), new PacketPlayerMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z));
+		}
 		entityIn.setDeltaMovement(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z);
 	}
 

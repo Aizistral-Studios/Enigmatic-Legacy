@@ -31,6 +31,14 @@
       }
     ]
   },
+  "misc.sword_hit_reject": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:misc/sword_hit_reject",
+        "stream": false
+      }
+    ]
+  },
   "misc.shield_trigger": {
     "sounds": [
       {

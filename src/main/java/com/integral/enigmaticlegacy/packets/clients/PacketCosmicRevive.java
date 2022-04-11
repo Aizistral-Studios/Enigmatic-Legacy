@@ -15,30 +15,35 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
-public class PacketCosmicScollRevive {
+public class PacketCosmicRevive {
 	private int entityID;
+	private int reviveType;
 
-	public PacketCosmicScollRevive(int entityID) {
+	public PacketCosmicRevive(int entityID, int reviveType) {
 		this.entityID = entityID;
+		this.reviveType = reviveType;
 	}
 
-	public static void encode(PacketCosmicScollRevive msg, FriendlyByteBuf buf) {
+	public static void encode(PacketCosmicRevive msg, FriendlyByteBuf buf) {
 		buf.writeInt(msg.entityID);
+		buf.writeInt(msg.reviveType);
 	}
 
-	public static PacketCosmicScollRevive decode(FriendlyByteBuf buf) {
-		return new PacketCosmicScollRevive(buf.readInt());
+	public static PacketCosmicRevive decode(FriendlyByteBuf buf) {
+		return new PacketCosmicRevive(buf.readInt(), buf.readInt());
 	}
 
-	public static void handle(PacketCosmicScollRevive msg, Supplier<NetworkEvent.Context> ctx) {
+	public static void handle(PacketCosmicRevive msg, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			Player player = EnigmaticLegacy.proxy.getClientPlayer();
 			Entity entity = player.level.getEntity(msg.entityID);
 
 			if (entity != null) {
+				Item item = msg.reviveType == 0 ? EnigmaticLegacy.cosmicScroll : EnigmaticLegacy.theCube;
 				int i = 40;
 				Minecraft.getInstance().particleEngine.createTrackingEmitter(entity, ParticleTypes.TOTEM_OF_UNDYING, 30);
 
@@ -51,10 +56,10 @@ public class PacketCosmicScollRevive {
 				player.level.playLocalSound(entity.getX(), entity.getY(), entity.getZ(), SoundEvents.TOTEM_USE, entity.getSoundSource(), 1.0F, 1.0F, false);
 
 				if (entity == player) {
-					ItemStack stack = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.cosmicScroll);
+					ItemStack stack = SuperpositionHandler.getCurioStack(player, item);
 
 					if (stack == null) {
-						stack = new ItemStack(EnigmaticLegacy.cosmicScroll, 1);
+						stack = new ItemStack(item, 1);
 					}
 
 					Minecraft.getInstance().gameRenderer.displayItemActivation(stack);

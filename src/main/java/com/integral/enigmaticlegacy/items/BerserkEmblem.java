@@ -121,14 +121,14 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		if (context.entity() instanceof ServerPlayer player) {
+		if (context.entity() instanceof Player player) {
 			player.getAttributes().addTransientAttributeModifiers(this.createAttributeMap(player));
 		}
 	}
 
 	@Override
 	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
-		if (context.entity() instanceof ServerPlayer player) {
+		if (context.entity() instanceof Player player) {
 			player.getAttributes().removeAttributeModifiers(this.createAttributeMap(player));
 		}
 	}

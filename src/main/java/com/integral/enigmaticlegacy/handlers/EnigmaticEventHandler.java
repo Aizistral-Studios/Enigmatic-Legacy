@@ -75,7 +75,7 @@ import com.integral.enigmaticlegacy.objects.QuarkHelper;
 import com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.enigmaticlegacy.objects.Vector3;
-import com.integral.enigmaticlegacy.packets.clients.PacketCosmicScollRevive;
+import com.integral.enigmaticlegacy.packets.clients.PacketCosmicRevive;
 import com.integral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketPatchouliForce;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
@@ -328,6 +328,7 @@ public class EnigmaticEventHandler {
 	public static final Multimap<Player, Item> postmortalPossession = ArrayListMultimap.create();
 	public static final Multimap<Player, Guardian> angeredGuardians = ArrayListMultimap.create();
 	public static final Map<Player, AABB> desolationBoxes = new WeakHashMap<>();
+	public static final Map<Player, Float> lastHealth = new WeakHashMap<>();
 
 	public static boolean isPoisonHurt = false;
 	public static boolean isApplyingNightVision = false;
@@ -530,7 +531,8 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onEnderPearlTeleport(EntityTeleportEvent.EnderPearl event) {
-		if (SuperpositionHandler.hasCurio(event.getPlayer(), eyeOfNebula)) {
+		if (SuperpositionHandler.hasCurio(event.getPlayer(), eyeOfNebula)
+				|| SuperpositionHandler.hasCurio(event.getPlayer(), theCube)) {
 			event.setAttackDamage(0);
 		}
 	}
@@ -556,7 +558,8 @@ public class EnigmaticEventHandler {
 
 			if (SuperpositionHandler.hasCurio(player, voidPearl)) {
 				event.setResult(Result.DENY);
-			} else if (SuperpositionHandler.hasCurio(player, enigmaticItem) && !effect.getEffect().isBeneficial()) {
+			} else if ((SuperpositionHandler.hasCurio(player, enigmaticItem)
+					|| SuperpositionHandler.hasCurio(player, theCube)) && !effect.getEffect().isBeneficial()) {
 				event.setResult(Result.DENY);
 			}
 		}
@@ -718,7 +721,8 @@ public class EnigmaticEventHandler {
 			}
 
 		} else if (event.getOverlay() == ForgeIngameGui.AIR_LEVEL_ELEMENT) {
-			if (SuperpositionHandler.hasCurio(mc.player, EnigmaticLegacy.oceanStone) || SuperpositionHandler.hasCurio(mc.player, EnigmaticLegacy.voidPearl)) {
+			if (SuperpositionHandler.hasCurio(mc.player, oceanStone) || SuperpositionHandler.hasCurio(mc.player, voidPearl)
+					|| SuperpositionHandler.hasCurio(mc.player, theCube)) {
 				if (OceanStone.preventOxygenBarRender.getValue()) {
 					event.setCanceled(true);
 				}
@@ -996,8 +1000,12 @@ public class EnigmaticEventHandler {
 			miningBoost += CursedScroll.miningBoost.getValue().asModifier()*SuperpositionHandler.getCurseAmount(event.getPlayer());
 		}
 
-		if (EnigmaticLegacy.enigmaticAmulet.ifHasColor(event.getPlayer(), AmuletColor.GREEN)) {
+		if (EnigmaticLegacy.enigmaticAmulet.hasColor(event.getPlayer(), AmuletColor.GREEN)) {
 			miningBoost += 0.25F;
+		}
+
+		if (SuperpositionHandler.hasCurio(event.getPlayer(), theCube)) {
+			miningBoost += 0.6F;
 		}
 
 		if (!event.getPlayer().isOnGround())
@@ -1302,6 +1310,9 @@ public class EnigmaticEventHandler {
 			}
 		}
 
+		if (event.getSource().getEntity() instanceof ServerPlayer player && SuperpositionHandler.hasCurio(player, theCube)) {
+			theCube.applyRandomEffect(player, true);
+		}
 	}
 
 	@SubscribeEvent
@@ -1371,7 +1382,7 @@ public class EnigmaticEventHandler {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onLivingDeath(LivingDeathEvent event) {
 
-		if (event.getEntityLiving() instanceof Player & !event.getEntityLiving().level.isClientSide) {
+		if (event.getEntityLiving() instanceof Player && !event.getEntityLiving().level.isClientSide) {
 			Player player = (Player) event.getEntityLiving();
 
 			/*
@@ -1379,6 +1390,9 @@ public class EnigmaticEventHandler {
 			 */
 
 			if (isPoisonHurt && event.getSource() == DamageSource.MAGIC) {
+				event.setCanceled(true);
+				player.setHealth(1);
+			} else if (lastHealth.containsKey(player) && lastHealth.get(player) >= 2F && SuperpositionHandler.hasCurio(player, theCube)) {
 				event.setCanceled(true);
 				player.setHealth(1);
 			} else if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticItem) || player.getInventory().contains(new ItemStack(EnigmaticLegacy.enigmaticItem)) || event.getSource() instanceof DamageSourceNemesisCurse) {
@@ -1422,7 +1436,26 @@ public class EnigmaticEventHandler {
 						cosmicScroll.setCooldown(scroll, CosmicScroll.deathProtectionCooldown.getValue() * 20);
 
 						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())),
-								new PacketCosmicScollRevive(player.getId()));
+								new PacketCosmicRevive(player.getId(), 0));
+					}
+				}
+			}
+
+			if (!event.isCanceled() && player instanceof ServerPlayer) {
+				if (SuperpositionHandler.hasCurio(player, theCube)) {
+					if (!SuperpositionHandler.hasSpellstoneCooldown(player)) {
+						event.setCanceled(true);
+						player.setHealth(player.getMaxHealth()*0.3F);
+
+						theCube.triggerActiveAbility(player.level, (ServerPlayer) player, SuperpositionHandler.getCurioStack(player, theCube));
+
+						player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 1200, 2));
+						player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 1));
+						player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 1200, 0));
+						player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1200, 1));
+
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())),
+								new PacketCosmicRevive(player.getId(), 1));
 					}
 				}
 			}
@@ -1498,7 +1531,12 @@ public class EnigmaticEventHandler {
 						chance += AngelBlessing.deflectChance.getValue().asModifier(false);
 					}
 
-					if (EnigmaticLegacy.enigmaticAmulet.ifHasColor(player, AmuletColor.VIOLET)) {
+					if (SuperpositionHandler.hasCurio(player, theCube)) {
+						trigger = true;
+						chance += 0.35;
+					}
+
+					if (EnigmaticLegacy.enigmaticAmulet.hasColor(player, AmuletColor.VIOLET)) {
 						trigger = true;
 						chance += 0.15;
 					}
@@ -1596,7 +1634,7 @@ public class EnigmaticEventHandler {
 			}
 
 			if (event.getSource().msgId == DamageSource.FALL.msgId) {
-				if (EnigmaticLegacy.enigmaticAmulet.ifHasColor(player, AmuletColor.MAGENTA) && event.getAmount() <= 2.0f) {
+				if (EnigmaticLegacy.enigmaticAmulet.hasColor(player, AmuletColor.MAGENTA) && event.getAmount() <= 2.0f) {
 					event.setCanceled(true);
 				}
 			}
@@ -1747,10 +1785,14 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onEntityDamaged(LivingDamageEvent event) {
+		if (event.getEntityLiving() instanceof ServerPlayer player) {
+			lastHealth.put(player, player.getHealth());
+		}
+
 		if (event.getSource().getDirectEntity() instanceof Player && !event.getSource().getDirectEntity().level.isClientSide) {
 			Player player = (Player) event.getSource().getDirectEntity();
 
-			if (EnigmaticLegacy.enigmaticAmulet.ifHasColor(player, AmuletColor.BLACK)) {
+			if (EnigmaticLegacy.enigmaticAmulet.hasColor(player, AmuletColor.BLACK)) {
 				player.heal(event.getAmount() * 0.1F);
 			}
 
@@ -1782,9 +1824,25 @@ public class EnigmaticEventHandler {
 		}
 	}
 
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void endEntityHurt(LivingHurtEvent event) {
+		if (event.getEntity() instanceof ServerPlayer player && event.getSource().getEntity() != null) {
+			if (event.getAmount() > theCube.getDamageLimit(player)) {
+				event.setCanceled(true);
+				player.level.playSound(null, player.blockPosition(), SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1F, 1F);
+
+				if (event.getSource().getDirectEntity() instanceof LivingEntity living) {
+					Vector3 look = new Vector3(living.position()).subtract(new Vector3(player.position())).normalize();
+					Vector3 dir = look.multiply(1D);
+
+					etheriumConfig.knockBack(living, 1.0F, dir.x, dir.z);
+				}
+			}
+		}
+	}
+
 	@SubscribeEvent
 	public void onEntityHurt(LivingHurtEvent event) {
-
 		// TODO The priorities are messed up as fuck. We gotta do something about it.
 
 		/*
@@ -1955,7 +2013,7 @@ public class EnigmaticEventHandler {
 			}
 
 			if (event.getSource().msgId == DamageSource.FALL.msgId) {
-				if (EnigmaticLegacy.enigmaticAmulet.ifHasColor(player, AmuletColor.MAGENTA)) {
+				if (EnigmaticLegacy.enigmaticAmulet.hasColor(player, AmuletColor.MAGENTA)) {
 					event.setAmount(event.getAmount() - 2.0f);
 				}
 			}
@@ -2086,6 +2144,18 @@ public class EnigmaticEventHandler {
 						event.setCanceled(true);
 						owner.hurt(event.getSource(), SuperpositionHandler.hasItem((Player)owner, EnigmaticLegacy.animalGuide) ? (event.getAmount()*HunterGuide.synergyDamageReduction.getValue().asModifierInverted()) : event.getAmount());
 					}
+				}
+			}
+		}
+
+		if (event.getEntityLiving() instanceof ServerPlayer player && event.getSource().getDirectEntity() instanceof LivingEntity living) {
+			if (SuperpositionHandler.hasCurio(player, theCube)) {
+				if (event.getAmount() <= theCube.getDamageLimit(player) && theySeeMeRollin.nextDouble() <= 0.35) {
+					event.setCanceled(true);
+					living.hurt(event.getSource(), event.getAmount());
+					player.level.playSound(null, player.blockPosition(), SWORD_HIT_REJECT, SoundSource.PLAYERS, 1F, 1F);
+				} else {
+					theCube.applyRandomEffect(living, false);
 				}
 			}
 		}
@@ -2708,6 +2778,8 @@ public class EnigmaticEventHandler {
 	public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
 		if (!(event.getPlayer() instanceof ServerPlayer))
 			return;
+
+		SuperpositionHandler.doChecks();
 
 		if (!OmniconfigWrapper.syncAllToPlayer((ServerPlayer) event.getPlayer())) {
 			OmniconfigWrapper.onRemoteServer = false;

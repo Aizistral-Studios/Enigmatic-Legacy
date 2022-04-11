@@ -25,7 +25,8 @@
 	"AccessorAbstractArrowEntity",
 	"AccessorAdvancementCommands",
 	"MixinMobEffect",
-	"MixinImprovedTooltipsModule"
+	"MixinImprovedTooltipsModule",
+	"MixinVillager"
   ],
   "client": [
 	"MixinForgeHooksClient",
