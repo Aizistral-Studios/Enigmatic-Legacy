@@ -30,8 +30,11 @@ import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -49,6 +52,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -59,11 +63,13 @@ import top.theillusivec4.curios.api.SlotContext;
 public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 	private final List<MobEffect> randomBuffs;
 	private final List<MobEffect> randomDebuffs;
+	private final List<ResourceKey<Level>> worlds;
 
 	public TheCube() {
 		super(getDefaultProperties().rarity(Rarity.EPIC));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "the_cube"));
 
+		this.worlds = ImmutableList.of(Level.OVERWORLD, Level.NETHER, Level.END);
 		this.randomBuffs = ImmutableList.of(MobEffects.ABSORPTION, MobEffects.DAMAGE_BOOST, MobEffects.REGENERATION,
 				MobEffects.DIG_SPEED, MobEffects.JUMP, MobEffects.MOVEMENT_SPEED, MobEffects.DAMAGE_RESISTANCE,
 				MobEffects.SLOW_FALLING);
@@ -217,13 +223,59 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 		if (SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
-		for (int i = 0; i < 64; i++) {
-			if (SuperpositionHandler.validTeleportRandomly(player, player.level, 32)) {
-				break;
+		ResourceKey<Level> key = this.worlds.get(random.nextInt(this.worlds.size()));
+		ServerLevel level = SuperpositionHandler.getWorld(key);
+
+		if (level == null) {
+			key = Level.OVERWORLD;
+			level = SuperpositionHandler.getOverworld();
+		}
+
+		System.out.println(level.getWorldBorder().getAbsoluteMaxSize());
+
+		int attempts = 0;
+		int radius = 10000;
+
+		cycle: while (true) {
+			BlockPos pos = new BlockPos(radius - random.nextInt(radius * 2), key == Level.NETHER ? 100 : 200, radius - random.nextInt(radius * 2));
+			level.getChunkAt(pos);
+
+			for (int i = 0; i < 4; i++) {
+				if (i > 0) {
+					pos = new BlockPos((pos.getX() << 4) + random.nextInt(16), pos.getY(), (pos.getZ() << 4) + random.nextInt(16));
+				}
+
+				if (this.tryTeleport(player, player.level, pos.getX(), pos.getY(), pos.getZ())) {
+					break cycle;
+				}
+			}
+
+			if (++attempts > 100) {
+				this.triggerActiveAbility(world, player, stack);
+				return;
 			}
 		}
 
 		SuperpositionHandler.setSpellstoneCooldown(player, this.getCooldown(player));
+	}
+
+	private boolean tryTeleport(ServerPlayer player, Level world, int x, int y, int z) {
+		int checkAxis = y - 10;
+
+		for (int counter = 0; counter <= checkAxis; counter++) {
+			if (!world.isEmptyBlock(new BlockPos(x, y - counter - 1, z)) && world.getBlockState(new BlockPos(x, y - counter - 1, z)).canOcclude() && world.isEmptyBlock(new BlockPos(x, y - counter, z)) & world.isEmptyBlock(new BlockPos(x, y - counter + 1, z))) {
+				world.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketRecallParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 48, false));
+
+				player.teleportTo(x + 0.5, y - counter, z + 0.5);
+
+				world.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketRecallParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 48, false));
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 }
