@@ -123,6 +123,7 @@ import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -1140,13 +1141,18 @@ public class SuperpositionHandler {
 		return SuperpositionHandler.getWorld(EnigmaticLegacy.proxy.getEndKey());
 	}
 
-	public static void sendToDimension(ServerPlayer player, ResourceKey<Level> dimension) {
+	public static void sendToDimension(ServerPlayer player, ResourceKey<Level> dimension, ITeleporter teleporter) {
 		if (!player.level.dimension().equals(dimension)) {
 			ServerLevel world = SuperpositionHandler.getWorld(dimension);
 			if (world != null) {
 				player.changeDimension(world, new RealSmoothTeleporter());
+				player.changeDimension(world, teleporter);
 			}
 		}
+	}
+
+	public static void sendToDimension(ServerPlayer player, ResourceKey<Level> dimension) {
+		sendToDimension(player, dimension, new RealSmoothTeleporter());
 	}
 
 	public static ServerLevel backToSpawn(ServerPlayer serverPlayer) {
