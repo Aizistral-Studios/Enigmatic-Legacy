@@ -58,6 +58,7 @@ public class EtheriumShovel extends ItemEtheriumTool {
 
 		this.effectiveMaterials = Sets.newHashSet();
 		this.effectiveMaterials.add(Material.DIRT);
+		this.effectiveMaterials.add(Material.CLAY);
 		this.effectiveMaterials.add(Material.GRASS);
 		this.effectiveMaterials.add(Material.TOP_SNOW);
 		this.effectiveMaterials.add(Material.TOP_SNOW);
