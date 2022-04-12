@@ -2529,6 +2529,7 @@ public class EnigmaticEventHandler {
 					int heartsGained = SuperpositionHandler.getPersistentInteger(player, "AbyssalHeartsGained", 0);
 
 					if (heartsGained < 2) { // Only as many as there are unique items from them, +1
+					if (heartsGained < 3) { // Only as many as there are unique items from them, +1
 						((IAbyssalHeartBearer) killed).dropAbyssalHeart(player);
 					}
 				}
