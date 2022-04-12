@@ -22,12 +22,13 @@ public class RealSmoothTeleporter implements ITeleporter {
 
 	@Override
 	public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
-		if (entity instanceof ServerPlayer) {
-			entity.level = destWorld;
-			destWorld.addDuringPortalTeleport((ServerPlayer) entity);
-			this.fireTriggers(currentWorld, (ServerPlayer) entity);
-			return entity;
-		} else
+		if (entity instanceof ServerPlayer)
+			return repositionEntity.apply(false);
+			//entity.level = destWorld;
+			//destWorld.addDuringPortalTeleport((ServerPlayer) entity);
+			//this.fireTriggers(currentWorld, (ServerPlayer) entity);
+			//return entity;
+		else
 			return repositionEntity.apply(false);
 	}
 
