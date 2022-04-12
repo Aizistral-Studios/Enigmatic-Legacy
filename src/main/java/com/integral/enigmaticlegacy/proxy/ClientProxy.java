@@ -42,6 +42,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.item.BoneMealItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.core.particles.ParticleTypes;
@@ -90,6 +91,36 @@ public class ClientProxy extends CommonProxy {
 			return this.clientTransientPlayerData;
 		else
 			return this.commonTransientPlayerData;
+	}
+
+	@Override
+	public void displayReviveAnimation(int entityID, int reviveType) {
+		Player player = this.getClientPlayer();
+		Entity entity = player.level.getEntity(entityID);
+
+		if (entity != null) {
+			Item item = reviveType == 0 ? EnigmaticLegacy.cosmicScroll : EnigmaticLegacy.theCube;
+			int i = 40;
+			Minecraft.getInstance().particleEngine.createTrackingEmitter(entity, ParticleTypes.TOTEM_OF_UNDYING, 30);
+
+			int amount = 50;
+
+			for (int counter = 0; counter <= amount; counter++) {
+				player.level.addParticle(ParticleTypes.FLAME, true, entity.getX() + (Math.random() - 0.5), entity.getY() + (entity.getBbHeight()/2) + (Math.random() - 0.5), entity.getZ() + (Math.random() - 0.5), (Math.random() - 0.5D) * 0.2, (Math.random() - 0.5D) * 0.2, (Math.random() - 0.5D) * 0.2);
+			}
+
+			player.level.playLocalSound(entity.getX(), entity.getY(), entity.getZ(), SoundEvents.TOTEM_USE, entity.getSoundSource(), 1.0F, 1.0F, false);
+
+			if (entity == player) {
+				ItemStack stack = SuperpositionHandler.getCurioStack(player, item);
+
+				if (stack == null) {
+					stack = new ItemStack(item, 1);
+				}
+
+				Minecraft.getInstance().gameRenderer.displayItemActivation(stack);
+			}
+		}
 	}
 
 	@Override

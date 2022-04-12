@@ -138,4 +138,8 @@ public class CommonProxy {
 			return 0;
 	}
 
+	public void displayReviveAnimation(int entityID, int reviveType) {
+		// NO-OP
+	}
+
 }

@@ -1145,7 +1145,6 @@ public class SuperpositionHandler {
 		if (!player.level.dimension().equals(dimension)) {
 			ServerLevel world = SuperpositionHandler.getWorld(dimension);
 			if (world != null) {
-				player.changeDimension(world, new RealSmoothTeleporter());
 				player.changeDimension(world, teleporter);
 			}
 		}
@@ -1682,6 +1681,19 @@ public class SuperpositionHandler {
 				return;
 			}
 		}
+	}
+
+	@SafeVarargs
+	public static <T> T getRandomElement(List<T> list, T... excluding) {
+		List<T> filtered = new ArrayList<>(list);
+		Arrays.stream(excluding).forEach(filtered::remove);
+
+		if (filtered.size() <= 0)
+			throw new IllegalArgumentException("List has no valid elements to choose");
+		else if (filtered.size() == 1)
+			return filtered.get(0);
+		else
+			return filtered.get(random.nextInt(filtered.size()));
 	}
 
 	public static String getMD5Hash(String string) {

@@ -28,6 +28,7 @@ import com.integral.enigmaticlegacy.brewing.ValidationBrewingRecipe;
 import com.integral.enigmaticlegacy.config.EtheriumConfigHandler;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.crafting.EnigmaticRecipeSerializers;
+import com.integral.enigmaticlegacy.crafting.HiddenRecipe;
 import com.integral.enigmaticlegacy.effects.BlazingStrengthEffect;
 import com.integral.enigmaticlegacy.effects.MoltenHeartEffect;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
@@ -529,6 +530,12 @@ public class EnigmaticLegacy {
 
 		BrewingRecipeRegistry.addRecipe(new ValidationBrewingRecipe(Ingredient.of(hastePotionExtendedEmpowered, recallPotion, twistedPotion, ultimatePotionLingering, commonPotionLingering), null));
 
+		HiddenRecipe.addRecipe(new ItemStack(theCube),
+				new ItemStack(golemHeart), new ItemStack(cosmicHeart), new ItemStack(magmaHeart),
+				new ItemStack(angelBlessing), new ItemStack(Blocks.OBSIDIAN), new ItemStack(eyeOfNebula),
+				new ItemStack(oceanStone), new ItemStack(cosmicHeart), new ItemStack(voidPearl)
+				);
+
 		EnigmaticUpdateHandler.init();
 
 		proxy.loadComplete(event);
@@ -648,6 +655,7 @@ public class EnigmaticLegacy {
 		soulCrystal.attributeDispatcher.clear();
 		enigmaticItem.flightMap.clear();
 		heavenScroll.flyMap.clear();
+		theCube.clearLocationCache();
 		RegisteredMeleeAttack.clearRegistry();
 	}
 

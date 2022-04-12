@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.AstralBreaker;
 
@@ -39,30 +40,16 @@ public class PacketCosmicRevive {
 
 	public static void handle(PacketCosmicRevive msg, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
-			Player player = EnigmaticLegacy.proxy.getClientPlayer();
-			Entity entity = player.level.getEntity(msg.entityID);
-
-			if (entity != null) {
-				Item item = msg.reviveType == 0 ? EnigmaticLegacy.cosmicScroll : EnigmaticLegacy.theCube;
-				int i = 40;
-				Minecraft.getInstance().particleEngine.createTrackingEmitter(entity, ParticleTypes.TOTEM_OF_UNDYING, 30);
-
-				int amount = 50;
-
-				for (int counter = 0; counter <= amount; counter++) {
-					player.level.addParticle(ParticleTypes.FLAME, true, entity.getX() + (Math.random() - 0.5), entity.getY() + (entity.getBbHeight()/2) + (Math.random() - 0.5), entity.getZ() + (Math.random() - 0.5), (Math.random() - 0.5D) * 0.2, (Math.random() - 0.5D) * 0.2, (Math.random() - 0.5D) * 0.2);
-				}
-
-				player.level.playLocalSound(entity.getX(), entity.getY(), entity.getZ(), SoundEvents.TOTEM_USE, entity.getSoundSource(), 1.0F, 1.0F, false);
+			if (msg.reviveType == 0) {
+				EnigmaticLegacy.proxy.displayReviveAnimation(msg.entityID, msg.reviveType);
+			} else {
+				Player player = EnigmaticLegacy.proxy.getClientPlayer();
+				Entity entity = player.level.getEntity(msg.entityID);
 
 				if (entity == player) {
-					ItemStack stack = SuperpositionHandler.getCurioStack(player, item);
-
-					if (stack == null) {
-						stack = new ItemStack(item, 1);
-					}
-
-					Minecraft.getInstance().gameRenderer.displayItemActivation(stack);
+					EnigmaticEventHandler.scheduledCubeRevive = 5;
+				} else {
+					EnigmaticLegacy.proxy.displayReviveAnimation(msg.entityID, msg.reviveType);
 				}
 			}
 		});

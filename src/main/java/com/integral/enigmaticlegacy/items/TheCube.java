@@ -1,7 +1,17 @@
 package com.integral.enigmaticlegacy.items;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.WeakHashMap;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
@@ -64,9 +74,11 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 	private final List<MobEffect> randomBuffs;
 	private final List<MobEffect> randomDebuffs;
 	private final List<ResourceKey<Level>> worlds;
+	private final Map<ServerPlayer, Future<CachedTeleportationLocation>> locationCache = new WeakHashMap<>();
+	private final ExecutorService executor = Executors.newCachedThreadPool();
 
 	public TheCube() {
-		super(getDefaultProperties().rarity(Rarity.EPIC));
+		super(getDefaultProperties().rarity(Rarity.EPIC).fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "the_cube"));
 
 		this.worlds = ImmutableList.of(Level.OVERWORLD, Level.NETHER, Level.END);
@@ -79,6 +91,7 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 
 		this.immunityList.add(DamageSource.ON_FIRE.msgId);
 		this.immunityList.add(DamageSource.LAVA.msgId);
+		this.immunityList.add(DamageSource.HOT_FLOOR.msgId);
 		this.immunityList.add(DamageSource.CRAMMING.msgId);
 		this.immunityList.add(DamageSource.DROWN.msgId);
 		this.immunityList.add(DamageSource.FALL.msgId);
@@ -92,7 +105,7 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 	@Override
 	public int getCooldown(Player player) {
 		if (player != null && SuperpositionHandler.hasArchitectsFavor(player))
-			return 600;
+			return 1600;
 		else
 			return 3200;
 	}
@@ -188,7 +201,7 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	public List<Component> getAttributesTooltip(List<Component> tooltips, ItemStack stack) {
-		//tooltips.clear();
+		tooltips.clear();
 		return tooltips;
 	}
 
@@ -211,10 +224,28 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 				player.clearFire();
 			}
 
-			//if (context.entity() instanceof ServerPlayer) {
 			AttributeMap map = player.getAttributes();
 			map.addTransientAttributeModifiers(this.getCurrentModifiers(player));
-			//}
+
+			if (context.entity() instanceof ServerPlayer) {
+				if (!this.locationCache.containsKey(player)) {
+					this.generateCachedLocation((ServerPlayer) player);
+				} else {
+					Future<CachedTeleportationLocation> future = this.locationCache.get(player);
+
+					if (future.isDone() && !future.isCancelled()) {
+						try {
+							CachedTeleportationLocation location = future.get();
+
+							if (location.dimension() == player.level.dimension()) {
+								this.generateCachedLocation((ServerPlayer) player);
+							}
+						} catch (Exception ex) {
+							throw new RuntimeException(ex);
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -223,59 +254,117 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 		if (SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
-		ResourceKey<Level> key = this.worlds.get(random.nextInt(this.worlds.size()));
+		CachedTeleportationLocation location = null;
+
+		if (this.locationCache.containsKey(player)) {
+			try {
+				location = this.locationCache.get(player).get();
+				this.locationCache.remove(player);
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+		}
+
+		if (location == null) {
+			EnigmaticLegacy.logger.getInternal().error("No cached location found for {}, generating new one synchronously.", player.getGameProfile().getName());
+			location = this.findRandomLocation(player);
+		}
+
+		ResourceKey<Level> key = location.dimension();
+
+		world.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketRecallParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 48, false));
+		player.teleportTo(location.x(), location.y(), location.z());
+
+		if (player.level.dimension() != key) {
+			SuperpositionHandler.sendToDimension(player, key);
+			player.teleportTo(location.x(), location.y(), location.z());
+		}
+
+		world.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketRecallParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 48, false));
+
+		SuperpositionHandler.setSpellstoneCooldown(player, this.getCooldown(player));
+
+		EnigmaticLegacy.logger.getInternal().info("Player {} triggered active ability of Non-Euclidean Cube. Teleported to D: {}, X: {}, Y: {}, Z: {}.",
+				player.getGameProfile().getName(), player.level.dimension(), player.getX(), player.getY(), player.getZ());
+	}
+
+	private void generateCachedLocation(ServerPlayer player) {
+		Future<CachedTeleportationLocation> future = this.executor.submit(() -> {
+			try {
+				CachedTeleportationLocation location = this.findRandomLocation(player);
+				EnigmaticLegacy.logger.debug("Found random location: " + location);
+				return location;
+			} catch (Exception ex) {
+				EnigmaticLegacy.logger.error("Could not find random location for:" + player.getGameProfile().getName());
+				ex.printStackTrace();
+				throw ex;
+			}
+		});
+
+		this.locationCache.put(player, future);
+	}
+
+	private CachedTeleportationLocation findRandomLocation(ServerPlayer player) {
+		ResourceKey<Level> key = SuperpositionHandler.getRandomElement(this.worlds, player.level.dimension());
 		ServerLevel level = SuperpositionHandler.getWorld(key);
 
 		if (level == null) {
+			EnigmaticLegacy.logger.error("Could not find world: " + key);
+			EnigmaticLegacy.logger.error("This is never supposed to happen!");
 			key = Level.OVERWORLD;
 			level = SuperpositionHandler.getOverworld();
 		}
 
-		System.out.println(level.getWorldBorder().getAbsoluteMaxSize());
-
+		int border = level.getWorldBorder().getAbsoluteMaxSize();
 		int attempts = 0;
-		int radius = 10000;
+		int radius = border < 10000 ? border : 10000;
 
-		cycle: while (true) {
+		while (true) {
 			BlockPos pos = new BlockPos(radius - random.nextInt(radius * 2), key == Level.NETHER ? 100 : 200, radius - random.nextInt(radius * 2));
 			level.getChunkAt(pos);
 
 			for (int i = 0; i < 4; i++) {
 				if (i > 0) {
-					pos = new BlockPos((pos.getX() << 4) + random.nextInt(16), pos.getY(), (pos.getZ() << 4) + random.nextInt(16));
+					pos = new BlockPos((pos.getX() >> 4) * 16 + random.nextInt(16), pos.getY(), (pos.getZ() >> 4) * 16 + random.nextInt(16));
 				}
 
-				if (this.tryTeleport(player, player.level, pos.getX(), pos.getY(), pos.getZ())) {
-					break cycle;
-				}
+				var location = this.findValidPosition(player, level, pos.getX(), pos.getY(), pos.getZ());
+
+				if (!location.isEmpty())
+					return new CachedTeleportationLocation(key, location.get().x, location.get().y, location.get().z);
 			}
 
-			if (++attempts > 100) {
-				this.triggerActiveAbility(world, player, stack);
-				return;
-			}
+			if (++attempts > 100)
+				return this.findRandomLocation(player);
 		}
-
-		SuperpositionHandler.setSpellstoneCooldown(player, this.getCooldown(player));
 	}
 
-	private boolean tryTeleport(ServerPlayer player, Level world, int x, int y, int z) {
+	private Optional<Vector3> findValidPosition(ServerPlayer player, Level world, int x, int y, int z) {
 		int checkAxis = y - 10;
 
 		for (int counter = 0; counter <= checkAxis; counter++) {
-			if (!world.isEmptyBlock(new BlockPos(x, y - counter - 1, z)) && world.getBlockState(new BlockPos(x, y - counter - 1, z)).canOcclude() && world.isEmptyBlock(new BlockPos(x, y - counter, z)) & world.isEmptyBlock(new BlockPos(x, y - counter + 1, z))) {
-				world.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketRecallParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 48, false));
+			BlockPos below = new BlockPos(x, y - counter - 1, z);
+			BlockPos feet = new BlockPos(x, y - counter, z);
+			BlockPos head = new BlockPos(x, y - counter + 1, z);
 
-				player.teleportTo(x + 0.5, y - counter, z + 0.5);
+			if (world.getMinBuildHeight() >= below.getY())
+				return Optional.empty();
 
-				world.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketRecallParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 48, false));
-				return true;
-			}
+			if (!world.isEmptyBlock(below) && world.getBlockState(below).canOcclude() && world.isEmptyBlock(feet) && world.isEmptyBlock(head))
+				return Optional.of(new Vector3(feet.getX() + 0.5, feet.getY(), feet.getZ() + 0.5));
 		}
 
-		return false;
+		return Optional.empty();
+	}
+
+	public void clearLocationCache() {
+		this.locationCache.clear();
+	}
+
+	private static record CachedTeleportationLocation(ResourceKey<Level> dimension, double x, double y, double z) {
+		// NO-OP
 	}
 
 }

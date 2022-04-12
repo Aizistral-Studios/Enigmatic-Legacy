@@ -102,6 +102,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.world.level.block.EndPortalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
@@ -109,6 +110,7 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.toasts.Toast;
+import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -330,6 +332,7 @@ public class EnigmaticEventHandler {
 	public static final Map<Player, AABB> desolationBoxes = new WeakHashMap<>();
 	public static final Map<Player, Float> lastHealth = new WeakHashMap<>();
 
+	public static int scheduledCubeRevive = -1;
 	public static boolean isPoisonHurt = false;
 	public static boolean isApplyingNightVision = false;
 	private static boolean handlingTooltip = false;
@@ -1110,6 +1113,15 @@ public class EnigmaticEventHandler {
 				if (player.tickCount % 100 == 0) {
 					this.syncPlayTime(player);
 				}
+			} else {
+				if (scheduledCubeRevive > 0 && !(Minecraft.getInstance().screen instanceof ReceivingLevelScreen)) {
+					scheduledCubeRevive--;
+
+					if (scheduledCubeRevive == 0) {
+						proxy.displayReviveAnimation(player.getId(), 1);
+						scheduledCubeRevive = -1;
+					}
+				}
 			}
 
 			/*
@@ -1392,7 +1404,7 @@ public class EnigmaticEventHandler {
 			if (isPoisonHurt && event.getSource() == DamageSource.MAGIC) {
 				event.setCanceled(true);
 				player.setHealth(1);
-			} else if (lastHealth.containsKey(player) && lastHealth.get(player) >= 2F && SuperpositionHandler.hasCurio(player, theCube)) {
+			} else if (lastHealth.containsKey(player) && lastHealth.get(player) >= 1.5F && SuperpositionHandler.hasCurio(player, theCube)) {
 				event.setCanceled(true);
 				player.setHealth(1);
 			} else if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticItem) || player.getInventory().contains(new ItemStack(EnigmaticLegacy.enigmaticItem)) || event.getSource() instanceof DamageSourceNemesisCurse) {
@@ -2528,7 +2540,6 @@ public class EnigmaticEventHandler {
 				if (SuperpositionHandler.isTheWorthyOne(player)) {
 					int heartsGained = SuperpositionHandler.getPersistentInteger(player, "AbyssalHeartsGained", 0);
 
-					if (heartsGained < 2) { // Only as many as there are unique items from them, +1
 					if (heartsGained < 3) { // Only as many as there are unique items from them, +1
 						((IAbyssalHeartBearer) killed).dropAbyssalHeart(player);
 					}
