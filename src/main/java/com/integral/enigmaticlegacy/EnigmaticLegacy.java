@@ -167,13 +167,16 @@ import com.integral.enigmaticlegacy.triggers.ForbiddenFruitTrigger;
 import com.integral.enigmaticlegacy.triggers.RevelationGainTrigger;
 import com.integral.enigmaticlegacy.triggers.RevelationTomeBurntTrigger;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
+import com.integral.etherium.blocks.BlockEtherium;
 import com.integral.etherium.core.EtheriumEventHandler;
 import com.integral.etherium.items.EnderRod;
 import com.integral.etherium.items.EtheriumArmor;
 import com.integral.etherium.items.EtheriumAxe;
 import com.integral.etherium.items.EtheriumIngot;
+import com.integral.etherium.items.EtheriumNugget;
 import com.integral.etherium.items.EtheriumOre;
 import com.integral.etherium.items.EtheriumPickaxe;
+import com.integral.etherium.items.EtheriumScraps;
 import com.integral.etherium.items.EtheriumScythe;
 import com.integral.etherium.items.EtheriumShovel;
 import com.integral.etherium.items.EtheriumSword;
@@ -230,6 +233,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -286,6 +290,7 @@ public class EnigmaticLegacy {
 	public static BlockBigLamp bigShroomlamp;
 	public static BlockMassiveLamp massiveRedstonelamp;
 	public static BlockBigLamp bigRedstonelamp;
+	public static BlockEtherium etheriumBlock;
 
 	@ConfigurableItem("") public static EnigmaticItem enigmaticItem;
 	@ConfigurableItem("Scroll of Ageless Wisdom") public static XPScroll xpScroll;
@@ -319,6 +324,8 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("") public static HastePotion hastePotionExtendedEmpowered;
 	@ConfigurableItem("Etherium Ore") public static EtheriumOre etheriumOre;
 	@ConfigurableItem("Etherium Ingot") public static EtheriumIngot etheriumIngot;
+	@ConfigurableItem("Etherium Nugget") public static EtheriumNugget etheriumNugget;
+	@ConfigurableItem("Etherium Scraps") public static EtheriumScraps etheriumScraps;
 	@ConfigurableItem("Ultimate Potions") public static UltimatePotionBase ultimatePotionBase;
 	@ConfigurableItem("Ultimate Potions") public static UltimatePotionSplash ultimatePotionSplash;
 	@ConfigurableItem("Ultimate Potions") public static UltimatePotionLingering ultimatePotionLingering;
@@ -702,6 +709,7 @@ public class EnigmaticLegacy {
 			bigShroomlamp = new BlockBigLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN), "big_shroomlamp");
 			massiveRedstonelamp = new BlockMassiveLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN), "massive_redstonelamp");
 			bigRedstonelamp = new BlockBigLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN), "big_redstonelamp");
+			etheriumBlock = new BlockEtherium(etheriumConfig);
 
 			event.getRegistry().registerAll(
 					massiveLamp,
@@ -709,7 +717,9 @@ public class EnigmaticLegacy {
 					massiveShroomlamp,
 					bigShroomlamp,
 					massiveRedstonelamp,
-					bigRedstonelamp);
+					bigRedstonelamp,
+					etheriumBlock
+					);
 
 			logger.info("Blocks registered successfully.");
 		}
@@ -746,6 +756,8 @@ public class EnigmaticLegacy {
 			ironRing = new IronRing();
 			etheriumOre = new EtheriumOre(etheriumConfig);
 			etheriumIngot = new EtheriumIngot(etheriumConfig);
+			etheriumNugget = new EtheriumNugget(etheriumConfig);
+			etheriumScraps = new EtheriumScraps(etheriumConfig);
 
 			hastePotionDefault = (HastePotion) new HastePotion(Rarity.COMMON, 3600, 0).setRegistryName(new ResourceLocation(MODID, "haste_potion_default"));
 			hastePotionExtended = (HastePotion) new HastePotion(Rarity.COMMON, 9600, 0).setRegistryName(new ResourceLocation(MODID, "haste_potion_extended"));
@@ -885,6 +897,8 @@ public class EnigmaticLegacy {
 					relicOfTesting,
 					etheriumOre,
 					etheriumIngot,
+					etheriumNugget,
+					etheriumScraps,
 					commonPotionBase,
 					commonPotionSplash,
 					commonPotionLingering,
@@ -964,10 +978,10 @@ public class EnigmaticLegacy {
 					new GenericBlockItem(massiveShroomlamp),
 					new GenericBlockItem(bigShroomlamp),
 					new GenericBlockItem(massiveRedstonelamp),
-					new GenericBlockItem(bigRedstonelamp)
+					new GenericBlockItem(bigRedstonelamp),
+					new GenericBlockItem(etheriumBlock, GenericBlockItem.getDefaultProperties().rarity(Rarity.RARE))
 					//,gemOfBinding,wormholePotion
 					);
-
 			logger.info("Items registered successfully.");
 		}
 

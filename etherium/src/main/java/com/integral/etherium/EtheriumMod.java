@@ -6,15 +6,19 @@ import org.apache.logging.log4j.Logger;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
+import com.integral.etherium.blocks.BlockEtherium;
 import com.integral.etherium.core.EtheriumConfig;
 import com.integral.etherium.core.EtheriumEventHandler;
+import com.integral.etherium.core.EtheriumUtil;
 import com.integral.etherium.core.TestLootGenerator;
 import com.integral.etherium.items.EnderRod;
 import com.integral.etherium.items.EtheriumArmor;
 import com.integral.etherium.items.EtheriumAxe;
 import com.integral.etherium.items.EtheriumIngot;
+import com.integral.etherium.items.EtheriumNugget;
 import com.integral.etherium.items.EtheriumOre;
 import com.integral.etherium.items.EtheriumPickaxe;
+import com.integral.etherium.items.EtheriumScraps;
 import com.integral.etherium.items.EtheriumScythe;
 import com.integral.etherium.items.EtheriumShovel;
 import com.integral.etherium.items.EtheriumSword;
@@ -23,8 +27,10 @@ import com.integral.etherium.proxy.ClientProxy;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -48,6 +54,7 @@ public class EtheriumMod {
 	public static final Logger logger = LogManager.getLogger("Etherium");
 	public static final CommonProxy proxy = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	public static SimpleChannel packetInstance;
+	public static EtheriumConfig etheriumConfig;
 
 	public static SoundEvent HHON;
 	public static SoundEvent HHOFF;
@@ -68,30 +75,17 @@ public class EtheriumMod {
 	public static EtheriumScythe etheriumScythe;
 
 	public static EnderRod enderRod;
+	public static EtheriumScraps etheriumScraps;
+	public static EtheriumNugget etheriumNugget;
 	public static TestLootGenerator lootGenerator;
 	
+	public static BlockEtherium etheriumBlock;
+	
 	public EtheriumMod() {
-		EtheriumConfig etheriumConfig = new EtheriumConfig();
+		etheriumConfig = new EtheriumConfig();
 
 		EnigmaticMaterials.setEtheriumConfig(etheriumConfig);
 		EnigmaticArmorMaterials.setEtheriumConfig(etheriumConfig);
-		
-		etheriumOre = new EtheriumOre(etheriumConfig);
-		etheriumIngot = new EtheriumIngot(etheriumConfig);
-		
-		etheriumHelmet = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.HEAD).setRegistryName(new ResourceLocation(MODID, "etherium_helmet"));
-		etheriumChestplate = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.CHEST).setRegistryName(new ResourceLocation(MODID, "etherium_chestplate"));
-		etheriumLeggings = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.LEGS).setRegistryName(new ResourceLocation(MODID, "etherium_leggings"));
-		etheriumBoots = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.FEET).setRegistryName(new ResourceLocation(MODID, "etherium_boots"));
-
-		etheriumPickaxe = new EtheriumPickaxe(etheriumConfig);
-		etheriumAxe = new EtheriumAxe(etheriumConfig);
-		etheriumShovel = new EtheriumShovel(etheriumConfig);
-		etheriumSword = new EtheriumSword(etheriumConfig);
-		etheriumScythe = new EtheriumScythe(etheriumConfig);
-		
-		enderRod = new EnderRod(etheriumConfig);
-		lootGenerator = new TestLootGenerator(etheriumConfig);
 		
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onLoadComplete);
@@ -116,9 +110,37 @@ public class EtheriumMod {
 	public static class RegistryEvents {
 		
 		@SubscribeEvent
-		public static void registerItems(final RegistryEvent.Register<Item> event) {
+		public static void registerBlocks(RegistryEvent.Register<Block> event) {
+			logger.info("Initializing blocks registration...");
+			
+			etheriumBlock = new BlockEtherium(etheriumConfig);
+			
+			event.getRegistry().register(etheriumBlock);
+		}
+		
+		@SubscribeEvent
+		public static void registerItems(RegistryEvent.Register<Item> event) {
 			logger.info("Initializing items registration...");
 
+			etheriumOre = new EtheriumOre(etheriumConfig);
+			etheriumIngot = new EtheriumIngot(etheriumConfig);
+			
+			etheriumHelmet = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.HEAD).setRegistryName(new ResourceLocation(MODID, "etherium_helmet"));
+			etheriumChestplate = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.CHEST).setRegistryName(new ResourceLocation(MODID, "etherium_chestplate"));
+			etheriumLeggings = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.LEGS).setRegistryName(new ResourceLocation(MODID, "etherium_leggings"));
+			etheriumBoots = (EtheriumArmor) new EtheriumArmor(etheriumConfig, EquipmentSlot.FEET).setRegistryName(new ResourceLocation(MODID, "etherium_boots"));
+
+			etheriumPickaxe = new EtheriumPickaxe(etheriumConfig);
+			etheriumAxe = new EtheriumAxe(etheriumConfig);
+			etheriumShovel = new EtheriumShovel(etheriumConfig);
+			etheriumSword = new EtheriumSword(etheriumConfig);
+			etheriumScythe = new EtheriumScythe(etheriumConfig);
+			
+			enderRod = new EnderRod(etheriumConfig);
+			etheriumScraps = new EtheriumScraps(etheriumConfig);
+			etheriumNugget = new EtheriumNugget(etheriumConfig);
+			lootGenerator = new TestLootGenerator(etheriumConfig);
+			
 			event.getRegistry().registerAll(
 					etheriumOre,
 					etheriumIngot,
@@ -132,7 +154,11 @@ public class EtheriumMod {
 					etheriumSword,
 					etheriumScythe,
 					enderRod,
-					lootGenerator
+					etheriumScraps,
+					etheriumNugget,
+					lootGenerator,
+					new BlockItem(etheriumBlock, EtheriumUtil.defaultProperties(etheriumConfig, BlockEtherium.class)
+							.stacksTo(64).fireResistant()).setRegistryName(etheriumBlock.getRegistryName())
 					);
 
 			logger.info("Items registered successfully.");

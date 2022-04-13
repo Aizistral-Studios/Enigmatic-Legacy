@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "conditions": [],
+  "group": "enigmaticlegacy_etheriumingot",
+  "ingredients": [
+    {
+      "item": "etherium:etherium_block"
+    }
+  ],
+  "result": {
+    "item": "etherium:etherium_ingot",
+    "count": 9
+  }
+}

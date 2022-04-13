@@ -2,7 +2,11 @@
   "parent": "etherium:recipes/root",
   "rewards": {
     "recipes": [
-      "etherium:etherium_ingot"
+      "etherium:etherium_ingot",
+      "etherium:etherium_block",
+      "etherium:etherium_block_uncrafting",
+      "etherium:etherium_ingot_nuggets",
+      "etherium:etherium_ingot_uncrafting"
     ]
   },
   "criteria": {
