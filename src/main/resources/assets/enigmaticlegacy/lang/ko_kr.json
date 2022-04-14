@@ -1259,7 +1259,7 @@
 "book.enigmaticlegacy.entry.lore_inscriber.page.14": "!&5어둡고 강력합니다.",
 "book.enigmaticlegacy.entry.lore_inscriber.page.15": "!&6세계&5를 지배하는 데 쓰이곤 했습니다...",
 "book.enigmaticlegacy.entry.lore_inscriber.page.16": "!&1&l왜&r &2&n내가&r &3&o고통&r &4&m받아야&r &6&k하는가",
-"book.enigmaticlegacy.entry.lore_inscriber.page.17": "글을 새기는 작업을 완료하면 이름과 지식을 아이템으로 이전하기 위해 모루에서 결합하십시오.",
+"book.enigmaticlegacy.entry.lore_inscriber.page.17": "글을 새기는 작업을 완료하면 이름과 지식을 아이템으로 이전하기 위해 모루에서 합치세요.",
 "book.enigmaticlegacy.entry.lore_inscriber.page.18": "그렇게 하면 항상 정확히 4레벨의 경험치가 필요합니다.<br2/>사용자 정의 이름과 지식을 모두 정의할 필요는 없습니다. 둘 중 하나만 정의할 수 있습니다. 사용자 지정 이름이 없는 조각을 첨부할 때 원래 항목의 이름을 덮어쓰지 않습니다. 이름만 있는 경우 해당 지식 라인은 그대로 유지됩니다(존재하는 경우).",
 
 
@@ -1469,7 +1469,7 @@
 
 "book.enigmaticlegacy.entry.monster_charm.name": "학살자의 표식",
 "book.enigmaticlegacy.entry.monster_charm.page.1": "때로 어둠 속을 아무 생각 없이 방황하는 그 괴물들은 큰 성가심이 될 때가 있습니다. 이제 네더라이트를 단조할 수 있는 권한을 갖게 되었고, 한때 상당한 위협이었던 네더라이트가 검을 더럽히는 약간의 불편함으로 감소하는 경우가 많습니다. 그러나 때때로 그들의 영혼이 육체에 더 이상 달라붙지 않도록 하는 것만으로는 더 이상 보람을 느끼지 못합니다.",
-"book.enigmaticlegacy.entry.monster_charm.page.2": "그러나 때때로 그들의 영혼이 육체에 더 이상 달라붙지 않도록 하려면 두 번 쳐야 하고 그렇게 하는 것만으로는 더 이상 믿을 수 없을 정도로 보람을 느끼지 못합니다.<br2/>괴물 학살자의 표식은 이러한 빈번한 만남에서 당신을 도와서 당신의 검격을 한두 마리에게 적중시키는 완벽한 부적입니다.",
+"book.enigmaticlegacy.entry.monster_charm.page.2": "괴물 학살자의 표식은 이러한 빈번한 만남에서 당신을 도와서 당신의 검격을 한두 마리에게 적중시키는 완벽한 부적입니다.",
 "book.enigmaticlegacy.entry.monster_charm.page.3": "그것을 지니고 있을 때 죽임을 당한 생물은 수집할 수 있는 더 유용한 물건을 남깁니다. 그 생물들이 몬스터라면, 당신은 또한 경험의 형태로 그들의 생명력의 더 많은 부분을 흡수할 수 있을 것입니다.<br2/>한 번 몬스터과 싸우는 데 일생을 바쳤지만 결국 스스로 괴물이 된 영웅의 이야기를 몇 번 접했습니다.",
 "book.enigmaticlegacy.entry.monster_charm.page.4": "그러나 일반적인 좀비를 보면 그런 운명을 겪지 않아도 될 것이라고 확신합니다. 어떻게 공통점이 있을 수 있을까요..?",
 
@@ -1508,8 +1508,8 @@
 
 
 "book.enigmaticlegacy.entry.heaven_scroll.name": "천국의 선물",
-"book.enigmaticlegacy.entry.heaven_scroll.page.1": "다른 반신이나 인간이 그랬던 것처럼, 여행을 시작할 때부터 당신은 연약한 신체의 한계를 초월하는 꿈을 꾸었습니다. 그 꿈에는 다른 모든 속성 중에서 다른 무엇보다도 신처럼 이 세상의 하늘을 자유롭게 돌아다니는 것이 포함되어있었습니다. 글쎄요, 이 주문서로는 당신이 모든 하늘을 돌아다닐 수는 없을지도 모릅니다.",
-"book.enigmaticlegacy.entry.heaven_scroll.page.2": "그러나 네더의 별의 엄청난 힘으로 인해 한두 가지 일을 할 수 있습니다.<br2/>활동적인 신호기 내에 있는 자신을 발견한 경우 - 그리고 천국의 선물은 신호기의 신비한 오라에서 멀리 떨어져 있다고 생각하지 않는 한 매우 편리한 비행 능력을 부여합니다.",
+"book.enigmaticlegacy.entry.heaven_scroll.page.1": "다른 반신이나 인간이 그랬던 것처럼, 여행을 시작할 때부터 당신은 연약한 신체의 한계를 초월하는 꿈을 꾸었습니다. 그 꿈에는 다른 모든 속성 중에서 다른 무엇보다도 신처럼 이 세상의 하늘을 자유롭게 돌아다니는 것이 포함되어있었습니다. 글쎄요, 이 주문서로는 당신이 모든 하늘을 돌아다닐 수는 없을지도 모릅니다. 그러나 네더의 별의 엄청난 힘으로 조금은 가능합니다.",
+"book.enigmaticlegacy.entry.heaven_scroll.page.2": "활동적인 신호기 내에 있는 자신을 발견한 경우 - 그리고 천국의 선물은 신호기의 신비한 오라에서 멀리 떨어져 있다고 생각하지 않는 한 매우 편리한 비행 능력을 부여합니다.",
 "book.enigmaticlegacy.entry.heaven_scroll.page.3": "불행히도 그 오라는 그 자체만으로는 비행에 동력을 공급하는 데 필요한 많은 에너지를 지속적으로 소모할 만큼 충분히 강하지 않습니다. 두루마리는 천천히, 그러나 꾸준히 당신이 흡수한 경험을 소모하여 당신을 공중에 띄울 것입니다.",
 "book.enigmaticlegacy.entry.heaven_scroll.page.4": "당신은 그 힘을 향상시키고 한계를 극복할 방법이 분명히 있을 것이라고 확신하지만, 잠시 동안은 당신이 해야 할 일만 남았습니다.",
 
@@ -1599,8 +1599,8 @@
 
 
 "book.enigmaticlegacy.entry.the_infinitum.name": "무저갱",
-"book.enigmaticlegacy.entry.the_infinitum.page.1": "이것이 잉태되었습니다. 이 어둡고 살로 덮힌 책과 결합하여 그 페이지가 감추고 있는 공포와 함께, 당신은 당신을 위협한 자들을 파괴할 것입니다.<br2/>당신을 비웃던 사람들, 당신을 과소평가한 사람들, 당신을 부수기 위해 온갖 노력을 다한 사람들, 당신의 존재로부터 세상을 정화하기 위해 노력한 사람들은 당신이 짊어진 부패에 혐오감을 느끼거나 단순히 당신을 쉬운 먹잇감으로 여길 것입니다.",
-"book.enigmaticlegacy.entry.the_infinitum.page.2": "당신은 불태울 수 없는 글이요, 잊혀지지 않는 지식이요, 부인할 수 없는 진리이기 때문입니다.<br2/>당신은 이 영역이 그토록 끈질기게 지우려고 했던 것을 드러낼 것이며, 그것이 숨기려 했던 현실을 영원의 판에 새길 것입니다.",
+"book.enigmaticlegacy.entry.the_infinitum.page.1": "이것이 잉태되었습니다. 이 어둡고 살로 덮힌 책과 결합하여 그 페이지가 감추고 있는 공포와 함께, 당신은 당신을 위협한 자들을 파괴할 것입니다.<br2/>당신을 비웃던 사람들, 당신을 과소평가한 사람들, 당신을 부수기 위해 온갖 노력을 다한 사람들, 당신의 존재로부터 세상을 정화하기 위해 노력한 사람들은 당신이 짊어진 부패에 혐오감을 느끼거나 단순히 쉬운 먹잇감으로 여길 것입니다.",
+"book.enigmaticlegacy.entry.the_infinitum.page.2": "당신은 불태울 수 없는 글이요, 잊혀지지 않는 지식이요, 부인할 수 없는 진리이기 때문입니다.<br2/>당신은 이 영역이 끈질기게 지우려고 했던 것을 드러낼 것이며, 숨기려 한 진실을 영원의 판에 새길 것입니다.",
 "book.enigmaticlegacy.entry.the_infinitum.page.3": "당신은 그들이 결코 잊지 못할 교훈을 그들 모두에게 가르칠 것입니다.",
 
 "book.enigmaticlegacy.entry.ender_slayer.name": "엔더 학살자",
