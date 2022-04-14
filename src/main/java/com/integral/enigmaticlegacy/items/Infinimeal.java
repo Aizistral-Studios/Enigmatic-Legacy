@@ -1,6 +1,9 @@
 package com.integral.enigmaticlegacy.items;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
@@ -12,6 +15,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CactusBlock;
+import net.minecraft.world.level.block.ChorusFlowerBlock;
+import net.minecraft.world.level.block.ChorusPlantBlock;
 import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.SugarCaneBlock;
 import net.minecraft.world.level.block.VineBlock;
@@ -128,8 +133,28 @@ public class Infinimeal extends ItemBase implements Vanishable {
 
 				if (world instanceof ServerLevel) {
 					for (int i = 0; i <= cycles; i++) {
-						block.randomTick(state, (ServerLevel)world, pos, random);
+						state.randomTick((ServerLevel)world, pos, random);
 					}
+				}
+
+				return InteractionResult.sidedSuccess(world.isClientSide);
+			} else if (block instanceof ChorusPlantBlock || block instanceof ChorusFlowerBlock) {
+				if (!world.isClientSide) {
+					world.levelEvent(2005, pos, 0);
+				}
+
+				if (world instanceof ServerLevel serverWorld) {
+					List<BlockPos> flowers = this.findChorusFlowers(world, pos);
+
+					flowers.forEach(flowerPos -> {
+						int cycles = 1 + random.nextInt(2);
+						cycles *= 11;
+
+						for (int i = 0; i <= cycles; i++) {
+							BlockState flowerState = world.getBlockState(flowerPos);
+							flowerState.randomTick(serverWorld, flowerPos, random);
+						}
+					});
 				}
 
 				return InteractionResult.sidedSuccess(world.isClientSide);
@@ -137,6 +162,34 @@ public class Infinimeal extends ItemBase implements Vanishable {
 		}
 
 		return result;
+	}
+
+	private List<BlockPos> findChorusFlowers(Level level, BlockPos pos) {
+		List<BlockPos> chorusTree = new ArrayList<>();
+		chorusTree.add(pos);
+
+		while (true) {
+			int formerSize = chorusTree.size();
+			for (BlockPos treePos : new ArrayList<>(chorusTree)) {
+				chorusTree.addAll(this.getNeighboringBlocks(level, treePos, chorusTree, ChorusFlowerBlock.class,
+						ChorusPlantBlock.class));
+			}
+
+			if (formerSize == chorusTree.size()) {
+				break;
+			}
+		}
+
+		return chorusTree.stream().filter(p -> level.getBlockState(p).getBlock() instanceof ChorusFlowerBlock)
+				.collect(Collectors.toList());
+	}
+
+	@SafeVarargs
+	private List<BlockPos> getNeighboringBlocks(Level level, BlockPos pos, List<BlockPos> exclude, Class<? extends Block>... classes) {
+		BlockPos[] neighbors = new BlockPos[] { pos.above(), pos.below(), pos.east(), pos.north(), pos.south(), pos.west() };
+
+		return Arrays.stream(neighbors).filter(neighbor -> !exclude.contains(neighbor) && Arrays.stream(classes)
+				.anyMatch(theClass -> theClass.isInstance(level.getBlockState(neighbor).getBlock()))).collect(Collectors.toList());
 	}
 
 	private BlockPos findTopmostGrowable(Level world, BlockPos pos, Block block, boolean goUp) {
