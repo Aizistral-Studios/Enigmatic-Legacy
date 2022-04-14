@@ -66,6 +66,7 @@ import com.integral.enigmaticlegacy.items.BerserkEmblem;
 import com.integral.enigmaticlegacy.items.CosmicCake;
 import com.integral.enigmaticlegacy.items.CosmicHeart;
 import com.integral.enigmaticlegacy.items.CosmicScroll;
+import com.integral.enigmaticlegacy.items.CurseTransposer;
 import com.integral.enigmaticlegacy.items.CursedRing;
 import com.integral.enigmaticlegacy.items.CursedScroll;
 import com.integral.enigmaticlegacy.items.CursedStone;
@@ -357,6 +358,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Astral Breaker") public static AstralBreaker astralBreaker;
 	@ConfigurableItem("Keystone of The Oblivion") public static OblivionStone oblivionStone;
 	@ConfigurableItem("Tome of Hungering Knowledge") public static EnchantmentTransposer enchantmentTransposer;
+	@ConfigurableItem("Tome of Devoured Malignancy") public static CurseTransposer curseTransposer;
 
 	//@ConfigurableItem("Gem of Binding") public static GemOfBinding gemOfBinding;
 	//@ConfigurableItem("Wormhole Potion") public static WormholePotion wormholePotion;
@@ -799,6 +801,7 @@ public class EnigmaticLegacy {
 			astralBreaker = new AstralBreaker(etheriumConfig);
 			oblivionStone = new OblivionStone();
 			enchantmentTransposer = new EnchantmentTransposer();
+			curseTransposer = new CurseTransposer();
 
 			//			gemOfBinding = new GemOfBinding();
 			//			wormholePotion = new WormholePotion();
@@ -983,6 +986,7 @@ public class EnigmaticLegacy {
 					theCube,
 					desolationRing,
 					astralPotato,
+					curseTransposer,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),

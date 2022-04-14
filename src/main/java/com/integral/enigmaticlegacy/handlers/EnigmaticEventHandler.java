@@ -2938,7 +2938,6 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onAnvilUpdate(AnvilUpdateEvent event) {
-
 		if (event.getLeft().getCount() == 1)
 			if (event.getRight().getItem().equals(EnigmaticLegacy.loreFragment) && event.getRight().getTagElement("display") != null) {
 				event.setCost(4);
@@ -2949,15 +2948,13 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
-
 		if (event.getPlayer() != null && !event.getPlayer().level.isClientSide) {
-			if (event.getInventory().countItem(EnigmaticLegacy.enchantmentTransposer) == 1 && event.getCrafting().getItem() == Items.ENCHANTED_BOOK) {
+			if ((event.getInventory().countItem(EnigmaticLegacy.enchantmentTransposer) == 1 || event.getInventory().countItem(EnigmaticLegacy.curseTransposer) == 1) && event.getCrafting().getItem() == Items.ENCHANTED_BOOK) {
 				event.getPlayer().level.playSound(null, event.getPlayer().blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 			} else if (event.getCrafting().getItem() == cursedStone) {
 				event.getPlayer().level.playSound(null, event.getPlayer().blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 			}
 		}
-
 	}
 
 

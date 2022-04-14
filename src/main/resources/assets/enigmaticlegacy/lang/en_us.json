@@ -96,6 +96,7 @@
 	"item.enigmaticlegacy.etherium_nugget": "Etherium Nugget",
 	"item.enigmaticlegacy.etherium_scraps": "Etherium Scrap",
 	"item.enigmaticlegacy.astral_potato": "Astral Potato",
+	"item.enigmaticlegacy.curse_transposer": "Tome of Devoured Malignancy",
 	"block.enigmaticlegacy.etherium_block": "Block of Etherium",
 	"block.enigmaticlegacy.cosmic_cake": "The Eternal Cake",
 	
@@ -708,7 +709,9 @@
 	"tooltip.enigmaticlegacy.enchantmentTransposer2": "§5to transfer all enchantments from item to the tome.",
 	"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5The tome will be transformed into §6Enchanted Book§5.",
 	
-	"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5The tome will be transformed into §6Enchanted Book§5.",
+	"tooltip.enigmaticlegacy.curseTransposer1": "§5Combine with any enchanted item in a crafting grid",
+	"tooltip.enigmaticlegacy.curseTransposer2": "§5to transfer all curses from item to the tome.",
+	"tooltip.enigmaticlegacy.curseTransposer3": "§5The tome will be transformed into §6Enchanted Book§5.",
 	
 	"tooltip.enigmaticlegacy.boundToPlayer": "§5Bound to: §6%1$s",
 	
@@ -866,8 +869,8 @@
 	"tooltip.enigmaticlegacy.avariceScroll7": "§5Villager trades have §635% Discount.",
 	
 	"tooltip.enigmaticlegacy.infinimeal1": "§5Functions as infinite §6Bone Meal.",
-	"tooltip.enigmaticlegacy.infinimeal2": "§5Effective on §6Cactuses§5, §6Vines§5, §Chorus Plants§5,",
-	"tooltip.enigmaticlegacy.infinimeal3": "§6Nether Wart§5 and §6Sugar Cane.",
+	"tooltip.enigmaticlegacy.infinimeal2": "§5Effective on §6Cactuses§5, §6Chorus Plants§5,",
+	"tooltip.enigmaticlegacy.infinimeal3": "§6Nether Wart§5, §6Sugar Cane§5 and §6Vines§5",
 	
 	"tooltip.enigmaticlegacy.unwitnessedAmuletHoldShift": "§5The §6Shift §5shall be held.",
 	"tooltip.enigmaticlegacy.unwitnessedAmuletShift1": "§5It shall become bound to the first one who",

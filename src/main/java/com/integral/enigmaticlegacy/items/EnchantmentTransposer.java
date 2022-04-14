@@ -10,6 +10,7 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.resources.ResourceLocation;
@@ -21,14 +22,17 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class EnchantmentTransposer extends ItemBase {
 
 	public EnchantmentTransposer() {
-		super(ItemBase.getDefaultProperties().stacksTo(1).rarity(Rarity.UNCOMMON));
+		this(getDefaultProperties().stacksTo(1).rarity(Rarity.UNCOMMON));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enchantment_transposer"));
+	}
+
+	protected EnchantmentTransposer(Properties properties) {
+		super(properties);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
-
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enchantmentTransposer1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enchantmentTransposer2");
@@ -37,7 +41,10 @@ public class EnchantmentTransposer extends ItemBase {
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
+	}
 
+	public boolean canTranspose(Enchantment enchantment) {
+		return true;
 	}
 
 }

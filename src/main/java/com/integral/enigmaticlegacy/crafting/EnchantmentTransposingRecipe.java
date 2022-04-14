@@ -1,10 +1,13 @@
 package com.integral.enigmaticlegacy.crafting;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.items.EnchantmentTransposer;
 
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
@@ -14,11 +17,14 @@ import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 
@@ -43,7 +49,7 @@ public class EnchantmentTransposingRecipe extends CustomRecipe {
 			ItemStack checkedItemStack = inv.getItem(i);
 
 			if (!checkedItemStack.isEmpty()) {
-				if (checkedItemStack.getItem() == EnigmaticLegacy.enchantmentTransposer) {
+				if (checkedItemStack.getItem() instanceof EnchantmentTransposer) {
 					if (transposer == null) {
 						transposer = checkedItemStack.copy();
 					} else
@@ -51,20 +57,12 @@ public class EnchantmentTransposingRecipe extends CustomRecipe {
 				} else {
 					stackList.add(checkedItemStack);
 				}
-
 			}
-
 		}
 
-		if (transposer != null && stackList.size() == 1 && stackList.get(0).isEnchanted()) {
-			ItemStack enchanted = stackList.get(0).copy();
-			ListTag enchantmentNBT = enchanted.getEnchantmentTags();
-
-			ItemStack returned = new ItemStack(Items.ENCHANTED_BOOK);
-			returned.getOrCreateTag().put("StoredEnchantments", enchantmentNBT);
-
-			return returned;
-		}
+		if (transposer != null && stackList.size() == 1 && stackList.get(0).isEnchanted()
+				&& this.canDisenchant(transposer, stackList.get(0)))
+			return this.disenchant(transposer, stackList.get(0)).getA();
 
 		return ItemStack.EMPTY;
 	}
@@ -78,7 +76,7 @@ public class EnchantmentTransposingRecipe extends CustomRecipe {
 			ItemStack checkedItemStack = inv.getItem(i);
 
 			if (!checkedItemStack.isEmpty()) {
-				if (checkedItemStack.getItem() == EnigmaticLegacy.enchantmentTransposer) {
+				if (checkedItemStack.getItem() instanceof EnchantmentTransposer) {
 					if (transposer == null) {
 						transposer = checkedItemStack.copy();
 					} else
@@ -91,7 +89,8 @@ public class EnchantmentTransposingRecipe extends CustomRecipe {
 
 		}
 
-		if (transposer != null && stackList.size() == 1 && stackList.get(0).isEnchanted())
+		if (transposer != null && stackList.size() == 1 && stackList.get(0).isEnchanted()
+				&& this.canDisenchant(transposer, stackList.get(0)))
 			return true;
 
 		return false;
@@ -99,22 +98,54 @@ public class EnchantmentTransposingRecipe extends CustomRecipe {
 
 	@Override
 	public NonNullList<ItemStack> getRemainingItems(CraftingContainer inv) {
-		NonNullList<ItemStack> nonnulllist = NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
+		NonNullList<ItemStack> remaining = NonNullList.withSize(inv.getContainerSize(), ItemStack.EMPTY);
+		Map<ItemStack, Integer> stackList = new HashMap<>();
+		ItemStack transposer = null;
 
-		for(int i = 0; i < nonnulllist.size(); ++i) {
-			ItemStack item = inv.getItem(i);
-			if (item.getItem() != EnigmaticLegacy.enchantmentTransposer && item.isEnchanted()) {
-				ItemStack returned = item.copy();
-				CompoundTag nbt = returned.getOrCreateTag();
+		for (int i = 0; i < inv.getContainerSize(); i++) {
+			ItemStack checkedItemStack = inv.getItem(i);
 
-				nbt.remove("Enchantments");
-				//returned.setTag(nbt);
-
-				nonnulllist.set(i, returned);
+			if (!checkedItemStack.isEmpty()) {
+				if (checkedItemStack.getItem() instanceof EnchantmentTransposer) {
+					if (transposer == null) {
+						transposer = checkedItemStack.copy();
+					} else
+						return remaining;
+				} else {
+					stackList.put(checkedItemStack, i);
+				}
 			}
 		}
 
-		return nonnulllist;
+		if (transposer != null && stackList.size() == 1) {
+			ItemStack returned = stackList.keySet().iterator().next();
+
+			if (returned.isEnchanted() && this.canDisenchant(transposer, returned)) {
+				remaining.set(stackList.get(returned), this.disenchant(transposer, returned).getB());
+			}
+		}
+
+		return remaining;
+	}
+
+	private Tuple<ItemStack, ItemStack> disenchant(ItemStack transposer, ItemStack target) {
+		Map<Enchantment, Integer> transposed = EnchantmentHelper.getEnchantments(target);
+		Map<Enchantment, Integer> leftover = EnchantmentHelper.getEnchantments(target);
+		transposed.keySet().removeIf(enchant -> !((EnchantmentTransposer)transposer.getItem()).canTranspose(enchant));
+		leftover.keySet().removeIf(enchant -> ((EnchantmentTransposer)transposer.getItem()).canTranspose(enchant));
+
+		ItemStack book = new ItemStack(Items.ENCHANTED_BOOK);
+		EnchantmentHelper.setEnchantments(transposed, book);
+
+		ItemStack item = target.copy();
+		EnchantmentHelper.setEnchantments(leftover, item);
+
+		return new Tuple<>(book, item);
+	}
+
+	private boolean canDisenchant(ItemStack transposer, ItemStack target) {
+		return EnchantmentHelper.getEnchantments(target).keySet().stream()
+				.anyMatch(((EnchantmentTransposer)transposer.getItem())::canTranspose);
 	}
 
 	@Override
