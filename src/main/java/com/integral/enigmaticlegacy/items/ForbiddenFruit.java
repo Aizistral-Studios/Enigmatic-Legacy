@@ -87,6 +87,8 @@ public class ForbiddenFruit extends ItemBase implements Vanishable {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenFruit2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenFruit3", ChatFormatting.GOLD, regenerationSubtraction+"%");
 		} else {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.forbiddenFruitLore");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 	}

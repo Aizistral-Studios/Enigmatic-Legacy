@@ -22,6 +22,7 @@ import com.integral.enigmaticlegacy.api.items.IAdvancedPotionItem.PotionType;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.blocks.BlockBigLamp;
+import com.integral.enigmaticlegacy.blocks.BlockCosmicCake;
 import com.integral.enigmaticlegacy.blocks.BlockMassiveLamp;
 import com.integral.enigmaticlegacy.brewing.SpecialBrewingRecipe;
 import com.integral.enigmaticlegacy.brewing.ValidationBrewingRecipe;
@@ -59,8 +60,10 @@ import com.integral.enigmaticlegacy.items.AntiforbiddenPotion;
 import com.integral.enigmaticlegacy.items.AstralBreaker;
 import com.integral.enigmaticlegacy.items.AstralDust;
 import com.integral.enigmaticlegacy.items.AstralFruit;
+import com.integral.enigmaticlegacy.items.AstralPotato;
 import com.integral.enigmaticlegacy.items.AvariceScroll;
 import com.integral.enigmaticlegacy.items.BerserkEmblem;
+import com.integral.enigmaticlegacy.items.CosmicCake;
 import com.integral.enigmaticlegacy.items.CosmicHeart;
 import com.integral.enigmaticlegacy.items.CosmicScroll;
 import com.integral.enigmaticlegacy.items.CursedRing;
@@ -283,6 +286,7 @@ public class EnigmaticLegacy {
 	public static SoundEvent WRITE;
 	public static SoundEvent LEARN;
 	public static SoundEvent SWORD_HIT_REJECT;
+	public static SoundEvent UNEAT;
 
 	public static BlockMassiveLamp massiveLamp;
 	public static BlockBigLamp bigLamp;
@@ -291,6 +295,7 @@ public class EnigmaticLegacy {
 	public static BlockMassiveLamp massiveRedstonelamp;
 	public static BlockBigLamp bigRedstonelamp;
 	public static BlockEtherium etheriumBlock;
+	public static BlockCosmicCake cosmicCake;
 
 	@ConfigurableItem("") public static EnigmaticItem enigmaticItem;
 	@ConfigurableItem("Scroll of Ageless Wisdom") public static XPScroll xpScroll;
@@ -414,6 +419,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("The Ender Slayer") public static EnderSlayer enderSlayer;
 	@ConfigurableItem("Non-Euclidean Cube") public static TheCube theCube;
 	@ConfigurableItem("The Burden of Desolation") public static DesolationRing desolationRing;
+	@ConfigurableItem("Astral Potato") public static AstralPotato astralPotato;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -710,6 +716,7 @@ public class EnigmaticLegacy {
 			massiveRedstonelamp = new BlockMassiveLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN), "massive_redstonelamp");
 			bigRedstonelamp = new BlockBigLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN), "big_redstonelamp");
 			etheriumBlock = new BlockEtherium(etheriumConfig);
+			cosmicCake = new BlockCosmicCake();
 
 			event.getRegistry().registerAll(
 					massiveLamp,
@@ -718,7 +725,8 @@ public class EnigmaticLegacy {
 					bigShroomlamp,
 					massiveRedstonelamp,
 					bigRedstonelamp,
-					etheriumBlock
+					etheriumBlock,
+					cosmicCake
 					);
 
 			logger.info("Blocks registered successfully.");
@@ -852,6 +860,7 @@ public class EnigmaticLegacy {
 			enderSlayer = new EnderSlayer();
 			theCube = new TheCube();
 			desolationRing = new DesolationRing();
+			astralPotato = new AstralPotato();
 
 			spellstoneList = Lists.newArrayList(
 					angelBlessing,
@@ -973,12 +982,14 @@ public class EnigmaticLegacy {
 					enderSlayer,
 					theCube,
 					desolationRing,
+					astralPotato,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),
 					new GenericBlockItem(bigShroomlamp),
 					new GenericBlockItem(massiveRedstonelamp),
 					new GenericBlockItem(bigRedstonelamp),
+					new CosmicCake(),
 					new GenericBlockItem(etheriumBlock, GenericBlockItem.getDefaultProperties().rarity(Rarity.RARE))
 					//,gemOfBinding,wormholePotion
 					);
@@ -996,6 +1007,7 @@ public class EnigmaticLegacy {
 			WRITE = SuperpositionHandler.registerSound("misc.write");
 			LEARN = SuperpositionHandler.registerSound("misc.learn");
 			SWORD_HIT_REJECT = SuperpositionHandler.registerSound("misc.sword_hit_reject");
+			UNEAT = SuperpositionHandler.registerSound("misc.uneat");
 
 			logger.info("Sounds registered successfully.");
 		}

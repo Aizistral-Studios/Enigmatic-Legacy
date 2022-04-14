@@ -1,0 +1,22 @@
+{
+    "textures": {
+        "particle": "enigmaticlegacy:blocks/cake_side",
+        "bottom": "enigmaticlegacy:blocks/cake_bottom",
+        "top": "enigmaticlegacy:blocks/cake_top",
+        "side": "enigmaticlegacy:blocks/cake_side",
+        "inside": "enigmaticlegacy:blocks/cake_inner"
+    },
+    "elements": [
+        {   "from": [ 11, 0, 1 ],
+            "to": [ 15, 8, 15 ],
+            "faces": {
+                "down":  { "texture": "#bottom", "cullface": "down" },
+                "up":    { "texture": "#top" },
+                "north": { "texture": "#side" },
+                "south": { "texture": "#side" },
+                "west":  { "texture": "#inside" },
+                "east":  { "texture": "#side" }
+            }
+        }
+    ]
+}

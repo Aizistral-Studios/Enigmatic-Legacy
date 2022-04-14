@@ -95,7 +95,9 @@
 	"item.enigmaticlegacy.desolation_ring": "The Burden of Desolation",
 	"item.enigmaticlegacy.etherium_nugget": "Etherium Nugget",
 	"item.enigmaticlegacy.etherium_scraps": "Etherium Scrap",
+	"item.enigmaticlegacy.astral_potato": "Astral Potato",
 	"block.enigmaticlegacy.etherium_block": "Block of Etherium",
+	"block.enigmaticlegacy.cosmic_cake": "The Eternal Cake",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -822,6 +824,7 @@
 	"tooltip.enigmaticlegacy.guardianHeart11": "§6Some monsters are immune to being enraged.",
 	"tooltip.enigmaticlegacy.guardianHeart12": "§5This ability has §6%1$s§6 seconds§5 cooldown.",
 	
+	"tooltip.enigmaticlegacy.forbiddenFruitLore": "§5Knowledge is the greatest gift.",
 	"tooltip.enigmaticlegacy.forbiddenFruit1": "§5After consuming the fruit you shall never",
 	"tooltip.enigmaticlegacy.forbiddenFruit2": "§5experience hunger again, but any form of",
 	"tooltip.enigmaticlegacy.forbiddenFruit3": "§5regeneration will have §6%1$s§5 weaker effect.",
@@ -944,6 +947,11 @@
 	
 	"tooltip.enigmaticlegacy.desolationRing1": "§6Iron Golems, §6Endermen, §6Zombified Piglins§5 and",
 	"tooltip.enigmaticlegacy.desolationRing2": "§6Piglins§5 will not spawn in your proximity.",
+	
+	"tooltip.enigmaticlegacy.astralPotato1": "§5Behold, the infinite delicacy of the stars!",
+	
+	"tooltip.enigmaticlegacy.cosmicCake1": "§5Much more nutritious than regular cake.",
+	"tooltip.enigmaticlegacy.cosmicCake2": "§5Restores itself with time.",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",

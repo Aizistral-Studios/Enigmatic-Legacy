@@ -50,6 +50,20 @@
       }
     ]
   },
+  "misc.uneat": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:misc/uneat1",
+        "stream": false
+      }, {
+        "name": "enigmaticlegacy:misc/uneat2",
+        "stream": false
+      }, {
+        "name": "enigmaticlegacy:misc/uneat3",
+        "stream": false
+      }
+    ]
+  },
   "misc.write": {
     "sounds": [
       {
