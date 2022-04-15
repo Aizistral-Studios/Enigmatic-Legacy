@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ICursed;
+import com.integral.enigmaticlegacy.api.items.IEldritch;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
@@ -31,7 +32,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
 
-public class DesolationRing extends ItemBaseCurio implements ICursed {
+public class DesolationRing extends ItemBaseCurio implements IEldritch {
 
 	public DesolationRing() {
 		super(getDefaultProperties().rarity(Rarity.EPIC));

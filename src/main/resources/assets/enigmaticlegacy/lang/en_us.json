@@ -97,6 +97,7 @@
 	"item.enigmaticlegacy.etherium_scraps": "Etherium Scrap",
 	"item.enigmaticlegacy.astral_potato": "Astral Potato",
 	"item.enigmaticlegacy.curse_transposer": "Tome of Devoured Malignancy",
+	"item.enigmaticlegacy.soul_compass": "Wayfinder of the Damned",
 	"block.enigmaticlegacy.etherium_block": "Block of Etherium",
 	"block.enigmaticlegacy.cosmic_cake": "The Eternal Cake",
 	
@@ -955,6 +956,8 @@
 	
 	"tooltip.enigmaticlegacy.cosmicCake1": "§5Much more nutritious than regular cake.",
 	"tooltip.enigmaticlegacy.cosmicCake2": "§5Restores itself with time.",
+	
+	"tooltip.enigmaticlegacy.soulCompass1": "§5Points to the location of nearest §6Soul Crystal.",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",

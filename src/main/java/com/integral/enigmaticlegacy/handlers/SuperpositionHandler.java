@@ -1090,6 +1090,17 @@ public class SuperpositionHandler {
 		return player.getInventory().contains(new ItemStack(item));
 	}
 
+	public static boolean hasExactStack(Player player, ItemStack stack) {
+		for (List<ItemStack> list : player.getInventory().compartments) {
+			for (ItemStack inventoryStack : list) {
+				if (inventoryStack == stack)
+					return true;
+			}
+		}
+
+		return false;
+	}
+
 	/**
 	 * Checks whether the collection of ItemEntities contains given Item.
 	 * @author Integral

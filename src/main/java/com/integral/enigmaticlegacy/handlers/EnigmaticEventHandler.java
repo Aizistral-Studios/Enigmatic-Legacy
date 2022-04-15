@@ -83,6 +83,7 @@ import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketSetEntryState;
 import com.integral.enigmaticlegacy.packets.clients.PacketSlotUnlocked;
 import com.integral.enigmaticlegacy.packets.clients.PacketSyncPlayTime;
+import com.integral.enigmaticlegacy.packets.clients.PacketUpdateCompass;
 import com.integral.enigmaticlegacy.packets.clients.PacketWitherParticles;
 import com.integral.enigmaticlegacy.packets.server.PacketAnvilField;
 import com.integral.enigmaticlegacy.packets.server.PacketEnchantingGUI;
@@ -331,6 +332,7 @@ public class EnigmaticEventHandler {
 	public static final Multimap<Player, Guardian> angeredGuardians = ArrayListMultimap.create();
 	public static final Map<Player, AABB> desolationBoxes = new WeakHashMap<>();
 	public static final Map<Player, Float> lastHealth = new WeakHashMap<>();
+	public static final Map<Player, Integer> lastSoulCompassUpdate = new WeakHashMap<>();
 
 	public static int scheduledCubeRevive = -1;
 	public static boolean isPoisonHurt = false;
@@ -974,14 +976,12 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onLooting(LootingLevelEvent event) {
-
 		if (event.getDamageSource() != null)
 			if (event.getDamageSource().getEntity() instanceof Player) {
 				Player player = (Player) event.getDamageSource().getEntity();
 
 				// NO-OP
 			}
-
 	}
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
@@ -1108,6 +1108,16 @@ public class EnigmaticEventHandler {
 					desolationBoxes.put(player, SuperpositionHandler.getBoundingBoxAroundEntity(player, 128));
 				} else {
 					desolationBoxes.remove(player);
+				}
+
+				if (SuperpositionHandler.hasItem(player, soulCompass)) {
+					Integer lastUpdate = lastSoulCompassUpdate.get(player);
+
+					if (lastUpdate == null || player.tickCount - lastUpdate > 20) {
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with((() -> (ServerPlayer)player)),
+								new PacketUpdateCompass(0, 0, 0));
+						lastSoulCompassUpdate.put(player, player.tickCount);
+					}
 				}
 
 				if (player.tickCount % 100 == 0) {
@@ -2367,6 +2377,7 @@ public class EnigmaticEventHandler {
 					droppedCrystal = true;
 				}
 
+				SoulArchive.getInstance().addItem(droppedStorageCrystal);
 			} else if (SuperpositionHandler.shouldPlayerDropSoulCrystal(player, this.hadCursedRing(player))) {
 				ItemStack soulCrystal = EnigmaticLegacy.soulCrystal.createCrystalFrom(player);
 				PermanentItemEntity droppedSoulCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), soulCrystal);
@@ -2375,6 +2386,7 @@ public class EnigmaticEventHandler {
 				EnigmaticLegacy.logger.info("Teared Soul Crystal from " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
 
 				droppedCrystal = true;
+				SoulArchive.getInstance().addItem(droppedSoulCrystal);
 			}
 
 			ResourceLocation soulLossAdvancement = new ResourceLocation(EnigmaticLegacy.MODID, "book/soul_loss");

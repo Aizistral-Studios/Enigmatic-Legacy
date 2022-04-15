@@ -51,6 +51,7 @@ import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticKeybindHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticUpdateHandler;
 import com.integral.enigmaticlegacy.handlers.OneSpecialHandler;
+import com.integral.enigmaticlegacy.handlers.SoulArchive;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.items.AbyssalHeart;
@@ -113,6 +114,7 @@ import com.integral.enigmaticlegacy.items.PlaceholderItem;
 import com.integral.enigmaticlegacy.items.RecallPotion;
 import com.integral.enigmaticlegacy.items.RelicOfTesting;
 import com.integral.enigmaticlegacy.items.RevelationTome;
+import com.integral.enigmaticlegacy.items.SoulCompass;
 import com.integral.enigmaticlegacy.items.SoulCrystal;
 import com.integral.enigmaticlegacy.items.StorageCrystal;
 import com.integral.enigmaticlegacy.items.SuperMagnetRing;
@@ -422,6 +424,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Non-Euclidean Cube") public static TheCube theCube;
 	@ConfigurableItem("The Burden of Desolation") public static DesolationRing desolationRing;
 	@ConfigurableItem("Astral Potato") public static AstralPotato astralPotato;
+	@ConfigurableItem("Wayfinder of the Damned") public static SoulCompass soulCompass;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -620,6 +623,7 @@ public class EnigmaticLegacy {
 		logger.info("Initializing client setup phase...");
 		keybindHandler.registerKeybinds();
 		enigmaticAmulet.registerVariants();
+		soulCompass.registerVariants();
 
 		for (final Block theBlock : cutoutBlockRegistry) {
 			ItemBlockRenderTypes.setRenderLayer(theBlock, RenderType.cutout());
@@ -645,6 +649,7 @@ public class EnigmaticLegacy {
 
 	private void onServerStart(ServerAboutToStartEvent event) {
 		this.performCleanup();
+		SoulArchive.initialize(event.getServer());
 	}
 
 	private void onServerStarted(ServerStartedEvent event) {
@@ -666,6 +671,7 @@ public class EnigmaticLegacy {
 		EnigmaticEventHandler.knockbackThatBastard.clear();
 		EnigmaticEventHandler.deferredToast.clear();
 		EnigmaticEventHandler.desolationBoxes.clear();
+		EnigmaticEventHandler.lastSoulCompassUpdate.clear();
 		EnigmaticEventHandler.lastHealth.clear();
 		soulCrystal.attributeDispatcher.clear();
 		enigmaticItem.flightMap.clear();
@@ -864,6 +870,7 @@ public class EnigmaticLegacy {
 			theCube = new TheCube();
 			desolationRing = new DesolationRing();
 			astralPotato = new AstralPotato();
+			soulCompass = new SoulCompass();
 
 			spellstoneList = Lists.newArrayList(
 					angelBlessing,
@@ -987,6 +994,7 @@ public class EnigmaticLegacy {
 					desolationRing,
 					astralPotato,
 					curseTransposer,
+					soulCompass,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),

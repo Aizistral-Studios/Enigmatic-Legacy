@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.handlers.SoulArchive;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.SoulCrystal;
 import com.integral.enigmaticlegacy.items.StorageCrystal;
@@ -178,12 +179,18 @@ public class PermanentItemEntity extends Entity {
 			return true;
 		} else
 			return false;
-
 	}
 
 	@Override
 	public void remove(Entity.RemovalReason reason) {
-		EnigmaticLegacy.logger.warn("[WARN] Removing Permanent Item Entity: " + this);
+		if (reason == RemovalReason.DISCARDED || reason == RemovalReason.KILLED) {
+			EnigmaticLegacy.logger.warn("[WARN] Removing Permanent Item Entity: " + this);
+
+			if (!this.level.isClientSide) {
+				SoulArchive.getInstance().removeItem(this);
+			}
+		}
+
 		super.remove(reason);
 	}
 
@@ -235,6 +242,7 @@ public class PermanentItemEntity extends Entity {
 		if (!this.level.isClientSide) {
 			if (this.pickupDelay > 0)
 				return;
+
 			ItemStack itemstack = this.getItem();
 			Item item = itemstack.getItem();
 			int i = itemstack.getCount();
@@ -250,7 +258,6 @@ public class PermanentItemEntity extends Entity {
 			}
 
 			if (allowPickUp) {
-
 				if (item instanceof StorageCrystal) {
 					CompoundTag crystalNBT = ItemNBTHelper.getNBT(itemstack);
 					ItemStack embeddedSoul = crystalNBT.contains("embeddedSoul") ? ItemStack.of(crystalNBT.getCompound("embeddedSoul")) : null;
@@ -259,6 +266,8 @@ public class PermanentItemEntity extends Entity {
 						return;
 
 					EnigmaticLegacy.storageCrystal.retrieveDropsFromCrystal(itemstack, player, embeddedSoul);
+					SoulArchive.getInstance().removeItem(this);
+
 					/*
 					if (!isPlayerOwner && embeddedSoul != null) {
 						PermanentItemEntity droppedSoulCrystal = new PermanentItemEntity(this.world, this.getPosX(), this.getPosY(), this.getPosZ(), embeddedSoul);
@@ -270,6 +279,9 @@ public class PermanentItemEntity extends Entity {
 				} else if (item instanceof SoulCrystal) {
 					if (!EnigmaticLegacy.soulCrystal.retrieveSoulFromCrystal(player, itemstack))
 						return;
+					else {
+						SoulArchive.getInstance().removeItem(this);
+					}
 				}
 
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), 64, player.level.dimension())), new PacketRecallParticles(this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), 48, false));
@@ -296,6 +308,15 @@ public class PermanentItemEntity extends Entity {
 			}
 
 		}
+	}
+
+	public boolean containsSoul() {
+		if (this.getItem().is(EnigmaticLegacy.soulCrystal))
+			return true;
+		else if (this.getItem().is(EnigmaticLegacy.storageCrystal))
+			return ItemNBTHelper.getNBT(this.getItem()).contains("embeddedSoul");
+		else
+			return false;
 	}
 
 	@OnlyIn(Dist.CLIENT)
