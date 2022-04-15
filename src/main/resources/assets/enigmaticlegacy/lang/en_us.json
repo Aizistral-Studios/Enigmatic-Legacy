@@ -390,7 +390,7 @@
 	"tooltip.enigmaticlegacy.theCube11": "§5- Any attacks that deal above §6%1$s§6 damage§5 are completely negated.",
 	"tooltip.enigmaticlegacy.theCube12": "§5- §d35%§6 Chance§5 to deflect an incoming attack or projectile.",
 	"tooltip.enigmaticlegacy.theCube13": "§5- When attacked in melee, applies random debuff to attacker.",
-	"tooltip.enigmaticlegacy.theCube14": "§5- Whenever you slay any living creature, you receive random buff.",
+	"tooltip.enigmaticlegacy.theCube14": "§5- Whenever you slay any creature, you receive random buff.",
 	"tooltip.enigmaticlegacy.theCube15": "§5- You need no air to breathe.",
 	"tooltip.enigmaticlegacy.theCube16": "§5- Immunity to negative status effects.",
 	"tooltip.enigmaticlegacy.theCube17": "§5- Immunity to pressure, fall, collision, pricking, teleportation, fire",
@@ -585,8 +585,8 @@
 	"tooltip.enigmaticlegacy.voidPearl6": "§5- You no longer need air to breathe.",
 	"tooltip.enigmaticlegacy.voidPearl7": "§5- Immunity to any status effects.",
 	"tooltip.enigmaticlegacy.voidPearl8": "§5- Your attacks inflict §6Withering.",
-	"tooltip.enigmaticlegacy.voidPearl9": "§5- Any living creatures nearby you, if they",
-	"tooltip.enigmaticlegacy.voidPearl10": "§5  are exposed to darkness, receive massive",
+	"tooltip.enigmaticlegacy.voidPearl9": "§5- Any creatures nearby you, if they are",
+	"tooltip.enigmaticlegacy.voidPearl10": "§5  exposed to darkness, receive massive",
 	"tooltip.enigmaticlegacy.voidPearl11": "§5  damage and heavy debuffs. §6Skyflaps§5 are",
 	"tooltip.enigmaticlegacy.voidPearl12": "§5  affected regardless of light level.",
 	"tooltip.enigmaticlegacy.voidPearl13": "§5- §6%1$s§d Chance§5 that otherwise lethal damage",
@@ -1628,7 +1628,7 @@
 	"book.enigmaticlegacy.entry.the_cube.name": "Non-Euclidean Cube",
 	"book.enigmaticlegacy.entry.the_cube.page.1": "Many of those who laid their claim on six mighty spellstones have pondered the possibility to, perhaps, somehow combine their powers into an artifact of might never before witnessed. Many have tried, and many have failed... Until now.<br2/>At last, you discovered a way to achieve such a feat. With power of the cosmos manifest in your hands, you may force",
 	"book.enigmaticlegacy.entry.the_cube.page.2": "elements into such form that defies reality itself. The pinnacle of your exploration and research, it will become a symbol of your superiority over any mortal creature that ever walked the lands of three great worlds.",
-	"book.enigmaticlegacy.entry.the_cube.page.3": "With its innumerable powers, even death you shall now transcend... As insofar this cube lasts forever, you are in the presence of immortality.",
+	"book.enigmaticlegacy.entry.the_cube.page.3": "With its innumerable powers, even death you shall now transcend... For insofar as this cube will last forever, you are in the presence of immortality.",
 	
 	
 	"book.enigmaticlegacy.entry.desolation_ring.name": "Burden of Desolation",
