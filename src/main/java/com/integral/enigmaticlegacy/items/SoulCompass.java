@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import com.google.common.base.Objects;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
+import com.integral.enigmaticlegacy.api.items.ICursed;
 import com.integral.enigmaticlegacy.api.items.IEldritch;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -52,7 +53,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class SoulCompass extends ItemBase implements IEldritch {
+public class SoulCompass extends ItemBase implements ICursed {
 	@OnlyIn(Dist.CLIENT)
 	private CompassWobble wobble;
 	@OnlyIn(Dist.CLIENT)
@@ -155,7 +156,8 @@ public class SoulCompass extends ItemBase implements IEldritch {
 						} else
 							return this.randomAngle(gameTime, seed);
 
-						if (!SuperpositionHandler.hasExactStack((Player) living, stack)
+						if (!SuperpositionHandler.isTheCursedOne((Player) living)
+								|| !SuperpositionHandler.hasExactStack((Player) living, stack)
 								|| level.getBiome(living.blockPosition()).is(Biomes.SOUL_SAND_VALLEY))
 							return this.randomAngle(gameTime, seed);
 
