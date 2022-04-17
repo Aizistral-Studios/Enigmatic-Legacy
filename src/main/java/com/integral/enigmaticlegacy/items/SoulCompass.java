@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.annotation.Nullable;
 
+import com.google.common.base.Objects;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.IEldritch;
@@ -46,11 +47,16 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class SoulCompass extends ItemBase implements IEldritch {
+	@OnlyIn(Dist.CLIENT)
+	private CompassWobble wobble;
+	@OnlyIn(Dist.CLIENT)
+	private CompassWobble wobbleRandom;
 	@Nullable @OnlyIn(Dist.CLIENT)
 	private BlockPos nearestCrystal;
 
@@ -61,8 +67,44 @@ public class SoulCompass extends ItemBase implements IEldritch {
 
 	@OnlyIn(Dist.CLIENT)
 	public void setNearestCrystal(BlockPos nearestCrystal) {
-		this.nearestCrystal = nearestCrystal;
-		System.out.println("Nearest crystal set: " + nearestCrystal);
+		if (!Objects.equal(this.nearestCrystal, nearestCrystal)) {
+			if (nearestCrystal != null && this.nearestCrystal != null) {
+				//BlockPos playerPos = Minecraft.getInstance().player.blockPosition();
+				//BlockPos oldPos = this.nearestCrystal.subtract(playerPos);
+				//BlockPos newPos = nearestCrystal.subtract(playerPos);
+
+				//float bareAngle = this.getAngle(newPos, oldPos) / 360F;
+
+				//if (bareAngle < 0.5F) {
+				//	bareAngle += 0.5F;
+				//}
+
+				//float angle = Mth.positiveModulo(bareAngle, 1F);
+				//angle = 0.5F - (angle - 0.25F);
+
+				this.wobble.rotation = 1.0;
+				this.wobble.deltaRotation = 0.3;
+				//System.out.println("Bare Angle: " + bareAngle);
+				//System.out.println("Angle: " + angle);
+			} else {
+				this.wobble.rotation = this.wobbleRandom.rotation;
+				this.wobble.deltaRotation = this.wobbleRandom.deltaRotation;
+			}
+
+			this.nearestCrystal = nearestCrystal;
+			//System.out.println("Nearest crystal set: " + nearestCrystal);
+		}
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public float getAngle(BlockPos one, BlockPos two) {
+		float angle = (float) Math.toDegrees(Math.atan2(one.getZ() - two.getZ(), one.getX() - two.getX()));
+
+		if (angle < 0) {
+			angle += 360;
+		}
+
+		return angle;
 	}
 
 	@Override
@@ -80,9 +122,12 @@ public class SoulCompass extends ItemBase implements IEldritch {
 
 	@OnlyIn(Dist.CLIENT)
 	public void registerVariants() {
+		this.wobble = new CompassWobble(0.1);
+		this.wobbleRandom = new CompassWobble(0.6); // 0.6 to make it GO FASTA
+
 		ItemProperties.register(this, new ResourceLocation("angle"), new ClampedItemPropertyFunction() {
-			private final CompassWobble wobble = new CompassWobble(0.1);
-			private final CompassWobble wobbleRandom = new CompassWobble(0.6); // 0.6 to make it GO FASTA
+			private final CompassWobble wobble = SoulCompass.this.wobble;
+			private final CompassWobble wobbleRandom = SoulCompass.this.wobbleRandom;
 
 			@Override
 			public float unclampedCall(ItemStack stack, @Nullable ClientLevel level, @Nullable LivingEntity living, int seed) {
@@ -97,10 +142,10 @@ public class SoulCompass extends ItemBase implements IEldritch {
 
 					assert level != null;
 
-					BlockPos blockpos = CompassItem.isLodestoneCompass(stack) ? this.getLodestonePosition(level, stack.getOrCreateTag()) : this.getSpawnPosition(level);
+					BlockPos target = this.getTargetPosition();
 					long gameTime = level.getGameTime();
 
-					if (blockpos != null && !(entity.position().distanceToSqr(blockpos.getX() + 0.5D, entity.position().y(), blockpos.getZ() + 0.5D) < 1.0E-5F)) {
+					if (target != null && !(entity.position().distanceToSqr(target.getX() + 0.5D, entity.position().y(), target.getZ() + 0.5D) < 1.0E-5F)) {
 						boolean isLocalPlayer = living instanceof Player && ((Player)living).isLocalPlayer();
 						double bodyRotation = 0.0D;
 
@@ -110,22 +155,19 @@ public class SoulCompass extends ItemBase implements IEldritch {
 						} else
 							return this.randomAngle(gameTime, seed);
 
-						if (!SuperpositionHandler.hasExactStack((Player) living, stack))
+						if (!SuperpositionHandler.hasExactStack((Player) living, stack)
+								|| level.getBiome(living.blockPosition()).is(Biomes.SOUL_SAND_VALLEY))
 							return this.randomAngle(gameTime, seed);
 
 						bodyRotation = Mth.positiveModulo(bodyRotation / 360.0D, 1.0D);
-						double angle = this.getAngleTo(Vec3.atCenterOf(blockpos), entity) / ((float)Math.PI * 2F);
+						double angle = SoulCompass.this.getAngleTo(Vec3.atCenterOf(target), entity) / ((float)Math.PI * 2F);
 						double otherAngle;
 
-						if (isLocalPlayer) {
-							if (this.wobble.shouldUpdate(gameTime)) {
-								this.wobble.update(gameTime, 0.5D - (bodyRotation - 0.25D));
-							}
-
-							otherAngle = angle + this.wobble.rotation;
-						} else {
-							otherAngle = 0.5D - (bodyRotation - 0.25D - angle);
+						if (this.wobble.shouldUpdate(gameTime)) {
+							this.wobble.update(gameTime, 0.5D - (bodyRotation - 0.25D));
 						}
+
+						otherAngle = angle + this.wobble.rotation;
 
 						return Mth.positiveModulo((float)otherAngle, 1.0F);
 					} else
@@ -144,6 +186,11 @@ public class SoulCompass extends ItemBase implements IEldritch {
 
 			private int hash(int value) {
 				return value * 1327217883;
+			}
+
+			@Nullable
+			private BlockPos getTargetPosition() {
+				return SoulCompass.this.nearestCrystal;
 			}
 
 			@Nullable
@@ -169,11 +216,11 @@ public class SoulCompass extends ItemBase implements IEldritch {
 				int i = direction.getAxis().isVertical() ? 90 * direction.getAxisDirection().getStep() : 0;
 				return Mth.wrapDegrees(180 + direction.get2DDataValue() * 90 + frame.getRotation() * 45 + i);
 			}
-
-			private double getAngleTo(Vec3 pos, Entity entity) {
-				return Math.atan2(pos.z() - entity.getZ(), pos.x() - entity.getX());
-			}
 		});
+	}
+
+	private double getAngleTo(Vec3 pos, Entity entity) {
+		return Math.atan2(pos.z() - entity.getZ(), pos.x() - entity.getX());
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -197,6 +244,7 @@ public class SoulCompass extends ItemBase implements IEldritch {
 			var = Mth.positiveModulo(var + 0.5D, 1.0D) - 0.5D;
 			this.deltaRotation += var * this.needleMobility;
 			this.deltaRotation *= 0.8D;
+
 			this.rotation = Mth.positiveModulo(this.rotation + this.deltaRotation, 1.0D);
 		}
 	}

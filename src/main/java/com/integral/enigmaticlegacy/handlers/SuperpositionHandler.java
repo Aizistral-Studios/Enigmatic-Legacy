@@ -46,6 +46,7 @@ import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketUpdateCompass;
 import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 import com.mojang.datafixers.util.Pair;
@@ -104,6 +105,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Tuple;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.phys.AABB;
@@ -1565,6 +1567,17 @@ public class SuperpositionHandler {
 			return "" + intg;
 		else
 			return "" + num;
+	}
+
+	public static Optional<Tuple<UUID, BlockPos>> updateSoulCompass(ServerPlayer player) {
+		var optional = SoulArchive.getInstance().findNearest(player.level, player.blockPosition());
+		boolean noValid = optional.isEmpty();
+		BlockPos pos = noValid ? BlockPos.ZERO : optional.get().getB();
+
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with((() -> player)),
+				new PacketUpdateCompass(pos.getX(), pos.getY(), pos.getZ(), noValid));
+		EnigmaticEventHandler.lastSoulCompassUpdate.put(player, player.tickCount);
+		return optional;
 	}
 
 	/**

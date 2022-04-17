@@ -54,6 +54,7 @@ public class PermanentItemEntity extends Entity {
 	private int health = 5;
 	private UUID thrower;
 	private UUID owner;
+	private Vec3 position;
 
 	@ObjectHolder(EnigmaticLegacy.MODID + ":permanent_item_entity")
 	public static EntityType<PermanentItemEntity> TYPE;
@@ -71,6 +72,7 @@ public class PermanentItemEntity extends Entity {
 		this.setInvulnerable(true);
 
 		this.setNoGravity(true);
+		this.position = new Vec3(x, y, z);
 	}
 
 	public PermanentItemEntity(Level worldIn, double x, double y, double z, ItemStack stack) {
@@ -112,6 +114,12 @@ public class PermanentItemEntity extends Entity {
 		if (this.getItem().isEmpty()) {
 			this.discard();
 		} else {
+			if (!this.level.isClientSide && this.position != null) {
+				if (!this.position().equals(this.position)) {
+					this.teleportTo(this.position.x, this.position.y, this.position.z);
+				}
+			}
+
 			super.tick();
 
 			if (this.pickupDelay > 0 && this.pickupDelay != 32767) {
@@ -211,6 +219,11 @@ public class PermanentItemEntity extends Entity {
 			compound.put("Item", this.getItem().save(new CompoundTag()));
 		}
 
+		if (this.position != null) {
+			compound.putDouble("BoundX", this.position.x);
+			compound.putDouble("BoundY", this.position.y);
+			compound.putDouble("BoundZ", this.position.z);
+		}
 	}
 
 	@Override
@@ -227,6 +240,13 @@ public class PermanentItemEntity extends Entity {
 
 		if (compound.contains("Thrower")) {
 			this.thrower = compound.getUUID("Thrower");
+		}
+
+		if (compound.contains("BoundX") && compound.contains("BoundY") && compound.contains("BoundZ")) {
+			double x = compound.getDouble("BoundX");
+			double y = compound.getDouble("BoundY");
+			double z = compound.getDouble("BoundZ");
+			this.position = new Vec3(x, y, z);
 		}
 
 		CompoundTag compoundnbt = compound.getCompound("Item");

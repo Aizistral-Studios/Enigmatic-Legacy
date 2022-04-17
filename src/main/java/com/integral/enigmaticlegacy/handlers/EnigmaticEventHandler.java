@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
 import java.util.WeakHashMap;
 
 import javax.annotation.Nonnull;
@@ -280,6 +281,7 @@ import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerContainerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
@@ -1081,6 +1083,13 @@ public class EnigmaticEventHandler {
 	}
 
 	@SubscribeEvent
+	public void onPlayerTick(PlayerChangedDimensionEvent event) {
+		if (event.getPlayer() instanceof ServerPlayer player) {
+			lastSoulCompassUpdate.remove(player);
+		}
+	}
+
+	@SubscribeEvent
 	public void onPlayerTick(LivingEvent.LivingUpdateEvent event) {
 		if (!event.getEntity().level.isClientSide) {
 			if (event.getEntity() instanceof EnderMan || event.getEntity() instanceof Shulker) {
@@ -1113,10 +1122,28 @@ public class EnigmaticEventHandler {
 				if (SuperpositionHandler.hasItem(player, soulCompass)) {
 					Integer lastUpdate = lastSoulCompassUpdate.get(player);
 
-					if (lastUpdate == null || player.tickCount - lastUpdate > 20) {
-						EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with((() -> (ServerPlayer)player)),
-								new PacketUpdateCompass(0, 0, 0));
-						lastSoulCompassUpdate.put(player, player.tickCount);
+					if (lastUpdate == null || player.tickCount - lastUpdate > 10) {
+						var optional = SuperpositionHandler.updateSoulCompass((ServerPlayer) player);
+
+
+						optional.ifPresent(tuple -> {
+							BlockPos pos = tuple.getB();
+
+							if (player.distanceToSqr(pos.getX(), pos.getY(), pos.getZ()) < 256) {
+								player.level.getChunkAt(pos);
+								UUID id = tuple.getA();
+								int radius = 3;
+
+								AABB box = new AABB(pos.getX() - radius, pos.getY() - radius, pos.getZ() - radius,
+										pos.getX() + radius, pos.getY() + radius, pos.getZ() + radius);
+
+								List<PermanentItemEntity> list = player.level.getEntitiesOfClass(PermanentItemEntity.class, box, entity -> entity.getUUID().equals(id));
+
+								if (list.size() <= 0) {
+									SoulArchive.getInstance().removeItem(id);
+								}
+							}
+						});
 					}
 				}
 
@@ -2566,10 +2593,10 @@ public class EnigmaticEventHandler {
 					if (entity.getItem() != null) {
 						if (entity.getItem().is(Items.ENDER_PEARL)) {
 							this.dropXPOrb(killed.level, killed.getX(), killed.getY(), killed.getZ(), 10);
-							extraXP += 10;
+							//extraXP += 10;
 						} else if (entity.getItem().is(Items.ENDER_EYE)) {
 							this.dropXPOrb(killed.level, killed.getX(), killed.getY(), killed.getZ(), 20);
-							extraXP += 20;
+							//extraXP += 20;
 						}
 					}
 				}
@@ -2859,7 +2886,6 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onAdvancement(AdvancementEvent event) {
-
 		String id = event.getAdvancement().getId().toString();
 		Player player = event.getPlayer();
 
@@ -2898,9 +2924,10 @@ public class EnigmaticEventHandler {
 		 * permanently unlocked, when the player respawns.
 		 */
 
-		if (!player.level.isClientSide)
-			if (!event.isEndConquered()) {
+		if (!player.level.isClientSide) {
+			lastSoulCompassUpdate.remove(player);
 
+			if (!event.isEndConquered()) {
 				if (!player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
 
 					if (SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL)) {
@@ -2911,6 +2938,7 @@ public class EnigmaticEventHandler {
 					}
 				}
 			}
+		}
 
 	}
 

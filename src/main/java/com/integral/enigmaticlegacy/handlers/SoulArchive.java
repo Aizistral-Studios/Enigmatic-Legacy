@@ -3,8 +3,10 @@ package com.integral.enigmaticlegacy.handlers;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Type;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +24,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.objects.Vector3;
@@ -31,10 +34,13 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelResource;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 public class SoulArchive {
+	private static final Type SOUL_RECORDS_TYPE = new TypeToken<List<SoulData>>(){}.getType();
 	private static final Charset UTF8 = Charset.forName("UTF-8");
 	private static SoulArchive instance;
 	private final File saveFile;
@@ -46,12 +52,12 @@ public class SoulArchive {
 		this.saveFile = new File(saveFolder, "soul_archive.json");
 	}
 
-	public Optional<BlockPos> findNearest(Level level, BlockPos pos) {
-		var data =  this.data.get(level.dimension()).stream().filter(record -> record.type() == 0)
-				.reduce((record1, record2) -> pos.distSqr(record1.pos()) > pos.distSqr(record2.pos()) ?
+	public Optional<Tuple<UUID, BlockPos>> findNearest(Level level, BlockPos pos) {
+		var data =  this.data.get(level.dimension()).stream().filter(record -> record.type == 0)
+				.reduce((record1, record2) -> pos.distSqr(record1.pos) > pos.distSqr(record2.pos) ?
 						record2 : record1).orElse(null);
 
-		return data != null ? Optional.of(data.pos()) : Optional.empty();
+		return data != null ? Optional.of(new Tuple<>(data.id, data.pos)) : Optional.empty();
 	}
 
 	public void save() {
@@ -66,8 +72,6 @@ public class SoulArchive {
 	}
 
 	public void load() {
-		this.data.clear();
-
 		try {
 			if (!this.saveFile.exists() || !this.saveFile.isFile())
 				return;
@@ -83,7 +87,7 @@ public class SoulArchive {
 	}
 
 	private byte[] saveToBytes() {
-		String text = new GsonBuilder().setPrettyPrinting().create().toJson(this.data.values());
+		String text = new GsonBuilder().setPrettyPrinting().create().toJson(new ArrayList<>(this.data.values()));
 		return text.getBytes(UTF8);
 	}
 
@@ -91,7 +95,7 @@ public class SoulArchive {
 		this.data.clear();
 
 		String text = new String(bytes, UTF8);
-		List<SoulData> list =  new Gson().fromJson(text, List.class);
+		List<SoulData> list =  new Gson().fromJson(text, SOUL_RECORDS_TYPE);
 
 		list.forEach(record -> {
 			ResourceKey<Level> key = ResourceKey.create(Registry.DIMENSION_REGISTRY, record.dimension);
@@ -100,7 +104,11 @@ public class SoulArchive {
 	}
 
 	private void synchronize() {
-
+		ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers().forEach(player -> {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.soulCompass)) {
+				SuperpositionHandler.updateSoulCompass(player);
+			}
+		});
 	}
 
 	public void addItem(PermanentItemEntity item) {
@@ -108,6 +116,13 @@ public class SoulArchive {
 				item.blockPosition(), item.containsSoul() ? 0 : 1);
 
 		if (this.data.put(item.level.dimension(), record)) {
+			this.save();
+			this.synchronize();
+		}
+	}
+
+	public void removeItem(UUID id) {
+		if (this.data.values().removeIf(record -> record.id.equals(id))) {
 			this.save();
 			this.synchronize();
 		}
@@ -129,7 +144,43 @@ public class SoulArchive {
 		instance.load();
 	}
 
-	private static record SoulData(ResourceLocation dimension, UUID id, UUID ownerID, BlockPos pos, int type) {
+	private static class SoulData {
+		private ResourceLocation dimension;
+		private UUID id;
+		private UUID ownerID;
+		private BlockPos pos;
+		private int type;
+
+		SoulData(ResourceLocation dimension, UUID id, UUID ownerID, BlockPos pos, int type) {
+			this.dimension = dimension;
+			this.id = id;
+			this.ownerID = ownerID;
+			this.pos = pos;
+			this.type = type;
+		}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(this.dimension, this.id, this.ownerID, this.pos, this.type);
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (this.getClass() != obj.getClass())
+				return false;
+			SoulData other = (SoulData) obj;
+			return Objects.equals(this.dimension, other.dimension) && Objects.equals(this.id, other.id) && Objects.equals(this.ownerID, other.ownerID) && Objects.equals(this.pos, other.pos) && this.type == other.type;
+		}
+
+		@Override
+		public String toString() {
+			return "SoulData [dimension=" + this.dimension + ", id=" + this.id + ", ownerID=" + this.ownerID + ", pos=" + this.pos + ", type=" + this.type + "]";
+		}
+
 		boolean isEqual(PermanentItemEntity item) {
 			return Objects.equals(this.id, item.getUUID()) && Objects.equals(this.ownerID, item.getOwnerId());
 		}
