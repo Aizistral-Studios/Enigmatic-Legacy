@@ -71,7 +71,11 @@ public class ForbiddenAxe extends SwordItem {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 
-		int looting = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, stack);
+		int looting = 0;
+
+		if (worldIn != null) {
+			looting = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, stack);
+		}
 
 		if (Minecraft.getInstance().player != null) {
 			ICuriosItemHandler handler = CuriosApi.getCuriosHelper().getCuriosHandler(Minecraft.getInstance().player).orElse(null);

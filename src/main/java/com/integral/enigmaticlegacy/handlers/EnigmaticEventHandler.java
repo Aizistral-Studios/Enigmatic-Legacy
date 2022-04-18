@@ -35,6 +35,7 @@ import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.gui.EnderChestInventoryButton;
 import com.integral.enigmaticlegacy.gui.ToggleMagnetEffectsButton;
+import com.integral.enigmaticlegacy.helpers.BlueSkiesHelper;
 import com.integral.enigmaticlegacy.helpers.CrossbowHelper;
 import com.integral.enigmaticlegacy.helpers.EnigmaticEnchantmentHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -1174,6 +1175,8 @@ public class EnigmaticEventHandler {
 				player.setAbsorptionAmount(0F);
 			}
 
+			BlueSkiesHelper.maybeFixCapability(player);
+
 			if (EnigmaticLegacy.forbiddenFruit.haveConsumedFruit(player)) {
 				FoodData foodStats = player.getFoodData();
 				foodStats.setFoodLevel(20);
@@ -1894,6 +1897,9 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onEntityHurt(LivingHurtEvent event) {
+		if (event.getAmount() >= Float.MAX_VALUE)
+			return;
+
 		// TODO The priorities are messed up as fuck. We gotta do something about it.
 
 		/*
