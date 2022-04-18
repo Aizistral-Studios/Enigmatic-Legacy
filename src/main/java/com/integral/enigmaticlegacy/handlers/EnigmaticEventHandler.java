@@ -1489,27 +1489,29 @@ public class EnigmaticEventHandler {
 					}
 				}
 			}
+		}
+	}
 
-			if (!event.isCanceled() && player instanceof ServerPlayer) {
-				if (SuperpositionHandler.hasCurio(player, theCube)) {
-					if (!SuperpositionHandler.hasSpellstoneCooldown(player)) {
-						event.setCanceled(true);
-						player.setHealth(player.getMaxHealth()*0.3F);
+	@SubscribeEvent(priority = EventPriority.LOW)
+	public void onDeathLow(LivingDeathEvent event) {
+		if (event.getEntityLiving() instanceof ServerPlayer player) {
+			if (SuperpositionHandler.hasCurio(player, theCube)) {
+				if (!SuperpositionHandler.hasSpellstoneCooldown(player)) {
+					event.setCanceled(true);
+					player.setHealth(player.getMaxHealth()*0.3F);
 
-						theCube.triggerActiveAbility(player.level, (ServerPlayer) player, SuperpositionHandler.getCurioStack(player, theCube));
+					theCube.triggerActiveAbility(player.level, player, SuperpositionHandler.getCurioStack(player, theCube));
 
-						player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 1200, 2));
-						player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 1));
-						player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 1200, 0));
-						player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1200, 1));
+					player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 1200, 2));
+					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 1));
+					player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 1200, 0));
+					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1200, 1));
 
-						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())),
-								new PacketCosmicRevive(player.getId(), 1));
-					}
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())),
+							new PacketCosmicRevive(player.getId(), 1));
 				}
 			}
 		}
-
 	}
 
 	@SubscribeEvent
