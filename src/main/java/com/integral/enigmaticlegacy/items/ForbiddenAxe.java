@@ -73,7 +73,7 @@ public class ForbiddenAxe extends SwordItem {
 		int looting = 0;
 
 		if (worldIn != null) {
-			looting = EnchantmentHelper.getEnchantmentLevel(Enchantments.LOOTING, stack);
+			looting = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, stack);
 		}
 
 		if (Minecraft.getInstance().player != null) {
