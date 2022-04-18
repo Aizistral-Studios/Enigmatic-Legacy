@@ -2,8 +2,6 @@ package com.integral.enigmaticlegacy.objects;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 import static java.nio.file.StandardCopyOption.*;
-import static com.sun.nio.file.ExtendedWatchEventModifier.*;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
