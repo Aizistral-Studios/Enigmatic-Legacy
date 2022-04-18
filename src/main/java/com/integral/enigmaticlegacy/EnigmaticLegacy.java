@@ -217,7 +217,7 @@ import net.minecraft.block.AbstractBlock;
 @Mod(EnigmaticLegacy.MODID)
 public class EnigmaticLegacy {
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.11.11";
+	public static final String VERSION = "2.11.12";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
