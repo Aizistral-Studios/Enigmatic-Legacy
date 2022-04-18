@@ -97,6 +97,7 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.command.impl.KillCommand;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.CreatureAttribute;
@@ -1549,6 +1550,8 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onEntityHurt(LivingHurtEvent event) {
+		if (event.getAmount() >= Float.MAX_VALUE)
+			return;
 
 		// TODO The priorities are messed up as fuck. We gotta do something about it.
 
