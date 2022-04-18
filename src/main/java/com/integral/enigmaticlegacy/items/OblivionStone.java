@@ -153,13 +153,13 @@ public class OblivionStone extends ItemBase implements Vanishable {
 
 	@Override
 	public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack other, Slot slot, ClickAction action, Player player, SlotAccess access) {
-		if (action == ClickAction.PRIMARY || !slot.mayPlace(stack) || !slot.mayPickup(player))
+		if (action == ClickAction.PRIMARY || !slot.mayPlace(stack) || !slot.mayPickup(player) || other.isEmpty())
 			return false;
 
 		other.setCount(0);
 
 		if (player.level.isClientSide) {
-			player.level.playSound(player, player.blockPosition(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 0.25F, 2F + (float) Math.random());
+			player.level.playSound(player, player.blockPosition(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 0.25F, 1.2F + (float) Math.random() * 0.4F);
 		}
 
 		return true;
@@ -167,13 +167,13 @@ public class OblivionStone extends ItemBase implements Vanishable {
 
 	@Override
 	public boolean overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction action, Player player) {
-		if (action == ClickAction.PRIMARY || !slot.mayPlace(stack) || !slot.mayPickup(player))
+		if (action == ClickAction.PRIMARY || !slot.mayPlace(stack) || !slot.mayPickup(player) || !slot.hasItem())
 			return false;
 
 		slot.set(ItemStack.EMPTY);
 
 		if (player.level.isClientSide) {
-			player.level.playSound(player, player.blockPosition(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 0.25F, 2F + (float) Math.random());
+			player.level.playSound(player, player.blockPosition(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 0.25F, 1.2F + (float) Math.random() * 0.4F);
 		}
 
 		return true;
