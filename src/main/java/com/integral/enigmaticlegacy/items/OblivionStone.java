@@ -127,7 +127,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 							ItemStack displayStack;
 							displayStack = new ItemStack(something, 1);
 
-							list.add(new TextComponent(" - ").append(((TextComponent)displayStack.getHoverName()).withStyle(ChatFormatting.GOLD)).withStyle(ChatFormatting.GOLD));
+							list.add(new TextComponent(" - " + displayStack.getHoverName().getString()).withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.GOLD));
 						}
 					}
 				}
