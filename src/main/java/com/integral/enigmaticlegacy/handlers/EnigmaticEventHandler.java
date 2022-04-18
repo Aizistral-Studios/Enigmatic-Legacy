@@ -30,6 +30,7 @@ import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.gui.EnderChestInventoryButton;
+import com.integral.enigmaticlegacy.helpers.BlueSkiesHelper;
 import com.integral.enigmaticlegacy.helpers.CrossbowHelper;
 import com.integral.enigmaticlegacy.helpers.EnigmaticEnchantmentHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -966,6 +967,8 @@ public class EnigmaticEventHandler {
 			if (Float.isNaN(player.getAbsorptionAmount())) {
 				player.setAbsorptionAmount(0F);
 			}
+
+			BlueSkiesHelper.maybeFixCapability(player);
 
 			if (EnigmaticLegacy.forbiddenFruit.haveConsumedFruit(player)) {
 				FoodStats foodStats = player.getFoodData();
