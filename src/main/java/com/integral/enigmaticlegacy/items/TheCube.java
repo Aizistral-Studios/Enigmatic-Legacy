@@ -62,6 +62,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoulFireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraftforge.api.distmarker.Dist;
@@ -90,6 +91,7 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 				MobEffects.POISON, MobEffects.WITHER);
 
 		this.immunityList.add(DamageSource.ON_FIRE.msgId);
+		this.immunityList.add(DamageSource.IN_FIRE.msgId);
 		this.immunityList.add(DamageSource.LAVA.msgId);
 		this.immunityList.add(DamageSource.HOT_FLOOR.msgId);
 		this.immunityList.add(DamageSource.CRAMMING.msgId);
