@@ -1323,8 +1323,10 @@ public class EnigmaticEventHandler {
 				return;
 			}
 
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticAmulet) || SuperpositionHandler.hasItem(player, EnigmaticLegacy.enigmaticAmulet)) {
-				postmortalPossession.put(player, EnigmaticLegacy.enigmaticAmulet);
+			if (SuperpositionHandler.hasCurio(player, enigmaticAmulet) || SuperpositionHandler.hasItem(player, enigmaticAmulet)) {
+				postmortalPossession.put(player, enigmaticAmulet);
+			} else if (SuperpositionHandler.hasCurio(player, ascensionAmulet) || SuperpositionHandler.hasItem(player, ascensionAmulet)) {
+				postmortalPossession.put(player, ascensionAmulet);
 			}
 
 			if (SuperpositionHandler.hasItem(player, cursedStone)) {
@@ -3177,19 +3179,19 @@ public class EnigmaticEventHandler {
 	}
 
 	private boolean hadEnigmaticAmulet(Player player) {
-		return EnigmaticEventHandler.postmortalPossession.containsKey(player) ? EnigmaticEventHandler.postmortalPossession.containsEntry(player, EnigmaticLegacy.enigmaticAmulet) : false;
+		return postmortalPossession.containsEntry(player, enigmaticAmulet) || postmortalPossession.containsEntry(player, ascensionAmulet);
 	}
 
 	private boolean hadEscapeScroll(Player player) {
-		return EnigmaticEventHandler.postmortalPossession.containsKey(player) ? EnigmaticEventHandler.postmortalPossession.containsEntry(player, EnigmaticLegacy.escapeScroll) : false;
+		return postmortalPossession.containsKey(player) ? postmortalPossession.containsEntry(player, EnigmaticLegacy.escapeScroll) : false;
 	}
 
 	private boolean hadUnholyStone(Player player) {
-		return EnigmaticEventHandler.postmortalPossession.containsKey(player) ? EnigmaticEventHandler.postmortalPossession.containsEntry(player, EnigmaticLegacy.cursedStone) : false;
+		return postmortalPossession.containsKey(player) ? postmortalPossession.containsEntry(player, EnigmaticLegacy.cursedStone) : false;
 	}
 
 	private boolean hadCursedRing(Player player) {
-		return EnigmaticEventHandler.postmortalPossession.containsKey(player) ? EnigmaticEventHandler.postmortalPossession.containsEntry(player, EnigmaticLegacy.cursedRing) : false;
+		return postmortalPossession.containsKey(player) ? postmortalPossession.containsEntry(player, EnigmaticLegacy.cursedRing) : false;
 	}
 
 
