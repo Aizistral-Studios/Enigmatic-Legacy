@@ -113,7 +113,7 @@ public class AnimalGuide extends ItemBase implements Vanishable {
 	}
 
 	public boolean isTamableAnimal(LivingEntity entity) {
-		if (entity instanceof TamableAnimal)
+		if (entity instanceof TamableAnimal || entity instanceof Bee)
 			return true;
 		else
 			return animalExclusionList.contains(entity.getType().getRegistryName());
