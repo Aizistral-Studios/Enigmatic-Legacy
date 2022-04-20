@@ -99,7 +99,8 @@
 	"item.enigmaticlegacy.curse_transposer": "Tome of Devoured Malignancy",
 	"item.enigmaticlegacy.soul_compass": "Wayfinder of the Damned",
 	"item.enigmaticlegacy.ascension_amulet": "Amulet of Ascension",
-	"item.enigmaticlegacy.eldritch_amulet": "The Testament of Supremacy",
+	"item.enigmaticlegacy.eldritch_amulet": "The Testament of Contempt",
+	"item.enigmaticlegacy.evil_ingot": "Nefarious Ingot",
 	"block.enigmaticlegacy.etherium_block": "Block of Etherium",
 	"block.enigmaticlegacy.cosmic_cake": "The Eternal Cake",
 	
@@ -1648,6 +1649,41 @@
 	"book.enigmaticlegacy.entry.desolation_ring.page.1": "You can scarce comprehend presence imposed upon reality by Heart of the Abyss, but, as you have recently discovered, comprehension is not neccessary for the ability to make use of it. Among few equally wonderful and terrible things that can draw power from it, there is this ring - even more nightmarish, perhaps, than Ring of the Seven Curses, in its",
 	"book.enigmaticlegacy.entry.desolation_ring.page.2": "unnameable nature.<br2/>It offers to conveniently fulfill your gnawing desire to set yourself free of neccessity to endlessly slaughter creatures that could once tolerate your presence,",
 	"book.enigmaticlegacy.entry.desolation_ring.page.3": "but have lost such ability soon as you submitted yourself to the burden of Seven Curses... By erasing them from the very existence surrounding you.<br2/>The cost of such reality-bending power is perilous, however, as should you decide that you desire it - you will be bound to it forevermore. And as you know by now, void can be more unbearable than even most frightening, ever-present threat...",
+	
+	
+	"book.enigmaticlegacy.entry.astral_potato.name": "Teleportato",
+	"book.enigmaticlegacy.entry.astral_potato.page.1": "In the everlasting battle of carrot lovers against potato enjoyers, the latter were bound to find themselves at a steady disadvantage. After all, what is a baked potato, in spite of all its deliciousness, in the face of immense nutritional value and reinvigorating effects of a mere carrot, albeit covered in some gold?",
+	"book.enigmaticlegacy.entry.astral_potato.page.2": "Today, we say \"no more\". The latest culinary invention of the cosmos itself shall fulfill two purposes - satiating our hunger, and becoming a symbol of our supremacy in the war on carrot. The appropriate name we have given to this",
+	"book.enigmaticlegacy.entry.astral_potato.page.3": "great delicacy will no doubt further mock and demoralize our enemy. What a shame would it be for them to find out they were utterly defeated by \"Teleportato\"? What horror will such awareness paint upon their faces?<br2/>It won't be long before we find out...",
+	
+	
+	"book.enigmaticlegacy.entry.cosmic_cake.name": "The Eternal Cake",
+	"book.enigmaticlegacy.entry.cosmic_cake.page.1": "There is only one issue in the mundane cake, one final flaw that prevents it from becoming perfect - it always ends, as imminently as life of a mortal man. At last, you conceived a way to rectify this annoying imperfection, letting you enjoy its creamy grace forevermore.<br2/>Imbued with primordial power, incorporating alien delicacy and spiced up with elemental",
+	"book.enigmaticlegacy.entry.cosmic_cake.page.2": "energies, this cake defies the flow of time, reversing entropy itself to restore its glorious, palatable form. However much you submit yourself to the sin of gluttony, it will always recover from any devouring assault of yours.",
+	"book.enigmaticlegacy.entry.cosmic_cake.page.3": "Who can withstand in the face of such deliciousness, who can resist the desire to exchange power, influence, riches and even life itself for becoming submerged in ceaseless, infinite act of consumption? Those things are temporary after all... but the cake, the cake is eternal.",
+	
+	
+	"book.enigmaticlegacy.entry.eldritch_amulet.name": "Testament of Contempt",
+	"book.enigmaticlegacy.entry.eldritch_amulet.page.1": "Though Amulet of Ascension is perfected and pure in its form, it may yet be empowered further. At the cost of sacrificing the purity, sure, but why would a cursed being such as you fret over this loss anyway?<br2/>The jumble of flesh known as Heart of the Abyss will happily latch onto your amulet, corrupting it into such a",
+	"book.enigmaticlegacy.entry.eldritch_amulet.page.2": "twisted form that defies description. Once vivid, elegant stone at its core is replaced with a glossy, onyx-like eye, gazing upon you and the world alike with uneasy implication and unknowable intent. Even madman would deny",
+	"book.enigmaticlegacy.entry.eldritch_amulet.page.3": "this abomination the touch to himself, but you welcome it upon your neck. For whereas madman is a victim of his own delusional perception of the world, you see it now for what it is...<br2/>And it is much more terrible than all the eyes of infinite abyss.",
+	
+	
+	"book.enigmaticlegacy.entry.ascension_amulet.name": "Amulet of Ascension",
+	"book.enigmaticlegacy.entry.ascension_amulet.page.1": "By now, you are aware that Enigmatic Amulet in your possession is not unique, and in fact such a thing is granted to many other demigods beyond your time and space. There seems to exist a few variations of it, with different colors and different powers. What exactly determined the color in your current possession is unknown, but they all seem to mean",
+	"book.enigmaticlegacy.entry.ascension_amulet.page.2": "something and be connected in some way.<br2/>With power contained within Heart of the Cosmos you can transform your amulet into the form of unwitnessed might and ambition. Proudly named Amulet",
+	"book.enigmaticlegacy.entry.ascension_amulet.page.3": "of Ascension, it will grant you abilities of all possible colors...<br2/>Fate may have decided the beginning of your existence in this realm, but the end of it is yours to shape.",
+	
+	
+	"book.enigmaticlegacy.entry.soul_compass.name": "Soul Compass",
+	"book.enigmaticlegacy.entry.soul_compass.page.1": "With enough deaths, terrible novelty of losing parts of your soul with each one have withered away, leaving only the troublesome experience of locating places of your demise in an effort to recollect them. Those places often fall to be in the most unnavigable parts of the world, as if to incur frustration of such extent that it be named another curse of ring bearer.",
+	"book.enigmaticlegacy.entry.soul_compass.page.2": "As many other curses, however, this one too can be overcome. With this thing in your pocket, you will never again have to rely on your failing memory alone to aid you in search of your soul crystals. It will conveniently point you to the",
+	"book.enigmaticlegacy.entry.soul_compass.page.3": "nearest one, wherever it is, so long as you are in the right dimension.<br2/>Notably, there is one place where it fails to work, and its needle spins uncontrollably at alarming speeds - Soul Sand Valley. How many forgotten souls must wander that damned place to produce such a strong interference? Perhaps, it is a mystery better left unsolved.",
+	
+	"book.enigmaticlegacy.entry.curse_transposer.name": "Devoured Malignancy",
+	"book.enigmaticlegacy.entry.curse_transposer.page.1": "Bearing the Seven Curses, you have aquired ability to draw power from curses bound to some of the ancient gear you find in your explorations, and even create such yourself with the help of Enchanter's Pearl. But they still are a great nuisance at times, as even though you can transpose them from one item from another, so far you had no way of separating them from",
+	"book.enigmaticlegacy.entry.curse_transposer.page.2": "enchantments when doing so.<br2/>With this little invention, however, your curse management abilities should improve significantly. It offers a way to separate curses and only curses from any item of",
+	"book.enigmaticlegacy.entry.curse_transposer.page.3": "your equipment; not a cheap one at that, but a way nonetheless.",
 	
 	
 	"book.enigmaticlegacy.landing_text": "In front of you lies the well of great knowledge, a place where some of this world's greatest mysteries belong, scrupulously researched and carefully catalogized.<br2/>As your journey continues and the world reveals itself to you, you may revisit and behold knowledge you gathered within these pages."

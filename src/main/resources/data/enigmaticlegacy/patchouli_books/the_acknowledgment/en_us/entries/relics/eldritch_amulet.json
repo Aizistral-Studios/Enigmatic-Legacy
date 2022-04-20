@@ -1,0 +1,33 @@
+{
+    "name": "book.enigmaticlegacy.entry.eldritch_amulet.name",
+    "icon": "enigmaticlegacy:eldritch_amulet",
+    "category": "enigmaticlegacy:relics",
+	"advancement": "enigmaticlegacy:book/relics/eldritch_amulet",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 190,
+	"extra_recipe_mappings": {
+			"enigmaticlegacy:eldritch_amulet": 1
+		},
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.eldritch_amulet.page.1"
+        },
+		{
+            "type": "enigmaticlegacy:hidden_crafting",
+			"recipe": "enigmaticlegacy:eldritch_amulet",
+            "heading": " ",
+            "text": "book.enigmaticlegacy.entry.eldritch_amulet.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.eldritch_amulet.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

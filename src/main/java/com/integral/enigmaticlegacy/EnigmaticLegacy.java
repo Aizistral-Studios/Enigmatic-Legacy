@@ -21,6 +21,7 @@ import com.integral.enigmaticlegacy.api.generic.ConfigurableItem;
 import com.integral.enigmaticlegacy.api.items.IAdvancedPotionItem.PotionType;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
+import com.integral.enigmaticlegacy.blocks.BlockAstralDust;
 import com.integral.enigmaticlegacy.blocks.BlockBigLamp;
 import com.integral.enigmaticlegacy.blocks.BlockCosmicCake;
 import com.integral.enigmaticlegacy.blocks.BlockMassiveLamp;
@@ -86,6 +87,7 @@ import com.integral.enigmaticlegacy.items.EnigmaticAmulet;
 import com.integral.enigmaticlegacy.items.EnigmaticItem;
 import com.integral.enigmaticlegacy.items.EscapeScroll;
 import com.integral.enigmaticlegacy.items.EvilEssence;
+import com.integral.enigmaticlegacy.items.EvilIngot;
 import com.integral.enigmaticlegacy.items.ExtradimensionalEye;
 import com.integral.enigmaticlegacy.items.EyeOfNebula;
 import com.integral.enigmaticlegacy.items.FabulousScroll;
@@ -302,6 +304,7 @@ public class EnigmaticLegacy {
 	public static BlockBigLamp bigRedstonelamp;
 	public static BlockEtherium etheriumBlock;
 	public static BlockCosmicCake cosmicCake;
+	public static BlockAstralDust astralBlock;
 
 	@ConfigurableItem("") public static EnigmaticItem enigmaticItem;
 	@ConfigurableItem("Scroll of Ageless Wisdom") public static XPScroll xpScroll;
@@ -403,6 +406,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Heart of the Guardian") public static GuardianHeart guardianHeart;
 	@ConfigurableItem("The Twist") public static TheTwist theTwist;
 	@ConfigurableItem("Nefarious Essence") public static EvilEssence evilEssence;
+	@ConfigurableItem("Nefarious Ingot") public static EvilIngot evilIngot;
 	@ConfigurableItem("Guite to Animal Companionship") public static AnimalGuide animalGuide;
 	@ConfigurableItem("Guide to Feral Hunt") public static HunterGuide hunterGuide;
 	@ConfigurableItem("Forbidden Fruit") public static ForbiddenFruit forbiddenFruit;
@@ -743,6 +747,7 @@ public class EnigmaticLegacy {
 			bigRedstonelamp = new BlockBigLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN), "big_redstonelamp");
 			etheriumBlock = new BlockEtherium(etheriumConfig);
 			cosmicCake = new BlockCosmicCake();
+			astralBlock = new BlockAstralDust();
 
 			event.getRegistry().registerAll(
 					massiveLamp,
@@ -752,7 +757,8 @@ public class EnigmaticLegacy {
 					massiveRedstonelamp,
 					bigRedstonelamp,
 					etheriumBlock,
-					cosmicCake
+					cosmicCake,
+					astralBlock
 					);
 
 			logger.info("Blocks registered successfully.");
@@ -862,6 +868,7 @@ public class EnigmaticLegacy {
 			guardianHeart = new GuardianHeart();
 			theTwist = new TheTwist();
 			evilEssence = new EvilEssence();
+			evilIngot = new EvilIngot();
 			forbiddenFruit = new ForbiddenFruit();
 			antiforbiddenPotion = new AntiforbiddenPotion();
 			animalGuide = new AnimalGuide();
@@ -990,6 +997,7 @@ public class EnigmaticLegacy {
 					guardianHeart,
 					theTwist,
 					evilEssence,
+					evilIngot,
 					animalGuide,
 					hunterGuide,
 					forbiddenFruit,
@@ -1023,6 +1031,7 @@ public class EnigmaticLegacy {
 					new GenericBlockItem(massiveRedstonelamp),
 					new GenericBlockItem(bigRedstonelamp),
 					new CosmicCake(),
+					new GenericBlockItem(astralBlock, GenericBlockItem.getDefaultProperties().rarity(Rarity.EPIC).tab(null)),
 					new GenericBlockItem(etheriumBlock, GenericBlockItem.getDefaultProperties().rarity(Rarity.RARE))
 					//,gemOfBinding,wormholePotion
 					);
