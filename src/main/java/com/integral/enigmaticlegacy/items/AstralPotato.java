@@ -20,6 +20,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
@@ -34,7 +35,7 @@ public class AstralPotato extends ItemBaseFood {
 
 	public AstralPotato() {
 		super(getDefaultProperties().rarity(Rarity.EPIC).fireResistant(),
-				new FoodProperties.Builder().nutrition(8).saturationMod(1.6F).build());
+				new FoodProperties.Builder().nutrition(8).saturationMod(1.4F).build());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_potato"));
 	}
 
