@@ -158,6 +158,17 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		return amulet;
 	}
 
+	public ItemStack setPseudoRandomColor(ItemStack amulet) {
+		if ((amulet != null) && amulet.getItem().equals(this)) {
+			String name = ItemNBTHelper.getString(amulet, "Inscription", "Herobrine");
+			name += ServerLifecycleHooks.getCurrentServer().getWorldData().worldGenSettings().seed();
+			long hash = name.hashCode();
+
+			ItemNBTHelper.setFloat(amulet, amuletColorTag, AmuletColor.getSeededColor(new Random(hash)).colorVar);
+		}
+		return amulet;
+	}
+
 	public ItemStack setSeededColor(ItemStack amulet) {
 		if ((amulet != null) && amulet.getItem().equals(this)) {
 			String name = ItemNBTHelper.getString(amulet, "Inscription", "Herobrine");

@@ -3091,7 +3091,7 @@ public class EnigmaticEventHandler {
 				enigmaticAmulet.setProperlyGranted(amuletStack);
 
 				if (!EnigmaticAmulet.seededColorGen.getValue()) {
-					enigmaticAmulet.setRandomColor(amuletStack);
+					enigmaticAmulet.setPseudoRandomColor(amuletStack);
 				} else {
 					enigmaticAmulet.setSeededColor(amuletStack);
 				}
