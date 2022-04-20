@@ -98,6 +98,8 @@
 	"item.enigmaticlegacy.astral_potato": "Astral Potato",
 	"item.enigmaticlegacy.curse_transposer": "Tome of Devoured Malignancy",
 	"item.enigmaticlegacy.soul_compass": "Wayfinder of the Damned",
+	"item.enigmaticlegacy.ascension_amulet": "Amulet of Ascension",
+	"item.enigmaticlegacy.eldritch_amulet": "The Testament of Supremacy",
 	"block.enigmaticlegacy.etherium_block": "Block of Etherium",
 	"block.enigmaticlegacy.cosmic_cake": "The Eternal Cake",
 	
@@ -958,6 +960,14 @@
 	"tooltip.enigmaticlegacy.cosmicCake2": "§5Restores itself with time.",
 	
 	"tooltip.enigmaticlegacy.soulCompass1": "§5Points to the location of nearest §6Soul Crystal.",
+	
+	"tooltip.enigmaticlegacy.eldritchAmulet1": "§5When worn, your inventory persists with you",
+	"tooltip.enigmaticlegacy.eldritchAmulet2": "§5after death. §6Experience§5 and §6Soul Crystals§5 will",
+	"tooltip.enigmaticlegacy.eldritchAmulet3": "§5still be lost.",
+	"tooltip.enigmaticlegacy.eldritchAmulet4": "§5Creatures beneath your gaze will be slowed",
+	"tooltip.enigmaticlegacy.eldritchAmulet5": "§5down and weakened.",
+	"tooltip.enigmaticlegacy.eldritchAmuletStat1": "§6+3 §dAttack Damage",
+	"tooltip.enigmaticlegacy.eldritchAmuletStat2": "§6+15% §dLifesteal",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",

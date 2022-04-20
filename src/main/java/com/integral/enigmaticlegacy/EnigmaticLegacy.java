@@ -58,6 +58,7 @@ import com.integral.enigmaticlegacy.items.AbyssalHeart;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
 import com.integral.enigmaticlegacy.items.AnimalGuide;
 import com.integral.enigmaticlegacy.items.AntiforbiddenPotion;
+import com.integral.enigmaticlegacy.items.AscensionAmulet;
 import com.integral.enigmaticlegacy.items.AstralBreaker;
 import com.integral.enigmaticlegacy.items.AstralDust;
 import com.integral.enigmaticlegacy.items.AstralFruit;
@@ -76,6 +77,7 @@ import com.integral.enigmaticlegacy.items.DarkMirror;
 import com.integral.enigmaticlegacy.items.DarkestScroll;
 import com.integral.enigmaticlegacy.items.DesolationRing;
 import com.integral.enigmaticlegacy.items.EarthHeart;
+import com.integral.enigmaticlegacy.items.EldritchAmulet;
 import com.integral.enigmaticlegacy.items.EnchanterPearl;
 import com.integral.enigmaticlegacy.items.EnchantmentTransposer;
 import com.integral.enigmaticlegacy.items.EnderRing;
@@ -426,6 +428,8 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("The Burden of Desolation") public static DesolationRing desolationRing;
 	@ConfigurableItem("Astral Potato") public static AstralPotato astralPotato;
 	@ConfigurableItem("Wayfinder of the Damned") public static SoulCompass soulCompass;
+	@ConfigurableItem("Amulet of Ascension") public static AscensionAmulet ascensionAmulet;
+	@ConfigurableItem("The Testament of Supremacy") public static EldritchAmulet eldritchAmulet;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
 	public static AdvancedPotion ULTIMATE_INVISIBILITY;
@@ -553,6 +557,12 @@ public class EnigmaticLegacy {
 				new ItemStack(golemHeart), new ItemStack(cosmicHeart), new ItemStack(magmaHeart),
 				new ItemStack(angelBlessing), new ItemStack(Blocks.OBSIDIAN), new ItemStack(eyeOfNebula),
 				new ItemStack(oceanStone), new ItemStack(cosmicHeart), new ItemStack(voidPearl)
+				);
+
+		HiddenRecipe.addRecipe(new ItemStack(ascensionAmulet),
+				new ItemStack(Items.AMETHYST_SHARD), new ItemStack(astralDust), new ItemStack(Items.AMETHYST_SHARD),
+				new ItemStack(etheriumIngot), new ItemStack(enigmaticAmulet), new ItemStack(etheriumIngot),
+				new ItemStack(Items.DRAGON_BREATH), new ItemStack(cosmicHeart), new ItemStack(Items.DRAGON_BREATH)
 				);
 
 		EnigmaticUpdateHandler.init();
@@ -873,6 +883,8 @@ public class EnigmaticLegacy {
 			desolationRing = new DesolationRing();
 			astralPotato = new AstralPotato();
 			soulCompass = new SoulCompass();
+			ascensionAmulet = new AscensionAmulet();
+			eldritchAmulet = new EldritchAmulet();
 
 			spellstoneList = Lists.newArrayList(
 					angelBlessing,
@@ -979,7 +991,6 @@ public class EnigmaticLegacy {
 					gemRing,
 					cursedStone,
 					enchanterPearl,
-					//trueNotchApple,
 					avariceScroll,
 					infinimeal,
 					darkestScroll,
@@ -997,6 +1008,8 @@ public class EnigmaticLegacy {
 					astralPotato,
 					curseTransposer,
 					soulCompass,
+					ascensionAmulet,
+					eldritchAmulet,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),

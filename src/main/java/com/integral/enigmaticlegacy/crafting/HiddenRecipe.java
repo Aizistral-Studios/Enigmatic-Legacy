@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
@@ -12,6 +13,7 @@ import com.integral.enigmaticlegacy.api.items.ITaintable;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -36,6 +38,8 @@ public class HiddenRecipe extends CustomRecipe {
 	public ItemStack assemble(CraftingContainer inv) {
 		ItemStack output = ItemStack.EMPTY;
 
+		Optional<CompoundTag> amuletNBT = Optional.empty();
+
 		recipes: for (Map.Entry<ItemStack[][], ItemStack> entry : RECIPES.entrySet()) {
 			for (int r = 0; r < 3; r++) {
 				for (int i = 0; i < 3; i++) {
@@ -43,11 +47,16 @@ public class HiddenRecipe extends CustomRecipe {
 
 					if (slotStack.getItem() != entry.getKey()[r][i].getItem()) {
 						continue recipes;
+					} else {
+						if (slotStack.is(EnigmaticLegacy.enigmaticAmulet)) {
+							amuletNBT = Optional.of(slotStack.getTag().copy());
+						}
 					}
 				}
 			}
 
 			output = entry.getValue().copy();
+			amuletNBT.ifPresent(output::setTag);
 			break;
 		}
 

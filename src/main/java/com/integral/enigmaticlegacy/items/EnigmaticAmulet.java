@@ -20,6 +20,7 @@ import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.item.TooltipFlag;
@@ -45,6 +46,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 
@@ -132,6 +134,9 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	}
 
 	public boolean hasColor(Player player, AmuletColor color) {
+		if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.ascensionAmulet))
+			return true;
+
 		ItemStack enigmaticAmulet = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.enigmaticAmulet);
 
 		if ((enigmaticAmulet != null) && (EnigmaticLegacy.enigmaticAmulet.getColor(enigmaticAmulet) == color))
@@ -194,8 +199,12 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	}
 
 	public EnigmaticAmulet() {
-		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_amulet"));
+		this(getDefaultProperties().rarity(Rarity.UNCOMMON).fireResistant(), "enigmatic_amulet");
+	}
+
+	protected EnigmaticAmulet(Properties properties, String name) {
+		super(properties);
+		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, name));
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -258,7 +267,13 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		}
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		this.addAttributes(list, stack);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	protected void addAttributes(List<Component> list, ItemStack stack) {
 		ItemLoreHelper.addLocalizedFormattedString(list, "curios.modifiers.charm", ChatFormatting.GOLD);
+
 		if (this.getColor(stack) != AmuletColor.RED) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticAmuletModifier" + this.getColor(stack));
 		} else {
@@ -284,11 +299,11 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		return atts;
 	}
 
-	public Multimap<Attribute, AttributeModifier> getAllModifiers() {
+	protected Multimap<Attribute, AttributeModifier> getAllModifiers(@Nullable Player player) {
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
 		atts.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(UUID.fromString("f5bb82c7-0332-4adf-a414-2e4f03471983"), EnigmaticLegacy.MODID+":attack_bonus", damageBonus.getValue(), AttributeModifier.Operation.ADDITION));
-		atts.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(UUID.fromString("cde98b8a-0cfc-45dc-929f-9cce9b6fbdfa"), EnigmaticLegacy.MODID+":sprint_bonus", 0.15F, AttributeModifier.Operation.MULTIPLY_TOTAL));
+		atts.put(Attributes.MOVEMENT_SPEED, new AttributeModifier(UUID.fromString("cde98b8a-0cfc-45dc-929f-9cce9b6fbdfa"), EnigmaticLegacy.MODID+":sprint_bonus", player != null ? (player.isSprinting() ? 0.15F : 0F) : 0.15F, AttributeModifier.Operation.MULTIPLY_TOTAL));
 		atts.put(ForgeMod.ENTITY_GRAVITY.get(), new AttributeModifier(UUID.fromString("d1a07f6f-1079-4b17-8dbd-c74dc5e9094d"), EnigmaticLegacy.MODID+":gravity_bonus", -0.25F, AttributeModifier.Operation.MULTIPLY_TOTAL));
 		atts.put(ForgeMod.SWIM_SPEED.get(), new AttributeModifier(UUID.fromString("a4d4b794-a691-4757-b1cb-f5f2d5a25571"), EnigmaticLegacy.MODID+":swim_bonus", 0.25F, AttributeModifier.Operation.MULTIPLY_TOTAL));
 
@@ -310,7 +325,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
 		if (context.entity() instanceof ServerPlayer player) {
 			AttributeMap map = player.getAttributes();
-			map.removeAttributeModifiers(this.getAllModifiers());
+			map.removeAttributeModifiers(this.getAllModifiers(null));
 		}
 	}
 
