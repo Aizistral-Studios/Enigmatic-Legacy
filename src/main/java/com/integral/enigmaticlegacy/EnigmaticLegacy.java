@@ -565,6 +565,12 @@ public class EnigmaticLegacy {
 				new ItemStack(Items.DRAGON_BREATH), new ItemStack(cosmicHeart), new ItemStack(Items.DRAGON_BREATH)
 				);
 
+		HiddenRecipe.addRecipe(new ItemStack(eldritchAmulet),
+				new ItemStack(evilEssence), new ItemStack(abyssalHeart), new ItemStack(evilEssence),
+				new ItemStack(Items.NETHERITE_INGOT), new ItemStack(ascensionAmulet), new ItemStack(Items.NETHERITE_INGOT),
+				new ItemStack(twistedCore), new ItemStack(Items.NETHER_STAR), new ItemStack(twistedCore)
+				);
+
 		EnigmaticUpdateHandler.init();
 
 		proxy.loadComplete(event);

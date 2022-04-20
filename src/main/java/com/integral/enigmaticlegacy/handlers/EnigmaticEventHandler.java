@@ -1330,8 +1330,8 @@ public class EnigmaticEventHandler {
 			if (SuperpositionHandler.hasItem(player, cursedStone)) {
 				postmortalPossession.put(player, cursedStone);
 
-				for(List<ItemStack> list : player.getInventory().compartments) {
-					for(ItemStack itemstack : list) {
+				for (List<ItemStack> list : player.getInventory().compartments) {
+					for (ItemStack itemstack : list) {
 						if (!itemstack.isEmpty() && itemstack.getItem() == cursedStone) {
 							itemstack.setCount(0);
 						}
@@ -1352,12 +1352,17 @@ public class EnigmaticEventHandler {
 				}
 			}
 
-			for (int i = 0; i < player.getInventory().armor.size(); i++) {
-				ItemStack armor = player.getInventory().armor.get(i);
+			if (SuperpositionHandler.hasCurio(player, eldritchAmulet) && SuperpositionHandler.isTheWorthyOne(player)) {
+				eldritchAmulet.storeInventory(player);
+				postmortalPossession.put(player, eldritchAmulet);
+			} else {
+				for (int i = 0; i < player.getInventory().armor.size(); i++) {
+					ItemStack armor = player.getInventory().armor.get(i);
 
-				if (EnchantmentHelper.getItemEnchantmentLevel(eternalBindingCurse, armor) > 0) {
-					player.getInventory().armor.set(i, ItemStack.EMPTY);
-					SuperpositionHandler.setPersistentTag(player, "EternallyBoundArmor" + i, armor.serializeNBT());
+					if (EnchantmentHelper.getItemEnchantmentLevel(eternalBindingCurse, armor) > 0) {
+						player.getInventory().armor.set(i, ItemStack.EMPTY);
+						SuperpositionHandler.setPersistentTag(player, "EternallyBoundArmor" + i, armor.serializeNBT());
+					}
 				}
 			}
 		}
@@ -1372,8 +1377,11 @@ public class EnigmaticEventHandler {
 		event.addOverride(stack -> EnchantmentHelper.getItemEnchantmentLevel(eternalBindingCurse, stack) > 0,
 				DropRule.ALWAYS_KEEP);
 
-		if (event.getEntityLiving() instanceof ServerPlayer) {
-			ServerPlayer player = (ServerPlayer) event.getEntityLiving();
+		if (event.getEntityLiving() instanceof ServerPlayer player) {
+			if (postmortalPossession.containsEntry(player, eldritchAmulet)) {
+				event.addOverride(stack -> EnchantmentHelper.
+						getItemEnchantmentLevel(Enchantments.VANISHING_CURSE, stack) <= 0, DropRule.ALWAYS_KEEP);
+			}
 
 			if (this.hadUnholyStone(player) && player.level.dimension() == proxy.getNetherKey()) {
 				BlockPos deathPos = player.blockPosition();
@@ -1545,8 +1553,6 @@ public class EnigmaticEventHandler {
 		}
 
 	}
-
-
 
 	@SubscribeEvent
 	public void onProjectileImpact(ProjectileImpactEvent event) {
@@ -1846,14 +1852,26 @@ public class EnigmaticEventHandler {
 		if (event.getSource().getDirectEntity() instanceof Player && !event.getSource().getDirectEntity().level.isClientSide) {
 			Player player = (Player) event.getSource().getDirectEntity();
 
+			float lifesteal = 0;
+
 			if (EnigmaticLegacy.enigmaticAmulet.hasColor(player, AmuletColor.BLACK)) {
-				player.heal(event.getAmount() * 0.1F);
+				lifesteal += event.getAmount() * 0.1F;
+			}
+
+			if (SuperpositionHandler.hasCurio(player, eldritchAmulet)) {
+				if (SuperpositionHandler.isTheWorthyOne(player)) {
+					lifesteal += event.getAmount() * 0.15F;
+				}
 			}
 
 			if (player.getMainHandItem() != null && player.getMainHandItem().getItem() == theInfinitum) {
 				if (SuperpositionHandler.isTheWorthyOne(player)) {
-					player.heal(event.getAmount() * 0.1F);
+					lifesteal += event.getAmount() * 0.1F;
 				}
+			}
+
+			if (lifesteal > 0) {
+				player.heal(lifesteal);
 			}
 		}
 	}
@@ -2238,13 +2256,15 @@ public class EnigmaticEventHandler {
 		Player newPlayer = event.getPlayer();
 		Player oldPlayer = event.getOriginal();
 
-		if (event.isWasDeath()) {
-			for (int i = 0; i < 4; i++) {
-				Tag tag = SuperpositionHandler.getPersistentTag(oldPlayer, "EternallyBoundArmor" + i, null);
+		if (event.isWasDeath() && newPlayer instanceof ServerPlayer && oldPlayer instanceof ServerPlayer) {
+			if (!eldritchAmulet.reclaimInventory((ServerPlayer) oldPlayer, (ServerPlayer) newPlayer)) {
+				for (int i = 0; i < 4; i++) {
+					Tag tag = SuperpositionHandler.getPersistentTag(oldPlayer, "EternallyBoundArmor" + i, null);
 
-				if (tag instanceof CompoundTag armor) {
-					ItemStack stack = ItemStack.of(armor);
-					newPlayer.getInventory().armor.set(i, stack);
+					if (tag instanceof CompoundTag armor) {
+						ItemStack stack = ItemStack.of(armor);
+						newPlayer.getInventory().armor.set(i, stack);
+					}
 				}
 			}
 		}

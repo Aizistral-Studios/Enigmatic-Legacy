@@ -10,7 +10,9 @@ import java.util.Optional;
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.ITaintable;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
+import com.integral.omniconfig.wrappers.Omniconfig;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -48,7 +50,7 @@ public class HiddenRecipe extends CustomRecipe {
 					if (slotStack.getItem() != entry.getKey()[r][i].getItem()) {
 						continue recipes;
 					} else {
-						if (slotStack.is(EnigmaticLegacy.enigmaticAmulet)) {
+						if (slotStack.is(EnigmaticLegacy.enigmaticAmulet) || slotStack.is(EnigmaticLegacy.ascensionAmulet)) {
 							amuletNBT = Optional.of(slotStack.getTag().copy());
 						}
 					}
@@ -58,6 +60,10 @@ public class HiddenRecipe extends CustomRecipe {
 			output = entry.getValue().copy();
 			amuletNBT.ifPresent(output::setTag);
 			break;
+		}
+
+		if (!OmniconfigHandler.isItemEnabled(output.getItem())) {
+			output = ItemStack.EMPTY;
 		}
 
 		return output;

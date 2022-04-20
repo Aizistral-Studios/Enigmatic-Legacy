@@ -223,7 +223,6 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 		}
 	}
 
-
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {

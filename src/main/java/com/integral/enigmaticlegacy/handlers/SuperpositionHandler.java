@@ -392,21 +392,27 @@ public class SuperpositionHandler {
 	 */
 
 	@Nullable
-	public static LivingEntity getObservedEntity(final Player player, final Level world, final float range, final int maxDist) {
-		LivingEntity newTarget = null;
+	public static LivingEntity getObservedEntity(Player player, Level world, float range, int maxDist) {
+		List<LivingEntity> entities = getObservedEntities(player, world, range, maxDist, true);
+		return entities.size() > 0 ? entities.get(0) : null;
+	}
+
+	public static List<LivingEntity> getObservedEntities(Player player, Level world, float range, int maxDist, boolean stopWhenFound) {
 		Vector3 target = Vector3.fromEntityCenter(player);
-		List<LivingEntity> entities = new ArrayList<LivingEntity>();
-		for (int distance = 1; entities.size() == 0 && distance < maxDist; ++distance) {
+		List<LivingEntity> entities = new ArrayList<>();
+
+		for (int distance = 1; distance < maxDist; ++distance) {
 			target = target.add(new Vector3(player.getLookAngle()).multiply(distance)).add(0.0, 0.5, 0.0);
-			entities = player.level.getEntitiesOfClass(LivingEntity.class, new AABB(target.x - range, target.y - range, target.z - range, target.x + range, target.y + range, target.z + range));
-			if (entities.contains(player)) {
-				entities.remove(player);
+			List<LivingEntity> list = player.level.getEntitiesOfClass(LivingEntity.class, new AABB(target.x - range, target.y - range, target.z - range, target.x + range, target.y + range, target.z + range));
+			list.removeIf(entity -> entity == player || !player.hasLineOfSight(entity));
+			entities.addAll(list);
+
+			if (stopWhenFound && entities.size() > 0) {
+				break;
 			}
 		}
-		if (entities.size() > 0) {
-			newTarget = entities.get(0);
-		}
-		return newTarget;
+
+		return entities;
 	}
 
 	@Nullable
