@@ -2365,79 +2365,8 @@ public class EnigmaticEventHandler {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.LOWEST)
+	@SubscribeEvent(priority = EventPriority.NORMAL)
 	public void onLivingDrops(LivingDropsEvent event) {
-		if (event.getEntityLiving() instanceof ServerPlayer player) {
-			CompoundTag deathLocation = new CompoundTag();
-			deathLocation.putDouble("x", player.getX());
-			deathLocation.putDouble("y", player.getY());
-			deathLocation.putDouble("z", player.getZ());
-			deathLocation.putString("dimension", player.level.dimension().location().toString());
-
-			SuperpositionHandler.setPersistentTag(player, "LastDeathLocation", deathLocation);
-
-			boolean droppedCrystal = false;
-			boolean hadEscapeScroll = this.hadEscapeScroll(player);
-
-			DimensionalPosition dimPoint = hadEscapeScroll ? SuperpositionHandler.getRespawnPoint(player) : new DimensionalPosition(player.getX(), player.getY(), player.getZ(), player.level);
-
-			if (hadEscapeScroll) {
-				player.level.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketPortalParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 100, 1.25F, false));
-
-				for (ItemEntity dropIt : event.getDrops()) {
-					ItemEntity alternativeDrop = new ItemEntity(dimPoint.world, dimPoint.posX, dimPoint.posY, dimPoint.posZ, dropIt.getItem());
-					alternativeDrop.teleportTo(dimPoint.posX, dimPoint.posY, dimPoint.posZ);
-					alternativeDrop.setDeltaMovement(theySeeMeRollin.nextDouble()-0.5, theySeeMeRollin.nextDouble()-0.5, theySeeMeRollin.nextDouble()-0.5);
-					dimPoint.world.addFreshEntity(alternativeDrop);
-					dropIt.setItem(ItemStack.EMPTY);
-				}
-
-				event.getDrops().clear();
-
-				dimPoint.world.playSound(null, new BlockPos(dimPoint.posX, dimPoint.posY, dimPoint.posZ), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(dimPoint.posX, dimPoint.posY, dimPoint.posZ, 128, dimPoint.world.dimension())), new PacketRecallParticles(dimPoint.posX, dimPoint.posY, dimPoint.posZ, 48, false));
-			}
-
-			if (this.hadEnigmaticAmulet(player) && !event.getDrops().isEmpty() && EnigmaticLegacy.enigmaticAmulet.isVesselEnabled()) {
-				ItemStack soulCrystal = SuperpositionHandler.shouldPlayerDropSoulCrystal(player, this.hadCursedRing(player)) ? EnigmaticLegacy.soulCrystal.createCrystalFrom(player) : null;
-				ItemStack storageCrystal = EnigmaticLegacy.storageCrystal.storeDropsOnCrystal(event.getDrops(), player, soulCrystal);
-				PermanentItemEntity droppedStorageCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), storageCrystal);
-				droppedStorageCrystal.setOwnerId(player.getUUID());
-				dimPoint.world.addFreshEntity(droppedStorageCrystal);
-				EnigmaticLegacy.logger.info("Summoned Extradimensional Storage Crystal for " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
-				event.getDrops().clear();
-
-				if (soulCrystal != null) {
-					droppedCrystal = true;
-				}
-
-				SoulArchive.getInstance().addItem(droppedStorageCrystal);
-			} else if (SuperpositionHandler.shouldPlayerDropSoulCrystal(player, this.hadCursedRing(player))) {
-				ItemStack soulCrystal = EnigmaticLegacy.soulCrystal.createCrystalFrom(player);
-				PermanentItemEntity droppedSoulCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), soulCrystal);
-				droppedSoulCrystal.setOwnerId(player.getUUID());
-				dimPoint.world.addFreshEntity(droppedSoulCrystal);
-				EnigmaticLegacy.logger.info("Teared Soul Crystal from " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
-
-				droppedCrystal = true;
-				SoulArchive.getInstance().addItem(droppedSoulCrystal);
-			}
-
-			ResourceLocation soulLossAdvancement = new ResourceLocation(EnigmaticLegacy.MODID, "book/soul_loss");
-
-			if (droppedCrystal) {
-				SuperpositionHandler.grantAdvancement(player, soulLossAdvancement);
-			} else if (!droppedCrystal && SuperpositionHandler.hasAdvancement(player, soulLossAdvancement)) {
-				SuperpositionHandler.revokeAdvancement(player, soulLossAdvancement);
-			}
-
-			postmortalPossession.removeAll(player);
-			return;
-		} else if (event.getEntityLiving() instanceof Player) {
-			postmortalPossession.removeAll(event.getEntityLiving());
-		}
-
 		/*
 		 * Beheading handler for Axe of Executioner.
 		 */
@@ -2492,16 +2421,22 @@ public class EnigmaticEventHandler {
 			}
 		}
 
-		/*
-		 * Unique drops for Ring of the Seven Curses.
-		 */
-
 		if (event.isRecentlyHit() && event.getSource() != null && event.getSource().getEntity() instanceof Player && SuperpositionHandler.isTheCursedOne((Player) event.getSource().getEntity())) {
 			Player player = (Player) event.getSource().getEntity();
 			LivingEntity killed = event.getEntityLiving();
 
 			if (SuperpositionHandler.hasCurio(player, avariceScroll)) {
 				this.addDropWithChance(event, new ItemStack(Items.EMERALD, 1), AvariceScroll.emeraldChance.getValue());
+			}
+
+			if (killed instanceof EnderDragon) {
+				if (SuperpositionHandler.isTheWorthyOne(player)) {
+					int heartsGained = SuperpositionHandler.getPersistentInteger(player, "AbyssalHeartsGained", 0);
+
+					if (heartsGained < 3) { // Only as many as there are unique items from them, +1
+						((IAbyssalHeartBearer) killed).dropAbyssalHeart(player);
+					}
+				}
 			}
 
 			if (!CursedRing.enableSpecialDrops.getValue())
@@ -2583,15 +2518,90 @@ public class EnigmaticEventHandler {
 				this.addDropWithChance(event, new ItemStack(Items.EGG, 1), 50);
 			} else if (killed instanceof WitherBoss) {
 				this.addDrop(event, this.getRandomSizeStack(evilEssence, 1, 4));
-			} else if (killed instanceof EnderDragon) {
-				if (SuperpositionHandler.isTheWorthyOne(player)) {
-					int heartsGained = SuperpositionHandler.getPersistentInteger(player, "AbyssalHeartsGained", 0);
-
-					if (heartsGained < 3) { // Only as many as there are unique items from them, +1
-						((IAbyssalHeartBearer) killed).dropAbyssalHeart(player);
-					}
-				}
 			}
+		}
+	}
+
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onLivingDropsLowest(LivingDropsEvent event) {
+		if (event.getEntityLiving() instanceof ServerPlayer player) {
+			CompoundTag deathLocation = new CompoundTag();
+			deathLocation.putDouble("x", player.getX());
+			deathLocation.putDouble("y", player.getY());
+			deathLocation.putDouble("z", player.getZ());
+			deathLocation.putString("dimension", player.level.dimension().location().toString());
+
+			SuperpositionHandler.setPersistentTag(player, "LastDeathLocation", deathLocation);
+
+			boolean droppedCrystal = false;
+			boolean hadEscapeScroll = this.hadEscapeScroll(player);
+
+			DimensionalPosition dimPoint = hadEscapeScroll ? SuperpositionHandler.getRespawnPoint(player) : new DimensionalPosition(player.getX(), player.getY(), player.getZ(), player.level);
+
+			if (hadEscapeScroll) {
+				player.level.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketPortalParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 100, 1.25F, false));
+
+				for (ItemEntity dropIt : event.getDrops()) {
+					ItemEntity alternativeDrop = new ItemEntity(dimPoint.world, dimPoint.posX, dimPoint.posY, dimPoint.posZ, dropIt.getItem());
+					alternativeDrop.teleportTo(dimPoint.posX, dimPoint.posY, dimPoint.posZ);
+					alternativeDrop.setDeltaMovement(theySeeMeRollin.nextDouble()-0.5, theySeeMeRollin.nextDouble()-0.5, theySeeMeRollin.nextDouble()-0.5);
+					dimPoint.world.addFreshEntity(alternativeDrop);
+					dropIt.setItem(ItemStack.EMPTY);
+				}
+
+				event.getDrops().clear();
+
+				dimPoint.world.playSound(null, new BlockPos(dimPoint.posX, dimPoint.posY, dimPoint.posZ), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(dimPoint.posX, dimPoint.posY, dimPoint.posZ, 128, dimPoint.world.dimension())), new PacketRecallParticles(dimPoint.posX, dimPoint.posY, dimPoint.posZ, 48, false));
+			}
+
+			if (this.hadEnigmaticAmulet(player) && !event.getDrops().isEmpty() && EnigmaticLegacy.enigmaticAmulet.isVesselEnabled()) {
+				ItemStack soulCrystal = SuperpositionHandler.shouldPlayerDropSoulCrystal(player, this.hadCursedRing(player)) ? EnigmaticLegacy.soulCrystal.createCrystalFrom(player) : null;
+				ItemStack storageCrystal = EnigmaticLegacy.storageCrystal.storeDropsOnCrystal(event.getDrops(), player, soulCrystal);
+				PermanentItemEntity droppedStorageCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), storageCrystal);
+				droppedStorageCrystal.setOwnerId(player.getUUID());
+				dimPoint.world.addFreshEntity(droppedStorageCrystal);
+				EnigmaticLegacy.logger.info("Summoned Extradimensional Storage Crystal for " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
+				event.getDrops().clear();
+
+				if (soulCrystal != null) {
+					droppedCrystal = true;
+				}
+
+				SoulArchive.getInstance().addItem(droppedStorageCrystal);
+			} else if (SuperpositionHandler.shouldPlayerDropSoulCrystal(player, this.hadCursedRing(player))) {
+				ItemStack soulCrystal = EnigmaticLegacy.soulCrystal.createCrystalFrom(player);
+				PermanentItemEntity droppedSoulCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), soulCrystal);
+				droppedSoulCrystal.setOwnerId(player.getUUID());
+				dimPoint.world.addFreshEntity(droppedSoulCrystal);
+				EnigmaticLegacy.logger.info("Teared Soul Crystal from " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
+
+				droppedCrystal = true;
+				SoulArchive.getInstance().addItem(droppedSoulCrystal);
+			}
+
+			ResourceLocation soulLossAdvancement = new ResourceLocation(EnigmaticLegacy.MODID, "book/soul_loss");
+
+			if (droppedCrystal) {
+				SuperpositionHandler.grantAdvancement(player, soulLossAdvancement);
+			} else if (!droppedCrystal && SuperpositionHandler.hasAdvancement(player, soulLossAdvancement)) {
+				SuperpositionHandler.revokeAdvancement(player, soulLossAdvancement);
+			}
+
+			postmortalPossession.removeAll(player);
+			return;
+		} else if (event.getEntityLiving() instanceof Player) {
+			postmortalPossession.removeAll(event.getEntityLiving());
+		}
+
+		/*
+		 * Unique drops for Ring of the Seven Curses.
+		 */
+
+		if (event.isRecentlyHit() && event.getSource() != null && event.getSource().getEntity() instanceof Player && SuperpositionHandler.isTheCursedOne((Player) event.getSource().getEntity())) {
+			Player player = (Player) event.getSource().getEntity();
+			LivingEntity killed = event.getEntityLiving();
 
 			if (killed instanceof EnderMan && killed.level.dimension().equals(proxy.getEndKey())
 					&& killed.getPersistentData().getBoolean("EnderSlayerVictim")) {
