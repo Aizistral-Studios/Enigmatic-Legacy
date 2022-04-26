@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:the_infinitum"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:theInfinitum"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:theInfinitum.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "enigmaticlegacy:main/abyssal_heart",
+  "criteria": {
+    "infinitum": {
+      "trigger": "enigmaticlegacy:cursed_inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:the_infinitum"]
+          }
+        ]
+      }
+    }
+  }
+}

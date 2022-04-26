@@ -47,55 +47,54 @@ public class MixinApotheosisEnchantmentContainer extends EnchantmentMenu {
 
 	@Inject(at = @At("HEAD"), method = "clickMenuButton(Lnet/minecraft/world/entity/player/Player;I)Z", cancellable = true)
 	private void onEnchantedItem(Player player, int id, CallbackInfoReturnable<Boolean> info) {
-		if (SuperpositionHandler.isTheCursedOne(player))
-			if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.enchanterPearl) || SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enchanterPearl)) {
+		if (EnigmaticLegacy.enchanterPearl.isPresent(player)) {
+			int level = this.costs[id];
+			ItemStack toEnchant = this.enchantSlots.getItem(0);
+			int i = id + 1;
 
-				int level = this.costs[id];
-				ItemStack toEnchant = this.enchantSlots.getItem(0);
-				int i = id + 1;
+			if (this.costs[id] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < i || player.experienceLevel < this.costs[id]) && !player.getAbilities().instabuild) {
+				info.setReturnValue(false);
+				return;// false;
+			}
 
-				if (this.costs[id] <= 0 || toEnchant.isEmpty() || (player.experienceLevel < i || player.experienceLevel < this.costs[id]) && !player.getAbilities().instabuild) {
-					info.setReturnValue(false);
-					return;// false;
-				}
+			this.access.execute((world, pos) -> {
+				ItemStack enchanted = toEnchant;
+				List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
+				if (!list.isEmpty()) {
+					ItemStack firstRoll = this.enchantStack(player, enchanted, id, true);
+					ItemStack secondRoll = this.enchantStack(player, enchanted, id, false);
 
-				this.access.execute((world, pos) -> {
-					ItemStack enchanted = toEnchant;
-					List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
-					if (!list.isEmpty()) {
-						ItemStack firstRoll = this.enchantStack(player, enchanted, id, true);
-						ItemStack secondRoll = this.enchantStack(player, enchanted, id, false);
+					enchanted = SuperpositionHandler.mergeEnchantments(firstRoll, secondRoll, true, false);
+					enchanted = SuperpositionHandler.maybeApplyEternalBinding(enchanted);
+					this.enchantSlots.setItem(0, enchanted);
 
-						enchanted = SuperpositionHandler.mergeEnchantments(firstRoll, secondRoll, true, false);
-						this.enchantSlots.setItem(0, enchanted);
+					player.awardStat(Stats.ENCHANT_ITEM);
+					if (player instanceof ServerPlayer) {
 
-						player.awardStat(Stats.ENCHANT_ITEM);
-						if (player instanceof ServerPlayer) {
+						// TODO Gotta finish this someday
 
-							// TODO Gotta finish this someday
-
-							/*
+						/*
 							try {
 								Class<?> triggerClass = Class.forName("shadows.apotheosis.advancements.EnchantedTrigger");
 								Method triggerMethod = triggerClass.getDeclaredMethod("trigger", ServerPlayer.class, ItemStack.class, Integer.class, Float.class, Float.class, Float.class);
 							} catch (Exception ex) {
 							}
-							 */
-							//EnchantedItemTrigger
-							CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer)player, enchanted, level);
-						}
-
-						this.enchantSlots.setChanged();
-						this.slotsChanged(this.enchantSlots);
-						world.playSound((Player) null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
+						 */
+						//EnchantedItemTrigger
+						CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer)player, enchanted, level);
 					}
 
-				});
+					this.enchantSlots.setChanged();
+					this.slotsChanged(this.enchantSlots);
+					world.playSound((Player) null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
+				}
+
+			});
 
 
-				info.setReturnValue(true);
-				return;// true;
-			}
+			info.setReturnValue(true);
+			return;// true;
+		}
 	}
 
 	private ItemStack enchantStack(Player player, ItemStack stack, int id, boolean shadowsRollTwice) {

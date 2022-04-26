@@ -1,13 +1,18 @@
 package com.integral.enigmaticlegacy.api.materials;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.etherium.core.IEtheriumConfig;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.common.TierSortingRegistry;
 
 /**
  * Tools material provider.
@@ -16,7 +21,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 public enum EnigmaticMaterials implements Tier {
 	FORBIDDENAXE(0, 2000, 6.0F, 3.0F, 16, () -> Ingredient.EMPTY),
-	ETHERIUM(4, 3000, 8.0F, 5.0F, 32, () -> getEtheriumConfig().getRepairMaterial());
+	ENDERSLAYER(0, 2000, 6.0F, 3.0F, 16, () -> Ingredient.of(Blocks.OBSIDIAN)),
+	ETHERIUM(5, 3000, 8.0F, 5.0F, 32, () -> getEtheriumConfig().getRepairMaterial());
 
 	private static IEtheriumConfig etheriumConfig;
 
@@ -34,6 +40,11 @@ public enum EnigmaticMaterials implements Tier {
 		this.attackDamage = attackDamageIn;
 		this.enchantability = enchantabilityIn;
 		this.repairMaterial = repairMaterialIn;
+
+		if (harvestLevelIn == 5) {
+			TierSortingRegistry.registerTier(this, new ResourceLocation("enigmaticlegacy", "etherium"),
+					List.of((Object[])Tiers.values()), List.of());
+		}
 	}
 
 	@Override

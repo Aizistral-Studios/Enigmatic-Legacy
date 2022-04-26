@@ -16,6 +16,7 @@ import com.integral.etherium.items.generic.ItemEtheriumTool;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
@@ -57,6 +58,7 @@ public class EtheriumShovel extends ItemEtheriumTool {
 
 		this.effectiveMaterials = Sets.newHashSet();
 		this.effectiveMaterials.add(Material.DIRT);
+		this.effectiveMaterials.add(Material.CLAY);
 		this.effectiveMaterials.add(Material.GRASS);
 		this.effectiveMaterials.add(Material.TOP_SNOW);
 		this.effectiveMaterials.add(Material.TOP_SNOW);
@@ -75,7 +77,7 @@ public class EtheriumShovel extends ItemEtheriumTool {
 			return;
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumShovel1", ChatFormatting.GOLD, this.config.getShovelMiningRadius(), this.config.getShovelMiningDepth());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumShovel1", ChatFormatting.GOLD, this.config.getShovelMiningRadius() + this.config.getAOEBoost(Minecraft.getInstance().player), this.config.getShovelMiningDepth());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 			if (!this.config.disableAOEShiftInhibition()) {
@@ -94,16 +96,14 @@ public class EtheriumShovel extends ItemEtheriumTool {
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-
 		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getShovelMiningRadius() != -1) {
-
 			HitResult trace = AOEMiningHelper.calcRayTrace(world, (Player) entityLiving, ClipContext.Fluid.ANY);
 
 			if (trace.getType() == HitResult.Type.BLOCK) {
 				BlockHitResult blockTrace = (BlockHitResult) trace;
 				Direction face = blockTrace.getDirection();
 
-				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, this.effectiveMaterials, this.config.getShovelMiningRadius(), this.config.getShovelMiningDepth(), false, pos, stack, (objPos, objState) -> {
+				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, this.effectiveMaterials, this.config.getShovelMiningRadius() + this.config.getAOEBoost((Player) entityLiving), this.config.getShovelMiningDepth(), false, pos, stack, (objPos, objState) -> {
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 				});
 			}

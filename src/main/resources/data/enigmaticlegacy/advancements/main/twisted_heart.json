@@ -16,8 +16,8 @@
   },
   "parent": "enigmaticlegacy:main/cursed_ring",
   "criteria": {
-    "etherium": {
-      "trigger": "minecraft:inventory_changed",
+    "core": {
+      "trigger": "enigmaticlegacy:cursed_inventory_changed",
       "conditions": {
         "items": [
           {

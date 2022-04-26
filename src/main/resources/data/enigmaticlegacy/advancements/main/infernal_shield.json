@@ -19,8 +19,8 @@
   },
   "parent": "enigmaticlegacy:main/twisted_heart",
   "criteria": {
-    "etherium": {
-      "trigger": "minecraft:inventory_changed",
+    "shield": {
+      "trigger": "enigmaticlegacy:cursed_inventory_changed",
       "conditions": {
         "items": [
           {

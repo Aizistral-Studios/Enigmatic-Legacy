@@ -31,6 +31,14 @@
       }
     ]
   },
+  "misc.sword_hit_reject": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:misc/sword_hit_reject",
+        "stream": false
+      }
+    ]
+  },
   "misc.shield_trigger": {
     "sounds": [
       {
@@ -38,6 +46,20 @@
         "stream": false
       }, {
         "name": "enigmaticlegacy:misc/shield_hit_1",
+        "stream": false
+      }
+    ]
+  },
+  "misc.uneat": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:misc/uneat1",
+        "stream": false
+      }, {
+        "name": "enigmaticlegacy:misc/uneat2",
+        "stream": false
+      }, {
+        "name": "enigmaticlegacy:misc/uneat3",
         "stream": false
       }
     ]

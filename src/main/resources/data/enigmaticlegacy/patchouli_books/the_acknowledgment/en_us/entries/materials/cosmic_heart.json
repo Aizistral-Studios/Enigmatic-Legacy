@@ -1,0 +1,22 @@
+{
+    "name": "book.enigmaticlegacy.entry.cosmic_heart.name",
+    "icon": "enigmaticlegacy:cosmic_heart",
+    "category": "enigmaticlegacy:materials",
+	"advancement": "enigmaticlegacy:book/materials/cosmic_heart",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 100,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cosmic_heart.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:cosmic_heart",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.cosmic_heart.page.2"
+        }
+    ]
+}

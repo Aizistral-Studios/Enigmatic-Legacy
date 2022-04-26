@@ -12,6 +12,7 @@ import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
+import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -22,6 +23,7 @@ import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.LivingEntity;
@@ -88,7 +90,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	public final int xpCostBase = 150;
-	public final int nightVisionDuration = 210;
+	public final int nightVisionDuration = 310;
 
 	public OceanStone() {
 		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.RARE));
@@ -101,6 +103,14 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 		this.resistanceList.put(DamageSource.LAVA.msgId, () -> 2F);
 		this.resistanceList.put(DamageSource.HOT_FLOOR.msgId, () -> 2F);
 		this.resistanceList.put("fireball", () -> 2F);
+	}
+
+	@Override
+	public int getCooldown(Player player) {
+		if (player != null && reducedCooldowns.test(player))
+			return 300;
+		else
+			return spellstoneCooldown.getValue();
 	}
 
 	private Multimap<Attribute, AttributeModifier> createAttributeMap(Player player) {
@@ -122,7 +132,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone2");
 			//ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStoneCooldown", ChatFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStoneCooldown", ChatFormatting.GOLD, ((this.getCooldown(Minecraft.getInstance().player))) / 20.0F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone4");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oceanStone5", ChatFormatting.GOLD, underwaterCreaturesResistance.getValue().asPercentage() + "%");
@@ -189,7 +199,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 
 					world.playSound(null, player.blockPosition(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.NEUTRAL, 2.0F, (float) (0.7F + (Math.random() * 0.3D)));
 
-					SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
+					SuperpositionHandler.setSpellstoneCooldown(player, this.getCooldown(player));
 				}
 
 			}
@@ -197,7 +207,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
+		if (context.entity() instanceof ServerPlayer player) {
 			EnigmaticLegacy.miningCharm.removeNightVisionEffect(player, this.nightVisionDuration);
 			player.getAttributes().removeAttributeModifiers(this.createAttributeMap(player));
 		}
@@ -205,10 +215,12 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		if (context.entity() instanceof Player player && !player.level.isClientSide)
+		if (context.entity() instanceof ServerPlayer player)
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.oceanStone)) {
 				if (player.isEyeInFluid(FluidTags.WATER)) {
+					EnigmaticEventHandler.isApplyingNightVision = true;
 					player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
+					EnigmaticEventHandler.isApplyingNightVision = false;
 					player.setAirSupply(300);
 				} else {
 					EnigmaticLegacy.miningCharm.removeNightVisionEffect(player, this.nightVisionDuration);

@@ -1,14 +1,19 @@
 package com.integral.enigmaticlegacy.handlers;
 
+import static com.integral.enigmaticlegacy.EnigmaticLegacy.cursedRing;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -18,6 +23,7 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
@@ -27,9 +33,12 @@ import com.integral.enigmaticlegacy.api.generic.ConfigurableItem;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.IPerhaps;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
+import com.integral.enigmaticlegacy.api.quack.IProperShieldUser;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
+import com.integral.enigmaticlegacy.items.GolemHeart;
+import com.integral.enigmaticlegacy.items.InfernalShield;
 import com.integral.enigmaticlegacy.items.TheAcknowledgment;
 import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.integral.enigmaticlegacy.objects.DimensionalPosition;
@@ -37,6 +46,7 @@ import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
+import com.integral.enigmaticlegacy.packets.clients.PacketUpdateCompass;
 import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 import com.mojang.datafixers.util.Pair;
@@ -58,12 +68,15 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootPool.Builder;
@@ -79,15 +92,20 @@ import net.minecraft.nbt.ByteTag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.level.block.EndPortalBlock;
+import net.minecraft.world.level.block.NetherPortalBlock;
 import net.minecraft.world.level.block.entity.BeaconBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Tuple;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.phys.AABB;
@@ -107,6 +125,7 @@ import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -115,7 +134,9 @@ import net.minecraftforge.forgespi.language.ModFileScanData;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.SlotTypeMessage;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
@@ -133,17 +154,18 @@ public class SuperpositionHandler {
 	public static final char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
 	public static final UUID SCROLL_SLOT_UUID = UUID.fromString("ae465e52-ffc2-4f57-b09a-066aa0cea3d4");
 	public static final UUID SPELLSTONE_SLOT_UUID = UUID.fromString("63df175a-0d6d-4163-8ef1-218bcb42feba");
+	public static final UUID RING_SLOT_UUID = UUID.fromString("76012386-aa31-4c17-8d6a-e9dd29affcb0");
 
 	public static boolean hasAdvancedCurios(final LivingEntity entity) {
 		return SuperpositionHandler.getAdvancedCurios(entity).size() > 0;
 	}
 
 	public static boolean unlockSpecialSlot(String slot, Player player) {
-		if (!slot.equals("scroll") && !slot.equals("spellstone"))
+		if (!slot.equals("scroll") && !slot.equals("spellstone") && !slot.equals("ring"))
 			throw new IllegalArgumentException("Slot type '" + slot + "' is not supported!");
 
 		MutableBoolean success = new MutableBoolean(false);
-		UUID id = slot.equals("scroll") ? SCROLL_SLOT_UUID : SPELLSTONE_SLOT_UUID;
+		UUID id = slot.equals("scroll") ? SCROLL_SLOT_UUID : (slot.equals("spellstone") ? SPELLSTONE_SLOT_UUID : RING_SLOT_UUID);
 
 		ICuriosHelper apiHelper = CuriosApi.getCuriosHelper();
 
@@ -254,6 +276,42 @@ public class SuperpositionHandler {
 		});
 	}
 
+	public static boolean tryForceEquip(LivingEntity entity, ItemStack curio) {
+		if (!(curio.getItem() instanceof ICurioItem))
+			throw new IllegalArgumentException("I fear for now this only works with ICurioItem");
+
+		MutableBoolean equipped = new MutableBoolean(false);
+		ICurioItem item = (ICurioItem) curio.getItem();
+
+		CuriosApi.getCuriosHelper().getCuriosHandler(entity).ifPresent(handler -> {
+			if (!entity.level.isClientSide) {
+				Map<String, ICurioStacksHandler> curios = handler.getCurios();
+
+				cycle: for (Map.Entry<String, ICurioStacksHandler> entry : curios.entrySet()) {
+					IDynamicStackHandler stackHandler = entry.getValue().getStacks();
+
+					for (int i = 0; i < stackHandler.getSlots(); i++) {
+						ItemStack present = stackHandler.getStackInSlot(i);
+						Set<String> tags = CuriosApi.getCuriosHelper().getCurioTags(curio.getItem());
+						String id = entry.getKey();
+
+						SlotContext context = new SlotContext(id, entity, i, false, entry.getValue().isVisible());
+
+						if (present.isEmpty() && (tags.contains(id) || tags.contains("curio")) && item.canEquip(context, curio)) {
+							stackHandler.setStackInSlot(i, curio);
+							item.playRightClickEquipSound(entity, curio);
+							equipped.setTrue();
+							break cycle;
+						}
+					}
+				}
+
+			}
+		});
+
+		return equipped.booleanValue();
+	}
+
 	/**
 	 * Sends message to Curios API in order to register specified Curio type. Should
 	 * be used within InterModEnqueueEvent.
@@ -334,21 +392,27 @@ public class SuperpositionHandler {
 	 */
 
 	@Nullable
-	public static LivingEntity getObservedEntity(final Player player, final Level world, final float range, final int maxDist) {
-		LivingEntity newTarget = null;
+	public static LivingEntity getObservedEntity(Player player, Level world, float range, int maxDist) {
+		List<LivingEntity> entities = getObservedEntities(player, world, range, maxDist, true);
+		return entities.size() > 0 ? entities.get(0) : null;
+	}
+
+	public static List<LivingEntity> getObservedEntities(Player player, Level world, float range, int maxDist, boolean stopWhenFound) {
 		Vector3 target = Vector3.fromEntityCenter(player);
-		List<LivingEntity> entities = new ArrayList<LivingEntity>();
-		for (int distance = 1; entities.size() == 0 && distance < maxDist; ++distance) {
+		List<LivingEntity> entities = new ArrayList<>();
+
+		for (int distance = 1; distance < maxDist; ++distance) {
 			target = target.add(new Vector3(player.getLookAngle()).multiply(distance)).add(0.0, 0.5, 0.0);
-			entities = player.level.getEntitiesOfClass(LivingEntity.class, new AABB(target.x - range, target.y - range, target.z - range, target.x + range, target.y + range, target.z + range));
-			if (entities.contains(player)) {
-				entities.remove(player);
+			List<LivingEntity> list = player.level.getEntitiesOfClass(LivingEntity.class, new AABB(target.x - range, target.y - range, target.z - range, target.x + range, target.y + range, target.z + range));
+			list.removeIf(entity -> entity == player || !player.hasLineOfSight(entity));
+			entities.addAll(list);
+
+			if (stopWhenFound && entities.size() > 0) {
+				break;
 			}
 		}
-		if (entities.size() > 0) {
-			newTarget = entities.get(0);
-		}
-		return newTarget;
+
+		return entities;
 	}
 
 	@Nullable
@@ -441,20 +505,16 @@ public class SuperpositionHandler {
 	 */
 
 	public static boolean validTeleport(Entity entity, double x_init, double y_init, double z_init, Level world, int checkAxis) {
-
 		int x = (int) x_init;
 		int y = (int) y_init;
 		int z = (int) z_init;
 
 		BlockState block = world.getBlockState(new BlockPos(x, y - 1, z));
 
-		if (world.isEmptyBlock(new BlockPos(x, y - 1, z)) & block.canOcclude()) {
-
+		if (!world.isEmptyBlock(new BlockPos(x, y - 1, z)) && block.canOcclude()) {
 			for (int counter = 0; counter <= checkAxis; counter++) {
-
-				if (!world.isEmptyBlock(new BlockPos(x, y + counter - 1, z)) & world.getBlockState(new BlockPos(x, y + counter - 1, z)).canOcclude() & world.isEmptyBlock(new BlockPos(x, y + counter, z)) & world.isEmptyBlock(new BlockPos(x, y + counter + 1, z))) {
-
-					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+				if (!world.isEmptyBlock(new BlockPos(x, y + counter - 1, z)) && world.getBlockState(new BlockPos(x, y + counter - 1, z)).canOcclude() && world.isEmptyBlock(new BlockPos(x, y + counter, z)) && world.isEmptyBlock(new BlockPos(x, y + counter + 1, z))) {
+					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level.dimension())), new PacketPortalParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 72, 1.0F, false));
 
@@ -465,22 +525,15 @@ public class SuperpositionHandler {
 						((LivingEntity) entity).teleportTo(x + 0.5, y + counter, z + 0.5);
 					}
 
-					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-
+					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level.dimension())), new PacketRecallParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 48, false));
-
 					return true;
 				}
-
 			}
-
 		} else {
-
 			for (int counter = 0; counter <= checkAxis; counter++) {
-
-				if (!world.isEmptyBlock(new BlockPos(x, y - counter - 1, z)) & world.getBlockState(new BlockPos(x, y - counter - 1, z)).canOcclude() & world.isEmptyBlock(new BlockPos(x, y - counter, z)) & world.isEmptyBlock(new BlockPos(x, y - counter + 1, z))) {
-
-					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+				if (!world.isEmptyBlock(new BlockPos(x, y - counter - 1, z)) && world.getBlockState(new BlockPos(x, y - counter - 1, z)).canOcclude() && world.isEmptyBlock(new BlockPos(x, y - counter, z)) && world.isEmptyBlock(new BlockPos(x, y - counter + 1, z))) {
+					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level.dimension())), new PacketRecallParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 48, false));
 
 					if (entity instanceof ServerPlayer) {
@@ -490,14 +543,11 @@ public class SuperpositionHandler {
 						((LivingEntity) entity).teleportTo(x + 0.5, y - counter, z + 0.5);
 					}
 
-					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.HOSTILE, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
+					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level.dimension())), new PacketRecallParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 48, false));
-
 					return true;
 				}
-
 			}
-
 		}
 
 		return false;
@@ -1033,7 +1083,7 @@ public class SuperpositionHandler {
 					}
 
 					int range = (beacon.levels + 1) * 10;
-					double distance = Math.sqrt(beacon.getBlockPos().distSqr(player.getX(), beacon.getBlockPos().getY(), player.getZ(), true));
+					double distance = Math.sqrt(beacon.getBlockPos().distToCenterSqr(player.getX(), beacon.getBlockPos().getY(), player.getZ()));
 
 					if (distance <= range) {
 						inRange = true;
@@ -1046,6 +1096,17 @@ public class SuperpositionHandler {
 
 	public static boolean hasItem(Player player, Item item) {
 		return player.getInventory().contains(new ItemStack(item));
+	}
+
+	public static boolean hasExactStack(Player player, ItemStack stack) {
+		for (List<ItemStack> list : player.getInventory().compartments) {
+			for (ItemStack inventoryStack : list) {
+				if (inventoryStack == stack)
+					return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -1099,13 +1160,17 @@ public class SuperpositionHandler {
 		return SuperpositionHandler.getWorld(EnigmaticLegacy.proxy.getEndKey());
 	}
 
-	public static void sendToDimension(ServerPlayer player, ResourceKey<Level> dimension) {
+	public static void sendToDimension(ServerPlayer player, ResourceKey<Level> dimension, ITeleporter teleporter) {
 		if (!player.level.dimension().equals(dimension)) {
 			ServerLevel world = SuperpositionHandler.getWorld(dimension);
 			if (world != null) {
-				player.changeDimension(world, new RealSmoothTeleporter());
+				player.changeDimension(world, teleporter);
 			}
 		}
+	}
+
+	public static void sendToDimension(ServerPlayer player, ResourceKey<Level> dimension) {
+		sendToDimension(player, dimension, new RealSmoothTeleporter());
 	}
 
 	public static ServerLevel backToSpawn(ServerPlayer serverPlayer) {
@@ -1197,6 +1262,62 @@ public class SuperpositionHandler {
 
 	public static boolean isTheCursedOne(Player player) {
 		return SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing);
+	}
+
+	public static boolean isTheWorthyOne(Player player) {
+		if (isTheCursedOne(player)) {
+			int timeWithRing = EnigmaticLegacy.proxy.getTimeWithCurses(player);
+			int timeWithoutRing = EnigmaticLegacy.proxy.getTimeWithoutCurses(player);
+
+			if (timeWithRing <= 0)
+				return false;
+			else if (timeWithoutRing <= 0)
+				return true;
+
+			return timeWithRing/timeWithoutRing >= 199;
+		} else
+			return false;
+	}
+
+	public static String getSufferingTime(@Nullable Player player) {
+		if (player == null)
+			return "0%";
+		else {
+			int timeWithRing = EnigmaticLegacy.proxy.getTimeWithCurses(player);
+			int timeWithoutRing = EnigmaticLegacy.proxy.getTimeWithoutCurses(player);
+
+			if (timeWithRing <= 0)
+				return "0%";
+			else if (timeWithoutRing <= 0)
+				return "100%";
+
+			if (timeWithRing > 100000 || timeWithoutRing > 100000) {
+				timeWithRing = timeWithRing / 100;
+				timeWithoutRing = timeWithoutRing / 100;
+
+				if (timeWithRing <= 0)
+					return "0%";
+				else if (timeWithoutRing <= 0)
+					return "100%";
+			}
+
+			double total = timeWithRing + timeWithoutRing;
+			double ringPercent = (timeWithRing / total) * 100;
+			ringPercent = Math.round(ringPercent * 10.0)/10.0;
+			String text = "";
+
+			if (ringPercent - Math.round(ringPercent) == 0) {
+				text += ((int)ringPercent) + "%";
+			} else {
+				text += ringPercent + "%";
+			}
+
+			if ("99.5%".equals(text) && !isTheWorthyOne(player)) {
+				text = "99.4%";
+			}
+
+			return text;
+		}
 	}
 
 	public static float getMissingHealthPool(Player player) {
@@ -1303,7 +1424,7 @@ public class SuperpositionHandler {
 		int armorAmount = 0;
 
 		for (ItemStack stack : entity.getArmorSlots()) {
-			if (!stack.isEmpty()) {
+			if (!stack.isEmpty() && !GolemHeart.EXCLUDED_ARMOR.stream().anyMatch(stack::is)) {
 				armorAmount++;
 			}
 		}
@@ -1440,6 +1561,17 @@ public class SuperpositionHandler {
 			return "" + num;
 	}
 
+	public static Optional<Tuple<UUID, BlockPos>> updateSoulCompass(ServerPlayer player) {
+		var optional = SoulArchive.getInstance().findNearest(player.level, player.blockPosition());
+		boolean noValid = optional.isEmpty();
+		BlockPos pos = noValid ? BlockPos.ZERO : optional.get().getB();
+
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with((() -> player)),
+				new PacketUpdateCompass(pos.getX(), pos.getY(), pos.getZ(), noValid));
+		EnigmaticEventHandler.lastSoulCompassUpdate.put(player, player.tickCount);
+		return optional;
+	}
+
 	/**
 	 * Merges enchantments from mergeFrom onto input ItemStack, with exact same
 	 * rules as vanilla Anvil when used in Survival Mode.
@@ -1487,6 +1619,120 @@ public class SuperpositionHandler {
 
 		EnchantmentHelper.setEnchantments(inputEnchants, returnedStack);
 		return returnedStack;
+	}
+
+	public static ItemStack maybeApplyEternalBinding(ItemStack stack) {
+		if (Math.random() < 0.5)
+			if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BINDING_CURSE, stack) > 0) {
+				Map<Enchantment, Integer> map =  EnchantmentHelper.getEnchantments(stack);
+
+				map.remove(Enchantments.VANISHING_CURSE);
+				int level = map.remove(Enchantments.BINDING_CURSE);
+				map.put(EnigmaticLegacy.eternalBindingCurse, level);
+				EnchantmentHelper.setEnchantments(map, stack);
+			}
+
+		return stack;
+	}
+
+	public static void onDamageSourceBlocking(LivingEntity blocker, ItemStack useItem, DamageSource source, CallbackInfoReturnable<Boolean> info) {
+		if (blocker instanceof Player player && useItem != null) {
+			boolean blocking = ((IProperShieldUser)blocker).isActuallyReallyBlocking();
+
+			if (blocking && useItem.getItem() instanceof InfernalShield) {
+				boolean piercingArrow = false;
+				Entity entity = source.getDirectEntity();
+
+				if (entity instanceof AbstractArrow) {
+					AbstractArrow abstractarrow = (AbstractArrow)entity;
+					if (abstractarrow.getPierceLevel() > 0) {
+						piercingArrow = true;
+					}
+				}
+
+				piercingArrow = false; // defend against Piercing... for now
+
+				if (!source.isBypassArmor() && ((IProperShieldUser)blocker).isActuallyReallyBlocking() && !piercingArrow) {
+					Vec3 sourcePos = source.getSourcePosition();
+					if (sourcePos != null) {
+						Vec3 lookVec = blocker.getViewVector(1.0F);
+						Vec3 sourceToSelf = sourcePos.vectorTo(blocker.position()).normalize();
+						sourceToSelf = new Vec3(sourceToSelf.x, 0.0D, sourceToSelf.z);
+						if (sourceToSelf.dot(lookVec) < 0.0D) {
+							info.setReturnValue(true);
+
+							int strength = -1;
+
+							if (player.hasEffect(EnigmaticLegacy.blazingStrengthEffect)) {
+								MobEffectInstance effectInstance = player.getEffect(EnigmaticLegacy.blazingStrengthEffect);
+								strength = effectInstance.getAmplifier();
+								player.removeEffect(EnigmaticLegacy.blazingStrengthEffect);
+								strength = strength > 2 ? 2 : strength;
+							}
+
+							player.addEffect(new MobEffectInstance(EnigmaticLegacy.blazingStrengthEffect, 1200, strength + 1, true, true));
+
+							if (source.getDirectEntity() instanceof LivingEntity living && living.isAlive()) {
+								if (!living.fireImmune() && !(living instanceof Guardian)) {
+									StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
+
+									// Ensure that we will not be caught in any sort of StackOverflow because of thorns-like effects
+									if (Arrays.stream(stacktrace).filter(element -> {
+										return SuperpositionHandler.class.getName().equals(element.getClassName());
+									}).count() < 2) {
+										living.invulnerableTime = 0;
+										living.hurt(new EntityDamageSource(DamageSource.ON_FIRE.msgId, player), 4F);
+										living.setSecondsOnFire(4);
+										EnigmaticEventHandler.knockbackThatBastard.remove(living);
+									}
+								}
+							}
+
+							return;
+						}
+					}
+				}
+
+				info.setReturnValue(false);
+				return;
+			}
+		}
+	}
+
+	@SafeVarargs
+	public static <T> T getRandomElement(List<T> list, T... excluding) {
+		List<T> filtered = new ArrayList<>(list);
+		Arrays.stream(excluding).forEach(filtered::remove);
+
+		if (filtered.size() <= 0)
+			throw new IllegalArgumentException("List has no valid elements to choose");
+		else if (filtered.size() == 1)
+			return filtered.get(0);
+		else
+			return filtered.get(random.nextInt(filtered.size()));
+	}
+
+	public static String getMD5Hash(String string) {
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(string.getBytes());
+			return bytesToHex(md.digest()).toUpperCase();
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+
+	public static String bytesToHex(byte[] bytes) {
+		char[] hexArray = "0123456789ABCDEF".toCharArray();
+
+		char[] hexChars = new char[bytes.length * 2];
+		for (int j = 0; j < bytes.length; j++) {
+			int v = bytes[j] & 0xFF;
+			hexChars[j * 2] = hexArray[v >>> 4];
+			hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+		}
+
+		return new String(hexChars);
 	}
 
 }

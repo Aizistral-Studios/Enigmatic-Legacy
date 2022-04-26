@@ -14,6 +14,7 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.HoeItem;
@@ -29,7 +30,7 @@ public abstract class ItemBaseTool extends DiggerItem {
 	public Set<ToolAction> toolActions;
 	public ItemStack defaultInstance;
 
-	public ItemBaseTool(float attackDamageIn, float attackSpeedIn, Tier tier, Tag<Block> effectiveBlocksIn, Properties builder) {
+	public ItemBaseTool(float attackDamageIn, float attackSpeedIn, Tier tier, TagKey<Block> effectiveBlocksIn, Properties builder) {
 		super(attackDamageIn, attackSpeedIn, tier, effectiveBlocksIn, builder);
 
 		this.effectiveMaterials = Sets.newHashSet();

@@ -50,9 +50,19 @@ public class TransientPlayerData {
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), blockRadius, player.level.dimension())), new PacketSyncTransientData(this));
 	}
 
+	public void syncToAllClients() {
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.ALL.noArg(), new PacketSyncTransientData(this));
+	}
+
 	public void syncToPlayer() {
 		if (this.getPlayer() instanceof ServerPlayer) {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) this.getPlayer()), new PacketSyncTransientData(this));
+		}
+	}
+
+	public void syncToPlayer(ServerPlayer player) {
+		if (this.getPlayer() instanceof ServerPlayer) {
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player), new PacketSyncTransientData(this));
 		}
 	}
 

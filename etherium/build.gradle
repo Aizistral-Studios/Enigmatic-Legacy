@@ -56,6 +56,7 @@ jar {
 		include 'sounds/misc/hhoff.ogg'
 		include 'sounds/misc/shield_trigger.ogg'
 		include 'sounds/misc/shield_hit_?.ogg'
+		include 'textures/blocks/*etherium*.png*'
 		include 'textures/items/*etherium*.png*'
 		include 'textures/items/*ender_rod*.png*'
 		into 'assets/etherium'
@@ -102,7 +103,7 @@ processResources {
         include 'changelog.html'
     }
 	
-	from("${rootProject.projectDir}/docs") {
-        include 'LICENSE'
+	from("${rootProject.projectDir}") {
+        include 'LICENSE.md'
 	}
 }

@@ -1,0 +1,31 @@
+{
+    "name": "book.enigmaticlegacy.entry.abyssal_heart.name",
+    "icon": "enigmaticlegacy:abyssal_heart",
+    "category": "enigmaticlegacy:materials",
+	"advancement": "enigmaticlegacy:book/materials/abyssal_heart",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 90,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.abyssal_heart.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "enigmaticlegacy:abyssal_heart",
+			"link_recipe": true,
+            "title": "book.enigmaticlegacy.entry.abyssal_heart.heading.1",
+            "text": "book.enigmaticlegacy.entry.abyssal_heart.page.2"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.abyssal_heart.page.3"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.abyssal_heart.page.4"
+        }
+    ]
+}

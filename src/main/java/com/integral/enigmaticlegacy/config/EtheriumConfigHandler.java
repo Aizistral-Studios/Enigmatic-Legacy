@@ -1,16 +1,24 @@
 package com.integral.enigmaticlegacy.config;
 
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.UnaryOperator;
+
+import javax.annotation.Nullable;
+
 import com.google.common.base.Preconditions;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.objects.Perhaps;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
 import com.integral.etherium.core.IEtheriumConfig;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ArmorMaterial;
@@ -32,6 +40,8 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 	private static Omniconfig.IntParameter shovelMiningRadius;
 	private static Omniconfig.IntParameter shovelMiningDepth;
 	private static Omniconfig.IntParameter swordCooldown;
+	public static BiFunction<Player, Perhaps, Perhaps> shieldOperator = (one, two) -> two;
+	public static BiFunction<Player, Integer, Integer> aoeOperator = (one, two) -> two;
 
 	public EtheriumConfigHandler() {
 		Preconditions.checkArgument(instance == null, "Etherium config handler already created!");
@@ -123,12 +133,14 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 	}
 
 	@Override
-	public void knockBack(Player entityIn, float strength, double xRatio, double zRatio) {
+	public void knockBack(LivingEntity entityIn, float strength, double xRatio, double zRatio) {
 		entityIn.hasImpulse = true;
 		Vec3 vec3d = new Vec3(0D, 0D, 0D);
 		Vec3 vec3d1 = (new Vec3(xRatio, 0.0D, zRatio)).normalize().scale(strength);
 
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) entityIn), new PacketPlayerMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z));
+		if (entityIn instanceof ServerPlayer) {
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) entityIn), new PacketPlayerMotion(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z));
+		}
 		entityIn.setDeltaMovement(vec3d.x / 2.0D - vec3d1.x, entityIn.isOnGround() ? Math.min(0.4D, vec3d.y / 2.0D + strength) : vec3d.y, vec3d.z / 2.0D - vec3d1.z);
 	}
 
@@ -148,8 +160,8 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 	}
 
 	@Override
-	public Perhaps getShieldThreshold() {
-		return shieldThreshold.getValue();
+	public Perhaps getShieldThreshold(@Nullable Player player) {
+		return shieldOperator.apply(player, shieldThreshold.getValue());
 	}
 
 	@Override
@@ -220,6 +232,11 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 	@Override
 	public boolean isStandalone() {
 		return false;
+	}
+
+	@Override
+	public int getAOEBoost(@Nullable Player player) {
+		return player != null ? aoeOperator.apply(player, 0) : 0;
 	}
 
 }

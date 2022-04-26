@@ -1,0 +1,51 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "criteria": {
+    "has_item_1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:abyssal_heart"]
+          }
+        ]
+      }
+    },
+    "has_item_2": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:ascension_amulet"]
+          }
+        ]
+      }
+    },
+	"has_recipe_result": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:eldritch_amulet"]
+          }
+        ]
+      }
+    },
+	"is_the_cursed_one": {
+      "trigger": "enigmaticlegacy:equip_cursed_ring"
+    }
+  },
+  "requirements": [
+    [
+      "has_recipe_result",
+	  "has_item_1"
+    ],
+	[
+	  "has_recipe_result",
+	  "has_item_2"
+	],
+	[
+	  "is_the_cursed_one"
+	]
+  ]
+}

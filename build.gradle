@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-		mavenLocal()
+		maven { url "file:///${project.projectDir}/deps/" }
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url = 'https://maven.parchmentmc.org' }
         maven {
@@ -65,9 +65,11 @@ dependencies {
     annotationProcessor 'org.ow2.asm:asm-util:7.2'
 	
 	// These are 1.18 dependencies
-	compileOnly fg.deobf('generic:curios:forge-1.18.1-5.0.5.2')
-	compileOnly fg.deobf('generic:Patchouli:1.18.1-64')
+	compileOnly fg.deobf('generic:curios:forge-1.18.2-5.0.6.3')
+	compileOnly fg.deobf('generic:Patchouli:1.18.2-66')
 	compileOnly fg.deobf('generic:WorldNameRandomizer:FORGE-1.18.1-v1.3.0')
+	compileOnly fg.deobf('generic:Quark:3.2-346')
+	compileOnly fg.deobf('generic:AutoRegLib:1.7-53')
 	
 	// These are 1.17 dependencies
 	//compileOnly fg.deobf('generic:curios:forge-1.17.1-5.0.2.7-spec')
@@ -98,12 +100,26 @@ dependencies {
 
 }
 
-jar {
+tasks.withType(Jar) {
     manifest {
         attributes([
             "MixinConnector": "${project.group}.MixinConnector"
         ])
     }
+}
+
+task finalJar(type: Jar) {
+	classifier = 'final'
+	
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from zipTree('build/libs/' + archivesBaseName + '-' + version + '.jar')
+	from zipTree('lockbox/EnigmaticLockbox-' + lockbox_version + '.jar')
+}
+
+task renameJar {
+	doLast {
+		ant.move(file: 'build/libs/' + archivesBaseName + '-' + version + '-final.jar', tofile: 'build/libs/' + archivesBaseName + '-' + version + '.jar')
+	}
 }
 
 processResources {
@@ -139,15 +155,21 @@ processResources {
 		'dep_forge': dep_forge, 
 		'dep_minecraft': dep_minecraft, 
 		'dep_patchouli': dep_patchouli, 
-		'dep_curios': dep_curios
+		'dep_curios': dep_curios,
+		'lockbox_id': lockbox_id,
+		'lockbox_name': lockbox_name,
+		'lockbox_version': lockbox_version,
+		'lockbox_credits': lockbox_credits,
+		'lockbox_description': lockbox_description
 		rename 'mods.toml', "META-INF/mods.toml"
     }
 
     from("${project.projectDir}/docs") {
-		println("Including documentation...")	
-		// Include a license and changelog into build .jar
         include 'changelog.html'
-        include 'LICENSE'
+    }
+
+    from("${project.projectDir}") {
+       include 'LICENSE.md'
     }
 }
 
@@ -156,3 +178,10 @@ task updateResources() {
 }
 
 tasks.updateResources.dependsOn processResources
+
+project.afterEvaluate {
+	reobfJar.finalizedBy('finalJar')
+	finalJar.finalizedBy('renameJar')
+	
+	tasks.named('curseforge').get().dependsOn('finalJar')
+}

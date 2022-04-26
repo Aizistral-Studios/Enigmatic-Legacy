@@ -64,10 +64,6 @@ public class TheTwist extends TheAcknowledgment implements ICursed {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, Level world, List<Component> list, TooltipFlag flag) {
-		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist1");
-		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist2");
-		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-
 		if (Screen.hasShiftDown()) {
 			if (Minecraft.getInstance().player != null && SuperpositionHandler.isTheCursedOne(Minecraft.getInstance().player)) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist4");
@@ -77,11 +73,18 @@ public class TheTwist extends TheAcknowledgment implements ICursed {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist6", ChatFormatting.GOLD, bossDamageBonus + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist7", ChatFormatting.GOLD, knockbackBonus + "%");
 		} else {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theTwist2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		ItemLoreHelper.indicateCursedOnesOnly(list);
+
+		if (stack.isEnchanted()) {
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+		}
 
 		try {
 			//list.add(new TextComponent("").append(TheAcknowledgment.getEdition()).mergeStyle(ChatFormatting.DARK_PURPLE));
@@ -92,6 +95,9 @@ public class TheTwist extends TheAcknowledgment implements ICursed {
 
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
+		if (!SuperpositionHandler.isTheCursedOne(player))
+			return InteractionResultHolder.pass(player.getItemInHand(hand));
+
 		if (hand == InteractionHand.MAIN_HAND) {
 			ItemStack offhandStack = player.getOffhandItem();
 

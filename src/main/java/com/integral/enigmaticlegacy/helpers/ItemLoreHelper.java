@@ -8,6 +8,7 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -36,6 +37,23 @@ public class ItemLoreHelper {
 
 		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.cursedOnesOnly1").withStyle(format));
 		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.cursedOnesOnly2").withStyle(format));
+
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public static void indicateWorthyOnesOnly(List<Component> list) {
+		ChatFormatting format = ChatFormatting.DARK_RED;
+		Player player = Minecraft.getInstance().player;
+
+		if (player != null) {
+			format = SuperpositionHandler.isTheWorthyOne(Minecraft.getInstance().player) ? ChatFormatting.GOLD : ChatFormatting.DARK_RED;
+		}
+
+		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.worthyOnesOnly1"));
+		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.worthyOnesOnly2"));
+		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.worthyOnesOnly3"));
+		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.void"));
+		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.worthyOnesOnly4").withStyle(format).append(new TextComponent(" " + SuperpositionHandler.getSufferingTime(player)).withStyle(ChatFormatting.LIGHT_PURPLE)));
 
 	}
 

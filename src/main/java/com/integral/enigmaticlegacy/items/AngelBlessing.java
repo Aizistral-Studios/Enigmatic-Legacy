@@ -19,14 +19,19 @@ import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerChunkCache;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.entity.projectile.WitherSkull;
@@ -37,6 +42,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSetEntityMotionPacket;
+import net.minecraft.network.protocol.game.ClientboundTeleportEntityPacket;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -44,6 +51,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.PacketDistributor;
 import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.type.capability.ICurio.SoundInfo;
 
 public class AngelBlessing extends ItemSpellstoneCurio  {
 	public static Omniconfig.IntParameter spellstoneCooldown;
@@ -91,22 +99,31 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 	}
 
 	@Override
+	public int getCooldown(Player player) {
+		if (player != null && reducedCooldowns.test(player))
+			return 15;
+		else
+			return spellstoneCooldown.getValue();
+	}
+
+	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
-
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessingCooldown", ChatFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessingCooldown", ChatFormatting.GOLD, ((this.getCooldown(Minecraft.getInstance().player))) / 20.0F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing4");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing5", ChatFormatting.GOLD, deflectChance.getValue().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing6");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing7");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing8");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.angelBlessing9");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -141,7 +158,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 
 		world.playSound(null, player.blockPosition(), SoundEvents.ENDER_EYE_LAUNCH, SoundSource.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
 
-		SuperpositionHandler.setSpellstoneCooldown(player, spellstoneCooldown.getValue());
+		SuperpositionHandler.setSpellstoneCooldown(player, this.getCooldown(player));
 	}
 
 	@Override
@@ -153,7 +170,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 
 		List<AbstractHurtingProjectile> projectileEntities = living.level.getEntitiesOfClass(AbstractHurtingProjectile.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
 		List<AbstractArrow> arrowEntities = living.level.getEntitiesOfClass(AbstractArrow.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
-		List<ThrownPotion> potionEntities = living.level.getEntitiesOfClass(ThrownPotion.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
+		List<ThrowableItemProjectile> potionEntities = living.level.getEntitiesOfClass(ThrowableItemProjectile.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
 
 		for (AbstractHurtingProjectile entity : projectileEntities) {
 			this.redirect(living, entity);
@@ -163,7 +180,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 			this.redirect(living, entity);
 		}
 
-		for (ThrownPotion entity : potionEntities) {
+		for (ThrowableItemProjectile entity : potionEntities) {
 			this.redirect(living, entity);
 		}
 	}
@@ -178,7 +195,22 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 		Vector3 redirection = entityPos.subtract(bearerPos);
 		redirection = redirection.normalize();
 
-		if (redirected instanceof AbstractArrow && ((AbstractArrow) redirected).getOwner() == bearer) {
+		if ((redirected instanceof AbstractArrow arrow && arrow.getOwner() == bearer)
+				|| (redirected instanceof ThrowableItemProjectile projectile && projectile.getOwner() == bearer)) {
+			if (redirected.getTags().contains("AB_ACCELERATED")) {
+				if (redirected.level instanceof ServerLevel level) {
+					//ServerChunkCache cache = level.getChunkSource();
+					//cache.broadcastAndSend(redirected, new ClientboundSetEntityMotionPacket(redirected));
+					//cache.broadcastAndSend(redirected, new ClientboundTeleportEntityPacket(redirected));
+					//EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(bearer.getX(), bearer.getY(), bearer.getZ(), 64.0D, bearer.level.dimension())), new PacketForceArrowRotations(redirected.getId(), redirected.getYRot(), redirected.getXRot(), redirected.getDeltaMovement().x, redirected.getDeltaMovement().y, redirected.getDeltaMovement().z, redirected.getX(), redirected.getY(), redirected.getZ()));
+				}
+
+				return;
+			}
+
+			if (redirected.getTags().stream().anyMatch(tag -> tag.startsWith("AB_DEFLECTED")))
+				return;
+
 			if (redirected instanceof ThrownTrident) {
 				ThrownTrident trident = (ThrownTrident) redirected;
 
@@ -186,8 +218,15 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 					return;
 			}
 
-			redirected.setDeltaMovement(redirected.getDeltaMovement().x * 1.75D, redirected.getDeltaMovement().y * 1.75D, redirected.getDeltaMovement().z * 1.75D);
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(bearer.getX(), bearer.getY(), bearer.getZ(), 64.0D, bearer.level.dimension())), new PacketForceArrowRotations(redirected.getId(), redirected.getYRot(), redirected.getXRot(), redirected.getDeltaMovement().x, redirected.getDeltaMovement().y, redirected.getDeltaMovement().z, redirected.getX(), redirected.getY(), redirected.getZ()));
+			if (redirected.addTag("AB_ACCELERATED")) {
+				redirected.setDeltaMovement(redirected.getDeltaMovement().x * 1.75D, redirected.getDeltaMovement().y * 1.75D, redirected.getDeltaMovement().z * 1.75D);
+
+				if (redirected.level instanceof ServerLevel level) {
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(bearer.getX(), bearer.getY(), bearer.getZ(), 64.0D, bearer.level.dimension())), new PacketForceArrowRotations(redirected.getId(), redirected.getYRot(), redirected.getXRot(), redirected.getDeltaMovement().x, redirected.getDeltaMovement().y, redirected.getDeltaMovement().z, redirected.getX(), redirected.getY(), redirected.getZ()));
+				}
+
+				//EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(bearer.getX(), bearer.getY(), bearer.getZ(), 64.0D, bearer.level.dimension())), new PacketForceArrowRotations(redirected.getId(), redirected.getYRot(), redirected.getXRot(), redirected.getDeltaMovement().x, redirected.getDeltaMovement().y, redirected.getDeltaMovement().z, redirected.getX(), redirected.getY(), redirected.getZ()));
+			}
 		} else {
 			// redirected.setDeltaMovement(redirection.x, redirection.y, redirection.z);
 		}
@@ -201,5 +240,4 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 		}
 		 */
 	}
-
 }

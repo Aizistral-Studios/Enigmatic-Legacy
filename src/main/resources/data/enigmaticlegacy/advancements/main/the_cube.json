@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:the_cube"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:theCube"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:theCube.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true,
+    "frame": "goal"
+  },
+  "parent": "enigmaticlegacy:main/all_spellstones",
+  "criteria": {
+    "spellstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:the_cube"]
+          }
+        ]
+      }
+    }
+  }
+}

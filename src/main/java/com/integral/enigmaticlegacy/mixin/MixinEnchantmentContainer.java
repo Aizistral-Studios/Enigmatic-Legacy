@@ -46,62 +46,62 @@ public abstract class MixinEnchantmentContainer extends AbstractContainerMenu {
 			// so we need to forget our own class to avoid alerting the compiler
 			EnchantmentMenu container = (EnchantmentMenu) (Object) this;
 
-			if (SuperpositionHandler.isTheCursedOne(player))
-				if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.enchanterPearl) || SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enchanterPearl)) {
-					ItemStack inputItem = container.enchantSlots.getItem(0);
-					int levelsRequired = clickedID + 1;
+			if (EnigmaticLegacy.enchanterPearl.isPresent(player)) {
+				ItemStack inputItem = container.enchantSlots.getItem(0);
+				int levelsRequired = clickedID + 1;
 
-					if (container.costs[clickedID] <= 0 || inputItem.isEmpty() || (player.experienceLevel < levelsRequired || player.experienceLevel < container.costs[clickedID]) && !player.getAbilities().instabuild) {
-						info.setReturnValue(false);
-						return; // false;
-					} else {
-						container.access.execute((world, blockPos) -> {
-							ItemStack enchantedItem = inputItem;
-							List<EnchantmentInstance> rolledEnchantments = container.getEnchantmentList(inputItem, clickedID, container.costs[clickedID]);
-							if (!rolledEnchantments.isEmpty()) {
-								ItemStack doubleRoll = EnchantmentHelper.enchantItem(player.getRandom(), enchantedItem.copy(), Math.min(container.costs[clickedID]+7, 40), true);
+				if (container.costs[clickedID] <= 0 || inputItem.isEmpty() || (player.experienceLevel < levelsRequired || player.experienceLevel < container.costs[clickedID]) && !player.getAbilities().instabuild) {
+					info.setReturnValue(false);
+					return; // false;
+				} else {
+					container.access.execute((world, blockPos) -> {
+						ItemStack enchantedItem = inputItem;
+						List<EnchantmentInstance> rolledEnchantments = container.getEnchantmentList(inputItem, clickedID, container.costs[clickedID]);
+						if (!rolledEnchantments.isEmpty()) {
+							ItemStack doubleRoll = EnchantmentHelper.enchantItem(player.getRandom(), enchantedItem.copy(), Math.min(container.costs[clickedID]+7, 40), true);
 
-								player.onEnchantmentPerformed(inputItem, levelsRequired);
-								boolean isBookStack = inputItem.getItem() == Items.BOOK;
-								if (isBookStack) {
-									enchantedItem = new ItemStack(Items.ENCHANTED_BOOK);
-									CompoundTag compoundnbt = inputItem.getTag();
-									if (compoundnbt != null) {
-										enchantedItem.setTag(compoundnbt.copy());
-									}
-
-									container.enchantSlots.setItem(0, enchantedItem);
+							player.onEnchantmentPerformed(inputItem, levelsRequired);
+							boolean isBookStack = inputItem.getItem() == Items.BOOK;
+							if (isBookStack) {
+								enchantedItem = new ItemStack(Items.ENCHANTED_BOOK);
+								CompoundTag compoundnbt = inputItem.getTag();
+								if (compoundnbt != null) {
+									enchantedItem.setTag(compoundnbt.copy());
 								}
 
-								for(EnchantmentInstance enchantmentdata : rolledEnchantments) {
-									if (isBookStack) {
-										EnchantedBookItem.addEnchantment(enchantedItem, enchantmentdata);
-									} else {
-										enchantedItem.enchant(enchantmentdata.enchantment, enchantmentdata.level);
-									}
-								}
-
-								enchantedItem = SuperpositionHandler.mergeEnchantments(enchantedItem, doubleRoll, false, false);
 								container.enchantSlots.setItem(0, enchantedItem);
-
-								player.awardStat(Stats.ENCHANT_ITEM);
-								if (player instanceof ServerPlayer) {
-									CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer)player, enchantedItem, levelsRequired);
-								}
-
-								container.enchantSlots.setChanged();
-								container.enchantmentSeed.set(player.getEnchantmentSeed());
-								container.slotsChanged(container.enchantSlots);
-								world.playSound((Player)null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
 							}
 
-						});
+							for(EnchantmentInstance enchantmentdata : rolledEnchantments) {
+								if (isBookStack) {
+									EnchantedBookItem.addEnchantment(enchantedItem, enchantmentdata);
+								} else {
+									enchantedItem.enchant(enchantmentdata.enchantment, enchantmentdata.level);
+								}
+							}
 
-						info.setReturnValue(true);
-						return; // true;
-					}
+							enchantedItem = SuperpositionHandler.mergeEnchantments(enchantedItem, doubleRoll, false, false);
+							enchantedItem = SuperpositionHandler.maybeApplyEternalBinding(enchantedItem);
 
+							container.enchantSlots.setItem(0, enchantedItem);
+
+							player.awardStat(Stats.ENCHANT_ITEM);
+							if (player instanceof ServerPlayer) {
+								CriteriaTriggers.ENCHANTED_ITEM.trigger((ServerPlayer)player, enchantedItem, levelsRequired);
+							}
+
+							container.enchantSlots.setChanged();
+							container.enchantmentSeed.set(player.getEnchantmentSeed());
+							container.slotsChanged(container.enchantSlots);
+							world.playSound((Player)null, blockPos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F);
+						}
+
+					});
+
+					info.setReturnValue(true);
+					return; // true;
 				}
+			}
 		}
 
 	}
@@ -123,11 +123,10 @@ public abstract class MixinEnchantmentContainer extends AbstractContainerMenu {
 			}
 
 			if (containerUser != null) {
-				if (SuperpositionHandler.isTheCursedOne(containerUser))
-					if (SuperpositionHandler.hasItem(containerUser, EnigmaticLegacy.enchanterPearl) || SuperpositionHandler.hasCurio(containerUser, EnigmaticLegacy.enchanterPearl)) {
-						info.setReturnValue(64);
-						return;
-					}
+				if (EnigmaticLegacy.enchanterPearl.isPresent(containerUser)) {
+					info.setReturnValue(64);
+					return;
+				}
 			}
 		}
 	}

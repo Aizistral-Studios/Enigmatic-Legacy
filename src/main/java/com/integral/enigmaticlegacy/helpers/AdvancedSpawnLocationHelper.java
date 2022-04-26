@@ -105,7 +105,7 @@ public class AdvancedSpawnLocationHelper {
 	@Nullable
 	protected static BlockPos getOverworldRespawnPos(ServerLevel p_241092_0_, int p_241092_1_, int p_241092_2_, boolean p_241092_3_) {
 		BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos(p_241092_1_, 0, p_241092_2_);
-		Biome biome = p_241092_0_.getBiome(blockpos$mutable);
+		Biome biome = p_241092_0_.getBiome(blockpos$mutable).value();
 		boolean flag = p_241092_0_.dimensionType().hasCeiling();
 		LevelChunk chunk = p_241092_0_.getChunk(p_241092_1_ >> 4, p_241092_2_ >> 4);
 		int i = flag ? p_241092_0_.getChunkSource().getGenerator().getSpawnHeight(p_241092_0_) : chunk.getHeight(Heightmap.Types.MOTION_BLOCKING, p_241092_1_ & 15, p_241092_2_ & 15);

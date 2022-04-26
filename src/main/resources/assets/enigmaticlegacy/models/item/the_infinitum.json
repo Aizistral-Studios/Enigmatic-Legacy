@@ -1,0 +1,26 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "enigmaticlegacy:items/the_infinitum"
+    },
+	"overrides": [
+        {
+            "predicate": {
+                "enigmaticlegacy:the_infinitum_open": 0
+            },
+            "model": "enigmaticlegacy:item/the_infinitum_0"
+        },
+        {
+            "predicate": {
+                "enigmaticlegacy:the_infinitum_open": 0.5
+            },
+            "model": "enigmaticlegacy:item/the_infinitum_1"
+        },
+        {
+            "predicate": {
+                "enigmaticlegacy:the_infinitum_open": 1
+            },
+            "model": "enigmaticlegacy:item/the_infinitum_2"
+        }
+	]
+}

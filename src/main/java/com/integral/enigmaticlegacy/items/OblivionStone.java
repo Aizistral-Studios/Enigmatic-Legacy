@@ -22,7 +22,10 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ClickAction;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -75,30 +78,28 @@ public class OblivionStone extends ItemBase implements Vanishable {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
-
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone1");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone2");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone2_more");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone4");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone5");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone6");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone7");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone8");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone9");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone10");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone11");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone11");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone12");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone13");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone14");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone15");
-
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone16");
 		} else if (Screen.hasControlDown()) {
-
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneCtrlList");
 			if (stack.hasTag()) {
 				CompoundTag nbt = stack.getTag();
@@ -126,7 +127,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 							ItemStack displayStack;
 							displayStack = new ItemStack(something, 1);
 
-							list.add(new TextComponent(" - ").append(((TextComponent)displayStack.getHoverName()).withStyle(ChatFormatting.GOLD)).withStyle(ChatFormatting.GOLD));
+							list.add(new TextComponent(" - " + displayStack.getHoverName().getString()).withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.GOLD));
 						}
 					}
 				}
@@ -148,6 +149,34 @@ public class OblivionStone extends ItemBase implements Vanishable {
 		}
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneModeDesc", null, mode.getString());
+	}
+
+	@Override
+	public boolean overrideOtherStackedOnMe(ItemStack stack, ItemStack other, Slot slot, ClickAction action, Player player, SlotAccess access) {
+		if (action == ClickAction.PRIMARY || !slot.mayPlace(stack) || !slot.mayPickup(player) || other.isEmpty())
+			return false;
+
+		other.setCount(0);
+
+		if (player.level.isClientSide) {
+			player.level.playSound(player, player.blockPosition(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 0.25F, 1.2F + (float) Math.random() * 0.4F);
+		}
+
+		return true;
+	}
+
+	@Override
+	public boolean overrideStackedOnOther(ItemStack stack, Slot slot, ClickAction action, Player player) {
+		if (action == ClickAction.PRIMARY || !slot.mayPlace(stack) || !slot.mayPickup(player) || !slot.hasItem())
+			return false;
+
+		slot.set(ItemStack.EMPTY);
+
+		if (player.level.isClientSide) {
+			player.level.playSound(player, player.blockPosition(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 0.25F, 1.2F + (float) Math.random() * 0.4F);
+		}
+
+		return true;
 	}
 
 	@Override

@@ -85,6 +85,23 @@
 	"item.enigmaticlegacy.unwitnessed_amulet": "Unwitnessed Amulet",
 	"item.enigmaticlegacy.twisted_potion": "Potion of Twisted Mercy",
 	"item.enigmaticlegacy.infernal_shield": "Bulwark of Blazing Pride",
+	"item.enigmaticlegacy.cosmic_heart": "Heart of the Cosmos",
+	"item.enigmaticlegacy.abyssal_heart": "Heart of the Abyss",
+	"item.enigmaticlegacy.the_infinitum": "The Infinitum",
+	"item.enigmaticlegacy.astral_fruit": "Celestial Fruit",
+	"item.enigmaticlegacy.ender_slayer": "The Ender Slayer",
+	"item.enigmaticlegacy.the_cube": "Non-Euclidean Cube",
+	"item.enigmaticlegacy.desolation_ring": "The Burden of Desolation",
+	"item.enigmaticlegacy.etherium_nugget": "Etherium Nugget",
+	"item.enigmaticlegacy.etherium_scraps": "Etherium Scrap",
+	"item.enigmaticlegacy.astral_potato": "Teleportato",
+	"item.enigmaticlegacy.curse_transposer": "Tome of Devoured Malignancy",
+	"item.enigmaticlegacy.soul_compass": "Wayfinder of the Damned",
+	"item.enigmaticlegacy.ascension_amulet": "Amulet of Ascension",
+	"item.enigmaticlegacy.eldritch_amulet": "The Testament of Contempt",
+	"item.enigmaticlegacy.evil_ingot": "Nefarious Ingot",
+	"block.enigmaticlegacy.etherium_block": "Block of Etherium",
+	"block.enigmaticlegacy.cosmic_cake": "The Eternal Cake",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -95,6 +112,9 @@
 	
 	"effect.enigmaticlegacy.blazing_strength": "Blazing Might",
 	"effect.enigmaticlegacy.molten_heart": "Molten Heart",
+	
+	"stat.enigmaticlegacy.play_time_with_seven_curses": "Time Played with Seven Curses",
+	"stat.enigmaticlegacy.play_time_without_seven_curses": "Time Played without Seven Curses",
 	
 	"item.enigmaticlegacy.common_potion.effect.empty": "Hollow Potion",
 	"item.enigmaticlegacy.common_potion.effect.haste": "Potion of Haste",
@@ -183,8 +203,12 @@
 	"enchantment.enigmaticlegacy.torrent": "Torrent",
 	"enchantment.enigmaticlegacy.wrath": "Wrath",
 	"enchantment.enigmaticlegacy.slayer": "Slayer",
+	"enchantment.enigmaticlegacy.eternal_binding_curse": "Curse of Eternal Binding",
+	"enchantment.enigmaticlegacy.sorrow_curse": "Curse of Sorrow",
 	
-	"enchantment.enigmaticlegacy.nemesis_curse.desc": "Deals 35% of damage back to you for each melee attack.",
+	"enchantment.enigmaticlegacy.eternal_binding_curse.desc": "Makes the item impossible to unequip or loose on death.",
+	"enchantment.enigmaticlegacy.sorrow_curse.desc": "Sometimes applies random debuffs when receiving damage.",
+	"enchantment.enigmaticlegacy.nemesis_curse.desc": "Deals 25% of damage back to you for each melee attack.",
 	"enchantment.enigmaticlegacy.sharpshooter.desc": "Increased and less random arrow damage.",
 	"enchantment.enigmaticlegacy.ceaseless.desc": "Can shoot basic arrows without consuming ammunition.",
 	"enchantment.enigmaticlegacy.torrent.desc": "Increased damage against water sensitive of fire immune creatures.",
@@ -319,6 +343,24 @@
 	
 	"advancement.enigmaticlegacy:theTwist": "Fateful Twist",
 	"advancement.enigmaticlegacy:theTwist.desc": "Slay the Wither and create The Twist using Nefarious Essence",
+	
+	"advancement.enigmaticlegacy:astralFruit": "Fabulous Apple",
+	"advancement.enigmaticlegacy:astralFruit.desc": "Find Celestial Fruit among treasures of the End City, and consume it",
+	
+	"advancement.enigmaticlegacy:abyssalHeart": "Eldritch Horror",
+	"advancement.enigmaticlegacy:abyssalHeart.desc": "Slay the Ender Dragon and claim Heart of the Abyss",
+	
+	"advancement.enigmaticlegacy:theInfinitum": "Beyond Time and Space",
+	"advancement.enigmaticlegacy:theInfinitum.desc": "Acquire The Infinitum and become the herald of the Abyss",
+	
+	"advancement.enigmaticlegacy:desolationRing": "Reality is Bent",
+	"advancement.enigmaticlegacy:desolationRing.desc": "Forge The Burden of Desolation, and bear it",
+	
+	"advancement.enigmaticlegacy:allSpellstones": "Stone Grimoire",
+	"advancement.enigmaticlegacy:allSpellstones.desc": "Collect every unique spellstone. Would there have been a way to combine them all...",
+	
+	"advancement.enigmaticlegacy:theCube": "This Cube Cured My Mortality",
+	"advancement.enigmaticlegacy:theCube.desc": "Force all spellstones into a shape equally powerful and unnatural, creating Non-Euclidean Cube",
 
 	"tooltip.enigmaticlegacy.holdShift": "§5Hold §6Shift§5 to see details.",
 	
@@ -334,6 +376,29 @@
 	"tooltip.enigmaticlegacy.enigmaticItem9": "§5- Compensates mining speed penalty when flying.",
 	"tooltip.enigmaticlegacy.enigmaticItem10": "§5- You are immortal while having it equipped",
 	"tooltip.enigmaticlegacy.enigmaticItem11": "§5  or in your inventory.",
+	
+	"tooltip.enigmaticlegacy.theCube1": "§dActive ability:",
+	"tooltip.enigmaticlegacy.theCube2": "§6- Teleports you to random location in one of three main dimensions.",
+	"tooltip.enigmaticlegacy.theCube3": "§dСooldown: §6%1$s§6 seconds",
+	"tooltip.enigmaticlegacy.theCube4": "§dPassive abilities:",
+	"tooltip.enigmaticlegacy.theCube5": "§5- §d+35%§6 Sprinting Speed",
+	"tooltip.enigmaticlegacy.theCube6": "§5- §d+100%§6 Swimming Speed",
+	"tooltip.enigmaticlegacy.theCube7": "§5- §d+60%§6 Mining Speed",
+	"tooltip.enigmaticlegacy.theCube8": "§5- §d+40%§6 Attack Speed",
+	"tooltip.enigmaticlegacy.theCube9": "§5- §d+1§6 Fortune Level",
+	"tooltip.enigmaticlegacy.theCube10": "§5- §d+1§6 Luck",
+	"tooltip.enigmaticlegacy.theCube11": "§5- Any attacks that deal above §6%1$s§6 damage§5 are completely negated.",
+	"tooltip.enigmaticlegacy.theCube12": "§5- §d35%§6 Chance§5 to deflect an incoming attack or projectile.",
+	"tooltip.enigmaticlegacy.theCube13": "§5- When attacked in melee, applies random debuff to attacker.",
+	"tooltip.enigmaticlegacy.theCube14": "§5- Whenever you slay any creature, you receive random buff.",
+	"tooltip.enigmaticlegacy.theCube15": "§5- You need no air to breathe.",
+	"tooltip.enigmaticlegacy.theCube16": "§5- Immunity to negative status effects.",
+	"tooltip.enigmaticlegacy.theCube17": "§5- Immunity to pressure, fall, collision, pricking, teleportation, fire",
+	"tooltip.enigmaticlegacy.theCube18": "§5  and lava damage.",
+	"tooltip.enigmaticlegacy.theCube19": "§5- When you have more than §61 health§5, you survive any lethal damage",
+	"tooltip.enigmaticlegacy.theCube20": "§5  with §61 health§5 remaining. If you have §61 health§5 or less, attempts to",
+	"tooltip.enigmaticlegacy.theCube21": "§5  trigger active ability to prevent lethal damage. Restores your",
+	"tooltip.enigmaticlegacy.theCube22": "§5  health to §630%§5 and applies powerful buffs if successful.",
 
 	"tooltip.enigmaticlegacy.xpTomeMode": "§dMode: %1$s",
 	"tooltip.enigmaticlegacy.code6": "§6",
@@ -441,10 +506,9 @@
 	
 	"tooltip.enigmaticlegacy.miningCharm1": "§6+%1$s§d Mining Speed",
 	"tooltip.enigmaticlegacy.miningCharm2": "§6+%1$s§d Fortune Level",
-	"tooltip.enigmaticlegacy.miningCharm3": "§5When you are underground and in dark,",
-	"tooltip.enigmaticlegacy.miningCharm4": "§5applies §6Night Vision§5 effect to you. This",
-	"tooltip.enigmaticlegacy.miningCharm5": "§5feature can be disabled by pressing",
-	"tooltip.enigmaticlegacy.miningCharm6": "§5the §6Right-Click§5 when holding charm.",
+	"tooltip.enigmaticlegacy.miningCharm3": "§5When you are underground, applies §6Night Vision",
+	"tooltip.enigmaticlegacy.miningCharm4": "§5effect to you. This feature can be disabled by",
+	"tooltip.enigmaticlegacy.miningCharm5": "§5pressing §6Right-Click§5 when holding charm.",
 	"tooltip.enigmaticlegacy.miningCharmNightVision": "§dNight Vision: %1$s",
 	
 	"tooltip.enigmaticlegacy.enderRing1": "§5Allows you to remotely acess your",
@@ -457,7 +521,9 @@
 	"tooltip.enigmaticlegacy.angelBlessing4": "§5- Immunity to fall and collision damage.",
 	"tooltip.enigmaticlegacy.angelBlessing5": "§5- §6%1$s§d Chance§5 to deflect incoming projectile.",
 	"tooltip.enigmaticlegacy.angelBlessing6": "§5- Your own projectiles are greatly accelerated.",
-	"tooltip.enigmaticlegacy.angelBlessing7": "§5- You are vulnerable to §6Withering§5 and §6Void Damage.",
+	"tooltip.enigmaticlegacy.angelBlessing7": "§5- Active ability can be triggered by pressing jump",
+	"tooltip.enigmaticlegacy.angelBlessing8": "§5  key while in mid-air.",
+	"tooltip.enigmaticlegacy.angelBlessing9": "§5- You are vulnerable to §6Withering§5 and §6Void Damage.",
 	
 	"tooltip.enigmaticlegacy.eyeOfNebula1": "§dActive ability:",
 	"tooltip.enigmaticlegacy.eyeOfNebula2": "§6- Teleports you behind creature you are looking at.",
@@ -519,8 +585,8 @@
 	"tooltip.enigmaticlegacy.voidPearl6": "§5- You no longer need air to breathe.",
 	"tooltip.enigmaticlegacy.voidPearl7": "§5- Immunity to any status effects.",
 	"tooltip.enigmaticlegacy.voidPearl8": "§5- Your attacks inflict §6Withering.",
-	"tooltip.enigmaticlegacy.voidPearl9": "§5- Any living creatures nearby you, if they",
-	"tooltip.enigmaticlegacy.voidPearl10": "§5  are exposed to darkness, receive massive",
+	"tooltip.enigmaticlegacy.voidPearl9": "§5- Any creatures nearby you, if they are",
+	"tooltip.enigmaticlegacy.voidPearl10": "§5  exposed to darkness, receive massive",
 	"tooltip.enigmaticlegacy.voidPearl11": "§5  damage and heavy debuffs. §6Skyflaps§5 are",
 	"tooltip.enigmaticlegacy.voidPearl12": "§5  affected regardless of light level.",
 	"tooltip.enigmaticlegacy.voidPearl13": "§5- §6%1$s§d Chance§5 that otherwise lethal damage",
@@ -611,22 +677,22 @@
 	
 	"tooltip.enigmaticlegacy.oblivionStoneHoldCtrl": "§5Hold §6Ctrl§5 to see consumable items.",
 	"tooltip.enigmaticlegacy.oblivionStoneCtrlList": "§5List of consumable items:",
-	"tooltip.enigmaticlegacy.oblivionStone1": "§5Combine with any item in crafting grid",
-	"tooltip.enigmaticlegacy.oblivionStone2": "§5to allow it consuming this item, or with",
-	"tooltip.enigmaticlegacy.oblivionStone2_more": "§5nothing to clear the list.",
-	"tooltip.enigmaticlegacy.oblivionStone3": "§5Press §6Right-Click§5 to switch modes.",
-	"tooltip.enigmaticlegacy.oblivionStone4": "§5Press §6Shift§5+§6Right-Click§5 to activate",
-	"tooltip.enigmaticlegacy.oblivionStone5": "§5or deactivate it completely.",
-	"tooltip.enigmaticlegacy.oblivionStone6": "§5In §6Total Absorption§5 mode, keystone",
-	"tooltip.enigmaticlegacy.oblivionStone7": "§5consumes all specified items within",
-	"tooltip.enigmaticlegacy.oblivionStone8": "§5your inventory, until none left.",
-	"tooltip.enigmaticlegacy.oblivionStone9": "§5In §6Last Stack§5 mode, it will always leave",
-	"tooltip.enigmaticlegacy.oblivionStone10": "§5one stack of each type of item, but will",
-	"tooltip.enigmaticlegacy.oblivionStone11": "§5consume anything more than that.",
-	"tooltip.enigmaticlegacy.oblivionStone12": "§5In §6Excess Absorption§5 mode, it will only",
-	"tooltip.enigmaticlegacy.oblivionStone13": "§5consume anything if you have no free",
-	"tooltip.enigmaticlegacy.oblivionStone14": "§5space in your inventory, and only until",
-	"tooltip.enigmaticlegacy.oblivionStone15": "§5it appears.",
+	"tooltip.enigmaticlegacy.oblivionStone1": "§5While in inventory, §6Right-Clicking§5 it while dragging",
+	"tooltip.enigmaticlegacy.oblivionStone2": "§5another stack, or while dragging the keystone",
+	"tooltip.enigmaticlegacy.oblivionStone3": "§5over another stack will destroy that stack.",
+	"tooltip.enigmaticlegacy.oblivionStone4": "§5Combine with any item in crafting grid to let it",
+	"tooltip.enigmaticlegacy.oblivionStone5": "§5automatically consume that item while in inventory,",
+	"tooltip.enigmaticlegacy.oblivionStone6": "§5or with nothing to clear the list.",
+	"tooltip.enigmaticlegacy.oblivionStone7": "§5While holding, press §6Right-Click§5 to switch modes,",
+	"tooltip.enigmaticlegacy.oblivionStone8": "§5or §6Shift+Right-Click§5 to activate or deactivate it.",
+	"tooltip.enigmaticlegacy.oblivionStone9": "§5In §6Total Absorption§5 mode, keystone consumes all",
+	"tooltip.enigmaticlegacy.oblivionStone10": "§5listed items within your inventory, until none left.",
+	"tooltip.enigmaticlegacy.oblivionStone11": "§5In §6Last Stack§5 mode, it will always leave one stack",
+	"tooltip.enigmaticlegacy.oblivionStone12": "§5of each type of item, but will consume anything",
+	"tooltip.enigmaticlegacy.oblivionStone13": "§5more than that.",
+	"tooltip.enigmaticlegacy.oblivionStone14": "§5In §6Excess Absorption§5 mode, it will only consume",
+	"tooltip.enigmaticlegacy.oblivionStone15": "§5anything if you have no free space in your",
+	"tooltip.enigmaticlegacy.oblivionStone16": "§5inventory, and only until it appears.",
 	
 	"tooltip.enigmaticlegacy.oblivionStoneModeDesc": "§dMode: §6%1$s",
 	"tooltip.enigmaticlegacy.oblivionStoneMode0": "§6Total Absorption",
@@ -643,7 +709,9 @@
 	"tooltip.enigmaticlegacy.enchantmentTransposer2": "§5to transfer all enchantments from item to the tome.",
 	"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5The tome will be transformed into §6Enchanted Book§5.",
 	
-	"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5The tome will be transformed into §6Enchanted Book§5.",
+	"tooltip.enigmaticlegacy.curseTransposer1": "§5Combine with any enchanted item in a crafting grid",
+	"tooltip.enigmaticlegacy.curseTransposer2": "§5to transfer all curses from item to the tome.",
+	"tooltip.enigmaticlegacy.curseTransposer3": "§5The tome will be transformed into §6Enchanted Book§5.",
 	
 	"tooltip.enigmaticlegacy.boundToPlayer": "§5Bound to: §6%1$s",
 	
@@ -680,9 +748,9 @@
 	"tooltip.enigmaticlegacy.berserk_emblem10": "§6+%1$s §dMovement Speed",
 	"tooltip.enigmaticlegacy.berserk_emblem11": "§6+%1$s §dDamage Resistance",
 	
-	"tooltip.enigmaticlegacy.cursedRing1": "§5Once worn, it becomes a part of you.",
-	"tooltip.enigmaticlegacy.cursedRing2": "§4This ring will persist with you forever.",
-	"tooltip.enigmaticlegacy.cursedRing2_creative": "§6With the power of god, you can unequip it.",
+	"tooltip.enigmaticlegacy.eternallyBound1": "§5Once worn, it becomes a part of you.",
+	"tooltip.enigmaticlegacy.eternallyBound2": "§4This ring will persist with you forever.",
+	"tooltip.enigmaticlegacy.eternallyBound2_creative": "§6With the power of god, you can unequip it.",
 	"tooltip.enigmaticlegacy.cursedRing3": "§dSeven curses will befall whoever bears it:",
 	"tooltip.enigmaticlegacy.cursedRing4": "§5- You receive double damage from §6ANY§5 source.",
 	"tooltip.enigmaticlegacy.cursedRing4_alt": "§5- You receive §6%1$s§5 damage from §6ANY§5 source.",
@@ -710,6 +778,11 @@
 	
 	"tooltip.enigmaticlegacy.cursedOnesOnly1": "Only those who bear the Seven Curses",
 	"tooltip.enigmaticlegacy.cursedOnesOnly2": "hold power to obtain and use this item.",
+	
+	"tooltip.enigmaticlegacy.worthyOnesOnly1": "§5The sacrifice neccessary to aquire this item",
+	"tooltip.enigmaticlegacy.worthyOnesOnly2": "§5is immense - you have to spend §699.5%§5 of your",
+	"tooltip.enigmaticlegacy.worthyOnesOnly3": "§5time in the world suffering the §6Seven Curses.",
+	"tooltip.enigmaticlegacy.worthyOnesOnly4": "For now, your time measures at:",
 	
 	"tooltip.enigmaticlegacy.tainted1": "§5Slightly tainted by cursed one's presence.",
 	"tooltip.enigmaticlegacy.tainted2": "§5Tainted by the touch of a cursed being.",
@@ -749,9 +822,12 @@
 	"tooltip.enigmaticlegacy.guardianHeart11": "§6Some monsters are immune to being enraged.",
 	"tooltip.enigmaticlegacy.guardianHeart12": "§5This ability has §6%1$s§6 seconds§5 cooldown.",
 	
+	"tooltip.enigmaticlegacy.forbiddenFruitLore": "§5Knowledge is the greatest gift.",
 	"tooltip.enigmaticlegacy.forbiddenFruit1": "§5After consuming the fruit you shall never",
 	"tooltip.enigmaticlegacy.forbiddenFruit2": "§5experience hunger again, but any form of",
 	"tooltip.enigmaticlegacy.forbiddenFruit3": "§5regeneration will have §6%1$s§5 weaker effect.",
+	
+	"tooltip.enigmaticlegacy.astralFruit1": "§5Consume to obtain §6+1§d Ring Slot §5permanently.",
 	
 	"tooltip.enigmaticlegacy.antiforbiddenPotion1": "§5Allows you to atone for the sin committed",
 	"tooltip.enigmaticlegacy.antiforbiddenPotion2": "§5by tasting §6The Forbidden Fruit§5.",
@@ -760,13 +836,14 @@
 	"tooltip.enigmaticlegacy.evilEssence2": "§5from the §6Wither§5's soul.",
 	
 	"tooltip.enigmaticlegacy.gemRing1": "§5Renders §6Piglins§5 neutral when worn.",
+	"tooltip.enigmaticlegacy.gemRing1Cursed": "§5§mRenders §6§mPiglins§5§m neutral when worn.",
 	
-	"tooltip.enigmaticlegacy.enchanterPearl1": "§5While equipped or in your inventory, you",
-	"tooltip.enigmaticlegacy.enchanterPearl2": "§5receive greater amount and power of",
-	"tooltip.enigmaticlegacy.enchanterPearl3": "§5enchantments when using §6Enchanting Table.",
-	"tooltip.enigmaticlegacy.enchanterPearl4": "§5Enchanting has chance to produce both",
-	"tooltip.enigmaticlegacy.enchanterPearl5": "§5curses and treasure enchantments.",
-	"tooltip.enigmaticlegacy.enchanterPearl6": "§5You do not require §6Lapis Lazuli§5 to enchant.",
+	"tooltip.enigmaticlegacy.enchantersPearl1": "§6+1§d Charm Slot",
+	"tooltip.enigmaticlegacy.enchantersPearl2": "§5You receive greater amount and power of",
+	"tooltip.enigmaticlegacy.enchantersPearl3": "§5enchantments when using §6Enchanting Table.",
+	"tooltip.enigmaticlegacy.enchantersPearl4": "§5Enchanting has chance to produce both",
+	"tooltip.enigmaticlegacy.enchantersPearl5": "§5curses and treasure enchantments.",
+	"tooltip.enigmaticlegacy.enchantersPearl6": "§5You do not require §6Lapis Lazuli§5 to enchant.",
 	
 	"tooltip.enigmaticlegacy.cursedStone1": "§5If you die in the §6Nether§5, in the middle of",
 	"tooltip.enigmaticlegacy.cursedStone2": "§5sufficiently large lava lake with this stone",
@@ -787,8 +864,8 @@
 	"tooltip.enigmaticlegacy.avariceScroll7": "§5Villager trades have §635% Discount.",
 	
 	"tooltip.enigmaticlegacy.infinimeal1": "§5Functions as infinite §6Bone Meal.",
-	"tooltip.enigmaticlegacy.infinimeal2": "§5Effective on §6Cactuses§5, §6Vines§5,",
-	"tooltip.enigmaticlegacy.infinimeal3": "§6Nether Wart§5 and §6Sugar Cane.",
+	"tooltip.enigmaticlegacy.infinimeal2": "§5Effective on §6Cactuses§5, §6Chorus Plants§5,",
+	"tooltip.enigmaticlegacy.infinimeal3": "§6Nether Wart§5, §6Sugar Cane§5 and §6Vines§5",
 	
 	"tooltip.enigmaticlegacy.unwitnessedAmuletHoldShift": "§5The §6Shift §5shall be held.",
 	"tooltip.enigmaticlegacy.unwitnessedAmuletShift1": "§5It shall become bound to the first one who",
@@ -799,11 +876,6 @@
 	"tooltip.enigmaticlegacy.twistedPotion1": "§5Teleports you to the location of your last",
 	"tooltip.enigmaticlegacy.twistedPotion2": "§5demise, at the cost of leaving you on the",
 	"tooltip.enigmaticlegacy.twistedPotion3": "§5edge of death.",
-	
-	"tooltip.enigmaticlegacy.infernalShield1": "§5It shall become bound to the first one who",
-	"tooltip.enigmaticlegacy.infernalShield2": "§5dares lay their claim upon this relic, and in",
-	"tooltip.enigmaticlegacy.infernalShield3": "§5that glorious minute fate of its chosen",
-	"tooltip.enigmaticlegacy.infernalShield4": "§5bearer shall be preordained.",
 	
 	"tooltip.enigmaticlegacy.infernalShield1": "§6When equipped:",
 	"tooltip.enigmaticlegacy.infernalShield2": "§5- Extinguishes you when on fire.",
@@ -816,7 +888,61 @@
 	"tooltip.enigmaticlegacy.infernalShield9": "§5- Successful blocks grant increasing §6Blazing Might§5",
 	"tooltip.enigmaticlegacy.infernalShield10": "§5  effect, but any damage received takes it away.",
 	"tooltip.enigmaticlegacy.infernalShield11": "§5- Enemy attacks from behind deal §650%§5 more damage.",
-
+	
+	"tooltip.enigmaticlegacy.abyssalHeart1": "§5It is alive. It is watching. Never before have",
+	"tooltip.enigmaticlegacy.abyssalHeart2": "§5this realm shuddered beneath the gaze of",
+	"tooltip.enigmaticlegacy.abyssalHeart3": "§5something so alien, so unholy, so unknowable",
+	"tooltip.enigmaticlegacy.abyssalHeart4": "§5and madness-inducing.",
+	
+	"tooltip.enigmaticlegacy.abyssalHeart1_obf": "§5§kIt is alive. It is watching. Never before have",
+	"tooltip.enigmaticlegacy.abyssalHeart2_obf": "§5§kthis realm shuddered beneath the gaze of",
+	"tooltip.enigmaticlegacy.abyssalHeart3_obf": "§5§ksomething so alien, so unholy, so unknowable",
+	"tooltip.enigmaticlegacy.abyssalHeart4_obf": "§5§kand madness-inducing.",
+	
+	"tooltip.enigmaticlegacy.theInfinitum1": "§5The abyss returns even the boldest gaze.",
+	"tooltip.enigmaticlegacy.theInfinitum2": "§5Alteration of the §6Fourth Curse§5:",
+	"tooltip.enigmaticlegacy.theInfinitum3": "§5- Always deals its full damage.",
+	"tooltip.enigmaticlegacy.theInfinitum4": "§6+%1$s §dDamage§5 against players and bosses.",
+	"tooltip.enigmaticlegacy.theInfinitum5": "§6+%1$s §dKnockback",
+	"tooltip.enigmaticlegacy.theInfinitum6": "§6+%1$s §dLifesteal",
+	"tooltip.enigmaticlegacy.theInfinitum7": "§5Can bear most sword enchantments.",
+	"tooltip.enigmaticlegacy.theInfinitum8": "§5Each attack inflicts horrific debuffs.",
+	"tooltip.enigmaticlegacy.theInfinitum9": "§5When held, provides §685% §dChance§5 that otherwise",
+	"tooltip.enigmaticlegacy.theInfinitum10": "§5lethal damage won't kill you.",
+	
+	"tooltip.enigmaticlegacy.enderSlayer1": "§5To exterminate them all...",
+	"tooltip.enigmaticlegacy.enderSlayer2": "§5Is such the only way?",
+	"tooltip.enigmaticlegacy.enderSlayer1_alt": "§5To slap them all...",
+	"tooltip.enigmaticlegacy.enderSlayer2_alt": "§5Is such the only way?",
+	"tooltip.enigmaticlegacy.enderSlayer3": "§6+%1$s §dDamage§5 against dwellers of §6The End.",
+	"tooltip.enigmaticlegacy.enderSlayer4": "§6+%1$s §dKnockback§5 against dwellers of §6The End.",
+	"tooltip.enigmaticlegacy.enderSlayer5": "§5In §6The End§5, fully charged attacks deal",
+	"tooltip.enigmaticlegacy.enderSlayer6": "§5colossal damage to §6Endermen§5, and all drops",
+	"tooltip.enigmaticlegacy.enderSlayer7": "§5from them are transformed into experience.",
+	"tooltip.enigmaticlegacy.enderSlayer8": "§5Temporarily disables teleportation abilities of",
+	"tooltip.enigmaticlegacy.enderSlayer9": "§5§6Shulkers§5 and §6Endermen.",
+	"tooltip.enigmaticlegacy.enderSlayer10": "§5Temporarily disables active ability of §6Eye of",
+	"tooltip.enigmaticlegacy.enderSlayer11": "§6Nebula§5 and ability to use §6Ender Pearls§5 for",
+	"tooltip.enigmaticlegacy.enderSlayer12": "§5attacked players.",
+	
+	"tooltip.enigmaticlegacy.desolationRing1": "§6Iron Golems, §6Endermen, §6Zombified Piglins§5 and",
+	"tooltip.enigmaticlegacy.desolationRing2": "§6Piglins§5 will not spawn in your proximity.",
+	
+	"tooltip.enigmaticlegacy.astralPotato1": "§5Behold, the infinite delicacy of the stars!",
+	
+	"tooltip.enigmaticlegacy.cosmicCake1": "§5Much more nutritious than regular cake.",
+	"tooltip.enigmaticlegacy.cosmicCake2": "§5Restores itself with time.",
+	
+	"tooltip.enigmaticlegacy.soulCompass1": "§5Points to the location of nearest §6Soul Crystal.",
+	
+	"tooltip.enigmaticlegacy.eldritchAmulet1": "§5When worn, your inventory persists with you",
+	"tooltip.enigmaticlegacy.eldritchAmulet2": "§5after death. §6Experience§5 and §6Soul Crystals§5 will",
+	"tooltip.enigmaticlegacy.eldritchAmulet3": "§5still be lost.",
+	"tooltip.enigmaticlegacy.eldritchAmulet4": "§5Creatures beneath your gaze will be slowed",
+	"tooltip.enigmaticlegacy.eldritchAmulet5": "§5down and weakened.",
+	"tooltip.enigmaticlegacy.eldritchAmuletStat1": "§6+3 §dAttack Damage",
+	"tooltip.enigmaticlegacy.eldritchAmuletStat2": "§6+15% §dLifesteal",
+	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",
 	"gui.enigmaticlegacy.blazing_core_bar_offsetX": "0",
@@ -898,7 +1024,7 @@
 	"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.3": "Sharpshooter does only affect arrows - it will not increase damage of fireworks, for instance.<br2/>Furthermore, it cannot be combined with Multishot or Piercing.",
 	
 	
-	"book.enigmaticlegacy.entry.curse_of_nemesis.name": "Curse of Nemesis",
+	"book.enigmaticlegacy.entry.curse_of_nemesis.name": "Nemesis",
 	"book.enigmaticlegacy.entry.curse_of_nemesis.heading.1": "The Curse",
 	"book.enigmaticlegacy.entry.curse_of_nemesis.page.1": "One of the less known cursed enchantments, this one is more curious and obscure than others.<br2/>It can only be encountered on melee weapons, alike swords or axes. Should you directly attack with the weapon that bears Curses of Nemesis, you will receive around 25 percents of the damage you dealt back upon yourself.<br2/>",
 	"book.enigmaticlegacy.entry.curse_of_nemesis.page.2": "However, no matter how devastating your blows will be, this curse can never kill you.<br2/>It will eventually leave you with just a sliver of health remaining, but something else will have to take this sliver for you to finally die.",
@@ -1187,7 +1313,7 @@
 	"book.enigmaticlegacy.entry.evil_essence.heading.1": "The Essence",
 	"book.enigmaticlegacy.entry.evil_essence.page.1": "While the Nether Star is a core of Wither's physical vessel, this substance is a manifestation of pure energy of its seemingly indestructible and perpetual soul. A tiny fraction of that energy, but it sure has immeasurable potential in your hands.<br2/>It seems to have strange connection to your own cursed being, which is why you were",
 	"book.enigmaticlegacy.entry.evil_essence.page.2": "able to obtain this essence in the first place. It draws closer to you as you approach, as lf bent by desire to latch onto you. Perhaps, you could allow it to do so?... No, what a dumb idea that would be.<br2/>But one thing is beyond questioning - this matter contains tremendous amounts",
-	"book.enigmaticlegacy.entry.evil_essence.page.3": "of dark, twisted power, that you just so happen to be capable of harnessing. You will surely find something to do about it.",
+	"book.enigmaticlegacy.entry.evil_essence.page.3": "of dark, twisted power, that you just so happen to be capable of harnessing. You will surely find something to do with it.",
 	
 	
 	"book.enigmaticlegacy.entry.forbidden_fruit.name": "The Forbidden Fruit",
@@ -1218,7 +1344,7 @@
 	
 	"book.enigmaticlegacy.entry.hunter_guide.name": "Hunter's Guide",
 	"book.enigmaticlegacy.entry.hunter_guide.page.1": "Another comprehensive guide, this one will help you learn how to hunt side-by-side with beastly companions that you might have tamed. You are probably already aware that despite all loyalty and courage they are capable of showing in battle, animals are much less sentient than you and aren't capable of developing complex combat techniques and effectively",
-	"book.enigmaticlegacy.entry.hunter_guide.page.2": "dodging unoubvious attack patterns.<br2/>This book outlines many unique approaches to combat that you can learn as their master, which will allow you to take hits they normally would on",
+	"book.enigmaticlegacy.entry.hunter_guide.page.2": "dodging unobvious attack patterns.<br2/>This book outlines many unique approaches to combat that you can learn as their master, which will allow you to take hits they normally would on",
 	"book.enigmaticlegacy.entry.hunter_guide.page.3": "yourself, saving them from being slain by attacks stronger than they can bear.<br2/>Hopefully your means of defense are much more elaborate and effective, and you can heal yourself much quicker in battle with use potions for instance.",
 	
 	
@@ -1431,6 +1557,101 @@
 	"book.enigmaticlegacy.entry.infinimeal.page.1": "One another way to harness the power that rests within Heart of the Earth, this arcane substance embodies the power of nature itself, with its everlasting desire to spread its roots across the earth, to grow and thrive no matter what.<br2/>Letting it come in contact with most forms of plantlife is enough to significantly",
 	"book.enigmaticlegacy.entry.infinimeal.page.2": "accellerate their growth, similar to the effect produced when using Bone Meal. Unlike Bone Meal, however, you only need a mere grains of it to achieve such effect. Left alone, it seems to be able to draw power from surrounding",
 	"book.enigmaticlegacy.entry.infinimeal.page.3": "nature, growing and replenishing itself in quantity after being used - though never to more than there was created originally.<br2/>It also works on certain plants that normal fertilizers have no effect on, specifically Sugar Cane, Cactuses, Vines and Nether Wart.",
+	
+	
+	"book.enigmaticlegacy.entry.cosmic_heart.name": "Heart of the Cosmos",
+	"book.enigmaticlegacy.entry.cosmic_heart.page.1": "With a fine selection of arcane ingredients, those which contain the power of other dimensions, you can alter the earthly nature of Heart of the Sea, transforming it into something different... Vastly more powerful.<br2/>The power of cosmos itself now rests at the palm of your hand. Only time will tell what unimaginable feats can be",
+	"book.enigmaticlegacy.entry.cosmic_heart.page.2": "achieved with it, what fabulous artifacts can be powered with its reality-bending energies.<br2/>But one thing is for certain - the world will tremble beneath the steps of their bearer.",
+	
+	
+	"book.enigmaticlegacy.entry.abyssal_heart.name": "Heart of the Abyss",
+	"book.enigmaticlegacy.entry.abyssal_heart.heading.1": "The Heart",
+	"book.enigmaticlegacy.entry.abyssal_heart.page.1": "When this unearthly abomination fell into your hands for the first time, description-defying mix of feelings have overcome your mind, among which there was a place for terror and excitement, admiration and disgust. The gaze of its lonely eye befell you with intent impossible to comprehend, but once initial wave of emotions retreated - you have",
+	"book.enigmaticlegacy.entry.abyssal_heart.page.2": "concluded that it poses no threat to you.<br2/>Still, you know not what it truly is, and where it came from. Perhaps your insufferable existence, and efforts to live in spite of Seven Curses were noticed by some unnameable eldritch power, and through your",
+	"book.enigmaticlegacy.entry.abyssal_heart.page.3": "damnable being it have chosen to channel itself into the world. Perhaps it is a mere accident, a fluke in reality itself that allowed something like this to appear. Perhaps it is your ailing mind that have conceived this horror in some nightmarish fever, and with its growth - corruption of the curses have managed to manifest it into the mortal realm?<br2/>Perhaps it's best to never know, for some truths are much",
+	"book.enigmaticlegacy.entry.abyssal_heart.page.4": "more unsettling than anything a man's imagination can come up with.<br2/>Regardless, now you are the rightful owner of this thing. And it will not be long before you can put it to some unimaginably violent, frightening use... The world will suffer tenfold for all the suffering it caused to you.",
+	
+	
+	"book.enigmaticlegacy.entry.astral_fruit.name": "Celestial Fruit",
+	"book.enigmaticlegacy.entry.astral_fruit.heading.1": "The Fruit",
+	"book.enigmaticlegacy.entry.astral_fruit.page.1": "Though many have sought this relic, it appears that you are among the few who found. In fact, it was not even that hard at all. Though a journey itself was nothing short of a feat, once you have made your way to the End City and opened the first treasure chest - there it was, awaiting you.<br2/>It certainly has connection to Seven Curses, but you cannot",
+	"book.enigmaticlegacy.entry.astral_fruit.page.2": "begin to imagine how circumstances aligned in such a way that it was in that exact chest you have opened, and no other. Determinism was never among your favored beliefs, and yet... perhaps it was destiny?<br2/>At any rate, the taste is divine, and the ability it has",
+	"book.enigmaticlegacy.entry.astral_fruit.page.3": "to empower you to bear another ring is undeniably useful.",
+	
+	
+	"book.enigmaticlegacy.entry.curse_of_eternal_binding.name": "Eternal Binding",
+	"book.enigmaticlegacy.entry.curse_of_eternal_binding.heading.1": "The Curse",
+	"book.enigmaticlegacy.entry.curse_of_eternal_binding.page.1": "The similarity of this curse's name to Curse of Binding is no accident - for it does exactly the same thing as the latter, preventing you from removing armor and accessories from yourself once equipped. The twist, however, is in the fact that items bearing this one will persist with you even across death. This might be less severe in the case of armor, since sooner or later",
+	"book.enigmaticlegacy.entry.curse_of_eternal_binding.page.2": "it will break; for most accessories, however, with this curse applied you condemn yourself to bear them until you die permanently or until the end of time, whichever comes first.<br2/>Unlike most other curses, the only way to obtain this one seems to be by using classical",
+	"book.enigmaticlegacy.entry.curse_of_eternal_binding.page.3": "Enchanting Table, empowered by the Enchanter's Pearl.",
+	
+	
+	"book.enigmaticlegacy.entry.curse_of_sorrow.name": "Sorrow",
+	"book.enigmaticlegacy.entry.curse_of_sorrow.heading.1": "The Curse",
+	"book.enigmaticlegacy.entry.curse_of_sorrow.page.1": "Applicable only to armor, this curse adds an aftermath to the damage you would take from your enemies. Severe debuffs will befall you for every hit that you take, the greater the damage - the greater the debuffs.<br2/>Hopefully, the chance of such happening is only about one in ten for every piece of armor with this curse that you bear.",
+	"book.enigmaticlegacy.entry.curse_of_sorrow.page.2": "As per usual, you can occasionally find items bearing this curse among ancient treasures which you periodically pillage. It might be useful to power Scroll of a Thousand Curses if you have such, but whether or not the tradeoff is worth it is for you to judge.",
+	"book.enigmaticlegacy.entry.curse_of_sorrow.page.3": "Enchanting Table, empowered by the Enchanter's Pearl.",
+	
+	
+	"book.enigmaticlegacy.entry.the_infinitum.name": "The Infinitum",
+	"book.enigmaticlegacy.entry.the_infinitum.page.1": "It is conceived. In union with this dark, flesh-covered book, with horror that its pages conceal, you will wreak havoc upon those who threatened you.<br2/>Upon those who laughed at you, those who underestimated you, those who undertaken every effort to break you, to cleanse the world of your presence, be they disgusted by corruption that you bear or simply",
+	"book.enigmaticlegacy.entry.the_infinitum.page.2": "viewing you as an easy prey. For you are the writings that cannot be burned, knowledge that cannot be forgotten, truth that cannot be denied.<br2/>You will reveal to this realm what it have so persistently",
+	"book.enigmaticlegacy.entry.the_infinitum.page.3": "attempted to unmake and erase, you will engrave upon the tablets of eternity that reality which it have tried to hide.<br2/>You will teach them all a lesson they shall never forget.",
+	
+	
+	"book.enigmaticlegacy.entry.ender_slayer.name": "The Ender Slayer",
+	"book.enigmaticlegacy.entry.ender_slayer.page.1": "One of the toughest lessons you have learned ever since first equipping Ring of the Seven Curses is that Endermen are no longer able to tolerate your existence. They have haunted you ever since - screeching, frightening horrors, chasing you in the night under the stars, and in smothering darkness of twisted salt-soaked caverns beneath the ground, possessed by",
+	"book.enigmaticlegacy.entry.ender_slayer.page.2": "unbendable desire to decimate your being. Before long, you have accepted that to restore neutral relations with them is by all means an impossible undertaking, and abandoned any and every attempt to achieve such.",
+	"book.enigmaticlegacy.entry.ender_slayer.page.3": "If that was the end of it - perhaps, to submit yourself to such fate and perpetually suffer their nightmarish onslaught would become nothing more than another part of your routine, and you would bear it with acceptance you have achieved in bearing all other curses.<br2/>If only... Now that The End beckons you to meet its challenges, traverse its lands and claim its treasures, the Endermen have become an",
+	"book.enigmaticlegacy.entry.ender_slayer.page.4": "obstacle in your way equal to which you did not face yet. For that dimension is inhabited fully by their kind, and thus, to even survive entering it seems a feat beyond the limits of your power as a demigod.<br2/>Perhaps, it is time to recede, to finally abandon your hope of surmounting this world's challanges and harnessing corruption of the curses. But the battle may yet be won. With this sword, and your sheer strength of will you may yet",
+	"book.enigmaticlegacy.entry.ender_slayer.page.5": "stand victorious. For if peace cannot be made... it can only mean war.",
+	
+	
+	"book.enigmaticlegacy.entry.the_cube.name": "Non-Euclidean Cube",
+	"book.enigmaticlegacy.entry.the_cube.page.1": "Many of those who laid their claim on six mighty spellstones have pondered the possibility to, perhaps, somehow combine their powers into an artifact of might never before witnessed. Many have tried, and many have failed... Until now.<br2/>At last, you discovered a way to achieve such a feat. With power of the cosmos manifest in your hands, you may force",
+	"book.enigmaticlegacy.entry.the_cube.page.2": "elements into such form that defies reality itself. The pinnacle of your exploration and research, it will become a symbol of your superiority over any mortal creature that ever walked the lands of three great worlds.",
+	"book.enigmaticlegacy.entry.the_cube.page.3": "With its innumerable powers, even death you shall now transcend... For insofar as this cube will last forever, you are in the presence of immortality.",
+	
+	
+	"book.enigmaticlegacy.entry.desolation_ring.name": "Burden of Desolation",
+	"book.enigmaticlegacy.entry.desolation_ring.page.1": "You can scarce comprehend presence imposed upon reality by Heart of the Abyss, but, as you have recently discovered, comprehension is not neccessary for the ability to make use of it. Among few equally wonderful and terrible things that can draw power from it, there is this ring - even more nightmarish, perhaps, than Ring of the Seven Curses, in its",
+	"book.enigmaticlegacy.entry.desolation_ring.page.2": "unnameable nature.<br2/>It offers to conveniently fulfill your gnawing desire to set yourself free of neccessity to endlessly slaughter creatures that could once tolerate your presence,",
+	"book.enigmaticlegacy.entry.desolation_ring.page.3": "but have lost such ability soon as you submitted yourself to the burden of Seven Curses... By erasing them from the very existence surrounding you.<br2/>The cost of such reality-bending power is perilous, however, as should you decide that you desire it - you will be bound to it forevermore. And as you know by now, void can be more unbearable than even most frightening, ever-present threat...",
+	
+	
+	"book.enigmaticlegacy.entry.astral_potato.name": "Teleportato",
+	"book.enigmaticlegacy.entry.astral_potato.page.1": "In the everlasting battle of carrot lovers against potato enjoyers, the latter were bound to find themselves at a steady disadvantage. After all, what is a baked potato, in spite of all its deliciousness, in the face of immense nutritional value and reinvigorating effects of a mere carrot, albeit covered in some gold?",
+	"book.enigmaticlegacy.entry.astral_potato.page.2": "Today, we say \"no more\". The latest culinary invention of the cosmos itself shall fulfill two purposes - satiating our hunger, and becoming a symbol of our supremacy in the war on carrot. The appropriate name we have given to this",
+	"book.enigmaticlegacy.entry.astral_potato.page.3": "great delicacy will no doubt further mock and demoralize our enemy. What a shame would it be for them to find out they were utterly defeated by \"Teleportato\"? What horror will such awareness paint upon their faces?<br2/>It won't be long before we find out...",
+	
+	
+	"book.enigmaticlegacy.entry.cosmic_cake.name": "The Eternal Cake",
+	"book.enigmaticlegacy.entry.cosmic_cake.page.1": "There is only one issue in the mundane cake, one final flaw that prevents it from becoming perfect - it always ends, as imminently as life of a mortal man. At last, you conceived a way to rectify this annoying imperfection, letting you enjoy its creamy grace forevermore.<br2/>Imbued with primordial power, incorporating alien delicacy and spiced up with elemental",
+	"book.enigmaticlegacy.entry.cosmic_cake.page.2": "energies, this cake defies the flow of time, reversing entropy itself to restore its glorious, palatable form. However much you submit yourself to the sin of gluttony, it will always recover from any devouring assault of yours.",
+	"book.enigmaticlegacy.entry.cosmic_cake.page.3": "Who can withstand in the face of such deliciousness, who can resist the desire to exchange power, influence, riches and even life itself for becoming submerged in ceaseless, infinite act of consumption? Those things are temporary after all... but the cake, the cake is eternal.",
+	
+	
+	"book.enigmaticlegacy.entry.eldritch_amulet.name": "Testament of Contempt",
+	"book.enigmaticlegacy.entry.eldritch_amulet.page.1": "Though Amulet of Ascension is perfected and pure in its form, it may yet be empowered further. At the cost of sacrificing the purity, sure, but why would a cursed being such as you fret over this loss anyway?<br2/>The jumble of flesh known as Heart of the Abyss will happily latch onto your amulet, corrupting it into such a",
+	"book.enigmaticlegacy.entry.eldritch_amulet.page.2": "twisted form that defies description. Once vivid, elegant stone at its core is replaced with a glossy, onyx-like eye, gazing upon you and the world alike with uneasy implication and unknowable intent. Even madman would deny",
+	"book.enigmaticlegacy.entry.eldritch_amulet.page.3": "this abomination the touch to himself, but you welcome it upon your neck. For whereas madman is a victim of his own delusional perception of the world, you see it now for what it is...<br2/>And it is much more terrible than all the eyes of infinite abyss.",
+	
+	
+	"book.enigmaticlegacy.entry.ascension_amulet.name": "Amulet of Ascension",
+	"book.enigmaticlegacy.entry.ascension_amulet.page.1": "By now, you are aware that Enigmatic Amulet in your possession is not unique, and in fact such a thing is granted to many other demigods beyond your time and space. There seems to exist a few variations of it, with different colors and different powers. What exactly determined the color in your current possession is unknown, but they all seem to mean",
+	"book.enigmaticlegacy.entry.ascension_amulet.page.2": "something and be connected in some way.<br2/>With power contained within Heart of the Cosmos you can transform your amulet into the form of unwitnessed might and ambition. Proudly named Amulet",
+	"book.enigmaticlegacy.entry.ascension_amulet.page.3": "of Ascension, it will grant you abilities of all possible colors...<br2/>Fate may have decided the beginning of your existence in this realm, but the end of it is yours to shape.",
+	
+	
+	"book.enigmaticlegacy.entry.soul_compass.name": "Soul Compass",
+	"book.enigmaticlegacy.entry.soul_compass.page.1": "With enough deaths, terrible novelty of losing parts of your soul with each one have withered away, leaving only the troublesome experience of locating places of your demise in an effort to recollect them. Those places often fall to be in the most unnavigable parts of the world, as if to incur frustration of such extent that it be named another curse of ring bearer.",
+	"book.enigmaticlegacy.entry.soul_compass.page.2": "As many other curses, however, this one too can be overcome. With this thing in your pocket, you will never again have to rely on your failing memory alone to aid you in search of your soul crystals. It will conveniently point you to the",
+	"book.enigmaticlegacy.entry.soul_compass.page.3": "nearest one, wherever it is, so long as you are in the right dimension.<br2/>Notably, there is one place where it fails to work, and its needle spins uncontrollably at alarming speeds - Soul Sand Valley. How many forgotten souls must wander that damned place to produce such a strong interference? Perhaps, it is a mystery better left unsolved.",
+	
+	"book.enigmaticlegacy.entry.curse_transposer.name": "Devoured Malignancy",
+	"book.enigmaticlegacy.entry.curse_transposer.page.1": "Bearing the Seven Curses, you have aquired ability to draw power from curses bound to some of the ancient gear you find in your explorations, and even create such yourself with the help of Enchanter's Pearl. But they still are a great nuisance at times, as even though you can transpose them from one item from another, so far you had no way of separating them from",
+	"book.enigmaticlegacy.entry.curse_transposer.page.2": "enchantments when doing so.<br2/>With this little invention, however, your curse management abilities should improve significantly. It offers a way to separate curses and only curses from any item of",
+	"book.enigmaticlegacy.entry.curse_transposer.page.3": "your equipment; not a cheap one at that, but a way nonetheless.",
 	
 	
 	"book.enigmaticlegacy.landing_text": "In front of you lies the well of great knowledge, a place where some of this world's greatest mysteries belong, scrupulously researched and carefully catalogized.<br2/>As your journey continues and the world reveals itself to you, you may revisit and behold knowledge you gathered within these pages."

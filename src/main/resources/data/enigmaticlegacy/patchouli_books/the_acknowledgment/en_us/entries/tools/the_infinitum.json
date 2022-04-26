@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.the_infinitum.name",
+    "icon": "enigmaticlegacy:the_infinitum",
+    "category": "enigmaticlegacy:tools",
+	"advancement": "enigmaticlegacy:book/tools/the_infinitum",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 100,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.the_infinitum.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:the_infinitum",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.the_infinitum.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.the_infinitum.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

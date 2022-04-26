@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.SpongeBlock;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
@@ -30,7 +31,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.Tag.Named;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
@@ -81,7 +82,7 @@ public class Megasponge extends ItemBaseCurio implements Vanishable {
 	}
 
 	@SuppressWarnings("deprecation")
-	public BlockPos getCollidedWater(Named<Fluid> fluidTag, Player player) {
+	public BlockPos getCollidedWater(TagKey<Fluid> fluidTag, Player player) {
 		AABB axisalignedbb = player.getBoundingBox().deflate(0.001D);
 		int i = Mth.floor(axisalignedbb.minX);
 		int j = Mth.ceil(axisalignedbb.maxX);

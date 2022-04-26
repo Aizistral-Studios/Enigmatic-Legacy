@@ -99,6 +99,7 @@ public class UltimatePotionLingering extends ItemBase implements IAdvancedPotion
 			EnigmaticPotionEntity potionEntity = new EnigmaticPotionEntity(worldIn, playerIn);
 			potionEntity.setItem(throwed);
 			potionEntity.shootFromRotation(playerIn, playerIn.getXRot(), playerIn.getYRot(), -20.0F, 0.5F, 1.0F);
+			potionEntity.setOwner(playerIn);
 			worldIn.addFreshEntity(potionEntity);
 		}
 

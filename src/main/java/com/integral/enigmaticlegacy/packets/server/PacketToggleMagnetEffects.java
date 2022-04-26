@@ -42,8 +42,9 @@ public class PacketToggleMagnetEffects {
 			TransientPlayerData data = TransientPlayerData.get(playerServ);
 
 			data.setDisabledMagnetRingEffects(!data.getDisabledMagnetRingEffects());
-			data.needsSync = true;
+			data.syncToAllClients();
 		});
+
 		ctx.get().setPacketHandled(true);
 	}
 

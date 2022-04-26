@@ -13,6 +13,7 @@ import com.integral.etherium.core.IEtheriumTool;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -77,7 +78,7 @@ public class EtheriumSword extends SwordItem implements IEtheriumTool {
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 
-		if (hand == InteractionHand.OFF_HAND)
+		if (hand == InteractionHand.OFF_HAND || player.getOffhandItem().getUseAnimation() == UseAnim.BLOCK)
 			return new InteractionResultHolder<>(InteractionResult.PASS, player.getItemInHand(hand));
 
 		if (player.isCrouching()) {

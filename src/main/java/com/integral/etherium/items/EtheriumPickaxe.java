@@ -2,6 +2,7 @@ package com.integral.etherium.items;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Nullable;
 
@@ -13,6 +14,7 @@ import com.integral.etherium.items.generic.ItemEtheriumTool;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
@@ -71,7 +73,7 @@ public class EtheriumPickaxe extends ItemEtheriumTool {
 			return;
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumPickaxe1", ChatFormatting.GOLD, this.config.getPickaxeMiningRadius(), this.config.getPickaxeMiningDepth());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumPickaxe1", ChatFormatting.GOLD, this.config.getPickaxeMiningRadius() + this.config.getAOEBoost(Minecraft.getInstance().player), this.config.getPickaxeMiningDepth());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 			if (!this.config.disableAOEShiftInhibition()) {
@@ -91,13 +93,12 @@ public class EtheriumPickaxe extends ItemEtheriumTool {
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
 		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getPickaxeMiningRadius() != -1) {
-
 			HitResult trace = AOEMiningHelper.calcRayTrace(world, (Player) entityLiving, ClipContext.Fluid.ANY);
 			if (trace.getType() == HitResult.Type.BLOCK) {
 				BlockHitResult blockTrace = (BlockHitResult) trace;
 				Direction face = blockTrace.getDirection();
 
-				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, this.effectiveMaterials, this.config.getPickaxeMiningRadius(), this.config.getPickaxeMiningDepth(), true, pos, stack, (objPos, objState) -> {
+				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, this.effectiveMaterials, this.config.getPickaxeMiningRadius() + this.config.getAOEBoost((Player) entityLiving), this.config.getPickaxeMiningDepth(), true, pos, stack, (objPos, objState) -> {
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 				});
 			}

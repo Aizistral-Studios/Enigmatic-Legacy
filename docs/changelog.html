@@ -1,5 +1,153 @@
 <h3><b>The Changelog:</b></h3><br/>
 
+<h5><b>[Release 2.20.2]:</b></h5>
+<p>
+&nbsp;- Fixed lore disabling config option for Ring of the Seven Curses not working.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.20.1]:</b></h5>
+<p>
+&nbsp;- Fixed crash on dedicated server startup (#308).<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.20.0]:</b></h5>
+<p>
+&nbsp;- Tweaked priorities of some loot-altering effects;<br/>
+&nbsp;- Active ability of Etherium Broadsword will no longer trigger if player holds shield in offhand;<br/>
+&nbsp;- Enigmatic Amulet color is now pseudo-randomly determined by player's name in combination with world seed;<br/>
+&nbsp;- Bees are now considered tamable animals by curse-bending effect of Guide to Animal Companionship;<br/>
+&nbsp;- Lowered priority of Non-Euclidean cube in handling death event;<br/>
+&nbsp;- Fixed Non-Euclidean cube not providing immunity from fire block damage (#307);<br/>
+&nbsp;- Added config option to disable Night Vision ability of Charm of Treasure Hunter;<br/>
+&nbsp;- Keystone of the Oblivion can now be right-clicked on/with within inventory to destroy dragged/hovered stacks;<br/>
+&nbsp;- Tooltip of Exquisite Ring is now altered for bearers of Seven Curses, indicating that its Piglin-neutralizing effect will not work for them;<br/>
+&nbsp;- Fixed client crash when viewing ctrl-tooltip of Keystone of The Oblivion (#306);<br/>
+&nbsp;- Soul Crystal locations are now archived in soul_archive.json file at the root of world save folder (#78);<br/>
+&nbsp;- Clarified some wording on Pearl of the Void/Non-Euclidean Cube;<br/>
+&nbsp;- Fixed The Burden of Desolation not having cursed tooltip frame;<br/>
+&nbsp;- Essence of Raging Life now works on chorus plants;<br/>
+&nbsp;- Implemented Nefarious Ingot, as well as Etherium Block, Ingot and Scrap;<br/>
+&nbsp;- Implemented Wayfinder of the Damned (#83);<br/>
+&nbsp;- Implemented Tome of Devoured Malignancy;<br/>
+&nbsp;- Implemented Amulet of Ascension;<br/>
+&nbsp;- Implemented The Testament of Contempt;<br/>
+&nbsp;- Implemented The Eternal Cake;<br/>
+&nbsp;- Implemented Teleportato;<br/>
+&nbsp;- Player may now obtain up to 4 Hearts of the Abyss per world (previously 3);<br/>
+&nbsp;- Added Korean translation (thanks PixVoxel, #305);<br/>
+&nbsp;- Ported fixes from 2.11.12.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.19.0]:</b></h5>
+<p>
+&nbsp;- Implemented configurable exlusion list for Heart of the Golem, which allows to make it not count certain items as armor even when equipped in armor slots. Elytra is listed by default;<br/>
+&nbsp;- Added config option that makes Ring of the Seven Curses try to auto-equip itself when it enters player's inventory (#290);<br/>
+&nbsp;- Pearl of the Void damage now respects Guide to Animal Companionship (#288);<br/>
+&nbsp;- Implemented mechanism that prevents poison damage from ever killing the player (#299);<br/>
+&nbsp;- Enchantment entries in The Acknowledgment are now automatically unlocked when opening Enchanting Table's GUI (#274);<br/>
+&nbsp;- Fixed incorrect compatibility restrictions on Curse of Eternal Binding;<br/>
+&nbsp;- Pearl of the Void no longer prevents Night Vision effects of Charm of the Treasure Hunter/Will of the Ocean from working;<br/>
+&nbsp;- Fixed desynchronization issues when using any means of cross-dimensional teleportation in the mod;<br/>
+&nbsp;- Etherium Shovel and Astral Breaker are now efficient against clay;<br/>
+&nbsp;- If Quark is installed, its sort button in player's inventory will now be automatically moved out of the way of Enigmatic Legacy's buttons (#295);<br/>
+&nbsp;- Additional integration with Quark which prevents it from ever changing anything within Enigmatic Legacy's tooltips (what it tries to add there is not compatible anyways);<br/>
+&nbsp;- Made sure that Quark's features of automatically unlocking entire recipe book and and deleting all recipe-related advancements will not affect Enigmatic Legacy's recipes and advancements (they are integral to many things in The Acknowledgment, and Quark is too bold in its assumption that those can safely be messed with);<br/>
+&nbsp;- Player may now obtain up to 3 Hearts of the Abyss per world (previously 2);<br/>
+&nbsp;- Implemented The Burden of Desolation;<br/>
+&nbsp;- Implemented Non-Euclidean Cube.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.18.1]:</b></h5>
+<p>
+&nbsp;- Removed some duplicate keys in English localization file;<br/>
+&nbsp;- Fixed game crash when dealing damage to Ender Dragon (#298);<br/>
+&nbsp;- Fixed possible desynchronization issues when applying dynamic attributes to a player (#286);<br/>
+&nbsp;- Fixed dropped items rubberbanding when near another player who disabled magnetic effects for themselves (#283).<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.18.0]:</b></h5>
+<p>
+&nbsp;- Initial 1.18.2 port;<br/>
+&nbsp;- Enchanting with Enchanter's Pearl can no longer produce items that have both Curse of Eternal Binding and Curse of Vanishing.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.17.3]:</b></h5>
+<p>
+&nbsp;- Fixed invalid line in tooltip of Charm of Treasure Hunter.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.17.2]:</b></h5>
+<p>
+&nbsp;- Fixed client crash on startup when AppleSkin is present.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.17.1]:</b></h5>
+<p>
+&nbsp;- Improved compatibility of Sharpshooter enchantment with modded crossbows (thanks Flynatol, #282);<br/>
+&nbsp;- Added Quark integration which prevents it from replacing item stats with icons in Enigmatic Legacy's item tooltips, as they do not display correctly there;<br/>
+&nbsp;- Added AppleSkin integration which prevents it from adding icons for food hunger/saturation levels into Enigmatic Legacy's item tooltips, as they do not display correctly there;<br/>
+&nbsp;- Extended duration of Night Vision effects granted by Charm of Treasure Hunter and Will of the Ocean;<br/>
+&nbsp;- Charm of Treasure Hunter no longer requires low light level to work, and does not immediately remove Night Vision effect in inappropriate conditions, instead simply ceasing to refresh it;<br/>
+&nbsp;- More spelling mistakes corrected in English localization.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.17.0]:</b></h5>
+<p>
+&nbsp;- Fixed stack overflow when trying to block Guardian attack with Bulwark of Blazing Pride (#276);<br/>
+&nbsp;- Angel's Blessing can now accelerate thrown potions and similar projectiles;<br/>
+&nbsp;- Added an option to client config which allows to disable activation of active ability of Angel's Blessing by pressing jump key in mid-air;<br/>
+&nbsp;- Implemented The Ender Slayer.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.16.1]:</b></h5>
+<p>
+&nbsp;- Added "enchantment.desc" for new curses;<br/>
+&nbsp;- Corrected one minor spelling mistakes in English localization;<br/>
+&nbsp;- Curse of Eternal Binding is now incompatible with Enigmatic Amulet and Scroll of Postmortal Recall, as well as any modded enchantments that contain "soulbound" or "soulbinding" in their registry name;<br/>
+&nbsp;- Enchanter's Pearl can no longer be equipped by players who do not bear the Seven Curses, and will not provide additional charm slot to them if it ends up equipped anyhow.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.16.0]:</b></h5>
+<p>
+&nbsp;- Fixed current looting bonus not displayed correctly in tooltip of Axe of Executioner (#271);<br/>
+&nbsp;- Fixed a bug where enabling ultra hardcore mode for Ring of the Seven Curses in config caused two identical rings to be equipped onto player when spawning (#269);<br/>
+&nbsp;- Fixed projectiles deflected by Angel's Blessing picking up potentially infinite acceleration and crashing the game as a result (#272);<br/>
+&nbsp;- Active ability of Angel's Blessing can now be activated by pressing jump key in mid-air (#170);<br/>
+&nbsp;- The Acknowledgment now has separate option for Patchouli's text overflow mode, with default set to "OVERFLOW" (#268);<br/>
+&nbsp;- The Forbidden Fruit no longer counts as conventional food (#265);<br/>
+&nbsp;- Unholy Grail is now 4 times more rare;<br/>
+&nbsp;- Reduced intensity of particles produced by Astral Breaker;<br/>
+&nbsp;- Somewhat improved the texture of Bulwark of Blazing Pride;<br/>
+&nbsp;- Implemented "enigmaticlegacy:cursed_inventory_changed" advancement trigger, which is identical to vanilla's "inventory_changed" in every regard, except that it also checks whether or not the player is bearing Ring of the Seven Curses. Most ring-related advancements now use this trigger;<br/>
+&nbsp;- Implemented some new advancements;<br/>
+&nbsp;- Implemented "Time Played with Seven Curses" and "Time Played without Seven Curses" stats, visible in vanilla's stats menu;<br/>
+&nbsp;- Opening The Twist now shows its name on the landing page, instead of it always being "The Acknowledgment". This will also apply to The Infinitum;<br/>
+&nbsp;- The Twist can no longer be opened if the player does not bear the Seven Curses. This will also apply to The Infinitum;<br/>
+&nbsp;- Upon entering any world for the first time, the default optimal GUI scale will be forced for The Acknowledgment;<br/>
+&nbsp;- Enchanter's Pearl now works only when equipped as charm, but provides +1 charm slot while equipped;<br/>
+&nbsp;- Pearl of the Void, The Twist and other items with related effects now have more precise check for applying effects that are supposed to be triggered only by player's melee attacks;<br/>
+&nbsp;- Implemented configurable list of entities in config which are supposed to be counted as bosses by The Twist and the like;<br/>
+&nbsp;- Expanded the description of Accessibility Config, to more precisely outline what effect does disabling items there have;<br/>
+&nbsp;- A couple new special crafting ingredients - Heart of the Cosmos and Heart of the Abyss;<br/>
+&nbsp;- Implemented Celestial Fruit;<br/>
+&nbsp;- Implemented The Architect's Favor;<br/>
+&nbsp;- Implemented The Infinitum (#267);<br/>
+&nbsp;- Implemented Curse of Sorrow (#266);<br/>
+&nbsp;- Implemented Curse of Eternal Binding (#266).<br/>
+<p/><br/><br/>
+
+
 <h5><b>[Release 2.15.1]:</b></h5>
 <p>
 &nbsp;- Fixed misplaced config options (#262).<br/>
@@ -75,6 +223,13 @@
 <h5><b>[Release 2.12.0]:</b></h5>
 <p>
 &nbsp;- Initial 1.17 port. Due to overwhelming amount of changes in Forge and Minecraft itself, this is an experimental beta version released to let people test it, find and report bugs; don't expect unwavering stability yet.<br/>
+<p/><br/><br/>
+
+
+<h5><b>[Release 2.11.12]:</b></h5>
+<p>
+&nbsp;- Fixed player becoming immortal after applying /kill command, when Blue Skies and Project MMO present (#289);<br/>
+&nbsp;- Fixed Astral Sorcery's Resplendent Prism whitelist being invalidated in presence of Enigmatic Legacy (#285).<br/>
 <p/><br/><br/>
 
 

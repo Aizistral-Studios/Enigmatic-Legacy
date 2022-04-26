@@ -13,17 +13,30 @@
 	"MixinApotheosisEnchantmentContainer",
 	"MixinEnchantmentContainer",
 	"MixinHoglinTasks",
-	"MixinEnchantment",
+	"MixinEnchantmentHelper",
 	"MixinLootTable",
 	"MixinCharmEffects",
 	"MixinStarterGear",
 	"MixinPlayer",
 	"MixinLivingEntity",
+	"MixinEnderDragon",
+	"MixinInventoryChangeTrigger",
+	"MixinShulker",
 	"AccessorAbstractArrowEntity",
-	"AccessorAdvancementCommands"
+	"AccessorAdvancementCommands",
+	"MixinMobEffect",
+	"MixinImprovedTooltipsModule",
+	"MixinVillager",
+	"MixinAutomaticRecipeUnlockModule",
   ],
   "client": [
-	"MixinForgeHooksClient"
+	"MixinForgeHooksClient",
+	"MixinGuiBookLanding",
+	"MixinBookTextRenderer",
+	"MixinAttributeTooltips",
+	"MixinItemRenderer",
+	"MixinTooltipOverlayHandler",
+	"MixinMiniInventoryButton"
   ],
   "injectors": {
     "defaultRequire": 1

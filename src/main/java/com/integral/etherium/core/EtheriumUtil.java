@@ -1,11 +1,14 @@
 package com.integral.etherium.core;
 
+import com.integral.etherium.blocks.BlockEtherium;
 import com.integral.etherium.items.EnderRod;
 import com.integral.etherium.items.EtheriumArmor;
 import com.integral.etherium.items.EtheriumAxe;
 import com.integral.etherium.items.EtheriumIngot;
+import com.integral.etherium.items.EtheriumNugget;
 import com.integral.etherium.items.EtheriumOre;
 import com.integral.etherium.items.EtheriumPickaxe;
+import com.integral.etherium.items.EtheriumScraps;
 import com.integral.etherium.items.EtheriumScythe;
 import com.integral.etherium.items.EtheriumShovel;
 import com.integral.etherium.items.EtheriumSword;
@@ -24,12 +27,14 @@ public class EtheriumUtil {
 		props.rarity(Rarity.RARE);
 
 		if (config.isStandalone()) {
-			if (isAmong(itemClass, EnderRod.class, EtheriumOre.class, EtheriumIngot.class)) {
+			if (isAmong(itemClass, EnderRod.class, EtheriumOre.class, EtheriumIngot.class, EtheriumScraps.class, EtheriumNugget.class)) {
 				props.tab(CreativeModeTab.TAB_MATERIALS);
 			} else if (isAmong(itemClass, EtheriumAxe.class, EtheriumPickaxe.class, EtheriumScythe.class, EtheriumShovel.class)) {
 				props.tab(CreativeModeTab.TAB_TOOLS);
 			} else if (isAmong(itemClass, EtheriumSword.class, EtheriumArmor.class)) {
 				props.tab(CreativeModeTab.TAB_COMBAT);
+			} else if (itemClass == BlockEtherium.class) {
+				props.tab(CreativeModeTab.TAB_BUILDING_BLOCKS);
 			} else {
 				props.tab(CreativeModeTab.TAB_MISC);
 			}

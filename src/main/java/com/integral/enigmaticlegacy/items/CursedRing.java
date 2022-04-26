@@ -75,6 +75,7 @@ public class CursedRing extends ItemBaseCurio {
 	public static Omniconfig.BooleanParameter enableLore;
 
 	public static Omniconfig.BooleanParameter ultraHardcore;
+	public static Omniconfig.BooleanParameter autoEquip;
 	public static final List<ResourceLocation> neutralAngerBlacklist = new ArrayList<>();
 
 	@SubscribeConfig(receiveClient = true)
@@ -130,7 +131,11 @@ public class CursedRing extends ItemBaseCurio {
 							+ "entering a new world, instead of just being added to their inventory.")
 					.getBoolean("UltraHardcode", false);
 
-
+			autoEquip = builder
+					.comment("If true, Ring of the Seven Curses will be equipped into player's ring slot right away when "
+							+ "it enters their inventory. This is different from ultra hardcore option as the way through "
+							+ "which ring ends up in player's inventory does not matter.")
+					.getBoolean("AutoEquip", false);
 
 			knockbackDebuff = builder
 					.comment("How much knockback bearers of the ring take, measured in percents.")
@@ -210,20 +215,22 @@ public class CursedRing extends ItemBaseCurio {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing17");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing18");
 		} else {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore2");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore3");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore4");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore5");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore6");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore7");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing1");
+			if (enableLore.getValue()) {
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore1");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore2");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore3");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore4");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore5");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore6");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRingLore7");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
+			}
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eternallyBound1");
 
 			if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.isCreative()) {
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing2_creative");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eternallyBound2_creative");
 			} else {
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.cursedRing2");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eternallyBound2");
 			}
 
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");

@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.item.Tier;
 import net.minecraft.tags.Tag;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,11 +21,11 @@ import net.minecraft.world.item.Item.Properties;
 
 public abstract class ItemEtheriumTool extends DiggerItem implements IEtheriumTool {
 	public Set<Material> effectiveMaterials;
-	public Set<Tag<Block>> effectiveTags;
+	public Set<TagKey<Block>> effectiveTags;
 	public ItemStack defaultInstance;
 	protected final IEtheriumConfig config;
 
-	public ItemEtheriumTool(float attackDamageIn, float attackSpeedIn, IEtheriumConfig config, Tag<Block> blocks, Properties builder) {
+	public ItemEtheriumTool(float attackDamageIn, float attackSpeedIn, IEtheriumConfig config, TagKey<Block> blocks, Properties builder) {
 		super(attackDamageIn, attackSpeedIn, config.getToolMaterial(), blocks, builder);
 
 		this.config = config;
@@ -43,12 +44,12 @@ public abstract class ItemEtheriumTool extends DiggerItem implements IEtheriumTo
 		return super.isCorrectToolForDrops(stack, blockIn) || this.hasAnyTag(blockIn, this.effectiveTags) || this.effectiveMaterials.contains(blockIn.getMaterial());
 	}
 
-	protected boolean hasAnyTag(BlockState blockstate, Set<Tag<Block>> tags) {
+	protected boolean hasAnyTag(BlockState blockstate, Set<TagKey<Block>> tags) {
 		return tags.stream().anyMatch(tag -> this.hasTag(blockstate, tag));
 	}
 
-	protected boolean hasTag(BlockState blockstate, Tag<Block> tag) {
-		return tag.contains(blockstate.getBlock());
+	protected boolean hasTag(BlockState blockstate, TagKey<Block> tag) {
+		return blockstate.is(tag);
 	}
 
 	@Override

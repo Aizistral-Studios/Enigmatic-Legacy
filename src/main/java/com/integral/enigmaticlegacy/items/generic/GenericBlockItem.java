@@ -18,6 +18,7 @@ public class GenericBlockItem extends BlockItem {
 
 	public GenericBlockItem(Block blockIn, Properties props) {
 		super(blockIn, props);
+		this.setRegistryName(blockIn.getRegistryName());
 	}
 
 	public static Properties getDefaultProperties() {

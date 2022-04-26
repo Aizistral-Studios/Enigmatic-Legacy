@@ -10,6 +10,7 @@ import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
+import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
@@ -46,6 +47,7 @@ import top.theillusivec4.curios.api.SlotContext;
 public class MiningCharm extends ItemBaseCurio {
 	public static Omniconfig.PerhapsParameter breakSpeedBonus;
 	public static Omniconfig.DoubleParameter reachDistanceBonus;
+	public static Omniconfig.BooleanParameter enableNightVision;
 	//public static EnigmaConfig.BooleanParameter bonusFortuneEnabled;
 
 	@SubscribeConfig
@@ -62,10 +64,14 @@ public class MiningCharm extends ItemBaseCurio {
 				.max(16)
 				.getDouble("ReachDistance", 2.15);
 
+		enableNightVision = builder
+				.comment("Whether Night Vision ability of Charm of Treasure Hunter should be enabled.")
+				.getBoolean("EnableNightVision", true);
+
 		builder.popPrefix();
 	}
 
-	public final int nightVisionDuration = 210;
+	public final int nightVisionDuration = 310;
 
 	public MiningCharm() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.RARE));
@@ -91,7 +97,6 @@ public class MiningCharm extends ItemBaseCurio {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm4");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm5");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharm6");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -107,7 +112,6 @@ public class MiningCharm extends ItemBaseCurio {
 			if (effect.getDuration() <= (duration - 1)) {
 				player.removeEffect(MobEffects.NIGHT_VISION);
 			}
-
 		}
 	}
 
@@ -115,13 +119,24 @@ public class MiningCharm extends ItemBaseCurio {
 	public void curioTick(SlotContext context, ItemStack stack) {
 		if (context.entity() instanceof Player player && !context.entity().level.isClientSide)
 			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.miningCharm)) {
-				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true) && player.getY() < 50 && !player.level.dimension().location().toString().equals("minecraft:the_nether") && !player.level.dimension().location().toString().equals("minecraft:the_end") && !player.isEyeInFluid(FluidTags.WATER) && !player.level.canSeeSkyFromBelowWater(player.blockPosition()) && player.level.getMaxLocalRawBrightness(player.blockPosition(), 0) <= 8) {
+				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
+					if (enableNightVision.getValue()) {
+						if (player.getY() < 50 && !player.level.dimension().equals(Level.NETHER)
+								&& !player.level.dimension().equals(Level.END)
+								&& !player.isEyeInFluid(FluidTags.WATER)
+								&& !player.level.canSeeSkyFromBelowWater(player.blockPosition())
+								/*&& player.level.getMaxLocalRawBrightness(player.blockPosition(), 0) <= 8*/) {
 
-					player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
-				} else {
-					this.removeNightVisionEffect(player, this.nightVisionDuration);
+							EnigmaticEventHandler.isApplyingNightVision = true;
+							player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
+							EnigmaticEventHandler.isApplyingNightVision = false;
+						} else {
+							//this.removeNightVisionEffect(player, this.nightVisionDuration);
+						}
+					} else {
+						ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", false);
+					}
 				}
-
 			}
 	}
 
@@ -133,8 +148,10 @@ public class MiningCharm extends ItemBaseCurio {
 			ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", false);
 			world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHOFF, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 		} else {
-			ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", true);
-			world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHON, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			if (enableNightVision.getValue()) {
+				ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", true);
+				world.playSound(null, player.blockPosition(), EnigmaticLegacy.HHON, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			}
 		}
 
 		player.swing(handIn);

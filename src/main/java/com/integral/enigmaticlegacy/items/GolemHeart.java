@@ -1,5 +1,7 @@
 package com.integral.enigmaticlegacy.items;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -27,18 +29,22 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.SlotContext;
 
 public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
+	public static final List<Item> EXCLUDED_ARMOR = new ArrayList<>();
 	public static Omniconfig.IntParameter spellstoneCooldown;
 	public static Omniconfig.DoubleParameter defaultArmorBonus;
 	public static Omniconfig.DoubleParameter superArmorBonus;
@@ -93,6 +99,19 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 				.getDouble("VulnerabilityModifier", 2.0);
 
 		builder.popPrefix();
+
+		String[] exclusions = builder.config.getStringList("GolemHeartExcludedArmor", builder.getCurrentCategory(), new String[] { "minecraft:elytra" },
+				"List of items that should not be counted as armor by Heart of the Golem, even when equipped in armor slots.");
+
+		Arrays.stream(exclusions).forEach(entry -> {
+			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(entry));
+
+			if (item != null) {
+				EXCLUDED_ARMOR.add(item);
+			} else {
+				EnigmaticLegacy.logger.error("Could not find excluded item when parsing config: " + entry);
+			}
+		});
 	}
 
 
@@ -173,7 +192,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
+		if (context.entity() instanceof ServerPlayer player) {
 			AttributeMap map = player.getAttributes();
 			map.removeAttributeModifiers(this.attributesDefault);
 			map.removeAttributeModifiers(this.attributesNoArmor);
@@ -182,7 +201,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		if (context.entity() instanceof Player player) {
+		if (context.entity() instanceof ServerPlayer player) {
 			AttributeMap map = player.getAttributes();
 
 			if (SuperpositionHandler.hasAnyArmor(player)) {

@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.quack.IProperShieldUser;
 import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.InfernalShield;
 import com.integral.enigmaticlegacy.items.MagmaHeart;
 
@@ -38,61 +39,7 @@ public abstract class MixinLivingEntity extends Entity implements IProperShieldU
 
 	@Inject(method = "isDamageSourceBlocked", at = @At("HEAD"), cancellable = true)
 	private void onDamageSourceBlocking(DamageSource source, CallbackInfoReturnable<Boolean> info) {
-		if (((LivingEntity)(Object)this) instanceof Player player && this.useItem != null) {
-			boolean blocking = this.isActuallyReallyBlocking();
-
-			if (blocking && this.useItem.getItem() instanceof InfernalShield) {
-				boolean piercingArrow = false;
-				Entity entity = source.getDirectEntity();
-
-				if (entity instanceof AbstractArrow) {
-					AbstractArrow abstractarrow = (AbstractArrow)entity;
-					if (abstractarrow.getPierceLevel() > 0) {
-						piercingArrow = true;
-					}
-				}
-
-				piercingArrow = false; // defend against Piercing... for now
-
-				if (!source.isBypassArmor() && this.isActuallyReallyBlocking() && !piercingArrow) {
-					Vec3 sourcePos = source.getSourcePosition();
-					if (sourcePos != null) {
-						Vec3 lookVec = this.getViewVector(1.0F);
-						Vec3 sourceToSelf = sourcePos.vectorTo(this.position()).normalize();
-						sourceToSelf = new Vec3(sourceToSelf.x, 0.0D, sourceToSelf.z);
-						if (sourceToSelf.dot(lookVec) < 0.0D) {
-							info.setReturnValue(true);
-
-							int strength = -1;
-
-							if (player.hasEffect(EnigmaticLegacy.blazingStrengthEffect)) {
-								MobEffectInstance effectInstance = player.getEffect(EnigmaticLegacy.blazingStrengthEffect);
-								strength = effectInstance.getAmplifier();
-								player.removeEffect(EnigmaticLegacy.blazingStrengthEffect);
-								strength = strength > 2 ? 2 : strength;
-							}
-
-							player.addEffect(new MobEffectInstance(EnigmaticLegacy.blazingStrengthEffect, 1200, strength + 1, true, true));
-
-							if (source.getDirectEntity() instanceof LivingEntity living && living.isAlive()) {
-								if (!living.fireImmune()) {
-									living.invulnerableTime = 0;
-									living.hurt(new EntityDamageSource(DamageSource.ON_FIRE.msgId, player), 4F);
-									living.setSecondsOnFire(4);
-									EnigmaticEventHandler.knockbackThatBastard.remove(living);
-								}
-							}
-
-
-							return;
-						}
-					}
-				}
-
-				info.setReturnValue(false);
-				return;
-			}
-		}
+		SuperpositionHandler.onDamageSourceBlocking(((LivingEntity)(Object)this), this.useItem, source, info);
 	}
 
 	@Override

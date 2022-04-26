@@ -56,7 +56,7 @@ public class PacketForceArrowRotations {
 			if (arrow != null) {
 				arrow.addTag("enigmaticlegacy.redirected");
 
-				arrow.teleportTo(msg.posX, msg.posY, msg.posZ);
+				arrow.moveTo(msg.posX, msg.posY, msg.posZ);
 				arrow.setDeltaMovement(msg.motionX, msg.motionY, msg.motionZ);
 				arrow.setYRot(msg.rotationYaw);
 				arrow.yRotO = msg.rotationYaw;
