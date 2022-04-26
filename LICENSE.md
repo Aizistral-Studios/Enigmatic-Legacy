@@ -18,7 +18,7 @@ Everyone is permitted to copy and distribute verbatim copies of this license doc
 
 ## II. Extension
 
-**1.** This license covers any code, assets and binaries that are a part of Enigmatic Legacy, officially published by the Creator after this license was made effective, including but not limited to: contents of repositories that may contain such code, assets and binaries in publicly available form. Every part of Enigmatic Legacy that was published, available and obtained before Enigmatic Legacy was covered by this exact license remains covered by whichever license was effective at the moment;
+**1.** This license covers any code, assets and binaries that are a part of Enigmatic Legacy, officially published by the Creator at the time and after this license was made effective, including but not limited to: contents of repositories that may contain such code, assets and binaries in publicly available form. Every part of Enigmatic Legacy that was published, available and obtained before Enigmatic Legacy was covered by this exact license remains covered by whichever license was effective at the moment;
 
 **2.** The Creator reserves all rights in regards to their works that are not explicitly mentioned and defined otherwise by this license.
 
