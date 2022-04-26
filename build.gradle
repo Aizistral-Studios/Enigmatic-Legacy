@@ -183,5 +183,5 @@ project.afterEvaluate {
 	reobfJar.finalizedBy('finalJar')
 	finalJar.finalizedBy('renameJar')
 	
-	tasks.named('curseforge').get().dependsOn('finalJar')
+	tasks.named('curseforge').get().dependsOn('renameJar')
 }
