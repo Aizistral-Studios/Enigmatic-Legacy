@@ -86,13 +86,22 @@
 "item.enigmaticlegacy.twisted_potion": "비틀린 자비의 물약",
 "item.enigmaticlegacy.infernal_shield": "불타오르는 자부심의 방벽",
 "item.enigmaticlegacy.cosmic_heart": "우주의 심장",
-"item.enigmaticlegacy.cosmic_scroll": "설계자의 호의",
 "item.enigmaticlegacy.abyssal_heart": "심연의 심장",
 "item.enigmaticlegacy.the_infinitum": "무저갱",
 "item.enigmaticlegacy.astral_fruit": "천상의 과실",
 "item.enigmaticlegacy.ender_slayer": "엔더 학살자",
 "item.enigmaticlegacy.the_cube": "비유클리드 입방체",
 "item.enigmaticlegacy.desolation_ring": "적막함의 부담",
+"item.enigmaticlegacy.etherium_nugget": "에테리움 조각",
+"item.enigmaticlegacy.etherium_scraps": "에테리움 파편",
+"item.enigmaticlegacy.astral_potato": "텔레포테이토",
+"item.enigmaticlegacy.curse_transposer": "삼켜진 악성의 서적",
+"item.enigmaticlegacy.soul_compass": "저주받은 자의 길잡이",
+"item.enigmaticlegacy.ascension_amulet": "승천의 부적",
+"item.enigmaticlegacy.eldritch_amulet": "경멸의 증표",
+"item.enigmaticlegacy.evil_ingot": "악명의 주괴",
+"block.enigmaticlegacy.etherium_block": "에테리움 블록",
+"block.enigmaticlegacy.cosmic_cake": "영원의 케이크",
 
 "block.enigmaticlegacy.big_lamp": "전등",
 "block.enigmaticlegacy.massive_lamp": "케이스를 씌운 전등",
@@ -353,9 +362,6 @@
 "advancement.enigmaticlegacy:theCube": "입방체는 내 필멸을 치유했다",
 "advancement.enigmaticlegacy:theCube.desc": "모든 주문석을 동일하게 강력하고 부자연스러운 모양으로 강제해 비유클리드 입방체를 만드세요",
 
-"advancement.enigmaticlegacy:cosmicScroll": "신성의 가신(개발 지원자 전용)",
-"advancement.enigmaticlegacy:cosmicScroll.desc": "설계자의 영역을 순례하고 그의 헌신적인 신봉자가 되어 그의 표식과 축복을 받을 권리를 얻으세요",
-
 "tooltip.enigmaticlegacy.holdShift": "§6Shift§5를 눌러 자세한 정보를 확인하세요.",
 
 "tooltip.enigmaticlegacy.enigmaticItem1": "§d액티브 능력:",
@@ -591,7 +597,7 @@
 "tooltip.enigmaticlegacy.monsterCharm3": "§6+1 §d약탈 등급",
 "tooltip.enigmaticlegacy.monsterCharm4": "§5사살한 몬스터들은 추가 경험치를 제공합니다.",
 
-"tooltip.enigmaticlegacy.mendingMixture1": "§5제작대에서 아무 도구, 무기 또는 갑옷과 함쳐",
+"tooltip.enigmaticlegacy.mendingMixture1": "§5제작대에서 아무 도구, 무기 또는 갑옷과 합쳐",
 "tooltip.enigmaticlegacy.mendingMixture2": "§5내구도를 완전히 회복시킵니다.",
 
 "tooltip.enigmaticlegacy.unholyGrail1": "§5마시지 않는 것이 좋을 것 같습니다...",
@@ -671,22 +677,22 @@
 
 "tooltip.enigmaticlegacy.oblivionStoneHoldCtrl": "§6Ctrl§5을 눌러 흡수하는 아이템 목록을 봅니다.",
 "tooltip.enigmaticlegacy.oblivionStoneCtrlList": "§5흡수하는 아이템 목록:",
-"tooltip.enigmaticlegacy.oblivionStone1": "§5아무 아이템과 함께 제작대에서 조합하여",
-"tooltip.enigmaticlegacy.oblivionStone2": "§5해당 아이템을 흡수하도록 설정합니다.",
-"tooltip.enigmaticlegacy.oblivionStone2_more": "§5아무것도 조합하지 않으면 목록을 비웁니다.",
-"tooltip.enigmaticlegacy.oblivionStone3": "§6마우스 오른쪽 버튼§5을 눌러 모드를 변경합니다.",
-"tooltip.enigmaticlegacy.oblivionStone4": "§6Shift+마우스 오른쪽 버튼§5을 눌러",
-"tooltip.enigmaticlegacy.oblivionStone5": "§5완전히 활성화하거나 비활성화합니다.",
-"tooltip.enigmaticlegacy.oblivionStone6": "§6전부 흡수§5 모드에서는, 인벤토리의 모든",
-"tooltip.enigmaticlegacy.oblivionStone7": "§5지정된 아이템을 전부 흡수하여, 아무것도",
-"tooltip.enigmaticlegacy.oblivionStone8": "§5남지 않도록 합니다.",
-"tooltip.enigmaticlegacy.oblivionStone9": "§6최종 중첩§5 모드에서는, 인벤토리에 적어도",
-"tooltip.enigmaticlegacy.oblivionStone10": "§5한 묶음의 아이템을 남겨두지만, 그 이상의",
-"tooltip.enigmaticlegacy.oblivionStone11": "§5아이템은 전부 흡수합니다.",
-"tooltip.enigmaticlegacy.oblivionStone12": "§6초과 흡수§5 모드에서는, 인벤토리에 빈",
-"tooltip.enigmaticlegacy.oblivionStone13": "§5공간이 없을 때 초과해서 들어오는 아이템을",
-"tooltip.enigmaticlegacy.oblivionStone14": "§5소비하며, 이는 빈 공간이 생기기 전까지",
-"tooltip.enigmaticlegacy.oblivionStone15": "§5지속됩니다.",
+"tooltip.enigmaticlegacy.oblivionStone1": "§5인벤토리에서 원하는 아이템을 파괴할 수 있습니다.",
+"tooltip.enigmaticlegacy.oblivionStone2": "§5초석에 원하는 아이템을 드래그한 후 §6마우스 오른쪽 버튼§5을 누르세요.",
+"tooltip.enigmaticlegacy.oblivionStone3": "§5또는 초석을 원하는 아이템에 드래그한 후 §6마우스 오른쪽 버튼§5을 누르세요.",
+"tooltip.enigmaticlegacy.oblivionStone4": "§5아무 아이템과 함께 제작대에서 조합할 수 있습니다.",
+"tooltip.enigmaticlegacy.oblivionStone5": "§5조합한 아이템은 인벤토리에서 자동으로 파괴됩니다.",
+"tooltip.enigmaticlegacy.oblivionStone6": "§5어떤 아이템도 없이 조합할 경우 목록을 비웁니다.",
+"tooltip.enigmaticlegacy.oblivionStone7": "§5들고 있는 상태에서 §6마우스 오른쪽 버튼§5을 눌러 모드를 변경합니다.",
+"tooltip.enigmaticlegacy.oblivionStone8": "§6Shift+마우스 오른쪽 버튼§5을 눌러 활성화하거나 비활성화합니다.",
+"tooltip.enigmaticlegacy.oblivionStone9": "§6전부 흡수§5 모드:",
+"tooltip.enigmaticlegacy.oblivionStone10": "§5인벤토리의 모든 지정된 아이템을 파괴합니다.",
+"tooltip.enigmaticlegacy.oblivionStone11": "§6최종 중첩§5 모드:",
+"tooltip.enigmaticlegacy.oblivionStone12": "§5적어도 한 묶음의 아이템을 남겨둡니다.",
+"tooltip.enigmaticlegacy.oblivionStone13": "§5그 이상의 아이템은 전부 파괴합니다.",
+"tooltip.enigmaticlegacy.oblivionStone14": "§6초과 흡수§5 모드:",
+"tooltip.enigmaticlegacy.oblivionStone15": "§5빈 공간이 없을 때 초과해서 들어오는 아이템을 파괴합니다.",
+"tooltip.enigmaticlegacy.oblivionStone16": "§5이 효과는 빈 공간이 생기기 전까지 지속됩니다.",
 
 "tooltip.enigmaticlegacy.oblivionStoneModeDesc": "§d모드: §6%1$s",
 "tooltip.enigmaticlegacy.oblivionStoneMode0": "§6전부 흡수",
@@ -699,11 +705,13 @@
 "tooltip.enigmaticlegacy.astralBreaker3": "§6Shift+마우스 오른쪽 버튼§5을 눌러 효과를 켜고 끌 수 있습니다.",
 "tooltip.enigmaticlegacy.astralBreaker4": "§5대부분의 블록에 효과적입니다.",
 
-"tooltip.enigmaticlegacy.enchantmentTransposer1": "§5제작대에서 아무 마법 부여된 아이템과 조합해 아이템의",
-"tooltip.enigmaticlegacy.enchantmentTransposer2": "§5모든 마법 부여를 서적으로 옮겨냅니다.",
+"tooltip.enigmaticlegacy.enchantmentTransposer1": "§5제작대에서 아무 마법 부여된 아이템과 조합할 수 있습니다.",
+"tooltip.enigmaticlegacy.enchantmentTransposer2": "§5해당 아이템의 모든 마법 부여를 서적으로 옮겨냅니다.",
 "tooltip.enigmaticlegacy.enchantmentTransposer3": "§5해당 서적은 §6마법이 부여된 책§5으로 변합니다.",
-
-"tooltip.enigmaticlegacy.enchantmentTransposer3": "§5해당 서적은 §6마법이 부여된 책§5으로 변합니다.",
+	
+"tooltip.enigmaticlegacy.curseTransposer1": "§5제작대에서 아무 마법 부여된 아이템과 조합할 수 있습니다.",
+"tooltip.enigmaticlegacy.curseTransposer2": "§5해당 아이템의 모든 저주를 서적으로 옮겨냅니다.",
+"tooltip.enigmaticlegacy.curseTransposer3": "§5해당 서적은 §6마법이 부여된 책§5으로 변합니다.",
 
 "tooltip.enigmaticlegacy.boundToPlayer": "§5다음에게 귀속됨: §6%1$s",
 
@@ -771,9 +779,6 @@
 "tooltip.enigmaticlegacy.cursedOnesOnly1": "일곱 저주를 품은 자만이 이 아이템의",
 "tooltip.enigmaticlegacy.cursedOnesOnly2": "힘을 얻고 사용할 권리를 얻습니다.",
 
-"tooltip.enigmaticlegacy.blessedOnesOnly1": "설계자에게 선택받은 자만이 이 아이템의",
-"tooltip.enigmaticlegacy.blessedOnesOnly2": "힘을 얻고 사용할 권리를 얻습니다.",
-
 "tooltip.enigmaticlegacy.worthyOnesOnly1": "§5이 아이템을 얻기 위해선 큰 희생이 필요합니다.",
 "tooltip.enigmaticlegacy.worthyOnesOnly2": "§5반지를 끼지 않은 시간의 §699.5%§5를 §6일곱 저주§5에",
 "tooltip.enigmaticlegacy.worthyOnesOnly3": "§5고통받아야 합니다.",
@@ -781,8 +786,6 @@
 
 "tooltip.enigmaticlegacy.tainted1": "§5저주받은 자의 존재로 인해 약간 오염되었습니다.",
 "tooltip.enigmaticlegacy.tainted2": "§5저주받은 존재의 손길로 더럽혀졌습니다.",
-"tooltip.enigmaticlegacy.blessed1": "§5설계자가 직접 선택한 자의 존재로 인해",
-"tooltip.enigmaticlegacy.blessed2": "§5이 아이템의 힘이 증폭되었습니다.",
 
 "tooltip.enigmaticlegacy.theTwist1": "§5모든 것을 빼앗아 가려는 길이라면,",
 "tooltip.enigmaticlegacy.theTwist2": "§5이보다 더 좋은 방법은 없을 것입니다...",
@@ -819,6 +822,7 @@
 "tooltip.enigmaticlegacy.guardianHeart11": "§6일부 몬스터는 광분 상태에 면역입니다.",
 "tooltip.enigmaticlegacy.guardianHeart12": "§5이 효과는 §6%1$s§6초§5의 대기시간을 가집니다.",
 
+"tooltip.enigmaticlegacy.forbiddenFruitLore": "§5지식은 최고의 선물입니다.",
 "tooltip.enigmaticlegacy.forbiddenFruit1": "§5이 과일을 섭취하게 되면, 다시는 허기를",
 "tooltip.enigmaticlegacy.forbiddenFruit2": "§5느끼지 않게 되지만, 어떤 형태의 재생 효과든",
 "tooltip.enigmaticlegacy.forbiddenFruit3": "§5기존보다 §6%1$s§5 약해진 효율을 보이게 됩니다.",
@@ -832,6 +836,7 @@
 "tooltip.enigmaticlegacy.evilEssence2": "§5날 것의 에너지를 구체화시켰습니다.",
 
 "tooltip.enigmaticlegacy.gemRing1": "§5장착 시 §6피글린§5들이 중립적인 상태가 됩니다.",
+	"tooltip.enigmaticlegacy.gemRing1Cursed": "§5§m5장착 시 §6§m피글린§5§m들이 중립적인 상태가 됩니다.",
 
 "tooltip.enigmaticlegacy.enchantersPearl1": "§6+1§d 부적 칸",
 "tooltip.enigmaticlegacy.enchantersPearl2": "§6마법 부여대§5를 사용할 때 더 많은 양과",
@@ -884,24 +889,6 @@
 "tooltip.enigmaticlegacy.infernalShield10": "§5  증폭시키지만, 피해받을 시 없어집니다.",
 "tooltip.enigmaticlegacy.infernalShield11": "§5- 뒤 공격에 §650%§5 추가 피해를 입습니다.",
 
-"tooltip.enigmaticlegacy.cosmicScrollLore1": "§5믿음을 잃는 것을 지켜보는 것은 마음을 아프게 하지만,",
-"tooltip.enigmaticlegacy.cosmicScrollLore2": "§5남은 자들을 의심하지 않도록 해 줄지도 모릅니다.",
-"tooltip.enigmaticlegacy.cosmicScroll1": "§6+1 §d운",
-"tooltip.enigmaticlegacy.cosmicScroll2": "§6+1 §d신비로운 주문서 칸",
-"tooltip.enigmaticlegacy.cosmicScroll3": "§5만약 §6에테리움 갑옷§5 세트를 입었다면, 보호막의",
-"tooltip.enigmaticlegacy.cosmicScroll4": "§5조건이 최대 체력의 §6%1$s§5 밑으로 내려가는",
-"tooltip.enigmaticlegacy.cosmicScroll5": "§5것으로 변경됩니다.",
-"tooltip.enigmaticlegacy.cosmicScroll6": "§5대부분의 주문석 액티브 능력 재사용 대기시간이",
-"tooltip.enigmaticlegacy.cosmicScroll7": "§5대폭 감소합니다.",
-"tooltip.enigmaticlegacy.cosmicScroll8": "§6에테리움 도구§5들이 더 넓은 영역을 채굴합니다.",
-"tooltip.enigmaticlegacy.cosmicScroll9": "§5치명적인 피해를 입을 시, 체력이 §650%§5까지",
-"tooltip.enigmaticlegacy.cosmicScroll10": "§5회복되며 강력한 효과들이 적용됩니다.",
-"tooltip.enigmaticlegacy.cosmicScroll11": "§5이 효과는 §6%1$s§6초§5의 재사용 대기시간을 가집니다.",
-"tooltip.enigmaticlegacy.cosmicScroll12": "§6+%1$s §d피해량§5, §6+%2$s §d밀치기§5가",
-"tooltip.enigmaticlegacy.cosmicScroll13": "§5선택받지 못한 자들을 대상으로 적용되며,",
-"tooltip.enigmaticlegacy.cosmicScroll14": "§5근접 공격이 대상을 화염에 휩싸이게 합니다.",
-"tooltip.enigmaticlegacy.cosmicScrollCooldown": "§d남은 재사용 대기시간: §6%1$s§6초",
-
 "tooltip.enigmaticlegacy.abyssalHeart1": "§5이것은 살아있고, 지켜보는 중입니다.",
 "tooltip.enigmaticlegacy.abyssalHeart2": "§5이 영역은 이토록 이상하고, 불경하며,",
 "tooltip.enigmaticlegacy.abyssalHeart3": "§5알 수 없고, 광기를 유발하는 무언가의",
@@ -940,6 +927,21 @@
 
 "tooltip.enigmaticlegacy.desolationRing1": "§6철 골렘, §6엔더맨, §6좀비화된 피글린§5 그리고",
 "tooltip.enigmaticlegacy.desolationRing2": "§6피글린§5이 근처에서 생성되지 않습니다.",
+	
+	"tooltip.enigmaticlegacy.astralPotato1": "§5보라, 별들의 무한한 섬세함이다!",
+	
+	"tooltip.enigmaticlegacy.cosmicCake1": "§5일반적인 케이크보다 영양소가 높습니다.",
+	"tooltip.enigmaticlegacy.cosmicCake2": "§5시간이 지남에 따라 수복합니다.",
+	
+	"tooltip.enigmaticlegacy.soulCompass1": "§5가장 가까운 §6영혼 수정§5의 위치를 가리킵니다.",
+	
+	"tooltip.enigmaticlegacy.eldritchAmulet1": "§5장착 시, 사망해도 아이템을 잃어버리지 않습니다.",
+	"tooltip.enigmaticlegacy.eldritchAmulet2": "§6경험치§5와 §6영혼 수정§5은 여전히 사라집니다.",
+	"tooltip.enigmaticlegacy.eldritchAmulet3": "§5잃어버린 경험치와 수정은 사망한 자리에 남습니다.",
+	"tooltip.enigmaticlegacy.eldritchAmulet4": "§5시선 안에 있는 생명체들은 느려지고 약해질 것입니다.",
+	"tooltip.enigmaticlegacy.eldritchAmulet5": "§5시선 밖의 생명체에게는 적용되지 않습니다.",
+	"tooltip.enigmaticlegacy.eldritchAmuletStat1": "§6+3 §d공격 피해",
+	"tooltip.enigmaticlegacy.eldritchAmuletStat2": "§6+15% §d생명 흡수",
 
 "gui.enigmaticlegacy.lore_inscriber": "이름 & 설명 적기",
 "gui.enigmaticlegacy.blazing_core_bar_title": "열기",
@@ -1335,7 +1337,6 @@
 "book.enigmaticlegacy.entry.guardian_heart.page.9": "그들이 그룹의 내부 갈등을 해결하느라 바쁜 동안 당신과 그들 사이에 가능한 한 최대한 멀리 떨어지는 것이 좋습니다.",
 
 
-
 "book.enigmaticlegacy.entry.animal_guide.name": "동물 조련사의 안내서",
 "book.enigmaticlegacy.entry.animal_guide.page.1": "오버월드의 사랑스러운 동물들과 친구가 되고 싶다면 이 종합 가이드가 확실히 도움이 될 것입니다. 이것은 당신이 훨씬 덜 친근한 것들과 싸우느라 바쁠 때 동물 친구들을 우발적으로 다치게 하는 것을 피하는 방법과 그들의 충성심과 존경을 얻는 많은 방법을 배우는 데 도움이 될 것입니다.",
 "book.enigmaticlegacy.entry.animal_guide.page.2": "그러나 신중한 연구와 주제에 대한 세부 사항을 요약한 수백 페이지를 기억하는 것은 어렵습니다. 따라서 한 두 가지 내용을 신속하게 찾아봐야 할 경우에 대비하여 품에 가지고 다니는 것이 좋습니다.",
@@ -1558,11 +1559,6 @@
 "book.enigmaticlegacy.entry.infinimeal.page.3": "자연은 사용 후 양적으로 스스로 성장하고 보충하지만 본래 생성된 것 보다 많지 않습니다.<br2/>또한 일반 비료가 효과가 없는 특정 식물들, 특히 사탕수수, 선인장, 덩굴 및 네더 사마귀에도 효과가 있습니다.",
 
 
-"book.enigmaticlegacy.entry.cosmic_scroll.name": "설계자의 호의",
-"book.enigmaticlegacy.entry.cosmic_scroll.page.1": "소문으로 뒤덮인 이 주문서의 위력은 대부분의 반신들, 심지어 신에 가까이 다가간 이들에게도 거부됩니다. 이것을 소유할 수 있는 사람은 건축가 자신의 재량에 달려있으며 소문에 따르면 $(l:https://discord.gg/fuWK8ns)그의 도메인$(/l)으로 향하는 긴 여정에 가득 차 있습니다. 그 경건한 존재가 알아차리는 것은 그 거주자 중 소수의 영예로운 일입니다.",
-"book.enigmaticlegacy.entry.cosmic_scroll.page.2": "그렇게 한 사람들은 동등하지 않은 권한을 부여받았습니다. 세상이 그들의 영광을 누리게 하고, 다른 이들의 귀와 눈에 믿음을 전파하게 하소서.",
-
-
 "book.enigmaticlegacy.entry.cosmic_heart.name": "우주의 심장",
 "book.enigmaticlegacy.entry.cosmic_heart.page.1": "다른 차원의 힘을 포함하는 신비한 재료의 정밀한 선택으로 바다의 심장의 지상 특성을 변경하여 다른 것으로 바꿀 수 있습니다...훨씬 더 강력합니다. 우주 자체의 힘을 이제 당신의 손바닥에 달려 있습니다.",
 "book.enigmaticlegacy.entry.cosmic_heart.page.2": "상상할 수 없는 위업이 무엇인지, 현실을 바꾸는 에너지로 어떤 멋진 인공물을 만들 수 있는지는 시간이 말해줄 것입니다.<br2/>하지만 한 가지는 확실합니다. 세상은 그들의 발자취 아래에서 떨고 있을 것입니다.",
@@ -1618,10 +1614,45 @@
 
 
 "book.enigmaticlegacy.entry.desolation_ring.name": "적막함의 부담",
-"book.enigmaticlegacy.entry.desolation_ring.page.1": "당신은 심연의 심장이 현실에 부과한 존재감을 거의 이해할 수 없지만, 최근에 당신이 발견했듯이, 그것을 활용하는 능력을 위해 이해는 필요하지 않습니다.",
-"book.enigmaticlegacy.entry.desolation_ring.page.2": "그것으로부터 힘을 끌어낼 수 있는 마찬가지로 놀랍고 끔찍한 몇 가지 것들 중에, 이 반지가 있습니다 - 아마도 이름 모를 성질에서, 일곱 개의 저주의 반지보다 더 악몽적일 것입니다.<br2/> 그것은 한때 당신의 존재를 용인할 수 있었지만, 일곱 번의 저주의 짐에 자신을 굴복시키자마자 그러한 능력을 잃은 생물들을 끝없이 도살해야 하는 필요성에서 벗어나게 하고 싶은 당신의 욕구를 편리하게 충족시켜 줍니다.",
+"book.enigmaticlegacy.entry.desolation_ring.page.1": "당신은 심연의 심장이 현실에 부과한 존재감을 거의 이해할 수 없지만, 최근에 당신이 발견했듯이, 그것을 활용하는 능력을 위해 이해는 필요하지 않습니다.<br2/>그것으로부터 힘을 끌어낼 수 있는 마찬가지로 놀랍고 끔찍한 몇 가지 것들 중에, 이 반지가 있습니다 - 아마도 이름 모를 성질에서, 일곱 개의 저주의 반지보다 더 악몽적일 것입니다.",
+"book.enigmaticlegacy.entry.desolation_ring.page.2": "그것은 한때 당신의 존재를 용인할 수 있었지만, 일곱 번의 저주의 짐에 자신을 굴복시키자마자 그러한 능력을 잃은 생물들을 끝없이 도살해야 하는 필요성에서 벗어나게 하고 싶은 당신의 욕구를 편리하게 충족시켜 줍니다.",
 "book.enigmaticlegacy.entry.desolation_ring.page.3": "당신을 둘러싼 존재로부터 그들을 지움으로써.<br2/>그런 현실 왜곡의 힘의 대가는 위험하지만, 당신이 그것을 원한다고 결정한다면, 당신은 영원히 그것에 얽매이게 될 것입니다. 아시겠지만, 공허함은 가장 무섭고, 항상 존재하는 위협보다 더 견디기 힘들 수 있습니다.",
-
+	
+"book.enigmaticlegacy.entry.astral_potato.name": "텔레포테이토",
+"book.enigmaticlegacy.entry.astral_potato.page.1": "당근 애호가와 감자 애호가의 끊임없는 싸움에서, 후자는 꾸준히 불리한 입장에 있다는 것을 깨닫게 될 겁니다. 비록 약간의 금으로 덮여있기는 하지만, 엄청난 영양적 가치와 활력을 되살리는 당근 앞에서, 구운 감자가 다 뭐랍니까?",
+"book.enigmaticlegacy.entry.astral_potato.page.2": "우리는 오늘, \"여기서 끝냅니다\". 우주의 가장 최신 요리의 발명은 두 가지 목적을 달성할 것입니다 - 배고픔을 채우는 것과, 당근과의 전쟁에서 이점을 가져가는 것입니다. 이 대단한 섬세함에 붙은 이름은 적을 조롱하고 사기를 꺾을 것입니다.",
+"book.enigmaticlegacy.entry.astral_potato.page.3": "그들이 \"텔레포테이토\"에게 완전히 패배했다는 걸 알면 얼마나 수치스러울까요? 그걸 알게 된 그들이 어떤 표정을 지을까요?<br2/>곧 알게 될 겁니다...",
+	
+	
+"book.enigmaticlegacy.entry.cosmic_cake.name": "영원의 케이크",
+"book.enigmaticlegacy.entry.cosmic_cake.page.1": "평범한 케이크에는 딱 한 가지 문제가 있는데, 그 문제가 케이크를 완벽하지 못하게 만듭니다 - 바로 끝난다는 것이죠. 마침내, 당신은 이 짜증나는 결함을 고칠 방법을 고안해냈고, 영원히 그 우아함을 즐길 수 있게 되었습니다.",
+"book.enigmaticlegacy.entry.cosmic_cake.page.2": "원초적인 힘과 이계의 힘을 통합하고 원소적인 에너지로 향기를 더하는 이 케이크는 시간의 흐름을 거스르며 엔트로피 자체를 뒤집고 화려하고 입에 맞는 형태를 회복합니다. 아무리 과식하는 죄악에 굴복하더라도, 그것은 언제나 당신의 맹렬한 공격으로부터 회복될 것입니다.",
+"book.enigmaticlegacy.entry.cosmic_cake.page.3": "이런 맛 앞에서 누가 견딜 수 있을까요, 권력, 영향력, 부, 심지어 생명 자체를 교환하려는 욕망을, 끝없이 무한한 소비 행위에 잠기게 하는 것에 누가 저항할 수 있을까요? 그런 것들은 결국 일시적입니다... 하지만 케이크는 영원합니다.",
+	
+	
+"book.enigmaticlegacy.entry.eldritch_amulet.name": "경멸의 증표",
+"book.enigmaticlegacy.entry.eldritch_amulet.page.1": "비록 승천의 부적의 형태가 완벽하고 순수할지라도, 그것은 더 많은 힘을 얻을 수 있습니다. 순수함을 희생하는 대가를 치르겠지만, 왜 당신 같은 저주받은 존재가 이런 상실을 걱정하겠어요?<br2/>심연의 심장이라고 알려진 살점 덩어리가 당신의 부적에 달라붙어 묘사할 수 없는 왜곡된 형태로 만들어버릴 것입니다.",
+"book.enigmaticlegacy.entry.eldritch_amulet.page.2": "일단 그 중심에 있는 생생하고 우아했던 돌은 우울하고 오닉스 같은 눈으로 대체되어 불안한 암시와 알 수 없는 의도를 가지고 당신과 같은 세계를 바라보고 있습니다. 광인도 이 가증스러운 손길은 거부하겠지만, 당신은 그것을 당신의 목에 걸고 환영하는군요.",
+"book.enigmaticlegacy.entry.eldritch_amulet.page.3": "광인은 당신과 달리 세상에 대한 망상적 인식의 희생자인 반면, 당신은 지금 그것이 무엇인지 확인하고 있습니다...<br2/>그리고 그것은 무한한 심연의 모든 눈들보다 더 끔찍합니다.",
+	
+	
+"book.enigmaticlegacy.entry.ascension_amulet.name": "승천의 부적",
+"book.enigmaticlegacy.entry.ascension_amulet.page.1": "지금쯤이면 당신이 가지고 있는 불가사의한 부적은 독특하지 않다는 것을 알고 있을 것이고, 실제로 그것은 당신과 같이 시간과 공간을 초월한 많은 반신들에게 주어지고 있습니다. 그것은 다른 색과 다른 힘을 가진 몇 가지 종류가 존재하는 것 같습니다.",
+"book.enigmaticlegacy.entry.ascension_amulet.page.2": "현재 소지하고 있는 색상을 정확히 결정하는 법은 알려지지 않았지만, 그것들은 모두 의미가 있고 어떤 방식으로든 연결되어 있는 것처럼 보입니다.<br2/>우주의 심장 안에 담긴 힘으로 부적을 무의식적인 힘과 야망의 형태로 바꿀 수 있습니다.",
+"book.enigmaticlegacy.entry.ascension_amulet.page.3": "승천의 부적이라는 자랑스러운 이름을 가진 이 부적을 통해 가능한 모든 색상의 능력을 얻을 수 있습니다...<br2/>운명이 이 영역에서 당신의 존재의 시작을 결정했을 지 모르지만, 그것의 끝은 당신이 형성하는 것입니다.",
+	
+	
+"book.enigmaticlegacy.entry.soul_compass.name": "영혼 나침반",
+"book.enigmaticlegacy.entry.soul_compass.page.1": "충분한 죽음과 함께, 각각의 영혼의 일부를 잃는 끔찍한 참신함은 시들해졌고, 그것들을 기억하기 위한 노력으로 당신의 사망 장소를 찾는 골치 아픈 경험만 남았습니다. 그러한 장소들은 마치 반지 착용자의 또 다른 저주라고 불릴 정도로 종종 도착하기 어려운 지점이곤 합니다.",
+"book.enigmaticlegacy.entry.soul_compass.page.2": "그러나 다른 많은 저주들처럼, 이 또한 극복될 수 있습니다. 인벤토리에 이것을 넣고 나면, 다시는 당신의 영혼 수정을 찾기 위해 기억에만 의존할 필요가 없습니다. 이 나침반은 올바른 차원에 있는 한 가장 가까운 영혼 수정을 가리키기 때문입니다.",
+"book.enigmaticlegacy.entry.soul_compass.page.3": "주목할 점은, 그것이 작동하지 않고, 무서운 속도로 걷잡을 수 없이 회전하는 곳이 있습니다 - 영혼 모래 계곡입니다. 얼마나 잊혀진 영혼들이 많이 돌아다니고 있으면 그렇게 강한 간섭을 일으킬 수 있는 걸까요? 아마 그것건 미해결로 남겨두는 것이 좋을 것 같습니다.",
+	
+"book.enigmaticlegacy.entry.curse_transposer.name": "삼켜진 악성",
+"book.enigmaticlegacy.entry.curse_transposer.page.1": "일곱 가지 저주를 짊어지면 탐험에서 발견한 고대 장비에 얽힌 저주의 힘을 끌어낼 수 있고, 심지어 마법 부여자의 진주의 도움으로 그러한 자신을 만들어나갈 수도 있습니다.",
+"book.enigmaticlegacy.entry.curse_transposer.page.2": "하지만 한 아이템에서 다른 아이템으로 그것들을 옮겨 놓을 수는 있어도, 그것들을 마법 부여와 분리할 방법은 없었기에, 그들은 때때로 매우 골칫거리였습니다.",
+"book.enigmaticlegacy.entry.curse_transposer.page.3": "그러나 이 작은 발명이 당신의 저주 관리 능력을 크게 향상시킬 것입니다. 싸게는 안 먹히겠지만, 저주를 장비에서 분리할 수 있습니다.",
+	
+	
 
 "book.enigmaticlegacy.landing_text": "당신 앞에 놓여 있는 것은 이 세상의 위대한 비밀들 중 일부가 속해 있는 곳인 위대한 지식의 우물이 꼼꼼하게 연구되고 목록화 된 것입니다.<br2/>당신의 여정이 계속되고 세상이 당신에게 스스로를 드러낼 때, 당신은 이 책을 다시 펴고 모아온 지식을 다시 보게 될 것입니다."
 
