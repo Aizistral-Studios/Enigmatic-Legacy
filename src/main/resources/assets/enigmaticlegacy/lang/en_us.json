@@ -100,6 +100,7 @@
 	"item.enigmaticlegacy.ascension_amulet": "Amulet of Ascension",
 	"item.enigmaticlegacy.eldritch_amulet": "The Testament of Contempt",
 	"item.enigmaticlegacy.evil_ingot": "Nefarious Ingot",
+	"item.enigmaticlegacy.enigmatic_elytra": "Majestic Elytra",
 	"block.enigmaticlegacy.etherium_block": "Block of Etherium",
 	"block.enigmaticlegacy.cosmic_cake": "The Eternal Cake",
 	
@@ -338,7 +339,7 @@
 	"advancement.enigmaticlegacy:infernalShield": "You Try Penetrating THIS!",
 	"advancement.enigmaticlegacy:infernalShield.desc": "Forge Bulwark of Blazing Pride, the ultimate tool of defense",
 	
-	"advancement.enigmaticlegacy:twistedMirror": "Warped Beaty",
+	"advancement.enigmaticlegacy:twistedMirror": "Warped Beauty",
 	"advancement.enigmaticlegacy:twistedMirror.desc": "Create the Twisted Mirror",
 	
 	"advancement.enigmaticlegacy:theTwist": "Fateful Twist",
@@ -1150,7 +1151,7 @@
 	"book.enigmaticlegacy.entry.magma_heart.name": "Blazing Core",
 	"book.enigmaticlegacy.entry.magma_heart.heading.1": "The Spellstone",
 	"book.enigmaticlegacy.entry.magma_heart.page.1": "Among the blazing wastes and seething oceans of lava stretching over blasted reaches of the Nether, among the cries of souls torn apart and forgotten, and ashes that any attempt to lay claim and rule over these wastes were reduced to, there's no surprise to come across the spellstone that embodies element of the fire itself.",
-	"book.enigmaticlegacy.entry.magma_heart.page.2": "Blazing Core grants you anything you may need to survive the extreme heat of the underworld. Fire and lava will be rendered completely harmless to you, and to an extent, flames will protect you from those who tries to attack you... Well, maybe not protect, but at least help to deliver your instant vengeance.",
+	"book.enigmaticlegacy.entry.magma_heart.page.2": "Blazing Core grants you anything you may need to survive the extreme heat of the underworld. Fire and lava will be rendered completely harmless to you, although temporarily; and, to an extent, flames will protect you from those who tries to attack you... Well, maybe not protect, but at least help to deliver your instant vengeance.",
 	
 	
 	"book.enigmaticlegacy.entry.golem_heart.name": "Heart of the Golem",

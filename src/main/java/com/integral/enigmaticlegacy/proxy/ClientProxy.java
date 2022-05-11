@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentMap;
 import com.google.common.collect.MapMaker;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.client.fx.PermanentItemPickupParticle;
+import com.integral.enigmaticlegacy.client.renderers.EnigmaticElytraLayer;
 import com.integral.enigmaticlegacy.client.renderers.PermanentItemRenderer;
 import com.integral.enigmaticlegacy.client.renderers.UltimateWitherSkullRenderer;
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
@@ -30,6 +31,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
+import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.particle.ItemPickupParticle;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -39,6 +41,8 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrownPotion;
 import net.minecraft.world.item.BoneMealItem;
@@ -144,6 +148,7 @@ public class ClientProxy extends CommonProxy {
 	public void addLayers(EntityRenderersEvent.AddLayers evt) {
 		this.addPlayerLayer(evt, "default");
 		this.addPlayerLayer(evt, "slim");
+		this.addEntityLayer(evt, EntityType.ARMOR_STAND);
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -152,7 +157,17 @@ public class ClientProxy extends CommonProxy {
 		EntityRenderer<? extends Player> renderer = evt.getSkin(skin);
 
 		if (renderer instanceof LivingEntityRenderer livingRenderer) {
-			livingRenderer.addLayer(new ShieldAuraLayer(livingRenderer, Minecraft.getInstance().getEntityModels()));
+			livingRenderer.addLayer(new EnigmaticElytraLayer(livingRenderer, evt.getEntityModels()));
+			livingRenderer.addLayer(new ShieldAuraLayer(livingRenderer, evt.getEntityModels()));
+		}
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	private <T extends LivingEntity, M extends HumanoidModel<T>, R extends LivingEntityRenderer<T, M>> void addEntityLayer(EntityRenderersEvent.AddLayers evt, EntityType<? extends T> entityType) {
+		R renderer = evt.getRenderer(entityType);
+
+		if (renderer != null) {
+			renderer.addLayer(new EnigmaticElytraLayer<>(renderer, evt.getEntityModels()));
 		}
 	}
 

@@ -297,6 +297,7 @@ import net.minecraftforge.client.gui.GuiUtils;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.PacketDistributor.PacketTarget;
 import net.minecraftforge.server.ServerLifecycleHooks;
+import top.theillusivec4.caelus.api.RenderCapeEvent;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.SlotContext;
@@ -346,6 +347,13 @@ public class EnigmaticEventHandler {
 	public static boolean isApplyingNightVision = false;
 	private static boolean handlingTooltip = false;
 	private long clientWorldTicks = 0;
+
+	@OnlyIn(Dist.CLIENT)
+	public void renderCape(RenderCapeEvent event) {
+		if (SuperpositionHandler.hasEnigmaticElytra(event.getPlayer())) {
+			event.setCanceled(true);
+		}
+	}
 
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent(priority = EventPriority.HIGHEST)

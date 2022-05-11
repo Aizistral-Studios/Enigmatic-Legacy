@@ -1621,6 +1621,15 @@ public class SuperpositionHandler {
 		return returnedStack;
 	}
 
+	public static boolean hasEnigmaticElytra(LivingEntity living) {
+		return getEnigmaticElytra(living) != null;
+	}
+
+	@Nullable
+	public static ItemStack getEnigmaticElytra(LivingEntity living) {
+		return getCurioStack(living, EnigmaticLegacy.enigmaticElytra);
+	}
+
 	public static ItemStack maybeApplyEternalBinding(ItemStack stack) {
 		if (Math.random() < 0.5)
 			if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BINDING_CURSE, stack) > 0) {

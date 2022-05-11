@@ -82,6 +82,7 @@ import com.integral.enigmaticlegacy.items.EnchantmentTransposer;
 import com.integral.enigmaticlegacy.items.EnderRing;
 import com.integral.enigmaticlegacy.items.EnderSlayer;
 import com.integral.enigmaticlegacy.items.EnigmaticAmulet;
+import com.integral.enigmaticlegacy.items.EnigmaticElytra;
 import com.integral.enigmaticlegacy.items.EnigmaticItem;
 import com.integral.enigmaticlegacy.items.EscapeScroll;
 import com.integral.enigmaticlegacy.items.EvilEssence;
@@ -101,6 +102,7 @@ import com.integral.enigmaticlegacy.items.HunterGuide;
 import com.integral.enigmaticlegacy.items.InfernalShield;
 import com.integral.enigmaticlegacy.items.Infinimeal;
 import com.integral.enigmaticlegacy.items.IronRing;
+import com.integral.enigmaticlegacy.items.LivingFlame;
 import com.integral.enigmaticlegacy.items.LootGenerator;
 import com.integral.enigmaticlegacy.items.LoreFragment;
 import com.integral.enigmaticlegacy.items.LoreInscriber;
@@ -431,6 +433,8 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Wayfinder of the Damned") public static SoulCompass soulCompass;
 	@ConfigurableItem("Amulet of Ascension") public static AscensionAmulet ascensionAmulet;
 	@ConfigurableItem("The Testament of Contempt") public static EldritchAmulet eldritchAmulet;
+	@ConfigurableItem("Living Flame") public static LivingFlame livingFlame;
+	@ConfigurableItem("??? Elytra") public static EnigmaticElytra enigmaticElytra;
 
 	public static Item cosmicScroll;
 
@@ -658,6 +662,7 @@ public class EnigmaticLegacy {
 		logger.info("Sending messages to Curios API...");
 		SuperpositionHandler.registerCurioType("charm", 1, false, null);
 		SuperpositionHandler.registerCurioType("ring", 2, false, null);
+		SuperpositionHandler.registerCurioType("back", 1, false, null);
 		SuperpositionHandler.registerCurioType("spellstone", 0, false, new ResourceLocation(MODID, "slots/empty_spellstone_slot"));
 		SuperpositionHandler.registerCurioType("scroll", 0, false, new ResourceLocation(MODID, "slots/empty_scroll_slot"));
 		//SuperpositionHandler.registerCurioType("curio", -1, true, false, null);
@@ -892,6 +897,8 @@ public class EnigmaticLegacy {
 			soulCompass = new SoulCompass();
 			ascensionAmulet = new AscensionAmulet();
 			eldritchAmulet = new EldritchAmulet();
+			livingFlame = new LivingFlame();
+			enigmaticElytra = new EnigmaticElytra();
 
 			spellstoneList = Lists.newArrayList(
 					angelBlessing,
@@ -1017,6 +1024,8 @@ public class EnigmaticLegacy {
 					soulCompass,
 					ascensionAmulet,
 					eldritchAmulet,
+					livingFlame,
+					enigmaticElytra,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),
