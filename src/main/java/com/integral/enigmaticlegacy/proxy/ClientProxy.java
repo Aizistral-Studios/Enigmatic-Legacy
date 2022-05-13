@@ -14,6 +14,7 @@ import java.util.concurrent.ConcurrentMap;
 
 import com.google.common.collect.MapMaker;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.client.QuoteHandler;
 import com.integral.enigmaticlegacy.client.fx.PermanentItemPickupParticle;
 import com.integral.enigmaticlegacy.client.renderers.EnigmaticElytraLayer;
 import com.integral.enigmaticlegacy.client.renderers.PermanentItemRenderer;
@@ -62,6 +63,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -80,6 +82,8 @@ public class ClientProxy extends CommonProxy {
 
 		IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modBus.addListener(this::onClientSetup);
+
+		MinecraftForge.EVENT_BUS.register(QuoteHandler.INSTANCE);
 	}
 
 	@Override

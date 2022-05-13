@@ -8,6 +8,8 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -56,6 +58,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.ParticleStatus;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
@@ -113,7 +116,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -1621,6 +1626,12 @@ public class SuperpositionHandler {
 		return returnedStack;
 	}
 
+	@OnlyIn(Dist.CLIENT)
+	public static int greatestWidth(Font font, String[] lines) {
+		return Arrays.stream(lines).mapToInt(font::width).reduce((num1, num2) -> num1 > num2 ? num1 : num2)
+				.getAsInt();
+	}
+
 	public static boolean hasEnigmaticElytra(LivingEntity living) {
 		return getEnigmaticElytra(living) != null;
 	}
@@ -1706,6 +1717,30 @@ public class SuperpositionHandler {
 				return;
 			}
 		}
+	}
+
+	public static <K, V extends Comparable<? super V>> void sortByKey(Map<K, V> map) {
+		List<Entry<K, V>> list = new ArrayList<>(map.entrySet());
+		list.sort((Comparator)Entry.comparingByKey());
+
+		map.clear();
+
+		for (Entry<K, V> entry : list) {
+			map.put(entry.getKey(), entry.getValue());
+		}
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public static String[] wrapString(String string, Font font, int width) {
+		var list = font.getSplitter().splitLines(string, width, Style.EMPTY);
+		String[] lines = new String[list.size()];
+
+		for (int i = 0; i < lines.length; i++) {
+			FormattedText text = list.get(i);
+			lines[i] = text.getString();
+		}
+
+		return lines;
 	}
 
 	@SafeVarargs

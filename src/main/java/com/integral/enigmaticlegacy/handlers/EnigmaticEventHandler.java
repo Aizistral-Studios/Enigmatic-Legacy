@@ -2,6 +2,7 @@ package com.integral.enigmaticlegacy.handlers;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -102,6 +103,7 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.math.Matrix4f;
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.advancements.Advancement;

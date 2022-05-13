@@ -6,6 +6,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.client.Quote;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
@@ -74,6 +75,8 @@ public class RelicOfTesting extends ItemBase {
 			//playerIn.sendMessage(new TextComponent("FLOAT: " + UltimaTestConfig.floatTest.getValue()), playerIn.getUniqueID());
 			//playerIn.sendMessage(new TextComponent("BOOLEAN: " + UltimaTestConfig.booleanTest.getValue()), playerIn.getUniqueID());
 
+		} else {
+			Quote.NO_PERIL.play();
 		}
 
 		/*

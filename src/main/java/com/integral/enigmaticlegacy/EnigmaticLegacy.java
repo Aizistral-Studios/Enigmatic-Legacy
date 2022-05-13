@@ -27,6 +27,7 @@ import com.integral.enigmaticlegacy.blocks.BlockCosmicCake;
 import com.integral.enigmaticlegacy.blocks.BlockMassiveLamp;
 import com.integral.enigmaticlegacy.brewing.SpecialBrewingRecipe;
 import com.integral.enigmaticlegacy.brewing.ValidationBrewingRecipe;
+import com.integral.enigmaticlegacy.client.Quote;
 import com.integral.enigmaticlegacy.config.EtheriumConfigHandler;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.crafting.EnigmaticRecipeSerializers;
@@ -261,6 +262,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -1052,6 +1054,10 @@ public class EnigmaticLegacy {
 			LEARN = SuperpositionHandler.registerSound("misc.learn");
 			SWORD_HIT_REJECT = SuperpositionHandler.registerSound("misc.sword_hit_reject");
 			UNEAT = SuperpositionHandler.registerSound("misc.uneat");
+
+			if (FMLEnvironment.dist.isClient()) {
+				Quote.NO_PERIL.getClass();
+			}
 
 			logger.info("Sounds registered successfully.");
 		}
