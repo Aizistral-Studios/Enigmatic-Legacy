@@ -10,6 +10,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.screens.LevelLoadingScreen;
+import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -20,6 +22,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.client.gui.GuiUtils;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
+import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @OnlyIn(Dist.CLIENT)
@@ -27,6 +31,7 @@ public class QuoteHandler {
 	public static final QuoteHandler INSTANCE = new QuoteHandler();
 	private Quote currentQuote = null;
 	private long startedPlaying = -1;
+	private int delayTicks = -1;
 
 	private QuoteHandler() {
 		// NO-OP
@@ -37,47 +42,60 @@ public class QuoteHandler {
 		return ((double)millis) / 1000;
 	}
 
-	public void playQuote(Quote quote) {
+	public void playQuote(Quote quote, int delayTicks) {
 		if (this.currentQuote == null) {
 			this.currentQuote = quote;
-
-			SimpleSoundInstance instance = new SimpleSoundInstance(quote.getSound().getLocation(),
-					SoundSource.MASTER, 0.5F, 1, false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true);
-
-			Minecraft.getInstance().getSoundManager().play(instance);
-
-			this.startedPlaying = System.currentTimeMillis();
+			this.delayTicks = delayTicks;
 		}
 	}
 
 	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
+	public void onPlayerTick(PlayerTickEvent event) {
+		if (event.player == Minecraft.getInstance().player) {
+			if (this.delayTicks > 0 && !(Minecraft.getInstance().screen instanceof LevelLoadingScreen)
+					&& !(Minecraft.getInstance().screen instanceof ReceivingLevelScreen)) {
+				this.delayTicks--;
+
+				if (this.delayTicks == 0) {
+					SimpleSoundInstance instance = new SimpleSoundInstance(this.currentQuote.getSound().getLocation(),
+							SoundSource.MASTER, 0.5F, 1, false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true);
+
+					Minecraft.getInstance().getSoundManager().play(instance);
+
+					this.startedPlaying = System.currentTimeMillis();
+				}
+			}
+		}
+	}
+
+	@SubscribeEvent
 	public void onOverlayRender(RenderGameOverlayEvent.Post event) {
 		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL)
 			return;
 
-		if (Minecraft.getInstance().screen != null || this.currentQuote == null)
+		if (Minecraft.getInstance().screen != null || this.currentQuote == null || this.delayTicks > 0)
 			return;
 
 		this.drawQuote(event.getMatrixStack(), event.getWindow());
 	}
 
 	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
 	public void onOverlayRender(ScreenEvent.DrawScreenEvent.Post event) {
-		if (this.currentQuote != null) {
+		if (this.currentQuote != null && this.delayTicks <= 0) {
 			this.drawQuote(event.getPoseStack(), Minecraft.getInstance().getWindow());
 			Minecraft.getInstance().getSoundManager().resume();
 		}
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	private void drawQuote(PoseStack stack, Window window) {
 		if (this.currentQuote.getSubtitles().getDuration() - this.getPlayTime() <= 0.1) {
 			this.currentQuote = null;
-			this.startedPlaying = -1;
+			this.startedPlaying = this.delayTicks = -1;
 			return;
 		}
+
+		if (this.getPlayTime() < 0.05)
+			return;
 
 		if (OmniconfigHandler.disableQuoteSubtitles.getValue())
 			return;

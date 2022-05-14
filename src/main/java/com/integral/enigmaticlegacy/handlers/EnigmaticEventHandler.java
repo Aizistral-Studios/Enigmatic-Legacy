@@ -31,6 +31,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.ICursed;
 import com.integral.enigmaticlegacy.api.quack.IAbyssalHeartBearer;
 import com.integral.enigmaticlegacy.api.quack.IProperShieldUser;
+import com.integral.enigmaticlegacy.client.Quote;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.effects.MoltenHeartEffect;
 import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
@@ -2949,8 +2950,9 @@ public class EnigmaticEventHandler {
 			lastSoulCompassUpdate.remove(player);
 
 			if (!event.isEndConquered()) {
-				if (!player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+				Quote.NO_PERIL.playWithDelay((ServerPlayer) player, 10);
 
+				if (!player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
 					if (SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL)) {
 						SuperpositionHandler.unlockSpecialSlot("scroll", event.getPlayer());
 					}

@@ -10,7 +10,6 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
 public class Subtitles {
 	private final Map<Double, String> map = new HashMap<>();
 	private final double duration;

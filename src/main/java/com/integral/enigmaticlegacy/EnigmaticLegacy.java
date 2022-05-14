@@ -149,6 +149,7 @@ import com.integral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketGenericParticleEffect;
 import com.integral.enigmaticlegacy.packets.clients.PacketHandleItemPickup;
 import com.integral.enigmaticlegacy.packets.clients.PacketPatchouliForce;
+import com.integral.enigmaticlegacy.packets.clients.PacketPlayQuote;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerSetlook;
@@ -622,6 +623,7 @@ public class EnigmaticLegacy {
 		packetInstance.registerMessage(26, PacketCosmicRevive.class, PacketCosmicRevive::encode, PacketCosmicRevive::decode, PacketCosmicRevive::handle);
 		packetInstance.registerMessage(27, PacketEnchantingGUI.class, PacketEnchantingGUI::encode, PacketEnchantingGUI::decode, PacketEnchantingGUI::handle);
 		packetInstance.registerMessage(28, PacketUpdateCompass.class, PacketUpdateCompass::encode, PacketUpdateCompass::decode, PacketUpdateCompass::handle);
+		packetInstance.registerMessage(29, PacketPlayQuote.class, PacketPlayQuote::encode, PacketPlayQuote::decode, PacketPlayQuote::handle);
 
 		logger.info("Registering triggers...");
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);
@@ -1055,9 +1057,7 @@ public class EnigmaticLegacy {
 			SWORD_HIT_REJECT = SuperpositionHandler.registerSound("misc.sword_hit_reject");
 			UNEAT = SuperpositionHandler.registerSound("misc.uneat");
 
-			if (FMLEnvironment.dist.isClient()) {
-				Quote.NO_PERIL.getClass();
-			}
+			Quote.getByID(0);
 
 			logger.info("Sounds registered successfully.");
 		}
