@@ -13,9 +13,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class Subtitles {
 	private final Map<Double, String> map = new HashMap<>();
-	private final float duration;
+	private final double duration;
 
-	public Subtitles(float duration, String firstLine) {
+	public Subtitles(double duration, String firstLine) {
 		this.map.put(0.0, firstLine);
 		this.duration = duration;
 	}

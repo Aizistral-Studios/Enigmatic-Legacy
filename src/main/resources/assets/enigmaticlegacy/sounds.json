@@ -74,5 +74,21 @@
         "stream": false
       }
     ]
+  },
+  "quote.no_peril": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/no_peril",
+        "stream": false
+      }
+    ]
+  },
+  "quote.i_wandered": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/i_wandered",
+        "stream": false
+      }
+    ]
   }
 }

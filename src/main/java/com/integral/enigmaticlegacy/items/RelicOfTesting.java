@@ -76,7 +76,7 @@ public class RelicOfTesting extends ItemBase {
 			//playerIn.sendMessage(new TextComponent("BOOLEAN: " + UltimaTestConfig.booleanTest.getValue()), playerIn.getUniqueID());
 
 		} else {
-			Quote.NO_PERIL.play();
+			Quote.I_WANDERED.play();
 		}
 
 		/*

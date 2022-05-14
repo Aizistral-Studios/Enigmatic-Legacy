@@ -11,8 +11,11 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class Quote {
-	public static final Quote NO_PERIL = new Quote("no_peril", new Subtitles(5,
+	public static final Quote NO_PERIL = new Quote("no_peril", new Subtitles(8.0,
 			"Where there is no peril in the task - there can be no glory in its accomplishment."));
+	public static final Quote I_WANDERED = new Quote("i_wandered", new Subtitles(
+			11.5, "Yes, I wandered those lands many times...")
+			.add(4.75, "...a desolate reminder of everything that was, and all that could have been."));
 
 	private final SoundEvent sound;
 	private final Subtitles subtitles;
