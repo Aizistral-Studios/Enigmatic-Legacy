@@ -41,6 +41,7 @@ public class OmniconfigHandler {
 
 	public static Omniconfig.EnumParameter<TextOverflowMode> acknowledgmentOverflowMode;
 	public static Omniconfig.BooleanParameter angelBlessingDoubleJump;
+	public static Omniconfig.BooleanParameter disableQuoteSubtitles;
 
 	public static boolean isItemEnabled(Object item) {
 		if (item == null)
@@ -108,6 +109,11 @@ public class OmniconfigHandler {
 				.comment("If false, active ability of Angel's Blessing will not be triggerable by pressing jump key in mid-air.")
 				.clientOnly()
 				.getBoolean("AngelBlessingDoubleJump", true);
+
+		disableQuoteSubtitles = client
+				.comment("If true, disables subtitles for The Architect's narration.")
+				.clientOnly()
+				.getBoolean("DisableQuoteSubtitles", false);
 
 		SuperpositionHandler.dispatchWrapperToHolders(EnigmaticLegacy.MODID, client);
 

@@ -2,6 +2,7 @@ package com.integral.enigmaticlegacy.client;
 
 import java.time.Clock;
 
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -77,6 +78,9 @@ public class QuoteHandler {
 			this.startedPlaying = -1;
 			return;
 		}
+
+		if (OmniconfigHandler.disableQuoteSubtitles.getValue())
+			return;
 
 		Subtitles subtitles = this.currentQuote.getSubtitles();
 
