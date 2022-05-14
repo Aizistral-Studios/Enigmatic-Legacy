@@ -1338,6 +1338,8 @@ public class EnigmaticEventHandler {
 				return;
 			}
 
+			SuperpositionHandler.setPersistentBoolean(player, "DeathFromEntity", event.getSource().getEntity() instanceof LivingEntity);
+
 			if (SuperpositionHandler.hasCurio(player, enigmaticAmulet) || SuperpositionHandler.hasItem(player, enigmaticAmulet)) {
 				postmortalPossession.put(player, enigmaticAmulet);
 			} else if (SuperpositionHandler.hasCurio(player, ascensionAmulet) || SuperpositionHandler.hasItem(player, ascensionAmulet)) {
@@ -2950,7 +2952,11 @@ public class EnigmaticEventHandler {
 			lastSoulCompassUpdate.remove(player);
 
 			if (!event.isEndConquered()) {
-				Quote.NO_PERIL.playWithDelay((ServerPlayer) player, 10);
+				if (SuperpositionHandler.getPersistentBoolean(player, "DeathFromEntity", false)) {
+					Quote.getRandom(Quote.DEATH_QUOTES_ENTITY).playWithDelay((ServerPlayer) player, 10);
+				} else {
+					Quote.getRandom(Quote.DEATH_QUOTES).playWithDelay((ServerPlayer) player, 10);
+				}
 
 				if (!player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
 					if (SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL)) {

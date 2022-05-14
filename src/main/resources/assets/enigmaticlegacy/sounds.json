@@ -90,5 +90,133 @@
         "stream": false
       }
     ]
+  },
+  "quote.another_demigod": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/another_demigod",
+        "stream": false
+      }
+    ]
+  },
+  "quote.another_eon": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/another_eon",
+        "stream": false
+      }
+    ]
+  },
+  "quote.death_may": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/death_may",
+        "stream": false
+      }
+    ]
+  },
+  "quote.demise_is": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/demise_is",
+        "stream": false
+      }
+    ]
+  },
+  "quote.end_doorstep": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/end_doorstep",
+        "stream": false
+      }
+    ]
+  },
+  "quote.eternity_to_keep": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/eternity_to_keep",
+        "stream": false
+      }
+    ]
+  },
+  "quote.oblivion_rejects": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/oblivion_rejects",
+        "stream": false
+      }
+    ]
+  },
+  "quote.only_because": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/only_because",
+        "stream": false
+      }
+    ]
+  },
+  "quote.perhaps_you": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/perhaps_you",
+        "stream": false
+      }
+    ]
+  },
+  "quote.setback": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/setback",
+        "stream": false
+      }
+    ]
+  },
+  "quote.sulfur_air": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/sulfur_air",
+        "stream": false
+      }
+    ]
+  },
+  "quote.tortured_rocks": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/tortured_rocks",
+        "stream": false
+      }
+    ]
+  },
+  "quote.violence_calls": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/violence_calls",
+        "stream": false
+      }
+    ]
+  },
+  "quote.we_fall": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/we_fall",
+        "stream": false
+      }
+    ]
+  },
+  "quote.you_will_endure": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/you_will_endure",
+        "stream": false
+      }
+    ]
+  },
+  "quote.immortal": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/immortal",
+        "stream": false
+      }
+    ]
   }
 }

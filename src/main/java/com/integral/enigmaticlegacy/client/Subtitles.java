@@ -30,10 +30,12 @@ public class Subtitles {
 
 	public String getLine(double time) {
 		String line = "ERROR";
+		double bestTime = -1;
 
 		for (Entry<Double, String> entry : this.map.entrySet()) {
-			if (entry.getKey() <= time) {
+			if (entry.getKey() <= time && entry.getKey() > bestTime) {
 				line = entry.getValue();
+				bestTime = entry.getKey();
 			}
 		}
 
