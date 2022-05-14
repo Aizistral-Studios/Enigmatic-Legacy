@@ -103,6 +103,8 @@
 	"item.enigmaticlegacy.enigmatic_elytra": "Величественные крылья",
 	"block.enigmaticlegacy.etherium_block": "Эфириевый блок",
 	"block.enigmaticlegacy.cosmic_cake": "Торт бесконечности",
+	"item.enigmaticlegacy.architect_eye_dormant": "Дремлющее око",
+	"item.enigmaticlegacy.architect_eye_active": "Загадачное око",
 	
 	"block.enigmaticlegacy.big_lamp": "Лампа",
 	"block.enigmaticlegacy.massive_lamp": "Укреплённая лампа",
@@ -943,6 +945,13 @@
 	"tooltip.enigmaticlegacy.eldritchAmulet5": "§5будут замедлены и ослаблены.",
 	"tooltip.enigmaticlegacy.eldritchAmuletStat1": "§6+3 §dурона",
 	"tooltip.enigmaticlegacy.eldritchAmuletStat2": "§6+15% §dвампиризма",
+	
+	"tooltip.enigmaticlegacy.architectEye1": "§5Он взаимосвязан с местоположением за пределами вашего ",
+	"tooltip.enigmaticlegacy.architectEye2": "§5пространства и времени. Вы можете пробудить око, если хотите",
+	"tooltip.enigmaticlegacy.architectEye3": "§5рискнуть, привлечь внимание кого-то... или чего-то.",
+
+	"tooltip.enigmaticlegacy.architectEyeAwakened1": "§5Тот, кто использует его для наблюдения за вами и окружающим миром, кажется,",
+	"tooltip.enigmaticlegacy.architectEyeAwakened2": "§5не в состоянии физически добраться до вас... Или не желает этого делать.",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Начертание",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Тепло",
