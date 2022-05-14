@@ -53,7 +53,7 @@ public class Quote {
 			);
 	public static final Quote ANOTHER_DEMIGOD = new Quote("another_demigod", new Subtitles(
 			14.0, "Another demigod wanders this forsaken land...")
-			.add(5, "Let me accompany you in your journey. Perhaps, you will manage that which others could not.")
+			.add(5.25, "Let me accompany you in your journey. Perhaps, you will manage that which others could not.")
 			);
 	public static final Quote ANOTHER_EON = new Quote("another_eon", new Subtitles(
 			11.0, "Another eon, another wanderer. Another story to be told...")

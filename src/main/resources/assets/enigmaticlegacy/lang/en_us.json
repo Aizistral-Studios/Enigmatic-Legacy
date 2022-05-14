@@ -103,6 +103,8 @@
 	"item.enigmaticlegacy.enigmatic_elytra": "Majestic Elytra",
 	"block.enigmaticlegacy.etherium_block": "Block of Etherium",
 	"block.enigmaticlegacy.cosmic_cake": "The Eternal Cake",
+	"item.enigmaticlegacy.architect_eye_dormant": "Dormant Eye",
+	"item.enigmaticlegacy.architect_eye_active": "Inscrutable Eye",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -943,6 +945,13 @@
 	"tooltip.enigmaticlegacy.eldritchAmulet5": "§5down and weakened.",
 	"tooltip.enigmaticlegacy.eldritchAmuletStat1": "§6+3 §dAttack Damage",
 	"tooltip.enigmaticlegacy.eldritchAmuletStat2": "§6+15% §dLifesteal",
+	
+	"tooltip.enigmaticlegacy.architectEye1": "§5It is connected to location beyond your space and",
+	"tooltip.enigmaticlegacy.architectEye2": "§5time. You can awaken the eye, if you wish to risk",
+	"tooltip.enigmaticlegacy.architectEye3": "§5drawing attention of someone... or something.",
+	
+	"tooltip.enigmaticlegacy.architectEyeAwakened1": "§5Whoever uses it to observe you and the world seems",
+	"tooltip.enigmaticlegacy.architectEyeAwakened2": "§5incapable of physically reaching you... Or unwilling to.",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",

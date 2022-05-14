@@ -1102,6 +1102,17 @@ public class EnigmaticEventHandler {
 	public void onPlayerTick(PlayerChangedDimensionEvent event) {
 		if (event.getPlayer() instanceof ServerPlayer player) {
 			lastSoulCompassUpdate.remove(player);
+
+			if (TransientPlayerData.get(player).getUnlockedNarrator())
+				if (event.getPlayer().level.dimension() == Level.NETHER
+						/*&& !SuperpositionHandler.getPersistentBoolean(player, "ELHeardNetherQuote", false)*/) {
+					SuperpositionHandler.setPersistentBoolean(player, "ELHeardNetherQuote", true);
+					Quote.SULFUR_AIR.playWithDelay(player, 240);
+				} else if (event.getPlayer().level.dimension() == Level.END
+						&& !SuperpositionHandler.getPersistentBoolean(player, "ELHeardEndQuote", false)) {
+					SuperpositionHandler.setPersistentBoolean(player, "ELHeardEndQuote", true);
+					Quote.TORTURED_ROCKS.playWithDelay(player, 240);
+				}
 		}
 	}
 
@@ -2952,11 +2963,13 @@ public class EnigmaticEventHandler {
 			lastSoulCompassUpdate.remove(player);
 
 			if (!event.isEndConquered()) {
-				if (SuperpositionHandler.getPersistentBoolean(player, "DeathFromEntity", false)) {
-					Quote.getRandom(Quote.DEATH_QUOTES_ENTITY).playWithDelay((ServerPlayer) player, 10);
-				} else {
-					Quote.getRandom(Quote.DEATH_QUOTES).playWithDelay((ServerPlayer) player, 10);
-				}
+
+				if (TransientPlayerData.get(player).getUnlockedNarrator())
+					if (SuperpositionHandler.getPersistentBoolean(player, "DeathFromEntity", false)) {
+						Quote.getRandom(Quote.DEATH_QUOTES_ENTITY).playWithDelay((ServerPlayer) player, 10);
+					} else {
+						Quote.getRandom(Quote.DEATH_QUOTES).playWithDelay((ServerPlayer) player, 10);
+					}
 
 				if (!player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
 					if (SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL)) {

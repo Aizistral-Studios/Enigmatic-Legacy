@@ -59,6 +59,7 @@ import com.integral.enigmaticlegacy.items.AbyssalHeart;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
 import com.integral.enigmaticlegacy.items.AnimalGuide;
 import com.integral.enigmaticlegacy.items.AntiforbiddenPotion;
+import com.integral.enigmaticlegacy.items.ArchitectEye;
 import com.integral.enigmaticlegacy.items.AscensionAmulet;
 import com.integral.enigmaticlegacy.items.AstralBreaker;
 import com.integral.enigmaticlegacy.items.AstralDust;
@@ -436,8 +437,9 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Wayfinder of the Damned") public static SoulCompass soulCompass;
 	@ConfigurableItem("Amulet of Ascension") public static AscensionAmulet ascensionAmulet;
 	@ConfigurableItem("The Testament of Contempt") public static EldritchAmulet eldritchAmulet;
-	@ConfigurableItem("Living Flame") public static LivingFlame livingFlame;
-	@ConfigurableItem("??? Elytra") public static EnigmaticElytra enigmaticElytra;
+	//@ConfigurableItem("Living Flame") public static LivingFlame livingFlame;
+	@ConfigurableItem("Majestic Elytra") public static EnigmaticElytra enigmaticElytra;
+	@ConfigurableItem("Inscrutable Eye") public static ArchitectEye architectEye;
 
 	public static Item cosmicScroll;
 
@@ -648,6 +650,7 @@ public class EnigmaticLegacy {
 		logger.info("Initializing client setup phase...");
 		keybindHandler.registerKeybinds();
 		enigmaticAmulet.registerVariants();
+		architectEye.registerVariants();
 		soulCompass.registerVariants();
 
 		for (final Block theBlock : cutoutBlockRegistry) {
@@ -901,8 +904,9 @@ public class EnigmaticLegacy {
 			soulCompass = new SoulCompass();
 			ascensionAmulet = new AscensionAmulet();
 			eldritchAmulet = new EldritchAmulet();
-			livingFlame = new LivingFlame();
+			//livingFlame = new LivingFlame();
 			enigmaticElytra = new EnigmaticElytra();
+			architectEye = new ArchitectEye();
 
 			spellstoneList = Lists.newArrayList(
 					angelBlessing,
@@ -1028,8 +1032,9 @@ public class EnigmaticLegacy {
 					soulCompass,
 					ascensionAmulet,
 					eldritchAmulet,
-					livingFlame,
+					//livingFlame,
 					enigmaticElytra,
+					architectEye,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),

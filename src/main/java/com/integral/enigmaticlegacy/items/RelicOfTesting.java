@@ -10,6 +10,7 @@ import com.integral.enigmaticlegacy.client.Quote;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
+import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.item.TooltipFlag;
@@ -70,13 +71,11 @@ public class RelicOfTesting extends ItemBase {
 		}
 
 		if (!worldIn.isClientSide) {
-
+			TransientPlayerData.get(playerIn).setUnlockedNarrator(false);
 			//playerIn.sendMessage(new TextComponent("INTEGER: " + UltimaTestConfig.integerTest.getValue()), playerIn.getUniqueID());
 			//playerIn.sendMessage(new TextComponent("FLOAT: " + UltimaTestConfig.floatTest.getValue()), playerIn.getUniqueID());
 			//playerIn.sendMessage(new TextComponent("BOOLEAN: " + UltimaTestConfig.booleanTest.getValue()), playerIn.getUniqueID());
 
-		} else {
-			Quote.END_DOORSTEP.play();
 		}
 
 		/*

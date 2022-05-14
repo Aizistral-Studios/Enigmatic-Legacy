@@ -1,0 +1,26 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "enigmaticlegacy:items/architect_eye_dormant"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "enigmaticlegacy:architect_eye_activated": 0.33
+            },
+            "model": "enigmaticlegacy:item/architect_eye_dormant_1"
+        },
+        {
+            "predicate": {
+                "enigmaticlegacy:architect_eye_activated": 0.66
+            },
+            "model": "enigmaticlegacy:item/architect_eye_dormant_2"
+        },
+		{
+            "predicate": {
+                "enigmaticlegacy:architect_eye_activated": 1.0
+            },
+            "model": "enigmaticlegacy:item/architect_eye_active"
+        }
+    ]
+}

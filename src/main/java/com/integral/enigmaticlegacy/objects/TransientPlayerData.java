@@ -78,6 +78,7 @@ public class TransientPlayerData {
 	private int fireImmunityTimerLast;
 	private Boolean consumedForbiddenFruit;
 	private Boolean disabledMagnetEffects;
+	private Boolean unlockedNarrator;
 	private transient boolean hasEyeOfNebulaPower;
 
 	public boolean needsSync = false;
@@ -172,6 +173,15 @@ public class TransientPlayerData {
 		SuperpositionHandler.setPersistentBoolean(this.player.get(), MagnetRing.disabledMagnetTag, disabledMagnetEffects);
 	}
 
+	public Boolean getUnlockedNarrator() {
+		return this.unlockedNarrator != null ? this.unlockedNarrator : (this.unlockedNarrator = SuperpositionHandler.getPersistentBoolean(this.player.get(), "ELUnlockedNarrator", false));
+	}
+
+	public void setUnlockedNarrator(Boolean unlockedNarrator) {
+		this.unlockedNarrator = unlockedNarrator;
+		SuperpositionHandler.setPersistentBoolean(this.player.get(), "ELUnlockedNarrator", unlockedNarrator);
+	}
+
 	public boolean hasEyeOfNebulaPower() {
 		return this.hasEyeOfNebulaPower;
 	}
@@ -192,6 +202,7 @@ public class TransientPlayerData {
 		buf.writeInt(data.fireImmunityTimerLast);
 		buf.writeBoolean(data.getConsumedForbiddenFruit());
 		buf.writeBoolean(data.getDisabledMagnetRingEffects());
+		buf.writeBoolean(data.getUnlockedNarrator());
 
 		return buf;
 	}
@@ -204,6 +215,7 @@ public class TransientPlayerData {
 		int fireImmunityTimerLast = buf.readInt();
 		boolean consumedForbiddenFruit = buf.readBoolean();
 		boolean disabledMagnetEffects = buf.readBoolean();
+		boolean unlockedNarrator = buf.readBoolean();
 
 		Player player = EnigmaticLegacy.proxy.getPlayer(playerID);
 
@@ -215,6 +227,7 @@ public class TransientPlayerData {
 			data.fireImmunityTimerLast = fireImmunityTimerLast;
 			data.consumedForbiddenFruit = consumedForbiddenFruit;
 			data.disabledMagnetEffects = disabledMagnetEffects;
+			data.unlockedNarrator = unlockedNarrator;
 
 			return data;
 		}
