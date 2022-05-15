@@ -56,8 +56,8 @@ public class Quote {
 			.add(5.25, "Let me accompany you in your journey. Perhaps, you will manage that which others could not.")
 			);
 	public static final Quote ANOTHER_EON = new Quote("another_eon", new Subtitles(
-			11.0, "Another eon, another wanderer. Another story to be told...")
-			.add(6.25, "I will observe yours with great curiosity.")
+			12.0, "Another eon, another wanderer. Another story to be told...")
+			.add(7.5, "I will observe yours with great curiosity.")
 			);
 	public static final Quote PERHAPS_YOU = new Quote("perhaps_you", new Subtitles(
 			13.0, "Perhaps, you will be the one to uncover the long-forgotten history of this land...")
