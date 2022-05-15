@@ -218,5 +218,85 @@
         "stream": false
       }
     ]
+  },
+  "quote.appaling_presence": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/appaling_presence",
+        "stream": false
+      }
+    ]
+  },
+  "quote.toll_paid": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/toll_paid",
+        "stream": false
+      }
+    ]
+  },
+  "quote.its_destruction": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/its_destruction",
+        "stream": false
+      }
+    ]
+  },
+  "quote.breathes_relieved": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/breathes_relieved",
+        "stream": false
+      }
+    ]
+  },
+  "quote.whether_it_is": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/whether_it_is",
+        "stream": false
+      }
+    ]
+  },
+  "quote.poor_creature": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/poor_creature",
+        "stream": false
+      }
+    ]
+  },
+  "quote.horrible_existence": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/horrible_existence",
+        "stream": false
+      }
+    ]
+  },
+  "quote.countless_dead": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/countless_dead",
+        "stream": false
+      }
+    ]
+  },
+  "quote.with_dragons": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/with_dragons",
+        "stream": false
+      }
+    ]
+  },
+  "quote.terrifying_form": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:quote/terrifying_form",
+        "stream": false
+      }
+    ]
   }
 }
