@@ -5,7 +5,7 @@
 	"item.enigmaticlegacy.extradimensional_eye": "Око измерений",
 	"item.enigmaticlegacy.recall_potion": "Зелье возврата",
 	"item.enigmaticlegacy.forbidden_axe": "Топор палача",
-	"item.enigmaticlegacy.super_magnet_ring": "Кольцо смещения",
+	"item.enigmaticlegacy.super_magnet_ring": "Кольцо Дислокации",
 	"item.enigmaticlegacy.escape_scroll": "Свиток Посмертного возврата",
 	"item.enigmaticlegacy.heaven_scroll": "Дар Небес",
 	"item.enigmaticlegacy.golem_heart": "Сердце голема",
@@ -20,7 +20,7 @@
 	"item.enigmaticlegacy.mining_charm": "Мечта шахтера",
 	"item.enigmaticlegacy.ender_ring": "Кольцо Края",
 	"item.enigmaticlegacy.mending_mixture": "Восстанавливающая микстура",
-	"item.enigmaticlegacy.loot_generator": "Один ящик",
+	"item.enigmaticlegacy.loot_generator": "Единственный ящик",
 	"item.enigmaticlegacy.thicc_scroll": "Пустой свиток",
 	"item.enigmaticlegacy.iron_ring": "Железное кольцо",
 	"item.enigmaticlegacy.haste_potion_default": "Зелье спешки",
@@ -83,17 +83,17 @@
 	"item.enigmaticlegacy.infinimeal": "Эссенция бушующей жизни",
 	"item.enigmaticlegacy.darkest_scroll": "Темнейший свиток",
 	"item.enigmaticlegacy.unwitnessed_amulet": "Неопределенный амулет",
-	"item.enigmaticlegacy.twisted_potion": "Зелье искаженное милосердия",
+	"item.enigmaticlegacy.twisted_potion": "Зелье Искаженного милосердия",
 	"item.enigmaticlegacy.infernal_shield": "Бастион Пылающей Городости",
 	"item.enigmaticlegacy.cosmic_heart": "Сердце Космоса",
 	"item.enigmaticlegacy.abyssal_heart": "Сердце Бездны",
 	"item.enigmaticlegacy.the_infinitum": "Бесконечность",
-	"item.enigmaticlegacy.astral_fruit": "Божественный Плод",
+	"item.enigmaticlegacy.astral_fruit": "Божественный плод",
 	"item.enigmaticlegacy.ender_slayer": "Погибель Края",
 	"item.enigmaticlegacy.the_cube": "Неевклидов куб",
 	"item.enigmaticlegacy.desolation_ring": "Бремя Опустошения",
 	"item.enigmaticlegacy.etherium_nugget": "Кусочек эфириума",
-	"item.enigmaticlegacy.etherium_scraps": "Эфириевый лом",
+	"item.enigmaticlegacy.etherium_scraps": "Эфириумовый лом",
 	"item.enigmaticlegacy.astral_potato": "Телекартоха",
 	"item.enigmaticlegacy.curse_transposer": "Том поглощённой злобы",
 	"item.enigmaticlegacy.soul_compass": "Компас душ",
@@ -101,7 +101,7 @@
 	"item.enigmaticlegacy.eldritch_amulet": "Амулет презрения",
 	"item.enigmaticlegacy.evil_ingot": "Нечестивый слиток",
 	"item.enigmaticlegacy.enigmatic_elytra": "Величественные крылья",
-	"block.enigmaticlegacy.etherium_block": "Эфириевый блок",
+	"block.enigmaticlegacy.etherium_block": "Эфириумовый блок",
 	"block.enigmaticlegacy.cosmic_cake": "Торт бесконечности",
 	"item.enigmaticlegacy.architect_eye_dormant": "Дремлющее око",
 	"item.enigmaticlegacy.architect_eye_active": "Загадачное око",
@@ -276,13 +276,13 @@
 	"advancement.enigmaticlegacy:discoverRing.desc": "Получите ваше первое кольцо",
 	
 	"advancement.enigmaticlegacy:recallPotion": "Нужно выбираться отсюда",
-	"advancement.enigmaticlegacy:recallPotion.desc": "Сварите зелье возврата",
+	"advancement.enigmaticlegacy:recallPotion.desc": "Найдите или создайте зелье возврата",
 	
 	"advancement.enigmaticlegacy:magnetRing": "Магнетизм",
 	"advancement.enigmaticlegacy:magnetRing.desc": "Найдите или создайте Магнитное кольцо",
 	
-	"advancement.enigmaticlegacy:superMagnetRing": "Всепожирающий глаз",
-	"advancement.enigmaticlegacy:superMagnetRing.desc": "Найдите или создайте улучшенное кольцо смещения",
+	"advancement.enigmaticlegacy:superMagnetRing": "Всепожирающие око",
+	"advancement.enigmaticlegacy:superMagnetRing.desc": "Найдите или создайте Кольцо Дислокации",
 	
 	"advancement.enigmaticlegacy:heavenScroll": "Небесный свиток",
 	"advancement.enigmaticlegacy:heavenScroll.desc": "Найдите или создайте Дар Небес",
@@ -300,10 +300,10 @@
 	"advancement.enigmaticlegacy:mendingMixture.desc": "Найдите или создайте восстанавливающую микстуру",
 	
 	"advancement.enigmaticlegacy:unholyGrail": "Игнорируя советы",
-	"advancement.enigmaticlegacy:unholyGrail.desc": "Испейте из Проклятого грааля",
+	"advancement.enigmaticlegacy:unholyGrail.desc": "Испейте из Осквернённого Грааля",
 	
 	"advancement.enigmaticlegacy:unholyGrailWorthy": "Проклятое превосходиство",
-	"advancement.enigmaticlegacy:unholyGrailWorthy.desc": "Используйте силу Святого грааля... но какой ценой?",
+	"advancement.enigmaticlegacy:unholyGrailWorthy.desc": "Используйте силу Святого Грааля... но какой ценой?",
 	
 	"advancement.enigmaticlegacy:astralDust": "Первородный катализатор",
 	"advancement.enigmaticlegacy:astralDust.desc": "Найдите астральную пыль",
@@ -339,16 +339,16 @@
 	"advancement.enigmaticlegacy:guardianHeart.desc": "Убейте Древнего стража и завладейте Сердцем Стража",
 	
 	"advancement.enigmaticlegacy:infernalShield": "Ты пробуешь попасть сюда!",
-	"advancement.enigmaticlegacy:infernalShield.desc": "Выкуй Басион Пылающей Гордости, свой главный элемент защиты.",
+	"advancement.enigmaticlegacy:infernalShield.desc": "Выкуй Бастион Пылающей Гордости, свой главный элемент защиты.",
 	
 	"advancement.enigmaticlegacy:twistedMirror": "Извращенная красота",
 	"advancement.enigmaticlegacy:twistedMirror.desc": "Создай Искаженное зеркало",
 	
-	"advancement.enigmaticlegacy:theTwist": "Перепутье",
+	"advancement.enigmaticlegacy:theTwist": "Роковой поворот",
 	"advancement.enigmaticlegacy:theTwist.desc": "Убейте Иссушителя и создайте Разлом, используя нечистивую сущность",
 	
 	"advancement.enigmaticlegacy:astralFruit": "Сказочное яблоко",
-	"advancement.enigmaticlegacy:astralFruit.desc": "Найдите Божественный Плод среди сокровищ Города Края и съешьте его",
+	"advancement.enigmaticlegacy:astralFruit.desc": "Найдите Божественный плод среди сокровищ Города Края и съешьте его",
 	
 	"advancement.enigmaticlegacy:abyssalHeart": "Древний ужас",
 	"advancement.enigmaticlegacy:abyssalHeart.desc": "Убейте Дракона Края и захватите Сердце Бездны",
@@ -609,7 +609,7 @@
 	"tooltip.enigmaticlegacy.megaSponge2": "§5радиусе вокруг вас.",
 	
 	"tooltip.enigmaticlegacy.lootGeneratorCurrent": "§dТекущая таблица добычи:",
-	"tooltip.enigmaticlegacy.lootGenerator1": "§5Нажмите §6ПКМ§5 или §6Shift+ПКМ§5, чтобы",
+	"tooltip.enigmaticlegacy.lootGenerator1": "§5Нажмите §6ПКМ§5 или §6Shift+ПКМ§5 по воздуху, чтобы",
 	"tooltip.enigmaticlegacy.lootGenerator2": "§5переключиться вперёд/назад по списку таблиц.",
 	
 	"tooltip.enigmaticlegacy.lootGenerator3": "§5Нажмите §6Shift+ПКМ§5 по крышке сундука,",
@@ -1036,7 +1036,7 @@
 	
 	"book.enigmaticlegacy.entry.curse_of_nemesis.name": "Проклятие возмездия",
 	"book.enigmaticlegacy.entry.curse_of_nemesis.heading.1": "Проклятие",
-	"book.enigmaticlegacy.entry.curse_of_nemesis.page.1": "Одно из наименее известных проклятий, накладываемых на снаряжение, [Проклятие возмездия] является даже более любопытным и странным, чем остальные. Оно может быть наложено исключительно на оружие ближнего боя, коими являются мечи, топоры и прочие. При попытке нанести вред кому-либо, примерно 25% нанесённого урона будет отражено обратно в атакующего.",
+	"book.enigmaticlegacy.entry.curse_of_nemesis.page.1": "Одно из наименее известных проклятий, накладываемых на снаряжение, [Проклятие возмездия] является даже более любопытным и странным, чем остальные. Оно может быть наложено исключительно на оружие ближнего боя, коими являются мечи, топоры и прочие. При попытке нанести вред кому-либо, примерно 25 процентов нанесённого урона будет отражено обратно в атакующего.",
 	"book.enigmaticlegacy.entry.curse_of_nemesis.page.2": "Но не переживайте: насколько разрушительными не были бы ваши выпады, данное зачарование никогда не сможет убить вас.Оно будет держать вас на краю, в ожидании того, что кто-то другой наконец прикончит вас одним касанием.",
 	
 	
@@ -1383,7 +1383,7 @@
 	"book.enigmaticlegacy.entry.ancient_debris.name": "Древние обломки",
 	"book.enigmaticlegacy.entry.ancient_debris.heading.1": "Обломки",
 	"book.enigmaticlegacy.entry.ancient_debris.page.1": "Глубоко в коре Незера лежат древние обломки.<br2/>их происхождение точно неизвестно. Древние тома, с которыми вы столкнулись, довольно точно описывают процесс его переработки и ожидаемые свойства материала, которые могут быть получены в результате, но они не оставляют никаких подсказок о том, откуда он мог взяться.",
-	"book.enigmaticlegacy.entry.ancient_debris.page.2": "Поскольку геологическая история Незера сама по себе является загадкой, то, как нечто столь необычное, как эти обломки, оказалось в этой истории, является еще большей загадкой.<br2/>Однако гораздо больше, в этой истории, вы заинтересованы в том, чтобы наложить свои руки на настоящий образец обломков.",
+	"book.enigmaticlegacy.entry.ancient_debris.page.2": "Поскольку геологическая история Незера сама по себе является загадкой, то, как нечто столь необычное, как эти обломки, оказалось в этой истории, является еще большей загадкой. Однако гораздо больше, в этой истории, вы заинтересованы в том, чтобы наложить свои руки на настоящий образец обломков.",
 	"book.enigmaticlegacy.entry.ancient_debris.page.3": "Из того, что вы узнали, это может быть ключом к ковке металла, превосходящего по твердости алмаз, который на протяжении многих прошлых эпох оставался самым прочным материалом, с которым приходилось работать как людям, так и полубогам.",
 	
 	
@@ -1473,8 +1473,8 @@
 	"book.enigmaticlegacy.entry.xp_scroll.page.4": "поскольку опыт, хранящийся в свитке, не учитывается в вашем собственном общем количестве. Просто взглянув на него, вы можете легко оценить, сколько опыта он хранит в любой момент времени.В то время как он активен и переносится среди других ваших аксессуаров, этот свиток также поглощает любые сгустки опыта, которые могут быть сброшены на большой площади вокруг вас.",
 	
 	
-	"book.enigmaticlegacy.entry.super_magnet_ring.name": "Кольцо смещения",
-	"book.enigmaticlegacy.entry.super_magnet_ring.page.1": "Долгожданное обновление Магнитного кольца, Кольцо смещения лучше во всех отношениях.Наполненный частицей мистической энергии Конца, он покрывает площадь в два раза большую, чем его предшественник, и вместо того, чтобы притягивать к вам выпавшие предметы, он... притягивает вас к предметам.Во всех отношениях затронутые предметы будут вести себя так, как если бы вы",
+	"book.enigmaticlegacy.entry.super_magnet_ring.name": "Кольцо Дислокации",
+	"book.enigmaticlegacy.entry.super_magnet_ring.page.1": "Долгожданное обновление Магнитного кольца, Кольцо Дислокации лучше во всех отношениях. Наполненный частицей мистической энергии Конца, он покрывает площадь в два раза большую, чем его предшественник, и вместо того, чтобы притягивать к вам выпавшие предметы, он... притягивает вас к предметам.Во всех отношениях затронутые предметы будут вести себя так, как если бы вы",
 	"book.enigmaticlegacy.entry.super_magnet_ring.page.2": "стояли рядом с ними, фактически находясь в нескольких местах одновременно. Это кольцо также наследует свойство своего родителя, не позволяя вашим собственным предметам падать, если вы полностью не подавите его силу.",
 	
 	
@@ -1581,7 +1581,7 @@
 	"book.enigmaticlegacy.entry.abyssal_heart.page.4": "некоторые истины гораздо более тревожны, чем все, что может придумать человеческое воображение.<br2/>Как бы то ни было, теперь вы законный владелец этой вещи. И пройдет совсем немного времени, прежде чем вы сможете применить его в каком-нибудь невообразимо жестоком, пугающем применении... Мир пострадает в десятикратном размере за все страдания, которые он причинил вам.",
 	
 	
-	"book.enigmaticlegacy.entry.astral_fruit.name": "Божественный Плод",
+	"book.enigmaticlegacy.entry.astral_fruit.name": "Божественный плод",
 	"book.enigmaticlegacy.entry.astral_fruit.heading.1": "Плод",
 	"book.enigmaticlegacy.entry.astral_fruit.page.1": "Хотя многие искали эту реликвию, похоже, что вы один из немногих, кто нашел. На самом деле, это было даже не так уж сложно. Хотя само путешествие было не чем иным, как подвигом, как только вы добрались до Города края и открыли первый сундук с сокровищами - вот он, ожидающий вас. Это, безусловно, связано с Семью Проклятиями, но вы даже представить себе не можете,",
 	"book.enigmaticlegacy.entry.astral_fruit.page.2": "как обстоятельства сложились таким образом что это было именно в том сундуке, который вы открыли, и ни в каком другом. Детерминизм никогда не входил в число ваших любимых убеждений, и все же... может быть, это была судьба?<br2/>Во всяком случае, вкус божественный, и способность, которой он обладает,",
@@ -1623,9 +1623,9 @@
 	
 	
 	"book.enigmaticlegacy.entry.desolation_ring.name": "Бремя Опустошения",
-	"book.enigmaticlegacy.entry.desolation_ring.page.1": "Вы едва ли можете понять присутствие, наложенное на реальность Сердцем Бездны, но, как вы недавно обнаружили, понимание не обязательно для способности использовать его. Среди немногих столь же чудесных и ужасных вещей, которые могут черпать из него силу, есть это кольцо - возможно, даже более кошмарное, чем Кольцо Семи проклятий, ",
-	"book.enigmaticlegacy.entry.desolation_ring.page.2": "по своей неназванной природе.<br2/>Он предлагает удобно удовлетворить ваше гложущее желание освободить себя от необходимости бесконечно убивать существ, которые когда-то могли терпеть ваше присутствие,",
-	"book.enigmaticlegacy.entry.desolation_ring.page.3": "но потеряли такую способность, как только вы подчинились бремени Семи Проклятий... Стирая их из самого бытия.<br2/> Цена такой искажающей реальность силы, однако, опасна, поскольку, если вы решите, что желаете этого, вы будете привязаны к ней навсегда. И, как вы уже знаете, пустота может быть более невыносимой, чем даже самая пугающая, вездесущая угроза...",
+	"book.enigmaticlegacy.entry.desolation_ring.page.1": "Вы едва ли можете понять присутствие, наложенное на реальность Сердцем Бездны, но, как вы недавно обнаружили, понимание не обязательно для способности использовать его. Среди немногих столь же чудесных и ужасных вещей, которые могут черпать из него силу, есть это кольцо - возможно, даже более кошмарное, чем Кольцо Семи проклятий, по своей неназванной природе.",
+	"book.enigmaticlegacy.entry.desolation_ring.page.2": "Он предлагает удобно удовлетворить ваше гложущее желание освободить себя от необходимости бесконечно убивать существ, которые когда-то могли терпеть ваше присутствие, но потеряли такую способность,",
+	"book.enigmaticlegacy.entry.desolation_ring.page.3": "как только вы подчинились бремени Семи Проклятий... Стирая их из самого бытия.<br2/>Цена такой искажающей реальность силы, однако, опасна, поскольку, если вы решите, что желаете этого, вы будете привязаны к ней навсегда. И, как вы уже знаете, пустота может быть более невыносимой, чем даже самая пугающая, вездесущая угроза...",
 	
 	
 	"book.enigmaticlegacy.entry.astral_potato.name": "Телекартоха",
@@ -1640,7 +1640,7 @@
 	"book.enigmaticlegacy.entry.cosmic_cake.page.3": " оправится от любого вашего всепожирающего нападения. Кто может устоять перед лицом такого наслаждения, кто может устоять перед желанием обменять власть, влияние, богатство и даже саму жизнь на погружение в непрерывный, бесконечный акт потребления? В конце концов, все это временно... но торт, торт вечен.",
 	
 	
-	"book.enigmaticlegacy.entry.eldritch_amulet.name": "Амулет призрения",
+	"book.enigmaticlegacy.entry.eldritch_amulet.name": "Амулет презрения",
 	"book.enigmaticlegacy.entry.eldritch_amulet.page.1": "Хотя Амулет вознесения совершенен и чист по своей форме, он все же может быть усилен еще больше. Ценой жертвования чистотой, конечно, но почему такое проклятое существо, как ты, все равно должно переживать из-за этой потери?<br2/> Нагромождение плоти, известное как Сердце Бездны, с радостью вцепится в ваш амулет, искажая его в такую",
 	"book.enigmaticlegacy.entry.eldritch_amulet.page.2": "искаженную форму, которая не поддается описанию. Некогда яркий, элегантный камень в его сердцевине заменен блестящим, похожим на оникс глазом, который смотрит на вас и на мир одинаково с беспокойным подтекстом и непостижимым намерением.",
 	"book.enigmaticlegacy.entry.eldritch_amulet.page.3": "Даже безумец запретил бы этой мерзости прикасаться к себе, но ты приветствуешь ее на своей шее. Ибо в то время как безумец является жертвой своего собственного бредового восприятия мира, вы видите его сейчас таким, какой он есть...<br2/> И это гораздо страшнее, чем все глаза бесконечной бездны.",
