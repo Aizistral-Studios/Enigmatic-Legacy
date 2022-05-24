@@ -501,7 +501,7 @@
 	"tooltip.enigmaticlegacy.heavenTome3": "§5поглощения вашего опыта.",
 	"tooltip.enigmaticlegacy.heavenTome4": "§5Устраняет замедление копания в полёте.",
 	
-	"tooltip.enigmaticlegacy.fabulousScroll1": "§5Дарует вам способность свободно летать,",
+	"tooltip.enigmaticlegacy.fabulousScroll1": "§5Дарует вам способность свободно летать",
 	"tooltip.enigmaticlegacy.fabulousScroll2": "§5ценой быстрого поглощения вашего опыта.",
 	"tooltip.enigmaticlegacy.fabulousScroll3": "§5Однако, опыт не будет поглощаться",
 	"tooltip.enigmaticlegacy.fabulousScroll4": "§5в зоне действия работающего §6Маяка§5.",
@@ -510,7 +510,7 @@
 	"tooltip.enigmaticlegacy.miningCharm1": "§6+%1$s§d к скорости добычи",
 	"tooltip.enigmaticlegacy.miningCharm2": "§6+%1$s§d к уровню зачарования удачи",
 	"tooltip.enigmaticlegacy.miningCharm3": "§5Когда вы находитесь в подземной тьме,",
-	"tooltip.enigmaticlegacy.miningCharm4": "§5накладывает на вас эффект §6ночного зрения§5.",
+	"tooltip.enigmaticlegacy.miningCharm4": "§5накладывает на вас эффект §6Ночного зрения§5.",
 	"tooltip.enigmaticlegacy.miningCharm5": "§5Данная особенность может быть отключена нажатием клавиши §6ПКМ§5 при удержании амулета в руке.",
 	"tooltip.enigmaticlegacy.miningCharmNightVision": "§dНочное зрение: %1$s",
 	
