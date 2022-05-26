@@ -86,6 +86,9 @@ public class ArchitectEye extends ItemBaseCurio {
 			} else {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.architectEyeAwakened1");
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.architectEyeAwakened2");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.architectEyeAwakened3");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.architectEyeAwakened4");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.architectEyeAwakened5");
 			}
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");

@@ -33,6 +33,8 @@ public class EnchanterPearl extends ItemBaseCurio implements ICursed {
 	public EnchanterPearl() {
 		super(getDefaultProperties().rarity(Rarity.EPIC).fireResistant().stacksTo(1));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enchanter_pearl"));
+
+		// TODO Make non-cursed and add Crimson Pearl
 	}
 
 	@Override

@@ -950,8 +950,15 @@
 	"tooltip.enigmaticlegacy.architectEye2": "§5time. You can awaken the eye, if you wish to risk",
 	"tooltip.enigmaticlegacy.architectEye3": "§5drawing attention of someone... or something.",
 	
-	"tooltip.enigmaticlegacy.architectEyeAwakened1": "§5Whoever uses it to observe you and the world seems",
-	"tooltip.enigmaticlegacy.architectEyeAwakened2": "§5incapable of physically reaching you... Or unwilling to.",
+	"tooltip.enigmaticlegacy.architectEyeAwakened1": "§5Now that you have drawn their attention, whoever uses",
+	"tooltip.enigmaticlegacy.architectEyeAwakened2": "§5the eye to observe you and the world does not seem to",
+	"tooltip.enigmaticlegacy.architectEyeAwakened3": "§5need it in order to reach you. Whether they are incapable",
+	"tooltip.enigmaticlegacy.architectEyeAwakened4": "§5or simply unwilling to establish any contact beyond mental",
+	"tooltip.enigmaticlegacy.architectEyeAwakened5": "§5remains a mystery.",
+
+	"tooltip.enigmaticlegacy.enigmaticElytra1": "§5Hold jump key while flying to continuously",
+	"tooltip.enigmaticlegacy.enigmaticElytra2": "§5accelerate forward. Elytra is damaged",
+	"tooltip.enigmaticlegacy.enigmaticElytra3": "§5faster when accelerating.",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",

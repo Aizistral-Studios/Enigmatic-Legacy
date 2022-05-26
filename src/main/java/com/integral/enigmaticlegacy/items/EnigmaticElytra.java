@@ -70,7 +70,7 @@ public class EnigmaticElytra extends ItemBaseCurio implements Wearable {
 	private static boolean isBoosting;
 
 	public EnigmaticElytra() {
-		super(ItemBaseCurio.getDefaultProperties().durability(40).fireResistant().rarity(Rarity.EPIC));
+		super(ItemBaseCurio.getDefaultProperties().durability(5000).fireResistant().rarity(Rarity.EPIC));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_elytra"));
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSE_ITEM_BEHAVIOR);
 		MinecraftForge.EVENT_BUS.register(this);

@@ -224,6 +224,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
@@ -2491,9 +2492,6 @@ public class EnigmaticEventHandler {
 				this.addDropWithChance(event, this.getRandomSizeStack(Items.GLOWSTONE_DUST, 1, 7), 30);
 			} else if (killed.getClass() == Witch.class) {
 				this.addDropWithChance(event, new ItemStack(Items.GHAST_TEAR, 1), 30);
-				this.addDrop(event, this.getRandomSizeStack(Items.PHANTOM_MEMBRANE, 1, 3));
-			} else if (killed.getClass() == Witch.class) {
-				this.addDropWithChance(event, new ItemStack(Items.GHAST_TEAR, 1), 30);
 				this.addDropWithChance(event, this.getRandomSizeStack(Items.PHANTOM_MEMBRANE, 1, 3), 50);
 			} else if (killed.getClass() == Pillager.class || killed.getClass() == Vindicator.class) {
 				this.addDrop(event, this.getRandomSizeStack(Items.EMERALD, 0, 4));
@@ -2532,7 +2530,7 @@ public class EnigmaticEventHandler {
 			} else if (killed.getClass() == Silverfish.class) {
 				// NO-OP
 			} else if (killed.getClass() == MagmaCube.class) {
-				this.addDrop(event, this.getRandomSizeStack(Items.BLAZE_POWDER, 0, 1));
+				this.addDropWithChance(event, new ItemStack(Items.BLAZE_POWDER, 1), 50);
 			} else if (killed.getClass() == Chicken.class) {
 				this.addDropWithChance(event, new ItemStack(Items.EGG, 1), 50);
 			} else if (killed instanceof WitherBoss) {
