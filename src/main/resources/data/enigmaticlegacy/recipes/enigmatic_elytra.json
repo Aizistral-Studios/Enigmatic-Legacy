@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:enigmatic_elytra"
+    }
+  ],
+  "pattern": [
+    "BAB",
+    "EXE",
+    "DND"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:elytra"
+    },
+	"B": {
+      "item": "minecraft:dragon_breath"
+    },
+	"A": {
+      "item": "enigmaticlegacy:angel_blessing"
+    },
+	"E": {
+      "item": "enigmaticlegacy:etherium_ingot"
+    },
+	"D": {
+      "item": "enigmaticlegacy:astral_dust"
+    },
+	"N": {
+      "item": "enigmaticlegacy:eye_of_nebula"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:enigmatic_elytra"
+  }
+}

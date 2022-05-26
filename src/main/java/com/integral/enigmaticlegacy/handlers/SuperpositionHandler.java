@@ -64,7 +64,9 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -1638,7 +1640,12 @@ public class SuperpositionHandler {
 
 	@Nullable
 	public static ItemStack getEnigmaticElytra(LivingEntity living) {
-		return getCurioStack(living, EnigmaticLegacy.enigmaticElytra);
+		ItemStack stack = living.getItemBySlot(EquipmentSlot.CHEST);
+
+		if (stack.is(EnigmaticLegacy.enigmaticElytra))
+			return stack;
+		else
+			return getCurioStack(living, EnigmaticLegacy.enigmaticElytra);
 	}
 
 	public static ItemStack maybeApplyEternalBinding(ItemStack stack) {
