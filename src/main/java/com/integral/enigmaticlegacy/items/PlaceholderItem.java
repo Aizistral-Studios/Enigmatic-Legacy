@@ -13,7 +13,7 @@ public class PlaceholderItem extends ItemBase {
 	}
 
 	public PlaceholderItem(String name, Rarity rarity, int maxStackSize) {
-		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(maxStackSize));
+		super(ItemBase.getDefaultProperties().tab(null).rarity(rarity).stacksTo(maxStackSize));
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, name));
 	}
 

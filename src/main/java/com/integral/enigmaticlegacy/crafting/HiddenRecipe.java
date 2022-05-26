@@ -31,6 +31,28 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 public class HiddenRecipe extends CustomRecipe {
 	static final SimpleRecipeSerializer<HiddenRecipe> SERIALIZER = new SimpleRecipeSerializer<>(HiddenRecipe::new);
 	static final Map<ItemStack[][], ItemStack> RECIPES = new HashMap<>();
+	static final Entry<ItemStack[][], ItemStack> EMPTY = new Entry<ItemStack[][], ItemStack>() {
+		private final ItemStack[][] recipe = new ItemStack[][] {
+			{ ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY },
+			{ ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY },
+			{ ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY }
+		};
+
+		@Override
+		public ItemStack[][] getKey() {
+			return this.recipe;
+		}
+
+		@Override
+		public ItemStack getValue() {
+			return ItemStack.EMPTY;
+		}
+
+		@Override
+		public ItemStack setValue(ItemStack value) {
+			throw new UnsupportedOperationException();
+		}
+	};
 
 	public HiddenRecipe(ResourceLocation id) {
 		super(id);
@@ -114,7 +136,7 @@ public class HiddenRecipe extends CustomRecipe {
 
 	public static Entry<ItemStack[][], ItemStack> getRecipe(ResourceLocation output) {
 		return RECIPES.entrySet().stream().filter(entry -> entry.getValue().getItem().getRegistryName()
-				.equals(output)).findFirst().get();
+				.equals(output)).findFirst().orElse(EMPTY);
 	}
 
 }
