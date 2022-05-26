@@ -12,6 +12,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.ITaintable;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
+import com.integral.enigmaticlegacy.items.CosmicHeart;
 import com.integral.omniconfig.wrappers.Omniconfig;
 
 import net.minecraft.core.NonNullList;
@@ -99,6 +100,9 @@ public class HiddenRecipe extends CustomRecipe {
 					ItemStack slotStack = inv.getItem(3 * r + i);
 
 					if (slotStack.getItem() != array[r][i].getItem()) {
+						continue recipes;
+					} else if (array[r][i].getItem() instanceof CosmicHeart &&
+							!ItemNBTHelper.getBoolean(array[r][i], "isBelieverBlessed", false)) {
 						continue recipes;
 					}
 				}

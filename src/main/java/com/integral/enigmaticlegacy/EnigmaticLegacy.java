@@ -442,6 +442,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Majestic Elytra") public static EnigmaticElytra enigmaticElytra;
 	@ConfigurableItem("Inscrutable Eye") public static ArchitectEye architectEye;
 
+	@ConfigurableItem("Cosmic Scroll")
 	public static Item cosmicScroll;
 
 	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
@@ -562,23 +563,37 @@ public class EnigmaticLegacy {
 
 		BrewingRecipeRegistry.addRecipe(new ValidationBrewingRecipe(Ingredient.of(hastePotionExtendedEmpowered, recallPotion, twistedPotion, ultimatePotionLingering, commonPotionLingering), null));
 
-		HiddenRecipe.addRecipe(new ItemStack(theCube),
-				new ItemStack(golemHeart), new ItemStack(cosmicHeart), new ItemStack(magmaHeart),
-				new ItemStack(angelBlessing), new ItemStack(Blocks.OBSIDIAN), new ItemStack(eyeOfNebula),
-				new ItemStack(oceanStone), new ItemStack(cosmicHeart), new ItemStack(voidPearl)
-				);
+		if (OmniconfigHandler.isItemEnabled(theCube)) {
+			HiddenRecipe.addRecipe(new ItemStack(theCube),
+					new ItemStack(golemHeart), new ItemStack(cosmicHeart), new ItemStack(magmaHeart),
+					new ItemStack(angelBlessing), new ItemStack(Blocks.OBSIDIAN), new ItemStack(eyeOfNebula),
+					new ItemStack(oceanStone), new ItemStack(cosmicHeart), new ItemStack(voidPearl)
+					);
+		}
 
-		HiddenRecipe.addRecipe(new ItemStack(ascensionAmulet),
-				new ItemStack(Items.AMETHYST_SHARD), new ItemStack(astralDust), new ItemStack(Items.AMETHYST_SHARD),
-				new ItemStack(etheriumIngot), new ItemStack(enigmaticAmulet), new ItemStack(etheriumIngot),
-				new ItemStack(Items.DRAGON_BREATH), new ItemStack(cosmicHeart), new ItemStack(Items.DRAGON_BREATH)
-				);
+		if (OmniconfigHandler.isItemEnabled(ascensionAmulet)) {
+			HiddenRecipe.addRecipe(new ItemStack(ascensionAmulet),
+					new ItemStack(Items.AMETHYST_SHARD), new ItemStack(astralDust), new ItemStack(Items.AMETHYST_SHARD),
+					new ItemStack(etheriumIngot), new ItemStack(enigmaticAmulet), new ItemStack(etheriumIngot),
+					new ItemStack(Items.DRAGON_BREATH), new ItemStack(cosmicHeart), new ItemStack(Items.DRAGON_BREATH)
+					);
+		}
 
-		HiddenRecipe.addRecipe(new ItemStack(eldritchAmulet),
-				new ItemStack(evilEssence), new ItemStack(abyssalHeart), new ItemStack(evilEssence),
-				new ItemStack(Items.NETHERITE_INGOT), new ItemStack(ascensionAmulet), new ItemStack(Items.NETHERITE_INGOT),
-				new ItemStack(twistedCore), new ItemStack(Items.NETHER_STAR), new ItemStack(twistedCore)
-				);
+		if (OmniconfigHandler.isItemEnabled(eldritchAmulet)) {
+			HiddenRecipe.addRecipe(new ItemStack(eldritchAmulet),
+					new ItemStack(evilEssence), new ItemStack(abyssalHeart), new ItemStack(evilEssence),
+					new ItemStack(Items.NETHERITE_INGOT), new ItemStack(ascensionAmulet), new ItemStack(Items.NETHERITE_INGOT),
+					new ItemStack(twistedCore), new ItemStack(Items.NETHER_STAR), new ItemStack(twistedCore)
+					);
+		}
+
+		if (OmniconfigHandler.isItemEnabled(cosmicScroll)) {
+			HiddenRecipe.addRecipe(new ItemStack(cosmicScroll),
+					new ItemStack(astralDust), new ItemStack(Items.ENCHANTED_GOLDEN_APPLE), new ItemStack(astralDust),
+					new ItemStack(etheriumIngot), new ItemStack(darkestScroll), new ItemStack(etheriumIngot),
+					new ItemStack(astralDust), new ItemStack(cosmicHeart), new ItemStack(astralDust)
+					);
+		}
 
 		EnigmaticUpdateHandler.init();
 
@@ -713,6 +728,10 @@ public class EnigmaticLegacy {
 
 	public boolean isCSGPresent() {
 		return ModList.get().isLoaded("customstartinggear");
+	}
+
+	public boolean isLockboxPresent() {
+		return ModList.get().isLoaded("enigmaticlockbox");
 	}
 
 	private ResourceLocation makeCustomStat(String pKey, StatFormatter pFormatter) {
@@ -1048,6 +1067,11 @@ public class EnigmaticLegacy {
 					new GenericBlockItem(etheriumBlock, GenericBlockItem.getDefaultProperties().rarity(Rarity.RARE))
 					//,gemOfBinding,wormholePotion
 					);
+
+			if (!EnigmaticLegacy.enigmaticLegacy.isLockboxPresent()) {
+				event.getRegistry().register(new PlaceholderItem("cosmic_scroll", Rarity.EPIC, 1));
+			}
+
 			logger.info("Items registered successfully.");
 		}
 

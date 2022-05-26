@@ -162,6 +162,10 @@ public class SuperpositionHandler {
 	public static final UUID SCROLL_SLOT_UUID = UUID.fromString("ae465e52-ffc2-4f57-b09a-066aa0cea3d4");
 	public static final UUID SPELLSTONE_SLOT_UUID = UUID.fromString("63df175a-0d6d-4163-8ef1-218bcb42feba");
 	public static final UUID RING_SLOT_UUID = UUID.fromString("76012386-aa31-4c17-8d6a-e9dd29affcb0");
+	public static final char[] UPPERCASE_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
+	public static final char[] LOWERCASE_LETTERS = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+	public static final char[] NUMBERS = "0123456789".toCharArray();
+	public static final char[] SPECIAL_SYMBOLS = "-+=(){}[]':;./,<>*&^%$#@!?~".toCharArray();
 
 	public static boolean hasAdvancedCurios(final LivingEntity entity) {
 		return SuperpositionHandler.getAdvancedCurios(entity).size() > 0;
@@ -1735,6 +1739,54 @@ public class SuperpositionHandler {
 		for (Entry<K, V> entry : list) {
 			map.put(entry.getKey(), entry.getValue());
 		}
+	}
+
+	private static boolean contains(char[] array, char ch) {
+		for (char ach : array) {
+			if (ach == ch)
+				return true;
+		}
+
+		return false;
+	}
+
+	public static String obscureString(String string) {
+		char[] oldArray = string.toCharArray();
+		char[] newArray = new char[oldArray.length];
+		boolean code = false;
+
+		for (int i = 0; i < oldArray.length; i++) {
+			char ch = oldArray[i];
+			newArray[i] = ch;
+
+			if (ch == '\u00a7') {
+				code = true;
+				continue;
+			} else if (code) {
+				code = false;
+				continue;
+			} else if (ch == ' ') {
+				continue;
+			}
+
+			char[] replacements = null;
+
+			if (contains(UPPERCASE_LETTERS, ch)) {
+				replacements = UPPERCASE_LETTERS;
+			} else if (contains(LOWERCASE_LETTERS, ch)) {
+				replacements = LOWERCASE_LETTERS;
+			} else if (contains(NUMBERS, ch)) {
+				replacements = NUMBERS;
+			} else {
+				replacements = SPECIAL_SYMBOLS;
+			}
+
+			ch = replacements[random.nextInt(replacements.length)];
+
+			newArray[i] = ch;
+		}
+
+		return new String(newArray);
 	}
 
 	@OnlyIn(Dist.CLIENT)
