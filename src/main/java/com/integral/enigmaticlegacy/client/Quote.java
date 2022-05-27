@@ -46,6 +46,10 @@ public class Quote {
 			"Violence calls for vengeance. Return, and dispense it!"));
 	public static final Quote IMMORTAL = new Quote("immortal", new Subtitles(8.5,
 			"You are immortal! Return and give that pitiful creature a demonstration of this fact."));
+	public static final Quote APPALING_PRESENCE = new Quote("appaling_presence", new Subtitles(9.5,
+			"The shell is gone... but appaling presence will forever remain imprinted upon this realm."));
+	public static final Quote ITS_DESTRUCTION = new Quote("its_destruction", new Subtitles(9.0,
+			"Its destruction is a small consolation... given the implications of its terrible existence."));
 
 	public static final Quote I_WANDERED = new Quote("i_wandered", new Subtitles(
 			11.5, "Yes, I wandered those lands many times...")
@@ -71,6 +75,39 @@ public class Quote {
 			12.25, "Tortured rocks, pale as bones, hanged up above infinite, all-consuming blackness.")
 			.add(7.5, "The End... is almost like a fever dream.")
 			);
+	public static final Quote BREATHES_RELIEVED = new Quote("breathes_relieved", new Subtitles(
+			11.5, "The world breathes relieved without the burdensome presence of that horror...")
+			.add(7.8, "So long at least.")
+			);
+	public static final Quote WHETHER_IT_IS = new Quote("whether_it_is", new Subtitles(
+			12.5, "Whether it is power, or redemption that you seek in repeatedly returning Wither from and to its grave...")
+			.add(7.6, "...at least, you give that damnable creature a purpose.")
+			);
+	public static final Quote POOR_CREATURE = new Quote("poor_creature", new Subtitles(
+			15.0, "Poor creature... The last of her kind, bound to guard the godforsaken island...")
+			.add(7.9, "...in the middle of nothingness. Lay her to the deserved rest.")
+			);
+	public static final Quote HORRIBLE_EXISTENCE = new Quote("horrible_existence", new Subtitles(
+			12.0, "What a horrible existence... Brought back from the dead, only to be slain once more.")
+			.add(7.6, "You must truly be devoid of compassion.")
+			);
+	public static final Quote COUNTLESS_DEAD = new Quote("countless_dead", new Subtitles(
+			16.0, "Countless dead souls, merged into abomination of such terrible form that it defies description.")
+			.add(8.8, "The earth is stained by the very presence of this foul creature.")
+			);
+	public static final Quote WITH_DRAGONS = new Quote("with_dragons", new Subtitles(
+			32.0, "With dragon's imminent demise, this place seems even more empty and purposeless than before.")
+			.add(9.7, "Will you wander those fractured, deserted lands...")
+			.add(14.0, "...or return to the facade of sanity and liveliness the Overworld provides?")
+			.add(21.2, "Of course, we both know the answer... you cannot resist exploring the unknown, be it now or later.")
+			);
+	public static final Quote TERRIFYING_FORM = new Quote("terrifying_form", new Subtitles(
+			14.5, "...its terrifying form is destructible, but not its soul.")
+			.add(6.2, "It bears curse not dissimilar to yours... Curse of immortality.")
+			);
+	public static final Quote TOLL_PAID = new Quote("toll_paid", new Subtitles(11.5,
+			"With the toll paid, you are free from the burdensome swell of hatred and sorrow...")
+			.add(7.4, "...imprisoned in that ring."));
 
 	public static final List<Quote> DEATH_QUOTES = ImmutableList.of(
 			NO_PERIL, ONLY_BECAUSE, DEATH_MAY, DEMISE_IS, WE_FALL, YOU_WILL_ENDURE, OBLIVION_REJECTS, SETBACK);

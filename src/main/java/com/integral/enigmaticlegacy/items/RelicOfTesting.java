@@ -57,7 +57,6 @@ public class RelicOfTesting extends ItemBase implements IHidden {
 
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
-
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		playerIn.startUsingItem(handIn);
 
@@ -72,7 +71,9 @@ public class RelicOfTesting extends ItemBase implements IHidden {
 		}
 
 		if (!worldIn.isClientSide) {
-			TransientPlayerData.get(playerIn).setUnlockedNarrator(false);
+			Quote.TERRIFYING_FORM.play((ServerPlayer) playerIn);
+
+			//TransientPlayerData.get(playerIn).setUnlockedNarrator(false);
 			//playerIn.sendMessage(new TextComponent("INTEGER: " + UltimaTestConfig.integerTest.getValue()), playerIn.getUniqueID());
 			//playerIn.sendMessage(new TextComponent("FLOAT: " + UltimaTestConfig.floatTest.getValue()), playerIn.getUniqueID());
 			//playerIn.sendMessage(new TextComponent("BOOLEAN: " + UltimaTestConfig.booleanTest.getValue()), playerIn.getUniqueID());
