@@ -364,6 +364,9 @@
 	
 	"advancement.enigmaticlegacy:theCube": "This Cube Cured My Mortality",
 	"advancement.enigmaticlegacy:theCube.desc": "Force all spellstones into a shape equally powerful and unnatural, creating Non-Euclidean Cube",
+	
+	"advancement.enigmaticlegacy:fabulousScroll": "Touch the Skies",
+	"advancement.enigmaticlegacy:fabulousScroll.desc": "Obtain Grace of the Creator",
 
 	"tooltip.enigmaticlegacy.holdShift": "§5Hold §6Shift§5 to see details.",
 	
