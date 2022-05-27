@@ -101,6 +101,7 @@ import com.integral.enigmaticlegacy.items.GuardianHeart;
 import com.integral.enigmaticlegacy.items.HastePotion;
 import com.integral.enigmaticlegacy.items.HeavenScroll;
 import com.integral.enigmaticlegacy.items.HunterGuide;
+import com.integral.enigmaticlegacy.items.IchorBottle;
 import com.integral.enigmaticlegacy.items.InfernalShield;
 import com.integral.enigmaticlegacy.items.Infinimeal;
 import com.integral.enigmaticlegacy.items.IronRing;
@@ -441,6 +442,7 @@ public class EnigmaticLegacy {
 	//@ConfigurableItem("Living Flame") public static LivingFlame livingFlame;
 	@ConfigurableItem("Majestic Elytra") public static EnigmaticElytra enigmaticElytra;
 	@ConfigurableItem("Inscrutable Eye") public static ArchitectEye architectEye;
+	@ConfigurableItem("Bottle of Ichor") public static IchorBottle ichorBottle;
 
 	@ConfigurableItem("Cosmic Scroll")
 	public static Item cosmicScroll;
@@ -928,6 +930,7 @@ public class EnigmaticLegacy {
 			//livingFlame = new LivingFlame();
 			enigmaticElytra = new EnigmaticElytra();
 			architectEye = new ArchitectEye();
+			ichorBottle = new IchorBottle();
 
 			spellstoneList = Lists.newArrayList(
 					angelBlessing,
@@ -1056,6 +1059,7 @@ public class EnigmaticLegacy {
 					//livingFlame,
 					enigmaticElytra,
 					architectEye,
+					ichorBottle,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),

@@ -162,6 +162,7 @@ public class SuperpositionHandler {
 	public static final UUID SCROLL_SLOT_UUID = UUID.fromString("ae465e52-ffc2-4f57-b09a-066aa0cea3d4");
 	public static final UUID SPELLSTONE_SLOT_UUID = UUID.fromString("63df175a-0d6d-4163-8ef1-218bcb42feba");
 	public static final UUID RING_SLOT_UUID = UUID.fromString("76012386-aa31-4c17-8d6a-e9dd29affcb0");
+	public static final UUID CHARM_SLOT_UUID = UUID.fromString("485121e7-b670-45dc-b014-4c8b8f62283d");
 	public static final char[] UPPERCASE_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toCharArray();
 	public static final char[] LOWERCASE_LETTERS = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 	public static final char[] NUMBERS = "0123456789".toCharArray();
@@ -172,11 +173,12 @@ public class SuperpositionHandler {
 	}
 
 	public static boolean unlockSpecialSlot(String slot, Player player) {
-		if (!slot.equals("scroll") && !slot.equals("spellstone") && !slot.equals("ring"))
+		if (!slot.equals("scroll") && !slot.equals("spellstone") && !slot.equals("ring") && !slot.equals("charm"))
 			throw new IllegalArgumentException("Slot type '" + slot + "' is not supported!");
 
 		MutableBoolean success = new MutableBoolean(false);
-		UUID id = slot.equals("scroll") ? SCROLL_SLOT_UUID : (slot.equals("spellstone") ? SPELLSTONE_SLOT_UUID : RING_SLOT_UUID);
+		UUID id = slot.equals("scroll") ? SCROLL_SLOT_UUID : (slot.equals("spellstone") ? SPELLSTONE_SLOT_UUID
+				: (slot.equals("ring") ? RING_SLOT_UUID : CHARM_SLOT_UUID));
 
 		ICuriosHelper apiHelper = CuriosApi.getCuriosHelper();
 

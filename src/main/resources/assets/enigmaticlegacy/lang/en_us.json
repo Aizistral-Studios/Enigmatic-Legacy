@@ -105,6 +105,7 @@
 	"block.enigmaticlegacy.cosmic_cake": "The Eternal Cake",
 	"item.enigmaticlegacy.architect_eye_dormant": "Dormant Eye",
 	"item.enigmaticlegacy.architect_eye_active": "Inscrutable Eye",
+	"item.enigmaticlegacy.ichor_bottle": "Bottle of Ichor",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -962,6 +963,9 @@
 	"tooltip.enigmaticlegacy.enigmaticElytra1": "§5Hold jump key while flying to continuously",
 	"tooltip.enigmaticlegacy.enigmaticElytra2": "§5accelerate forward. Elytra is damaged",
 	"tooltip.enigmaticlegacy.enigmaticElytra3": "§5faster when accelerating.",
+
+	"tooltip.enigmaticlegacy.ichorBottle1": "§5To contempt the gods, one must know them...",
+	"tooltip.enigmaticlegacy.ichorBottle2": "§5Consume to obtain §6+1§d Charm Slot §5permanently.",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",
