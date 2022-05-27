@@ -8,7 +8,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
 public class PacketSyncTransientData {
-
 	private TransientPlayerData playerData;
 
 	public PacketSyncTransientData(TransientPlayerData data) {
@@ -30,9 +29,10 @@ public class PacketSyncTransientData {
 			// Syncying to server must have additional checks to prevent exploits.
 			// In current implementation it's just not possible, since no need yet exists.
 
-			if (msg.playerData.getPlayer().level.isClientSide) {
-				TransientPlayerData.set(msg.playerData.getPlayer(), msg.playerData);
-			}
+			if (msg.playerData != null)
+				if (msg.playerData.getPlayer().level.isClientSide) {
+					TransientPlayerData.set(msg.playerData.getPlayer(), msg.playerData);
+				}
 		});
 
 		ctx.get().setPacketHandled(true);
