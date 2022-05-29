@@ -100,8 +100,12 @@
 "item.enigmaticlegacy.ascension_amulet": "승천의 부적",
 "item.enigmaticlegacy.eldritch_amulet": "경멸의 증표",
 "item.enigmaticlegacy.evil_ingot": "악명의 주괴",
+	"item.enigmaticlegacy.enigmatic_elytra": "장엄한 겉날개",
 "block.enigmaticlegacy.etherium_block": "에테리움 블록",
 "block.enigmaticlegacy.cosmic_cake": "영원의 케이크",
+	"item.enigmaticlegacy.architect_eye_dormant": "휴면하는 눈",
+	"item.enigmaticlegacy.architect_eye_active": "불가해한 눈",
+	"item.enigmaticlegacy.ichor_bottle": "이코르 병",
 
 "block.enigmaticlegacy.big_lamp": "전등",
 "block.enigmaticlegacy.massive_lamp": "케이스를 씌운 전등",
@@ -361,6 +365,9 @@
 
 "advancement.enigmaticlegacy:theCube": "입방체는 내 필멸을 치유했다",
 "advancement.enigmaticlegacy:theCube.desc": "모든 주문석을 동일하게 강력하고 부자연스러운 모양으로 강제해 비유클리드 입방체를 만드세요",
+	
+	"advancement.enigmaticlegacy:fabulousScroll": "하늘을 만지다",
+	"advancement.enigmaticlegacy:fabulousScroll.desc": "창조주의 은혜를 획득하세요",
 
 "tooltip.enigmaticlegacy.holdShift": "§6Shift§5를 눌러 자세한 정보를 확인하세요.",
 
@@ -942,14 +949,91 @@
 	"tooltip.enigmaticlegacy.eldritchAmulet5": "§5시선 밖의 생명체에게는 적용되지 않습니다.",
 	"tooltip.enigmaticlegacy.eldritchAmuletStat1": "§6+3 §d공격 피해",
 	"tooltip.enigmaticlegacy.eldritchAmuletStat2": "§6+15% §d생명 흡수",
+	
+	"tooltip.enigmaticlegacy.architectEye1": "§5이것은 당신의 시간과 장소를 뛰어넘은 장소에 연결되어 있습니다.",
+	"tooltip.enigmaticlegacy.architectEye2": "§5당신은 이 눈을 깨울 수도 있습니다.",
+	"tooltip.enigmaticlegacy.architectEye3": "§5어떤 누군가... 혹은 무언가의 관심을 받을 위험을 지고 싶다면 말입니다.",
+	
+	"tooltip.enigmaticlegacy.architectEyeAwakened1": "§5이제 당신이 그들의 주의를 끌었습니다.",
+	"tooltip.enigmaticlegacy.architectEyeAwakened2": "§5당신과 세상을 관찰하기 위해 눈을 사용하는 사람은",
+	"tooltip.enigmaticlegacy.architectEyeAwakened3": "§5당신에게 도달하기 위해 눈이 필요하지 않은 것 같습니다.",
+	"tooltip.enigmaticlegacy.architectEyeAwakened4": "§5그들이 능력이 없는 걸지 아니면 단순히 정신적 차원을",
+	"tooltip.enigmaticlegacy.architectEyeAwakened5": "§5넘어선 어떤 접촉도 맺지 않는 것인지는 미스터리입니다.",
+
+	"tooltip.enigmaticlegacy.enigmaticElytra1": "§5비행 중 점프 키를 누르고 있는 것으로",
+	"tooltip.enigmaticlegacy.enigmaticElytra2": "§5전방으로 가속합니다.",
+	"tooltip.enigmaticlegacy.enigmaticElytra3": "§5가속 중에는 내구도가 더 빨리 감소합니다.",
+
+	"tooltip.enigmaticlegacy.ichorBottle1": "§5신들을 경멸하려면, 누군가는 신들을 알아야 한다...",
+	"tooltip.enigmaticlegacy.ichorBottle2": "§5섭취하면 §6+1§d 부적 칸§5을 영구적으로 얻습니다.",
 
 "gui.enigmaticlegacy.lore_inscriber": "이름 & 설명 적기",
 "gui.enigmaticlegacy.blazing_core_bar_title": "열기",
 "gui.enigmaticlegacy.blazing_core_bar_offsetX": "0",
 "gui.enigmaticlegacy.blazing_core_bar_offsetY": "0",
 "gui.enigmaticlegacy.blazing_core__COMMENT": "Two strings above allow to move heat bar title by defining offsetX and offsetY to any positive or negative integers. This might be required for certain localizations more than for others depending on amount of symbols title takes takes to be spelled. You can, alternatively, leave title empty if you can't think of a solution that would look good, so that it just won't be rendered. Four symbols or less fit perfectly without any corrections. The string you read currently is just a commentary for localizators - you need not to translate it.",
+	
 
+	"quote.no_peril_1": "임무에 위험이 없는 곳에 - 그 성취에 영광이 있을 수 없다.",
+	"quote.end_doorstep_1": "'끝'의 문간은... 이제 한 걸음으로 그것으로부터 당신을 분리한다.",
+	"quote.only_because_1": "추락했다고 해서 아직 물러난 것은 아니다.",
+	"quote.demise_is_1": "당신과 같은 반신에게 죽음은 일시적인 불편에 불과하다.",
+	"quote.we_fall_1": "우리는 넘어지기에, 다시 일어서는 법을 배울 수 있다.",
+	"quote.you_will_endure_1": "당신은 이 손실을 견디고, 그것으로부터 배울 것이다.",
+	"quote.oblivion_rejects_1": "망각은 당신을 거부한다... 기회가 있을 때 그런 기회를 이용하라.",
+	"quote.setback_1": "좌절이지만 패배는 아니다.",
+	"quote.death_may_1": "죽음은 정복을 늦추겠지만, 부서진 의지는 정복을 막는다.",
+	"quote.eternity_to_keep_1": "당신은 영원하다. 할 수 있는 대로 해라.",
+	"quote.violence_calls_1": "폭력은 복수를 요구한다. 돌려줘라, 그리고 발사해라!",
+	"quote.immortal_1": "당신은 불멸자다! 돌아가서 그 불쌍한 녀석에게 이 사실을 보여라.",
+	"quote.appaling_presence_1": "껍데기는 사라졌지만... 무시무시한 존재는 이 영역에 영원히 각인될 것입니다.",
+	"quote.its_destruction_1": "그것의 파괴는 작은 위안입니다... 그것의 끔찍한 존재의 의미를 고려할 때 말이죠.",
 
+	"quote.i_wandered_1": "그래, 나는 그 땅을 여러 번 방황했다...",
+	"quote.i_wandered_2": "그때의 모든 것과 일어날 수 있었던 모든 것을 적막하게 상기시키는 것.",
+
+	"quote.another_demigod_1": "또 다른 반신이 버려진 이 땅을 떠돌아다니며...",
+	"quote.another_demigod_2": "제가 당신의 여행에 동행하게 해 주십시오. 다른 존재들이 할 수 없었던 일을 당신이 해낼 수 있을 것입니다.",
+
+	"quote.another_eon_1": "또 다른 영겁, 또 다른 방랑자. 또 다른 이야기를...",
+	"quote.another_eon_2": "저는 큰 호기심으로 당신을 관찰할 것입니다.",
+
+	"quote.perhaps_you_1": "아마도 당신은 이 땅의 오랫동안 잊혀진 역사를 밝혀낼 사람일 것입니다...",
+	"quote.perhaps_you_2": "만약 그렇다면 제가, 당신의 업적의 증인이 되겠습니다.",
+
+	"quote.sulfur_air_1": "공기 중의 유황, 불에 탄 바위와 살의 날카로운 향기...",
+	"quote.sulfur_air_2": "이곳은 말 그대로 지옥이다.",
+
+	"quote.tortured_rocks_1": "뼈처럼 창백한 고문당한 바위들이 끝없는 어둠 위에 매달려 있습니다.",
+	"quote.tortured_rocks_2": "끝의 세계... 거의 열몽과도 같습니다.",
+
+	"quote.no_peril_1": "세상은 그 묵직한 공포가 없어져 안도의 한숨을 내쉽니다...",
+	"quote.no_peril_2": "적어도 꽤나 오랫동안 말입니다.",
+
+	"quote.whether_it_is_1": "위더를 반복해서 무덤에서 돌아오게 하는 것이 힘이든 구원이든...",
+	"quote.whether_it_is_2": "...적어도, 당신은 그 망할 놈에게 목적을 주었습니다.",
+
+	"quote.poor_creature_1": "불쌍한 생물... 그녀의 종족의 마지막 생존자이자, 신이 버린 섬을 지키도록 속박되어 있습니다...",
+	"quote.poor_creature_2": "...무의 한가운데에서. 그녀를 편히 쉬게 해주십시오.",
+
+	"quote.horrible_existence_1": "얼마나 끔찍한 존재인가... 단지 한번 더 죽기 위해서 죽음에서 되살아났다.",
+	"quote.horrible_existence_2": "당신은 정말로 동정심이 없는가 보군요.",
+
+	"quote.countless_dead_1": "수없이 많은 죽은 영혼들이, 묘사할 수 없을 정도로 끔찍한 형태의 혐오로 합쳐졌다.",
+	"quote.countless_dead_1": "지구는 이 더러운 생물의 존재에 의해 더럽혀졌다.",
+
+	"quote.with_dragons_1": "용의 죽음이 임박해서, 이곳은 전보다 더 공허하고 목적도 없는 것 같습니다.",
+	"quote.with_dragons_2": "그 부서지고 황량한 땅을 방황하시겠습니까...",
+	"quote.with_dragons_3": "... 아니면 오버월드가 제공하는 온전함과 활력으로 돌아가시겠습니까?",
+	"quote.with_dragons_4": "물론, 우리 둘 다 답을 알고 있습니다... 미지의 탐구는 거부할 수 없습니다, 그게 지금이든, 나중이든 말이죠.",
+
+	"quote.terrifying_form_1": "...그 무서운 형태는 파괴할 수 있지만 영혼은 아닙니다.",
+	"quote.terrifying_form_2": "그것은 당신과 다르지 않은 저주를 품고 있습니다... 불멸의 저주.",
+
+	"quote.toll_paid_1": "통행료를 지불하면 증오와 슬픔의 부담스러운 팽창에서 벗어날 수 있습니다...",
+	"quote.toll_paid_2": "...그 반지에 갇혀 있는 그것들로부터요.",
+
+	
 "book.enigmaticlegacy.category.accessories.name": "장신구",
 "book.enigmaticlegacy.category.accessories.desc": "몸에 착용할 수는 있지만, 언뜻 보기에는 뚜렷한 기능을 하지 못합니다.<br2/>그러나 여러분은 강력한 마법의 힘이 부여된 반지, 부적, 또는 무거운 갑옷이나 검처럼 주인에게 부담을 주지 않는 형태의 무언가를 발견하거나 제작할 수 있습니다.",
 
