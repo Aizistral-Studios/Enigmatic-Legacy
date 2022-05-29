@@ -71,7 +71,7 @@ public class RelicOfTesting extends ItemBase implements IHidden {
 		}
 
 		if (!worldIn.isClientSide) {
-			Quote.TERRIFYING_FORM.play((ServerPlayer) playerIn);
+			Quote.NO_PERIL.play((ServerPlayer) playerIn);
 
 			//TransientPlayerData.get(playerIn).setUnlockedNarrator(false);
 			//playerIn.sendMessage(new TextComponent("INTEGER: " + UltimaTestConfig.integerTest.getValue()), playerIn.getUniqueID());

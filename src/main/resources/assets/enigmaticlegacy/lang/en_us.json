@@ -973,6 +973,66 @@
 	"gui.enigmaticlegacy.blazing_core_bar_offsetY": "0",
 	"gui.enigmaticlegacy.blazing_core__COMMENT": "Two strings above allow to move heat bar title by defining offsetX and offsetY to any positive or negative integers. This might be required for certain localizations more than for others depending on amount of symbols title takes takes to be spelled. You can, alternatively, leave title empty if you can't think of a solution that would look good, so that it just won't be rendered. Four symbols or less fit perfectly without any corrections. The string you read currently is just a commentary for localizators - you need not to translate it.",
 	
+
+	"quote.no_peril_1": "Where there is no peril in the task - there can be no glory in its accomplishment.",
+	"quote.end_doorstep_1": "The doorstep of The End... single step now separates you from it.",
+	"quote.only_because_1": "Only because you have fallen does not yet mean you backed down.",
+	"quote.demise_is_1": "Demise is but a temporary inconvenience for a demigod such as you.",
+	"quote.we_fall_1": "We fall, so that we may learn how to pick ourselves back up.",
+	"quote.you_will_endure_1": "You will endure this loss, and learn from it.",
+	"quote.oblivion_rejects_1": "Oblivion rejects you... make use of such opportunity, while you still can.",
+	"quote.setback_1": "A setback, but not a defeat.",
+	"quote.death_may_1": "Death may impede your conquest, but only broken will can halt it.",
+	"quote.eternity_to_keep_1": "You have eternity to keep trying. Do what it takes.",
+	"quote.violence_calls_1": "Violence calls for vengeance. Return, and dispense it!",
+	"quote.immortal_1": "You are immortal! Return and give that pitiful creature a demonstration of this fact.",
+	"quote.appaling_presence_1": "The shell is gone... but appaling presence will forever remain imprinted upon this realm.",
+	"quote.its_destruction_1": "Its destruction is a small consolation... given the implications of its terrible existence.",
+
+	"quote.i_wandered_1": "Yes, I wandered those lands many times...",
+	"quote.i_wandered_2": "A desolate reminder of everything that was, and all that could have been.",
+
+	"quote.another_demigod_1": "Another demigod wanders this forsaken land...",
+	"quote.another_demigod_2": "Let me accompany you in your journey. Perhaps, you will manage that which others could not.",
+
+	"quote.another_eon_1": "Another eon, another wanderer. Another story to be told...",
+	"quote.another_eon_2": "I will observe yours with great curiosity.",
+
+	"quote.perhaps_you_1": "Perhaps, you will be the one to uncover the long-forgotten history of this land...",
+	"quote.perhaps_you_2": "If so, I must bear witness to your accomplishments.",
+
+	"quote.sulfur_air_1": "Sulfur in the air, sharp scent of burnt rock and flesh...",
+	"quote.sulfur_air_2": "This place is a Hell indeed.",
+
+	"quote.tortured_rocks_1": "Tortured rocks, pale as bones, hanged up above infinite, all-consuming blackness.",
+	"quote.tortured_rocks_2": "The End... is almost like a fever dream.",
+
+	"quote.no_peril_1": "The world breathes relieved without the burdensome presence of that horror...",
+	"quote.no_peril_2": "So long at least.",
+
+	"quote.whether_it_is_1": "Whether it is power, or redemption that you seek in repeatedly returning Wither from and to its grave...",
+	"quote.whether_it_is_2": "...at least, you give that damnable creature a purpose.",
+
+	"quote.poor_creature_1": "Poor creature... The last of her kind, bound to guard the godforsaken island...",
+	"quote.poor_creature_2": "...in the middle of nothingness. Lay her to the deserved rest.",
+
+	"quote.horrible_existence_1": "What a horrible existence... Brought back from the dead, only to be slain once more.",
+	"quote.horrible_existence_2": "You must truly be devoid of compassion.",
+
+	"quote.countless_dead_1": "Countless dead souls, merged into abomination of such terrible form that it defies description.",
+	"quote.countless_dead_1": "The earth is stained by the very presence of this foul creature.",
+
+	"quote.with_dragons_1": "With dragon's imminent demise, this place seems even more empty and purposeless than before.",
+	"quote.with_dragons_2": "Will you wander those fractured, deserted lands...",
+	"quote.with_dragons_3": "...or return to the facade of sanity and liveliness the Overworld provides?",
+	"quote.with_dragons_4": "Of course, we both know the answer... you cannot resist exploring the unknown, be it now or later.",
+
+	"quote.terrifying_form_1": "...its terrifying form is destructible, but not its soul.",
+	"quote.terrifying_form_2": "It bears curse not dissimilar to yours... Curse of immortality.",
+
+	"quote.toll_paid_1": "With the toll paid, you are free from the burdensome swell of hatred and sorrow...",
+	"quote.toll_paid_2": "...imprisoned in that ring.",
+
 	
 	"book.enigmaticlegacy.category.accessories.name": "Accessories",
 	"book.enigmaticlegacy.category.accessories.desc": "Many items, though wearable on one's own body, serve no apparent function at first glance.<br2/>Yet you can craft or discover things imbued with powerful magic that take shape of rings, or charms, or something else that is more convenient to carry around and doesn't burden its owner as much as heavy armor or a sword.",
