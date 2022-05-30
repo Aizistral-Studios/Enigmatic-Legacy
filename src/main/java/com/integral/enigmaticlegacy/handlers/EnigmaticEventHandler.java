@@ -352,6 +352,7 @@ public class EnigmaticEventHandler {
 	private static boolean handlingTooltip = false;
 	private long clientWorldTicks = 0;
 
+	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void renderCape(RenderCapeEvent event) {
 		if (SuperpositionHandler.hasEnigmaticElytra(event.getPlayer())) {

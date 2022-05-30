@@ -37,26 +37,13 @@ public class EnigmaticElytraLayer<T extends LivingEntity, M extends EntityModel<
 	@Override
 	public void render(@Nonnull PoseStack pMatrixStack, @Nonnull MultiBufferSource pBuffer, int pPackedLight, T pLivingEntity, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
 		if (SuperpositionHandler.hasEnigmaticElytra(pLivingEntity)) {
-			ResourceLocation resourcelocation = null;
 			ItemStack stack = SuperpositionHandler.getEnigmaticElytra(pLivingEntity);
-
-			if (pLivingEntity instanceof AbstractClientPlayer abstractclientplayer) {
-				if (abstractclientplayer.isElytraLoaded() && abstractclientplayer.getElytraTextureLocation() != null) {
-					resourcelocation = abstractclientplayer.getElytraTextureLocation();
-				} else if (abstractclientplayer.isCapeLoaded() && abstractclientplayer.getCloakTextureLocation() != null && abstractclientplayer.isModelPartShown(PlayerModelPart.CAPE)) {
-					resourcelocation = abstractclientplayer.getCloakTextureLocation();
-				}
-			}
-
-			if (resourcelocation == null) {
-				resourcelocation = TEXTURE;
-			}
 
 			pMatrixStack.pushPose();
 			pMatrixStack.translate(0.0D, 0.0D, 0.125D);
 			this.getParentModel().copyPropertiesTo(this.elytraModel);
 			this.elytraModel.setupAnim(pLivingEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw, pHeadPitch);
-			VertexConsumer vertexconsumer = ItemRenderer.getArmorFoilBuffer(pBuffer, RenderType.armorCutoutNoCull(resourcelocation), false, stack.isEnchanted());
+			VertexConsumer vertexconsumer = ItemRenderer.getArmorFoilBuffer(pBuffer, RenderType.armorCutoutNoCull(TEXTURE), false, stack.isEnchanted());
 
 			float red = 1;
 			float green = 1;
