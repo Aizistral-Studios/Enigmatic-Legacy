@@ -112,6 +112,9 @@ public class EnigmaticElytra extends ItemBaseCurio implements Wearable {
 
 	@OnlyIn(Dist.CLIENT)
 	private void handleBoosting(Player player) {
+		if (Minecraft.getInstance().player != player)
+			return;
+
 		if (Minecraft.getInstance().options.keyJump.isDown() && this.boostPlayer(player)) {
 			if (!isBoosting) {
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(),
@@ -226,6 +229,9 @@ public class EnigmaticElytra extends ItemBaseCurio implements Wearable {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onPlayerTickClient(TickEvent.PlayerTickEvent event) {
+		if (event.player != Minecraft.getInstance().player)
+			return;
+
 		if (event.phase == Phase.START && event.player.level.isClientSide()) {
 			Player player = event.player;
 
