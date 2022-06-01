@@ -319,7 +319,7 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 			level = SuperpositionHandler.getOverworld();
 		}
 
-		int border = level.getWorldBorder().getAbsoluteMaxSize();
+		int border = (int) level.getWorldBorder().getSize() / 2;
 		int attempts = 0;
 		int radius = border < 10000 ? border : 10000;
 
