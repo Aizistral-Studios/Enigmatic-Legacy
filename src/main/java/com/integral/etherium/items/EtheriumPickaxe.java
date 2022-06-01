@@ -38,6 +38,8 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 
 public class EtheriumPickaxe extends ItemEtheriumTool {
 
@@ -126,6 +128,11 @@ public class EtheriumPickaxe extends ItemEtheriumTool {
 			return this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
 		else
 			return super.useOn(context);
+	}
+
+	@Override
+	public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+		return ToolActions.DEFAULT_PICKAXE_ACTIONS.contains(toolAction);
 	}
 
 }

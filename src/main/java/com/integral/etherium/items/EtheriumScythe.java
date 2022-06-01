@@ -43,6 +43,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 
 public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 	protected static final Map<Block, BlockState> HOE_LOOKUP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.defaultBlockState(), Blocks.DIRT_PATH, Blocks.FARMLAND.defaultBlockState(), Blocks.DIRT, Blocks.FARMLAND.defaultBlockState(), Blocks.COARSE_DIRT, Blocks.DIRT.defaultBlockState()));
@@ -137,6 +139,12 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 		}
 
 		return type;
+	}
+
+	@Override
+	public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+		return toolAction == ToolActions.HOE_TILL || toolAction == ToolActions.HOE_DIG
+				|| super.canPerformAction(stack, toolAction);
 	}
 
 	@Override

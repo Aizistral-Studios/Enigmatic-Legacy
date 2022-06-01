@@ -42,7 +42,8 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
+import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 import net.minecraft.world.item.Item.Properties;
 
 public class EtheriumShovel extends ItemEtheriumTool {
@@ -142,6 +143,11 @@ public class EtheriumShovel extends ItemEtheriumTool {
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
 		Material material = state.getMaterial();
 		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.speed;
+	}
+
+	@Override
+	public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+		return ToolActions.DEFAULT_SHOVEL_ACTIONS.contains(toolAction);
 	}
 
 }
