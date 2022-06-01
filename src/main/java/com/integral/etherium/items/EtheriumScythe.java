@@ -65,6 +65,10 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 		this.effectiveMaterials.add(Material.WATER_PLANT);
 		this.effectiveMaterials.add(Material.REPLACEABLE_PLANT);
 		this.effectiveMaterials.add(Material.CACTUS);
+		this.effectiveMaterials.add(Material.VEGETABLE);
+		this.effectiveMaterials.add(Material.MOSS);
+		this.effectiveMaterials.add(Material.REPLACEABLE_FIREPROOF_PLANT);
+		this.effectiveMaterials.add(Material.SCULK);
 	}
 
 	@Override
