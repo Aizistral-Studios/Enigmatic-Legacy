@@ -1120,6 +1120,9 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onPlayerTick(LivingEvent.LivingUpdateEvent event) {
+		if (!event.getEntityLiving().isAlive())
+			return;
+
 		if (!event.getEntity().level.isClientSide) {
 			if (event.getEntity() instanceof EnderMan || event.getEntity() instanceof Shulker) {
 				int cooldown = event.getEntity().getPersistentData().getInt("ELTeleportBlock");
