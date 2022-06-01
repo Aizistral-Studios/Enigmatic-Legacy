@@ -229,16 +229,18 @@ public class EnigmaticElytra extends ItemBaseCurio implements Wearable {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onPlayerTickClient(TickEvent.PlayerTickEvent event) {
-		if (event.player != Minecraft.getInstance().player)
-			return;
-
 		if (event.phase == Phase.START && event.player.level.isClientSide()) {
 			Player player = event.player;
 
 			if (TransientPlayerData.get(player).isElytraBoosting()) {
 				if (!player.isFallFlying()) {
-					this.handleBoosting(player);
-					return;
+					if (event.player == Minecraft.getInstance().player) {
+						this.handleBoosting(player);
+						return;
+					} else {
+						TransientPlayerData.get(player).setElytraBoosting(false);
+						return;
+					}
 				}
 
 				int amount = 3;
