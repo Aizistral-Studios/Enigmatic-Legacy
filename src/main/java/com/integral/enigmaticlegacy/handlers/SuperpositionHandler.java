@@ -1686,6 +1686,10 @@ public class SuperpositionHandler {
 		return stack;
 	}
 
+	public static boolean canUnequipBoundRelics(Player player) {
+		return player.isCreative() || EnigmaticLegacy.SOUL_OF_THE_ARCHITECT.equals(player.getUUID());
+	}
+
 	public static void onDamageSourceBlocking(LivingEntity blocker, ItemStack useItem, DamageSource source, CallbackInfoReturnable<Boolean> info) {
 		if (blocker instanceof Player player && useItem != null) {
 			boolean blocking = ((IProperShieldUser)blocker).isActuallyReallyBlocking();

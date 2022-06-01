@@ -228,7 +228,7 @@ public class CursedRing extends ItemBaseCurio {
 			}
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eternallyBound1");
 
-			if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.isCreative()) {
+			if (Minecraft.getInstance().player != null && SuperpositionHandler.canUnequipBoundRelics(Minecraft.getInstance().player)) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eternallyBound2_creative");
 			} else {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.eternallyBound2");
@@ -258,7 +258,7 @@ public class CursedRing extends ItemBaseCurio {
 
 	@Override
 	public boolean canUnequip(SlotContext context, ItemStack stack) {
-		if (context.entity() instanceof Player player && player.isCreative())
+		if (context.entity() instanceof Player player && SuperpositionHandler.canUnequipBoundRelics(player))
 			return super.canUnequip(context, stack);
 		else
 			return false;
