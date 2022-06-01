@@ -12,6 +12,7 @@ import com.integral.etherium.core.EtheriumUtil;
 import com.integral.etherium.core.IEtheriumConfig;
 import com.integral.etherium.core.IEtheriumTool;
 
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.client.Minecraft;
@@ -51,6 +52,8 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool {
 		this.effectiveMaterials.add(Material.CACTUS);
 		this.effectiveMaterials.add(Material.BAMBOO);
 		this.effectiveMaterials.add(Material.NETHER_WOOD);
+		this.effectiveMaterials.add(Material.BAMBOO_SAPLING);
+		this.effectiveMaterials.add(Material.VEGETABLE);
 
 		this.config.getSorceryMaterial("INFUSED_WOOD").ifPresent(this.effectiveMaterials::add);
 	}

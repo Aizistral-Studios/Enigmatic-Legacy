@@ -90,10 +90,6 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_breaker"));
 		this.config = config;
 
-		this.toolActions.add(ToolActions.AXE_DIG);
-		this.toolActions.add(ToolActions.PICKAXE_DIG);
-		this.toolActions.add(ToolActions.SHOVEL_DIG);
-
 		this.effectiveMaterials.addAll(EnigmaticLegacy.etheriumPickaxe.effectiveMaterials);
 		this.effectiveMaterials.addAll(EnigmaticLegacy.etheriumAxe.effectiveMaterials);
 		this.effectiveMaterials.addAll(EnigmaticLegacy.etheriumShovel.effectiveMaterials);
@@ -165,6 +161,13 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 			return this.use(context.getLevel(), context.getPlayer(), context.getHand()).getResult();
 		else
 			return super.useOn(context);
+	}
+
+	@Override
+	public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
+		return toolAction == ToolActions.AXE_DIG || toolAction == ToolActions.PICKAXE_DIG
+				|| toolAction == ToolActions.SHOVEL_DIG || toolAction == ToolActions.HOE_DIG
+				|| toolAction == ToolActions.SWORD_DIG || toolAction == ToolActions.SHEARS_DIG;
 	}
 
 }
