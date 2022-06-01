@@ -972,7 +972,6 @@
 	"gui.enigmaticlegacy.blazing_core_bar_offsetX": "0",
 	"gui.enigmaticlegacy.blazing_core_bar_offsetY": "0",
 	"gui.enigmaticlegacy.blazing_core__COMMENT": "Two strings above allow to move heat bar title by defining offsetX and offsetY to any positive or negative integers. This might be required for certain localizations more than for others depending on amount of symbols title takes takes to be spelled. You can, alternatively, leave title empty if you can't think of a solution that would look good, so that it just won't be rendered. Four symbols or less fit perfectly without any corrections. The string you read currently is just a commentary for localizators - you need not to translate it.",
-	
 
 	"quote.no_peril_1": "Where there is no peril in the task - there can be no glory in its accomplishment.",
 	"quote.end_doorstep_1": "The doorstep of The End... single step now separates you from it.",
@@ -1007,8 +1006,8 @@
 	"quote.tortured_rocks_1": "Tortured rocks, pale as bones, hanged up above infinite, all-consuming blackness.",
 	"quote.tortured_rocks_2": "The End... is almost like a fever dream.",
 
-	"quote.no_peril_1": "The world breathes relieved without the burdensome presence of that horror...",
-	"quote.no_peril_2": "So long at least.",
+	"quote.breathes_relieved": "The world breathes relieved without the burdensome presence of that horror...",
+	"quote.breathes_relieved": "So long at least.",
 
 	"quote.whether_it_is_1": "Whether it is power, or redemption that you seek in repeatedly returning Wither from and to its grave...",
 	"quote.whether_it_is_2": "...at least, you give that damnable creature a purpose.",
