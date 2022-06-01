@@ -161,7 +161,15 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 
 	@Override
 	public Perhaps getShieldThreshold(@Nullable Player player) {
-		return shieldOperator.apply(player, shieldThreshold.getValue());
+		if (player != null) {
+			try {
+				return shieldOperator.apply(player, shieldThreshold.getValue());
+			} catch (Exception ex) {
+				// NO-OP
+			}
+		}
+
+		return shieldThreshold.getValue();
 	}
 
 	@Override
