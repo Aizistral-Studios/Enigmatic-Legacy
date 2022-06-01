@@ -190,6 +190,7 @@ import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.entity.projectile.Fireball;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -1628,6 +1629,7 @@ public class EnigmaticEventHandler {
 							}
 
 							((AccessorAbstractArrowEntity)arrow).clearHitEntities();
+							((AbstractArrow) arrow).pickup = Pickup.CREATIVE_ONLY;
 						} else if (arrow instanceof AbstractHurtingProjectile) {
 							((AbstractHurtingProjectile) arrow).setOwner(player);
 
