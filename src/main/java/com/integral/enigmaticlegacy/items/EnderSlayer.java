@@ -87,26 +87,6 @@ public class EnderSlayer extends SwordItem implements ICursed {
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ender_slayer"));
 	}
 
-	@Override
-	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (attacker instanceof ServerPlayer player && SuperpositionHandler.isTheCursedOne(player)) {
-			if (target instanceof ServerPlayer targetPlayer) {
-				targetPlayer.getCooldowns().addCooldown(Items.ENDER_PEARL, 400);
-
-				if (SuperpositionHandler.hasCurio(targetPlayer, EnigmaticLegacy.eyeOfNebula)
-						|| SuperpositionHandler.hasCurio(targetPlayer, EnigmaticLegacy.theCube)) {
-					SuperpositionHandler.setSpellstoneCooldown(targetPlayer, 400);
-				}
-			}
-
-			if (target instanceof EnderMan || target instanceof Shulker) {
-				target.getPersistentData().putInt("ELTeleportBlock", 400);
-			}
-		}
-
-		return super.hurtEnemy(stack, target, attacker);
-	}
-
 	public boolean isEndDweller(LivingEntity entity) {
 		if (entity instanceof EnderMan || entity instanceof EnderDragon || entity instanceof Shulker || entity instanceof Endermite)
 			return true;

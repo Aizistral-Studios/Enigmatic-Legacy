@@ -1996,6 +1996,21 @@ public class EnigmaticEventHandler {
 				event.getEntityLiving().addEffect(new MobEffectInstance(MobEffects.WITHER, VoidPearl.witheringTime.getValue(), VoidPearl.witheringLevel.getValue(), false, true));
 			}
 
+			if (player instanceof ServerPlayer && SuperpositionHandler.isTheCursedOne(player)) {
+				if (event.getEntityLiving() instanceof ServerPlayer targetPlayer) {
+					targetPlayer.getCooldowns().addCooldown(Items.ENDER_PEARL, 400);
+
+					if (SuperpositionHandler.hasCurio(targetPlayer, EnigmaticLegacy.eyeOfNebula)
+							|| SuperpositionHandler.hasCurio(targetPlayer, EnigmaticLegacy.theCube)) {
+						SuperpositionHandler.setSpellstoneCooldown(targetPlayer, 400);
+					}
+				}
+
+				if (event.getEntityLiving() instanceof EnderMan || event.getEntityLiving() instanceof Shulker) {
+					event.getEntityLiving().getPersistentData().putInt("ELTeleportBlock", 400);
+				}
+			}
+
 			float bonusDamage = 0F;
 
 			if (player.getMainHandItem() != null) {
