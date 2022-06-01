@@ -260,7 +260,14 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 
 		if (this.locationCache.containsKey(player)) {
 			try {
-				location = this.locationCache.get(player).get();
+				var future = this.locationCache.get(player);
+
+				if (future.isDone()) {
+					location = this.locationCache.get(player).get();
+				} else {
+					future.cancel(true);
+				}
+
 				this.locationCache.remove(player);
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -268,7 +275,7 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 		}
 
 		if (location == null) {
-			EnigmaticLegacy.logger.getInternal().error("No cached location found for {}, generating new one synchronously.", player.getGameProfile().getName());
+			EnigmaticLegacy.logger.getInternal().info("No cached location found for {}, generating new one synchronously.", player.getGameProfile().getName());
 			location = this.findRandomLocation(player);
 		}
 
