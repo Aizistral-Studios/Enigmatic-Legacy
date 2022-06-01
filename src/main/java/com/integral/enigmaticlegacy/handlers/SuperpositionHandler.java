@@ -786,7 +786,25 @@ public class SuperpositionHandler {
 		else
 			//persistent.put(tag, expectedValue);
 			return expectedValue;
+	}
 
+	/**
+	 * Remove tag from the player's persistent NBT.
+	 */
+
+	public static void removePersistentTag(Player player, String tag) {
+		CompoundTag data = player.getPersistentData();
+		CompoundTag persistent;
+
+		if (!data.contains(Player.PERSISTED_NBT_TAG)) {
+			data.put(Player.PERSISTED_NBT_TAG, (persistent = new CompoundTag()));
+		} else {
+			persistent = data.getCompound(Player.PERSISTED_NBT_TAG);
+		}
+
+		if (persistent.contains(tag)) {
+			persistent.remove(tag);
+		}
 	}
 
 	/**

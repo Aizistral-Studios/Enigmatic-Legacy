@@ -2266,6 +2266,8 @@ public class EnigmaticEventHandler {
 						ItemStack stack = ItemStack.of(armor);
 						newPlayer.getInventory().armor.set(i, stack);
 					}
+
+					SuperpositionHandler.removePersistentTag(newPlayer, "EternallyBoundArmor" + i);
 				}
 			}
 		}

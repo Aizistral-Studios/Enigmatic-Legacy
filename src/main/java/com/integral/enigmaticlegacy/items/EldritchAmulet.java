@@ -167,7 +167,9 @@ public class EldritchAmulet extends AscensionAmulet implements IEldritch {
 		boolean hadTag = false;
 
 		if (maybeTag instanceof CompoundTag tag) {
+			SuperpositionHandler.removePersistentTag(newPlayer, "ELPersistentInventory");
 			hadTag = true;
+
 			inventories.entrySet().forEach(entry -> {
 				Tag maybeList = tag.get("Inventory" + entry.getKey());
 
