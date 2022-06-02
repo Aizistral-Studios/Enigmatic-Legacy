@@ -210,7 +210,7 @@
 	"enigmaticlegacy.curiotype.scroll": "奥术卷轴",
 
 	"tooltip.enigmaticlegacy.undefined": "§4检测到未定义的工具提示",
-	"tooltip.enigmaticlegacy.void": "",
+	"tooltip.enigmaticlegacy.void": " ",
 	"tooltip.enigmaticlegacy.paragraph": "§",
 	"tooltip.enigmaticlegacy.subformat": "&",
 	"tooltip.enigmaticlegacy.tilt": "&",
