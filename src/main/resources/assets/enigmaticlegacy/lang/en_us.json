@@ -106,6 +106,7 @@
 	"item.enigmaticlegacy.architect_eye_dormant": "Dormant Eye",
 	"item.enigmaticlegacy.architect_eye_active": "Inscrutable Eye",
 	"item.enigmaticlegacy.ichor_bottle": "Bottle of Ichor",
+	"item.enigmaticlegacy.quote_player": "Quote Player",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -967,6 +968,11 @@
 	"tooltip.enigmaticlegacy.ichorBottle1": "§5To contempt the gods, one must know them...",
 	"tooltip.enigmaticlegacy.ichorBottle2": "§5Consume to obtain §6+1§d Charm Slot §5permanently.",
 	
+	"tooltip.enigmaticlegacy.quotePlayer1": "§5Press §6Right-Click§5 to play selected quote.",
+	"tooltip.enigmaticlegacy.quotePlayer2": "§5Press §6Shift+Right-Click§5 to cycle through",
+	"tooltip.enigmaticlegacy.quotePlayer3": "§5available quotes.",
+	"tooltip.enigmaticlegacy.quotePlayerSelection": "§dCurrent Quote: §6%1$s",
+	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",
 	"gui.enigmaticlegacy.blazing_core_bar_offsetX": "0",
@@ -1006,8 +1012,8 @@
 	"quote.tortured_rocks_1": "Tortured rocks, pale as bones, hanged up above infinite, all-consuming blackness.",
 	"quote.tortured_rocks_2": "The End... is almost like a fever dream.",
 
-	"quote.breathes_relieved": "The world breathes relieved without the burdensome presence of that horror...",
-	"quote.breathes_relieved": "So long at least.",
+	"quote.breathes_relieved_1": "The world breathes relieved without the burdensome presence of that horror...",
+	"quote.breathes_relieved_2": "So long at least.",
 
 	"quote.whether_it_is_1": "Whether it is power, or redemption that you seek in repeatedly returning Wither from and to its grave...",
 	"quote.whether_it_is_2": "...at least, you give that damnable creature a purpose.",
@@ -1019,7 +1025,7 @@
 	"quote.horrible_existence_2": "You must truly be devoid of compassion.",
 
 	"quote.countless_dead_1": "Countless dead souls, merged into abomination of such terrible form that it defies description.",
-	"quote.countless_dead_1": "The earth is stained by the very presence of this foul creature.",
+	"quote.countless_dead_2": "The earth is stained by the very presence of this foul creature.",
 
 	"quote.with_dragons_1": "With dragon's imminent demise, this place seems even more empty and purposeless than before.",
 	"quote.with_dragons_2": "Will you wander those fractured, deserted lands...",

@@ -118,6 +118,7 @@ import com.integral.enigmaticlegacy.items.MonsterCharm;
 import com.integral.enigmaticlegacy.items.OblivionStone;
 import com.integral.enigmaticlegacy.items.OceanStone;
 import com.integral.enigmaticlegacy.items.PlaceholderItem;
+import com.integral.enigmaticlegacy.items.QuotePlayer;
 import com.integral.enigmaticlegacy.items.RecallPotion;
 import com.integral.enigmaticlegacy.items.RelicOfTesting;
 import com.integral.enigmaticlegacy.items.RevelationTome;
@@ -443,6 +444,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Majestic Elytra") public static EnigmaticElytra enigmaticElytra;
 	@ConfigurableItem("Inscrutable Eye") public static ArchitectEye architectEye;
 	@ConfigurableItem("Bottle of Ichor") public static IchorBottle ichorBottle;
+	@ConfigurableItem("") public static QuotePlayer quotePlayer;
 
 	@ConfigurableItem("Cosmic Scroll")
 	public static Item cosmicScroll;
@@ -931,6 +933,7 @@ public class EnigmaticLegacy {
 			enigmaticElytra = new EnigmaticElytra();
 			architectEye = new ArchitectEye();
 			ichorBottle = new IchorBottle();
+			quotePlayer = new QuotePlayer();
 
 			spellstoneList = Lists.newArrayList(
 					angelBlessing,
@@ -1060,6 +1063,7 @@ public class EnigmaticLegacy {
 					enigmaticElytra,
 					architectEye,
 					ichorBottle,
+					quotePlayer,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),

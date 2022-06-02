@@ -1,6 +1,7 @@
 package com.integral.enigmaticlegacy.client;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -9,6 +10,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayQuote;
 
 import net.minecraft.resources.ResourceLocation;
@@ -61,6 +63,7 @@ public class Quote {
 			ETERNITY_TO_KEEP, IMMORTAL, VIOLENCE_CALLS);
 
 	public static final List<Quote> NARRATOR_INTROS = ImmutableList.of(ANOTHER_DEMIGOD, ANOTHER_EON, PERHAPS_YOU);
+	public static final List<Quote> RING_DESTRUCTION = ImmutableList.of(TOLL_PAID, ITS_DESTRUCTION);
 
 	private static Quote lastQuote = null;
 
@@ -84,22 +87,47 @@ public class Quote {
 		return this;
 	}
 
-	public void playWithDelay(ServerPlayer player, int delayTicks) {
+	public void playOnceIfUnlocked(ServerPlayer player, int delayTicks) {
+		if (TransientPlayerData.get(player).getUnlockedNarrator()) {
+			if (!SuperpositionHandler.hasPersistentTag(player, "ELHeardQuote:" + this.name)) {
+				SuperpositionHandler.setPersistentBoolean(player, "ELHeardQuote:" + this.name, true);
+				this.play(player, delayTicks);
+			}
+		}
+	}
+
+	public void playOnceIfUnlocked(ServerPlayer player) {
+		this.playOnceIfUnlocked(player, 1);
+	}
+
+	public void playIfUnlocked(ServerPlayer player) {
+		if (TransientPlayerData.get(player).getUnlockedNarrator()) {
+			this.play(player);
+		}
+	}
+
+	public void playIfUnlocked(ServerPlayer player, int delayTicks) {
+		if (TransientPlayerData.get(player).getUnlockedNarrator()) {
+			this.play(player, delayTicks);
+		}
+	}
+
+	public void play(ServerPlayer player, int delayTicks) {
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player), new PacketPlayQuote(this, delayTicks));
 		lastQuote = this;
 	}
 
 	public void play(ServerPlayer player) {
-		this.playWithDelay(player, 1);
+		this.play(player, 1);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public void play() {
-		this.playWithDelay(1);
+		this.play(1);
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void playWithDelay(int delayTicks) {
+	public void play(int delayTicks) {
 		if (delayTicks < 1)
 			throw new IllegalArgumentException("Delay cannot be less than 1 tick!");
 
@@ -124,6 +152,10 @@ public class Quote {
 
 	public static Quote getByID(int id) {
 		return ALL_QUOTES.get(id);
+	}
+
+	public static List<Quote> getAllQuotes() {
+		return Collections.unmodifiableList(ALL_QUOTES);
 	}
 
 	public static Quote getRandom(List<Quote> list) {

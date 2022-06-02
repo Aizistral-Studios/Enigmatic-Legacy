@@ -40,7 +40,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class LootGenerator extends ItemBase implements Vanishable {
-
 	public Random lootRandomizer = new Random();
 	public List<ResourceLocation> lootList = new ArrayList<ResourceLocation>();
 
@@ -156,7 +155,6 @@ public class LootGenerator extends ItemBase implements Vanishable {
 		}
 
 		return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
-
 	}
 
 	@Override

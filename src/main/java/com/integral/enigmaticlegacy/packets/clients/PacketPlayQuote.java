@@ -30,7 +30,7 @@ public class PacketPlayQuote {
 
 	public static void handle(PacketPlayQuote msg, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
-			msg.quote.playWithDelay(msg.delay);
+			msg.quote.play(msg.delay);
 		});
 		ctx.get().setPacketHandled(true);
 	}

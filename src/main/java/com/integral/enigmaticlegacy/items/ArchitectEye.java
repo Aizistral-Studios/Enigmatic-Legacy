@@ -136,7 +136,7 @@ public class ArchitectEye extends ItemBaseCurio {
 		if (pEntity instanceof ServerPlayer player && !this.isDormant(pStack)) {
 			if (!TransientPlayerData.get(player).getUnlockedNarrator()) {
 				TransientPlayerData.get(player).setUnlockedNarrator(true);
-				Quote.getRandom(Quote.NARRATOR_INTROS).playWithDelay(player, 60);
+				Quote.getRandom(Quote.NARRATOR_INTROS).play(player, 60);
 			}
 		}
 
@@ -158,7 +158,7 @@ public class ArchitectEye extends ItemBaseCurio {
 				if (!wasNarratorUnlocked) {
 					data.setUnlockedNarrator(true);
 					data.needsSync = true;
-					Quote.getRandom(Quote.NARRATOR_INTROS).playWithDelay(player, 80);
+					Quote.getRandom(Quote.NARRATOR_INTROS).play(player, 80);
 				}
 			}
 

@@ -58,7 +58,7 @@ public class QuoteHandler {
 
 				if (this.delayTicks == 0) {
 					SimpleSoundInstance instance = new SimpleSoundInstance(this.currentQuote.getSound().getLocation(),
-							SoundSource.MASTER, 0.5F, 1, false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true);
+							SoundSource.VOICE, 1.0F, 1, false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true);
 
 					Minecraft.getInstance().getSoundManager().play(instance);
 

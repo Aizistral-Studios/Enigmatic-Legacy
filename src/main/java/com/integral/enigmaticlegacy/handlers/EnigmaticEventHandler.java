@@ -1106,16 +1106,11 @@ public class EnigmaticEventHandler {
 		if (event.getPlayer() instanceof ServerPlayer player) {
 			lastSoulCompassUpdate.remove(player);
 
-			if (TransientPlayerData.get(player).getUnlockedNarrator())
-				if (event.getPlayer().level.dimension() == Level.NETHER
-						/*&& !SuperpositionHandler.getPersistentBoolean(player, "ELHeardNetherQuote", false)*/) {
-					SuperpositionHandler.setPersistentBoolean(player, "ELHeardNetherQuote", true);
-					Quote.SULFUR_AIR.playWithDelay(player, 240);
-				} else if (event.getPlayer().level.dimension() == Level.END
-						&& !SuperpositionHandler.getPersistentBoolean(player, "ELHeardEndQuote", false)) {
-					SuperpositionHandler.setPersistentBoolean(player, "ELHeardEndQuote", true);
-					Quote.TORTURED_ROCKS.playWithDelay(player, 240);
-				}
+			if (event.getPlayer().level.dimension() == Level.NETHER) {
+				Quote.SULFUR_AIR.playOnceIfUnlocked(player, 240);
+			} else if (event.getPlayer().level.dimension() == Level.END) {
+				Quote.TORTURED_ROCKS.playOnceIfUnlocked(player, 240);
+			}
 		}
 	}
 
@@ -2996,12 +2991,14 @@ public class EnigmaticEventHandler {
 			lastSoulCompassUpdate.remove(player);
 
 			if (!event.isEndConquered()) {
-
-				if (TransientPlayerData.get(player).getUnlockedNarrator())
+				if (SuperpositionHandler.getPersistentBoolean(player, "DestroyedCursedRing", false)) {
+					SuperpositionHandler.removePersistentTag(player, "DestroyedCursedRing");
+					Quote.getRandom(Quote.RING_DESTRUCTION).playIfUnlocked((ServerPlayer) player, 10);
+				} else if (theySeeMeRollin.nextDouble() > 0.5)
 					if (SuperpositionHandler.getPersistentBoolean(player, "DeathFromEntity", false)) {
-						Quote.getRandom(Quote.DEATH_QUOTES_ENTITY).playWithDelay((ServerPlayer) player, 10);
+						Quote.getRandom(Quote.DEATH_QUOTES_ENTITY).playIfUnlocked((ServerPlayer) player, 10);
 					} else {
-						Quote.getRandom(Quote.DEATH_QUOTES).playWithDelay((ServerPlayer) player, 10);
+						Quote.getRandom(Quote.DEATH_QUOTES).playIfUnlocked((ServerPlayer) player, 10);
 					}
 
 				if (!player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
