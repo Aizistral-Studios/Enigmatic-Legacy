@@ -1,0 +1,23 @@
+{
+    "name": "book.enigmaticlegacy.entry.ichor_bottle.name",
+    "icon": "enigmaticlegacy:ichor_bottle",
+    "category": "enigmaticlegacy:relics",
+	"advancement": "enigmaticlegacy:book/relics/ichor_bottle",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 210,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ichor_bottle.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "enigmaticlegacy:ichor_bottle",
+			"link_recipe": true,
+			"title": "book.enigmaticlegacy.entry.ichor_bottle.heading.1",
+            "text": "book.enigmaticlegacy.entry.ichor_bottle.page.2"
+        }
+    ]
+}

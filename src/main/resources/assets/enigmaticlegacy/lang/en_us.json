@@ -260,7 +260,7 @@
 	"enigmaticlegacy.curiotype.scroll": "Arcane Scrolls",
 
 	"tooltip.enigmaticlegacy.undefined": "§4Undefined Tooltip Detected",
-	"tooltip.enigmaticlegacy.void": "",
+	"tooltip.enigmaticlegacy.void": " ",
 	"tooltip.enigmaticlegacy.paragraph": "§",
 	"tooltip.enigmaticlegacy.subformat": "&",
 	"tooltip.enigmaticlegacy.tilt": "&",
@@ -956,9 +956,9 @@
 	"tooltip.enigmaticlegacy.architectEye2": "§5time. You can awaken the eye, if you wish to risk",
 	"tooltip.enigmaticlegacy.architectEye3": "§5drawing attention of someone... or something.",
 	
-	"tooltip.enigmaticlegacy.architectEyeAwakened1": "§5Now that you have drawn their attention, whoever uses",
+	"tooltip.enigmaticlegacy.architectEyeAwakened1": "§5Now that you have drawn his attention, whoever uses",
 	"tooltip.enigmaticlegacy.architectEyeAwakened2": "§5the eye to observe you and the world does not seem to",
-	"tooltip.enigmaticlegacy.architectEyeAwakened3": "§5need it in order to reach you. Whether they are incapable",
+	"tooltip.enigmaticlegacy.architectEyeAwakened3": "§5need it in order to reach you. Whether he is incapable",
 	"tooltip.enigmaticlegacy.architectEyeAwakened4": "§5or simply unwilling to establish any contact beyond mental",
 	"tooltip.enigmaticlegacy.architectEyeAwakened5": "§5remains a mystery.",
 
@@ -1742,6 +1742,26 @@
 	"book.enigmaticlegacy.entry.curse_transposer.page.1": "Bearing the Seven Curses, you have aquired ability to draw power from curses bound to some of the ancient gear you find in your explorations, and even create such yourself with the help of Enchanter's Pearl. But they still are a great nuisance at times, as even though you can transpose them from one item from another, so far you had no way of separating them from",
 	"book.enigmaticlegacy.entry.curse_transposer.page.2": "enchantments when doing so.<br2/>With this little invention, however, your curse management abilities should improve significantly. It offers a way to separate curses and only curses from any item of",
 	"book.enigmaticlegacy.entry.curse_transposer.page.3": "your equipment; not a cheap one at that, but a way nonetheless.",
+	
+	
+	"book.enigmaticlegacy.entry.enigmatic_elytra.name": "Majestic Elytra",
+	"book.enigmaticlegacy.entry.enigmatic_elytra.page.1": "Combined with some fireworks, Elytra provides an outstanding means of transportation, easily outpacing any horse, boat or minecart alike. There are only two major concerns surrounding its prolonged use - swift weardown, and necessity to maintain steady supply of fireworks.<br2/>Majestic Elytra resolves both of them. It offers remarkable",
+	"book.enigmaticlegacy.entry.enigmatic_elytra.page.2": "durability, and can use enderic energies to propel the wearer forward during the flight at their wish, in a manner not dissimilar to fireworks. Doing so puts greater strain on hardness of the elytra, but insofar it can",
+	"book.enigmaticlegacy.entry.enigmatic_elytra.page.3": "be repaired with etherium in conventional anvil - that should not be too much of a concern.<br2/>Apart from that, it is covered with much more vibrant color patterns, leaving nobody in doubt regarding its magnificent, extraordinary qualities.",
+	
+	
+	"book.enigmaticlegacy.entry.ichor_bottle.name": "Bottle of Ichor",
+	"book.enigmaticlegacy.entry.ichor_bottle.heading.1": "The Bottle",
+	"book.enigmaticlegacy.entry.ichor_bottle.page.1": "Where exactly this so called \"blood of gods\" comes from is a question yet unanswered, and perhaps better left as such. Now that you have some at your disposal, however, you can consume it to increase your body's ability to channel arcane energies, allowing you to equip one more of those precious charms that magnify your abilities in one way or another.",
+	"book.enigmaticlegacy.entry.ichor_bottle.page.2": "The relic of such rarity is almost impossible to find, and you cannot help but wonder how it happened that one ended up in your hands. Perhaps, you were drawn together by your divine nature, or perhaps some greater power directed you towards it?..",
+	
+	
+	"book.enigmaticlegacy.entry.architect_eye.name": "Inscrutable Eye",
+	"book.enigmaticlegacy.entry.architect_eye.heading.1": "The Eye",
+	"book.enigmaticlegacy.entry.architect_eye.page.1": "An unexpected find among piles of treasure and junk, this eye have immediately consumed your attention with its distinguishably unearthly form. You could not resist the temptation of curiosity, and have chosen to awake it from slumber that lasted many centuries at least, and perhaps even many millenia.<br2/>Creator of the eye have soon",
+	"book.enigmaticlegacy.entry.architect_eye.page.2": "made himself known to you, and now that he is aware of your presence in this world - the eye itself is no longer necessary for him to observe and speak to you. He follows your footsteps since, remarking on things now and then. So far communication between you remains entirely unilateral, and thus it is hard",
+	"book.enigmaticlegacy.entry.architect_eye.page.3": "to establish what he is, and what motive he has to scrupulously contemplate your every move.<br2/>What can be said for sure is that he is no stranger to the world you currently inhabit, nor to higher beings such as you. Most certainly he once walked these lands himself, but extent of his participation in their past history remains a mystery yet. Much as where he is now, why he have chosen to speak to you, and what",
+	"book.enigmaticlegacy.entry.architect_eye.page.4": "expectations he places upon your journey.<br2/>For now, you can only hope that in time he will supply you with desired answers.",
 	
 	
 	"book.enigmaticlegacy.landing_text": "In front of you lies the well of great knowledge, a place where some of this world's greatest mysteries belong, scrupulously researched and carefully catalogized.<br2/>As your journey continues and the world reveals itself to you, you may revisit and behold knowledge you gathered within these pages."

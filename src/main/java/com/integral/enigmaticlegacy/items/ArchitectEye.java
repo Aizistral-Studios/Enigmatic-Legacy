@@ -46,6 +46,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 
 public class ArchitectEye extends ItemBaseCurio {
+	private static final ResourceLocation EYE_ADVANCEMENT = new ResourceLocation(EnigmaticLegacy.MODID, "book/relics/architect_eye");
 
 	public ArchitectEye() {
 		super(getDefaultProperties().rarity(Rarity.EPIC).fireResistant());
@@ -141,6 +142,11 @@ public class ArchitectEye extends ItemBaseCurio {
 				TransientPlayerData.get(player).setUnlockedNarrator(true);
 				Quote.getRandom(Quote.NARRATOR_INTROS).play(player, 60);
 			}
+
+			if (player.tickCount % 100 == 0)
+				if (!SuperpositionHandler.hasAdvancement(player, EYE_ADVANCEMENT)) {
+					SuperpositionHandler.grantAdvancement(player, EYE_ADVANCEMENT);
+				}
 		}
 
 		super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
@@ -162,6 +168,10 @@ public class ArchitectEye extends ItemBaseCurio {
 					data.setUnlockedNarrator(true);
 					data.needsSync = true;
 					Quote.getRandom(Quote.NARRATOR_INTROS).play(player, 80);
+				}
+
+				if (!SuperpositionHandler.hasAdvancement(player, EYE_ADVANCEMENT)) {
+					SuperpositionHandler.grantAdvancement(player, EYE_ADVANCEMENT);
 				}
 			}
 
