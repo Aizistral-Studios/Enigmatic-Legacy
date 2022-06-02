@@ -20,17 +20,21 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BedBlock;
+import net.minecraft.world.level.block.JukeboxBlock;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -125,7 +129,6 @@ public class LootGenerator extends ItemBase implements Vanishable {
 
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-
 		ItemStack itemstack = player.getItemInHand(hand);
 
 		if (!player.isCrouching()) {
@@ -146,6 +149,10 @@ public class LootGenerator extends ItemBase implements Vanishable {
 				itemstack.setDamageValue(this.lootList.size() - 1);
 			}
 			player.swing(hand);
+		}
+
+		if (player instanceof ServerPlayer) {
+			player.displayClientMessage(new TextComponent("Table: " + this.lootList.get(itemstack.getDamageValue())), true);
 		}
 
 		return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
