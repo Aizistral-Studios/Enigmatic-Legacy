@@ -242,6 +242,7 @@
 	"death.attack.darkness": "%1$s was devoured by darkness",
 	"message.enigmaticlegacy.gen_sim_complete": "Estimated generation complete in §632768§5 instances; check §6latest.log§5 file to see the results.",
 	"message.enigmaticlegacy.animal_analysis_complete": "Entity registry analysis is complete; check §6latest.log§5 file to see the results.",
+	"message.enigmaticlegacy.voiceover_experimental": "§eHi there! §6Enigmatic Legacy§e developer on the line. Since voiceover is not a common thing for mods to add, I would like you to know that this feature is experimental, and I am actively looking for player feedback on it. Join my §6Discord§e and inform me of your impression once you play with it for some while: §6https://discord.gg/fuWK8ns",
 	"status.enigmaticlegacy.outdated": "New version of §6Enigmatic Legacy§5 was established: %1$s. You must behold its greatness!",
 	"status.enigmaticlegacy.noconnection": "Enigmatic Legacy was unable to check for updates.",
 	"world.enigmaticlegacy.name": "World #",

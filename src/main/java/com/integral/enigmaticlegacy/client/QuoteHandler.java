@@ -8,6 +8,7 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
@@ -15,8 +16,14 @@ import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.network.chat.ClickEvent;
+import net.minecraft.network.chat.ClickEvent.Action;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.commands.TellRawCommand;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -32,6 +39,7 @@ public class QuoteHandler {
 	private Quote currentQuote = null;
 	private long startedPlaying = -1;
 	private int delayTicks = -1;
+	private boolean shownExperimentalInfo = false;
 
 	private QuoteHandler() {
 		// NO-OP
@@ -87,8 +95,22 @@ public class QuoteHandler {
 		}
 	}
 
+	private void sendExperimentalInfo(Player player) {
+		if (!this.shownExperimentalInfo) {
+			player.sendMessage(new TranslatableComponent("message.enigmaticlegacy.voiceover_experimental")
+					.setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW).withClickEvent(new ClickEvent(
+							Action.OPEN_URL, "https://discord.gg/fuWK8ns"))), Util.NIL_UUID);
+
+			this.shownExperimentalInfo = true;
+		}
+	}
+
 	private void drawQuote(PoseStack stack, Window window) {
 		if (this.currentQuote.getSubtitles().getDuration() - this.getPlayTime() <= 0.1) {
+			if (Quote.NARRATOR_INTROS.contains(this.currentQuote) && Minecraft.getInstance().player != null) {
+				this.sendExperimentalInfo(Minecraft.getInstance().player);
+			}
+
 			this.currentQuote = null;
 			this.startedPlaying = this.delayTicks = -1;
 			return;

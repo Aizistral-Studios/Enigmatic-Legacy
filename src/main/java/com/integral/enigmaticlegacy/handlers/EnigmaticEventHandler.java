@@ -28,6 +28,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.api.events.EndPortalActivatedEvent;
+import com.integral.enigmaticlegacy.api.events.EnterBlockEvent;
+import com.integral.enigmaticlegacy.api.events.SummonedEntityEvent;
 import com.integral.enigmaticlegacy.api.items.ICursed;
 import com.integral.enigmaticlegacy.api.quack.IAbyssalHeartBearer;
 import com.integral.enigmaticlegacy.api.quack.IProperShieldUser;
@@ -109,6 +112,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EndPortalBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.client.Minecraft;
@@ -200,6 +204,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.EnderEyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -1398,8 +1403,32 @@ public class EnigmaticEventHandler {
 			}
 		}
 
-		if (event.getSource().getEntity() instanceof ServerPlayer player && SuperpositionHandler.hasCurio(player, theCube)) {
-			theCube.applyRandomEffect(player, true);
+		if (event.getSource().getEntity() instanceof ServerPlayer player) {
+			if (SuperpositionHandler.hasCurio(player, theCube)) {
+				theCube.applyRandomEffect(player, true);
+			}
+
+			if (event.getEntity() instanceof WitherBoss) {
+				int killedWither = SuperpositionHandler.getPersistentInteger(player, "TimesKilledWither", 0);
+
+				if (killedWither <= 0) {
+					Quote.BREATHES_RELIEVED.play(player, 140);
+					killedWither++;
+				} else if (killedWither == 1) {
+					Quote.APPALING_PRESENCE.play(player, 140);
+					killedWither++;
+				} else if (killedWither == 2) {
+					Quote.TERRIFYING_FORM.play(player, 140);
+					killedWither++;
+				} else if (killedWither > 2 && killedWither < 5) {
+					killedWither++;
+				} else if (killedWither == 4) {
+					Quote.WHETHER_IT_IS.play(player, 140);
+					killedWither++;
+				}
+
+				SuperpositionHandler.setPersistentInteger(player, "TimesKilledWither", killedWither);
+			}
 		}
 	}
 
@@ -1456,6 +1485,7 @@ public class EnigmaticEventHandler {
 						SuperpositionHandler.destroyCurio(player, desolationRing);
 
 						player.level.playSound(null, player.blockPosition(), SoundEvents.WITHER_DEATH, SoundSource.PLAYERS, 1.0F, 0.5F);
+						SuperpositionHandler.setPersistentBoolean(player, "DestroyedCursedRing", true);
 					}
 				}
 			}
@@ -2158,6 +2188,10 @@ public class EnigmaticEventHandler {
 
 			if (event.getSource().getEntity() instanceof Player) {
 				Player player = (Player) event.getSource().getEntity();
+
+				if (mob instanceof EnderDragon && player instanceof ServerPlayer splayer) {
+					Quote.POOR_CREATURE.playOnceIfUnlocked(splayer, 60);
+				}
 
 				/*
 				 * Handler for damage bonuses of Charm of Monster Slayer.
@@ -2944,7 +2978,6 @@ public class EnigmaticEventHandler {
 			EnigmaticLegacy.logger.error("Failed to check player's advancements upon joining the world!");
 			ex.printStackTrace();
 		}
-
 	}
 
 	@SubscribeEvent
@@ -2975,6 +3008,31 @@ public class EnigmaticEventHandler {
 
 			SuperpositionHandler.unlockSpecialSlot("scroll", player);
 			SuperpositionHandler.setPersistentBoolean(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL, true);
+		}
+	}
+
+	@SubscribeEvent
+	public void onEndPortal(EndPortalActivatedEvent event) {
+		if (event.getPlayer() instanceof ServerPlayer player) {
+			Quote.END_DOORSTEP.playOnceIfUnlocked(player, 40);
+		}
+	}
+
+	@SubscribeEvent
+	public void onEntitySummon(SummonedEntityEvent event) {
+		if (event.getPlayer() instanceof ServerPlayer player) {
+			if (event.getSummonedEntity() instanceof WitherBoss) {
+				Quote.COUNTLESS_DEAD.playOnceIfUnlocked(player, 20);
+			} else if (event.getSummonedEntity() instanceof EnderDragon) {
+				Quote.HORRIBLE_EXISTENCE.playOnceIfUnlocked(player, 100);
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public void onEnteredBlock(EnterBlockEvent event) {
+		if (event.getPlayer() instanceof ServerPlayer player && event.getBlockState().getBlock() == Blocks.END_GATEWAY) {
+			Quote.I_WANDERED.playOnceIfUnlocked(player, 160);
 		}
 	}
 

@@ -28,6 +28,9 @@
 	"MixinImprovedTooltipsModule",
 	"MixinVillager",
 	"MixinAutomaticRecipeUnlockModule",
+	"MixinEnderEyeItem",
+	"MixinSummonedEntityTrigger",
+	"MixinEnterBlockTrigger"
   ],
   "client": [
 	"MixinForgeHooksClient",
