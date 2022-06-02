@@ -10,6 +10,7 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
@@ -20,6 +21,11 @@ public class EvilIngot extends ItemBase implements ICursed {
 	public EvilIngot() {
 		super(getDefaultProperties().rarity(Rarity.EPIC).stacksTo(8).fireResistant());
 		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "evil_ingot"));
+	}
+
+	@Override
+	public boolean canBeHurtBy(DamageSource source) {
+		return !source.isExplosion();
 	}
 
 	@Override
