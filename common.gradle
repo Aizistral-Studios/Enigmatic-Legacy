@@ -108,6 +108,7 @@ curseforge {
 			if (project.name.equals('EnigmaticLegacy')) {
 				requiredDependency 'curios'
 				requiredDependency 'patchouli'
+				requiredDependency 'caelus'
 				embeddedLibrary 'etherium'
 			} else {
 				incompatible 'enigmatic-legacy'

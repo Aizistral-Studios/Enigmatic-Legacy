@@ -158,6 +158,7 @@ processResources {
 		'dep_minecraft': dep_minecraft, 
 		'dep_patchouli': dep_patchouli, 
 		'dep_curios': dep_curios,
+		'dep_caelus': dep_caelus,
 		'lockbox_id': lockbox_id,
 		'lockbox_name': lockbox_name,
 		'lockbox_version': lockbox_version,

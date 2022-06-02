@@ -38,6 +38,12 @@ ${mod_description}
     versionRange="${dep_patchouli}"
     ordering="NONE"
     side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="caelus"
+    mandatory=true
+    versionRange="${dep_caelus}"
+    ordering="NONE"
+    side="BOTH"
 	
 [[mods]]
 modId="${lockbox_id}"
