@@ -2698,48 +2698,60 @@ public class EnigmaticEventHandler {
 		 */
 
 		if (SuperpositionHandler.getMergedAir$EarthenDungeons().contains(event.getName())) {
-			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -12F, 1F, SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.golemHeart, 35), SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.angelBlessing, 65));
+			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -12F, 1F,
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.golemHeart, 35),
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.angelBlessing, 65),
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.ichorBottle, 65));
 
 			LootTable modified = event.getTable();
 			modified.addPool(poolSpellstones);
 			event.setTable(modified);
 		} else if (SuperpositionHandler.getMergedEnder$EarthenDungeons().contains(event.getName())) {
-			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -10F, 1F, SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.eyeOfNebula, 35), SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.golemHeart, 65));
+			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -10F, 1F,
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.eyeOfNebula, 35),
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.golemHeart, 65));
 
 			LootTable modified = event.getTable();
 			modified.addPool(poolSpellstones);
 			event.setTable(modified);
 
 		} else if (SuperpositionHandler.getAirDungeons().contains(event.getName())) {
-			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -10F, 1F, SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.angelBlessing, 100));
+			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -10F, 1F,
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.angelBlessing, 100),
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.ichorBottle, 100));
 
 			LootTable modified = event.getTable();
 			modified.addPool(poolSpellstones);
 			event.setTable(modified);
 
 		} else if (SuperpositionHandler.getEarthenDungeons().contains(event.getName())) {
-			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -20F, 1F, SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.golemHeart, 100));
+			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -20F, 1F,
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.golemHeart, 100));
 
 			LootTable modified = event.getTable();
 			modified.addPool(poolSpellstones);
 			event.setTable(modified);
 
 		} else if (SuperpositionHandler.getNetherDungeons().contains(event.getName())) {
-			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -24F, 1F, SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.magmaHeart, 100));
+			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -24F, 1F,
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.magmaHeart, 100));
 
 			LootTable modified = event.getTable();
 			modified.addPool(poolSpellstones);
 			event.setTable(modified);
 
 		} else if (SuperpositionHandler.getWaterDungeons().contains(event.getName())) {
-			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -20F, 1F, SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.oceanStone, 100));
+			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -20F, 1F,
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.oceanStone, 100));
 
 			LootTable modified = event.getTable();
 			modified.addPool(poolSpellstones);
 			event.setTable(modified);
 
 		} else if (SuperpositionHandler.getEnderDungeons().contains(event.getName())) {
-			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -12F, 1F, SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.eyeOfNebula, 90), SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.voidPearl, 10));
+			LootPool poolSpellstones = SuperpositionHandler.constructLootPool("spellstones", -12F, 1F,
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.eyeOfNebula, 90),
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.voidPearl, 10));
 
 			LootTable modified = event.getTable();
 			modified.addPool(poolSpellstones);
