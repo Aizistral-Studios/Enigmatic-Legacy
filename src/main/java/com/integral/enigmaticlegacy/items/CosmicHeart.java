@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.ITaintable;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
+import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.network.chat.Component;

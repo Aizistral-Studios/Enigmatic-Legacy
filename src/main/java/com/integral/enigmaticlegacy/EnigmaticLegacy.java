@@ -1077,7 +1077,7 @@ public class EnigmaticLegacy {
 					);
 
 			if (!EnigmaticLegacy.enigmaticLegacy.isLockboxPresent()) {
-				event.getRegistry().register(new PlaceholderItem("cosmic_scroll", Rarity.EPIC, 1));
+				event.getRegistry().register(cosmicScroll = new PlaceholderItem("cosmic_scroll", Rarity.EPIC, 1));
 			}
 
 			logger.info("Items registered successfully.");

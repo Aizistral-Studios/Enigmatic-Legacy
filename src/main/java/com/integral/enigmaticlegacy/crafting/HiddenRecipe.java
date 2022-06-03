@@ -101,8 +101,9 @@ public class HiddenRecipe extends CustomRecipe {
 
 					if (slotStack.getItem() != array[r][i].getItem()) {
 						continue recipes;
-					} else if (array[r][i].getItem() instanceof CosmicHeart &&
-							!ItemNBTHelper.getBoolean(array[r][i], "isBelieverBlessed", false)) {
+					} else if (RECIPES.get(array).is(EnigmaticLegacy.cosmicScroll) &&
+							slotStack.getItem() instanceof CosmicHeart &&
+							!ItemNBTHelper.getBoolean(slotStack, "isBelieverBlessed", false)) {
 						continue recipes;
 					}
 				}
