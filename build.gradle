@@ -11,7 +11,10 @@ buildscript {
         maven {
 			name "Gradle Plugin Portal"
 			url 'https://plugins.gradle.org/m2/'
-			content { includeGroup "gradle.plugin.com.matthewprenger" }
+			content { 
+				includeGroup "gradle.plugin.com.matthewprenger"
+				includeGroup "com.modrinth"
+			}
 		}
         mavenCentral()
     }
@@ -21,6 +24,10 @@ buildscript {
 		classpath 'org.parchmentmc:librarian:1.+'
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-1.0.0-SNAPSHOT'
     }
+}
+
+plugins {
+    id "com.modrinth.minotaur" version "2.+"
 }
 
 println("Applying plugins...")

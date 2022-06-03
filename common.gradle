@@ -120,12 +120,36 @@ curseforge {
     }
 }
 
+modrinth {
+    token = findProperty('modrinthKey') ?: 0
+    projectId = "IpUWAlqM"
+    versionNumber = project.version
+	versionName = "Enigmatic Legacy v" + project.version
+    versionType = "release"
+	changelog = rootProject.file("docs/changelog.html").text
+    uploadFile = jar
+    gameVersions = ["1.18.2"]
+    dependencies {
+		// The scope can be `required`, `optional`, or `incompatible`
+		required.project "nU0bVIaL"
+    }
+	
+	syncBodyFrom = rootProject.file("docs/README.md").text
+}
+
+task upload {
+	dependsOn('modrinth')
+	dependsOn('curseforge')
+}
+
 tasks.withType(JavaCompile) {
     options.failOnError(true)
 }
 
 jar.finalizedBy('reobfJar')
 //publish.dependsOn('reobfJar')
+
+tasks.modrinth.dependsOn(tasks.modrinthSyncBody)
 
 publishing {
 
