@@ -106,6 +106,7 @@
 	"item.enigmaticlegacy.architect_eye_dormant": "휴면하는 눈",
 	"item.enigmaticlegacy.architect_eye_active": "불가해한 눈",
 	"item.enigmaticlegacy.ichor_bottle": "이코르 병",
+	"item.enigmaticlegacy.quote_player": "구절 재생기",
 
 "block.enigmaticlegacy.big_lamp": "전등",
 "block.enigmaticlegacy.massive_lamp": "케이스를 씌운 전등",
@@ -241,6 +242,7 @@
 "death.attack.darkness": "%1$s이(가) 어둠에 집어삼켜졌습니다",
 "message.enigmaticlegacy.gen_sim_complete": "예상 생성이 §632768§5개 인스턴스에서 완료되었습니다; 결과를 보려면 §6latest.log§5 파일을 확인하십시오.",
 "message.enigmaticlegacy.animal_analysis_complete": "생명체 레지스트리 분석이 완료되었습니다; 결과를 보려면 §6latest.log§5 파일을 확인하십시오.",
+	"message.enigmaticlegacy.voiceover_experimental": "§e안녕하세요! §6불가사의한 유물§e 개발자입니다. 음성은 모드들이 추가하는 것이 흔하지 않기 때문에 이 기능이 실험적이라는 것을 알아주셨으면 좋겠고, 이에 대한 플레이어 피드백을 적극적으로 찾고 있습니다. 제 §6디스코드§e에 가입해 플레이한 소감을 알려주세요: §6https://discord.gg/fuWK8ns",
 "status.enigmaticlegacy.outdated": "§6불가사의한 유물§5의 새로운 버전이 출시되었습니다: %1$s. 그 위대함에 전율하십시오!",
 "status.enigmaticlegacy.noconnection": "불가사의한 유물의 최신 버전을 확인할 수 없습니다.",
 "world.enigmaticlegacy.name": "세계 #",
@@ -966,6 +968,11 @@
 
 	"tooltip.enigmaticlegacy.ichorBottle1": "§5신들을 경멸하려면, 누군가는 신들을 알아야 한다...",
 	"tooltip.enigmaticlegacy.ichorBottle2": "§5섭취하면 §6+1§d 부적 칸§5을 영구적으로 얻습니다.",
+	
+	"tooltip.enigmaticlegacy.quotePlayer1": "§6마우스 오른쪽 버튼§5을 눌러 현재 선택된 구절을 읽습니다.",
+	"tooltip.enigmaticlegacy.quotePlayer2": "§6Shift+마우스 오른쪽 버튼§5을 눌러 다음 구절을 선택합니다.",
+	"tooltip.enigmaticlegacy.quotePlayer3": "§5마지막 구절일 경우 첫 구절로 순환합니다.",
+	"tooltip.enigmaticlegacy.quotePlayerSelection": "§d현재 구절: §6%1$s",
 
 "gui.enigmaticlegacy.lore_inscriber": "이름 & 설명 적기",
 "gui.enigmaticlegacy.blazing_core_bar_title": "열기",
@@ -973,65 +980,64 @@
 "gui.enigmaticlegacy.blazing_core_bar_offsetY": "0",
 "gui.enigmaticlegacy.blazing_core__COMMENT": "Two strings above allow to move heat bar title by defining offsetX and offsetY to any positive or negative integers. This might be required for certain localizations more than for others depending on amount of symbols title takes takes to be spelled. You can, alternatively, leave title empty if you can't think of a solution that would look good, so that it just won't be rendered. Four symbols or less fit perfectly without any corrections. The string you read currently is just a commentary for localizators - you need not to translate it.",
 	
-
 	"quote.no_peril_1": "임무에 위험이 없는 곳에 - 그 성취에 영광이 있을 수 없다.",
-	"quote.end_doorstep_1": "'끝'의 문간은... 이제 한 걸음으로 그것으로부터 당신을 분리한다.",
+	"quote.end_doorstep_1": "'끝'의 문간은... 이제 한 걸음으로 그것으로부터 널 분리한다.",
 	"quote.only_because_1": "추락했다고 해서 아직 물러난 것은 아니다.",
-	"quote.demise_is_1": "당신과 같은 반신에게 죽음은 일시적인 불편에 불과하다.",
+	"quote.demise_is_1": "너와 같은 반신에게 죽음은 일시적인 불편에 불과하다.",
 	"quote.we_fall_1": "우리는 넘어지기에, 다시 일어서는 법을 배울 수 있다.",
 	"quote.you_will_endure_1": "당신은 이 손실을 견디고, 그것으로부터 배울 것이다.",
-	"quote.oblivion_rejects_1": "망각은 당신을 거부한다... 기회가 있을 때 그런 기회를 이용하라.",
+	"quote.oblivion_rejects_1": "망각은 널 거부한다... 기회가 있을 때 그런 기회를 이용하라.",
 	"quote.setback_1": "좌절이지만 패배는 아니다.",
 	"quote.death_may_1": "죽음은 정복을 늦추겠지만, 부서진 의지는 정복을 막는다.",
-	"quote.eternity_to_keep_1": "당신은 영원하다. 할 수 있는 대로 해라.",
+	"quote.eternity_to_keep_1": "넌 영원하다. 할 수 있는 대로 해라.",
 	"quote.violence_calls_1": "폭력은 복수를 요구한다. 돌려줘라, 그리고 발사해라!",
-	"quote.immortal_1": "당신은 불멸자다! 돌아가서 그 불쌍한 녀석에게 이 사실을 보여라.",
-	"quote.appaling_presence_1": "껍데기는 사라졌지만... 무시무시한 존재는 이 영역에 영원히 각인될 것입니다.",
-	"quote.its_destruction_1": "그것의 파괴는 작은 위안입니다... 그것의 끔찍한 존재의 의미를 고려할 때 말이죠.",
+	"quote.immortal_1": "넌 불멸자다! 돌아가서 그 불쌍한 녀석에게 이 사실을 보여라.",
+	"quote.appaling_presence_1": "껍데기는 사라졌지만... 무시무시한 존재는 이 영역에 영원히 각인될 것이다.",
+	"quote.its_destruction_1": "그것의 파괴는 작은 위안이다... 그것의 끔찍한 존재의 의미를 고려할 때 말이다.",
 
 	"quote.i_wandered_1": "그래, 나는 그 땅을 여러 번 방황했다...",
 	"quote.i_wandered_2": "그때의 모든 것과 일어날 수 있었던 모든 것을 적막하게 상기시키는 것.",
 
 	"quote.another_demigod_1": "또 다른 반신이 버려진 이 땅을 떠돌아다니며...",
-	"quote.another_demigod_2": "제가 당신의 여행에 동행하게 해 주십시오. 다른 존재들이 할 수 없었던 일을 당신이 해낼 수 있을 것입니다.",
+	"quote.another_demigod_2": "내가 너의 여정에 동행하게 해 다오. 다른 존재들이 할 수 없었던 일을 네가 해낼 수 있을 것이다.",
 
-	"quote.another_eon_1": "또 다른 영겁, 또 다른 방랑자. 또 다른 이야기를...",
-	"quote.another_eon_2": "저는 큰 호기심으로 당신을 관찰할 것입니다.",
+	"quote.another_eon_1": "또 다른 영겁, 또 다른 방랑자. 또 다른 이야기들...",
+	"quote.another_eon_2": "나는 큰 호기심을 가지고 너를 관찰할 것이다.",
 
-	"quote.perhaps_you_1": "아마도 당신은 이 땅의 오랫동안 잊혀진 역사를 밝혀낼 사람일 것입니다...",
-	"quote.perhaps_you_2": "만약 그렇다면 제가, 당신의 업적의 증인이 되겠습니다.",
+	"quote.perhaps_you_1": "아마도 넌 이 땅의 오랫동안 잊혀진 역사를 밝혀낼 사람일 것이다...",
+	"quote.perhaps_you_2": "만약 그렇다면 내가, 네 업적의 증인이 되겠다.",
 
 	"quote.sulfur_air_1": "공기 중의 유황, 불에 탄 바위와 살의 날카로운 향기...",
 	"quote.sulfur_air_2": "이곳은 말 그대로 지옥이다.",
 
-	"quote.tortured_rocks_1": "뼈처럼 창백한 고문당한 바위들이 끝없는 어둠 위에 매달려 있습니다.",
-	"quote.tortured_rocks_2": "끝의 세계... 거의 열몽과도 같습니다.",
+	"quote.tortured_rocks_1": "뼈처럼 창백한 고문당한 바위들이 끝없는 어둠 위에 매달려 있다.",
+	"quote.tortured_rocks_2": "끝의 세계... 거의 열몽과도 같다.",
 
-	"quote.no_peril_1": "세상은 그 묵직한 공포가 없어져 안도의 한숨을 내쉽니다...",
-	"quote.no_peril_2": "적어도 꽤나 오랫동안 말입니다.",
+	"quote.no_peril_1": "세상은 그 묵직한 공포가 없어져 안도의 한숨을 내쉰다...",
+	"quote.no_peril_2": "적어도 꽤나 오랫동안 말이다.",
 
 	"quote.whether_it_is_1": "위더를 반복해서 무덤에서 돌아오게 하는 것이 힘이든 구원이든...",
-	"quote.whether_it_is_2": "...적어도, 당신은 그 망할 놈에게 목적을 주었습니다.",
+	"quote.whether_it_is_2": "...적어도, 너는 그 망할 놈에게 목적을 주었지.",
 
-	"quote.poor_creature_1": "불쌍한 생물... 그녀의 종족의 마지막 생존자이자, 신이 버린 섬을 지키도록 속박되어 있습니다...",
-	"quote.poor_creature_2": "...무의 한가운데에서. 그녀를 편히 쉬게 해주십시오.",
+	"quote.poor_creature_1": "불쌍한 생물... 그녀의 종족의 마지막 생존자이자, 신이 버린 섬을 지키도록 속박되어 있다...",
+	"quote.poor_creature_2": "...무의 한가운데에서 말이지. 그녀를 편히 쉬게 해 다오.",
 
 	"quote.horrible_existence_1": "얼마나 끔찍한 존재인가... 단지 한번 더 죽기 위해서 죽음에서 되살아났다.",
-	"quote.horrible_existence_2": "당신은 정말로 동정심이 없는가 보군요.",
+	"quote.horrible_existence_2": "너는 동정심이라는 것을 모르는 건가.",
 
 	"quote.countless_dead_1": "수없이 많은 죽은 영혼들이, 묘사할 수 없을 정도로 끔찍한 형태의 혐오로 합쳐졌다.",
-	"quote.countless_dead_1": "지구는 이 더러운 생물의 존재에 의해 더럽혀졌다.",
+	"quote.countless_dead_1": "대지는 이 더러운 생물의 존재에 의해 더럽혀졌다.",
 
-	"quote.with_dragons_1": "용의 죽음이 임박해서, 이곳은 전보다 더 공허하고 목적도 없는 것 같습니다.",
-	"quote.with_dragons_2": "그 부서지고 황량한 땅을 방황하시겠습니까...",
-	"quote.with_dragons_3": "... 아니면 오버월드가 제공하는 온전함과 활력으로 돌아가시겠습니까?",
-	"quote.with_dragons_4": "물론, 우리 둘 다 답을 알고 있습니다... 미지의 탐구는 거부할 수 없습니다, 그게 지금이든, 나중이든 말이죠.",
+	"quote.with_dragons_1": "용의 죽음이 가까워지니, 이곳은 전보다 더 공허하고 목적도 없는 것 같다.",
+	"quote.with_dragons_2": "그 부서지고 황량한 땅을 방황할 것이냐...",
+	"quote.with_dragons_3": "... 아니면 오버월드가 제공하는 온전함과 활력으로 돌아갈 것이냐?",
+	"quote.with_dragons_4": "물론, 우리는 답을 알고 있지... 미지의 탐구는 거부할 수 없지, 그게 지금이든, 나중이든 말이다.",
 
-	"quote.terrifying_form_1": "...그 무서운 형태는 파괴할 수 있지만 영혼은 아닙니다.",
-	"quote.terrifying_form_2": "그것은 당신과 다르지 않은 저주를 품고 있습니다... 불멸의 저주.",
+	"quote.terrifying_form_1": "...그 무서운 형태는 파괴할 수 있지만 영혼은 아니다.",
+	"quote.terrifying_form_2": "그것은 너와 다르지 않은 저주를 품고 있다... 불멸의 저주 말이다.",
 
-	"quote.toll_paid_1": "통행료를 지불하면 증오와 슬픔의 부담스러운 팽창에서 벗어날 수 있습니다...",
-	"quote.toll_paid_2": "...그 반지에 갇혀 있는 그것들로부터요.",
+	"quote.toll_paid_1": "통행료를 지불하면 증오와 슬픔의 부담스러운 팽창에서 벗어날 수 있다...",
+	"quote.toll_paid_2": "...그 반지에 갇혀 있는 그것들로부터.",
 
 	
 "book.enigmaticlegacy.category.accessories.name": "장신구",
@@ -1702,6 +1708,7 @@
 "book.enigmaticlegacy.entry.desolation_ring.page.2": "그것은 한때 당신의 존재를 용인할 수 있었지만, 일곱 번의 저주의 짐에 자신을 굴복시키자마자 그러한 능력을 잃은 생물들을 끝없이 도살해야 하는 필요성에서 벗어나게 하고 싶은 당신의 욕구를 편리하게 충족시켜 줍니다.",
 "book.enigmaticlegacy.entry.desolation_ring.page.3": "당신을 둘러싼 존재로부터 그들을 지움으로써.<br2/>그런 현실 왜곡의 힘의 대가는 위험하지만, 당신이 그것을 원한다고 결정한다면, 당신은 영원히 그것에 얽매이게 될 것입니다. 아시겠지만, 공허함은 가장 무섭고, 항상 존재하는 위협보다 더 견디기 힘들 수 있습니다.",
 	
+	
 "book.enigmaticlegacy.entry.astral_potato.name": "텔레포테이토",
 "book.enigmaticlegacy.entry.astral_potato.page.1": "당근 애호가와 감자 애호가의 끊임없는 싸움에서, 후자는 꾸준히 불리한 입장에 있다는 것을 깨닫게 될 겁니다. 비록 약간의 금으로 덮여있기는 하지만, 엄청난 영양적 가치와 활력을 되살리는 당근 앞에서, 구운 감자가 다 뭐랍니까?",
 "book.enigmaticlegacy.entry.astral_potato.page.2": "우리는 오늘, \"여기서 끝냅니다\". 우주의 가장 최신 요리의 발명은 두 가지 목적을 달성할 것입니다 - 배고픔을 채우는 것과, 당근과의 전쟁에서 이점을 가져가는 것입니다. 이 대단한 섬세함에 붙은 이름은 적을 조롱하고 사기를 꺾을 것입니다.",
@@ -1735,6 +1742,26 @@
 "book.enigmaticlegacy.entry.curse_transposer.page.1": "일곱 가지 저주를 짊어지면 탐험에서 발견한 고대 장비에 얽힌 저주의 힘을 끌어낼 수 있고, 심지어 마법 부여자의 진주의 도움으로 그러한 자신을 만들어나갈 수도 있습니다.",
 "book.enigmaticlegacy.entry.curse_transposer.page.2": "하지만 한 아이템에서 다른 아이템으로 그것들을 옮겨 놓을 수는 있어도, 그것들을 마법 부여와 분리할 방법은 없었기에, 그들은 때때로 매우 골칫거리였습니다.",
 "book.enigmaticlegacy.entry.curse_transposer.page.3": "그러나 이 작은 발명이 당신의 저주 관리 능력을 크게 향상시킬 것입니다. 싸게는 안 먹히겠지만, 저주를 장비에서 분리할 수 있습니다.",
+	
+	
+	"book.enigmaticlegacy.entry.enigmatic_elytra.name": "장엄한 겉날개",
+	"book.enigmaticlegacy.entry.enigmatic_elytra.page.1": "겉날개는 폭죽과 병행한다면 말, 보트, 수레를 뛰어넘는 교통 수단을 제공합니다. 하지만 그것을 오래 사용하려면 두 가지를 염두에 두어야 하는데, 하나는 빠른 마모이고, 다른 하나는 지속적인 폭죽의 공급입니다.<br2/>장엄한 겉날개는 그 두 가지를 모두 해결합니다.",
+	"book.enigmaticlegacy.entry.enigmatic_elytra.page.2": "그것은 놀라운 내구성을 지니며, 착용자가 비행하는 동안 내장된 에너지를 이용해 폭죽과 같은 방식으로 앞으로 나아갈 수 있습니다. 겉날개의 내구성에 큰 부담을 주지만, 기존의 모루에서 에테리움으로 수리할 수 있습니다. 이 점은 크게 걱정할 필요가 없습니다.",
+	"book.enigmaticlegacy.entry.enigmatic_elytra.page.3": "그 외에도, 이것은 훨씬 더 선명한 색의 무늬로 덮혀 있어, 그것의 웅장하고 비범한 특징을 나타냅니다.",
+	
+	
+	"book.enigmaticlegacy.entry.ichor_bottle.name": "이코르 병",
+	"book.enigmaticlegacy.entry.ichor_bottle.heading.1": "병",
+	"book.enigmaticlegacy.entry.ichor_bottle.page.1": "소위 \"신의 피\"라고 불리는 이것이 정확히 어디에서 오는지는 아직 해결되지 않은 질문이며, 아마도 그렇게 남겨두는 것이 더 나을 것입니다. 하지만 이제 이것을 마음대로 사용할 수 있게 되었으니, 당신은 신체가 난해한 에너지를 전달하는 능력을 증가시키기 위해 그것을 소비할 수 있고, 당신이 어떤 식으로든 당신의 능력을 확장시키는 소중한 부적들 중 하나를 더 갖추게 할 수 있습니다.",
+	"book.enigmaticlegacy.entry.ichor_bottle.page.2": "이렇게 희귀한 유물은 찾기 거의 불가능하며, 어떻게 해서 손에 쥐게 되었는지 궁금하지 않을 수 없습니다. 당신의 신성한 본성에 이끌린 것인지, 아니면 어떤 더 큰 힘에 의해 이끌린 것일지도?..",
+	
+	
+	"book.enigmaticlegacy.entry.architect_eye.name": "불가해한 눈",
+	"book.enigmaticlegacy.entry.architect_eye.heading.1": "눈",
+	"book.enigmaticlegacy.entry.architect_eye.page.1": "보물과 잡동사니 더미 속에서 예상치 못한 발견으로 이 눈은 눈에 띄는 괴상한 모습으로 여러분의 주의를 즉시 사로잡았습니다. 당신은 호기심의 유혹을 뿌리칠 수 없었고, 적어도 수 세기 동안, 그리고 어쩌면 수천 년 동안 지속된 잠에서 그것을 깨우기로 선택했습니다. 눈의 창조자는 곧 여러분에게 자신을 알렸습니다. 그리고 이제 그는 여러분이 이 세상에 있다는 것을 알고 있습니다.",
+	"book.enigmaticlegacy.entry.architect_eye.page.2": "그 눈은 더 이상 그에게 필요하지 않습니다. 그는 그 이후로 당신의 발자취를 따라가며, 때때로 여러 가지 일을 이야기하고자 합니다. 지금까지의 의사소통은 완전히 일방적이어서, 그가 무엇인지, 그리고 그가 당신의 일거수일투족을 세심하게 고려하는 데에 어떤 동기를 가지고 있는지 알아내기가 어려웠습니다.",
+	"book.enigmaticlegacy.entry.architect_eye.page.3": "확실히 말할 수 있는 것은 그가 당신이 현재 살고 있는 세계와 당신 같은 더 높은 존재에게도 낯선 사람이 아니라는 것입니다. 확실히 그는 이 땅을 직접 걸어본 적이 있지만, 그가 과거 역사에 얼마나 관여했는지는 아직 미스터리로 남아 있습니다. 그가 지금 어디에 있는지, 왜 그가 여러분에게 말하기를 선택했는지, 그리고 그가 당신의 여정에 어떤 기대를 걸고 있는지와 같은 것들 말입니다.",
+	"book.enigmaticlegacy.entry.architect_eye.page.4": "지금으로서는 그가 원하는 답을 제때에 제공해 주기를 바랄 수밖에 없습니다.",
 	
 	
 
