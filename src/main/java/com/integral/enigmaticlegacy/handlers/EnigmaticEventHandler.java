@@ -1938,7 +1938,7 @@ public class EnigmaticEventHandler {
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void endEntityHurt(LivingHurtEvent event) {
 		if (event.getEntity() instanceof ServerPlayer player && event.getSource().getEntity() != null) {
-			if (event.getAmount() > theCube.getDamageLimit(player)) {
+			if (event.getAmount() > theCube.getDamageLimit(player) && SuperpositionHandler.hasCurio(player, theCube)) {
 				event.setCanceled(true);
 				player.level.playSound(null, player.blockPosition(), SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1F, 1F);
 
