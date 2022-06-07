@@ -51,7 +51,9 @@ import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketUpdateCompass;
 import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Pair;
+import com.mojang.math.Matrix4f;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.world.level.block.state.BlockState;
@@ -60,6 +62,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.ParticleStatus;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -132,6 +136,7 @@ import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModList;
@@ -1860,6 +1865,53 @@ public class SuperpositionHandler {
 		}
 
 		return new String(hexChars);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public static void renderInsigniaNameplate(Entity entity, Component name, PoseStack stack, MultiBufferSource buffer,
+			int packedLight, EntityRenderDispatcher entityRenderDispatcher, Font font) {
+		double d0 = entityRenderDispatcher.distanceToSqr(entity);
+
+		if (ForgeHooksClient.isNameplateInRenderDistance(entity, d0)) {
+			boolean discrete = !entity.isDiscrete();
+			float f = entity.getBbHeight() + 0.5F;
+			int i = 0;
+			stack.pushPose();
+			stack.translate(0.0D, f, 0.0D);
+			stack.mulPose(entityRenderDispatcher.cameraOrientation());
+			stack.scale(-0.025F, -0.025F, 0.025F);
+			Matrix4f matrix4f = stack.last().pose();
+			float f1 = Minecraft.getInstance().options.getBackgroundOpacity(0.25F);
+			int j = (int)(f1 * 255.0F) << 24;
+			float f2 = -font.width(name) / 2;
+
+			font.drawInBatch(name, f2, i, 553648127, false, matrix4f, buffer, discrete, j, packedLight);
+
+			if (discrete) {
+				font.drawInBatch(name, f2, i, -1, false, matrix4f, buffer, false, 0, packedLight);
+			}
+
+			if (entity != Minecraft.getInstance().player
+					&& EnigmaticLegacy.insignia.canSeeTrueName(Minecraft.getInstance().player)) {
+				stack.pushPose();
+				name = new TextComponent("(" + entity.getDisplayName().getString() + ")");
+				f2 = -font.width(name) / 2;
+
+				float scale = 0.4F;
+				int offset = (int) (-10 * (1.0F / scale));
+				stack.scale(scale, scale, scale);
+				matrix4f = stack.last().pose();
+
+				font.drawInBatch(name, f2, i - offset, 553648127, false, matrix4f, buffer, discrete, j, packedLight);
+
+				if (discrete) {
+					font.drawInBatch(name, f2, i - offset, -1, false, matrix4f, buffer, false, 0, packedLight);
+				}
+				stack.popPose();
+			}
+
+			stack.popPose();
+		}
 	}
 
 }

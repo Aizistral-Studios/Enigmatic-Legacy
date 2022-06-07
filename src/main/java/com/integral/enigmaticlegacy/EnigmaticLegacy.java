@@ -104,6 +104,7 @@ import com.integral.enigmaticlegacy.items.HunterGuide;
 import com.integral.enigmaticlegacy.items.IchorBottle;
 import com.integral.enigmaticlegacy.items.InfernalShield;
 import com.integral.enigmaticlegacy.items.Infinimeal;
+import com.integral.enigmaticlegacy.items.Insignia;
 import com.integral.enigmaticlegacy.items.IronRing;
 import com.integral.enigmaticlegacy.items.LivingFlame;
 import com.integral.enigmaticlegacy.items.LootGenerator;
@@ -233,6 +234,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.NameTagItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -445,6 +447,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Inscrutable Eye") public static ArchitectEye architectEye;
 	@ConfigurableItem("Bottle of Ichor") public static IchorBottle ichorBottle;
 	@ConfigurableItem("") public static QuotePlayer quotePlayer;
+	@ConfigurableItem("Charming Insignia") public static Insignia insignia;
 
 	@ConfigurableItem("Cosmic Scroll")
 	public static Item cosmicScroll;
@@ -934,6 +937,7 @@ public class EnigmaticLegacy {
 			architectEye = new ArchitectEye();
 			ichorBottle = new IchorBottle();
 			quotePlayer = new QuotePlayer();
+			insignia = new Insignia();
 
 			spellstoneList = Lists.newArrayList(
 					angelBlessing,
@@ -1064,6 +1068,7 @@ public class EnigmaticLegacy {
 					architectEye,
 					ichorBottle,
 					quotePlayer,
+					insignia,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),

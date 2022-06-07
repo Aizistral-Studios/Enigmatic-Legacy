@@ -107,6 +107,7 @@
 	"item.enigmaticlegacy.architect_eye_active": "Inscrutable Eye",
 	"item.enigmaticlegacy.ichor_bottle": "Bottle of Ichor",
 	"item.enigmaticlegacy.quote_player": "Quote Player",
+	"item.enigmaticlegacy.insignia": "Charming Insignia",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -961,6 +962,7 @@
 	"tooltip.enigmaticlegacy.architectEyeAwakened3": "§5need it in order to reach you. Whether he is incapable",
 	"tooltip.enigmaticlegacy.architectEyeAwakened4": "§5or simply unwilling to establish any contact beyond",
 	"tooltip.enigmaticlegacy.architectEyeAwakened5": "§5mental remains a mystery.",
+	"tooltip.enigmaticlegacy.architectEyeAwakened6": "§5Reveals true name of players with §6Charming Insignia.",
 
 	"tooltip.enigmaticlegacy.enigmaticElytra1": "§5Hold jump key while flying to continuously",
 	"tooltip.enigmaticlegacy.enigmaticElytra2": "§5accelerate forward. Elytra is damaged",
@@ -973,6 +975,13 @@
 	"tooltip.enigmaticlegacy.quotePlayer2": "§5Press §6Shift+Right-Click§5 to cycle through",
 	"tooltip.enigmaticlegacy.quotePlayer3": "§5available quotes.",
 	"tooltip.enigmaticlegacy.quotePlayerSelection": "§dCurrent Quote: §6%1$s",
+	
+	"tooltip.enigmaticlegacy.insignia1": "§5Replaces your nametag if renamed in §6Anvil.",
+	"tooltip.enigmaticlegacy.insignia2": "§5Allows you to see your own nametag.",
+	"tooltip.enigmaticlegacy.insignia3": "§6Shift+Right-Click§5 when holding to toggle this.",
+	"tooltip.enigmaticlegacy.insigniaTagDisplayEnabled": "§dSelf-Visible Nametag: §6Enabled",
+	"tooltip.enigmaticlegacy.insigniaTagDisplayDisabled": "§dSelf-Visible Nametag: §6Disabled",
+	"tooltip.enigmaticlegacy.insigniaName": "§dEngraved Name: %1$s",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",

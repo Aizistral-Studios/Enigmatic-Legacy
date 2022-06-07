@@ -256,6 +256,7 @@ import net.minecraftforge.client.event.ClientPlayerNetworkEvent.LoggedInEvent;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderNameplateEvent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.common.MinecraftForge;
@@ -357,6 +358,33 @@ public class EnigmaticEventHandler {
 	public static boolean isApplyingNightVision = false;
 	private static boolean handlingTooltip = false;
 	private long clientWorldTicks = 0;
+
+
+	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
+	public void renderNameplate(RenderNameplateEvent event) {
+		if (event.getEntity() == Minecraft.getInstance().player) {
+			Player player = Minecraft.getInstance().player;
+			ItemStack insignia = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.insignia);
+
+			if (insignia != null && ItemNBTHelper.getBoolean(insignia, "tagDisplayEnabled", true)) {
+				event.setResult(Result.ALLOW);
+			}
+		}
+
+		//		try {
+		//			if (event.getEntity() == Minecraft.getInstance().player) {
+		//				for (StackTraceElement element : Thread.currentThread().getStackTrace()) {
+		//					if (element.getClassName().equals("net.minecraft.client.gui.screens.inventory.InventoryScreen")) {
+		//						event.setResult(Result.ALLOW);
+		//						break;
+		//					}
+		//				}
+		//			}
+		//		} catch (Exception ex) {
+		//			// NO-OP
+		//		}
+	}
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)

@@ -30,7 +30,8 @@
 	"MixinAutomaticRecipeUnlockModule",
 	"MixinEnderEyeItem",
 	"MixinSummonedEntityTrigger",
-	"MixinEnterBlockTrigger"
+	"MixinEnterBlockTrigger",
+	"MixinItemStack"
   ],
   "client": [
 	"MixinForgeHooksClient",
@@ -39,7 +40,8 @@
 	"MixinAttributeTooltips",
 	"MixinItemRenderer",
 	"MixinTooltipOverlayHandler",
-	"MixinMiniInventoryButton"
+	"MixinMiniInventoryButton",
+	"MixinEntityRenderer"
   ],
   "injectors": {
     "defaultRequire": 1
