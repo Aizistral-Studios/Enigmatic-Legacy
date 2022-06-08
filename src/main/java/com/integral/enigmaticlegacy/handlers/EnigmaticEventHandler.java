@@ -2914,6 +2914,17 @@ public class EnigmaticEventHandler {
 				modified.addPool(endLiterature);
 			}
 			event.setTable(modified);
+		} else if (event.getName().equals(BuiltInLootTables.DESERT_PYRAMID)) {
+			LootPool epic = SuperpositionHandler.constructLootPool("specialpyramidloot", -7, 1F,
+					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.insignia, 100)
+					);
+
+			LootTable modified = event.getTable();
+			modified.addPool(epic);
+			if (endLiterature != null) {
+				modified.addPool(endLiterature);
+			}
+			event.setTable(modified);
 		}
 
 		/*
