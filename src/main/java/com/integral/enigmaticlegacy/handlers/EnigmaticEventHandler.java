@@ -234,6 +234,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.ServerRecipeBook;
@@ -247,6 +248,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
@@ -1247,8 +1249,15 @@ public class EnigmaticEventHandler {
 				}
 			}
 
-			if (player.isSleeping() && player.getSleepTimer() > 90 && SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing)) {
-				player.sleepCounter = 90;
+			if (player.isSleeping() && SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing)) {
+				if (player.getSleepTimer() == 5) {
+					if (player instanceof ServerPlayer) {
+						player.sendMessage(new TranslatableComponent("message.enigmaticlegacy.cursed_sleep")
+								.withStyle(ChatFormatting.RED), Util.NIL_UUID);
+					}
+				} else if (player.getSleepTimer() > 90) {
+					player.sleepCounter = 90;
+				}
 			}
 
 			if (player.isOnFire() && SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing)) {
