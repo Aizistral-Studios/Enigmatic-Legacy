@@ -5,4 +5,5 @@
 - [x] Make The Architect's Favor separate from the main mod and include it under different license terms;
 - [ ] Make the path to obtaining The Architect's Favor less illuminated;
 - [ ] Make Soul Crystals pickup-able for everyone, regardless of who they were dropped by, with some way to obtain them in an item form;
-- [ ] Reconsiider playtime accounting mechanism for Ring of the Seven Curses.
+- [ ] Reconsiider playtime accounting mechanism for Ring of the Seven Curses;
+- [ ] Rename `architect_eye` to `enigmatic_eye`.
