@@ -130,6 +130,8 @@ import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.commands.CommandSourceStack;
@@ -391,13 +393,23 @@ public class EnigmaticEventHandler {
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onTooltip(ItemTooltipEvent event) {
-		if (event.getPlayer() != null && event.getItemStack().is(cursedRing)) {
-			if (CursedRing.concealAbilities.getValue() &&
-					!SuperpositionHandler.hasCurio(event.getPlayer(), cursedRing)) {
-				event.getToolTip().replaceAll(component -> {
-					return new TextComponent(SuperpositionHandler.obscureString(component.getString()))
-							.withStyle(component.getStyle());
-				});
+		if (event.getPlayer() != null) {
+			if (event.getItemStack().is(cursedRing)) {
+				if (CursedRing.concealAbilities.getValue() && !SuperpositionHandler.isTheCursedOne(event.getPlayer())) {
+					SuperpositionHandler.obscureTooltip(event.getToolTip());
+				}
+			} else if (event.getItemStack().getItem() instanceof ICursed) {
+				if (!SuperpositionHandler.isTheCursedOne(event.getPlayer())) {
+					event.getToolTip().replaceAll(component -> {
+						if (component instanceof TranslatableComponent loc) {
+							if (loc.getKey().startsWith("tooltip.enigmaticlegacy.cursedOnesOnly"))
+								return loc;
+						}
+
+						return new TextComponent(SuperpositionHandler.obscureString(component.getString()))
+								.withStyle(component.getStyle());
+					});
+				}
 			}
 		}
 	}

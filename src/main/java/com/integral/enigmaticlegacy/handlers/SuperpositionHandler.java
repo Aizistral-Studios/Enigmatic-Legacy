@@ -1819,6 +1819,12 @@ public class SuperpositionHandler {
 	}
 
 	@OnlyIn(Dist.CLIENT)
+	public static void obscureTooltip(List<Component> tooltip) {
+		tooltip.replaceAll(component -> new TextComponent(obscureString(component.getString()))
+				.withStyle(component.getStyle()));
+	}
+
+	@OnlyIn(Dist.CLIENT)
 	public static String[] wrapString(String string, Font font, int width) {
 		var list = font.getSplitter().splitLines(string, width, Style.EMPTY);
 		String[] lines = new String[list.size()];
