@@ -964,7 +964,7 @@
 	"tooltip.enigmaticlegacy.architectEyeAwakened3": "§5need it in order to reach you. Whether he is incapable",
 	"tooltip.enigmaticlegacy.architectEyeAwakened4": "§5or simply unwilling to establish any contact beyond",
 	"tooltip.enigmaticlegacy.architectEyeAwakened5": "§5mental remains a mystery.",
-	"tooltip.enigmaticlegacy.architectEyeAwakened6": "§5Reveals true name of players with §6Charming Insignia.",
+	"tooltip.enigmaticlegacy.architectEyeAwakened6": "§5Reveals true name of players bearing §6Charming Insignia.",
 
 	"tooltip.enigmaticlegacy.enigmaticElytra1": "§5Hold jump key while flying to continuously",
 	"tooltip.enigmaticlegacy.enigmaticElytra2": "§5accelerate forward. Elytra is damaged",
@@ -1773,6 +1773,12 @@
 	"book.enigmaticlegacy.entry.architect_eye.page.2": "made himself known to you, and now that he is aware of your presence in this world - the eye itself is no longer necessary for him to observe and speak to you. He follows your footsteps since, remarking on things now and then. So far communication between you remains entirely unilateral, and thus it is hard",
 	"book.enigmaticlegacy.entry.architect_eye.page.3": "to establish what he is, and what motive he has to scrupulously contemplate your every move.<br2/>What can be said for sure is that he is no stranger to the world you currently inhabit, nor to higher beings such as you. Most certainly he once walked these lands himself, but extent of his participation in their past history remains a mystery yet. Much as where he is now, why he have chosen to speak to you, and what",
 	"book.enigmaticlegacy.entry.architect_eye.page.4": "expectations he places upon your journey.<br2/>For now, you can only hope that in time he will supply you with desired answers.",
+	
+	
+	"book.enigmaticlegacy.entry.insignia.name": "Charming Insignia",
+	"book.enigmaticlegacy.entry.insignia.page.1": "Althouh this little trinket will not afford you increased strength, speed or will - there is more to it than appears at first glance. It allows you to conceal your name in the eyes of other demigods, and replace it with the one of your liking. Conveniently, it does not reduce the amount of other charms you can bear beside it.<br2/>The obvious way to make use",
+	"book.enigmaticlegacy.entry.insignia.page.2": "of it would be deception, but potential here is unfortunately limited, as insignia will only affect the name others see when they observe you in person. Besides, those who possess or are connected with certain godlike powers may",
+	"book.enigmaticlegacy.entry.insignia.page.3": "still be able to recognize your true name.<br2/>Another way is to distinguish yourself. This is where opportunities are limitless, especially considering that fancy colors and styles The Architect's Inkwell is known to be capable of producing are fully applicable to the alternative name you can engrave upon your insignia.",
 	
 	
 	"book.enigmaticlegacy.landing_text": "In front of you lies the well of great knowledge, a place where some of this world's greatest mysteries belong, scrupulously researched and carefully catalogized.<br2/>As your journey continues and the world reveals itself to you, you may revisit and behold knowledge you gathered within these pages."

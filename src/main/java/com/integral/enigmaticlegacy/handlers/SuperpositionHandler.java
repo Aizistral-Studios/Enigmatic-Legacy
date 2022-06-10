@@ -1879,6 +1879,15 @@ public class SuperpositionHandler {
 		double d0 = entityRenderDispatcher.distanceToSqr(entity);
 
 		if (ForgeHooksClient.isNameplateInRenderDistance(entity, d0)) {
+			boolean render = font.width(name) > 0;
+			boolean override = false;
+
+			if (!render && entity != Minecraft.getInstance().player
+					&& EnigmaticLegacy.insignia.canSeeTrueName(Minecraft.getInstance().player)) {
+				name = entity.getDisplayName();
+				render = override = true;
+			}
+
 			boolean discrete = !entity.isDiscrete();
 			float f = entity.getBbHeight() + 0.5F;
 			int i = 0;
@@ -1891,13 +1900,15 @@ public class SuperpositionHandler {
 			int j = (int)(f1 * 255.0F) << 24;
 			float f2 = -font.width(name) / 2;
 
-			font.drawInBatch(name, f2, i, 553648127, false, matrix4f, buffer, discrete, j, packedLight);
+			if (render) {
+				font.drawInBatch(name, f2, i, 553648127, false, matrix4f, buffer, discrete, j, packedLight);
 
-			if (discrete) {
-				font.drawInBatch(name, f2, i, -1, false, matrix4f, buffer, false, 0, packedLight);
+				if (discrete) {
+					font.drawInBatch(name, f2, i, -1, false, matrix4f, buffer, false, 0, packedLight);
+				}
 			}
 
-			if (entity != Minecraft.getInstance().player
+			if (!override && entity != Minecraft.getInstance().player
 					&& EnigmaticLegacy.insignia.canSeeTrueName(Minecraft.getInstance().player)) {
 				stack.pushPose();
 				name = new TextComponent("(" + entity.getDisplayName().getString() + ")");
