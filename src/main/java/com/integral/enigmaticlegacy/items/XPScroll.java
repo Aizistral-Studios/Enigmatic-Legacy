@@ -116,9 +116,7 @@ public class XPScroll extends ItemBaseCurio {
 	}
 
 	public void trigger(Level world, ItemStack stack, Player player, InteractionHand hand, boolean swing) {
-
 		if (!player.isCrouching()) {
-
 			if (ItemNBTHelper.getBoolean(stack, "AbsorptionMode", true)) {
 				ItemNBTHelper.setBoolean(stack, "AbsorptionMode", false);
 				world.playSound(null, player.blockPosition(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
@@ -158,29 +156,27 @@ public class XPScroll extends ItemBaseCurio {
 
 		Player player = (Player) context.entity();
 		Level world = player.level;
+		int xpPortion = this.getXPPortion(player);
 
 		if (ItemNBTHelper.getBoolean(itemstack, "AbsorptionMode", true)) {
-
-			if (ExperienceHelper.getPlayerXP(player) >= this.xpPortion) {
-				ExperienceHelper.drainPlayerXP(player, this.xpPortion);
-				ItemNBTHelper.setInt(itemstack, "XPStored", ItemNBTHelper.getInt(itemstack, "XPStored", 0) + this.xpPortion);
-			} else if (ExperienceHelper.getPlayerXP(player) > 0 & ExperienceHelper.getPlayerXP(player) < this.xpPortion) {
+			if (ExperienceHelper.getPlayerXP(player) >= xpPortion) {
+				ExperienceHelper.drainPlayerXP(player, xpPortion);
+				ItemNBTHelper.setInt(itemstack, "XPStored", ItemNBTHelper.getInt(itemstack, "XPStored", 0) + xpPortion);
+			} else if (ExperienceHelper.getPlayerXP(player) > 0 & ExperienceHelper.getPlayerXP(player) < xpPortion) {
 				int exp = ExperienceHelper.getPlayerXP(player);
 				ExperienceHelper.drainPlayerXP(player, exp);
 				ItemNBTHelper.setInt(itemstack, "XPStored", ItemNBTHelper.getInt(itemstack, "XPStored", 0) + exp);
 			}
-
 		} else {
 			int xp = ItemNBTHelper.getInt(itemstack, "XPStored", 0);
 
-			if (xp >= this.xpPortion) {
-				ItemNBTHelper.setInt(itemstack, "XPStored", xp - this.xpPortion);
-				ExperienceHelper.addPlayerXP(player, this.xpPortion);
-			} else if (xp > 0 & xp < this.xpPortion) {
+			if (xp >= xpPortion) {
+				ItemNBTHelper.setInt(itemstack, "XPStored", xp - xpPortion);
+				ExperienceHelper.addPlayerXP(player, xpPortion);
+			} else if (xp > 0 & xp < xpPortion) {
 				ItemNBTHelper.setInt(itemstack, "XPStored", 0);
 				ExperienceHelper.addPlayerXP(player, xp);
 			}
-
 		}
 
 		List<ExperienceOrb> orbs = world.getEntitiesOfClass(ExperienceOrb.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, xpCollectionRange.getValue()));
@@ -198,6 +194,22 @@ public class XPScroll extends ItemBaseCurio {
 	@Override
 	public boolean canEquipFromUse(SlotContext context, ItemStack stack) {
 		return false;
+	}
+
+	private int getXPPortion(Player player) {
+		int level = ExperienceHelper.getPlayerXPLevel(player);
+		int levelXP = ExperienceHelper.getExperienceForLevel(level + 1)
+				- ExperienceHelper.getExperienceForLevel(level);
+		int portion = levelXP / 5;
+
+		if (level > 100) {
+			portion *= 1 + level / 100;
+		}
+
+		if (portion > 0)
+			return portion;
+		else
+			return this.xpPortion;
 	}
 
 }
