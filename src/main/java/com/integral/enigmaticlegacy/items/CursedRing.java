@@ -74,6 +74,7 @@ public class CursedRing extends ItemBaseCurio {
 	public static Omniconfig.BooleanParameter saveTheBees;
 	public static Omniconfig.BooleanParameter enableSpecialDrops;
 	public static Omniconfig.BooleanParameter enableLore;
+	public static Omniconfig.BooleanParameter concealAbilities;
 
 	public static Omniconfig.BooleanParameter ultraHardcore;
 	public static Omniconfig.BooleanParameter autoEquip;
@@ -92,6 +93,10 @@ public class CursedRing extends ItemBaseCurio {
 					.comment("Set to false to disable displaying lore on Ring of the Seven Curses. Useful if you are a modpack"
 							+ " developer wanting to have your own.")
 					.getBoolean("DisplayLore", true);
+			concealAbilities = builder
+					.comment("If true, tooltip of Ring of the Seven Curses cannot be read before it is equipped. Fun way to"
+							+ " teach players that not every mystery is worth investigating.")
+					.getBoolean("ConcealAbilities", false);
 		} else {
 			painMultiplier = builder
 					.comment("Defines how much damage bearers of the ring receive from any source. Measured as percentage.")

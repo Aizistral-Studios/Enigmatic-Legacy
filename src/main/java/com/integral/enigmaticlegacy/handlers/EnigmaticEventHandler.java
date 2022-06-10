@@ -388,6 +388,20 @@ public class EnigmaticEventHandler {
 		//		}
 	}
 
+	@OnlyIn(Dist.CLIENT)
+	@SubscribeEvent(priority = EventPriority.LOWEST)
+	public void onTooltip(ItemTooltipEvent event) {
+		if (event.getPlayer() != null && event.getItemStack().is(cursedRing)) {
+			if (CursedRing.concealAbilities.getValue() &&
+					!SuperpositionHandler.hasCurio(event.getPlayer(), cursedRing)) {
+				event.getToolTip().replaceAll(component -> {
+					return new TextComponent(SuperpositionHandler.obscureString(component.getString()))
+							.withStyle(component.getStyle());
+				});
+			}
+		}
+	}
+
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void renderCape(RenderCapeEvent event) {
