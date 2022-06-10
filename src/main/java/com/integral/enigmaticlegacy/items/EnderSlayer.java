@@ -111,6 +111,7 @@ public class EnderSlayer extends SwordItem implements ICursed {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enderSlayer10");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enderSlayer11");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enderSlayer12");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enderSlayer13");
 		} else {
 			String stackName = stack.getDisplayName().getString();
 

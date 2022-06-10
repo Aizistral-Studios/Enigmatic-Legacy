@@ -2052,6 +2052,8 @@ public class EnigmaticEventHandler {
 			if (player instanceof ServerPlayer && SuperpositionHandler.isTheCursedOne(player)) {
 				if (event.getEntityLiving() instanceof ServerPlayer targetPlayer) {
 					targetPlayer.getCooldowns().addCooldown(Items.ENDER_PEARL, 400);
+					targetPlayer.getCooldowns().addCooldown(recallPotion, 400);
+					targetPlayer.getCooldowns().addCooldown(darkMirror, 400);
 
 					if (SuperpositionHandler.hasCurio(targetPlayer, EnigmaticLegacy.eyeOfNebula)
 							|| SuperpositionHandler.hasCurio(targetPlayer, EnigmaticLegacy.theCube)) {
