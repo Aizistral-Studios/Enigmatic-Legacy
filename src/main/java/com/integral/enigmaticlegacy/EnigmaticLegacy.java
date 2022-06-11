@@ -24,7 +24,9 @@ import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.blocks.BlockAstralDust;
 import com.integral.enigmaticlegacy.blocks.BlockBigLamp;
 import com.integral.enigmaticlegacy.blocks.BlockCosmicCake;
+import com.integral.enigmaticlegacy.blocks.BlockEndAnchor;
 import com.integral.enigmaticlegacy.blocks.BlockMassiveLamp;
+import com.integral.enigmaticlegacy.blocks.TileEndAnchor;
 import com.integral.enigmaticlegacy.brewing.SpecialBrewingRecipe;
 import com.integral.enigmaticlegacy.brewing.ValidationBrewingRecipe;
 import com.integral.enigmaticlegacy.client.Quote;
@@ -201,9 +203,11 @@ import com.integral.etherium.items.EtheriumSword;
 import com.integral.omniconfig.packets.PacketSyncOptions;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import com.mojang.blaze3d.platform.ScreenManager;
@@ -248,6 +252,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.stats.StatType;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.datafix.fixes.References;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.TextureStitchEvent;
@@ -273,6 +278,7 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -314,6 +320,7 @@ public class EnigmaticLegacy {
 	public static BlockEtherium etheriumBlock;
 	public static BlockCosmicCake cosmicCake;
 	public static BlockAstralDust astralBlock;
+	public static BlockEndAnchor endAnchor;
 
 	@ConfigurableItem("") public static EnigmaticItem enigmaticItem;
 	@ConfigurableItem("Scroll of Ageless Wisdom") public static XPScroll xpScroll;
@@ -783,6 +790,7 @@ public class EnigmaticLegacy {
 			etheriumBlock = new BlockEtherium(etheriumConfig);
 			cosmicCake = new BlockCosmicCake();
 			astralBlock = new BlockAstralDust();
+			endAnchor = new BlockEndAnchor();
 
 			event.getRegistry().registerAll(
 					massiveLamp,
@@ -793,7 +801,8 @@ public class EnigmaticLegacy {
 					bigRedstonelamp,
 					etheriumBlock,
 					cosmicCake,
-					astralBlock
+					astralBlock,
+					endAnchor
 					);
 
 			logger.info("Blocks registered successfully.");
@@ -1077,7 +1086,8 @@ public class EnigmaticLegacy {
 					new GenericBlockItem(bigRedstonelamp),
 					new CosmicCake(),
 					new GenericBlockItem(astralBlock, GenericBlockItem.getDefaultProperties().rarity(Rarity.EPIC).tab(null)),
-					new GenericBlockItem(etheriumBlock, GenericBlockItem.getDefaultProperties().rarity(Rarity.RARE))
+					new GenericBlockItem(etheriumBlock, GenericBlockItem.getDefaultProperties().rarity(Rarity.RARE)),
+					new GenericBlockItem(endAnchor, GenericBlockItem.getDefaultProperties().rarity(Rarity.EPIC))
 					//,gemOfBinding,wormholePotion
 					);
 
@@ -1225,6 +1235,17 @@ public class EnigmaticLegacy {
 					.build(MODID+":ultimate_wither_skull_entity").setRegistryName(new ResourceLocation(MODID, "ultimate_wither_skull_entity")));
 
 			logger.info("Entities registered successfully.");
+		}
+
+		@SubscribeEvent
+		public static void onTileReigistry(final RegistryEvent.Register<BlockEntityType<?>> event) {
+			logger.info("Initializing tile registration...");
+
+			event.getRegistry().register(BlockEntityType.Builder.<TileEndAnchor>of(TileEndAnchor::new,
+					endAnchor).build(Util.fetchChoiceType(References.BLOCK_ENTITY, MODID + ":tile_end_anchor"))
+					.setRegistryName(new ResourceLocation(MODID, "tile_end_anchor")));
+
+			logger.info("Tile registered successfully.");
 		}
 
 	}

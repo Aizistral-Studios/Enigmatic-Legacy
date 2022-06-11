@@ -14,8 +14,10 @@ import java.util.concurrent.ConcurrentMap;
 
 import com.google.common.collect.MapMaker;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.blocks.TileEndAnchor;
 import com.integral.enigmaticlegacy.client.QuoteHandler;
 import com.integral.enigmaticlegacy.client.fx.PermanentItemPickupParticle;
+import com.integral.enigmaticlegacy.client.renderers.EndAnchorRenderer;
 import com.integral.enigmaticlegacy.client.renderers.EnigmaticElytraLayer;
 import com.integral.enigmaticlegacy.client.renderers.PermanentItemRenderer;
 import com.integral.enigmaticlegacy.client.renderers.UltimateWitherSkullRenderer;
@@ -30,11 +32,15 @@ import com.integral.etherium.client.ShieldAuraLayer;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RespawnAnchorBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.particle.ItemPickupParticle;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.blockentity.TheEndPortalRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
@@ -199,6 +205,8 @@ public class ClientProxy extends CommonProxy {
 
 			return 0;
 		});
+
+		BlockEntityRenderers.register(TileEndAnchor.TYPE, EndAnchorRenderer::new);
 	}
 
 	@Override
