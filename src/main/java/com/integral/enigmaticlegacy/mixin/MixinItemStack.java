@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.items.Insignia;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -17,8 +18,8 @@ public class MixinItemStack {
 	private void onGetHoverName(CallbackInfoReturnable<Component> info) {
 		ItemStack stack = (ItemStack) (Object) this;
 
-		if (stack.is(EnigmaticLegacy.insignia)) {
-			info.setReturnValue(EnigmaticLegacy.insignia.getName(stack));
+		if (stack.getItem() instanceof Insignia) {
+			info.setReturnValue(stack.getItem().getName(stack));
 		}
 	}
 
@@ -26,7 +27,7 @@ public class MixinItemStack {
 	private void onHasCustomHoverName(CallbackInfoReturnable<Boolean> info) {
 		ItemStack stack = (ItemStack) (Object) this;
 
-		if (stack.is(EnigmaticLegacy.insignia)) {
+		if (stack.getItem() instanceof Insignia) {
 			info.setReturnValue(false);
 		}
 	}
