@@ -83,6 +83,7 @@ import com.integral.enigmaticlegacy.items.EarthHeart;
 import com.integral.enigmaticlegacy.items.EldritchAmulet;
 import com.integral.enigmaticlegacy.items.EnchanterPearl;
 import com.integral.enigmaticlegacy.items.EnchantmentTransposer;
+import com.integral.enigmaticlegacy.items.EndAnchor;
 import com.integral.enigmaticlegacy.items.EnderRing;
 import com.integral.enigmaticlegacy.items.EnderSlayer;
 import com.integral.enigmaticlegacy.items.EnigmaticAmulet;
@@ -1087,7 +1088,7 @@ public class EnigmaticLegacy {
 					new CosmicCake(),
 					new GenericBlockItem(astralBlock, GenericBlockItem.getDefaultProperties().rarity(Rarity.EPIC).tab(null)),
 					new GenericBlockItem(etheriumBlock, GenericBlockItem.getDefaultProperties().rarity(Rarity.RARE)),
-					new GenericBlockItem(endAnchor, GenericBlockItem.getDefaultProperties().rarity(Rarity.EPIC))
+					new EndAnchor()
 					//,gemOfBinding,wormholePotion
 					);
 

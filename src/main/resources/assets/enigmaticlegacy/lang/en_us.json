@@ -103,6 +103,7 @@
 	"item.enigmaticlegacy.enigmatic_elytra": "Majestic Elytra",
 	"block.enigmaticlegacy.etherium_block": "Block of Etherium",
 	"block.enigmaticlegacy.cosmic_cake": "The Eternal Cake",
+	"block.enigmaticlegacy.end_anchor": "Dimensional Anchor",
 	"item.enigmaticlegacy.architect_eye_dormant": "Dormant Eye",
 	"item.enigmaticlegacy.architect_eye_active": "Inscrutable Eye",
 	"item.enigmaticlegacy.ichor_bottle": "Bottle of Ichor",
@@ -984,6 +985,13 @@
 	"tooltip.enigmaticlegacy.insigniaTagDisplayEnabled": "§dSelf-Visible Nametag: §6Enabled",
 	"tooltip.enigmaticlegacy.insigniaTagDisplayDisabled": "§dSelf-Visible Nametag: §6Disabled",
 	"tooltip.enigmaticlegacy.insigniaName": "§dEngraved Name: %1$s",
+	
+	"tooltip.enigmaticlegacy.endAnchor1": "§5Works in all dimensions.",
+	"tooltip.enigmaticlegacy.endAnchor1_alt": "§5Works only in §6The End.",
+	"tooltip.enigmaticlegacy.endAnchor1_alt2": "§5Works in most dimensions.",
+	"tooltip.enigmaticlegacy.endAnchor2": "§5Requires §6Ender Pearls§5 to recharge.",
+	"tooltip.enigmaticlegacy.endAnchor3": "§5Has §6%1$s§5 chance to not spend charge",
+	"tooltip.enigmaticlegacy.endAnchor4": "§5upon respawn.",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",

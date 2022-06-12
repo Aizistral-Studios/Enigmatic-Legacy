@@ -35,9 +35,7 @@ public class BlockAstralDust extends Block {
 
 	@Override
 	public List<ItemStack> getDrops(BlockState state, Builder builder) {
-		List<ItemStack> stacklist = new ArrayList<ItemStack>();
-		stacklist.add(new ItemStack(this));
-		return stacklist;
+		return List.of(new ItemStack(this));
 	}
 
 }

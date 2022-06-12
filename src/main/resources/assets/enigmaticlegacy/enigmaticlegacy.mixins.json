@@ -31,7 +31,8 @@
 	"MixinEnderEyeItem",
 	"MixinSummonedEntityTrigger",
 	"MixinEnterBlockTrigger",
-	"MixinItemStack"
+	"MixinItemStack",
+	"MixinPlayerList"
   ],
   "client": [
 	"MixinForgeHooksClient",

@@ -43,11 +43,7 @@ public class BlockBigLamp extends LanternBlock {
 
 	@Override
 	public List<ItemStack> getDrops(BlockState state, Builder builder) {
-		List<ItemStack> stacklist = new ArrayList<ItemStack>();
-		stacklist.add(new ItemStack(Item.byBlock(this)));
-		return stacklist;
+		return List.of(new ItemStack(this));
 	}
-
-
 
 }
