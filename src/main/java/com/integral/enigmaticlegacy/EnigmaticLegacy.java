@@ -156,6 +156,7 @@ import com.integral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketGenericParticleEffect;
 import com.integral.enigmaticlegacy.packets.clients.PacketHandleItemPickup;
 import com.integral.enigmaticlegacy.packets.clients.PacketPatchouliForce;
+import com.integral.enigmaticlegacy.packets.clients.PacketPermadeath;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayQuote;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerRotations;
@@ -658,6 +659,7 @@ public class EnigmaticLegacy {
 		packetInstance.registerMessage(28, PacketUpdateCompass.class, PacketUpdateCompass::encode, PacketUpdateCompass::decode, PacketUpdateCompass::handle);
 		packetInstance.registerMessage(29, PacketPlayQuote.class, PacketPlayQuote::encode, PacketPlayQuote::decode, PacketPlayQuote::handle);
 		packetInstance.registerMessage(30, PacketUpdateElytraBoosting.class, PacketUpdateElytraBoosting::encode, PacketUpdateElytraBoosting::decode, PacketUpdateElytraBoosting::handle);
+		packetInstance.registerMessage(31, PacketPermadeath.class, PacketPermadeath::encode, PacketPermadeath::decode, PacketPermadeath::handle);
 
 		logger.info("Registering triggers...");
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);

@@ -35,6 +35,7 @@
 	"MixinPlayerList"
   ],
   "client": [
+	"AccessorDisconnectedScreen",
 	"MixinForgeHooksClient",
 	"MixinGuiBookLanding",
 	"MixinBookTextRenderer",

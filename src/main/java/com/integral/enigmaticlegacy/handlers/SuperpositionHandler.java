@@ -65,6 +65,7 @@ import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.ParticleStatus;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.screens.DisconnectedScreen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
@@ -1337,7 +1338,6 @@ public class SuperpositionHandler {
 		else {
 			int timeWithRing = EnigmaticLegacy.proxy.getTimeWithCurses(player);
 			int timeWithoutRing = EnigmaticLegacy.proxy.getTimeWithoutCurses(player);
-
 			if (timeWithRing <= 0)
 				return "0%";
 			else if (timeWithoutRing <= 0)

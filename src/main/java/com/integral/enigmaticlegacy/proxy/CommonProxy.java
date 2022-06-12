@@ -35,6 +35,10 @@ public class CommonProxy {
 		this.cursesTimeCache = new WeakHashMap<>();
 	}
 
+	public void displayPermadeathScreen() {
+		// NO-OP
+	}
+
 	public void clearTransientData() {
 		this.commonTransientPlayerData.clear();
 		this.cursesTimeCache.clear();

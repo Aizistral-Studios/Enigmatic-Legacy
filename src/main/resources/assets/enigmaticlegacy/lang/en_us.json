@@ -242,7 +242,7 @@
 	"tooltip.enigmaticlegacy.currentKeybind": "§6Current Keybind: §d%1$s",
 	"tooltip.enigmaticlegacy.seconds": "seconds",
 	"death.attack.darkness": "%1$s was devoured by darkness",
-	"message.enigmaticlegacy.permadeath": "In attempting the feat one proves their courage. May your fractured soul at last find rest.",
+	"message.enigmaticlegacy.permadeath": "In attempting the feat one proves their courage.\nMay your fractured soul at last find rest.",
 	"message.enigmaticlegacy.cursed_sleep": "Seven Curses awaken unspeakable fear and gnawing uncertainty within as you approach the tempting realm of dreams. No hope for the hopeless, no sleep for the sleepless...",
 	"message.enigmaticlegacy.gen_sim_complete": "Estimated generation complete in §632768§5 instances; check §6latest.log§5 file to see the results.",
 	"message.enigmaticlegacy.animal_analysis_complete": "Entity registry analysis is complete; check §6latest.log§5 file to see the results.",
@@ -250,6 +250,7 @@
 	"status.enigmaticlegacy.outdated": "New version of §6Enigmatic Legacy§5 was established: %1$s. You must behold its greatness!",
 	"status.enigmaticlegacy.noconnection": "Enigmatic Legacy was unable to check for updates.",
 	"world.enigmaticlegacy.name": "World #",
+	"gui.enigmaticlegacy.toWorldList": "Back to World List",
 	
 	"enigmaticlegacy.toasts.slotUnlocked.title": "%1$s are unlocked!",
 	"enigmaticlegacy.toasts.slotUnlocked.text1": "You can now equip them",

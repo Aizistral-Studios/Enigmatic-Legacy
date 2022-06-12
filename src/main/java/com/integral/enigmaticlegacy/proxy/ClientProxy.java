@@ -24,6 +24,7 @@ import com.integral.enigmaticlegacy.client.renderers.UltimateWitherSkullRenderer
 import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
+import com.integral.enigmaticlegacy.gui.PermadeathScreen;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.objects.RevelationTomeToast;
@@ -35,6 +36,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RespawnAnchorBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
+import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
+import net.minecraft.client.gui.screens.PauseScreen;
+import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.particle.ItemPickupParticle;
 import net.minecraft.client.player.LocalPlayer;
@@ -57,6 +62,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -90,6 +97,23 @@ public class ClientProxy extends CommonProxy {
 		modBus.addListener(this::onClientSetup);
 
 		MinecraftForge.EVENT_BUS.register(QuoteHandler.INSTANCE);
+	}
+
+	@Override
+	public void displayPermadeathScreen() {
+		boolean local = Minecraft.getInstance().isLocalServer();
+		Minecraft.getInstance().level.disconnect();
+
+		if (local) {
+			Minecraft.getInstance().clearLevel(new GenericDirtMessageScreen(new TranslatableComponent("menu.savingLevel")));
+		} else {
+			Minecraft.getInstance().clearLevel();
+		}
+
+		PermadeathScreen permadeath = new PermadeathScreen(new SelectWorldScreen(new TitleScreen()),
+				new TextComponent("The End"), new TranslatableComponent("message.enigmaticlegacy.permadeath"));
+		PermadeathScreen.active = permadeath;
+		Minecraft.getInstance().setScreen(permadeath);
 	}
 
 	@Override

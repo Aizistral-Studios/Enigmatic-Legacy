@@ -41,6 +41,7 @@ import com.integral.enigmaticlegacy.enchantments.CeaselessEnchantment;
 import com.integral.enigmaticlegacy.config.JsonConfigHandler;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.gui.EnderChestInventoryButton;
+import com.integral.enigmaticlegacy.gui.PermadeathScreen;
 import com.integral.enigmaticlegacy.gui.ToggleMagnetEffectsButton;
 import com.integral.enigmaticlegacy.helpers.BlueSkiesHelper;
 import com.integral.enigmaticlegacy.helpers.CrossbowHelper;
@@ -75,6 +76,7 @@ import com.integral.enigmaticlegacy.items.VoidPearl;
 import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.integral.enigmaticlegacy.mixin.AccessorAbstractArrowEntity;
 import com.integral.enigmaticlegacy.mixin.AccessorAdvancementCommands;
+import com.integral.enigmaticlegacy.mixin.AccessorDisconnectedScreen;
 import com.integral.enigmaticlegacy.objects.CooldownMap;
 import com.integral.enigmaticlegacy.objects.DamageSourceNemesisCurse;
 import com.integral.enigmaticlegacy.objects.DimensionalPosition;
@@ -86,6 +88,7 @@ import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketCosmicRevive;
 import com.integral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
 import com.integral.enigmaticlegacy.packets.clients.PacketPatchouliForce;
+import com.integral.enigmaticlegacy.packets.clients.PacketPermadeath;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketSetEntryState;
@@ -121,8 +124,10 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.toasts.Toast;
+import net.minecraft.client.gui.screens.DisconnectedScreen;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.inventory.AnvilScreen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
@@ -130,6 +135,7 @@ import net.minecraft.client.gui.screens.inventory.EnchantmentScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
+import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -1181,7 +1187,10 @@ public class EnigmaticEventHandler {
 	public void onPlayerTick(LivingEvent.LivingUpdateEvent event) {
 		if (event.getEntityLiving() instanceof ServerPlayer player) {
 			if (SuperpositionHandler.isPermanentlyDead(player)) {
-				player.connection.disconnect(new TranslatableComponent("message.enigmaticlegacy.permadeath"));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player),
+						new PacketPermadeath());
+				//player.connection.disconnect(new TranslatableComponent("message.enigmaticlegacy.permadeath")
+				//		.withStyle(ChatFormatting.RED));
 			}
 		}
 
@@ -2742,7 +2751,10 @@ public class EnigmaticEventHandler {
 			}
 
 			if (SuperpositionHandler.isPermanentlyDead(player)) {
-				player.connection.disconnect(new TranslatableComponent("message.enigmaticlegacy.permadeath"));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player),
+						new PacketPermadeath());
+				//player.connection.disconnect(new TranslatableComponent("message.enigmaticlegacy.permadeath")
+				//		.withStyle(ChatFormatting.RED));
 			}
 
 			ResourceLocation soulLossAdvancement = new ResourceLocation(EnigmaticLegacy.MODID, "book/soul_loss");
@@ -3182,10 +3194,11 @@ public class EnigmaticEventHandler {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onAnvilOpen(ScreenEvent.InitScreenEvent event) {
-		if (event.getScreen() instanceof AnvilScreen) {
+		if (PermadeathScreen.active != null && event.getScreen() != PermadeathScreen.active) {
+			Minecraft.getInstance().setScreen(PermadeathScreen.active);
+		}
 
-			AnvilScreen screen = (AnvilScreen) event.getScreen();
-
+		if (event.getScreen() instanceof AnvilScreen screen) {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketAnvilField(""));
 
 			try {
