@@ -202,6 +202,7 @@ import net.minecraft.world.entity.projectile.Fireball;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.food.FoodData;
+import net.minecraft.server.commands.KickCommand;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.material.FluidState;
@@ -1178,6 +1179,12 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onPlayerTick(LivingEvent.LivingUpdateEvent event) {
+		if (event.getEntityLiving() instanceof ServerPlayer player) {
+			if (SuperpositionHandler.isPermanentlyDead(player)) {
+				player.connection.disconnect(new TranslatableComponent("message.enigmaticlegacy.permadeath"));
+			}
+		}
+
 		if (!event.getEntityLiving().isAlive())
 			return;
 
@@ -2710,7 +2717,7 @@ public class EnigmaticEventHandler {
 			}
 
 			if (this.hadEnigmaticAmulet(player) && !event.getDrops().isEmpty() && EnigmaticLegacy.enigmaticAmulet.isVesselEnabled()) {
-				ItemStack soulCrystal = SuperpositionHandler.shouldPlayerDropSoulCrystal(player, this.hadCursedRing(player)) ? EnigmaticLegacy.soulCrystal.createCrystalFrom(player) : null;
+				ItemStack soulCrystal = SuperpositionHandler.canDropSoulCrystal(player, this.hadCursedRing(player)) ? EnigmaticLegacy.soulCrystal.createCrystalFrom(player) : null;
 				ItemStack storageCrystal = EnigmaticLegacy.storageCrystal.storeDropsOnCrystal(event.getDrops(), player, soulCrystal);
 				PermanentItemEntity droppedStorageCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), storageCrystal);
 				droppedStorageCrystal.setOwnerId(player.getUUID());
@@ -2723,7 +2730,7 @@ public class EnigmaticEventHandler {
 				}
 
 				SoulArchive.getInstance().addItem(droppedStorageCrystal);
-			} else if (SuperpositionHandler.shouldPlayerDropSoulCrystal(player, this.hadCursedRing(player))) {
+			} else if (SuperpositionHandler.canDropSoulCrystal(player, this.hadCursedRing(player))) {
 				ItemStack soulCrystal = EnigmaticLegacy.soulCrystal.createCrystalFrom(player);
 				PermanentItemEntity droppedSoulCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), soulCrystal);
 				droppedSoulCrystal.setOwnerId(player.getUUID());
@@ -2734,11 +2741,15 @@ public class EnigmaticEventHandler {
 				SoulArchive.getInstance().addItem(droppedSoulCrystal);
 			}
 
+			if (SuperpositionHandler.isPermanentlyDead(player)) {
+				player.connection.disconnect(new TranslatableComponent("message.enigmaticlegacy.permadeath"));
+			}
+
 			ResourceLocation soulLossAdvancement = new ResourceLocation(EnigmaticLegacy.MODID, "book/soul_loss");
 
-			if (droppedCrystal) {
+			if (SuperpositionHandler.isAffectedBySoulLoss(player, this.hadCursedRing(player))) {
 				SuperpositionHandler.grantAdvancement(player, soulLossAdvancement);
-			} else if (!droppedCrystal && SuperpositionHandler.hasAdvancement(player, soulLossAdvancement)) {
+			} else if (SuperpositionHandler.hasAdvancement(player, soulLossAdvancement)) {
 				SuperpositionHandler.revokeAdvancement(player, soulLossAdvancement);
 			}
 
@@ -3029,8 +3040,9 @@ public class EnigmaticEventHandler {
 			EnigmaticLegacy.logger.info("Logging in to local integrated server; no synchronization is required.");
 		}
 
+		ServerPlayer player = (ServerPlayer) event.getPlayer();
+
 		try {
-			ServerPlayer player = (ServerPlayer) event.getPlayer();
 			this.syncPlayTime(player);
 
 			if (!enigmaticLegacy.isCSGPresent()) {

@@ -1,6 +1,7 @@
 package com.integral.enigmaticlegacy.handlers;
 
 import static com.integral.enigmaticlegacy.EnigmaticLegacy.cursedRing;
+import static com.integral.enigmaticlegacy.EnigmaticLegacy.soulCrystal;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -1067,6 +1068,12 @@ public class SuperpositionHandler {
 		return stack1.getItem() == stack2.getItem() && ItemStack.tagMatches(stack1, stack2);
 	}
 
+	public static boolean isPermanentlyDead(Player player) {
+		// TODO Proper permadeath screen, Cursed Mode
+		return soulCrystal.getLostCrystals(player) >= 10
+				&& OmniconfigHandler.maxSoulCrystalLoss.getValue() >= 10;
+	}
+
 	/**
 	 * @return Multiplier for amount of particles based on client settings.
 	 */
@@ -1167,23 +1174,26 @@ public class SuperpositionHandler {
 		return false;
 	}
 
-	public static boolean shouldPlayerDropSoulCrystal(Player player, boolean hadRing) {
-		int dropMode = OmniconfigHandler.soulCrystalsMode.getValue();
-		int maxCrystalLoss = OmniconfigHandler.maxSoulCrystalLoss.getValue();
-
-		boolean canDropMore = EnigmaticLegacy.soulCrystal.getLostCrystals(player) < maxCrystalLoss;
+	public static boolean isAffectedBySoulLoss(Player player, boolean hadRing) {
+		int dropMode = OmniconfigHandler.soulCrystalsMode.getValue(); // TODO Use Enum config
 		boolean keepInventory = player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY);
 
-		// TODO Use Enum config
-
 		if (dropMode == 0)
-			return hadRing && canDropMore;
+			return hadRing;
 		else if (dropMode == 1)
-			return (hadRing || keepInventory) && canDropMore;
+			return (hadRing || keepInventory);
 		else if (dropMode == 2)
-			return canDropMore;
+			return true;
+		else
+			return false;
+	}
 
-		return false;
+	public static boolean canDropSoulCrystal(Player player, boolean hadRing) {
+		if (isAffectedBySoulLoss(player, hadRing)) {
+			int maxCrystalLoss = OmniconfigHandler.maxSoulCrystalLoss.getValue();
+			return EnigmaticLegacy.soulCrystal.getLostCrystals(player) < maxCrystalLoss;
+		} else
+			return false;
 	}
 
 	public static ServerLevel getWorld(ResourceKey<Level> key) {

@@ -34,6 +34,7 @@ public class OmniconfigHandler {
 
 	public static Omniconfig.IntParameter soulCrystalsMode;
 	public static Omniconfig.IntParameter maxSoulCrystalLoss;
+	public static Omniconfig.BooleanParameter hardcoreSoulCrytals;
 
 	private static final List<ResourceLocation> bossList = new ArrayList<>();
 
@@ -191,10 +192,12 @@ public class OmniconfigHandler {
 				.getInt("SoulCrystalsMode", 0);
 
 		maxSoulCrystalLoss = builder
-				.comment("Maximum amount of Soul Crystals a player can loose before they won't drop anymore. Each crystal lost subtracts 10% of from their maximum possible health value.")
+				.comment("Maximum amount of Soul Crystals a player can lose before they won't drop anymore."
+						+ " If set to 10 - player can loose all of them, and doing so will result in permadeath."
+						+ " Each crystal lost subtracts 10% of from their maximum possible health value.")
 				.min(1)
 				.max(10)
-				.getInt("MaxSoulCrystalLoss", 9);
+				.getInt("SoulCrystalsLimit", 10);
 
 		bossList.clear();
 		String[] bosses = builder.config.getStringList("CompleteBossList", "Generic Config", new String[] { "minecraft:ender_dragon", "minecraft:wither", "minecraft:elder_guardian" }, "List of entities that should be accounted for as bosses"
