@@ -81,6 +81,7 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, Vanishab
 	}
 
 	public void setLostCrystals(Player player, int lost) {
+		SuperpositionHandler.setCurrentWorldFractured(lost >= 10);
 		SuperpositionHandler.setPersistentInteger(player, "enigmaticlegacy.lostsoulfragments", lost);
 		this.updatePlayerSoulMap(player);
 	}

@@ -136,6 +136,7 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTextTooltip;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
+import net.minecraft.client.gui.screens.worldselection.WorldSelectionList;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -1185,15 +1186,6 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onPlayerTick(LivingEvent.LivingUpdateEvent event) {
-		if (event.getEntityLiving() instanceof ServerPlayer player) {
-			if (SuperpositionHandler.isPermanentlyDead(player)) {
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player),
-						new PacketPermadeath());
-				//player.connection.disconnect(new TranslatableComponent("message.enigmaticlegacy.permadeath")
-				//		.withStyle(ChatFormatting.RED));
-			}
-		}
-
 		if (!event.getEntityLiving().isAlive())
 			return;
 
@@ -2753,8 +2745,7 @@ public class EnigmaticEventHandler {
 			if (SuperpositionHandler.isPermanentlyDead(player)) {
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player),
 						new PacketPermadeath());
-				//player.connection.disconnect(new TranslatableComponent("message.enigmaticlegacy.permadeath")
-				//		.withStyle(ChatFormatting.RED));
+				SuperpositionHandler.setCurrentWorldFractured(true);
 			}
 
 			ResourceLocation soulLossAdvancement = new ResourceLocation(EnigmaticLegacy.MODID, "book/soul_loss");
@@ -3047,12 +3038,20 @@ public class EnigmaticEventHandler {
 		if (!(event.getPlayer() instanceof ServerPlayer))
 			return;
 
+		ServerPlayer player = (ServerPlayer) event.getPlayer();
+
+		if (SuperpositionHandler.isPermanentlyDead(player)) {
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player),
+					new PacketPermadeath());
+			SuperpositionHandler.setCurrentWorldFractured(true);
+		} else {
+			SuperpositionHandler.setCurrentWorldFractured(false);
+		}
+
 		if (!OmniconfigWrapper.syncAllToPlayer((ServerPlayer) event.getPlayer())) {
 			OmniconfigWrapper.onRemoteServer = false;
 			EnigmaticLegacy.logger.info("Logging in to local integrated server; no synchronization is required.");
 		}
-
-		ServerPlayer player = (ServerPlayer) event.getPlayer();
 
 		try {
 			this.syncPlayTime(player);
@@ -3187,6 +3186,8 @@ public class EnigmaticEventHandler {
 					}
 				}
 			}
+
+			SuperpositionHandler.setСurrentWorldCursed(SuperpositionHandler.isTheCursedOne(player));
 		}
 
 	}

@@ -30,6 +30,7 @@ import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.objects.RevelationTomeToast;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.etherium.client.ShieldAuraLayer;
+import com.mojang.authlib.GameProfile;
 
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -101,17 +102,20 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void displayPermadeathScreen() {
-		boolean local = Minecraft.getInstance().isLocalServer();
-		Minecraft.getInstance().level.disconnect();
+		if (Minecraft.getInstance().level != null) {
+			boolean local = Minecraft.getInstance().isLocalServer();
+			Minecraft.getInstance().level.disconnect();
 
-		if (local) {
-			Minecraft.getInstance().clearLevel(new GenericDirtMessageScreen(new TranslatableComponent("menu.savingLevel")));
-		} else {
-			Minecraft.getInstance().clearLevel();
+			if (local) {
+				Minecraft.getInstance().clearLevel(new GenericDirtMessageScreen(new TranslatableComponent("menu.savingLevel")));
+			} else {
+				Minecraft.getInstance().clearLevel();
+			}
 		}
 
 		PermadeathScreen permadeath = new PermadeathScreen(new SelectWorldScreen(new TitleScreen()),
-				new TextComponent("The End"), new TranslatableComponent("message.enigmaticlegacy.permadeath"));
+				new TranslatableComponent("gui.enigmaticlegacy.permadeathTitle"),
+				new TranslatableComponent("message.enigmaticlegacy.permadeath"));
 		PermadeathScreen.active = permadeath;
 		Minecraft.getInstance().setScreen(permadeath);
 	}
@@ -372,6 +376,11 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public Player getClientPlayer() {
 		return Minecraft.getInstance().player;
+	}
+
+	@Override
+	public String getClientUsername() {
+		return Minecraft.getInstance().getUser().getName();
 	}
 
 	@Override

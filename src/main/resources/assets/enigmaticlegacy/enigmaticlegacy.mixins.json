@@ -43,7 +43,8 @@
 	"MixinItemRenderer",
 	"MixinTooltipOverlayHandler",
 	"MixinMiniInventoryButton",
-	"MixinEntityRenderer"
+	"MixinEntityRenderer",
+	"MixinWorldListEntry"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -3,8 +3,13 @@ package com.integral.enigmaticlegacy.handlers;
 import static com.integral.enigmaticlegacy.EnigmaticLegacy.cursedRing;
 import static com.integral.enigmaticlegacy.EnigmaticLegacy.soulCrystal;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,9 +33,14 @@ import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import com.google.common.base.Objects;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
+import com.google.common.io.Files;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.ConfigurableItem;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
@@ -48,6 +58,7 @@ import com.integral.enigmaticlegacy.items.TheAcknowledgment;
 import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.integral.enigmaticlegacy.objects.AnchorSearchResult;
 import com.integral.enigmaticlegacy.objects.DimensionalPosition;
+import com.integral.enigmaticlegacy.objects.EnigmaticTransience;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
@@ -92,6 +103,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.storage.LevelResource;
+import net.minecraft.world.level.storage.LevelStorageSource;
+import net.minecraft.world.level.storage.LevelSummary;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootPool.Builder;
@@ -138,6 +152,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ChunkHolder;
 import net.minecraft.server.level.ServerChunkCache;
@@ -1945,6 +1960,89 @@ public class SuperpositionHandler {
 
 			stack.popPose();
 		}
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public static File getSaveFolder(LevelSummary summary) {
+		LevelStorageSource levels = Minecraft.getInstance().getLevelSource();
+		return new File(levels.getBaseDir().toFile(), summary.getLevelId());
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public static Component getAltInfo(LevelSummary summary) {
+		Component info = summary.getInfo();
+		File world = getSaveFolder(summary);
+		boolean fractured = isWorldFractured(world);
+
+		if (summary.getGameMode() == GameType.SURVIVAL || fractured) {
+			String key = "gameMode.enigmaticlegacy.";
+
+			if (fractured) {
+				key += "fractured";
+			} else if (isWorldCursed(world)) {
+				key += "cursed";
+
+				if (summary.isHardcore()) {
+					key += "Hardcore";
+				}
+			} else
+				return info;
+
+			TranslatableComponent tcn = new TranslatableComponent(key);
+			tcn.withStyle(info.getStyle());
+
+			if (info instanceof TranslatableComponent) {
+				info.getSiblings().forEach(tcn::append);
+			} else if (info instanceof TextComponent) {
+				for (int i = 1; i < info.getSiblings().size(); i++) {
+					tcn.append(info.getSiblings().get(i));
+				}
+			}
+
+			return tcn;
+		}
+
+		return info;
+	}
+
+	/**
+	 * @return Current server if in singleplayer, otherwise empty optional.
+	 */
+
+	public static Optional<MinecraftServer> getSingleplayerServer() {
+		MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+
+		if (server != null && server.isSingleplayer() &&
+				Objects.equal(server.getSingleplayerName(), EnigmaticLegacy.proxy.getClientUsername()))
+			return Optional.of(server);
+		else
+			return Optional.empty();
+	}
+
+	public static void setСurrentWorldCursed(boolean cursed) {
+		getSingleplayerServer().ifPresent(server -> {
+			File saveFolder = server.getWorldPath(LevelResource.ROOT).toFile();
+			EnigmaticTransience transience = EnigmaticTransience.read(saveFolder);
+			transience.setCursed(cursed);
+			transience.write(saveFolder);
+		});
+	}
+
+	public static void setCurrentWorldFractured(boolean fractured) {
+		getSingleplayerServer().ifPresent(server -> {
+			File saveFolder = server.getWorldPath(LevelResource.ROOT).toFile();
+			EnigmaticTransience transience = EnigmaticTransience.read(saveFolder);
+			transience.setPermanentlyDead(fractured);
+			transience.write(saveFolder);
+		});
+	}
+
+	public static boolean isWorldCursed(File world) {
+		return EnigmaticTransience.read(world).isCursed();
+	}
+
+	public static boolean isWorldFractured(File world) {
+		return EnigmaticTransience.read(world).isPermanentlyDead();
 	}
 
 }

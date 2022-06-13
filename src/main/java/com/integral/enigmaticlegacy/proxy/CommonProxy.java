@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentMap;
 import com.google.common.collect.MapMaker;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
+import com.mojang.authlib.GameProfile;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -98,6 +99,10 @@ public class CommonProxy {
 	}
 
 	public Player getClientPlayer() {
+		return null;
+	}
+
+	public String getClientUsername() {
 		return null;
 	}
 
