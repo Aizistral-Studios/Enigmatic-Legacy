@@ -276,7 +276,7 @@ public class CursedRing extends ItemBaseCurio {
 
 	@Override
 	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
-		SuperpositionHandler.setСurrentWorldCursed(false);
+		SuperpositionHandler.setCurrentWorldCursed(false);
 	}
 
 	@Override
@@ -286,7 +286,7 @@ public class CursedRing extends ItemBaseCurio {
 			CursedRingEquippedTrigger.INSTANCE.trigger(player);
 		}
 
-		SuperpositionHandler.setСurrentWorldCursed(true);
+		SuperpositionHandler.setCurrentWorldCursed(true);
 	}
 
 	@Override

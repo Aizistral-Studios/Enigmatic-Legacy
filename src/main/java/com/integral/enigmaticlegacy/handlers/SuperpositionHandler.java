@@ -2019,7 +2019,7 @@ public class SuperpositionHandler {
 			return Optional.empty();
 	}
 
-	public static void setСurrentWorldCursed(boolean cursed) {
+	public static void setCurrentWorldCursed(boolean cursed) {
 		getSingleplayerServer().ifPresent(server -> {
 			File saveFolder = server.getWorldPath(LevelResource.ROOT).toFile();
 			EnigmaticTransience transience = EnigmaticTransience.read(saveFolder);

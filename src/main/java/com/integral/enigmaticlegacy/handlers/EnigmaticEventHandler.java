@@ -3187,7 +3187,7 @@ public class EnigmaticEventHandler {
 				}
 			}
 
-			SuperpositionHandler.setСurrentWorldCursed(SuperpositionHandler.isTheCursedOne(player));
+			SuperpositionHandler.setCurrentWorldCursed(SuperpositionHandler.isTheCursedOne(player));
 		}
 
 	}
