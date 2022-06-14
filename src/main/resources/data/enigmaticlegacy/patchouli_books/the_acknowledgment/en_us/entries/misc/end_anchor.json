@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.end_anchor.name",
+    "icon": "enigmaticlegacy:end_anchor",
+    "category": "enigmaticlegacy:misc",
+	"advancement": "enigmaticlegacy:book/misc/end_anchor",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 150,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.end_anchor.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:end_anchor",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.end_anchor.page.2"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.end_anchor.page.3"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.end_anchor.page.4"
+        }
+    ]
+}
