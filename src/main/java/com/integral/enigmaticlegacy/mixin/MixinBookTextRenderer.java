@@ -27,7 +27,7 @@ public class MixinBookTextRenderer {
 	@Shadow @Final
 	private Book book;
 
-	@Redirect(method = "build()V", at = @At(
+	@Redirect(method = "<init>(Lvazkii/patchouli/client/book/gui/GuiBook;Lnet/minecraft/network/chat/Component;IIIII)V", at = @At(
 			target = "Lvazkii/patchouli/common/base/PatchouliConfig$ConfigAccess;overflowMode()Ljava/util/function/Supplier;",
 			value = "INVOKE"), require = 1)
 	private Supplier<TextOverflowMode> redirectOverflowMode(ConfigAccess access) {

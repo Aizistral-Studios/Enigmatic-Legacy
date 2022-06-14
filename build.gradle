@@ -73,7 +73,7 @@ dependencies {
 	
 	// These are 1.18 dependencies
 	compileOnly fg.deobf('generic:curios:forge-1.18.2-5.0.6.3')
-	compileOnly fg.deobf('generic:Patchouli:1.18.2-66')
+	compileOnly fg.deobf('generic:Patchouli:1.18.2-70')
 	compileOnly fg.deobf('generic:WorldNameRandomizer:FORGE-1.18.1-v1.3.0')
 	compileOnly fg.deobf('generic:Quark:3.2-346')
 	compileOnly fg.deobf('generic:AutoRegLib:1.7-53')
