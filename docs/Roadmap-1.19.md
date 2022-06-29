@@ -4,6 +4,6 @@
 - [ ] Migrate everything from `com.integral` to `com.aizistral`;
 - [x] Make The Architect's Favor separate from the main mod and include it under different license terms;
 - [ ] Make the path to obtaining The Architect's Favor less illuminated;
-- [ ] Make Soul Crystals pickup-able for everyone, regardless of who they were dropped by, with some way to obtain them in an item form;
+- [ ] Make Soul Crystals pickup-able for everyone, regardless of who they were dropped by, with some way to obtain them in an item form. Also special cursed-only weapon to tear them out of other players and some way to get more of them without other players;
 - [ ] Reconsiider playtime accounting mechanism for Ring of the Seven Curses;
 - [ ] Rename `architect_eye` to `enigmatic_eye`.
