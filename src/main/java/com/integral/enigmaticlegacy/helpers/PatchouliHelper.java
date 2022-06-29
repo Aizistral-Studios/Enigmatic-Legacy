@@ -5,7 +5,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import vazkii.patchouli.client.base.PersistentData;
-import vazkii.patchouli.client.base.PersistentData.DataHolder.BookData;
+import vazkii.patchouli.client.base.PersistentData.BookData;
 import vazkii.patchouli.client.book.BookEntry;
 import vazkii.patchouli.common.book.Book;
 import vazkii.patchouli.common.book.BookRegistry;
@@ -28,11 +28,11 @@ public class PatchouliHelper {
 		if (data == null || data.viewedEntries == null || entry == null || entry.getId() == null)
 			return;
 
-		if (read && !data.viewedEntries.contains(entry.getId().toString())) {
-			data.viewedEntries.add(entry.getId().toString());
+		if (read && !data.viewedEntries.contains(entry.getId())) {
+			data.viewedEntries.add(entry.getId());
 			entry.markReadStateDirty();
-		} else if (!read && data.viewedEntries.contains(entry.getId().toString())) {
-			data.viewedEntries.remove(entry.getId().toString());
+		} else if (!read && data.viewedEntries.contains(entry.getId())) {
+			data.viewedEntries.remove(entry.getId());
 			entry.markReadStateDirty();
 		}
 	}
