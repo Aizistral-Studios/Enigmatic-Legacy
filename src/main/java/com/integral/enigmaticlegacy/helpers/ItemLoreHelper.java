@@ -134,10 +134,12 @@ public class ItemLoreHelper {
 
 		ListTag loreList = nbt.getList("Lore", 8);
 
-		if (index == -1 && loreList.size() > 0) {
-			loreList.remove(loreList.size() - 1);
-		} else if (loreList.size() - 1 >= index) {
-			loreList.remove(index);
+		if (loreList.size() > 0) {
+			if (index == -1) {
+				loreList.remove(loreList.size() - 1);
+			} else if (loreList.size() - 1 >= index) {
+				loreList.remove(index);
+			}
 		}
 
 		nbt.put("Lore", loreList);
