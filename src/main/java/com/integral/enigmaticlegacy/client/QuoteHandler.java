@@ -96,13 +96,13 @@ public class QuoteHandler {
 	}
 
 	private void sendExperimentalInfo(Player player) {
-		if (!this.shownExperimentalInfo) {
-			player.sendMessage(new TranslatableComponent("message.enigmaticlegacy.voiceover_experimental")
-					.setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW).withClickEvent(new ClickEvent(
-							Action.OPEN_URL, "https://discord.gg/fuWK8ns"))), Util.NIL_UUID);
-
-			this.shownExperimentalInfo = true;
-		}
+		//		if (!this.shownExperimentalInfo) {
+		//			player.sendMessage(new TranslatableComponent("message.enigmaticlegacy.voiceover_experimental")
+		//					.setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW).withClickEvent(new ClickEvent(
+		//							Action.OPEN_URL, "https://discord.gg/fuWK8ns"))), Util.NIL_UUID);
+		//
+		//			this.shownExperimentalInfo = true;
+		//		}
 	}
 
 	private void drawQuote(PoseStack stack, Window window) {

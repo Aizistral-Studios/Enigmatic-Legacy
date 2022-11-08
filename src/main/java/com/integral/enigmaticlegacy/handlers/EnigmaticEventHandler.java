@@ -3118,16 +3118,17 @@ public class EnigmaticEventHandler {
 
 
 	@SubscribeEvent
-	public void onAttackTargetSet(LivingChangeTargetEvent event) {
-		if (event.getNewTarget() instanceof Player) {
-			Player player = (Player) event.getNewTarget();
+	public void onAttackTargetSet(LivingSetAttackTargetEvent event) {
+		if (event.getTarget() instanceof Player) {
+			Player player = (Player) event.getTarget();
 
 			if (event.getEntityLiving() instanceof Mob) {
 				Mob insect = (Mob) event.getEntityLiving();
 
 				if (insect.getMobType() == MobType.ARTHROPOD)
 					if (SuperpositionHandler.hasAntiInsectAcknowledgement(player)) {
-						event.setCanceled(true);
+						//event.setCanceled(true);
+						insect.setTarget(null);
 					}
 
 				if (insect instanceof Guardian && insect.getClass() != ElderGuardian.class) {
@@ -3135,7 +3136,8 @@ public class EnigmaticEventHandler {
 						boolean isBlacklisted = angeredGuardians.containsEntry(player, insect);
 
 						if (insect.getLastHurtByMob() != player && !isBlacklisted) {
-							event.setCanceled(true);
+							//event.setCanceled(true);
+							insect.setTarget(null);
 						} else {
 							if (!isBlacklisted) {
 								angeredGuardians.put(player, (Guardian)insect);
