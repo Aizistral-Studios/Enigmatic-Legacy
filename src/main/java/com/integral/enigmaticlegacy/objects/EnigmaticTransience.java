@@ -1,12 +1,18 @@
 package com.integral.enigmaticlegacy.objects;
 
+import java.io.Closeable;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
+
+import javax.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
+import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 
 public class EnigmaticTransience {
@@ -53,9 +59,31 @@ public class EnigmaticTransience {
 		if (!file.exists() || !file.isFile())
 			return new EnigmaticTransience();
 
-		try (FileReader reader = new FileReader(file)) {
+		FileReader reader = null;
+
+		try {
+			reader = new FileReader(file);
 			EnigmaticTransience transience = new Gson().fromJson(reader, EnigmaticTransience.class);
 			return transience;
+		} catch (IOException ex) {
+			throw new RuntimeException(ex);
+		} catch (JsonSyntaxException ex) {
+			EnigmaticLegacy.logger.warn("Failed to read " + file + ", will regenerate...");
+			close(reader);
+
+			EnigmaticTransience transience = new EnigmaticTransience();
+			transience.write(directory);
+			return transience;
+		} finally {
+			close(reader);
+		}
+	}
+
+	private static void close(@Nullable Closeable closeable) {
+		try {
+			if (closeable != null) {
+				closeable.close();
+			}
 		} catch (IOException ex) {
 			throw new RuntimeException(ex);
 		}
