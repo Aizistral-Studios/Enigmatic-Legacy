@@ -39,7 +39,8 @@
 	"MixinItemRenderer",
 	"MixinMiniInventoryButton",
 	"MixinEntityRenderer",
-	"MixinWorldListEntry"
+	"MixinWorldListEntry",
+	"MixinGuiBook"
   ],
   "injectors": {
     "defaultRequire": 1
