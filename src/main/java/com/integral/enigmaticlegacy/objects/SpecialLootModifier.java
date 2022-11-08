@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.core.BlockPos;
@@ -41,10 +42,11 @@ public class SpecialLootModifier extends LootModifier {
 
 		if (entity instanceof ServerPlayer player) {
 			if (this.isVanillaChest(context)) {
-				if (!SuperpositionHandler.hasPersistentTag(player, "LootedArchitectEye")) {
-					SuperpositionHandler.setPersistentBoolean(player, "LootedArchitectEye", true);
-					generatedLoot.add(new ItemStack(EnigmaticLegacy.architectEye, 1));
-				}
+				if (OmniconfigHandler.isItemEnabled(EnigmaticLegacy.architectEye))
+					if (!SuperpositionHandler.hasPersistentTag(player, "LootedArchitectEye")) {
+						SuperpositionHandler.setPersistentBoolean(player, "LootedArchitectEye", true);
+						generatedLoot.add(new ItemStack(EnigmaticLegacy.architectEye, 1));
+					}
 
 				if (SuperpositionHandler.hasPersistentTag(player, "LootedIchorBottle")) {
 					generatedLoot.removeIf(stack -> stack.is(EnigmaticLegacy.ichorBottle));
@@ -53,19 +55,16 @@ public class SpecialLootModifier extends LootModifier {
 				}
 			}
 
-			if ("minecraft:chests/end_city_treasure".equals(String.valueOf(context.getQueriedLootTableId()))) {
-				if (!SuperpositionHandler.hasPersistentTag(player, "LootedFirstEndCityChest")) {
-					SuperpositionHandler.setPersistentBoolean(player, "LootedFirstEndCityChest", true);
+			if (OmniconfigHandler.isItemEnabled(EnigmaticLegacy.astralFruit))
+				if ("minecraft:chests/end_city_treasure".equals(String.valueOf(context.getQueriedLootTableId()))) {
+					if (!SuperpositionHandler.hasPersistentTag(player, "LootedFirstEndCityChest")) {
+						SuperpositionHandler.setPersistentBoolean(player, "LootedFirstEndCityChest", true);
 
-					if (SuperpositionHandler.isTheCursedOne(player)) {
-						generatedLoot.add(new ItemStack(EnigmaticLegacy.astralFruit, 1));
+						if (SuperpositionHandler.isTheCursedOne(player)) {
+							generatedLoot.add(new ItemStack(EnigmaticLegacy.astralFruit, 1));
+						}
 					}
 				}
-			}
-		} else {
-			if (this.isVanillaChest(context)) {
-				generatedLoot.removeIf(stack -> stack.is(EnigmaticLegacy.ichorBottle));
-			}
 		}
 
 		return generatedLoot;
