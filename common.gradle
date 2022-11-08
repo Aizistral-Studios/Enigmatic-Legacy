@@ -105,14 +105,9 @@ curseforge {
 		addGameVersion '1.18.2'
 		
 		relations {
-			if (project.name.equals('EnigmaticLegacy')) {
-				requiredDependency 'curios'
-				requiredDependency 'patchouli'
-				requiredDependency 'caelus'
-				embeddedLibrary 'etherium'
-			} else {
-				incompatible 'enigmatic-legacy'
-			}
+			requiredDependency 'curios'
+			requiredDependency 'patchouli'
+			requiredDependency 'caelus'
 		}
 		
         //addArtifact(sourcesJar)
