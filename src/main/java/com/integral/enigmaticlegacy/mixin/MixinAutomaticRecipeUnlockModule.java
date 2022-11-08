@@ -17,7 +17,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.Recipe;
-import vazkii.quark.content.tweaks.module.AutomaticRecipeUnlockModule;
 
 /**
  * Our progression much relies on gradual unlocking of recipes and associated advancements,
@@ -28,7 +27,7 @@ import vazkii.quark.content.tweaks.module.AutomaticRecipeUnlockModule;
  */
 
 @Pseudo
-@Mixin(AutomaticRecipeUnlockModule.class)
+@Mixin(targets = "vazkii.quark.content.tweaks.module.AutomaticRecipeUnlockModule")
 public class MixinAutomaticRecipeUnlockModule {
 
 	@Redirect(method = "onPlayerLoggedIn", remap = false, at = @At(value = "INVOKE", remap = true,

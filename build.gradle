@@ -74,10 +74,10 @@ dependencies {
 	compileOnly fg.deobf('generic:curios:forge-1.18.2-5.0.6.3')
 	compileOnly fg.deobf('generic:Patchouli:1.18.2-71.1')
 	compileOnly fg.deobf('generic:WorldNameRandomizer:FORGE-1.18.1-v1.3.0')
-	compileOnly fg.deobf('generic:Quark:3.2-346')
-	compileOnly fg.deobf('generic:AutoRegLib:1.7-53')
 	compileOnly fg.deobf('generic:caelus:forge-1.18.1-3.0.0.2')
 	compileOnly fg.deobf('generic:jei:1.18.2-9.7.0.193')
+	//compileOnly fg.deobf('generic:Quark:3.2-346')
+	//compileOnly fg.deobf('generic:AutoRegLib:1.7-53')
 	
 	// These are 1.17 dependencies
 	//compileOnly fg.deobf('generic:curios:forge-1.17.1-5.0.2.7-spec')

@@ -6,10 +6,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import vazkii.quark.content.management.client.screen.widgets.MiniInventoryButton;
 
 @Pseudo
-@Mixin(MiniInventoryButton.class)
+@Mixin(targets = "vazkii.quark.content.management.client.screen.widgets.MiniInventoryButton")
 public class MixinMiniInventoryButton {
 
 	@Redirect(method = "render", at = @At(value = "INVOKE", remap = false,
