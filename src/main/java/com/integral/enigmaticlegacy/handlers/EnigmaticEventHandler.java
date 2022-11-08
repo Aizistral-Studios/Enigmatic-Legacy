@@ -2327,11 +2327,11 @@ public class EnigmaticEventHandler {
 	public void entityJoinWorld(EntityJoinWorldEvent event) {
 		Entity entity = event.getEntity();
 
-		if (entity instanceof ServerPlayer) {
-			ServerPlayer player = (ServerPlayer) entity;
-			EnigmaticLegacy.soulCrystal.updatePlayerSoulMap(player);
+		if (entity instanceof ServerPlayer joinedPlayer) {
+			EnigmaticLegacy.soulCrystal.updatePlayerSoulMap(joinedPlayer);
 			ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers().forEach(serverPlayer -> {
-				TransientPlayerData.get(serverPlayer).syncToPlayer(player);
+				TransientPlayerData.get(joinedPlayer).syncToPlayer(serverPlayer);
+				TransientPlayerData.get(serverPlayer).syncToPlayer(joinedPlayer);
 			});
 		}
 
