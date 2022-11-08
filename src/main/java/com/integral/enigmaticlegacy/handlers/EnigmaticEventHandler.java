@@ -1603,7 +1603,7 @@ public class EnigmaticEventHandler {
 						arrow.addTag("AB_DEFLECTED:" + arrow.tickCount);
 
 						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64.0D, player.level.dimension())), new PacketForceArrowRotations(arrow.getId(), arrow.getYRot(), arrow.getXRot(), arrow.getDeltaMovement().x, arrow.getDeltaMovement().y, arrow.getDeltaMovement().z, arrow.getX(), arrow.getY(), arrow.getZ()));
-						player.level.playSound(null, player.blockPosition(), EnigmaticLegacy.DEFLECT, SoundSource.PLAYERS, 1.0F, 0.95F + (float) (Math.random() * 0.1D));
+						player.level.playSound(null, player.blockPosition(), EnigmaticLegacy.soundDeflect, SoundSource.PLAYERS, 1.0F, 0.95F + (float) (Math.random() * 0.1D));
 					}
 				} /*else {
 					if (event.getEntity().getTags().contains("enigmaticlegacy.redirected")) {
@@ -2216,7 +2216,7 @@ public class EnigmaticEventHandler {
 				if (event.getAmount() <= theCube.getDamageLimit(player) && theySeeMeRollin.nextDouble() <= 0.35) {
 					event.setCanceled(true);
 					living.hurt(event.getSource(), event.getAmount());
-					player.level.playSound(null, player.blockPosition(), SWORD_HIT_REJECT, SoundSource.PLAYERS, 1F, 1F);
+					player.level.playSound(null, player.blockPosition(), soundSwordHitReject, SoundSource.PLAYERS, 1F, 1F);
 				} else {
 					theCube.applyRandomEffect(living, false);
 				}
@@ -2762,7 +2762,7 @@ public class EnigmaticEventHandler {
 					SuperpositionHandler.itemEntryBuilderED(Items.IRON_SHOVEL, 10, 20F, 30F, 1.0F, 0.8F),
 					SuperpositionHandler.itemEntryBuilderED(Items.BOW, 10, 20F, 30F, 1.0F, 0.8F),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.ironRing, 20),
-					LootItem.lootTableItem(EnigmaticLegacy.commonPotionBase).setWeight(20).apply(SetNbtFunction.setTag(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.HASTE).getTag())),
+					LootItem.lootTableItem(EnigmaticLegacy.commonPotionBase).setWeight(20).apply(SetNbtFunction.setTag(PotionHelper.createAdvancedPotion(EnigmaticLegacy.commonPotionBase, EnigmaticLegacy.haste).getTag())),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.magnetRing, 8),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.unholyGrail, 1),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticLegacy.loreInscriber, 5),

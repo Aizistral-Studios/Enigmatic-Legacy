@@ -46,7 +46,7 @@ public class UltimatePotionLingering extends ItemBase implements IAdvancedPotion
 	@OnlyIn(Dist.CLIENT)
 	public ItemStack getDefaultInstance() {
 		ItemStack stack = super.getDefaultInstance().copy();
-		PotionHelper.setAdvancedPotion(stack, EnigmaticLegacy.EMPTY);
+		PotionHelper.setAdvancedPotion(stack, EnigmaticLegacy.emptyPotion);
 		return stack.copy();
 	}
 

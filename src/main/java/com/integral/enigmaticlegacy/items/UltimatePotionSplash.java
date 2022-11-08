@@ -58,7 +58,7 @@ public class UltimatePotionSplash extends ItemBase implements IAdvancedPotionIte
 	@OnlyIn(Dist.CLIENT)
 	public ItemStack getDefaultInstance() {
 		ItemStack stack = super.getDefaultInstance().copy();
-		PotionHelper.setAdvancedPotion(stack, EnigmaticLegacy.EMPTY);
+		PotionHelper.setAdvancedPotion(stack, EnigmaticLegacy.emptyPotion);
 		return stack.copy();
 	}
 

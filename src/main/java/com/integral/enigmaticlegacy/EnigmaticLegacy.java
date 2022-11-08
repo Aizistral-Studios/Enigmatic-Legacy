@@ -53,7 +53,6 @@ import com.integral.enigmaticlegacy.gui.containers.PortableCrafterContainer;
 import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticKeybindHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticUpdateHandler;
-import com.integral.enigmaticlegacy.handlers.OneSpecialHandler;
 import com.integral.enigmaticlegacy.handlers.SoulArchive;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
@@ -295,23 +294,22 @@ public class EnigmaticLegacy {
 	public static final LoggerWrapper logger = new LoggerWrapper("Enigmatic Legacy");
 	public static SimpleChannel packetInstance;
 
-	public static final int howCoolAmI = Integer.MAX_VALUE;
+	public static final int HOW_COOL_I_AM = Integer.MAX_VALUE;
 
 	public static EnigmaticEventHandler enigmaticHandler;
 	public static EnigmaticKeybindHandler keybindHandler;
-	public static final OneSpecialHandler butImAsGuiltyAsThe = new OneSpecialHandler();
 	public static List<String> damageTypesFire = new ArrayList<String>();
 	public static List<AdvancedPotion> ultimatePotionTypes = new ArrayList<AdvancedPotion>();
 	public static List<AdvancedPotion> commonPotionTypes = new ArrayList<AdvancedPotion>();
 	public static List<Block> cutoutBlockRegistry = new ArrayList<Block>();
-	public static SoundEvent HHON;
-	public static SoundEvent HHOFF;
-	public static SoundEvent SHIELD_TRIGGER;
-	public static SoundEvent DEFLECT;
-	public static SoundEvent WRITE;
-	public static SoundEvent LEARN;
-	public static SoundEvent SWORD_HIT_REJECT;
-	public static SoundEvent UNEAT;
+	public static SoundEvent soundChargedOn;
+	public static SoundEvent soundChargedOff;
+	public static SoundEvent soundShieldTrigger;
+	public static SoundEvent soundDeflect;
+	public static SoundEvent soundWrite;
+	public static SoundEvent soundLearn;
+	public static SoundEvent soundSwordHitReject;
+	public static SoundEvent soundEatReverse;
 
 	public static BlockMassiveLamp massiveLamp;
 	public static BlockBigLamp bigLamp;
@@ -461,32 +459,32 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Cosmic Scroll")
 	public static Item cosmicScroll;
 
-	public static AdvancedPotion ULTIMATE_NIGHT_VISION;
-	public static AdvancedPotion ULTIMATE_INVISIBILITY;
-	public static AdvancedPotion ULTIMATE_LEAPING;
-	public static AdvancedPotion ULTIMATE_FIRE_RESISTANCE;
-	public static AdvancedPotion ULTIMATE_SWIFTNESS;
-	public static AdvancedPotion ULTIMATE_SLOWNESS;
-	public static AdvancedPotion ULTIMATE_TURTLE_MASTER;
-	public static AdvancedPotion ULTIMATE_WATER_BREATHING;
-	public static AdvancedPotion ULTIMATE_HEALING;
-	public static AdvancedPotion ULTIMATE_HARMING;
-	public static AdvancedPotion ULTIMATE_POISON;
-	public static AdvancedPotion ULTIMATE_REGENERATION;
-	public static AdvancedPotion ULTIMATE_STRENGTH;
-	public static AdvancedPotion ULTIMATE_WEAKNESS;
-	public static AdvancedPotion ULTIMATE_SLOW_FALLING;
+	public static AdvancedPotion ultimateNightVision;
+	public static AdvancedPotion ultimateInvisibility;
+	public static AdvancedPotion ultimateLeaping;
+	public static AdvancedPotion ultimateFireResistance;
+	public static AdvancedPotion ultimateSwiftness;
+	public static AdvancedPotion ultimateSlowness;
+	public static AdvancedPotion ultimateTurtleMaster;
+	public static AdvancedPotion ultimateWaterBreathing;
+	public static AdvancedPotion ultimateHealing;
+	public static AdvancedPotion ultimateHarming;
+	public static AdvancedPotion ultimatePoison;
+	public static AdvancedPotion ultimateRegeneration;
+	public static AdvancedPotion ultimateStrength;
+	public static AdvancedPotion ultimateWeakness;
+	public static AdvancedPotion ultimateSlowFalling;
 
-	public static AdvancedPotion HASTE;
-	public static AdvancedPotion LONG_HASTE;
-	public static AdvancedPotion STRONG_HASTE;
-	public static AdvancedPotion ULTIMATE_HASTE;
+	public static AdvancedPotion haste;
+	public static AdvancedPotion longHaste;
+	public static AdvancedPotion strongHaste;
+	public static AdvancedPotion ultimateHaste;
 
-	public static AdvancedPotion MOLTEN_HEART;
-	public static AdvancedPotion LONG_MOLTEN_HEART;
-	public static AdvancedPotion ULTIMATE_MOLTEN_HEART;
+	public static AdvancedPotion moltenHeart;
+	public static AdvancedPotion longMoltenHeart;
+	public static AdvancedPotion ultimateMoltenHeart;
 
-	public static AdvancedPotion EMPTY;
+	public static AdvancedPotion emptyPotion;
 	public static AdvancedPotion testingPotion;
 
 	public static BlazingStrengthEffect blazingStrengthEffect;
@@ -1105,14 +1103,14 @@ public class EnigmaticLegacy {
 		public static void registerSounds(final RegistryEvent.Register<SoundEvent> event) {
 			logger.info("Initializing sounds registration...");
 
-			HHON = SuperpositionHandler.registerSound("misc.hhon");
-			HHOFF = SuperpositionHandler.registerSound("misc.hhoff");
-			SHIELD_TRIGGER = SuperpositionHandler.registerSound("misc.shield_trigger");
-			DEFLECT = SuperpositionHandler.registerSound("misc.deflect");
-			WRITE = SuperpositionHandler.registerSound("misc.write");
-			LEARN = SuperpositionHandler.registerSound("misc.learn");
-			SWORD_HIT_REJECT = SuperpositionHandler.registerSound("misc.sword_hit_reject");
-			UNEAT = SuperpositionHandler.registerSound("misc.uneat");
+			soundChargedOn = SuperpositionHandler.registerSound("misc.hhon");
+			soundChargedOff = SuperpositionHandler.registerSound("misc.hhoff");
+			soundShieldTrigger = SuperpositionHandler.registerSound("misc.shield_trigger");
+			soundDeflect = SuperpositionHandler.registerSound("misc.deflect");
+			soundWrite = SuperpositionHandler.registerSound("misc.write");
+			soundLearn = SuperpositionHandler.registerSound("misc.learn");
+			soundSwordHitReject = SuperpositionHandler.registerSound("misc.sword_hit_reject");
+			soundEatReverse = SuperpositionHandler.registerSound("misc.uneat");
 
 			Quote.getByID(0);
 
@@ -1137,57 +1135,57 @@ public class EnigmaticLegacy {
 		public static void registerBrewing(final RegistryEvent.Register<Potion> event) {
 			logger.info("Initializing advanced potion system...");
 
-			ULTIMATE_NIGHT_VISION = new AdvancedPotion("ultimate_night_vision", new MobEffectInstance(MobEffects.NIGHT_VISION, 19200));
-			ULTIMATE_INVISIBILITY = new AdvancedPotion("ultimate_invisibility", new MobEffectInstance(MobEffects.INVISIBILITY, 19200));
-			ULTIMATE_LEAPING = new AdvancedPotion("ultimate_leaping", new MobEffectInstance(MobEffects.JUMP, 9600, 1));
-			ULTIMATE_FIRE_RESISTANCE = new AdvancedPotion("ultimate_fire_resistance", new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 19200));
-			ULTIMATE_SWIFTNESS = new AdvancedPotion("ultimate_swiftness", new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 9600, 1));
-			ULTIMATE_SLOWNESS = new AdvancedPotion("ultimate_slowness", new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 1200, 3));
-			ULTIMATE_TURTLE_MASTER = new AdvancedPotion("ultimate_turtle_master", new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 800, 5), new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 800, 3));
-			ULTIMATE_WATER_BREATHING = new AdvancedPotion("ultimate_water_breathing", new MobEffectInstance(MobEffects.WATER_BREATHING, 19200));
-			ULTIMATE_HEALING = new AdvancedPotion("ultimate_healing", new MobEffectInstance(MobEffects.HEAL, 1, 2));
-			ULTIMATE_HARMING = new AdvancedPotion("ultimate_harming", new MobEffectInstance(MobEffects.HARM, 1, 2));
-			ULTIMATE_POISON = new AdvancedPotion("ultimate_poison", new MobEffectInstance(MobEffects.POISON, 1800, 1));
-			ULTIMATE_REGENERATION = new AdvancedPotion("ultimate_regeneration", new MobEffectInstance(MobEffects.REGENERATION, 1800, 1));
-			ULTIMATE_STRENGTH = new AdvancedPotion("ultimate_strength", new MobEffectInstance(MobEffects.DAMAGE_BOOST, 9600, 1));
-			ULTIMATE_WEAKNESS = new AdvancedPotion("ultimate_weakness", new MobEffectInstance(MobEffects.WEAKNESS, 9600));
-			ULTIMATE_SLOW_FALLING = new AdvancedPotion("ultimate_slow_falling", new MobEffectInstance(MobEffects.SLOW_FALLING, 9600));
+			ultimateNightVision = new AdvancedPotion("ultimate_night_vision", new MobEffectInstance(MobEffects.NIGHT_VISION, 19200));
+			ultimateInvisibility = new AdvancedPotion("ultimate_invisibility", new MobEffectInstance(MobEffects.INVISIBILITY, 19200));
+			ultimateLeaping = new AdvancedPotion("ultimate_leaping", new MobEffectInstance(MobEffects.JUMP, 9600, 1));
+			ultimateFireResistance = new AdvancedPotion("ultimate_fire_resistance", new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 19200));
+			ultimateSwiftness = new AdvancedPotion("ultimate_swiftness", new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 9600, 1));
+			ultimateSlowness = new AdvancedPotion("ultimate_slowness", new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 1200, 3));
+			ultimateTurtleMaster = new AdvancedPotion("ultimate_turtle_master", new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 800, 5), new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 800, 3));
+			ultimateWaterBreathing = new AdvancedPotion("ultimate_water_breathing", new MobEffectInstance(MobEffects.WATER_BREATHING, 19200));
+			ultimateHealing = new AdvancedPotion("ultimate_healing", new MobEffectInstance(MobEffects.HEAL, 1, 2));
+			ultimateHarming = new AdvancedPotion("ultimate_harming", new MobEffectInstance(MobEffects.HARM, 1, 2));
+			ultimatePoison = new AdvancedPotion("ultimate_poison", new MobEffectInstance(MobEffects.POISON, 1800, 1));
+			ultimateRegeneration = new AdvancedPotion("ultimate_regeneration", new MobEffectInstance(MobEffects.REGENERATION, 1800, 1));
+			ultimateStrength = new AdvancedPotion("ultimate_strength", new MobEffectInstance(MobEffects.DAMAGE_BOOST, 9600, 1));
+			ultimateWeakness = new AdvancedPotion("ultimate_weakness", new MobEffectInstance(MobEffects.WEAKNESS, 9600));
+			ultimateSlowFalling = new AdvancedPotion("ultimate_slow_falling", new MobEffectInstance(MobEffects.SLOW_FALLING, 9600));
 
-			HASTE = new AdvancedPotion("haste", new MobEffectInstance(MobEffects.DIG_SPEED, 3600));
-			LONG_HASTE = new AdvancedPotion("long_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 9600));
-			STRONG_HASTE = new AdvancedPotion("strong_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 1800, 1));
-			ULTIMATE_HASTE = new AdvancedPotion("ultimate_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 9600, 1));
+			haste = new AdvancedPotion("haste", new MobEffectInstance(MobEffects.DIG_SPEED, 3600));
+			longHaste = new AdvancedPotion("long_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 9600));
+			strongHaste = new AdvancedPotion("strong_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 1800, 1));
+			ultimateHaste = new AdvancedPotion("ultimate_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 9600, 1));
 
-			MOLTEN_HEART = new AdvancedPotion("molten_heart", new MobEffectInstance(moltenHeartEffect, 3600));
-			LONG_MOLTEN_HEART = new AdvancedPotion("long_molten_heart", new MobEffectInstance(moltenHeartEffect, 9600));
-			ULTIMATE_MOLTEN_HEART = new AdvancedPotion("ultimate_molten_heart", new MobEffectInstance(moltenHeartEffect, 19200));
+			moltenHeart = new AdvancedPotion("molten_heart", new MobEffectInstance(moltenHeartEffect, 3600));
+			longMoltenHeart = new AdvancedPotion("long_molten_heart", new MobEffectInstance(moltenHeartEffect, 9600));
+			ultimateMoltenHeart = new AdvancedPotion("ultimate_molten_heart", new MobEffectInstance(moltenHeartEffect, 19200));
 
-			EMPTY = new AdvancedPotion("empty");
+			emptyPotion = new AdvancedPotion("empty");
 
-			ultimatePotionTypes.add(ULTIMATE_NIGHT_VISION);
-			ultimatePotionTypes.add(ULTIMATE_INVISIBILITY);
-			ultimatePotionTypes.add(ULTIMATE_LEAPING);
-			ultimatePotionTypes.add(ULTIMATE_FIRE_RESISTANCE);
-			ultimatePotionTypes.add(ULTIMATE_SWIFTNESS);
-			ultimatePotionTypes.add(ULTIMATE_SLOWNESS);
-			ultimatePotionTypes.add(ULTIMATE_TURTLE_MASTER);
-			ultimatePotionTypes.add(ULTIMATE_WATER_BREATHING);
-			ultimatePotionTypes.add(ULTIMATE_HEALING);
-			ultimatePotionTypes.add(ULTIMATE_HARMING);
-			ultimatePotionTypes.add(ULTIMATE_POISON);
-			ultimatePotionTypes.add(ULTIMATE_REGENERATION);
-			ultimatePotionTypes.add(ULTIMATE_STRENGTH);
-			ultimatePotionTypes.add(ULTIMATE_WEAKNESS);
-			ultimatePotionTypes.add(ULTIMATE_SLOW_FALLING);
+			ultimatePotionTypes.add(ultimateNightVision);
+			ultimatePotionTypes.add(ultimateInvisibility);
+			ultimatePotionTypes.add(ultimateLeaping);
+			ultimatePotionTypes.add(ultimateFireResistance);
+			ultimatePotionTypes.add(ultimateSwiftness);
+			ultimatePotionTypes.add(ultimateSlowness);
+			ultimatePotionTypes.add(ultimateTurtleMaster);
+			ultimatePotionTypes.add(ultimateWaterBreathing);
+			ultimatePotionTypes.add(ultimateHealing);
+			ultimatePotionTypes.add(ultimateHarming);
+			ultimatePotionTypes.add(ultimatePoison);
+			ultimatePotionTypes.add(ultimateRegeneration);
+			ultimatePotionTypes.add(ultimateStrength);
+			ultimatePotionTypes.add(ultimateWeakness);
+			ultimatePotionTypes.add(ultimateSlowFalling);
 
-			commonPotionTypes.add(HASTE);
-			commonPotionTypes.add(LONG_HASTE);
-			commonPotionTypes.add(STRONG_HASTE);
-			ultimatePotionTypes.add(ULTIMATE_HASTE);
+			commonPotionTypes.add(haste);
+			commonPotionTypes.add(longHaste);
+			commonPotionTypes.add(strongHaste);
+			ultimatePotionTypes.add(ultimateHaste);
 
-			commonPotionTypes.add(MOLTEN_HEART);
-			commonPotionTypes.add(LONG_MOLTEN_HEART);
-			ultimatePotionTypes.add(ULTIMATE_MOLTEN_HEART);
+			commonPotionTypes.add(moltenHeart);
+			commonPotionTypes.add(longMoltenHeart);
+			ultimatePotionTypes.add(ultimateMoltenHeart);
 
 			logger.info("Advanced potion system initialized successfully.");
 		}

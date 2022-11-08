@@ -184,12 +184,12 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 
 	@Override
 	public SoundEvent getAOESoundOff() {
-		return EnigmaticLegacy.HHOFF;
+		return EnigmaticLegacy.soundChargedOff;
 	}
 
 	@Override
 	public SoundEvent getAOESoundOn() {
-		return EnigmaticLegacy.HHON;
+		return EnigmaticLegacy.soundChargedOn;
 	}
 
 	@Override
@@ -234,7 +234,7 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 
 	@Override
 	public SoundEvent getShieldTriggerSound() {
-		return EnigmaticLegacy.SHIELD_TRIGGER;
+		return EnigmaticLegacy.soundShieldTrigger;
 	}
 
 	@Override

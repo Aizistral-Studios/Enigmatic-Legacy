@@ -103,7 +103,7 @@ public class RevelationTome extends ItemBase implements Vanishable {
 				ExperienceHelper.addPlayerXP(player, xp);
 				SuperpositionHandler.setPersistentInteger(player, this.persistantPointsTag, currentPoints + revelation);
 
-				world.playSound(null, new BlockPos(player.position()), EnigmaticLegacy.LEARN, SoundSource.PLAYERS, 0.75f, 1.0f);
+				world.playSound(null, new BlockPos(player.position()), EnigmaticLegacy.soundLearn, SoundSource.PLAYERS, 0.75f, 1.0f);
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayer) player, this.theType, currentPoints + revelation);
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayer) player, TomeType.GENERIC, RevelationTome.getGenericPoints(player));
 			} else {

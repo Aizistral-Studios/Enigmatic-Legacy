@@ -209,7 +209,7 @@ public class LoreInscriberContainer extends AbstractContainerMenu {
 		this.craftSlotsInv.setItem(0, ItemStack.EMPTY);
 
 		if (!player.level.isClientSide) {
-			player.level.playSound(null, player.blockPosition(), EnigmaticLegacy.WRITE, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
+			player.level.playSound(null, player.blockPosition(), EnigmaticLegacy.soundWrite, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 		}
 
 		return stack;
