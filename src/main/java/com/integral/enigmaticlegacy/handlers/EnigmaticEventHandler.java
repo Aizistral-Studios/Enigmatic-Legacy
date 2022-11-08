@@ -363,13 +363,11 @@ public class EnigmaticEventHandler {
 	public static final Map<Player, Float> lastHealth = new WeakHashMap<>();
 	public static final Map<Player, Integer> lastSoulCompassUpdate = new WeakHashMap<>();
 
-	public static Predicate<Item> fancyTooltipFrame = item -> false;
 	public static BiFunction<Player, Player, Float> evenMoreKnockback = (victim, player) -> 0F;
 
 	public static int scheduledCubeRevive = -1;
 	public static boolean isPoisonHurt = false;
 	public static boolean isApplyingNightVision = false;
-	private static boolean handlingTooltip = false;
 	private long clientWorldTicks = 0;
 
 
@@ -431,17 +429,13 @@ public class EnigmaticEventHandler {
 		}
 	}
 
+	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
-	@SubscribeEvent(priority = EventPriority.HIGHEST)
-	public void onTooltipRendering(RenderTooltipEvent.Pre event) {
-		if (handlingTooltip)
-			return;
-
+	public void onTooltipRendering(RenderTooltipEvent.Color event) {
 		ItemStack stack = event.getItemStack();
 
 		if (stack != null && !stack.isEmpty()) { // cause I don't trust you Forge
 			if (stack.getItem().getRegistryName().getNamespace().equals(EnigmaticLegacy.MODID)) {
-				event.setCanceled(handlingTooltip = true);
 				int background = GuiUtils.DEFAULT_BACKGROUND_COLOR;
 				int borderStart = GuiUtils.DEFAULT_BORDER_COLOR_START;
 				int borderEnd = GuiUtils.DEFAULT_BORDER_COLOR_END;
@@ -452,149 +446,17 @@ public class EnigmaticEventHandler {
 					borderEnd = borderStart;
 					//borderStart = 0x50656565;
 					//borderEnd = (borderStart & 0xFEFEFE) >> 1 | borderStart & 0xFF000000;
-				} else if (fancyTooltipFrame.test(stack.getItem())) {
+				} else if (stack.getItem() == cosmicScroll) {
 					background = 0xF0100010;
 					borderStart = 0xB0A800A8;
 					borderEnd = (borderStart & 0x3E3E3E) >> 1 | borderStart & 0xFF000000;
 					//borderEnd = borderStart;
 				}
 
-				drawHoveringText(event.getItemStack(), event.getPoseStack(), event.getComponents(), event.getX(),
-						event.getY(), event.getScreenWidth(), event.getScreenHeight(),
-						background, borderStart, borderEnd, event.getFont(), false);
-				handlingTooltip = false;
+				event.setBackground(background);
+				event.setBorderStart(borderStart);
+				event.setBorderEnd(borderEnd);
 			}
-		}
-	}
-
-
-	/**
-	 * Fucking shame I have to do this manually to fix blasted autowrapping.
-	 * No idea how this works but at least it does.
-	 */
-
-	@OnlyIn(Dist.CLIENT)
-	public static void drawHoveringText(ItemStack stack, PoseStack mStack, List<ClientTooltipComponent> list, int mouseX, int mouseY, int screenWidth, int screenHeight, int backgroundColor, int borderColorStart, int borderColorEnd, Font font, boolean secondary) {
-		int maxTextWidth = -1;
-
-		if (!list.isEmpty()) {
-			if (!secondary) {
-				RenderTooltipEvent.Pre event = new RenderTooltipEvent.Pre(stack, mStack, mouseX, mouseY, screenWidth, screenHeight, font, list);
-				if (MinecraftForge.EVENT_BUS.post(event))
-					return;
-
-				mouseX = event.getX();
-				mouseY = event.getY();
-				screenWidth = event.getScreenWidth();
-				screenHeight = event.getScreenHeight();
-				font = event.getFont();
-			}
-			int tooltipTextWidth = 0;
-
-			for (ClientTooltipComponent textLine : list) {
-				int textLineWidth = textLine.getWidth(font);
-				if (textLineWidth > tooltipTextWidth) {
-					tooltipTextWidth = textLineWidth;
-				}
-			}
-
-			int tooltipTextWidthReal = tooltipTextWidth;
-
-			boolean needsWrap = false;
-
-			int titleLinesCount = 1;
-			int tooltipX = mouseX + 12;
-			if (tooltipX + tooltipTextWidth + 4 > screenWidth) {
-				tooltipX = mouseX - 16 - tooltipTextWidth;
-				if (tooltipX < 4) {
-					if (mouseX > screenWidth / 2) {
-						if (!secondary) {
-							drawHoveringText(stack, mStack, list, tooltipTextWidthReal + 20, mouseY, screenWidth,
-									screenHeight, backgroundColor, borderColorStart, borderColorEnd, font, true);
-							return;
-						}
-					} else {
-						if (!secondary) {
-							drawHoveringText(stack, mStack, list, tooltipTextWidthReal + 20, mouseY, screenWidth,
-									screenHeight, backgroundColor, borderColorStart, borderColorEnd, font, true);
-							return;
-						}
-					}
-				}
-			}
-
-			int tooltipY = mouseY - 12;
-			int tooltipHeight = 8;
-
-			if (list.size() > 1) {
-				tooltipHeight += (list.size() - 1) * 10;
-				if (list.size() > titleLinesCount)
-				{
-					tooltipHeight += 2; // gap between title lines and next lines
-				}
-			}
-
-			if (tooltipY < 4) {
-				tooltipY = 4;
-			} else if (tooltipY + tooltipHeight + 4 > screenHeight) {
-				tooltipY = screenHeight - tooltipHeight - 4;
-			}
-
-			final int zLevel = 400;
-			RenderTooltipEvent.Color colorEvent = new RenderTooltipEvent.Color(stack, mStack, tooltipX, tooltipY, font, backgroundColor, borderColorStart, borderColorEnd, list);
-			MinecraftForge.EVENT_BUS.post(colorEvent);
-			backgroundColor = colorEvent.getBackgroundStart();
-			borderColorStart = colorEvent.getBorderStart();
-			borderColorEnd = colorEvent.getBorderEnd();
-
-			if (tooltipX <= 4) {
-				tooltipX++;
-			}
-			if (tooltipY + tooltipHeight + 6 >= screenHeight) {
-				tooltipY -= 2;
-			}
-
-			//RenderSystem.disableRescaleNormal();
-			RenderSystem.disableDepthTest();
-
-			mStack.pushPose();
-			Matrix4f mat = mStack.last().pose();
-
-			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY - 4, tooltipX + tooltipTextWidth + 3, tooltipY - 3, backgroundColor, backgroundColor);
-			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY + tooltipHeight + 3, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 4, backgroundColor, backgroundColor);
-			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY - 3, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3, backgroundColor, backgroundColor);
-			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 4, tooltipY - 3, tooltipX - 3, tooltipY + tooltipHeight + 3, backgroundColor, backgroundColor);
-			GuiUtils.drawGradientRect(mat, zLevel, tooltipX + tooltipTextWidth + 3, tooltipY - 3, tooltipX + tooltipTextWidth + 4, tooltipY + tooltipHeight + 3, backgroundColor, backgroundColor);
-			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY - 3 + 1, tooltipX - 3 + 1, tooltipY + tooltipHeight + 3 - 1, borderColorStart, borderColorEnd);
-			GuiUtils.drawGradientRect(mat, zLevel, tooltipX + tooltipTextWidth + 2, tooltipY - 3 + 1, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3 - 1, borderColorStart, borderColorEnd);
-			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY - 3, tooltipX + tooltipTextWidth + 3, tooltipY - 3 + 1, borderColorStart, borderColorStart);
-			GuiUtils.drawGradientRect(mat, zLevel, tooltipX - 3, tooltipY + tooltipHeight + 2, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3, borderColorEnd, borderColorEnd);
-
-			MultiBufferSource.BufferSource renderType = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
-			mStack.translate(0.0D, 0.0D, zLevel);
-
-			int tooltipTop = tooltipY;
-
-			for (int lineNumber = 0; lineNumber < list.size(); ++lineNumber) {
-				ClientTooltipComponent component = list.get(lineNumber);
-				if (component != null) {
-					component.renderText(font, tooltipX, tooltipY, mat, renderType);
-					//font.drawInBatch(line, tooltipX, tooltipY, -1, true, mat, renderType, false, 0, 15728880);
-				}
-
-				if (lineNumber + 1 == titleLinesCount) {
-					tooltipY += 2;
-				}
-
-				tooltipY += 10;
-
-			}
-
-			renderType.endBatch();
-			mStack.popPose();
-
-			RenderSystem.enableDepthTest();
-			//RenderSystem.enableRescaleNormal();
 		}
 	}
 
