@@ -290,6 +290,7 @@ import net.minecraftforge.event.entity.EntityTeleportEvent.EnderPearl;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.AnimalTameEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -3117,16 +3118,16 @@ public class EnigmaticEventHandler {
 
 
 	@SubscribeEvent
-	public void onAttackTargetSet(LivingSetAttackTargetEvent event) {
-		if (event.getTarget() instanceof Player) {
-			Player player = (Player) event.getTarget();
+	public void onAttackTargetSet(LivingChangeTargetEvent event) {
+		if (event.getNewTarget() instanceof Player) {
+			Player player = (Player) event.getNewTarget();
 
 			if (event.getEntityLiving() instanceof Mob) {
 				Mob insect = (Mob) event.getEntityLiving();
 
 				if (insect.getMobType() == MobType.ARTHROPOD)
 					if (SuperpositionHandler.hasAntiInsectAcknowledgement(player)) {
-						insect.setTarget(null);
+						event.setCanceled(true);
 					}
 
 				if (insect instanceof Guardian && insect.getClass() != ElderGuardian.class) {
@@ -3134,7 +3135,7 @@ public class EnigmaticEventHandler {
 						boolean isBlacklisted = angeredGuardians.containsEntry(player, insect);
 
 						if (insect.getLastHurtByMob() != player && !isBlacklisted) {
-							insect.setTarget(null);
+							event.setCanceled(true);
 						} else {
 							if (!isBlacklisted) {
 								angeredGuardians.put(player, (Guardian)insect);
@@ -3142,9 +3143,7 @@ public class EnigmaticEventHandler {
 						}
 					}
 				}
-
 			}
-
 		}
 	}
 

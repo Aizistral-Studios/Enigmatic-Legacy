@@ -44,39 +44,3 @@ ${mod_description}
     versionRange="${dep_caelus}"
     ordering="NONE"
     side="BOTH"
-	
-[[mods]]
-modId="${lockbox_id}"
-version="${lockbox_version}"
-displayName="${lockbox_name}"
-displayURL="${mod_url}"
-logoFile="${mod_icon}"
-credits="${lockbox_credits}"
-authors="${mod_author}"
-description='''
-${lockbox_description}
-'''
-[[dependencies.${lockbox_id}]]
-    modId="forge"
-    mandatory=true
-    versionRange="${dep_forge}"
-    ordering="NONE"
-    side="BOTH"
-[[dependencies.${lockbox_id}]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="${dep_minecraft}"
-    ordering="NONE"
-    side="BOTH"
-[[dependencies.${lockbox_id}]]
-    modId="curios"
-    mandatory=true
-    versionRange="${dep_curios}"
-    ordering="NONE"
-    side="BOTH"
-[[dependencies.${lockbox_id}]]
-    modId="${mod_id}"
-    mandatory=true
-    versionRange="${mod_version}"
-    ordering="NONE"
-    side="BOTH"

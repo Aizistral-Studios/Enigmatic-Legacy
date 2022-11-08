@@ -116,20 +116,6 @@ tasks.withType(Jar) {
     }
 }
 
-task finalJar(type: Jar) {
-	classifier = 'final'
-	
-	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-	from zipTree('build/libs/' + archivesBaseName + '-' + version + '.jar')
-	from zipTree('lockbox/EnigmaticLockbox-' + lockbox_version + '.jar')
-}
-
-task renameJar {
-	doLast {
-		ant.move(file: 'build/libs/' + archivesBaseName + '-' + version + '-final.jar', tofile: 'build/libs/' + archivesBaseName + '-' + version + '.jar')
-	}
-}
-
 processResources {
 	doFirst {
 		println("Processing resources...")
@@ -152,7 +138,7 @@ processResources {
         include 'mods.toml'
         expand 'mod_license': mod_license, 
 		'mod_version': project.version, 
-		'mod_id' : mod_id, 
+		'mod_id': mod_id, 
 		'mod_name': mod_name, 
 		'mod_url': mod_url, 
 		'mod_author': mod_author, 
@@ -164,13 +150,8 @@ processResources {
 		'dep_minecraft': dep_minecraft, 
 		'dep_patchouli': dep_patchouli, 
 		'dep_curios': dep_curios,
-		'dep_caelus': dep_caelus,
-		'lockbox_id': lockbox_id,
-		'lockbox_name': lockbox_name,
-		'lockbox_version': lockbox_version,
-		'lockbox_credits': lockbox_credits,
-		'lockbox_description': lockbox_description
-		rename 'mods.toml', "META-INF/mods.toml"
+		'dep_caelus': dep_caelus
+		rename 'mods.toml', 'META-INF/mods.toml'
     }
 
     from("${project.projectDir}/docs") {
@@ -187,10 +168,3 @@ task updateResources() {
 }
 
 tasks.updateResources.dependsOn processResources
-
-project.afterEvaluate {
-	reobfJar.finalizedBy('finalJar')
-	finalJar.finalizedBy('renameJar')
-	
-	tasks.named('curseforge').get().dependsOn('renameJar')
-}

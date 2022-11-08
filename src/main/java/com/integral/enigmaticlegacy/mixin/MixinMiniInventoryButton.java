@@ -11,7 +11,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 @Mixin(targets = "vazkii.quark.content.management.client.screen.widgets.MiniInventoryButton")
 public class MixinMiniInventoryButton {
 
-	@Redirect(method = "render", at = @At(value = "INVOKE", remap = false,
+	@Redirect(method = { "render", "m_6305_" }, remap = false, at = @At(value = "INVOKE", remap = false,
 			target = "Lnet/minecraft/client/gui/screens/inventory/AbstractContainerScreen;getGuiLeft()I"))
 	private int onGetGuiLeft(AbstractContainerScreen<?> parent) {
 		return parent.getGuiLeft() + 2;

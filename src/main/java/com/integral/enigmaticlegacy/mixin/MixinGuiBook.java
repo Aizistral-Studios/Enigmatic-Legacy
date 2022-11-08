@@ -23,7 +23,7 @@ public class MixinGuiBook {
 	 * @author Aizistral
 	 */
 
-	@Inject(method = "openWebLink", at = @At("HEAD"), cancellable = true, require = 0)
+	@Inject(method = "openWebLink", at = @At("HEAD"), cancellable = true, require = 0, remap = false)
 	private static void onOpenWebLink(Screen prevScreen, String address, CallbackInfo info) {
 		if (prevScreen instanceof GuiBookEntry entry) {
 			if (EnigmaticLegacy.MODID.equals(entry.book.getModNamespace())) {
