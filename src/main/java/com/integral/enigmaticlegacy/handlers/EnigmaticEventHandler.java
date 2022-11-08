@@ -1146,16 +1146,17 @@ public class EnigmaticEventHandler {
 				}
 			}
 
-			if (player.isSleeping() && SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing)) {
-				if (player.getSleepTimer() == 5) {
-					if (player instanceof ServerPlayer) {
-						player.sendMessage(new TranslatableComponent("message.enigmaticlegacy.cursed_sleep")
-								.withStyle(ChatFormatting.RED), Util.NIL_UUID);
+			if (!CursedRing.disableInsomnia.getValue())
+				if (player.isSleeping() && SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing)) {
+					if (player.getSleepTimer() == 5) {
+						if (player instanceof ServerPlayer) {
+							player.sendMessage(new TranslatableComponent("message.enigmaticlegacy.cursed_sleep")
+									.withStyle(ChatFormatting.RED), Util.NIL_UUID);
+						}
+					} else if (player.getSleepTimer() > 90) {
+						player.sleepCounter = 90;
 					}
-				} else if (player.getSleepTimer() > 90) {
-					player.sleepCounter = 90;
 				}
-			}
 
 			if (player.isOnFire() && SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing)) {
 				player.setRemainingFireTicks(player.getRemainingFireTicks()+2);
