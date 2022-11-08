@@ -1583,13 +1583,14 @@ public class EnigmaticEventHandler {
 						arrow.yRotO = arrow.getYRot() + 180.0F;
 						arrow.setYRot(arrow.getYRot() + 180.0F);;
 
-						if (arrow instanceof AbstractArrow) {
-							if (!(arrow instanceof ThrownTrident)) {
-								((AbstractArrow) arrow).setOwner(player);
+						if (arrow instanceof AbstractArrow absar) {
+							if (!(absar instanceof ThrownTrident)) {
+								absar.setOwner(player);
 							}
 
-							((AccessorAbstractArrowEntity)arrow).clearHitEntities();
-							((AbstractArrow) arrow).pickup = Pickup.CREATIVE_ONLY;
+							((AccessorAbstractArrowEntity)absar).clearHitEntities();
+							absar.pickup = Pickup.CREATIVE_ONLY;
+							absar.setPierceLevel((byte) 0);
 						} else if (arrow instanceof AbstractHurtingProjectile) {
 							((AbstractHurtingProjectile) arrow).setOwner(player);
 
