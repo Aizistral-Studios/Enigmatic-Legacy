@@ -129,16 +129,16 @@ public class AnimalGuide extends ItemBase implements Vanishable {
 
 				var entries = ForgeRegistries.ENTITIES.getEntries();
 
-				EnigmaticLegacy.logger.info("Checking up the list of " + entries.size() + " entities to find which are affected by curse-altering effect of Guide to Animal Companionship...");
+				EnigmaticLegacy.LOGGER.info("Checking up the list of " + entries.size() + " entities to find which are affected by curse-altering effect of Guide to Animal Companionship...");
 				ForgeRegistries.ENTITIES.getEntries().forEach(entry -> {
 					EntityType<?> type = entry.getValue();
 
 					if (TamableAnimal.class.isAssignableFrom(type.getBaseClass()) || animalExclusionList.contains(type.getRegistryName())) {
-						EnigmaticLegacy.logger.info(" - Entity: " + type.getRegistryName() + ", Class: " + type.getBaseClass());
+						EnigmaticLegacy.LOGGER.info(" - Entity: " + type.getRegistryName() + ", Class: " + type.getBaseClass());
 					}
 				});
 
-				EnigmaticLegacy.logger.info("The analysis is complete.");
+				EnigmaticLegacy.LOGGER.info("The analysis is complete.");
 				player.sendMessage(new TranslatableComponent("message.enigmaticlegacy.animal_analysis_complete").withStyle(ChatFormatting.DARK_PURPLE), player.getUUID());
 			}
 

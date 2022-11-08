@@ -1802,8 +1802,39 @@
 	"book.enigmaticlegacy.entry.end_anchor.page.4": "is not the safest of places to traverse, most so when stripped of flesh... You cannot help but wonder what terrible places await those who are mislead by the light of their beacons, and what grisly fate befalls them in there.",
 	
 	
-	"book.enigmaticlegacy.landing_text": "In front of you lies the well of great knowledge, a place where some of this world's greatest mysteries belong, scrupulously researched and carefully catalogized.<br2/>As your journey continues and the world reveals itself to you, you may revisit and behold knowledge you gathered within these pages."
+	"book.enigmaticlegacy.landing_text": "In front of you lies the well of great knowledge, a place where some of this world's greatest mysteries belong, scrupulously researched and carefully catalogized.<br2/>As your journey continues and the world reveals itself to you, you may revisit and behold knowledge you gathered within these pages.",
 	
-
-
+	"item.enigmaticlegacy.cosmic_scroll": "The Architect's Favor",
+		
+	"advancement.enigmaticlegacy:cosmicScroll": "Retainer of the Divine",
+	"advancement.enigmaticlegacy:cosmicScroll.desc": "Perform pilgrimage to The Architect's domain and become his devoted believer, earning the right to bear his mark and blessing",
+	
+	"tooltip.enigmaticlegacy.blessedOnesOnly1": "Only those chosen by The Architect",
+	"tooltip.enigmaticlegacy.blessedOnesOnly2": "hold power to obtain and use this item.",
+	
+	"tooltip.enigmaticlegacy.blessed1": "§5It's power is magnified by presence of",
+	"tooltip.enigmaticlegacy.blessed2": "§5one chosen by The Architect himself.",
+	
+	"tooltip.enigmaticlegacy.cosmicScrollLore1": "§5Observing loss of faith pains my heart, but",
+	"tooltip.enigmaticlegacy.cosmicScrollLore2": "§5may it not cast into doubt those who remain.",
+	"tooltip.enigmaticlegacy.cosmicScroll1": "§6+1 §dLuck",
+	"tooltip.enigmaticlegacy.cosmicScroll2": "§6+1 §dArcane Scroll Slot",
+	"tooltip.enigmaticlegacy.cosmicScroll3": "§5If you wear full set of §6Etherium Armor§5, shield",
+	"tooltip.enigmaticlegacy.cosmicScroll4": "§5only requires you to be below §6%1$s§5 of maximum",
+	"tooltip.enigmaticlegacy.cosmicScroll5": "§5health to appear.",
+	"tooltip.enigmaticlegacy.cosmicScroll6": "§5Active ability cooldown of most spellstones is",
+	"tooltip.enigmaticlegacy.cosmicScroll7": "§5substantially reduced.",
+	"tooltip.enigmaticlegacy.cosmicScroll8": "§6Etherium Tools§5 mine in increased area.",
+	"tooltip.enigmaticlegacy.cosmicScroll9": "§5When you receive lethal damage, your health is",
+	"tooltip.enigmaticlegacy.cosmicScroll10": "§5restored to §650%§5 and powerful buffs are applied.",
+	"tooltip.enigmaticlegacy.cosmicScroll11": "§5This ability has §6%1$s §6seconds§5 cooldown.",
+	"tooltip.enigmaticlegacy.cosmicScroll12": "§5You deal §6+%1$s §dDamage§5 and §6+%2$s §dKnockback§5 to",
+	"tooltip.enigmaticlegacy.cosmicScroll13": "§5players who are not chosen, and your melee",
+	"tooltip.enigmaticlegacy.cosmicScroll14": "§5attacks set them ablaze.",
+	"tooltip.enigmaticlegacy.cosmicScrollCooldown": "§dRemaining Cooldown: §6%1$s §6seconds",
+	
+	"book.enigmaticlegacy.entry.cosmic_scroll.name": "The Architect's Favor",
+	"book.enigmaticlegacy.entry.cosmic_scroll.page.1": "The might of this rumor-shadowed scroll is denied to most demigods, even those who have approached the godship rather close. Who is permitted to possess it is at the discretion of The Architect himself, and as rumors would have it - the journey to $(l:https://discord.gg/fuWK8ns)his domain$(/l) is long and full of dangers, and to be noticed by that godly being is an honor few of its dwellers ever had.",
+	"book.enigmaticlegacy.entry.cosmic_scroll.page.2": "Those who did, however, are awarded with power which has no equal; for the world to bask in their glory, and for them to spread the faith to the ears and eyes of others."
+	
 }

@@ -1041,16 +1041,16 @@ public class Configuration {
 		}
 
 		if (!Objects.equals(this.loadedConfigVersion, this.definedConfigVersion) && !this.firstLoadPassed) {
-			EnigmaticLegacy.logger.info("Loaded config version does not match defined version!");
-			EnigmaticLegacy.logger.info("Loaded version: " + this.loadedConfigVersion + ", provider-defined version: " + this.definedConfigVersion);
+			EnigmaticLegacy.LOGGER.info("Loaded config version does not match defined version!");
+			EnigmaticLegacy.LOGGER.info("Loaded version: " + this.loadedConfigVersion + ", provider-defined version: " + this.definedConfigVersion);
 
 			if (this.versioningPolicy == VersioningPolicy.AGGRESSIVE) {
-				EnigmaticLegacy.logger.info("The config updating policy is defined as " + this.versioningPolicy.toString() + "; full reset of config file will be executed.");
+				EnigmaticLegacy.LOGGER.info("The config updating policy is defined as " + this.versioningPolicy.toString() + "; full reset of config file will be executed.");
 
 				this.categories.clear();
 				this.children.clear();
 			} else if (this.versioningPolicy == VersioningPolicy.DISMISSIVE) {
-				EnigmaticLegacy.logger.info("The config updating policy is defined as " + this.versioningPolicy.toString() + "; everythying in the config file will be left untouched, apart from config version parameter being updated.");
+				EnigmaticLegacy.LOGGER.info("The config updating policy is defined as " + this.versioningPolicy.toString() + "; everythying in the config file will be left untouched, apart from config version parameter being updated.");
 			} else if (this.versioningPolicy == VersioningPolicy.RESPECTFUL) {
 				// NO-OP
 			} else if (this.versioningPolicy == VersioningPolicy.NOBLE) {
@@ -1084,7 +1084,7 @@ public class Configuration {
 				this.loadFile();
 			} catch (Throwable e) {
 				File fileBak = new File(this.file.getAbsolutePath() + "_" + new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date()) + ".errored");
-				EnigmaticLegacy.logger.error("An exception occurred while loading config file " + this.file.getName() + ". This file will be renamed to " + fileBak.getName() +  " and a new config file will be generated.");
+				EnigmaticLegacy.LOGGER.error("An exception occurred while loading config file " + this.file.getName() + ". This file will be renamed to " + fileBak.getName() +  " and a new config file will be generated.");
 				e.printStackTrace();
 
 				this.file.renameTo(fileBak);
@@ -1726,10 +1726,10 @@ public class Configuration {
 		try {
 			return Double.parseDouble(prop.getString()) < minValue ? minValue : (Double.parseDouble(prop.getString()) > maxValue ? maxValue : Double.parseDouble(prop.getString()));
 		} catch (Exception e) {
-			EnigmaticLegacy.logger.warn("Invalid value specified for '" + name + "' in category '" + category + "': " + prop.getString());
-			EnigmaticLegacy.logger.warn("Default value will be used: " + defaultValue);
-			EnigmaticLegacy.logger.warn("Stacktrace: ");
-			EnigmaticLegacy.logger.catching(e);
+			EnigmaticLegacy.LOGGER.warn("Invalid value specified for '" + name + "' in category '" + category + "': " + prop.getString());
+			EnigmaticLegacy.LOGGER.warn("Default value will be used: " + defaultValue);
+			EnigmaticLegacy.LOGGER.warn("Stacktrace: ");
+			EnigmaticLegacy.LOGGER.catching(e);
 		}
 		return defaultValue;
 	}

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.ChatFormatting;
@@ -54,6 +55,20 @@ public class ItemLoreHelper {
 		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.worthyOnesOnly3"));
 		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.void"));
 		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.worthyOnesOnly4").withStyle(format).append(new TextComponent(" " + SuperpositionHandler.getSufferingTime(player)).withStyle(ChatFormatting.LIGHT_PURPLE)));
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public static void indicateBlessedOnesOnly(List<Component> list) {
+		ChatFormatting format;
+
+		if (EnigmaticLegacy.PROXY.getClientPlayer() != null) {
+			format = SuperpositionHandler.isTheBlessedOne(EnigmaticLegacy.PROXY.getClientPlayer()) ? ChatFormatting.GOLD : ChatFormatting.DARK_RED;
+		} else {
+			format = ChatFormatting.DARK_RED;
+		}
+
+		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.blessedOnesOnly1").withStyle(format));
+		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.blessedOnesOnly2").withStyle(format));
 
 	}
 

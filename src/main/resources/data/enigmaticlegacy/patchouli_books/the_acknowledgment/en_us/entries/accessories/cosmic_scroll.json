@@ -1,0 +1,22 @@
+{
+    "name": "book.enigmaticlegacy.entry.cosmic_scroll.name",
+    "icon": "enigmaticlegacy:cosmic_scroll",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/cosmic_scroll_obscure",
+    "secret": true,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 180,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cosmic_scroll.page.1"
+        },
+		{
+            "type": "enigmaticlegacy:hidden_crafting",
+			"recipe": "enigmaticlegacy:cosmic_scroll",
+            "heading": " ",
+            "text": "book.enigmaticlegacy.entry.cosmic_scroll.page.2"
+        }
+    ]
+}

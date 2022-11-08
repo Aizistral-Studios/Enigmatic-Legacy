@@ -44,7 +44,7 @@ public class BeholderThread extends Thread {
 			WatchKey key = beheldPath
 					.register(service, new WatchEvent.Kind[] {ENTRY_MODIFY, ENTRY_CREATE, ENTRY_DELETE}, FILE_TREE);
 
-			EnigmaticLegacy.logger.info("BEHELD PATH: " + beheldPath);
+			EnigmaticLegacy.LOGGER.info("BEHELD PATH: " + beheldPath);
 
 			new BeholderThread(key, Thread.currentThread().getContextClassLoader()).start();
 		} catch (IOException e) {
@@ -77,13 +77,13 @@ public class BeholderThread extends Thread {
 				e.printStackTrace();
 			}
 
-			EnigmaticLegacy.logger.info("Updated Eclipse resource files!");
+			EnigmaticLegacy.LOGGER.info("Updated Eclipse resource files!");
 		}
 	}
 
 	@Override
 	public void run() {
-		EnigmaticLegacy.logger.info("I AM ALIVE");
+		EnigmaticLegacy.LOGGER.info("I AM ALIVE");
 
 		while (true) {
 
@@ -121,7 +121,7 @@ public class BeholderThread extends Thread {
 							filename = new File(name).toPath();
 						}
 
-						EnigmaticLegacy.logger.info("RECEIVED EVENT FOR FILE: " + filename + ", EVENT: " + kind.name());
+						EnigmaticLegacy.LOGGER.info("RECEIVED EVENT FOR FILE: " + filename + ", EVENT: " + kind.name());
 
 						if (kind == ENTRY_DELETE) {
 
@@ -149,8 +149,8 @@ public class BeholderThread extends Thread {
 								File newFile = new File(copyPathGradle.toFile(), filename.toString());
 								File oldFile = new File(beheldPath.toFile(), filename.toString());
 
-								EnigmaticLegacy.logger.info("Upating Gradle resources... ");
-								EnigmaticLegacy.logger.info("Copying " + oldFile + " to " + newFile);
+								EnigmaticLegacy.LOGGER.info("Upating Gradle resources... ");
+								EnigmaticLegacy.LOGGER.info("Copying " + oldFile + " to " + newFile);
 
 								mkdirsFor(newFile);
 								try {
@@ -162,8 +162,8 @@ public class BeholderThread extends Thread {
 								File newFile = new File(copyPathEclipse.toFile(), filename.toString());
 								File oldFile = new File(beheldPath.toFile(), filename.toString());
 
-								EnigmaticLegacy.logger.info("Upating Eclipse resources... ");
-								EnigmaticLegacy.logger.info("Copying " + oldFile + " to " + newFile);
+								EnigmaticLegacy.LOGGER.info("Upating Eclipse resources... ");
+								EnigmaticLegacy.LOGGER.info("Copying " + oldFile + " to " + newFile);
 
 								mkdirsFor(newFile);
 								try {
@@ -181,7 +181,7 @@ public class BeholderThread extends Thread {
 					}
 
 
-					EnigmaticLegacy.logger.info("BUILD RESOURCES UPDATED!");
+					EnigmaticLegacy.LOGGER.info("BUILD RESOURCES UPDATED!");
 
 					break;
 				}
@@ -193,7 +193,7 @@ public class BeholderThread extends Thread {
 				boolean valid = this.key.reset();
 
 				if (!valid) {
-					EnigmaticLegacy.logger.info("KEY INVALIDATED; EXITING BEHOLDER THREAD");
+					EnigmaticLegacy.LOGGER.info("KEY INVALIDATED; EXITING BEHOLDER THREAD");
 					break;
 				}
 			}
@@ -206,7 +206,7 @@ public class BeholderThread extends Thread {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 		String line = "";
 		while ((line = reader.readLine()) != null) {
-			EnigmaticLegacy.logger.info(line);
+			EnigmaticLegacy.LOGGER.info(line);
 		}
 	}
 
@@ -238,7 +238,7 @@ public class BeholderThread extends Thread {
 					if (!(ex instanceof FileAlreadyExistsException)) {
 						ex.printStackTrace();
 					} else {
-						EnigmaticLegacy.logger.debug("Could not overwrite already existing file for Eclipse build: " + s.toFile().getName());
+						EnigmaticLegacy.LOGGER.debug("Could not overwrite already existing file for Eclipse build: " + s.toFile().getName());
 					}
 				}
 			});

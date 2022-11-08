@@ -106,7 +106,7 @@ public class Infinimeal extends ItemBase implements Vanishable {
 					return result;
 
 				if (world.isClientSide) {
-					EnigmaticLegacy.proxy.spawnBonemealParticles(world, pos, 0);
+					EnigmaticLegacy.PROXY.spawnBonemealParticles(world, pos, 0);
 				}
 
 				int cycles = 7+random.nextInt(7);

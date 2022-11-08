@@ -12,6 +12,7 @@ import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.items.CosmicScroll;
 import com.integral.enigmaticlegacy.objects.Perhaps;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
 import com.integral.etherium.core.IEtheriumConfig;
@@ -40,8 +41,6 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 	private static Omniconfig.IntParameter shovelMiningRadius;
 	private static Omniconfig.IntParameter shovelMiningDepth;
 	private static Omniconfig.IntParameter swordCooldown;
-	public static BiFunction<Player, Perhaps, Perhaps> shieldOperator = (one, two) -> two;
-	public static BiFunction<Player, Integer, Integer> aoeOperator = (one, two) -> two;
 
 	public EtheriumConfigHandler() {
 		Preconditions.checkArgument(instance == null, "Etherium config handler already created!");
@@ -163,7 +162,8 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 	public Perhaps getShieldThreshold(@Nullable Player player) {
 		if (player != null) {
 			try {
-				return shieldOperator.apply(player, shieldThreshold.getValue());
+				if (SuperpositionHandler.hasArchitectsFavor(player))
+					return CosmicScroll.etheriumShieldThreshold.getValue();
 			} catch (Exception ex) {
 				// NO-OP
 			}
@@ -244,7 +244,7 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 
 	@Override
 	public int getAOEBoost(@Nullable Player player) {
-		return player != null ? aoeOperator.apply(player, 0) : 0;
+		return player != null && SuperpositionHandler.hasArchitectsFavor(player) ? 2 : 0;
 	}
 
 }

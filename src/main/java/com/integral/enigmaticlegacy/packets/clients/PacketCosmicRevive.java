@@ -41,15 +41,15 @@ public class PacketCosmicRevive {
 	public static void handle(PacketCosmicRevive msg, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
 			if (msg.reviveType == 0) {
-				EnigmaticLegacy.proxy.displayReviveAnimation(msg.entityID, msg.reviveType);
+				EnigmaticLegacy.PROXY.displayReviveAnimation(msg.entityID, msg.reviveType);
 			} else {
-				Player player = EnigmaticLegacy.proxy.getClientPlayer();
+				Player player = EnigmaticLegacy.PROXY.getClientPlayer();
 				Entity entity = player.level.getEntity(msg.entityID);
 
 				if (entity == player) {
 					EnigmaticEventHandler.scheduledCubeRevive = 5;
 				} else {
-					EnigmaticLegacy.proxy.displayReviveAnimation(msg.entityID, msg.reviveType);
+					EnigmaticLegacy.PROXY.displayReviveAnimation(msg.entityID, msg.reviveType);
 				}
 			}
 		});

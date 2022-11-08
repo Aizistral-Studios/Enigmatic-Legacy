@@ -66,7 +66,7 @@ public class SoulArchive {
 				IOUtils.write(this.saveToBytes(), out);
 			}
 		} catch (Exception ex) {
-			EnigmaticLegacy.logger.fatal("FAILED TO SAVE FILE: " + this.saveFile);
+			EnigmaticLegacy.LOGGER.fatal("FAILED TO SAVE FILE: " + this.saveFile);
 			throw new RuntimeException(ex);
 		}
 	}
@@ -81,7 +81,7 @@ public class SoulArchive {
 				this.loadFromBytes(bytes);
 			}
 		} catch (Exception ex) {
-			EnigmaticLegacy.logger.fatal("FAILED TO LOAD FILE: " + this.saveFile);
+			EnigmaticLegacy.LOGGER.fatal("FAILED TO LOAD FILE: " + this.saveFile);
 			throw new RuntimeException(ex);
 		}
 	}

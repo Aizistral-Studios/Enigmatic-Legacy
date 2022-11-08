@@ -42,12 +42,6 @@ public class EnigmaticJEIPlugin implements IModPlugin {
 
 		ingredients.forEach(stack -> {
 			if (stack != null) {
-				if (stack.getItem().getRegistryName().getNamespace().equals("enigmaticlegacy")) {
-					if (stack.getItem().getRegistryName().getPath().equals("cosmic_scroll")) {
-						removals.add(stack);
-					}
-				}
-
 				if (stack.getItem() instanceof IHidden) {
 					removals.add(stack);
 				}

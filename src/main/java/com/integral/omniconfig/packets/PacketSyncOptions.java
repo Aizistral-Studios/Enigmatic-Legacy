@@ -77,7 +77,7 @@ public class PacketSyncOptions {
 
 			if (wrapper != null) {
 
-				EnigmaticLegacy.logger.info("Synchronizing values of " + msg.fileName + " with ones dispatched by server...");
+				EnigmaticLegacy.LOGGER.info("Synchronizing values of " + msg.fileName + " with ones dispatched by server...");
 
 				for (String id : msg.synchronizedParameters.keySet()) {
 					Omniconfig.GenericParameter parameter = wrapper.invokationMap.get(id);
@@ -86,13 +86,13 @@ public class PacketSyncOptions {
 						String oldValue = parameter.valueToString();
 						parameter.parseFromString(msg.synchronizedParameters.get(id));
 
-						EnigmaticLegacy.logger.info("Value of '" + parameter.getId() + "' was set to '" + parameter.valueToString() + "'; old value: " + oldValue);
+						EnigmaticLegacy.LOGGER.info("Value of '" + parameter.getId() + "' was set to '" + parameter.valueToString() + "'; old value: " + oldValue);
 					} else {
-						EnigmaticLegacy.logger.error("Value '" + id + "' does not exist in " + msg.fileName + "! Skipping.");
+						EnigmaticLegacy.LOGGER.error("Value '" + id + "' does not exist in " + msg.fileName + "! Skipping.");
 					}
 				}
 			} else {
-				EnigmaticLegacy.logger.fatal("Received synchronization packet for non-existent config file: " + msg.fileName);
+				EnigmaticLegacy.LOGGER.fatal("Received synchronization packet for non-existent config file: " + msg.fileName);
 			}
 
 		});

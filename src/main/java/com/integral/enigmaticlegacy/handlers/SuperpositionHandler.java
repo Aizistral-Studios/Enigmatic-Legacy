@@ -1217,15 +1217,15 @@ public class SuperpositionHandler {
 	}
 
 	public static ServerLevel getOverworld() {
-		return SuperpositionHandler.getWorld(EnigmaticLegacy.proxy.getOverworldKey());
+		return SuperpositionHandler.getWorld(EnigmaticLegacy.PROXY.getOverworldKey());
 	}
 
 	public static ServerLevel getNether() {
-		return SuperpositionHandler.getWorld(EnigmaticLegacy.proxy.getNetherKey());
+		return SuperpositionHandler.getWorld(EnigmaticLegacy.PROXY.getNetherKey());
 	}
 
 	public static ServerLevel getEnd() {
-		return SuperpositionHandler.getWorld(EnigmaticLegacy.proxy.getEndKey());
+		return SuperpositionHandler.getWorld(EnigmaticLegacy.PROXY.getEndKey());
 	}
 
 	public static void sendToDimension(ServerPlayer player, ResourceKey<Level> dimension, ITeleporter teleporter) {
@@ -1334,8 +1334,8 @@ public class SuperpositionHandler {
 
 	public static boolean isTheWorthyOne(Player player) {
 		if (isTheCursedOne(player)) {
-			int timeWithRing = EnigmaticLegacy.proxy.getTimeWithCurses(player);
-			int timeWithoutRing = EnigmaticLegacy.proxy.getTimeWithoutCurses(player);
+			int timeWithRing = EnigmaticLegacy.PROXY.getTimeWithCurses(player);
+			int timeWithoutRing = EnigmaticLegacy.PROXY.getTimeWithoutCurses(player);
 
 			if (timeWithRing <= 0)
 				return false;
@@ -1347,12 +1347,23 @@ public class SuperpositionHandler {
 			return false;
 	}
 
+	public static boolean isTheBlessedOne(Player player) {
+		if (EnigmaticLegacy.SOUL_OF_THE_ARCHITECT.equals(player.getUUID()))
+			return true;
+		else
+			return DevotedBelieversHandler.isDevotedBeliever(player);
+	}
+
+	public static boolean hasArchitectsFavor(Player player) {
+		return isTheBlessedOne(player) && SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cosmicScroll);
+	}
+
 	public static String getSufferingTime(@Nullable Player player) {
 		if (player == null)
 			return "0%";
 		else {
-			int timeWithRing = EnigmaticLegacy.proxy.getTimeWithCurses(player);
-			int timeWithoutRing = EnigmaticLegacy.proxy.getTimeWithoutCurses(player);
+			int timeWithRing = EnigmaticLegacy.PROXY.getTimeWithCurses(player);
+			int timeWithoutRing = EnigmaticLegacy.PROXY.getTimeWithoutCurses(player);
 			if (timeWithRing <= 0)
 				return "0%";
 			else if (timeWithoutRing <= 0)
@@ -2013,7 +2024,7 @@ public class SuperpositionHandler {
 		MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 
 		if (server != null && server.isSingleplayer() &&
-				Objects.equal(server.getSingleplayerName(), EnigmaticLegacy.proxy.getClientUsername()))
+				Objects.equal(server.getSingleplayerName(), EnigmaticLegacy.PROXY.getClientUsername()))
 			return Optional.of(server);
 		else
 			return Optional.empty();

@@ -215,9 +215,9 @@ public class OmniconfigWrapper {
 					boolean worked = syncWrapperToPlayer(this, player);
 
 					if (worked) {
-						EnigmaticLegacy.logger.info("Successfully resynchronized file " + config.getConfigFile().getName() + " to " + player.getGameProfile().getName());
+						EnigmaticLegacy.LOGGER.info("Successfully resynchronized file " + config.getConfigFile().getName() + " to " + player.getGameProfile().getName());
 					} else {
-						EnigmaticLegacy.logger.info("File " + config.getConfigFile().getName() + " was not resynchronized to " + player.getGameProfile().getName() + ", since this integrated server is hosted by them.");
+						EnigmaticLegacy.LOGGER.info("File " + config.getConfigFile().getName() + " was not resynchronized to " + player.getGameProfile().getName() + ", since this integrated server is hosted by them.");
 					}
 				}
 			});
@@ -455,7 +455,7 @@ public class OmniconfigWrapper {
 
 	public static boolean syncAllToPlayer(ServerPlayer player) {
 		if (SuperpositionHandler.areWeRemoteServer(player)) {
-			EnigmaticLegacy.logger.info("Synchronizing omniconfig files to " + player.getGameProfile().getName() + "...");
+			EnigmaticLegacy.LOGGER.info("Synchronizing omniconfig files to " + player.getGameProfile().getName() + "...");
 
 			for (OmniconfigWrapper wrapper : wrapperRegistry.values()) {
 				if (!wrapper.config.getSidedType().isSided()) {
@@ -470,7 +470,7 @@ public class OmniconfigWrapper {
 
 	public static boolean syncWrapperToPlayer(OmniconfigWrapper wrapper, ServerPlayer player) {
 		if (SuperpositionHandler.areWeRemoteServer(player)) {
-			EnigmaticLegacy.logger.info("Sending data for " + wrapper.config.getConfigFile().getName());
+			EnigmaticLegacy.LOGGER.info("Sending data for " + wrapper.config.getConfigFile().getName());
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player), new PacketSyncOptions(wrapper));
 			return true;
 		} else

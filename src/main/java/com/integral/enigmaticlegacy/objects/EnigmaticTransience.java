@@ -68,7 +68,7 @@ public class EnigmaticTransience {
 		} catch (IOException ex) {
 			throw new RuntimeException(ex);
 		} catch (JsonSyntaxException ex) {
-			EnigmaticLegacy.logger.warn("Failed to read " + file + ", will regenerate...");
+			EnigmaticLegacy.LOGGER.warn("Failed to read " + file + ", will regenerate...");
 			close(reader);
 
 			EnigmaticTransience transience = new EnigmaticTransience();

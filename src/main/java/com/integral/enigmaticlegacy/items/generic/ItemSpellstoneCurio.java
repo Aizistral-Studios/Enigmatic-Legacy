@@ -27,7 +27,7 @@ import net.minecraft.world.item.Item.Properties;
 
 public abstract class ItemSpellstoneCurio extends ItemBaseCurio implements ISpellstone {
 	public static Omniconfig.BooleanParameter multiequip;
-	public static Predicate<Player> reducedCooldowns = player -> false;
+	public static Predicate<Player> reducedCooldowns = SuperpositionHandler::hasArchitectsFavor;
 
 	@SubscribeConfig
 	public static void onConfig(OmniconfigWrapper builder) {

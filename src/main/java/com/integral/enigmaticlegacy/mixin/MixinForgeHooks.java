@@ -31,17 +31,17 @@ public class MixinForgeHooks {
 		LootTable returnedTable = info.getReturnValue();
 
 		if (custom && returnedTable != null) {
-			EnigmaticLegacy.logger.debug("Caught custom LootTable loading: " + name);
+			EnigmaticLegacy.LOGGER.debug("Caught custom LootTable loading: " + name);
 
 			try {
-				EnigmaticLegacy.logger.debug("Unfreezing " + name + "...");
+				EnigmaticLegacy.LOGGER.debug("Unfreezing " + name + "...");
 				LootTableHelper.unfreezePlease(returnedTable);
 			} catch (Exception ex) {
-				EnigmaticLegacy.logger.fatal("FAILED TO PROCESS LOOT TABLE: " + name);
+				EnigmaticLegacy.LOGGER.fatal("FAILED TO PROCESS LOOT TABLE: " + name);
 				throw new RuntimeException(ex);
 			}
 
-			EnigmaticLegacy.logger.debug("Force dispatching LootTableLoadEvent for " + name + "...");
+			EnigmaticLegacy.LOGGER.debug("Force dispatching LootTableLoadEvent for " + name + "...");
 
 			LootTableLoadEvent event = new LootTableLoadEvent(name, returnedTable, lootTableManager);
 			EnigmaticLegacy.enigmaticHandler.onLootTablesLoaded(event);
@@ -50,10 +50,10 @@ public class MixinForgeHooks {
 				returnedTable = LootTable.EMPTY;
 			}
 
-			EnigmaticLegacy.logger.debug("Freezing " + name + " back...");
+			EnigmaticLegacy.LOGGER.debug("Freezing " + name + " back...");
 			returnedTable.freeze();
 
-			EnigmaticLegacy.logger.debug("Returning " + name + " to Forge handler...");
+			EnigmaticLegacy.LOGGER.debug("Returning " + name + " to Forge handler...");
 			info.setReturnValue(returnedTable);
 		}
 	}

@@ -87,7 +87,7 @@ public class DarkMirror extends ItemBase implements ICursed, Vanishable {
 
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-		if (EnigmaticLegacy.proxy.isInVanillaDimension(player) && SuperpositionHandler.isTheCursedOne(player) && !player.getCooldowns().isOnCooldown(this)) {
+		if (EnigmaticLegacy.PROXY.isInVanillaDimension(player) && SuperpositionHandler.isTheCursedOne(player) && !player.getCooldowns().isOnCooldown(this)) {
 			player.startUsingItem(hand);
 
 			if (player instanceof ServerPlayer) {

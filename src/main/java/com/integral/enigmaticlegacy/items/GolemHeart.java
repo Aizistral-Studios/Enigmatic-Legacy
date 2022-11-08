@@ -109,7 +109,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 			if (item != null) {
 				EXCLUDED_ARMOR.add(item);
 			} else {
-				EnigmaticLegacy.logger.error("Could not find excluded item when parsing config: " + entry);
+				EnigmaticLegacy.LOGGER.error("Could not find excluded item when parsing config: " + entry);
 			}
 		});
 	}

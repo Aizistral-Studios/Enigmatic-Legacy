@@ -66,7 +66,7 @@ public class Omniconfig {
 		}
 
 		protected void logGenericParserError(String value) {
-			EnigmaticLegacy.logger.error("Error when parsing value of '" + this.name + "' in '" + this.category + "': " + value);
+			EnigmaticLegacy.LOGGER.error("Error when parsing value of '" + this.name + "' in '" + this.category + "': " + value);
 		}
 
 		public abstract String valueToString();

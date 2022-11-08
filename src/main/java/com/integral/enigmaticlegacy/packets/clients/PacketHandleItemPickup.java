@@ -33,7 +33,7 @@ public class PacketHandleItemPickup {
 
 	public static void handle(PacketHandleItemPickup msg, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
-			EnigmaticLegacy.proxy.handleItemPickup(msg.pickuper_id, msg.item_id);
+			EnigmaticLegacy.PROXY.handleItemPickup(msg.pickuper_id, msg.item_id);
 		});
 
 		ctx.get().setPacketHandled(true);

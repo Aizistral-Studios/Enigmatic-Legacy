@@ -107,7 +107,7 @@ public class RevelationTome extends ItemBase implements Vanishable {
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayer) player, this.theType, currentPoints + revelation);
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayer) player, TomeType.GENERIC, RevelationTome.getGenericPoints(player));
 			} else {
-				EnigmaticLegacy.proxy.pushRevelationToast(stack, xp, revelation);
+				EnigmaticLegacy.PROXY.pushRevelationToast(stack, xp, revelation);
 			}
 
 			player.swing(hand);

@@ -38,7 +38,7 @@ public class MixinWorldListEntry {
 	@Inject(method = "joinWorld", at = @At("HEAD"), cancellable = true)
 	private void onJoinWorld(CallbackInfo info) {
 		if (SuperpositionHandler.isWorldFractured(SuperpositionHandler.getSaveFolder(this.summary))) {
-			EnigmaticLegacy.proxy.displayPermadeathScreen();
+			EnigmaticLegacy.PROXY.displayPermadeathScreen();
 			info.cancel();
 		}
 	}

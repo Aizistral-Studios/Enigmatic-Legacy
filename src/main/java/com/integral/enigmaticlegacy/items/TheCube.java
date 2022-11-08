@@ -275,7 +275,7 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 		}
 
 		if (location == null) {
-			EnigmaticLegacy.logger.getInternal().info("No cached location found for {}, generating new one synchronously.", player.getGameProfile().getName());
+			EnigmaticLegacy.LOGGER.getInternal().info("No cached location found for {}, generating new one synchronously.", player.getGameProfile().getName());
 			location = this.findRandomLocation(player);
 		}
 
@@ -295,7 +295,7 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 
 		SuperpositionHandler.setSpellstoneCooldown(player, this.getCooldown(player));
 
-		EnigmaticLegacy.logger.getInternal().info("Player {} triggered active ability of Non-Euclidean Cube. Teleported to D: {}, X: {}, Y: {}, Z: {}.",
+		EnigmaticLegacy.LOGGER.getInternal().info("Player {} triggered active ability of Non-Euclidean Cube. Teleported to D: {}, X: {}, Y: {}, Z: {}.",
 				player.getGameProfile().getName(), player.level.dimension(), player.getX(), player.getY(), player.getZ());
 	}
 
@@ -303,10 +303,10 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 		Future<CachedTeleportationLocation> future = this.executor.submit(() -> {
 			try {
 				CachedTeleportationLocation location = this.findRandomLocation(player);
-				EnigmaticLegacy.logger.debug("Found random location: " + location);
+				EnigmaticLegacy.LOGGER.debug("Found random location: " + location);
 				return location;
 			} catch (Exception ex) {
-				EnigmaticLegacy.logger.error("Could not find random location for:" + player.getGameProfile().getName());
+				EnigmaticLegacy.LOGGER.error("Could not find random location for:" + player.getGameProfile().getName());
 				ex.printStackTrace();
 				throw ex;
 			}
@@ -320,8 +320,8 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 		ServerLevel level = SuperpositionHandler.getWorld(key);
 
 		if (level == null) {
-			EnigmaticLegacy.logger.error("Could not find world: " + key);
-			EnigmaticLegacy.logger.error("This is never supposed to happen!");
+			EnigmaticLegacy.LOGGER.error("Could not find world: " + key);
+			EnigmaticLegacy.LOGGER.error("This is never supposed to happen!");
 			key = Level.OVERWORLD;
 			level = SuperpositionHandler.getOverworld();
 		}

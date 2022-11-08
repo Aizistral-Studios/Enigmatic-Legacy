@@ -25,11 +25,11 @@ public class TransientPlayerData {
 	public static TransientPlayerData get(Player player) {
 		boolean clientOnly = player.level.isClientSide;
 
-		if (EnigmaticLegacy.proxy.getTransientPlayerData(clientOnly).containsKey(player))
-			return EnigmaticLegacy.proxy.getTransientPlayerData(clientOnly).get(player);
+		if (EnigmaticLegacy.PROXY.getTransientPlayerData(clientOnly).containsKey(player))
+			return EnigmaticLegacy.PROXY.getTransientPlayerData(clientOnly).get(player);
 		else {
 			TransientPlayerData data = new TransientPlayerData(player);
-			EnigmaticLegacy.proxy.getTransientPlayerData(clientOnly).put(player, data);
+			EnigmaticLegacy.PROXY.getTransientPlayerData(clientOnly).put(player, data);
 
 			return data;
 		}
@@ -39,7 +39,7 @@ public class TransientPlayerData {
 		boolean clientOnly = player.level.isClientSide;
 
 		if (data != null) {
-			EnigmaticLegacy.proxy.getTransientPlayerData(clientOnly).put(player, data);
+			EnigmaticLegacy.PROXY.getTransientPlayerData(clientOnly).put(player, data);
 			return true;
 		} else
 			return false;
@@ -228,7 +228,7 @@ public class TransientPlayerData {
 		boolean unlockedNarrator = buf.readBoolean();
 		boolean elytraBoosting = buf.readBoolean();
 
-		Player player = EnigmaticLegacy.proxy.getPlayer(playerID);
+		Player player = EnigmaticLegacy.PROXY.getPlayer(playerID);
 
 		if (player != null) {
 			TransientPlayerData data = new TransientPlayerData(player);

@@ -55,6 +55,7 @@ import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.items.AngelBlessing;
 import com.integral.enigmaticlegacy.items.AvariceScroll;
 import com.integral.enigmaticlegacy.items.BerserkEmblem;
+import com.integral.enigmaticlegacy.items.CosmicScroll;
 import com.integral.enigmaticlegacy.items.CursedRing;
 import com.integral.enigmaticlegacy.items.CursedScroll;
 import com.integral.enigmaticlegacy.items.EnderSlayer;
@@ -363,8 +364,6 @@ public class EnigmaticEventHandler {
 	public static final Map<Player, Float> lastHealth = new WeakHashMap<>();
 	public static final Map<Player, Integer> lastSoulCompassUpdate = new WeakHashMap<>();
 
-	public static BiFunction<Player, Player, Float> evenMoreKnockback = (victim, player) -> 0F;
-
 	public static int scheduledCubeRevive = -1;
 	public static boolean isPoisonHurt = false;
 	public static boolean isApplyingNightVision = false;
@@ -526,15 +525,15 @@ public class EnigmaticEventHandler {
 	@SubscribeEvent
 	public void serverStarted(ServerStartedEvent event) {
 		if (!exceptionList.isEmpty()) {
-			EnigmaticLegacy.logger.fatal("Some stupid mods once again attempted to add unnamed LootPools to loot tables!");
+			EnigmaticLegacy.LOGGER.fatal("Some stupid mods once again attempted to add unnamed LootPools to loot tables!");
 			for (Triple<LootTable, LootPool, Exception> triple : exceptionList) {
 				LootTable table = triple.getLeft();
 				LootPool pool = triple.getMiddle();
 				Exception ex = triple.getRight();
 
-				EnigmaticLegacy.logger.fatal("Loot table in question: " + table);
-				EnigmaticLegacy.logger.fatal("LootPool in question: " + pool);
-				EnigmaticLegacy.logger.fatal("Examine the stacktrace below to see what mod have caused this.");
+				EnigmaticLegacy.LOGGER.fatal("Loot table in question: " + table);
+				EnigmaticLegacy.LOGGER.fatal("LootPool in question: " + pool);
+				EnigmaticLegacy.LOGGER.fatal("Examine the stacktrace below to see what mod have caused this.");
 				ex.printStackTrace();
 			}
 
@@ -867,7 +866,7 @@ public class EnigmaticEventHandler {
 				if (player != null) {
 					if (this.clientWorldTicks != player.level.getGameTime()) {
 						this.clientWorldTicks = player.level.getGameTime();
-						EnigmaticLegacy.proxy.updateInfinitumCounters();
+						EnigmaticLegacy.PROXY.updateInfinitumCounters();
 					}
 				}
 
@@ -887,14 +886,14 @@ public class EnigmaticEventHandler {
 
 						for (OmniconfigWrapper wrapper : OmniconfigWrapper.wrapperRegistry.values()) {
 
-							EnigmaticLegacy.logger.info("Dismissing values of " + wrapper.config.getConfigFile().getName() + " in favor of local config...");
+							EnigmaticLegacy.LOGGER.info("Dismissing values of " + wrapper.config.getConfigFile().getName() + " in favor of local config...");
 
 							for (Omniconfig.GenericParameter param : wrapper.retrieveInvocationList()) {
 								if (param.isSynchronized()) {
 									String oldValue = param.valueToString();
 									param.invoke(wrapper.config);
 
-									EnigmaticLegacy.logger.info("Value of '" + param.getId() + "' was restored to '" + param.valueToString() + "'; former server-forced value: " + oldValue);
+									EnigmaticLegacy.LOGGER.info("Value of '" + param.getId() + "' was restored to '" + param.valueToString() + "'; former server-forced value: " + oldValue);
 								}
 							}
 						}
@@ -1024,10 +1023,10 @@ public class EnigmaticEventHandler {
 
 	private void syncPlayTime(Player player) {
 		if (!player.level.isClientSide) {
-			int withCurses = EnigmaticLegacy.proxy.getStats(player, timeWithCursesStat);
-			int withoutCurses = EnigmaticLegacy.proxy.getStats(player, timeWithoutCursesStat);
+			int withCurses = EnigmaticLegacy.PROXY.getStats(player, timeWithCursesStat);
+			int withoutCurses = EnigmaticLegacy.PROXY.getStats(player, timeWithoutCursesStat);
 
-			EnigmaticLegacy.proxy.cacheStats(player.getUUID(), withoutCurses, withCurses);
+			EnigmaticLegacy.PROXY.cacheStats(player.getUUID(), withoutCurses, withCurses);
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64, player.level.dimension())),
 					new PacketSyncPlayTime(player.getUUID(), withCurses, withoutCurses));
 		}
@@ -1115,7 +1114,7 @@ public class EnigmaticEventHandler {
 					scheduledCubeRevive--;
 
 					if (scheduledCubeRevive == 0) {
-						proxy.displayReviveAnimation(player.getId(), 1);
+						PROXY.displayReviveAnimation(player.getId(), 1);
 						scheduledCubeRevive = -1;
 					}
 				}
@@ -1378,7 +1377,7 @@ public class EnigmaticEventHandler {
 						getItemEnchantmentLevel(Enchantments.VANISHING_CURSE, stack) <= 0, DropRule.ALWAYS_KEEP);
 			}
 
-			if (this.hadUnholyStone(player) && player.level.dimension() == proxy.getNetherKey()) {
+			if (this.hadUnholyStone(player) && player.level.dimension() == PROXY.getNetherKey()) {
 				BlockPos deathPos = player.blockPosition();
 
 				if (this.isThereLava(player.level, deathPos)) {
@@ -1776,7 +1775,11 @@ public class EnigmaticEventHandler {
 			}
 
 			if (event.getEntityLiving() instanceof Player victim) {
-				knockbackPower += evenMoreKnockback.apply(victim, player);
+				if (SuperpositionHandler.hasArchitectsFavor(player)) {
+					if (!SuperpositionHandler.isTheBlessedOne(victim)) {
+						knockbackPower += CosmicScroll.unchosenKnockbackBonus.getValue().asModifier(false);
+					}
+				}
 			}
 
 			if (knockbackPower > 1) {
@@ -2006,7 +2009,7 @@ public class EnigmaticEventHandler {
 				} else if (mainhandStack.is(enderSlayer)) {
 					if (SuperpositionHandler.isTheCursedOne(player)) {
 						if (enderSlayer.isEndDweller(event.getEntityLiving())) {
-							if (player.level.dimension().equals(proxy.getEndKey())) {
+							if (player.level.dimension().equals(PROXY.getEndKey())) {
 								if (event.getEntityLiving() instanceof EnderMan
 										&& RegisteredMeleeAttack.getRegisteredAttackStregth(player) >= 1F) {
 									event.setAmount((event.getAmount() + 100F) * 10F);
@@ -2587,7 +2590,7 @@ public class EnigmaticEventHandler {
 				PermanentItemEntity droppedStorageCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), storageCrystal);
 				droppedStorageCrystal.setOwnerId(player.getUUID());
 				dimPoint.world.addFreshEntity(droppedStorageCrystal);
-				EnigmaticLegacy.logger.info("Summoned Extradimensional Storage Crystal for " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
+				EnigmaticLegacy.LOGGER.info("Summoned Extradimensional Storage Crystal for " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
 				event.getDrops().clear();
 
 				if (soulCrystal != null) {
@@ -2600,7 +2603,7 @@ public class EnigmaticEventHandler {
 				PermanentItemEntity droppedSoulCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), soulCrystal);
 				droppedSoulCrystal.setOwnerId(player.getUUID());
 				dimPoint.world.addFreshEntity(droppedSoulCrystal);
-				EnigmaticLegacy.logger.info("Teared Soul Crystal from " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
+				EnigmaticLegacy.LOGGER.info("Teared Soul Crystal from " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
 
 				droppedCrystal = true;
 				SoulArchive.getInstance().addItem(droppedSoulCrystal);
@@ -2634,7 +2637,7 @@ public class EnigmaticEventHandler {
 			Player player = (Player) event.getSource().getEntity();
 			LivingEntity killed = event.getEntityLiving();
 
-			if (killed instanceof EnderMan && killed.level.dimension().equals(proxy.getEndKey())
+			if (killed instanceof EnderMan && killed.level.dimension().equals(PROXY.getEndKey())
 					&& killed.getPersistentData().getBoolean("EnderSlayerVictim")) {
 				int extraXP = 0;
 
@@ -2914,7 +2917,7 @@ public class EnigmaticEventHandler {
 
 		if (!OmniconfigWrapper.syncAllToPlayer((ServerPlayer) event.getPlayer())) {
 			OmniconfigWrapper.onRemoteServer = false;
-			EnigmaticLegacy.logger.info("Logging in to local integrated server; no synchronization is required.");
+			EnigmaticLegacy.LOGGER.info("Logging in to local integrated server; no synchronization is required.");
 		}
 
 		try {
@@ -2957,7 +2960,7 @@ public class EnigmaticEventHandler {
 				}
 			}
 		} catch (Exception ex) {
-			EnigmaticLegacy.logger.error("Failed to check player's advancements upon joining the world!");
+			EnigmaticLegacy.LOGGER.error("Failed to check player's advancements upon joining the world!");
 			ex.printStackTrace();
 		}
 	}
@@ -3174,7 +3177,7 @@ public class EnigmaticEventHandler {
 	}
 
 	public static void grantStarterGear(ServerPlayer player) {
-		EnigmaticLegacy.logger.info("Granting starter gear to " + player.getGameProfile().getName());
+		EnigmaticLegacy.LOGGER.info("Granting starter gear to " + player.getGameProfile().getName());
 
 		/*
 		 * Eh, annoying defaults.

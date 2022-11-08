@@ -50,6 +50,7 @@ import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 import com.integral.enigmaticlegacy.gui.containers.LoreInscriberContainer;
 import com.integral.enigmaticlegacy.gui.containers.LoreInscriberScreen;
 import com.integral.enigmaticlegacy.gui.containers.PortableCrafterContainer;
+import com.integral.enigmaticlegacy.handlers.DevotedBelieversHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticKeybindHandler;
 import com.integral.enigmaticlegacy.handlers.EnigmaticUpdateHandler;
@@ -70,6 +71,7 @@ import com.integral.enigmaticlegacy.items.AvariceScroll;
 import com.integral.enigmaticlegacy.items.BerserkEmblem;
 import com.integral.enigmaticlegacy.items.CosmicCake;
 import com.integral.enigmaticlegacy.items.CosmicHeart;
+import com.integral.enigmaticlegacy.items.CosmicScroll;
 import com.integral.enigmaticlegacy.items.CurseTransposer;
 import com.integral.enigmaticlegacy.items.CursedRing;
 import com.integral.enigmaticlegacy.items.CursedScroll;
@@ -291,7 +293,7 @@ public class EnigmaticLegacy {
 	public static final String NAME = "Enigmatic Legacy";
 
 	public static EnigmaticLegacy enigmaticLegacy;
-	public static final LoggerWrapper logger = new LoggerWrapper("Enigmatic Legacy");
+	public static final LoggerWrapper LOGGER = new LoggerWrapper("Enigmatic Legacy");
 	public static SimpleChannel packetInstance;
 
 	public static final int HOW_COOL_I_AM = Integer.MAX_VALUE;
@@ -455,9 +457,7 @@ public class EnigmaticLegacy {
 	@ConfigurableItem("Bottle of Ichor") public static IchorBottle ichorBottle;
 	@ConfigurableItem("") public static QuotePlayer quotePlayer;
 	@ConfigurableItem("Charming Insignia") public static Insignia insignia;
-
-	@ConfigurableItem("Cosmic Scroll")
-	public static Item cosmicScroll;
+	@ConfigurableItem("Cosmic Scroll") public static Item cosmicScroll;
 
 	public static AdvancedPotion ultimateNightVision;
 	public static AdvancedPotion ultimateInvisibility;
@@ -514,12 +514,12 @@ public class EnigmaticLegacy {
 
 	private static final String PTC_VERSION = "1";
 
-	public static final CommonProxy proxy = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+	public static final CommonProxy PROXY = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	public static final List<Triple<LootTable, LootPool, Exception>> exceptionList = new ArrayList<>();
 
 	@SuppressWarnings("deprecation")
 	public EnigmaticLegacy() {
-		logger.info("Constructing mod instance...");
+		LOGGER.info("Constructing mod instance...");
 
 		enigmaticLegacy = this;
 
@@ -538,10 +538,10 @@ public class EnigmaticLegacy {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onLoadComplete);
 		FMLJavaModLoadingContext.get().getModEventBus().register(new EnigmaticRecipeSerializers());
 		FMLJavaModLoadingContext.get().getModEventBus().register(this);
-		FMLJavaModLoadingContext.get().getModEventBus().register(proxy);
+		FMLJavaModLoadingContext.get().getModEventBus().register(PROXY);
 
 		MinecraftForge.EVENT_BUS.register(this);
-		MinecraftForge.EVENT_BUS.register(proxy);
+		MinecraftForge.EVENT_BUS.register(PROXY);
 		MinecraftForge.EVENT_BUS.register(enigmaticHandler);
 		MinecraftForge.EVENT_BUS.register(keybindHandler);
 		MinecraftForge.EVENT_BUS.register(new EnigmaticUpdateHandler());
@@ -549,13 +549,13 @@ public class EnigmaticLegacy {
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStart);
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStarted);
 
-		logger.info("Mod instance constructed successfully.");
+		LOGGER.info("Mod instance constructed successfully.");
 	}
 
 	public void onLoadComplete(final FMLLoadCompleteEvent event) {
-		logger.info("Initializing load completion phase...");
+		LOGGER.info("Initializing load completion phase...");
 
-		logger.info("Registering brewing recipes...");
+		LOGGER.info("Registering brewing recipes...");
 
 		if (OmniconfigHandler.isItemEnabled(recallPotion)) {
 			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.AWKWARD)), Ingredient.of(Items.ENDER_EYE), new ItemStack(recallPotion), new ResourceLocation(MODID, "recall_potion")));
@@ -611,19 +611,23 @@ public class EnigmaticLegacy {
 
 		EnigmaticUpdateHandler.init();
 
-		proxy.loadComplete(event);
+		PROXY.loadComplete(event);
 
-		logger.info("Load completion phase finished successfully");
+		DevotedBelieversHandler.getDevotedBelievers().entrySet().forEach(entry -> {
+			LOGGER.getInternal().info("Believer: {}, UUID: {}", entry.getKey(), entry.getValue());
+		});
+
+		LOGGER.info("Load completion phase finished successfully");
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
-		logger.info("Initializing common setup phase...");
+		LOGGER.info("Initializing common setup phase...");
 
 		damageTypesFire.add(DamageSource.LAVA.msgId);
 		damageTypesFire.add(DamageSource.IN_FIRE.msgId);
 		damageTypesFire.add(DamageSource.ON_FIRE.msgId);
 
-		logger.info("Registering packets...");
+		LOGGER.info("Registering packets...");
 		packetInstance = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MODID, "main")).networkProtocolVersion(() -> PTC_VERSION).clientAcceptedVersions(PTC_VERSION::equals).serverAcceptedVersions(PTC_VERSION::equals).simpleChannel();
 
 		packetInstance.registerMessage(0, PacketRecallParticles.class, PacketRecallParticles::encode, PacketRecallParticles::decode, PacketRecallParticles::handle);
@@ -659,7 +663,7 @@ public class EnigmaticLegacy {
 		packetInstance.registerMessage(30, PacketUpdateElytraBoosting.class, PacketUpdateElytraBoosting::encode, PacketUpdateElytraBoosting::decode, PacketUpdateElytraBoosting::handle);
 		packetInstance.registerMessage(31, PacketPermadeath.class, PacketPermadeath::encode, PacketPermadeath::decode, PacketPermadeath::handle);
 
-		logger.info("Registering triggers...");
+		LOGGER.info("Registering triggers...");
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);
 		CriteriaTriggers.register(BeheadingTrigger.INSTANCE);
 		CriteriaTriggers.register(RevelationGainTrigger.INSTANCE);
@@ -668,18 +672,18 @@ public class EnigmaticLegacy {
 		CriteriaTriggers.register(ForbiddenFruitTrigger.INSTANCE);
 		CriteriaTriggers.register(CursedInventoryChangedTrigger.INSTANCE);
 
-		logger.info("Registering stats...");
+		LOGGER.info("Registering stats...");
 
 		event.enqueueWork(() -> {
 			timeWithCursesStat = this.makeCustomStat("play_time_with_seven_curses", StatFormatter.TIME);
 			timeWithoutCursesStat = this.makeCustomStat("play_time_without_seven_curses", StatFormatter.TIME);
 		});
 
-		logger.info("Common setup phase finished successfully.");
+		LOGGER.info("Common setup phase finished successfully.");
 	}
 
 	private void clientRegistries(final FMLClientSetupEvent event) {
-		logger.info("Initializing client setup phase...");
+		LOGGER.info("Initializing client setup phase...");
 		keybindHandler.registerKeybinds();
 		enigmaticAmulet.registerVariants();
 		architectEye.registerVariants();
@@ -689,16 +693,16 @@ public class EnigmaticLegacy {
 			ItemBlockRenderTypes.setRenderLayer(theBlock, RenderType.cutout());
 		}
 
-		proxy.initEntityRendering();
+		PROXY.initEntityRendering();
 
 		//MenuScreens.register(PORTABLE_CRAFTER, CraftingScreen::new);
 		MenuScreens.register(LORE_INSCRIBER_CONTAINER, LoreInscriberScreen::new);
 
-		logger.info("Client setup phase finished successfully.");
+		LOGGER.info("Client setup phase finished successfully.");
 	}
 
 	private void intermodStuff(final InterModEnqueueEvent event) {
-		logger.info("Sending messages to Curios API...");
+		LOGGER.info("Sending messages to Curios API...");
 		SuperpositionHandler.registerCurioType("charm", 1, false, null);
 		SuperpositionHandler.registerCurioType("ring", 2, false, null);
 		SuperpositionHandler.registerCurioType("back", 1, false, null);
@@ -726,7 +730,7 @@ public class EnigmaticLegacy {
 		// TODO Figure something out with those multimaps
 		// I'd really like there to be a weak multimap or something
 
-		proxy.clearTransientData();
+		PROXY.clearTransientData();
 		EnigmaticEventHandler.angeredGuardians.clear();
 		EnigmaticEventHandler.postmortalPossession.clear();
 		EnigmaticEventHandler.knockbackThatBastard.clear();
@@ -780,7 +784,7 @@ public class EnigmaticLegacy {
 
 		@SubscribeEvent
 		public static void registerBlocks(final RegistryEvent.Register<Block> event) {
-			logger.info("Initializing blocks registration...");
+			LOGGER.info("Initializing blocks registration...");
 
 			massiveLamp = new BlockMassiveLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN), "massive_lamp");
 			bigLamp = new BlockBigLamp(BlockBehaviour.Properties.copy(Blocks.LANTERN), "big_lamp");
@@ -806,12 +810,12 @@ public class EnigmaticLegacy {
 					endAnchor
 					);
 
-			logger.info("Blocks registered successfully.");
+			LOGGER.info("Blocks registered successfully.");
 		}
 
 		@SubscribeEvent
 		public static void registerItems(final RegistryEvent.Register<Item> event) {
-			logger.info("Initializing items registration...");
+			LOGGER.info("Initializing items registration...");
 
 			enigmaticItem = new EnigmaticItem();
 			xpScroll = new XPScroll();
@@ -948,6 +952,7 @@ public class EnigmaticLegacy {
 			ichorBottle = new IchorBottle();
 			quotePlayer = new QuotePlayer();
 			insignia = new Insignia();
+			cosmicScroll = new CosmicScroll();
 
 			spellstoneList = Lists.newArrayList(
 					angelBlessing,
@@ -1079,6 +1084,7 @@ public class EnigmaticLegacy {
 					ichorBottle,
 					quotePlayer,
 					insignia,
+					cosmicScroll,
 					new GenericBlockItem(massiveLamp),
 					new GenericBlockItem(bigLamp),
 					new GenericBlockItem(massiveShroomlamp),
@@ -1092,16 +1098,12 @@ public class EnigmaticLegacy {
 					//,gemOfBinding,wormholePotion
 					);
 
-			if (!EnigmaticLegacy.enigmaticLegacy.isLockboxPresent()) {
-				event.getRegistry().register(cosmicScroll = new PlaceholderItem("cosmic_scroll", Rarity.EPIC, 1));
-			}
-
-			logger.info("Items registered successfully.");
+			LOGGER.info("Items registered successfully.");
 		}
 
 		@SubscribeEvent
 		public static void registerSounds(final RegistryEvent.Register<SoundEvent> event) {
-			logger.info("Initializing sounds registration...");
+			LOGGER.info("Initializing sounds registration...");
 
 			soundChargedOn = SuperpositionHandler.registerSound("misc.hhon");
 			soundChargedOff = SuperpositionHandler.registerSound("misc.hhoff");
@@ -1114,7 +1116,7 @@ public class EnigmaticLegacy {
 
 			Quote.getByID(0);
 
-			logger.info("Sounds registered successfully.");
+			LOGGER.info("Sounds registered successfully.");
 		}
 
 		@SubscribeEvent
@@ -1133,7 +1135,7 @@ public class EnigmaticLegacy {
 
 		@SubscribeEvent
 		public static void registerBrewing(final RegistryEvent.Register<Potion> event) {
-			logger.info("Initializing advanced potion system...");
+			LOGGER.info("Initializing advanced potion system...");
 
 			ultimateNightVision = new AdvancedPotion("ultimate_night_vision", new MobEffectInstance(MobEffects.NIGHT_VISION, 19200));
 			ultimateInvisibility = new AdvancedPotion("ultimate_invisibility", new MobEffectInstance(MobEffects.INVISIBILITY, 19200));
@@ -1187,7 +1189,7 @@ public class EnigmaticLegacy {
 			commonPotionTypes.add(longMoltenHeart);
 			ultimatePotionTypes.add(ultimateMoltenHeart);
 
-			logger.info("Advanced potion system initialized successfully.");
+			LOGGER.info("Advanced potion system initialized successfully.");
 		}
 
 		@SubscribeEvent
@@ -1224,7 +1226,7 @@ public class EnigmaticLegacy {
 
 		@SubscribeEvent
 		public static void onEntitiesRegistry(final RegistryEvent.Register<EntityType<?>> event) {
-			logger.info("Initializing entities registration...");
+			LOGGER.info("Initializing entities registration...");
 
 			event.getRegistry().register(EntityType.Builder.<PermanentItemEntity>of(PermanentItemEntity::new, MobCategory.MISC).sized(0.25F, 0.25F).setTrackingRange(64).setCustomClientFactory((spawnEntity, world) -> new PermanentItemEntity(PermanentItemEntity.TYPE, world)).setUpdateInterval(2).setShouldReceiveVelocityUpdates(true).build(MODID+":permanent_item_entity").setRegistryName(new ResourceLocation(MODID, "permanent_item_entity")));
 
@@ -1235,18 +1237,18 @@ public class EnigmaticLegacy {
 					//.setShouldReceiveVelocityUpdates(true)
 					.build(MODID+":ultimate_wither_skull_entity").setRegistryName(new ResourceLocation(MODID, "ultimate_wither_skull_entity")));
 
-			logger.info("Entities registered successfully.");
+			LOGGER.info("Entities registered successfully.");
 		}
 
 		@SubscribeEvent
 		public static void onTileReigistry(final RegistryEvent.Register<BlockEntityType<?>> event) {
-			logger.info("Initializing tile registration...");
+			LOGGER.info("Initializing tile registration...");
 
 			event.getRegistry().register(BlockEntityType.Builder.<TileEndAnchor>of(TileEndAnchor::new,
 					endAnchor).build(Util.fetchChoiceType(References.BLOCK_ENTITY, MODID + ":tile_end_anchor"))
 					.setRegistryName(new ResourceLocation(MODID, "tile_end_anchor")));
 
-			logger.info("Tile registered successfully.");
+			LOGGER.info("Tile registered successfully.");
 		}
 
 	}
@@ -1254,7 +1256,7 @@ public class EnigmaticLegacy {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onColorInit(final net.minecraftforge.client.event.ColorHandlerEvent.Item event) {
-		logger.info("Initializing colors registration...");
+		LOGGER.info("Initializing colors registration...");
 
 		event.getItemColors().register((stack, color) -> {
 			if (PotionHelper.isAdvancedPotion(stack))
@@ -1263,7 +1265,7 @@ public class EnigmaticLegacy {
 				return color > 0 ? -1 : PotionUtils.getColor(stack);
 		}, ultimatePotionBase, ultimatePotionSplash, ultimatePotionLingering, commonPotionBase, commonPotionSplash, commonPotionLingering);
 
-		logger.info("Colors registered successfully.");
+		LOGGER.info("Colors registered successfully.");
 	}
 
 	public static final CreativeModeTab enigmaticTab = new CreativeModeTab("enigmaticCreativeTab") {

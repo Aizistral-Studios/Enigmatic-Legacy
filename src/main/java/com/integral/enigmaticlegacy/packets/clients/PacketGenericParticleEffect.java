@@ -64,7 +64,7 @@ public class PacketGenericParticleEffect {
 	public static void handle(PacketGenericParticleEffect msg, Supplier<NetworkEvent.Context> ctx) {
 
 		ctx.get().enqueueWork(() -> {
-			Player player = EnigmaticLegacy.proxy.getClientPlayer();
+			Player player = EnigmaticLegacy.PROXY.getClientPlayer();
 			Vector3 pos = msg.pos;
 
 			int amount = msg.num;

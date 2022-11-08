@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.ITaintable;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
@@ -35,14 +36,26 @@ public class CosmicHeart extends ItemBase implements Vanishable {
 	public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		if (entityIn instanceof Player && !entityIn.level.isClientSide) {
 			Player player = (Player) entityIn;
-			blessableHandler.accept(stack, player);
+
+			if (SuperpositionHandler.isTheBlessedOne(player)) {
+				if (!ItemNBTHelper.getBoolean(stack, "isBelieverBlessed", false)) {
+					ItemNBTHelper.setBoolean(stack, "isBelieverBlessed", true);
+				}
+			} else {
+				if (ItemNBTHelper.getBoolean(stack, "isBelieverBlessed", false)) {
+					ItemNBTHelper.setBoolean(stack, "isBelieverBlessed", false);
+				}
+			}
 		}
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltipHandler.accept(stack, tooltip);
+		if (ItemNBTHelper.getBoolean(stack, "isBelieverBlessed", false)) {
+			ItemLoreHelper.addLocalizedString(tooltip, "tooltip.enigmaticlegacy.blessed1");
+			ItemLoreHelper.addLocalizedString(tooltip, "tooltip.enigmaticlegacy.blessed2");
+		}
 	}
 
 }

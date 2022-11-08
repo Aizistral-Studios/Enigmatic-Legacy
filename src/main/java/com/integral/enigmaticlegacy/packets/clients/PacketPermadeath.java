@@ -35,7 +35,7 @@ public class PacketPermadeath {
 		// server-side if client refused to do it within some short span of time after
 		// the packet was sent.
 
-		ctx.get().enqueueWork(() -> EnigmaticLegacy.proxy.displayPermadeathScreen());
+		ctx.get().enqueueWork(() -> EnigmaticLegacy.PROXY.displayPermadeathScreen());
 		ctx.get().setPacketHandled(true);
 	}
 }

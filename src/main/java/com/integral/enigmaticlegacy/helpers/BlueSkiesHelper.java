@@ -43,7 +43,7 @@ public class BlueSkiesHelper {
 		GET_CAPABILITY = getCapability;
 		MOD_PRESENT = player != null && iface != null ? true : false;
 
-		EnigmaticLegacy.logger.info("Blue Skies detected: " + MOD_PRESENT);
+		EnigmaticLegacy.LOGGER.info("Blue Skies detected: " + MOD_PRESENT);
 	}
 
 	public static void maybeFixCapability(Player player) {
@@ -62,7 +62,7 @@ public class BlueSkiesHelper {
 					if (health.isNaN()) {
 						SET_HEALTH.invoke(capability, 0F);
 						player.setHealth(0F);
-						EnigmaticLegacy.logger.info("Fixed NaN natural health for player: " + player.getGameProfile().getName());
+						EnigmaticLegacy.LOGGER.info("Fixed NaN natural health for player: " + player.getGameProfile().getName());
 					}
 				}
 			}

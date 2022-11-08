@@ -202,9 +202,9 @@ public class LootGenerator extends ItemBase implements Vanishable {
 						chest.clearContent();
 					}
 
-					EnigmaticLegacy.logger.info("Estimated generation complete in 32768 instances, results:");
+					EnigmaticLegacy.LOGGER.info("Estimated generation complete in 32768 instances, results:");
 					for (Item theItem : lootMap.keySet()) {
-						EnigmaticLegacy.logger.info("Item: " + theItem.getName(new ItemStack(theItem)).getString() + ", Amount: " + lootMap.get(theItem));
+						EnigmaticLegacy.LOGGER.info("Item: " + theItem.getName(new ItemStack(theItem)).getString() + ", Amount: " + lootMap.get(theItem));
 					}
 
 					player.sendMessage(new TranslatableComponent("message.enigmaticlegacy.gen_sim_complete").withStyle(ChatFormatting.DARK_PURPLE), player.getUUID());

@@ -184,7 +184,7 @@ public class PermanentItemEntity extends Entity {
 			return false;
 
 		if (source.isBypassMagic()) {
-			EnigmaticLegacy.logger.warn("[WARN] Attacked permanent item entity with absolute DamageSource: " + source);
+			EnigmaticLegacy.LOGGER.warn("[WARN] Attacked permanent item entity with absolute DamageSource: " + source);
 			this.kill();
 			return true;
 		} else
@@ -194,7 +194,7 @@ public class PermanentItemEntity extends Entity {
 	@Override
 	public void remove(Entity.RemovalReason reason) {
 		if (reason == RemovalReason.DISCARDED || reason == RemovalReason.KILLED) {
-			EnigmaticLegacy.logger.warn("[WARN] Removing Permanent Item Entity: " + this);
+			EnigmaticLegacy.LOGGER.warn("[WARN] Removing Permanent Item Entity: " + this);
 
 			if (!this.level.isClientSide) {
 				SoulArchive.getInstance().removeItem(this);
@@ -311,7 +311,7 @@ public class PermanentItemEntity extends Entity {
 				player.take(this, i);
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY(), this.getZ(), 64, this.level.dimension())), new PacketHandleItemPickup(player.getId(), this.getId()));
 
-				EnigmaticLegacy.logger.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
+				EnigmaticLegacy.LOGGER.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
 				this.discard();
 				itemstack.setCount(0);
 			} else if (this.pickupDelay == 0 && (this.owner == null || this.owner.equals(player.getUUID())) && (i <= 0 || player.getInventory().add(itemstack))) {
@@ -321,7 +321,7 @@ public class PermanentItemEntity extends Entity {
 
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY(), this.getZ(), 64, this.level.dimension())), new PacketHandleItemPickup(player.getId(), this.getId()));
 
-					EnigmaticLegacy.logger.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
+					EnigmaticLegacy.LOGGER.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
 					this.discard();
 					itemstack.setCount(i);
 				}
