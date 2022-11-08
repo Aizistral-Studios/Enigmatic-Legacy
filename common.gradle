@@ -95,7 +95,7 @@ curseforge {
 		println("Pushing CurseGradle specifications for project ID: ${curse_id}")
 		
 		// Specified as cmd argument
-        apiKey = findProperty('curseKey') ?: 0
+        apiKey = findProperty('curseKey') ?: '0'
         
 		id = project.curse_id
         releaseType = project.curse_release
@@ -116,7 +116,7 @@ curseforge {
 }
 
 modrinth {
-    token = findProperty('modrinthKey') ?: 0
+    token = findProperty('modrinthKey') ?: '0'
     projectId = "IpUWAlqM"
     versionNumber = project.version
 	versionName = "Enigmatic Legacy v" + project.version
