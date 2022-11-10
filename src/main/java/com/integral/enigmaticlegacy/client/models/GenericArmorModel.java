@@ -1,13 +1,5 @@
 package com.integral.enigmaticlegacy.client.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.decoration.ArmorStand;
-import net.minecraft.world.entity.EquipmentSlot;
-
 /**
  * Generic class for extension by armor models.
  * Originated from Botania: https://github.com/Vazkii/Botania

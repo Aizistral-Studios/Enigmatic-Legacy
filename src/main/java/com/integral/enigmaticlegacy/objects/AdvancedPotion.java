@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffectInstance;
 
 /**
  * Mimics vanilla Potion type, but is more minimalistic and manageable.

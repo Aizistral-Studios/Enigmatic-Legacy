@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
-import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -15,23 +14,22 @@ import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.ExperienceOrb;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -63,13 +61,13 @@ public class XPScroll extends ItemBaseCurio {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
-		TranslatableComponent cMode;
+		MutableComponent cMode;
 		if (!ItemNBTHelper.getBoolean(stack, "IsActive", false)) {
-			cMode = new TranslatableComponent("tooltip.enigmaticlegacy.xpTomeDeactivated");
+			cMode = Component.translatable("tooltip.enigmaticlegacy.xpTomeDeactivated");
 		} else if (ItemNBTHelper.getBoolean(stack, "AbsorptionMode", true)) {
-			cMode = new TranslatableComponent("tooltip.enigmaticlegacy.xpTomeAbsorption");
+			cMode = Component.translatable("tooltip.enigmaticlegacy.xpTomeAbsorption");
 		} else {
-			cMode = new TranslatableComponent("tooltip.enigmaticlegacy.xpTomeExtraction");
+			cMode = Component.translatable("tooltip.enigmaticlegacy.xpTomeExtraction");
 		}
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");

@@ -1,11 +1,8 @@
 package com.integral.enigmaticlegacy.client;
 
-import java.time.Clock;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.client.resources.language.I18n;
 import net.minecraftforge.api.distmarker.Dist;

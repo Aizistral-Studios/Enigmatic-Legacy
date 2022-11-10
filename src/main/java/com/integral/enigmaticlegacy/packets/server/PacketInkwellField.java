@@ -4,8 +4,8 @@ import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.gui.containers.LoreInscriberContainer;
 
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 
 /**

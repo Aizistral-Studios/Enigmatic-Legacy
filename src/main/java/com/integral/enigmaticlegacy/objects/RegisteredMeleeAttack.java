@@ -1,6 +1,5 @@
 package com.integral.enigmaticlegacy.objects;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
 

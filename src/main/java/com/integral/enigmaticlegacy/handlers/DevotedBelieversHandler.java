@@ -1,19 +1,18 @@
 package com.integral.enigmaticlegacy.handlers;
 
+import static com.integral.enigmaticlegacy.EnigmaticLegacy.LOGGER;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.UUID;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 
@@ -23,7 +22,6 @@ import com.google.gson.JsonParser;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.fml.loading.FMLPaths;
-import static com.integral.enigmaticlegacy.EnigmaticLegacy.LOGGER;
 
 public final class DevotedBelieversHandler {
 	private static final Map<String, UUID> DEVOTED_BELIEVERS = loadDevotedBelievers();

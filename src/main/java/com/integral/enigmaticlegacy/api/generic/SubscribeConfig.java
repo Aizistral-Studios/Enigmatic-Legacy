@@ -1,13 +1,14 @@
 package com.integral.enigmaticlegacy.api.generic;
 
-import com.integral.enigmaticlegacy.config.OmniconfigHandler;
-import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
+
+import com.integral.enigmaticlegacy.config.OmniconfigHandler;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 /**
  * This is used to annotate methods that should receive OmniconfigWrapper object

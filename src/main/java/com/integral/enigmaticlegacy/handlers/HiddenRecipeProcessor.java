@@ -1,17 +1,9 @@
 package com.integral.enigmaticlegacy.handlers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import com.integral.enigmaticlegacy.brewing.AbstractBrewingRecipe;
-import com.integral.enigmaticlegacy.brewing.ComplexBrewingRecipe;
-import com.integral.enigmaticlegacy.brewing.SpecialBrewingRecipe;
 import com.integral.enigmaticlegacy.crafting.HiddenRecipe;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;

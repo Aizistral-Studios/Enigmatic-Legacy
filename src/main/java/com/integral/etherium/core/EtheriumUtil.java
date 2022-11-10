@@ -13,10 +13,10 @@ import com.integral.etherium.items.EtheriumScythe;
 import com.integral.etherium.items.EtheriumShovel;
 import com.integral.etherium.items.EtheriumSword;
 
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.Rarity;
 
 public class EtheriumUtil {
 

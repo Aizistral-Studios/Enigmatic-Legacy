@@ -2,13 +2,11 @@ package com.integral.enigmaticlegacy.gui;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.integral.enigmaticlegacy.items.EnderRing;
 import com.integral.enigmaticlegacy.items.MagnetRing;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.Button.OnPress;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;

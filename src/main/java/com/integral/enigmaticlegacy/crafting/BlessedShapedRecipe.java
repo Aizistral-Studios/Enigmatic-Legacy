@@ -1,7 +1,6 @@
 package com.integral.enigmaticlegacy.crafting;
 
 import com.google.gson.JsonObject;
-import com.integral.enigmaticlegacy.api.items.ITaintable;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.CosmicHeart;
 

@@ -1,22 +1,19 @@
 package com.integral.enigmaticlegacy.enchantments;
 
+import static com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack.getRegisteredAttackStregth;
+
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
-import com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack;
 
-import static com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack.*;
-
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.DamageEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.TridentImpalerEnchantment;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.CrossbowItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.resources.ResourceLocation;
 
 public class TorrentEnchantment extends Enchantment {
 	public TorrentEnchantment(EquipmentSlot... slots) {

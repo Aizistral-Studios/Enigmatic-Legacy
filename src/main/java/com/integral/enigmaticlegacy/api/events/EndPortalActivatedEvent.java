@@ -2,8 +2,8 @@ package com.integral.enigmaticlegacy.api.events;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.Event;
 
 /**
  * Fired when player activates vanilla End Portal.

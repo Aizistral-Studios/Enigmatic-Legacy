@@ -1,24 +1,19 @@
 package com.integral.enigmaticlegacy.enchantments;
 
-import static com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack.*;
+import static com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack.getRegisteredAttackStregth;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
-import com.integral.enigmaticlegacy.objects.RegisteredMeleeAttack;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.DamageEnchantment;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.resources.ResourceLocation;
 
 public class SlayerEnchantment extends Enchantment {
 	public SlayerEnchantment(EquipmentSlot... slots) {

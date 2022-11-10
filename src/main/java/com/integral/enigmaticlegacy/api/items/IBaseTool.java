@@ -3,7 +3,6 @@ package com.integral.enigmaticlegacy.api.items;
 import java.util.Set;
 
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeHooks;

@@ -1,5 +1,6 @@
 package com.integral.enigmaticlegacy.items;
 
+import java.awt.TextComponent;
 import java.util.List;
 import java.util.Random;
 
@@ -7,29 +8,26 @@ import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.items.IHidden;
-import com.integral.enigmaticlegacy.client.Quote;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -67,16 +65,16 @@ public class RelicOfTesting extends ItemBase implements IHidden {
 		ItemStack checkTag = playerIn.getInventory().offhand.get(0);
 
 		if (checkTag != null) {
-			playerIn.sendMessage(new TextComponent(checkTag.getOrCreateTag().getAsString()), playerIn.getUUID());
+			playerIn.sendSystemMessage(Component.literal(checkTag.getOrCreateTag().getAsString()));
 		}
 
 		if (!worldIn.isClientSide) {
 			//Quote.NO_PERIL.play((ServerPlayer) playerIn);
 
 			TransientPlayerData.get(playerIn).setUnlockedNarrator(false);
-			//playerIn.sendMessage(new TextComponent("INTEGER: " + UltimaTestConfig.integerTest.getValue()), playerIn.getUniqueID());
-			//playerIn.sendMessage(new TextComponent("FLOAT: " + UltimaTestConfig.floatTest.getValue()), playerIn.getUniqueID());
-			//playerIn.sendMessage(new TextComponent("BOOLEAN: " + UltimaTestConfig.booleanTest.getValue()), playerIn.getUniqueID());
+			//playerIn.sendMessage(Component.literal("INTEGER: " + UltimaTestConfig.integerTest.getValue()), playerIn.getUniqueID());
+			//playerIn.sendMessage(Component.literal("FLOAT: " + UltimaTestConfig.floatTest.getValue()), playerIn.getUniqueID());
+			//playerIn.sendMessage(Component.literal("BOOLEAN: " + UltimaTestConfig.booleanTest.getValue()), playerIn.getUniqueID());
 
 		}
 
@@ -87,7 +85,7 @@ public class RelicOfTesting extends ItemBase implements IHidden {
 		    if(itemstack.hasDisplayName()) {
 		        name = itemstack.getDisplayName();
 		    } else {
-		        name = new TranslatableComponent(this.getTranslationKey());
+		        name = Component.translatable(this.getTranslationKey());
 		    }
 
 		    playerIn.openContainer(new PortableCrafterContainerProvider(name));

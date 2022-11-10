@@ -1,13 +1,12 @@
 package com.integral.enigmaticlegacy.mixin;
 
+import static net.minecraftforge.client.ForgeHooksClient.getTooltipFont;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.annotation.Nullable;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,8 +27,6 @@ import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import static net.minecraftforge.client.ForgeHooksClient.*;
 
 /**
  * I am ashamed to do this, but Forge still leaves me no choice.

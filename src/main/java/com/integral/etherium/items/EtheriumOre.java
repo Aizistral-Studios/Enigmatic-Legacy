@@ -3,9 +3,8 @@ package com.integral.etherium.items;
 import com.integral.etherium.core.EtheriumUtil;
 import com.integral.etherium.core.IEtheriumConfig;
 
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 
 public class EtheriumOre extends Item {
 	private final IEtheriumConfig config;

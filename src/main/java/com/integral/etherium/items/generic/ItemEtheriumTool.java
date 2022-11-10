@@ -1,22 +1,17 @@
 package com.integral.etherium.items.generic;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
 import com.integral.etherium.core.IEtheriumConfig;
 import com.integral.etherium.core.IEtheriumTool;
 
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.DiggerItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
-import net.minecraft.world.item.Tier;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.DiggerItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.Item.Properties;
 
 public abstract class ItemEtheriumTool extends DiggerItem implements IEtheriumTool {
 	public Set<Material> effectiveMaterials;

@@ -2,8 +2,8 @@ package com.integral.enigmaticlegacy.helpers;
 
 import java.util.UUID;
 
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 
 /**
  * A couple of methods for mork convenient work with NBT of ItemStacks.

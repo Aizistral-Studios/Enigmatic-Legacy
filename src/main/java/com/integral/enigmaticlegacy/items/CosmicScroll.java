@@ -1,5 +1,6 @@
 package com.integral.enigmaticlegacy.items;
 
+import java.awt.TextComponent;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,15 +17,12 @@ import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.integral.enigmaticlegacy.packets.clients.PacketCosmicRevive;
-import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -39,7 +37,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.BindingCurseEnchantment;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -53,7 +50,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.PacketDistributor;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurio.SoundInfo;
 
 public class CosmicScroll extends ItemBaseCurio implements IHidden {
 	private static final ResourceLocation ADVANCEMENT = new ResourceLocation(EnigmaticLegacy.MODID, "main/cosmic_scroll");
@@ -216,15 +212,15 @@ public class CosmicScroll extends ItemBaseCurio implements IHidden {
 			for (int i = 0; i < tooltip.size(); i++) {
 				Component component = tooltip.get(i);
 				String text = component.getString();
-				tooltip.set(i, new TextComponent(SuperpositionHandler.obscureString(text)).setStyle(component.getStyle()));
+				tooltip.set(i, Component.literal(SuperpositionHandler.obscureString(text)).setStyle(component.getStyle()));
 			}
 		}
 	}
 
 	@SubscribeEvent
 	public void onLivingDeath(LivingDeathEvent event) {
-		if (event.getEntityLiving() instanceof Player && !event.getEntityLiving().level.isClientSide) {
-			Player player = (Player) event.getEntityLiving();
+		if (event.getEntity() instanceof Player && !event.getEntity().level.isClientSide) {
+			Player player = (Player) event.getEntity();
 
 			if (SuperpositionHandler.isTheBlessedOne(player)) {
 				ItemStack scroll = SuperpositionHandler.getCurioStack(player, this);
@@ -257,10 +253,10 @@ public class CosmicScroll extends ItemBaseCurio implements IHidden {
 			Player player = (Player) event.getSource().getDirectEntity();
 			float bonusDamage = 0F;
 
-			if (event.getEntityLiving() instanceof Player victimPlayer && SuperpositionHandler.hasArchitectsFavor(player)) {
+			if (event.getEntity() instanceof Player victimPlayer && SuperpositionHandler.hasArchitectsFavor(player)) {
 				if (!SuperpositionHandler.isTheBlessedOne(victimPlayer)) {
 					bonusDamage += event.getAmount() * unchosenDamageBonus.getValue().asModifier(false);
-					event.getEntityLiving().setSecondsOnFire(4);
+					event.getEntity().setSecondsOnFire(4);
 				}
 			}
 
@@ -270,7 +266,7 @@ public class CosmicScroll extends ItemBaseCurio implements IHidden {
 
 	@SubscribeEvent(priority = EventPriority.LOW)
 	public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
-		if (event.getPlayer() instanceof ServerPlayer player) {
+		if (event.getEntity() instanceof ServerPlayer player) {
 			if (SuperpositionHandler.isTheBlessedOne(player) && !SuperpositionHandler.hasAdvancement(player,
 					new ResourceLocation(EnigmaticLegacy.MODID, "book/accessories/cosmic_scroll_obscure"))) {
 				SuperpositionHandler.grantAdvancement(player, new ResourceLocation(EnigmaticLegacy.MODID, "book/accessories/cosmic_scroll_obscure"));

@@ -6,37 +6,31 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Vanishable;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CactusBlock;
 import net.minecraft.world.level.block.ChorusFlowerBlock;
 import net.minecraft.world.level.block.ChorusPlantBlock;
 import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.SugarCaneBlock;
 import net.minecraft.world.level.block.VineBlock;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.Vanishable;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BoneMealItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.Level;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -61,7 +55,6 @@ public class Infinimeal extends ItemBase implements Vanishable {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public InteractionResult useOn(UseOnContext context) {
 		ItemStack stack = context.getItemInHand();
 		int savedCount = stack.getCount();
@@ -92,11 +85,11 @@ public class Infinimeal extends ItemBase implements Vanishable {
 						world.levelEvent(2005, pos, 0);
 					}
 
-					age += random.nextInt(20);
+					age += world.random.nextInt(20);
 					world.setBlock(topMostPos, topMostState.setValue(BlockStateProperties.AGE_15, Integer.valueOf(Math.min(age, 15))), 4);
 
 					if (world instanceof ServerLevel) {
-						block.randomTick(world.getBlockState(topMostPos), (ServerLevel)world, topMostPos, random);
+						world.getBlockState(topMostPos).randomTick((ServerLevel)world, topMostPos, world.random);
 					}
 
 					return InteractionResult.sidedSuccess(world.isClientSide);
@@ -109,11 +102,11 @@ public class Infinimeal extends ItemBase implements Vanishable {
 					EnigmaticLegacy.PROXY.spawnBonemealParticles(world, pos, 0);
 				}
 
-				int cycles = 7+random.nextInt(7);
+				int cycles = 7+world.random.nextInt(7);
 
 				if (world instanceof ServerLevel) {
 					for (int i = 0; i <= cycles; i++) {
-						block.randomTick(state, (ServerLevel)world, pos, random);
+						state.randomTick((ServerLevel)world, pos, world.random);
 					}
 
 					state.updateNeighbourShapes(world, pos, 4);
@@ -128,12 +121,12 @@ public class Infinimeal extends ItemBase implements Vanishable {
 					world.levelEvent(2005, pos, 0);
 				}
 
-				int cycles = 1+random.nextInt(1);
+				int cycles = 1+world.random.nextInt(1);
 				cycles*=11;
 
 				if (world instanceof ServerLevel) {
 					for (int i = 0; i <= cycles; i++) {
-						state.randomTick((ServerLevel)world, pos, random);
+						state.randomTick((ServerLevel)world, pos, world.random);
 					}
 				}
 
@@ -147,12 +140,12 @@ public class Infinimeal extends ItemBase implements Vanishable {
 					List<BlockPos> flowers = this.findChorusFlowers(world, pos);
 
 					flowers.forEach(flowerPos -> {
-						int cycles = 1 + random.nextInt(2);
+						int cycles = 1 + world.random.nextInt(2);
 						cycles *= 11;
 
 						for (int i = 0; i <= cycles; i++) {
 							BlockState flowerState = world.getBlockState(flowerPos);
-							flowerState.randomTick(serverWorld, flowerPos, random);
+							flowerState.randomTick(serverWorld, flowerPos, world.random);
 						}
 					});
 				}

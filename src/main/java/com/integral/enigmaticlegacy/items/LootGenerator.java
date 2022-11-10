@@ -1,5 +1,6 @@
 package com.integral.enigmaticlegacy.items;
 
+import java.awt.TextComponent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,30 +13,25 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.Vanishable;
-import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.RecordItem;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Vanishable;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BedBlock;
-import net.minecraft.world.level.block.JukeboxBlock;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -123,7 +119,7 @@ public class LootGenerator extends ItemBase implements Vanishable {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.lootGeneratorCurrent");
 
-		list.add(new TextComponent("" + this.lootList.get(stack.getDamageValue())).withStyle(ChatFormatting.GOLD));
+		list.add(Component.literal("" + this.lootList.get(stack.getDamageValue())).withStyle(ChatFormatting.GOLD));
 	}
 
 	@Override
@@ -151,7 +147,7 @@ public class LootGenerator extends ItemBase implements Vanishable {
 		}
 
 		if (player instanceof ServerPlayer) {
-			player.displayClientMessage(new TextComponent("Table: " + this.lootList.get(itemstack.getDamageValue())), true);
+			player.displayClientMessage(Component.literal("Table: " + this.lootList.get(itemstack.getDamageValue())), true);
 		}
 
 		return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
@@ -207,7 +203,7 @@ public class LootGenerator extends ItemBase implements Vanishable {
 						EnigmaticLegacy.LOGGER.info("Item: " + theItem.getName(new ItemStack(theItem)).getString() + ", Amount: " + lootMap.get(theItem));
 					}
 
-					player.sendMessage(new TranslatableComponent("message.enigmaticlegacy.gen_sim_complete").withStyle(ChatFormatting.DARK_PURPLE), player.getUUID());
+					player.sendSystemMessage(Component.translatable("message.enigmaticlegacy.gen_sim_complete").withStyle(ChatFormatting.DARK_PURPLE));
 
 				} else {
 					chest.clearContent();

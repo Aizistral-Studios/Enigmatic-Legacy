@@ -8,22 +8,15 @@ import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
 
-import org.apache.http.MethodNotSupportedException;
-
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
-import net.minecraft.world.item.Vanishable;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import top.theillusivec4.curios.api.SlotContext;
-import net.minecraft.world.item.Item.Properties;
 
 public abstract class ItemSpellstoneCurio extends ItemBaseCurio implements ISpellstone {
 	public static Omniconfig.BooleanParameter multiequip;

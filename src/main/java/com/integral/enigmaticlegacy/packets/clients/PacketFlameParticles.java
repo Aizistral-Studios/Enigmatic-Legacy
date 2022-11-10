@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.items.AstralBreaker;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.ParticleStatus;
 import net.minecraft.client.player.LocalPlayer;

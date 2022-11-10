@@ -9,7 +9,6 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 
 @Mixin(EnchantmentHelper.class)
 public class MixinEnchantmentHelper {

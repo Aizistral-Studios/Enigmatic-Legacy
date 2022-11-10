@@ -1,7 +1,6 @@
 package com.integral.enigmaticlegacy.mixin;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -11,10 +10,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
-import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.Criterion;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.crafting.Recipe;
 

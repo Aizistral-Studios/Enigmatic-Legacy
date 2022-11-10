@@ -4,8 +4,6 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.objects.Perhaps;
 import com.integral.omniconfig.Configuration;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-
 public class Omniconfig {
 
 	public static final int STANDART_INTEGER_LIMIT = 32768;

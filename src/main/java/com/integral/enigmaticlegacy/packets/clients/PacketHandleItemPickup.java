@@ -1,5 +1,4 @@
 package com.integral.enigmaticlegacy.packets.clients;
-import java.util.Random;
 import java.util.function.Supplier;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;

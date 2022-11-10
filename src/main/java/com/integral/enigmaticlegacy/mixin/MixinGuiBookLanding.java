@@ -8,17 +8,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.gui.AcknowlegmentNameRenderer;
-import com.integral.enigmaticlegacy.items.TheAcknowledgment;
-import com.integral.enigmaticlegacy.items.TheTwist;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
 import vazkii.patchouli.client.book.gui.BookTextRenderer;
 import vazkii.patchouli.client.book.gui.GuiBook;
 import vazkii.patchouli.client.book.gui.GuiBookLanding;
-import vazkii.patchouli.common.book.Book;
 
 @Mixin(GuiBookLanding.class)
 public abstract class MixinGuiBookLanding extends GuiBook {

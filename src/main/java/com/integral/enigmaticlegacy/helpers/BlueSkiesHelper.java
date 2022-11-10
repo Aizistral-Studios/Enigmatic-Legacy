@@ -1,6 +1,5 @@
 package com.integral.enigmaticlegacy.helpers;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;

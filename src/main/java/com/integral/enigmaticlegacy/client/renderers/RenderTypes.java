@@ -1,15 +1,5 @@
 package com.integral.enigmaticlegacy.client.renderers;
 
-import org.lwjgl.opengl.GL11;
-
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormat.Mode;
-
-import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
-
 /*
 public abstract class RenderTypes extends RenderType {
 

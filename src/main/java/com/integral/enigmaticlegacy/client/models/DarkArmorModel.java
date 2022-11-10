@@ -1,11 +1,5 @@
 package com.integral.enigmaticlegacy.client.models;
 
-import java.util.HashMap;
-
-import com.mojang.blaze3d.vertex.PoseStack;
-
-import net.minecraft.world.entity.EquipmentSlot;
-
 /*
 public class DarkArmorModel extends GenericArmorModel {
 

@@ -1,5 +1,6 @@
 package com.integral.enigmaticlegacy.items;
 
+import java.awt.TextComponent;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -13,8 +14,6 @@ import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -68,7 +67,7 @@ public class QuotePlayer extends ItemBase implements IHidden {
 			player.swing(hand);
 
 			if (player instanceof ServerPlayer) {
-				player.displayClientMessage(new TextComponent("Quote: " + Quote.getAllQuotes().get(itemstack.getDamageValue()).getName().toUpperCase()), true);
+				player.displayClientMessage(Component.literal("Quote: " + Quote.getAllQuotes().get(itemstack.getDamageValue()).getName().toUpperCase()), true);
 			}
 		} else {
 			if (player instanceof ServerPlayer splayer) {

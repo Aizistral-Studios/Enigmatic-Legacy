@@ -2,8 +2,6 @@ package com.integral.enigmaticlegacy.objects;
 
 import java.util.Random;
 
-import com.integral.enigmaticlegacy.items.EyeOfNebula;
-
 /**
  * A percentage-based value that can be converted into factor,
  * or 1.0 + factor in case it's required.

@@ -2,11 +2,11 @@ package com.integral.enigmaticlegacy.gui.containers;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.network.chat.Component;
 
 public class PortableCrafterContainerProvider implements MenuProvider {
 	private Component name;

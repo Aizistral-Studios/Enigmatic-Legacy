@@ -2,8 +2,8 @@ package com.integral.enigmaticlegacy.helpers;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
 public class EnigmaticEnchantmentHelper {
 

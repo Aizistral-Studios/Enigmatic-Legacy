@@ -5,18 +5,16 @@ import java.util.Random;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 
-import net.minecraft.world.item.Vanishable;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.item.Item.Properties;
 
 public abstract class ItemBase extends Item {
 	protected static final Random random = new Random();
@@ -64,8 +62,8 @@ public abstract class ItemBase extends Item {
 		Component superName = super.getName(stack);
 
 		if (this.isPlaceholder) {
-			if (superName instanceof TextComponent)
-				return ((TextComponent)superName).withStyle(ChatFormatting.OBFUSCATED);
+			if (superName instanceof MutableComponent)
+				return ((MutableComponent)superName).withStyle(ChatFormatting.OBFUSCATED);
 		}
 
 		return superName;

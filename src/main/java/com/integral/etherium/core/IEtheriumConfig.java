@@ -5,17 +5,15 @@ import java.util.Optional;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.objects.Perhaps;
-import com.integral.etherium.items.EtheriumAxe;
-import com.integral.etherium.items.EtheriumPickaxe;
 
-import net.minecraft.world.level.material.Material;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.fml.ModList;
 
 public interface IEtheriumConfig {

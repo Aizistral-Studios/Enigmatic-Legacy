@@ -10,10 +10,10 @@ import com.integral.enigmaticlegacy.items.MagmaHeart;
 import com.integral.enigmaticlegacy.items.MagnetRing;
 import com.integral.enigmaticlegacy.packets.clients.PacketSyncTransientData;
 
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.Item;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.PacketDistributor;

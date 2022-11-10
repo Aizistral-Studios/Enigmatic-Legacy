@@ -1,5 +1,6 @@
 package com.integral.enigmaticlegacy.items;
 
+import java.awt.TextComponent;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,16 +12,26 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
-import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.Vanishable;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.SlotAccess;
 import net.minecraft.world.entity.player.Player;
@@ -29,20 +40,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.StringTag;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -114,7 +113,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 							ItemStack displayStack;
 							displayStack = new ItemStack(something, 1);
 
-							list.add(new TextComponent(" - " + displayStack.getHoverName().getString()).withStyle(ChatFormatting.GOLD));
+							list.add(Component.literal(" - " + displayStack.getHoverName().getString()).withStyle(ChatFormatting.GOLD));
 						}
 						counter++;
 					}
@@ -127,7 +126,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 							ItemStack displayStack;
 							displayStack = new ItemStack(something, 1);
 
-							list.add(new TextComponent(" - " + displayStack.getHoverName().getString()).withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.GOLD));
+							list.add(Component.literal(" - " + displayStack.getHoverName().getString()).withStyle(ChatFormatting.GOLD).withStyle(ChatFormatting.GOLD));
 						}
 					}
 				}
@@ -140,12 +139,12 @@ public class OblivionStone extends ItemBase implements Vanishable {
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-		TranslatableComponent mode;
+		MutableComponent mode;
 
 		if (ItemNBTHelper.getBoolean(stack, "IsActive", true)) {
-			mode = new TranslatableComponent("tooltip.enigmaticlegacy.oblivionStoneMode" + ItemNBTHelper.getInt(stack, "ConsumptionMode", 0));
+			mode = Component.translatable("tooltip.enigmaticlegacy.oblivionStoneMode" + ItemNBTHelper.getInt(stack, "ConsumptionMode", 0));
 		} else {
-			mode = new TranslatableComponent("tooltip.enigmaticlegacy.oblivionStoneModeInactive");
+			mode = Component.translatable("tooltip.enigmaticlegacy.oblivionStoneModeInactive");
 		}
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneModeDesc", null, mode.getString());

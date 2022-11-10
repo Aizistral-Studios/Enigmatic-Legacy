@@ -1,18 +1,15 @@
 package com.integral.enigmaticlegacy.mixin;
 
-import org.apache.commons.lang3.ObjectUtils.Null;
 import org.apache.commons.lang3.tuple.Triple;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraftforge.common.ForgeHooks;
 
 /**
  * TODO Do we still need this?

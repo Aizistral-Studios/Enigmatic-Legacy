@@ -5,18 +5,11 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.ICursed;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseFood;
-import com.integral.enigmaticlegacy.objects.TransientPlayerData;
-import com.integral.enigmaticlegacy.triggers.ForbiddenFruitTrigger;
-import com.integral.omniconfig.Configuration;
-import com.integral.omniconfig.wrappers.Omniconfig;
-import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;

@@ -1,14 +1,12 @@
 package com.integral.enigmaticlegacy.helpers;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.List;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 // TODO This is fucked up, we need better way for doing it
 public class LootTableHelper {
