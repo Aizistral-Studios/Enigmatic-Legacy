@@ -77,10 +77,15 @@ import com.integral.enigmaticlegacy.proxy.ClientProxy;
 import com.integral.enigmaticlegacy.proxy.CommonProxy;
 import com.integral.enigmaticlegacy.registry.EnigmaticBlocks;
 import com.integral.enigmaticlegacy.registry.EnigmaticEffects;
+import com.integral.enigmaticlegacy.registry.EnigmaticEnchantments;
 import com.integral.enigmaticlegacy.registry.EnigmaticEntities;
 import com.integral.enigmaticlegacy.registry.EnigmaticItems;
+import com.integral.enigmaticlegacy.registry.EnigmaticLootModifiers;
 import com.integral.enigmaticlegacy.registry.EnigmaticMenus;
+import com.integral.enigmaticlegacy.registry.EnigmaticPotions;
+import com.integral.enigmaticlegacy.registry.EnigmaticRecipes;
 import com.integral.enigmaticlegacy.registry.EnigmaticSounds;
+import com.integral.enigmaticlegacy.registry.EnigmaticTiles;
 import com.integral.enigmaticlegacy.triggers.BeheadingTrigger;
 import com.integral.enigmaticlegacy.triggers.CursedInventoryChangedTrigger;
 import com.integral.enigmaticlegacy.triggers.CursedRingEquippedTrigger;
@@ -194,6 +199,18 @@ public class EnigmaticLegacy {
 		enigmaticHandler = new EnigmaticEventHandler();
 		keybindHandler = new EnigmaticKeybindHandler();
 
+		this.loadClass(EnigmaticItems.class);
+		this.loadClass(EnigmaticTiles.class);
+		this.loadClass(EnigmaticMenus.class);
+		this.loadClass(EnigmaticBlocks.class);
+		this.loadClass(EnigmaticSounds.class);
+		this.loadClass(EnigmaticEffects.class);
+		this.loadClass(EnigmaticPotions.class);
+		this.loadClass(EnigmaticRecipes.class);
+		this.loadClass(EnigmaticEntities.class);
+		this.loadClass(EnigmaticEnchantments.class);
+		this.loadClass(EnigmaticLootModifiers.class);
+
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientRegistries);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::intermodStuff);
@@ -212,6 +229,14 @@ public class EnigmaticLegacy {
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStarted);
 
 		LOGGER.info("Mod instance constructed successfully.");
+	}
+
+	private void loadClass(Class<?> theClass) {
+		try {
+			Class.forName(theClass.getName());
+		} catch (ClassNotFoundException ex) {
+			throw new IllegalStateException("This can't be hapenning.");
+		}
 	}
 
 	public void onLoadComplete(FMLLoadCompleteEvent event) {
