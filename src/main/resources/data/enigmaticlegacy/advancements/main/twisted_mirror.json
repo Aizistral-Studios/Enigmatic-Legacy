@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "enigmaticlegacy:dark_mirror"
+      "item": "enigmaticlegacy:twisted_mirror"
     },
     "title": {
       "translate": "advancement.enigmaticlegacy:twistedMirror"
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-             "items": ["enigmaticlegacy:dark_mirror"]
+             "items": ["enigmaticlegacy:twisted_mirror"]
           }
         ]
       }

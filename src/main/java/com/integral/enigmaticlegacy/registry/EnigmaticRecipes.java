@@ -30,7 +30,7 @@ public class EnigmaticRecipes extends AbstractRegistry<RecipeSerializer<?>> {
 	@ObjectHolder(value = MODID + ":enchantment_transposing", registryName = "recipe_serializer")
 	public static final RecipeSerializer<EnchantmentTransposingRecipe> ENCHANTMENT_TRANSPOSING = null;
 
-	@ObjectHolder(value = MODID + ":oblivion_stone_combine", registryName = "recipe_serializer")
+	@ObjectHolder(value = MODID + ":void_stone_combine", registryName = "recipe_serializer")
 	public static final RecipeSerializer<OblivionStoneCombineRecipe> OBLIVION_STONE_COMBINE = null;
 
 	@ObjectHolder(value = MODID + ":bind_to_player", registryName = "recipe_serializer")
@@ -52,7 +52,7 @@ public class EnigmaticRecipes extends AbstractRegistry<RecipeSerializer<?>> {
 		super(ForgeRegistries.RECIPE_SERIALIZERS);
 		this.register("mending_mixture_repair", () -> MendingMixtureRepairRecipe.SERIALIZER);
 		this.register("enchantment_transposing", () -> EnchantmentTransposingRecipe.SERIALIZER);
-		this.register("oblivion_stone_combine", () -> OblivionStoneCombineRecipe.SERIALIZER);
+		this.register("void_stone_combine", () -> OblivionStoneCombineRecipe.SERIALIZER);
 		this.register("bind_to_player", () -> BindToPlayerRecipe.SERIALIZER);
 		this.register("crafting_shaped_hidden", () -> HiddenRecipe.SERIALIZER);
 		this.register("shapeless_no_return_craft", ShapelessNoReturnRecipe.Serializer::new);

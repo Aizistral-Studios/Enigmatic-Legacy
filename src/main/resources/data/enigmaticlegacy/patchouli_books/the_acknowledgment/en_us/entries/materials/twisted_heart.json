@@ -1,0 +1,38 @@
+{
+    "name": "book.enigmaticlegacy.entry.twisted_heart.name",
+    "icon": "enigmaticlegacy:twisted_heart",
+    "category": "enigmaticlegacy:materials",
+	"advancement": "enigmaticlegacy:book/materials/twisted_heart",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 70,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.twisted_heart.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:twisted_heart",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.twisted_heart.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.twisted_heart.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.twisted_heart.page.4"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.twisted_heart.page.5"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

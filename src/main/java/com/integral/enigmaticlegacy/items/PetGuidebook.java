@@ -58,14 +58,14 @@ public class PetGuidebook extends ItemBase implements Vanishable {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuide1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuide2");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuide3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuidebook1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuidebook2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuidebook3");
 
 			if (Minecraft.getInstance().player != null && SuperpositionHandler.isTheCursedOne(Minecraft.getInstance().player)) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuide4");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuide5");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuidebook4");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuidebook5");
 			}
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -73,8 +73,8 @@ public class PetGuidebook extends ItemBase implements Vanishable {
 
 		if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.isCreative()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuideCreative1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuideCreative2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuidebookCreative1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.animalGuidebookCreative2");
 		}
 	}
 

@@ -25,7 +25,7 @@ public class MixinHoglinTasks {
 		if (returnedTarget.isPresent() && returnedTarget.orElse(null) instanceof Player) {
 			Player returnedPlayer = (Player) returnedTarget.orElse(null);
 
-			if (SuperpositionHandler.hasItem(returnedPlayer, EnigmaticItems.animalGuide)) {
+			if (SuperpositionHandler.hasItem(returnedPlayer, EnigmaticItems.animalGuidebook)) {
 				info.setReturnValue(Optional.empty());
 			}
 		}

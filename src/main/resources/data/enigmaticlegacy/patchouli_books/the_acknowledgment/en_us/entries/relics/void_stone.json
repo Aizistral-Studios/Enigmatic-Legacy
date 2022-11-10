@@ -1,0 +1,31 @@
+{
+    "name": "book.enigmaticlegacy.entry.void_stone.name",
+    "icon": "enigmaticlegacy:void_stone",
+    "category": "enigmaticlegacy:relics",
+	"advancement": "enigmaticlegacy:book/relics/void_stone",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 20,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.void_stone.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "enigmaticlegacy:void_stone",
+			"link_recipe": true,
+			"title": "book.enigmaticlegacy.entry.void_stone.heading.1",
+            "text": "book.enigmaticlegacy.entry.void_stone.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.void_stone.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.void_stone.page.4"
+        }
+    ]
+}

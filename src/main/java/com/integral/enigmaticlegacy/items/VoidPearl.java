@@ -183,7 +183,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 
 			if (player.tickCount % 10 == 0) {
 				List<LivingEntity> entities = player.level.getEntitiesOfClass(LivingEntity.class, new AABB(player.getX() - shadowRange.getValue(), player.getY() - shadowRange.getValue(), player.getZ() - shadowRange.getValue(), player.getX() + shadowRange.getValue(), player.getY() + shadowRange.getValue(), player.getZ() + shadowRange.getValue()));
-				boolean hasAnimalGuide = SuperpositionHandler.hasItem(player, EnigmaticItems.animalGuide);
+				boolean hasAnimalGuide = SuperpositionHandler.hasItem(player, EnigmaticItems.animalGuidebook);
 
 				if (entities.contains(player)) {
 					entities.remove(player);
@@ -191,7 +191,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 
 				for (LivingEntity victim : entities) {
 					if (victim.level.getMaxLocalRawBrightness(victim.blockPosition(), 0) < 3 || (victim instanceof Phantom && !victim.isOnFire())) {
-						if (hasAnimalGuide && EnigmaticItems.animalGuide.isProtectedAnimal(victim)) {
+						if (hasAnimalGuide && EnigmaticItems.animalGuidebook.isProtectedAnimal(victim)) {
 							continue;
 						}
 

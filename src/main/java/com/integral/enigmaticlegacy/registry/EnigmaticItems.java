@@ -84,7 +84,7 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 
 	@ConfigurableItem("Blazing Core")
 	@ObjectHolder(value = MODID + ":blazing_core", registryName = "item")
-	public static final BlazingCore magmaHeart = null;
+	public static final BlazingCore blazingCore = null;
 
 	@ConfigurableItem("Pearl of the Void")
 	@ObjectHolder(value = MODID + ":void_pearl", registryName = "item")
@@ -223,8 +223,8 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 	public static final AstralBreaker astralBreaker = null;
 
 	@ConfigurableItem("Keystone of The Oblivion")
-	@ObjectHolder(value = MODID + ":oblivion_stone", registryName = "item")
-	public static final OblivionStone oblivionStone = null;
+	@ObjectHolder(value = MODID + ":void_stone", registryName = "item")
+	public static final OblivionStone voidStone = null;
 
 	@ConfigurableItem("Tome of Hungering Knowledge")
 	@ObjectHolder(value = MODID + ":enchantment_transposer", registryName = "item")
@@ -268,7 +268,7 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 
 	@ConfigurableItem("Twisted Mirror")
 	@ObjectHolder(value = MODID + ":twisted_mirror", registryName = "item")
-	public static final TwistedMirror darkMirror = null;
+	public static final TwistedMirror twistedMirror = null;
 
 	@ConfigurableItem("Scroll of a Thousand Curses")
 	@ObjectHolder(value = MODID + ":cursed_scroll", registryName = "item")
@@ -276,7 +276,7 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 
 	@ConfigurableItem("Emblem of Bloodstained Valor")
 	@ObjectHolder(value = MODID + ":berserk_charm", registryName = "item")
-	public static final BerserkEmblem berserkEmblem = null;
+	public static final BerserkEmblem berserkCharm = null;
 
 	@ConfigurableItem("Heart of the Earth")
 	@ObjectHolder(value = MODID + ":earth_heart", registryName = "item")
@@ -284,7 +284,7 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 
 	@ConfigurableItem("Twisted Heart")
 	@ObjectHolder(value = MODID + ":twisted_heart", registryName = "item")
-	public static final TwistedHeart twistedCore = null;
+	public static final TwistedHeart twistedHeart = null;
 
 	@ConfigurableItem("Heart of the Guardian")
 	@ObjectHolder(value = MODID + ":guardian_heart", registryName = "item")
@@ -303,12 +303,12 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 	public static final EvilIngot evilIngot = null;
 
 	@ConfigurableItem("Guite to Animal Companionship")
-	@ObjectHolder(value = MODID + ":pet_guidebook", registryName = "item")
-	public static final PetGuidebook animalGuide = null;
+	@ObjectHolder(value = MODID + ":animal_guidebook", registryName = "item")
+	public static final PetGuidebook animalGuidebook = null;
 
 	@ConfigurableItem("Guide to Feral Hunt")
 	@ObjectHolder(value = MODID + ":hunter_guidebook", registryName = "item")
-	public static final HunterGuidebook hunterGuide = null;
+	public static final HunterGuidebook hunterGuidebook = null;
 
 	@ConfigurableItem("Forbidden Fruit")
 	@ObjectHolder(value = MODID + ":forbidden_fruit", registryName = "item")
@@ -316,11 +316,11 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 
 	@ConfigurableItem
 	@ObjectHolder(value = MODID + ":redemption_potion", registryName = "item")
-	public static final RedemptionPotion antiforbiddenPotion = null;
+	public static final RedemptionPotion redemptionPotion = null;
 
 	@ConfigurableItem("Exquisite Ring")
 	@ObjectHolder(value = MODID + ":golden_ring", registryName = "item")
-	public static final GoldenRing gemRing = null;
+	public static final GoldenRing goldenRing = null;
 
 	@ConfigurableItem("Unholy Stone")
 	@ObjectHolder(value = MODID + ":unholy_stone", registryName = "item")
@@ -404,7 +404,7 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 
 	@ConfigurableItem("Inscrutable Eye")
 	@ObjectHolder(value = MODID + ":enigmatic_eye", registryName = "item")
-	public static final EnigmaticEye architectEye = null;
+	public static final EnigmaticEye enigmaticEye = null;
 
 	@ConfigurableItem("Bottle of Ichor")
 	@ObjectHolder(value = MODID + ":ichor_bottle", registryName = "item")
@@ -481,6 +481,7 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 		this.register("cursed_ring", CursedRing::new);
 		this.register("twisted_mirror", TwistedMirror::new);
 		this.register("cursed_scroll", CursedScroll::new);
+		this.register("avarice_scroll", AvariceScroll::new);
 		this.register("berserk_charm", BerserkEmblem::new);
 		this.register("guardian_heart", GuardianHeart::new);
 		this.register("the_twist", TheTwist::new);
@@ -488,7 +489,7 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 		this.register("evil_ingot", EvilIngot::new);
 		this.register("forbidden_fruit", ForbiddenFruit::new);
 		this.register("redemption_potion", RedemptionPotion::new);
-		this.register("pet_guidebook", PetGuidebook::new);
+		this.register("animal_guidebook", PetGuidebook::new);
 		this.register("hunter_guidebook", HunterGuidebook::new);
 		this.register("earth_heart", EarthHeart::new);
 		this.register("twisted_heart", TwistedHeart::new);

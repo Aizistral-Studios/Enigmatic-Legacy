@@ -30,8 +30,8 @@ public class RedemptionPotion extends ItemBasePotion {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.antiforbiddenPotion1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.antiforbiddenPotion2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.redemptionPotion1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.redemptionPotion2");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}

@@ -85,14 +85,14 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem1", ChatFormatting.GOLD, minimizeNumber(attackDamage.getValue()) + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem2", ChatFormatting.GOLD, minimizeNumber(attackSpeed.getValue()) + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem3", ChatFormatting.GOLD, minimizeNumber(movementSpeed.getValue()) + "%");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem4", ChatFormatting.GOLD, minimizeNumber(damageResistance.getValue()) + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_charm1", ChatFormatting.GOLD, minimizeNumber(attackDamage.getValue()) + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_charm2", ChatFormatting.GOLD, minimizeNumber(attackSpeed.getValue()) + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_charm3", ChatFormatting.GOLD, minimizeNumber(movementSpeed.getValue()) + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_charm4", ChatFormatting.GOLD, minimizeNumber(damageResistance.getValue()) + "%");
 
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem5");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem6");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_charm5");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_charm6");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}
@@ -103,11 +103,11 @@ public class BerserkEmblem extends ItemBaseCurio implements ICursed {
 				int percentage = (int)(missingPool * 100F);
 
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem7");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem8", ChatFormatting.GOLD, minimizeNumber(attackDamage.getValue()*percentage) + "%");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem9", ChatFormatting.GOLD, minimizeNumber(attackSpeed.getValue()*percentage) + "%");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem10", ChatFormatting.GOLD, minimizeNumber(movementSpeed.getValue()*percentage) + "%");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_emblem11", ChatFormatting.GOLD, minimizeNumber(damageResistance.getValue()*percentage) + "%");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_charm7");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_charm8", ChatFormatting.GOLD, minimizeNumber(attackDamage.getValue()*percentage) + "%");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_charm9", ChatFormatting.GOLD, minimizeNumber(attackSpeed.getValue()*percentage) + "%");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_charm10", ChatFormatting.GOLD, minimizeNumber(movementSpeed.getValue()*percentage) + "%");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.berserk_charm11", ChatFormatting.GOLD, minimizeNumber(damageResistance.getValue()*percentage) + "%");
 
 			}
 

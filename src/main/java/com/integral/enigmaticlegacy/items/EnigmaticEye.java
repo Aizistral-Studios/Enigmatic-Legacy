@@ -40,7 +40,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 
 public class EnigmaticEye extends ItemBaseCurio {
-	private static final ResourceLocation EYE_ADVANCEMENT = new ResourceLocation(EnigmaticLegacy.MODID, "book/relics/architect_eye");
+	private static final ResourceLocation EYE_ADVANCEMENT = new ResourceLocation(EnigmaticLegacy.MODID, "book/relics/enigmatic_eye");
 
 	public EnigmaticEye() {
 		super(getDefaultProperties().rarity(Rarity.EPIC).fireResistant());
@@ -48,7 +48,7 @@ public class EnigmaticEye extends ItemBaseCurio {
 
 	@OnlyIn(Dist.CLIENT)
 	public void registerVariants() {
-		ItemProperties.register(this, new ResourceLocation(EnigmaticLegacy.MODID, "architect_eye_activated"), (stack, world, entity, numberlol) -> {
+		ItemProperties.register(this, new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_eye_activated"), (stack, world, entity, numberlol) -> {
 			if (!this.isDormant(stack))
 				return 1F;
 
@@ -77,17 +77,17 @@ public class EnigmaticEye extends ItemBaseCurio {
 
 		if (Screen.hasShiftDown()) {
 			if (this.isDormant(stack)) {
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.architectEye1");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.architectEye2");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.architectEye3");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticEye1");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticEye2");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticEye3");
 			} else {
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.architectEyeAwakened1");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.architectEyeAwakened2");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.architectEyeAwakened3");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.architectEyeAwakened4");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.architectEyeAwakened5");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticEyeAwakened1");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticEyeAwakened2");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticEyeAwakened3");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticEyeAwakened4");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticEyeAwakened5");
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.architectEyeAwakened6");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.enigmaticEyeAwakened6");
 			}
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -116,9 +116,9 @@ public class EnigmaticEye extends ItemBaseCurio {
 	@Override
 	public Component getName(ItemStack stack) {
 		if (this.isDormant(stack))
-			return Component.translatable("item.enigmaticlegacy.architect_eye_dormant");
+			return Component.translatable("item.enigmaticlegacy.enigmatic_eye_dormant");
 		else
-			return Component.translatable("item.enigmaticlegacy.architect_eye_active");
+			return Component.translatable("item.enigmaticlegacy.enigmatic_eye_active");
 	}
 
 	@Override

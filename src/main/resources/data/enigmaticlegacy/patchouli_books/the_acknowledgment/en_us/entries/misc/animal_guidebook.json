@@ -1,0 +1,22 @@
+{
+    "name": "book.enigmaticlegacy.entry.animal_guidebook.name",
+    "icon": "enigmaticlegacy:animal_guidebook",
+    "category": "enigmaticlegacy:misc",
+	"advancement": "enigmaticlegacy:book/misc/animal_guidebook",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 60,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.animal_guidebook.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:animal_guidebook",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.animal_guidebook.page.2"
+        }
+    ]
+}

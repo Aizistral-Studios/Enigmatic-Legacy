@@ -19,10 +19,10 @@
       "item": "minecraft:gold_ingot"
     },
 	"R": {
-      "item": "enigmaticlegacy:gem_ring"
+      "item": "enigmaticlegacy:golden_ring"
     },
 	"H": {
-      "item": "enigmaticlegacy:twisted_core"
+      "item": "enigmaticlegacy:twisted_heart"
     },
 	"F": {
       "item": "minecraft:feather"

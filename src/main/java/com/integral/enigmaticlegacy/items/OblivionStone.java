@@ -78,29 +78,29 @@ public class OblivionStone extends ItemBase implements Vanishable {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone2");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone4");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone5");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone6");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone4");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone5");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone6");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone7");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone8");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone7");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone8");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone9");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone10");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone9");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone10");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone11");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone12");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone13");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone11");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone12");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone13");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone14");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone15");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStone16");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone14");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone15");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStone16");
 		} else if (Screen.hasControlDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneCtrlList");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStoneCtrlList");
 			if (stack.hasTag()) {
 				CompoundTag nbt = stack.getTag();
 				ListTag arr = nbt.getList("SupersolidID", 8);
@@ -135,7 +135,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneHoldCtrl");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStoneHoldCtrl");
 		}
 
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
@@ -143,12 +143,12 @@ public class OblivionStone extends ItemBase implements Vanishable {
 		MutableComponent mode;
 
 		if (ItemNBTHelper.getBoolean(stack, "IsActive", true)) {
-			mode = Component.translatable("tooltip.enigmaticlegacy.oblivionStoneMode" + ItemNBTHelper.getInt(stack, "ConsumptionMode", 0));
+			mode = Component.translatable("tooltip.enigmaticlegacy.voidStoneMode" + ItemNBTHelper.getInt(stack, "ConsumptionMode", 0));
 		} else {
-			mode = Component.translatable("tooltip.enigmaticlegacy.oblivionStoneModeInactive");
+			mode = Component.translatable("tooltip.enigmaticlegacy.voidStoneModeInactive");
 		}
 
-		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.oblivionStoneModeDesc", null, mode.getString());
+		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.voidStoneModeDesc", null, mode.getString());
 	}
 
 	@Override
@@ -227,7 +227,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 		for (int slot = 0; slot < player.getInventory().items.size(); slot++) {
 			if (!player.getInventory().items.get(slot).isEmpty()) {
 				filledStacks += 1;
-				if (player.getInventory().items.get(slot).getItem() != EnigmaticItems.oblivionStone) {
+				if (player.getInventory().items.get(slot).getItem() != EnigmaticItems.voidStone) {
 					stackMap.put(slot, player.getInventory().items.get(slot));
 				}
 			}

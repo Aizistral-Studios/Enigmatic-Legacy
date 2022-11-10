@@ -1,0 +1,23 @@
+{
+    "name": "book.enigmaticlegacy.entry.sorrow_curse.name",
+    "icon": "minecraft:enchanted_book",
+    "category": "enigmaticlegacy:enchantments",
+	"advancement": "enigmaticlegacy:book/enchantments/generic",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 70,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.sorrow_curse.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "minecraft:diamond_chestplate#1{Enchantments:[{lvl:1s,id:'enigmaticlegacy:sorrow'}]}",
+			"link_recipe": false,
+			"title": "book.enigmaticlegacy.entry.sorrow_curse.heading.1",
+            "text": "book.enigmaticlegacy.entry.sorrow_curse.page.2"
+        }
+    ]
+}

@@ -49,7 +49,7 @@ public class MixinPiglinTasks {
 	@Inject(at = @At("RETURN"), method = "isWearingGold", cancellable = true)
 	private static void onWearingGoldCheck(LivingEntity entity, CallbackInfoReturnable<Boolean> info) {
 		if (entity instanceof Player player) {
-			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.gemRing) || SuperpositionHandler.hasCurio(player, EnigmaticItems.avariceScroll)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.goldenRing) || SuperpositionHandler.hasCurio(player, EnigmaticItems.avariceScroll)) {
 				info.setReturnValue(true);
 			}
 		}

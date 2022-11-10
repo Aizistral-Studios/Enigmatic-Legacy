@@ -50,12 +50,12 @@ public class HunterGuidebook extends ItemBase implements Vanishable {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuide1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuide2", ChatFormatting.GOLD, effectiveDistance);
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuide3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuidebook1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuidebook2", ChatFormatting.GOLD, effectiveDistance);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuidebook3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuide4");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuide5", ChatFormatting.GOLD, synergyDamageReduction + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuidebook4");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.hunterGuidebook5", ChatFormatting.GOLD, synergyDamageReduction + "%");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}

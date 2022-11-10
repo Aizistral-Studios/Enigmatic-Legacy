@@ -244,7 +244,7 @@ public class EnigmaticLegacy {
 		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.angelBlessing);
 		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.golemHeart);
 		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.oceanStone);
-		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.magmaHeart);
+		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.blazingCore);
 		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.eyeOfNebula);
 		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.voidPearl);
 		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.theCube);
@@ -257,7 +257,7 @@ public class EnigmaticLegacy {
 		}
 
 		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.twistedPotion)) {
-			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.of(EnigmaticItems.recallPotion), Ingredient.of(EnigmaticItems.twistedCore), new ItemStack(EnigmaticItems.twistedPotion), new ResourceLocation(MODID, "twisted_potion")));
+			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.of(EnigmaticItems.recallPotion), Ingredient.of(EnigmaticItems.twistedHeart), new ItemStack(EnigmaticItems.twistedPotion), new ResourceLocation(MODID, "twisted_potion")));
 		}
 
 		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.commonPotionBase)) {
@@ -274,7 +274,7 @@ public class EnigmaticLegacy {
 
 		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.theCube)) {
 			HiddenRecipe.addRecipe(new ItemStack(EnigmaticItems.theCube),
-					new ItemStack(EnigmaticItems.golemHeart), new ItemStack(EnigmaticItems.cosmicHeart), new ItemStack(EnigmaticItems.magmaHeart),
+					new ItemStack(EnigmaticItems.golemHeart), new ItemStack(EnigmaticItems.cosmicHeart), new ItemStack(EnigmaticItems.blazingCore),
 					new ItemStack(EnigmaticItems.angelBlessing), new ItemStack(Blocks.OBSIDIAN), new ItemStack(EnigmaticItems.eyeOfNebula),
 					new ItemStack(EnigmaticItems.oceanStone), new ItemStack(EnigmaticItems.cosmicHeart), new ItemStack(EnigmaticItems.voidPearl)
 					);
@@ -292,7 +292,7 @@ public class EnigmaticLegacy {
 			HiddenRecipe.addRecipe(new ItemStack(EnigmaticItems.eldritchAmulet),
 					new ItemStack(EnigmaticItems.evilEssence), new ItemStack(EnigmaticItems.abyssalHeart), new ItemStack(EnigmaticItems.evilEssence),
 					new ItemStack(Items.NETHERITE_INGOT), new ItemStack(EnigmaticItems.ascensionAmulet), new ItemStack(Items.NETHERITE_INGOT),
-					new ItemStack(EnigmaticItems.twistedCore), new ItemStack(Items.NETHER_STAR), new ItemStack(EnigmaticItems.twistedCore)
+					new ItemStack(EnigmaticItems.twistedHeart), new ItemStack(Items.NETHER_STAR), new ItemStack(EnigmaticItems.twistedHeart)
 					);
 		}
 
@@ -382,7 +382,7 @@ public class EnigmaticLegacy {
 	private void clientRegistries(final FMLClientSetupEvent event) {
 		LOGGER.info("Initializing client setup phase...");
 		EnigmaticItems.enigmaticAmulet.registerVariants();
-		EnigmaticItems.architectEye.registerVariants();
+		EnigmaticItems.enigmaticEye.registerVariants();
 		EnigmaticItems.soulCompass.registerVariants();
 
 		PROXY.initEntityRendering();

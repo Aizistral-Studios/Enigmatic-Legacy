@@ -35,7 +35,7 @@
     "has_parent_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "enigmaticlegacy:gem_ring"
+        "recipe": "enigmaticlegacy:golden_ring"
       }
     },
     "is_cursed_one": {

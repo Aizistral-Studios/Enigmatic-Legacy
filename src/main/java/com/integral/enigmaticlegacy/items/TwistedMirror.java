@@ -73,9 +73,9 @@ public class TwistedMirror extends ItemBase implements ICursed, Vanishable {
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.darkMirror1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.darkMirror2");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.darkMirror3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.twistedMirror1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.twistedMirror2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.twistedMirror3");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}

@@ -1,0 +1,22 @@
+{
+    "name": "book.enigmaticlegacy.entry.golden_ring.name",
+    "icon": "enigmaticlegacy:golden_ring",
+    "category": "enigmaticlegacy:accessories",
+    "advancement": "enigmaticlegacy:book/accessories/golden_ring",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 5,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.golden_ring.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:golden_ring",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.golden_ring.page.2"
+        }
+    ]
+}

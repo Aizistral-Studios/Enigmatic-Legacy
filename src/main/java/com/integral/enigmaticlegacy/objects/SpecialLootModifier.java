@@ -40,10 +40,10 @@ public class SpecialLootModifier extends LootModifier {
 
 		if (entity instanceof ServerPlayer player) {
 			if (this.isVanillaChest(context)) {
-				if (OmniconfigHandler.isItemEnabled(EnigmaticItems.architectEye))
+				if (OmniconfigHandler.isItemEnabled(EnigmaticItems.enigmaticEye))
 					if (!SuperpositionHandler.hasPersistentTag(player, "LootedArchitectEye")) {
 						SuperpositionHandler.setPersistentBoolean(player, "LootedArchitectEye", true);
-						generatedLoot.add(new ItemStack(EnigmaticItems.architectEye, 1));
+						generatedLoot.add(new ItemStack(EnigmaticItems.enigmaticEye, 1));
 					}
 
 				if (SuperpositionHandler.hasPersistentTag(player, "LootedIchorBottle")) {

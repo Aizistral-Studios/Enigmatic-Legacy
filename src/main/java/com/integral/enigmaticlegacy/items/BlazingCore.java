@@ -96,20 +96,20 @@ public class BlazingCore extends ItemSpellstoneCurio implements ISpellstone {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart2");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.blazingCore1");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.blazingCore2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeartCooldown", ChatFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.blazingCoreCooldown", ChatFormatting.GOLD, ((spellstoneCooldown.getValue())) / 20.0F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart3");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart4");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart5");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart6");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart7");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart8");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart9");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart10");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.magmaHeart11");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.blazingCore3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.blazingCore4");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.blazingCore5");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.blazingCore6");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.blazingCore7");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.blazingCore8");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.blazingCore9");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.blazingCore10");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.blazingCore11");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
 		}

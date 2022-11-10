@@ -39,9 +39,9 @@ public class GoldenRing extends ItemBaseCurio {
 
 		if (Screen.hasShiftDown()) {
 			if (Minecraft.getInstance().player != null && SuperpositionHandler.isTheCursedOne(Minecraft.getInstance().player)) {
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.gemRing1Cursed");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.goldenRing1Cursed");
 			} else {
-				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.gemRing1");
+				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.goldenRing1");
 			}
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
