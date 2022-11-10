@@ -14,7 +14,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class BlessedShapedRecipe extends ShapedRecipe {
 
@@ -47,7 +46,7 @@ public class BlessedShapedRecipe extends ShapedRecipe {
 		return super.assemble(inv);
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<BlessedShapedRecipe> {
+	public static class Serializer implements RecipeSerializer<BlessedShapedRecipe> {
 
 		private NonNullList<Ingredient> handleBlessed(NonNullList<Ingredient> ingredientList) {
 			for (Ingredient ing : ingredientList) {

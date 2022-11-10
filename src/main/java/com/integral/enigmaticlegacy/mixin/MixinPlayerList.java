@@ -87,7 +87,7 @@ public class MixinPlayerList {
 		PlayerList list = (PlayerList) (Object) this;
 
 		ServerLevel newLevel = level != null && optional.isPresent() ? level : this.server.overworld();
-		ServerPlayer newPlayer = new ServerPlayer(this.server, newLevel, player.getGameProfile());
+		ServerPlayer newPlayer = new ServerPlayer(this.server, newLevel, player.getGameProfile(), null);
 		newPlayer.connection = player.connection;
 		newPlayer.restoreFrom(player, keep);
 		newPlayer.setId(player.getId());
@@ -124,7 +124,7 @@ public class MixinPlayerList {
 		}
 
 		LevelData leveldata = newPlayer.level.getLevelData();
-		newPlayer.connection.send(new ClientboundRespawnPacket(newPlayer.level.dimensionTypeRegistration(), newPlayer.level.dimension(), BiomeManager.obfuscateSeed(newPlayer.getLevel().getSeed()), newPlayer.gameMode.getGameModeForPlayer(), newPlayer.gameMode.getPreviousGameModeForPlayer(), newPlayer.getLevel().isDebug(), newPlayer.getLevel().isFlat(), keep));
+		newPlayer.connection.send(new ClientboundRespawnPacket(newPlayer.level.dimensionTypeId(), newPlayer.level.dimension(), BiomeManager.obfuscateSeed(newPlayer.getLevel().getSeed()), newPlayer.gameMode.getGameModeForPlayer(), newPlayer.gameMode.getPreviousGameModeForPlayer(), newPlayer.getLevel().isDebug(), newPlayer.getLevel().isFlat(), keep, newPlayer.getLastDeathLocation()));
 		newPlayer.connection.teleport(newPlayer.getX(), newPlayer.getY(), newPlayer.getZ(), newPlayer.getYRot(), newPlayer.getXRot());
 		newPlayer.connection.send(new ClientboundSetDefaultSpawnPositionPacket(newLevel.getSharedSpawnPos(), newLevel.getSharedSpawnAngle()));
 		newPlayer.connection.send(new ClientboundChangeDifficultyPacket(leveldata.getDifficulty(), leveldata.isDifficultyLocked()));
@@ -132,14 +132,14 @@ public class MixinPlayerList {
 		list.sendLevelInfo(newPlayer, newLevel);
 		list.sendPlayerPermissionLevel(newPlayer);
 		newLevel.addRespawnedPlayer(newPlayer);
-		list.addPlayer(newPlayer);
+		this.players.add(newPlayer);
 		this.playersByUUID.put(newPlayer.getUUID(), newPlayer);
 		newPlayer.initInventoryMenu();
 		newPlayer.setHealth(newPlayer.getHealth());
 		net.minecraftforge.event.ForgeEventFactory.firePlayerRespawnEvent(newPlayer, keep);
 
 		if (usedAnchorCharge && pos != null) {
-			newPlayer.connection.send(new ClientboundSoundPacket(SoundEvents.RESPAWN_ANCHOR_DEPLETE, SoundSource.BLOCKS, pos.getX(), pos.getY(), pos.getZ(), 1.0F, 1.0F));
+			newPlayer.connection.send(new ClientboundSoundPacket(SoundEvents.RESPAWN_ANCHOR_DEPLETE, SoundSource.BLOCKS, pos.getX(), pos.getY(), pos.getZ(), 1.0F, 1.0F, newLevel.getRandom().nextLong()));
 		}
 
 		info.setReturnValue(newPlayer);

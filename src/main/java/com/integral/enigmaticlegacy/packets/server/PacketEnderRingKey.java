@@ -11,9 +11,9 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 
 /**
@@ -57,7 +57,7 @@ public class PacketEnderRingKey {
 				};
 
 				playerServ.containerCounter = container.containerId;
-				playerServ.connection.send(new ClientboundOpenScreenPacket(container.containerId, container.getType(), new TranslatableComponent("container.enderchest")));
+				playerServ.connection.send(new ClientboundOpenScreenPacket(container.containerId, container.getType(), Component.translatable("container.enderchest")));
 				playerServ.initMenu(container);
 				playerServ.containerMenu = container;
 				net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.player.PlayerContainerEvent.Open(playerServ, playerServ.containerMenu));

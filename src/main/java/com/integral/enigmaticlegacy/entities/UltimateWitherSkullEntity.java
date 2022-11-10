@@ -50,7 +50,7 @@ public class UltimateWitherSkullEntity extends AbstractHurtingProjectile {
 	int targetID;
 	LivingEntity target;
 
-	@ObjectHolder(EnigmaticLegacy.MODID + ":ultimate_wither_skull_entity")
+	@ObjectHolder(value = EnigmaticLegacy.MODID + ":ultimate_wither_skull_entity", registryName = "entity_type")
 	public static EntityType<UltimateWitherSkullEntity> TYPE;
 
 	public UltimateWitherSkullEntity(EntityType<? extends UltimateWitherSkullEntity> p_i50147_1_, Level p_i50147_2_) {

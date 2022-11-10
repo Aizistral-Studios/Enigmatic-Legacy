@@ -54,9 +54,9 @@ public class PacketFlameParticles {
 				float modifier = 1.0F;
 
 				if (msg.check) {
-					if (Minecraft.getInstance().options.particles == ParticleStatus.MINIMAL) {
+					if (Minecraft.getInstance().options.particles().get() == ParticleStatus.MINIMAL) {
 						modifier = 0.10F;
-					} else if (Minecraft.getInstance().options.particles == ParticleStatus.DECREASED) {
+					} else if (Minecraft.getInstance().options.particles().get() == ParticleStatus.DECREASED) {
 						modifier = 0.25F;
 					} else {
 						modifier = 0.35F;

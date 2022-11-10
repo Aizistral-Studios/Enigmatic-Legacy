@@ -24,8 +24,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.level.Level;
 
 public class CrossbowHelper {
-
-	public static final String sharpshooterTagPrefix = EnigmaticLegacy.MODID+":sharpshot:";
+	public static final String sharpshooterTagPrefix = EnigmaticLegacy.MODID + ":sharpshot:";
 
 	public static boolean tryCharge(LivingEntity living, ItemStack crossbow, ItemStack ammo, boolean bonusCycles, boolean isCreative) {
 		if (ammo.isEmpty())
@@ -106,9 +105,9 @@ public class CrossbowHelper {
 				}
 
 				if (EnigmaticEnchantmentHelper.hasSharpshooterEnchantment(crossbow)) {
-                    int dmg = (int) (EnigmaticEnchantmentHelper.getSharpshooterLevel(crossbow) * 3 + ((AbstractArrow) projectileentity).getBaseDamage() * velocity);
-                    projectileentity.addTag(CrossbowHelper.sharpshooterTagPrefix + dmg);
-                }
+					int dmg = (int) (EnigmaticEnchantmentHelper.getSharpshooterLevel(crossbow) * 3 + ((AbstractArrow) projectileentity).getBaseDamage() * velocity);
+					projectileentity.addTag(CrossbowHelper.sharpshooterTagPrefix + dmg);
+				}
 			}
 
 			if (shooter instanceof CrossbowAttackMob) {

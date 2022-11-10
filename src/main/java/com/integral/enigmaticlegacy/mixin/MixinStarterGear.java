@@ -22,7 +22,7 @@ public class MixinStarterGear {
 
 	@Inject(method = "playerLogin", at = @At("RETURN"), cancellable = false, require = 1)
 	public void onCSGHandling(PlayerEvent.PlayerLoggedInEvent event, CallbackInfo info) {
-		if (event.getPlayer() instanceof ServerPlayer player) {
+		if (event.getEntity() instanceof ServerPlayer player) {
 			EnigmaticEventHandler.grantStarterGear(player);
 		}
 	}

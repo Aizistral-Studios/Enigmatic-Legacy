@@ -62,7 +62,7 @@ public class WitherExplosion extends Explosion {
 		}
 
 		if (flag) {
-			Collections.shuffle(super.getToBlow(), this.world.random);
+			Collections.shuffle(super.getToBlow());
 
 			for (BlockPos blockpos : super.getToBlow()) {
 				BlockState blockstate = this.world.getBlockState(blockpos);

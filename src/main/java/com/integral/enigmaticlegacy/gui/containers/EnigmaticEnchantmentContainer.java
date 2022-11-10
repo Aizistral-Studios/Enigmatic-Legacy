@@ -23,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
@@ -39,7 +40,7 @@ public class EnigmaticEnchantmentContainer extends EnchantmentMenu {
 	};
 
 	private ContainerLevelAccess worldPosCallable;
-	private Random rand = new Random();
+	private RandomSource rand = RandomSource.create();
 	private DataSlot xpSeed = DataSlot.standalone();
 	public int[] enchantLevels = new int[3];
 	public int[] enchantClue = new int[] { -1, -1, -1 };

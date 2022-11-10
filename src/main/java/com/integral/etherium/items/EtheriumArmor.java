@@ -36,11 +36,6 @@ public class EtheriumArmor extends ArmorItem {
 	}
 
 	@Override
-	public String getDescriptionId() {
-		return config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getDescriptionId();
-	}
-
-	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
 		return "enigmaticlegacy:textures/models/armor/unseen_armor.png";
 	}

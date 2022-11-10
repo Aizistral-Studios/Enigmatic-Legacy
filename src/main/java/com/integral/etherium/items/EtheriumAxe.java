@@ -59,11 +59,6 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool {
 	}
 
 	@Override
-	public String getDescriptionId() {
-		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getDescriptionId();
-	}
-
-	@Override
 	public IEtheriumConfig getConfig() {
 		return this.config;
 	}

@@ -32,7 +32,7 @@ public class EnabledCondition implements ICondition {
 	}
 
 	@Override
-	public boolean test() {
+	public boolean test(IContext context) {
 		Item item = ForgeRegistries.ITEMS.getValue(this.item);
 
 		if (this.item.toString().equals(EnigmaticLegacy.MODID + ":bonuswoolrecipes"))

@@ -42,7 +42,7 @@ public class EtheriumEventHandler {
 
 	@SubscribeEvent
 	public void onEntityHurt(LivingHurtEvent event) {
-		if (event.getEntityLiving() instanceof Player player && event.getAmount() > 0) {
+		if (event.getEntity() instanceof Player player && event.getAmount() > 0) {
 			/*
 			 * Handler for knockback feedback and damage reduction of Etherium Armor Shield.
 			 */
@@ -63,7 +63,7 @@ public class EtheriumEventHandler {
 
 	@SubscribeEvent
 	public void onEntityAttacked(LivingAttackEvent event) {
-		if (event.getEntityLiving().level.isClientSide)
+		if (event.getEntity().level.isClientSide)
 			return;
 
 		// TODO Figure out a way to account for shield blocking
@@ -72,8 +72,8 @@ public class EtheriumEventHandler {
 		 * Handler for immunities and projectile deflection.
 		 */
 
-		if (event.getEntityLiving() instanceof Player) {
-			Player player = (Player) event.getEntityLiving();
+		if (event.getEntity() instanceof Player) {
+			Player player = (Player) event.getEntity();
 
 			if (event.getSource().getDirectEntity() instanceof AbstractHurtingProjectile || event.getSource().getDirectEntity() instanceof AbstractArrow) {
 				if (EtheriumArmor.hasShield(player)) {

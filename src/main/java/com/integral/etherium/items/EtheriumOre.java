@@ -16,9 +16,4 @@ public class EtheriumOre extends Item {
 		this.config = config;
 	}
 
-	@Override
-	public String getDescriptionId() {
-		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getDescriptionId();
-	}
-
 }

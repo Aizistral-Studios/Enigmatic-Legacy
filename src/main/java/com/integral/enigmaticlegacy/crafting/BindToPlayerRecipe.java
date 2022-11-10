@@ -22,7 +22,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 /**
  * Special recipe type for binding items to player using Gem of Binding.

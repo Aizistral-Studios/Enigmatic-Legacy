@@ -210,6 +210,7 @@ import net.minecraft.Util;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.RespawnAnchorBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
@@ -258,14 +259,13 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -509,7 +509,7 @@ public class EnigmaticLegacy {
 
 	public static final MenuType<PortableCrafterContainer> PORTABLE_CRAFTER = new MenuType<>((syncId, playerInv) -> new PortableCrafterContainer(syncId, playerInv, ContainerLevelAccess.create(playerInv.player.level, playerInv.player.blockPosition())));
 
-	@ObjectHolder(MODID + ":enigmatic_repair_container")
+	@ObjectHolder(value = MODID + ":enigmatic_repair_container", registryName = "menu")
 	public static final MenuType<LoreInscriberContainer> LORE_INSCRIBER_CONTAINER = null;
 
 	private static final String PTC_VERSION = "1";
@@ -539,6 +539,7 @@ public class EnigmaticLegacy {
 		FMLJavaModLoadingContext.get().getModEventBus().register(new EnigmaticRecipeSerializers());
 		FMLJavaModLoadingContext.get().getModEventBus().register(this);
 		FMLJavaModLoadingContext.get().getModEventBus().register(PROXY);
+		FMLJavaModLoadingContext.get().getModEventBus().register(keybindHandler);
 
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(PROXY);
@@ -1255,10 +1256,10 @@ public class EnigmaticLegacy {
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
-	public void onColorInit(final net.minecraftforge.client.event.ColorHandlerEvent.Item event) {
+	public void onColorInit(final RegisterColorHandlersEvent.Item event) {
 		LOGGER.info("Initializing colors registration...");
 
-		event.getItemColors().register((stack, color) -> {
+		event.register((stack, color) -> {
 			if (PotionHelper.isAdvancedPotion(stack))
 				return color > 0 ? -1 : PotionHelper.getColor(stack);
 

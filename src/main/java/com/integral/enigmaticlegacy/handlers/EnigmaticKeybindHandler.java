@@ -14,7 +14,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ClientRegistry;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,7 +26,6 @@ import net.minecraftforge.network.PacketDistributor;
  */
 
 public class EnigmaticKeybindHandler {
-
 	@OnlyIn(Dist.CLIENT)
 	public static boolean checkVariable;
 
@@ -36,15 +35,16 @@ public class EnigmaticKeybindHandler {
 
 	private boolean spaceDown = false;
 
+	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
-	public void registerKeybinds() {
+	public void onRegisterKeybinds(RegisterKeyMappingsEvent event) {
 		this.enderRingKey = new KeyMapping("key.enderRing", GLFW.GLFW_KEY_I, "key.categories.enigmaticLegacy");
 		this.spellstoneAbilityKey = new KeyMapping("key.spellstoneAbility", GLFW.GLFW_KEY_K, "key.categories.enigmaticLegacy");
 		this.xpScrollKey = new KeyMapping("key.xpScroll", GLFW.GLFW_KEY_J, "key.categories.enigmaticLegacy");
 
-		ClientRegistry.registerKeyBinding(this.enderRingKey);
-		ClientRegistry.registerKeyBinding(this.spellstoneAbilityKey);
-		ClientRegistry.registerKeyBinding(this.xpScrollKey);
+		event.register(this.enderRingKey);
+		event.register(this.spellstoneAbilityKey);
+		event.register(this.xpScrollKey);
 	}
 
 	@SubscribeEvent
@@ -98,7 +98,7 @@ public class EnigmaticKeybindHandler {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onLivingJump(LivingJumpEvent event) {
-		if (event.getEntityLiving() instanceof LocalPlayer player) {
+		if (event.getEntity() instanceof LocalPlayer player) {
 			//this.suppressNextJumpClick = true;
 		}
 	}

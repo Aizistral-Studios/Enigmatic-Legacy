@@ -1,14 +1,21 @@
 package com.integral.enigmaticlegacy.objects;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 
+import org.jetbrains.annotations.NotNull;
+
+import com.google.common.base.Suppliers;
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -24,10 +31,11 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
 public class SpecialLootModifier extends LootModifier {
+	public static final Supplier<Codec<SpecialLootModifier>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).apply(inst, SpecialLootModifier::new)));
 
 	protected SpecialLootModifier(LootItemCondition[] conditions) {
 		super(conditions);
@@ -35,7 +43,7 @@ public class SpecialLootModifier extends LootModifier {
 
 	@Nonnull
 	@Override
-	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		ServerLevel level = context.getLevel();
 		Entity entity = context.getParamOrNull(LootContextParams.THIS_ENTITY);
 		Vec3 origin = context.getParamOrNull(LootContextParams.ORIGIN);
@@ -74,16 +82,9 @@ public class SpecialLootModifier extends LootModifier {
 		return String.valueOf(context.getQueriedLootTableId()).startsWith("minecraft:chests/");
 	}
 
-	public static class Serializer extends GlobalLootModifierSerializer<SpecialLootModifier> {
-		@Override
-		public SpecialLootModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] conditions) {
-			return new SpecialLootModifier(conditions);
-		}
-
-		@Override
-		public JsonObject write(SpecialLootModifier instance) {
-			return this.makeConditions(instance.conditions);
-		}
+	@Override
+	public Codec<SpecialLootModifier> codec() {
+		return CODEC.get();
 	}
 
 }

@@ -27,7 +27,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class HiddenRecipe extends CustomRecipe {
 	static final SimpleRecipeSerializer<HiddenRecipe> SERIALIZER = new SimpleRecipeSerializer<>(HiddenRecipe::new);
@@ -140,7 +140,7 @@ public class HiddenRecipe extends CustomRecipe {
 	}
 
 	public static Entry<ItemStack[][], ItemStack> getRecipe(ResourceLocation output) {
-		return RECIPES.entrySet().stream().filter(entry -> entry.getValue().getItem().getRegistryName()
+		return RECIPES.entrySet().stream().filter(entry -> ForgeRegistries.ITEMS.getKey(entry.getValue().getItem())
 				.equals(output)).findFirst().orElse(EMPTY);
 	}
 

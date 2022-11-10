@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ObjectHolder;
 
 public class TileEndAnchor extends BlockEntity {
-	@ObjectHolder(EnigmaticLegacy.MODID + ":tile_end_anchor")
+	@ObjectHolder(value = EnigmaticLegacy.MODID + ":tile_end_anchor", registryName = "block")
 	public static BlockEntityType<TileEndAnchor> TYPE;
 
 	public TileEndAnchor(BlockEntityType<?> type, BlockPos pos, BlockState state) {

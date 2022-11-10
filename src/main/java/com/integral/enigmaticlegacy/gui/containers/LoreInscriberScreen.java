@@ -19,7 +19,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -43,7 +42,7 @@ public class LoreInscriberScreen extends AbstractContainerScreen<LoreInscriberCo
 		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
-		this.nameField = new EditBox(this.font, i + 55, j + 30, 95, 12, new TranslatableComponent("container.repair"));
+		this.nameField = new EditBox(this.font, i + 55, j + 30, 95, 12, Component.translatable("container.repair"));
 		this.nameField.setCanLoseFocus(false);
 		this.nameField.setTextColor(-1);
 		this.nameField.setTextColorUneditable(-1);

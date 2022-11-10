@@ -42,8 +42,8 @@ public class AOEMiningHelper {
 			BlockHitResult blockTrace = (BlockHitResult) trace;
 			Direction face = blockTrace.getDirection();
 
-			int fortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
-			int silkLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getMainHandItem());
+			int fortuneLevel = player.getMainHandItem().getEnchantmentLevel(Enchantments.BLOCK_FORTUNE);
+			int silkLevel = player.getMainHandItem().getEnchantmentLevel(Enchantments.SILK_TOUCH);
 
 			for (int a = -1; a <= 1; a++) {
 				for (int b = -1; b <= 1; b++) {
@@ -93,7 +93,7 @@ public class AOEMiningHelper {
 
 			toolDamageConsumer.accept(pos, state);
 
-			int exp = state.getExpDrop(world, pos, fortuneLevel, silkLevel);
+			int exp = state.getExpDrop(world, world.random, pos, fortuneLevel, silkLevel);
 			if (exp > 0 && world instanceof ServerLevel) {
 				state.getBlock().popExperience((ServerLevel) world, pos, exp);
 			}

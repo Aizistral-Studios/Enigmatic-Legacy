@@ -3,6 +3,7 @@ package com.integral.enigmaticlegacy.client;
 import java.time.Clock;
 
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
+import com.integral.enigmaticlegacy.gui.GUIUtils;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -19,16 +20,15 @@ import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.ClickEvent.Action;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.commands.TellRawCommand;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiEvent;
 import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.client.gui.GuiUtils;
 import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -36,6 +36,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 @OnlyIn(Dist.CLIENT)
 public class QuoteHandler {
 	public static final QuoteHandler INSTANCE = new QuoteHandler();
+	private static final RandomSource RANDOM = RandomSource.create();
 	private Quote currentQuote = null;
 	private long startedPlaying = -1;
 	private int delayTicks = -1;
@@ -66,7 +67,7 @@ public class QuoteHandler {
 
 				if (this.delayTicks == 0) {
 					SimpleSoundInstance instance = new SimpleSoundInstance(this.currentQuote.getSound().getLocation(),
-							SoundSource.VOICE, 0.7F, 1, false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true);
+							SoundSource.VOICE, 0.7F, 1, RANDOM, false, 0, SoundInstance.Attenuation.NONE, 0, 0, 0, true);
 
 					Minecraft.getInstance().getSoundManager().play(instance);
 
@@ -77,18 +78,15 @@ public class QuoteHandler {
 	}
 
 	@SubscribeEvent
-	public void onOverlayRender(RenderGameOverlayEvent.Post event) {
-		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL)
-			return;
-
+	public void onOverlayRender(RenderGuiEvent.Post event) {
 		if (Minecraft.getInstance().screen != null || this.currentQuote == null || this.delayTicks > 0)
 			return;
 
-		this.drawQuote(event.getMatrixStack(), event.getWindow());
+		this.drawQuote(event.getPoseStack(), event.getWindow());
 	}
 
 	@SubscribeEvent
-	public void onOverlayRender(ScreenEvent.DrawScreenEvent.Post event) {
+	public void onOverlayRender(ScreenEvent.Render.Post event) {
 		if (this.currentQuote != null && this.delayTicks <= 0) {
 			this.drawQuote(event.getPoseStack(), Minecraft.getInstance().getWindow());
 			Minecraft.getInstance().getSoundManager().resume();
@@ -150,9 +148,9 @@ public class QuoteHandler {
 		int color1 = 0x000000 | (((int)(alphaMod * 0.266)) << 24);
 		int color2 = ChatFormatting.YELLOW.getColor() | ((alphaMod) << 24);
 
-		GuiUtils.drawGradientRect(stack.last().pose(), 0, fromX - 4, fromY - 4, toX + 4, toY + 4, color1, color1);
-		GuiUtils.drawGradientRect(stack.last().pose(), 0, fromX - 6, fromY - 6, toX + 6, toY + 6, color1, color1);
-		GuiUtils.drawGradientRect(stack.last().pose(), 0, fromX - 8, fromY - 8, toX + 8, toY + 8, color1, color1);
+		GUIUtils.drawGradientRect(stack.last().pose(), 0, fromX - 4, fromY - 4, toX + 4, toY + 4, color1, color1);
+		GUIUtils.drawGradientRect(stack.last().pose(), 0, fromX - 6, fromY - 6, toX + 6, toY + 6, color1, color1);
+		GUIUtils.drawGradientRect(stack.last().pose(), 0, fromX - 8, fromY - 8, toX + 8, toY + 8, color1, color1);
 
 		int counter = 0;
 		for (String line : text) {

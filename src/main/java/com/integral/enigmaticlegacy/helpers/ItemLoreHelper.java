@@ -15,10 +15,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -36,8 +34,8 @@ public class ItemLoreHelper {
 		// TODO God do I hate making stylistic choices
 		//format = ChatFormatting.DARK_RED;
 
-		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.cursedOnesOnly1").withStyle(format));
-		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.cursedOnesOnly2").withStyle(format));
+		list.add(Component.translatable("tooltip.enigmaticlegacy.cursedOnesOnly1").withStyle(format));
+		list.add(Component.translatable("tooltip.enigmaticlegacy.cursedOnesOnly2").withStyle(format));
 
 	}
 
@@ -50,11 +48,11 @@ public class ItemLoreHelper {
 			format = SuperpositionHandler.isTheWorthyOne(Minecraft.getInstance().player) ? ChatFormatting.GOLD : ChatFormatting.DARK_RED;
 		}
 
-		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.worthyOnesOnly1"));
-		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.worthyOnesOnly2"));
-		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.worthyOnesOnly3"));
-		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.void"));
-		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.worthyOnesOnly4").withStyle(format).append(new TextComponent(" " + SuperpositionHandler.getSufferingTime(player)).withStyle(ChatFormatting.LIGHT_PURPLE)));
+		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly1"));
+		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly2"));
+		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly3"));
+		list.add(Component.translatable("tooltip.enigmaticlegacy.void"));
+		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly4").withStyle(format).append(Component.literal(" " + SuperpositionHandler.getSufferingTime(player)).withStyle(ChatFormatting.LIGHT_PURPLE)));
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -67,30 +65,30 @@ public class ItemLoreHelper {
 			format = ChatFormatting.DARK_RED;
 		}
 
-		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.blessedOnesOnly1").withStyle(format));
-		list.add(new TranslatableComponent("tooltip.enigmaticlegacy.blessedOnesOnly2").withStyle(format));
+		list.add(Component.translatable("tooltip.enigmaticlegacy.blessedOnesOnly1").withStyle(format));
+		list.add(Component.translatable("tooltip.enigmaticlegacy.blessedOnesOnly2").withStyle(format));
 
 	}
 
 	public static void addLocalizedFormattedString(List<Component> list, String str, ChatFormatting format) {
-		list.add(new TranslatableComponent(str).withStyle(format));
+		list.add(Component.translatable(str).withStyle(format));
 	}
 
 	public static void addLocalizedString(List<Component> list, String str) {
-		list.add(new TranslatableComponent(str));
+		list.add(Component.translatable(str));
 	}
 
 	public static void addLocalizedString(List<Component> list, String str, @Nullable ChatFormatting format, Object... values) {
-		TextComponent[] stringValues = new TextComponent[values.length];
+		Component[] stringValues = new Component[values.length];
 
 		int counter = 0;
 		for (Object value : values) {
-			TextComponent comp;
+			MutableComponent comp;
 
-			if (value instanceof TextComponent) {
-				comp = (TextComponent)value;
+			if (value instanceof MutableComponent) {
+				comp = (MutableComponent)value;
 			} else {
-				comp = new TextComponent(value.toString());
+				comp = Component.literal(value.toString());
 			}
 
 			if (format != null) {
@@ -101,7 +99,7 @@ public class ItemLoreHelper {
 			counter++;
 		}
 
-		list.add(new TranslatableComponent(str, (Object[])stringValues));
+		list.add(Component.translatable(str, (Object[])stringValues));
 	}
 
 	public static ItemStack mergeDisplayData(ItemStack from, ItemStack to) {
@@ -122,7 +120,7 @@ public class ItemLoreHelper {
 		CompoundTag nbt = stack.getOrCreateTagElement("display");
 
 		ListTag loreList = nbt.getList("Lore", 8);
-		loreList.add(StringTag.valueOf(Component.Serializer.toJson(new TextComponent(string))));
+		loreList.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(string))));
 
 		nbt.put("Lore", loreList);
 
@@ -134,9 +132,9 @@ public class ItemLoreHelper {
 
 		ListTag loreList = nbt.getList("Lore", 8);
 		if (loreList.size() - 1 >= index) {
-			loreList.set(index, StringTag.valueOf(Component.Serializer.toJson(new TextComponent(string))));
+			loreList.set(index, StringTag.valueOf(Component.Serializer.toJson(Component.literal(string))));
 		} else {
-			loreList.add(StringTag.valueOf(Component.Serializer.toJson(new TextComponent(string))));
+			loreList.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(string))));
 		}
 
 		nbt.put("Lore", loreList);
@@ -168,9 +166,9 @@ public class ItemLoreHelper {
 		ListTag loreList = nbt.getList("Lore", 8);
 
 		if (loreList.size() > 0) {
-			loreList.set(loreList.size() - 1, StringTag.valueOf(Component.Serializer.toJson(new TextComponent(string))));
+			loreList.set(loreList.size() - 1, StringTag.valueOf(Component.Serializer.toJson(Component.literal(string))));
 		} else {
-			loreList.add(StringTag.valueOf(Component.Serializer.toJson(new TextComponent(string))));
+			loreList.add(StringTag.valueOf(Component.Serializer.toJson(Component.literal(string))));
 		}
 
 		nbt.put("Lore", loreList);
@@ -181,7 +179,7 @@ public class ItemLoreHelper {
 	public static ItemStack setDisplayName(ItemStack stack, String name) {
 		CompoundTag nbt = stack.getOrCreateTagElement("display");
 
-		nbt.putString("Name", Component.Serializer.toJson(new TextComponent(name)));
+		nbt.putString("Name", Component.Serializer.toJson(Component.literal(name)));
 
 		return stack;
 	}
@@ -225,8 +223,8 @@ public class ItemLoreHelper {
 		}
 
 		private static String parseFormatting(String field) {
-			String formatter = new TranslatableComponent("tooltip.enigmaticlegacy.paragraph").getString();
-			String subformat = new TranslatableComponent("tooltip.enigmaticlegacy.subformat").getString();
+			String formatter = Component.translatable("tooltip.enigmaticlegacy.paragraph").getString();
+			String subformat = Component.translatable("tooltip.enigmaticlegacy.subformat").getString();
 
 			return field.replace(subformat, formatter);
 		}

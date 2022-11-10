@@ -14,8 +14,8 @@ import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -46,15 +46,14 @@ public class EnigmaticUpdateHandler {
 
 	private static String currentVersion = EnigmaticLegacy.VERSION + " " + EnigmaticLegacy.RELEASE_TYPE;
 	private static String newestVersion;
-	public static TranslatableComponent updateStatus = null;
+	public static MutableComponent updateStatus = null;
 	public static boolean show = false;
 	static boolean worked = false;
 
 	@SubscribeEvent
 	public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
-
-		if (event.getPlayer() instanceof ServerPlayer) {
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> ((ServerPlayer)event.getPlayer())), new PacketUpdateNotification());
+		if (event.getEntity() instanceof ServerPlayer player) {
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with(() -> player), new PacketUpdateNotification());
 		}
 	}
 
@@ -64,7 +63,7 @@ public class EnigmaticUpdateHandler {
 			return;
 
 		if (notificationsEnabled.getValue()) {
-			player.sendMessage(EnigmaticUpdateHandler.updateStatus, player.getUUID());
+			player.sendSystemMessage(EnigmaticUpdateHandler.updateStatus);
 		}
 
 		EnigmaticUpdateHandler.show = false;
@@ -85,17 +84,17 @@ public class EnigmaticUpdateHandler {
 			{
 				EnigmaticUpdateHandler.show = true;
 
-				TextComponent newVerArg = new TextComponent(EnigmaticUpdateHandler.newestVersion);
+				MutableComponent newVerArg = Component.literal(EnigmaticUpdateHandler.newestVersion);
 				newVerArg.withStyle(ChatFormatting.GOLD);
 
-				EnigmaticUpdateHandler.updateStatus = new TranslatableComponent("status.enigmaticlegacy.outdated", newVerArg);
+				EnigmaticUpdateHandler.updateStatus = Component.translatable("status.enigmaticlegacy.outdated", newVerArg);
 				EnigmaticUpdateHandler.updateStatus.withStyle(ChatFormatting.DARK_PURPLE);
 			}
 		}
 		else
 		{
 			EnigmaticUpdateHandler.show = true;
-			EnigmaticUpdateHandler.updateStatus = new TranslatableComponent("status.enigmaticlegacy.noconnection");
+			EnigmaticUpdateHandler.updateStatus = Component.translatable("status.enigmaticlegacy.noconnection");
 			EnigmaticUpdateHandler.updateStatus.withStyle(ChatFormatting.RED);
 		}
 	}

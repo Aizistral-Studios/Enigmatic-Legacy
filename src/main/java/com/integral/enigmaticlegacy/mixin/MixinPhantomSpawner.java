@@ -40,7 +40,7 @@ public class MixinPhantomSpawner {
 		} else if (!world.getGameRules().getBoolean(GameRules.RULE_DOINSOMNIA)) {
 			// NO-OP
 		} else {
-			Random random = world.random;
+			var random = world.random;
 			--this.ticksUntilSpawn;
 			if (this.ticksUntilSpawn > 0) {
 				// NO-OP

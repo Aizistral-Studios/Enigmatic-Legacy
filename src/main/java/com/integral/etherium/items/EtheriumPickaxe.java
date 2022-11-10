@@ -65,11 +65,6 @@ public class EtheriumPickaxe extends ItemEtheriumTool {
 	}
 
 	@Override
-	public String getDescriptionId() {
-		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getDescriptionId();
-	}
-
-	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (this.config.getPickaxeMiningRadius() == -1)

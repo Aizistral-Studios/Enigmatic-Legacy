@@ -16,9 +16,4 @@ public class EnderRod extends Item {
 		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "ender_rod"));
 		this.config = config;
 	}
-
-	@Override
-	public String getDescriptionId() {
-		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getDescriptionId();
-	}
 }

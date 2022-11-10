@@ -24,6 +24,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.storage.loot.LootContext.Builder;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class BlockEtherium extends Block {
 	private final IEtheriumConfig config;
@@ -44,7 +45,7 @@ public class BlockEtherium extends Block {
 
 	@Override
 	public String getDescriptionId() {
-		return this.config.isStandalone() ? "block.enigmaticlegacy." + this.getRegistryName().getPath() : super.getDescriptionId();
+		return this.config.isStandalone() ? "block.enigmaticlegacy." + ForgeRegistries.BLOCKS.getKey(this).getPath() : super.getDescriptionId();
 	}
 
 }

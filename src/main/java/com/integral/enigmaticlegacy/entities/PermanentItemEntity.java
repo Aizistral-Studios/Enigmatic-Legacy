@@ -29,7 +29,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -56,7 +55,7 @@ public class PermanentItemEntity extends Entity {
 	private UUID owner;
 	private Vec3 position;
 
-	@ObjectHolder(EnigmaticLegacy.MODID + ":permanent_item_entity")
+	@ObjectHolder(value = EnigmaticLegacy.MODID + ":permanent_item_entity", registryName = "entity_type")
 	public static EntityType<PermanentItemEntity> TYPE;
 
 	public float hoverStart = (float) (Math.random() * Math.PI * 2.0D);
@@ -97,8 +96,8 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	@Override
-	public boolean occludesVibrations() {
-		return this.getItem().is(ItemTags.OCCLUDES_VIBRATION_SIGNALS);
+	public boolean dampensVibrations() {
+		return this.getItem().is(ItemTags.DAMPENS_VIBRATIONS);
 	}
 
 	@Override
@@ -361,7 +360,7 @@ public class PermanentItemEntity extends Entity {
 	@Override
 	public Component getName() {
 		Component itextcomponent = this.getCustomName();
-		return itextcomponent != null ? itextcomponent : new TranslatableComponent(this.getItem().getDescriptionId());
+		return itextcomponent != null ? itextcomponent : Component.translatable(this.getItem().getDescriptionId());
 	}
 
 	@Override

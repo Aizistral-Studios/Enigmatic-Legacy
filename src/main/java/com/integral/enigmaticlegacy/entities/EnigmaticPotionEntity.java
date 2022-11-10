@@ -32,6 +32,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 
 /**
@@ -42,7 +43,7 @@ import net.minecraftforge.registries.ObjectHolder;
  */
 
 public class EnigmaticPotionEntity extends ThrowableItemProjectile implements ItemSupplier {
-	@ObjectHolder(EnigmaticLegacy.MODID + ":enigmatic_potion_entity")
+	@ObjectHolder(value = EnigmaticLegacy.MODID + ":enigmatic_potion_entity", registryName = "entity_type")
 	public static EntityType<EnigmaticPotionEntity> TYPE;
 
 	private static final EntityDataAccessor<ItemStack> ITEM = SynchedEntityData.defineId(EnigmaticPotionEntity.class,

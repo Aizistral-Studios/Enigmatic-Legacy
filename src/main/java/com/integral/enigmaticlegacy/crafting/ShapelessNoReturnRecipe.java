@@ -42,7 +42,7 @@ public class ShapelessNoReturnRecipe extends ShapelessRecipe {
 		return EnigmaticRecipeSerializers.SHAPELESS_NO_RETURN;
 	}
 
-	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ShapelessNoReturnRecipe> {
+	public static class Serialize implements RecipeSerializer<ShapelessNoReturnRecipe> {
 		@Override
 		public ShapelessNoReturnRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			ShapelessRecipe recipe = SHAPELESS_RECIPE.fromJson(recipeId, json);

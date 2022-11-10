@@ -143,13 +143,14 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.contents.LiteralContents;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.GameType;
@@ -390,10 +391,9 @@ public class SuperpositionHandler {
 	 */
 
 	public static SoundEvent registerSound(final String soundName) {
-		final ResourceLocation location = new ResourceLocation("enigmaticlegacy", soundName);
-		final SoundEvent event = new SoundEvent(location);
-		event.setRegistryName(location);
-		ForgeRegistries.SOUND_EVENTS.register(event);
+		ResourceLocation location = new ResourceLocation("enigmaticlegacy", soundName);
+		SoundEvent event = new SoundEvent(location);
+		ForgeRegistries.SOUND_EVENTS.register(location, event);
 		return event;
 	}
 
@@ -998,10 +998,10 @@ public class SuperpositionHandler {
 	public static void addPotionTooltip(List<MobEffectInstance> list, ItemStack itemIn, List<Component> lores, float durationFactor) {
 		List<Pair<Attribute, AttributeModifier>> list1 = Lists.newArrayList();
 		if (list.isEmpty()) {
-			lores.add((new TranslatableComponent("effect.none")).withStyle(ChatFormatting.GRAY));
+			lores.add((Component.translatable("effect.none")).withStyle(ChatFormatting.GRAY));
 		} else {
 			for (MobEffectInstance effectinstance : list) {
-				MutableComponent iformattabletextcomponent = new TranslatableComponent(effectinstance.getDescriptionId());
+				MutableComponent iformattabletextcomponent = Component.translatable(effectinstance.getDescriptionId());
 				MobEffect effect = effectinstance.getEffect();
 				Map<Attribute, AttributeModifier> map = effect.getAttributeModifiers();
 				if (!map.isEmpty()) {
@@ -1013,7 +1013,7 @@ public class SuperpositionHandler {
 				}
 
 				if (effectinstance.getAmplifier() > 0) {
-					iformattabletextcomponent.append(" ").append(new TranslatableComponent("potion.potency." + effectinstance.getAmplifier()));
+					iformattabletextcomponent.append(" ").append(Component.translatable("potion.potency." + effectinstance.getAmplifier()));
 				}
 
 				if (effectinstance.getDuration() > 20) {
@@ -1025,8 +1025,8 @@ public class SuperpositionHandler {
 		}
 
 		if (!list1.isEmpty()) {
-			lores.add(TextComponent.EMPTY);
-			lores.add((new TranslatableComponent("potion.whenDrank")).withStyle(ChatFormatting.DARK_PURPLE));
+			lores.add(CommonComponents.EMPTY);
+			lores.add((Component.translatable("potion.whenDrank")).withStyle(ChatFormatting.DARK_PURPLE));
 
 			for (Pair<Attribute, AttributeModifier> pair : list1) {
 				AttributeModifier attributemodifier2 = pair.getSecond();
@@ -1039,10 +1039,10 @@ public class SuperpositionHandler {
 				}
 
 				if (d0 > 0.0D) {
-					lores.add((new TranslatableComponent("attribute.modifier.plus." + attributemodifier2.getOperation().toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(d1), new TranslatableComponent(pair.getFirst().getDescriptionId()))).withStyle(ChatFormatting.BLUE));
+					lores.add((Component.translatable("attribute.modifier.plus." + attributemodifier2.getOperation().toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(d1), Component.translatable(pair.getFirst().getDescriptionId()))).withStyle(ChatFormatting.BLUE));
 				} else if (d0 < 0.0D) {
 					d1 = d1 * -1.0D;
-					lores.add((new TranslatableComponent("attribute.modifier.take." + attributemodifier2.getOperation().toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(d1), new TranslatableComponent(pair.getFirst().getDescriptionId()))).withStyle(ChatFormatting.DARK_RED));
+					lores.add((Component.translatable("attribute.modifier.take." + attributemodifier2.getOperation().toValue(), ItemStack.ATTRIBUTE_MODIFIER_FORMAT.format(d1), Component.translatable(pair.getFirst().getDescriptionId()))).withStyle(ChatFormatting.DARK_RED));
 				}
 			}
 		}
@@ -1095,10 +1095,9 @@ public class SuperpositionHandler {
 	 */
 	@OnlyIn(Dist.CLIENT)
 	public static float getParticleMultiplier() {
-
-		if (Minecraft.getInstance().options.particles == ParticleStatus.MINIMAL)
+		if (Minecraft.getInstance().options.particles().get() == ParticleStatus.MINIMAL)
 			return 0.35F;
-		else if (Minecraft.getInstance().options.particles == ParticleStatus.DECREASED)
+		else if (Minecraft.getInstance().options.particles().get() == ParticleStatus.DECREASED)
 			return 0.65F;
 		else
 			return 1.0F;
@@ -1862,7 +1861,7 @@ public class SuperpositionHandler {
 
 	@OnlyIn(Dist.CLIENT)
 	public static void obscureTooltip(List<Component> tooltip) {
-		tooltip.replaceAll(component -> new TextComponent(obscureString(component.getString()))
+		tooltip.replaceAll(component -> Component.literal(obscureString(component.getString()))
 				.withStyle(component.getStyle()));
 	}
 
@@ -1953,7 +1952,7 @@ public class SuperpositionHandler {
 			if (!override && entity != Minecraft.getInstance().player
 					&& EnigmaticLegacy.insignia.canSeeTrueName(Minecraft.getInstance().player)) {
 				stack.pushPose();
-				name = new TextComponent("(" + entity.getDisplayName().getString() + ")");
+				name = Component.literal("(" + entity.getDisplayName().getString() + ")");
 				f2 = -font.width(name) / 2;
 
 				float scale = 0.4F;
@@ -1999,16 +1998,17 @@ public class SuperpositionHandler {
 			} else
 				return info;
 
-			TranslatableComponent tcn = new TranslatableComponent(key);
+			MutableComponent tcn = Component.translatable(key);
 			tcn.withStyle(info.getStyle());
 
-			if (info instanceof TranslatableComponent) {
-				info.getSiblings().forEach(tcn::append);
-			} else if (info instanceof TextComponent) {
-				for (int i = 1; i < info.getSiblings().size(); i++) {
-					tcn.append(info.getSiblings().get(i));
+			if (info instanceof MutableComponent mutable)
+				if (mutable.getContents() instanceof TranslatableContents) {
+					info.getSiblings().forEach(tcn::append);
+				} else if (mutable.getContents() instanceof LiteralContents) {
+					for (int i = 1; i < info.getSiblings().size(); i++) {
+						tcn.append(info.getSiblings().get(i));
+					}
 				}
-			}
 
 			return tcn;
 		}
@@ -2024,7 +2024,8 @@ public class SuperpositionHandler {
 		MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 
 		if (server != null && server.isSingleplayer() &&
-				Objects.equal(server.getSingleplayerName(), EnigmaticLegacy.PROXY.getClientUsername()))
+				Objects.equal(server.getSingleplayerProfile().getName(),
+						EnigmaticLegacy.PROXY.getClientUsername()))
 			return Optional.of(server);
 		else
 			return Optional.empty();

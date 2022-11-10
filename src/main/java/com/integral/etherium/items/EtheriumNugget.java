@@ -15,9 +15,5 @@ public class EtheriumNugget extends Item {
 		this.config = config;
 	}
 
-	@Override
-	public String getDescriptionId() {
-		return this.config.isStandalone() ? "item.enigmaticlegacy." + this.getRegistryName().getPath() : super.getDescriptionId();
-	}
 }
 

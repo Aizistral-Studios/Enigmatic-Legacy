@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class EternalBindingCurse extends Enchantment {
 	private final List<String> incompatibleKeywords = new ArrayList<>();
@@ -76,7 +77,7 @@ public class EternalBindingCurse extends Enchantment {
 	@Override
 	protected boolean checkCompatibility(Enchantment ench) {
 		if (this.incompatibleKeywords.stream().anyMatch(keyword ->
-		StringUtils.containsIgnoreCase(keyword, ench.getRegistryName().getPath())))
+		StringUtils.containsIgnoreCase(keyword, ForgeRegistries.ENCHANTMENTS.getKey(ench).getPath())))
 			return false;
 
 		return ench != Enchantments.BINDING_CURSE && ench != Enchantments.VANISHING_CURSE ? super.checkCompatibility(ench) : false;

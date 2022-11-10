@@ -13,10 +13,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 
 public class CursedShapedRecipe extends ShapedRecipe {
-
 	// TODO We need one custom recipe handler for all our mod stuff
 
 	public CursedShapedRecipe(ResourceLocation idIn, String groupIn, int recipeWidthIn, int recipeHeightIn, NonNullList<Ingredient> recipeItemsIn, ItemStack recipeOutputIn) {
@@ -48,7 +46,7 @@ public class CursedShapedRecipe extends ShapedRecipe {
 		return super.assemble(inv);
 	}
 
-	public static class Serializer extends ForgeRegistryEntry<RecipeSerializer<?>>  implements RecipeSerializer<CursedShapedRecipe> {
+	public static class Serializer implements RecipeSerializer<CursedShapedRecipe> {
 
 		private NonNullList<Ingredient> handleTainted(NonNullList<Ingredient> ingredientList) {
 			for (Ingredient ing : ingredientList) {

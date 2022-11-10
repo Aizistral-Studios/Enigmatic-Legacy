@@ -27,6 +27,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import static net.minecraftforge.client.ForgeHooksClient.*;
 
@@ -45,7 +46,7 @@ public class MixinForgeHooksClient {
 			Optional<TooltipComponent> itemComponent, int mouseX, int screenWidth, int screenHeight,
 			Font forcedFont, Font fallbackFont, CallbackInfoReturnable<List<ClientTooltipComponent>> info) {
 
-		if (stack != null && stack.getItem().getRegistryName().getNamespace().equals(EnigmaticLegacy.MODID)) {
+		if (stack != null && ForgeRegistries.ITEMS.getKey(stack.getItem()).getNamespace().equals(EnigmaticLegacy.MODID)) {
 			Font font = getTooltipFont(forcedFont, stack, fallbackFont);
 			List<Either<FormattedText, TooltipComponent>> elements = textElements.stream().map((Function<FormattedText, Either<FormattedText, TooltipComponent>>) Either::left).collect(Collectors.toCollection(ArrayList::new));
 			itemComponent.ifPresent(c -> elements.add(1, Either.right(c)));
