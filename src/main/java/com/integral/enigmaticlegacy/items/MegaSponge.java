@@ -43,7 +43,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.PacketDistributor;
 import top.theillusivec4.curios.api.SlotContext;
 
-public class Megasponge extends ItemBaseCurio implements Vanishable {
+public class MegaSponge extends ItemBaseCurio implements Vanishable {
 	public static Omniconfig.IntParameter radius;
 
 	@SubscribeConfig
@@ -58,9 +58,8 @@ public class Megasponge extends ItemBaseCurio implements Vanishable {
 		builder.popPrefix();
 	}
 
-	public Megasponge() {
+	public MegaSponge() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "mega_sponge"));
 	}
 
 	@Override

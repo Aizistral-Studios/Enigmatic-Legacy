@@ -5,8 +5,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -57,7 +57,7 @@ public class MixinPhantomSpawner {
 									ServerStatsCounter serverstatisticsmanager = player.getStats();
 									int ticksSinceRest = Mth.clamp(serverstatisticsmanager.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)), 1, Integer.MAX_VALUE);
 
-									if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing))
+									if (SuperpositionHandler.hasCurio(player, EnigmaticItems.cursedRing))
 										if (random.nextInt(ticksSinceRest) <= 72000) {
 											BlockPos blockpos1 = blockpos.above(20 + random.nextInt(15)).east(-10 + random.nextInt(21)).south(-10 + random.nextInt(21));
 											BlockState blockstate = world.getBlockState(blockpos1);

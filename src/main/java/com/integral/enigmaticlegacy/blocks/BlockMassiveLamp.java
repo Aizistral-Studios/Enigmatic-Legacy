@@ -9,19 +9,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootContext.Builder;
 
 public class BlockMassiveLamp extends Block {
 
-	public BlockMassiveLamp(Properties properties, String registryName) {
-		super(properties.sound(SoundType.GLASS).noOcclusion());
-
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, registryName));
-		EnigmaticLegacy.cutoutBlockRegistry.add(this);
+	public BlockMassiveLamp() {
+		super(BlockBehaviour.Properties.copy(Blocks.LANTERN).sound(SoundType.GLASS).noOcclusion());
 	}
 
 	@Override

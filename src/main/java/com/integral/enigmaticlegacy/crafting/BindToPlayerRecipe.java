@@ -23,7 +23,7 @@ import net.minecraft.world.level.Level;
  */
 
 public class BindToPlayerRecipe extends CustomRecipe {
-	static final SimpleRecipeSerializer<BindToPlayerRecipe> SERIALIZER = new SimpleRecipeSerializer<>(BindToPlayerRecipe::new);
+	public static final SimpleRecipeSerializer<BindToPlayerRecipe> SERIALIZER = new SimpleRecipeSerializer<>(BindToPlayerRecipe::new);
 
 	public BindToPlayerRecipe(ResourceLocation id) {
 		super(id);

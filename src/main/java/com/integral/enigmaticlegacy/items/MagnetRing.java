@@ -11,6 +11,7 @@ import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.enigmaticlegacy.objects.Vector3;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
@@ -85,7 +86,6 @@ public class MagnetRing extends ItemBaseCurio {
 
 	public MagnetRing() {
 		this(ItemBaseCurio.getDefaultProperties().rarity(Rarity.RARE));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "magnet_ring"));
 	}
 
 	public MagnetRing(Properties properties) {
@@ -144,7 +144,7 @@ public class MagnetRing extends ItemBaseCurio {
 
 	@Override
 	public boolean canEquip(SlotContext context, ItemStack stack) {
-		return super.canEquip(context, stack) && !SuperpositionHandler.hasCurio(context.entity(), EnigmaticLegacy.superMagnetRing);
+		return super.canEquip(context, stack) && !SuperpositionHandler.hasCurio(context.entity(), EnigmaticItems.superMagnetRing);
 	}
 
 	public boolean hasMagnetEffectsDisabled(Player player) {

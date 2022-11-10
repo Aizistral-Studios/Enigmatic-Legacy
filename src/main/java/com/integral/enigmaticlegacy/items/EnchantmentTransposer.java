@@ -23,7 +23,6 @@ public class EnchantmentTransposer extends ItemBase {
 
 	public EnchantmentTransposer() {
 		this(getDefaultProperties().stacksTo(1).rarity(Rarity.UNCOMMON));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enchantment_transposer"));
 	}
 
 	protected EnchantmentTransposer(Properties properties) {

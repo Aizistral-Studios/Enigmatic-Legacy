@@ -3,6 +3,7 @@ package com.integral.enigmaticlegacy.crafting;
 import com.google.gson.JsonObject;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.CosmicHeart;
+import com.integral.enigmaticlegacy.registry.EnigmaticRecipes;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
@@ -22,7 +23,7 @@ public class BlessedShapedRecipe extends ShapedRecipe {
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return EnigmaticRecipeSerializers.BLESSED_SHAPED;
+		return EnigmaticRecipes.BLESSED_SHAPED;
 	}
 
 	@Override

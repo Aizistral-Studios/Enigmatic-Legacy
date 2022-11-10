@@ -17,6 +17,7 @@ import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketWitherParticles;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
@@ -58,7 +59,6 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 
 	public EnigmaticItem() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_item"));
 
 		this.immunityList.add(DamageSource.FALL.msgId);
 		this.immunityList.add(DamageSource.FLY_INTO_WALL.msgId);
@@ -124,7 +124,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 
 	public void handleEnigmaticFlight(final Player player) {
 		try {
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.enigmaticItem)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.enigmaticItem)) {
 				this.flightMap.put(player, true);
 				if (!player.getAbilities().mayfly) {
 					player.getAbilities().mayfly = true;

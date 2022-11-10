@@ -38,7 +38,6 @@ public class MoltenHeartEffect extends MobEffect {
 
 	public MoltenHeartEffect() {
 		super(MobEffectCategory.BENEFICIAL, 0xF28E0C);
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "molten_heart"));
 	}
 
 	@Override

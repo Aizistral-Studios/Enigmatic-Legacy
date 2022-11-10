@@ -1,6 +1,7 @@
 {
 	"parent": "block/block",
 	"ambientocclusion": false,
+	"render_type": "cutout",
 	"elements": [
 		{
 			"name": "Inner beacon texture",

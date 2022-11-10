@@ -31,7 +31,6 @@ public class QuotePlayer extends ItemBase implements IHidden {
 
 	public QuotePlayer() {
 		super(getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).fireResistant());
-		this.setRegistryName(EnigmaticLegacy.MODID, "quote_player");
 	}
 
 	@Override

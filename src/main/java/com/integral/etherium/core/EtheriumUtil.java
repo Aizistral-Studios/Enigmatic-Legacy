@@ -1,5 +1,6 @@
 package com.integral.etherium.core;
 
+import com.integral.enigmaticlegacy.config.EtheriumConfigHandler;
 import com.integral.etherium.blocks.BlockEtherium;
 import com.integral.etherium.items.EnderRod;
 import com.integral.etherium.items.EtheriumArmor;
@@ -20,7 +21,8 @@ import net.minecraft.world.item.Rarity;
 
 public class EtheriumUtil {
 
-	public static Properties defaultProperties(IEtheriumConfig config, Class<?> itemClass) {
+	public static Properties defaultProperties(Class<?> itemClass) {
+		IEtheriumConfig config = EtheriumConfigHandler.instance();
 		Properties props = new Item.Properties();
 
 		props.stacksTo(1);

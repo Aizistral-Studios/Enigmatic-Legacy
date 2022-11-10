@@ -1,8 +1,8 @@
 package com.integral.enigmaticlegacy.gui;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.EnderRing;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
@@ -18,7 +18,7 @@ public class EnderChestInventoryButton extends PlayerInventoryButton {
 
 	@Override
 	protected boolean beforeRender(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-		boolean hasRing = SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.enderRing) || SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.cursedRing);
+		boolean hasRing = SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticItems.enderRing) || SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticItems.cursedRing);
 
 		if (!hasRing || !EnderRing.inventoryButtonEnabled.getValue()) {
 			this.active = false;

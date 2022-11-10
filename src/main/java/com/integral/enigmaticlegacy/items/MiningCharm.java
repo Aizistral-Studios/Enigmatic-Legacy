@@ -14,13 +14,14 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
+import com.integral.enigmaticlegacy.registry.EnigmaticSounds;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
@@ -72,7 +73,6 @@ public class MiningCharm extends ItemBaseCurio {
 
 	public MiningCharm() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.RARE));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "mining_charm"));
 	}
 
 	@Override
@@ -115,7 +115,7 @@ public class MiningCharm extends ItemBaseCurio {
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
 		if (context.entity() instanceof Player player && !context.entity().level.isClientSide)
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.miningCharm)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.miningCharm)) {
 				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
 					if (enableNightVision.getValue()) {
 						if (player.getY() < 50 && !player.level.dimension().equals(Level.NETHER)
@@ -143,11 +143,11 @@ public class MiningCharm extends ItemBaseCurio {
 
 		if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
 			ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", false);
-			world.playSound(null, player.blockPosition(), EnigmaticLegacy.soundChargedOff, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOff, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 		} else {
 			if (enableNightVision.getValue()) {
 				ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", true);
-				world.playSound(null, player.blockPosition(), EnigmaticLegacy.soundChargedOn, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOn, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 

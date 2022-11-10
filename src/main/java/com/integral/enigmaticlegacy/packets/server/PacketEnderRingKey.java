@@ -2,8 +2,8 @@ package com.integral.enigmaticlegacy.packets.server;
 
 import java.util.function.Supplier;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -43,7 +43,7 @@ public class PacketEnderRingKey {
 			ServerPlayer playerServ = ctx.get().getSender();
 
 			//if (playerServ.openContainer.windowId == 0)
-			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticLegacy.enderRing) || SuperpositionHandler.hasCurio(playerServ, EnigmaticLegacy.cursedRing)) {
+			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticItems.enderRing) || SuperpositionHandler.hasCurio(playerServ, EnigmaticItems.cursedRing)) {
 				//ChestContainer container = ChestContainer.createGeneric9X3(playerServ.currentWindowId+1, playerServ.inventory, playerServ.getInventoryEnderChest());
 				ChestMenu container = new ChestMenu(MenuType.GENERIC_9x3, playerServ.containerCounter + 1, playerServ.getInventory(), playerServ.getEnderChestInventory(), 3) {
 					@Override

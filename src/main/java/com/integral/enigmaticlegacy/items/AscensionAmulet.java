@@ -6,10 +6,10 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Multimap;
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -99,8 +99,8 @@ public class AscensionAmulet extends EnigmaticAmulet {
 
 	@Override
 	public boolean canEquip(SlotContext context, ItemStack stack) {
-		return !SuperpositionHandler.hasCurio(context.entity(), EnigmaticLegacy.enigmaticAmulet)
-				&& !SuperpositionHandler.hasCurio(context.entity(), EnigmaticLegacy.ascensionAmulet);
+		return !SuperpositionHandler.hasCurio(context.entity(), EnigmaticItems.enigmaticAmulet)
+				&& !SuperpositionHandler.hasCurio(context.entity(), EnigmaticItems.ascensionAmulet);
 	}
 
 }

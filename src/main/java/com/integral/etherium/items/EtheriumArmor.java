@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.integral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
+import com.integral.enigmaticlegacy.config.EtheriumConfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.etherium.core.EtheriumUtil;
@@ -25,21 +27,15 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EtheriumArmor extends ArmorItem {
-	private static IEtheriumConfig config;
 
-	public EtheriumArmor(IEtheriumConfig config, EquipmentSlot slot) {
-		super(config.getArmorMaterial(), slot,
-				EtheriumUtil.defaultProperties(config, EtheriumArmor.class).fireResistant());
-		EtheriumArmor.config = config;
+	public EtheriumArmor(EquipmentSlot slot) {
+		super(EnigmaticArmorMaterials.ETHERIUM, slot,
+				EtheriumUtil.defaultProperties(EtheriumArmor.class).fireResistant());
 	}
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
 		return "enigmaticlegacy:textures/models/armor/unseen_armor.png";
-	}
-
-	public static IEtheriumConfig getConfig() {
-		return config;
 	}
 
 	public static boolean hasFullSet(@Nonnull Player player) {
@@ -56,7 +52,8 @@ public class EtheriumArmor extends ArmorItem {
 
 	public static boolean hasShield(@Nonnull Player player) {
 		if (player != null)
-			if (hasFullSet(player) && player.getHealth() / player.getMaxHealth() <= config.getShieldThreshold(player).asMultiplier(false))
+			if (hasFullSet(player) && player.getHealth() / player.getMaxHealth()
+					<= EtheriumConfigHandler.instance().getShieldThreshold(player).asMultiplier(false))
 				return true;
 
 		return false;
@@ -83,9 +80,9 @@ public class EtheriumArmor extends ArmorItem {
 		if (hasFullSet(Minecraft.getInstance().player) || (ItemNBTHelper.verifyExistance(stack, "forceDisplaySetBonus") && ItemNBTHelper.getBoolean(stack, "forceDisplaySetBonus", false))) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus2", ChatFormatting.GOLD, config.getShieldThreshold(Minecraft.getInstance().player).asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus2", ChatFormatting.GOLD, EtheriumConfigHandler.instance().getShieldThreshold(Minecraft.getInstance().player).asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus3");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus4", ChatFormatting.GOLD, config.getShieldReduction().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus4", ChatFormatting.GOLD, EtheriumConfigHandler.instance().getShieldReduction().asPercentage() + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus5");
 
 			//ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumArmorSetBonus6");

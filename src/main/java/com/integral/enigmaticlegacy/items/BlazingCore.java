@@ -28,7 +28,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import top.theillusivec4.curios.api.SlotContext;
 
-public class MagmaHeart extends ItemSpellstoneCurio implements ISpellstone {
+public class BlazingCore extends ItemSpellstoneCurio implements ISpellstone {
 	public static Omniconfig.IntParameter spellstoneCooldown;
 	public static Omniconfig.DoubleParameter damageFeedback;
 	public static Omniconfig.IntParameter ignitionFeedback;
@@ -74,9 +74,8 @@ public class MagmaHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 	public List<String> nemesisList = new ArrayList<String>();
 
-	public MagmaHeart() {
+	public BlazingCore() {
 		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "magma_heart"));
 
 		//this.immunityList.add(DamageSource.LAVA.damageType);
 		this.immunityList.add(DamageSource.IN_FIRE.msgId);

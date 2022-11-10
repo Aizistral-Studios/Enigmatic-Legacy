@@ -26,11 +26,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import top.theillusivec4.curios.api.SlotContext;
 
-public class GemRing extends ItemBaseCurio {
+public class GoldenRing extends ItemBaseCurio {
 
-	public GemRing() {
+	public GoldenRing() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "gem_ring"));
 	}
 
 	@Override

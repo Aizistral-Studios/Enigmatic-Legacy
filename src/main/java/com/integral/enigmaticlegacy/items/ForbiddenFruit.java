@@ -71,7 +71,6 @@ public class ForbiddenFruit extends ItemBase implements Vanishable {
 
 	public ForbiddenFruit() {
 		super(getDefaultProperties().rarity(Rarity.RARE).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "forbidden_fruit"));
 	}
 
 

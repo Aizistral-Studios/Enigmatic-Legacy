@@ -41,7 +41,6 @@ public class LootGenerator extends ItemBase implements Vanishable {
 
 	public LootGenerator() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "loot_generator"));
 
 		/*
 		for (ResourceLocation table : BuiltInLootTables.getReadOnlyLootTables()) {

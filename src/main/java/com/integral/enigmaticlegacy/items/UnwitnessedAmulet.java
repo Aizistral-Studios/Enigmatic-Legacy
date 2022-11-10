@@ -23,7 +23,6 @@ public class UnwitnessedAmulet extends ItemBaseCurio {
 
 	public UnwitnessedAmulet() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "unwitnessed_amulet"));
 	}
 
 	@Override

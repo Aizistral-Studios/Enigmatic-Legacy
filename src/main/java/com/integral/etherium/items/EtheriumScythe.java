@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.etherium.core.EtheriumUtil;
@@ -47,12 +48,9 @@ import net.minecraftforge.common.ToolActions;
 public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 	protected static final Map<Block, BlockState> HOE_LOOKUP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.defaultBlockState(), Blocks.DIRT_PATH, Blocks.FARMLAND.defaultBlockState(), Blocks.DIRT, Blocks.FARMLAND.defaultBlockState(), Blocks.COARSE_DIRT, Blocks.DIRT.defaultBlockState()));
 	public Set<Material> effectiveMaterials;
-	private final IEtheriumConfig config;
 
-	public EtheriumScythe(IEtheriumConfig config) {
-		super(config.getToolMaterial(), 3, -2.0F, EtheriumUtil.defaultProperties(config, EtheriumScythe.class).fireResistant());
-		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_scythe"));
-		this.config = config;
+	public EtheriumScythe() {
+		super(EnigmaticMaterials.ETHERIUM, 3, -2.0F, EtheriumUtil.defaultProperties(EtheriumScythe.class).fireResistant());
 
 		this.effectiveMaterials = Sets.newHashSet();
 		this.effectiveMaterials.add(Material.LEAVES);
@@ -70,21 +68,16 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 	}
 
 	@Override
-	public IEtheriumConfig getConfig() {
-		return this.config;
-	}
-
-	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
-		if (this.config.getScytheMiningVolume() == -1)
+		if (this.getConfig().getScytheMiningVolume() == -1)
 			return;
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe1", ChatFormatting.GOLD, this.config.getScytheMiningVolume() + this.config.getAOEBoost(Minecraft.getInstance().player));
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe2", ChatFormatting.GOLD, this.config.getScytheMiningVolume());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe1", ChatFormatting.GOLD, this.getConfig().getScytheMiningVolume() + this.getConfig().getAOEBoost(Minecraft.getInstance().player));
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe2", ChatFormatting.GOLD, this.getConfig().getScytheMiningVolume());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			if (!this.config.disableAOEShiftInhibition()) {
+			if (!this.getConfig().disableAOEShiftInhibition()) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe3");
 			}
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumScythe4");
@@ -121,7 +114,7 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 		if (!this.areaEffectsEnabled(context.getPlayer(), context.getItemInHand()))
 			return type;
 
-		int supRad = (this.config.getScytheMiningVolume() - 1) / 2;
+		int supRad = (this.getConfig().getScytheMiningVolume() - 1) / 2;
 
 		if (type == InteractionResult.CONSUME) {
 			for (int x = -supRad; x <= supRad; x++) {
@@ -146,9 +139,9 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getScytheMiningVolume() != -1) {
+		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.getConfig().getScytheMiningVolume() != -1) {
 			Direction face = Direction.UP;
-			int volume = this.config.getScytheMiningVolume() + (this.config.getAOEBoost((Player) entityLiving));
+			int volume = this.getConfig().getScytheMiningVolume() + (this.getConfig().getAOEBoost((Player) entityLiving));
 
 			AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos.offset(0, (volume - 1) / 2, 0), this.effectiveMaterials, volume, volume, false, pos, stack, (objPos, objState) -> {
 				stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));

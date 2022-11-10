@@ -2,8 +2,8 @@ package com.integral.enigmaticlegacy.packets.server;
 
 import java.util.function.Supplier;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -37,9 +37,9 @@ public class PacketXPScrollKey {
 		ctx.get().enqueueWork(() -> {
 			ServerPlayer playerServ = ctx.get().getSender();
 
-			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticLegacy.xpScroll)) {
-				ItemStack scroll = SuperpositionHandler.getCurioStack(playerServ, EnigmaticLegacy.xpScroll);
-				EnigmaticLegacy.xpScroll.trigger(playerServ.level, scroll, playerServ, InteractionHand.MAIN_HAND, false);
+			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticItems.xpScroll)) {
+				ItemStack scroll = SuperpositionHandler.getCurioStack(playerServ, EnigmaticItems.xpScroll);
+				EnigmaticItems.xpScroll.trigger(playerServ.level, scroll, playerServ, InteractionHand.MAIN_HAND, false);
 			}
 
 		});

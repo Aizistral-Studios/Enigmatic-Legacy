@@ -14,9 +14,9 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.TridentImpalerEnchantment;
 
 public class WrathEnchantment extends Enchantment {
+
 	public WrathEnchantment(EquipmentSlot... slots) {
 		super(Enchantment.Rarity.RARE, EnchantmentCategory.TRIDENT, slots);
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "wrath"));
 	}
 
 	@Override

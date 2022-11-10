@@ -26,7 +26,7 @@ import net.minecraft.world.level.Level;
  */
 
 public class EnchantmentTransposingRecipe extends CustomRecipe {
-	static final SimpleRecipeSerializer<EnchantmentTransposingRecipe> SERIALIZER = new SimpleRecipeSerializer<>(EnchantmentTransposingRecipe::new);
+	public static final SimpleRecipeSerializer<EnchantmentTransposingRecipe> SERIALIZER = new SimpleRecipeSerializer<>(EnchantmentTransposingRecipe::new);
 
 	public EnchantmentTransposingRecipe(ResourceLocation id) {
 		super(id);

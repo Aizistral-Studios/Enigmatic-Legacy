@@ -37,7 +37,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class AnimalGuide extends ItemBase implements Vanishable {
+public class PetGuidebook extends ItemBase implements Vanishable {
 	public static final List<ResourceLocation> animalExclusionList = new ArrayList<>();
 
 	@SubscribeConfig
@@ -50,9 +50,8 @@ public class AnimalGuide extends ItemBase implements Vanishable {
 		Arrays.stream(blacklist).forEach(entry -> animalExclusionList.add(new ResourceLocation(entry)));
 	}
 
-	public AnimalGuide() {
+	public PetGuidebook() {
 		super(getDefaultProperties().stacksTo(1).rarity(Rarity.UNCOMMON));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "animal_guide"));
 	}
 
 	@Override

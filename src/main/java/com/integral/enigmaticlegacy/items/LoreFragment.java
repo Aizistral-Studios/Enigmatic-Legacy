@@ -22,7 +22,6 @@ public class LoreFragment extends ItemBase {
 
 	public LoreFragment() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON).stacksTo(16));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "lore_fragment"));
 
 		// TODO Lore Fragment copying recipe
 	}

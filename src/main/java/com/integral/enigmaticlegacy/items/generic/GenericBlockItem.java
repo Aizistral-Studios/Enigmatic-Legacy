@@ -11,12 +11,10 @@ public class GenericBlockItem extends BlockItem {
 
 	public GenericBlockItem(Block blockIn) {
 		super(blockIn, GenericBlockItem.getDefaultProperties());
-		this.setRegistryName(blockIn.getRegistryName());
 	}
 
 	public GenericBlockItem(Block blockIn, Properties props) {
 		super(blockIn, props);
-		this.setRegistryName(blockIn.getRegistryName());
 	}
 
 	public static Properties getDefaultProperties() {

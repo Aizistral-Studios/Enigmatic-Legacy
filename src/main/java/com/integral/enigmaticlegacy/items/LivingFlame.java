@@ -10,7 +10,6 @@ public class LivingFlame extends ItemBase {
 
 	public LivingFlame() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "living_flame"));
 	}
 
 }

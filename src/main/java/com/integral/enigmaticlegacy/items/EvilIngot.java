@@ -19,7 +19,6 @@ public class EvilIngot extends ItemBase implements ICursed {
 
 	public EvilIngot() {
 		super(getDefaultProperties().rarity(Rarity.EPIC).stacksTo(8).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "evil_ingot"));
 	}
 
 	@Override

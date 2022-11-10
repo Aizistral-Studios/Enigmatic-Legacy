@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Sets;
+import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.etherium.core.EtheriumUtil;
@@ -36,13 +37,10 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EtheriumAxe extends AxeItem implements IEtheriumTool {
-	private final IEtheriumConfig config;
 	public Set<Material> effectiveMaterials;
 
-	public EtheriumAxe(IEtheriumConfig config) {
-		super(config.getToolMaterial(), 10, -3.2F, EtheriumUtil.defaultProperties(config, EtheriumAxe.class).fireResistant());
-		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_axe"));
-		this.config = config;
+	public EtheriumAxe() {
+		super(EnigmaticMaterials.ETHERIUM, 10, -3.2F, EtheriumUtil.defaultProperties(EtheriumAxe.class).fireResistant());
 
 		this.effectiveMaterials = Sets.newHashSet();
 		this.effectiveMaterials.add(Material.WOOD);
@@ -53,25 +51,20 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool {
 		this.effectiveMaterials.add(Material.BAMBOO_SAPLING);
 		this.effectiveMaterials.add(Material.VEGETABLE);
 
-		this.config.getSorceryMaterial("INFUSED_WOOD").ifPresent(this.effectiveMaterials::add);
-	}
-
-	@Override
-	public IEtheriumConfig getConfig() {
-		return this.config;
+		this.getConfig().getSorceryMaterial("INFUSED_WOOD").ifPresent(this.effectiveMaterials::add);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
-		if (this.config.getAxeMiningVolume() == -1)
+		if (this.getConfig().getAxeMiningVolume() == -1)
 			return;
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumAxe1", ChatFormatting.GOLD, this.config.getAxeMiningVolume() + this.config.getAOEBoost(Minecraft.getInstance().player));
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumAxe1", ChatFormatting.GOLD, this.getConfig().getAxeMiningVolume() + this.getConfig().getAOEBoost(Minecraft.getInstance().player));
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-			if (!this.config.disableAOEShiftInhibition()) {
+			if (!this.getConfig().disableAOEShiftInhibition()) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumAxe2");
 			}
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumAxe3");
@@ -87,9 +80,9 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool {
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getAxeMiningVolume() != -1) {
+		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.getConfig().getAxeMiningVolume() != -1) {
 			Direction face = Direction.UP;
-			int volume = this.config.getAxeMiningVolume() + (this.config.getAOEBoost((Player) entityLiving));
+			int volume = this.getConfig().getAxeMiningVolume() + (this.getConfig().getAOEBoost((Player) entityLiving));
 
 			AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos.offset(0, (volume - 1) / 2, 0), this.effectiveMaterials, volume, volume, false, pos, stack, (objPos, objState) -> {
 				stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));

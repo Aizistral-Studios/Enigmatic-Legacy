@@ -49,7 +49,6 @@ public class SoulCompass extends ItemBase implements ICursed {
 
 	public SoulCompass() {
 		super(getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "soul_compass"));
 	}
 
 	@OnlyIn(Dist.CLIENT)

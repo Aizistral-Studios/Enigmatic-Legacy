@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.objects.CooldownMap;
 import com.integral.enigmaticlegacy.objects.Vector3;
@@ -32,17 +33,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EtheriumSword extends SwordItem implements IEtheriumTool {
 	public CooldownMap etheriumSwordCooldowns = new CooldownMap();
-	private final IEtheriumConfig config;
 
-	public EtheriumSword(IEtheriumConfig config) {
-		super(config.getToolMaterial(), 6, -2.6F, EtheriumUtil.defaultProperties(config, EtheriumSword.class).fireResistant());
-		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_sword"));
-		this.config = config;
+	public EtheriumSword() {
+		super(EnigmaticMaterials.ETHERIUM, 6, -2.6F, EtheriumUtil.defaultProperties(EtheriumSword.class).fireResistant());
 	}
 
 	@Override
 	public IEtheriumConfig getConfig() {
-		return this.config;
+		return this.getConfig();
 	}
 
 	@Override
@@ -53,7 +51,7 @@ public class EtheriumSword extends SwordItem implements IEtheriumTool {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword2");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword3");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword4", ChatFormatting.GOLD, this.config.getSwordCooldown() / 20F);
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword4", ChatFormatting.GOLD, this.getConfig().getSwordCooldown() / 20F);
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumSword5");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -81,10 +79,10 @@ public class EtheriumSword extends SwordItem implements IEtheriumTool {
 				Vector3 look = new Vector3(player.getLookAngle());
 				Vector3 dir = look.multiply(1D);
 
-				this.config.knockBack(player, 1.0F, dir.x, dir.z);
+				this.getConfig().knockBack(player, 1.0F, dir.x, dir.z);
 				world.playSound(null, player.blockPosition(), SoundEvents.SKELETON_SHOOT, SoundSource.PLAYERS, 1.0F, (float) (0.6F + (Math.random() * 0.1D)));
 
-				player.getCooldowns().addCooldown(this, this.config.getSwordCooldown());
+				player.getCooldowns().addCooldown(this, this.getConfig().getSwordCooldown());
 
 				player.startUsingItem(hand);
 				return new InteractionResultHolder<>(InteractionResult.SUCCESS, player.getItemInHand(hand));

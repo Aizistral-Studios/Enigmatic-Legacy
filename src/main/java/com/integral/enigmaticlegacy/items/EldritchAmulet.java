@@ -14,6 +14,7 @@ import com.integral.enigmaticlegacy.api.items.IEldritch;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
@@ -120,7 +121,7 @@ public class EldritchAmulet extends AscensionAmulet implements IEldritch {
 	@Override
 	public boolean canEquip(SlotContext context, ItemStack stack) {
 		if (context.entity() instanceof Player player)
-			return !SuperpositionHandler.hasCurio(player, EnigmaticLegacy.eldritchAmulet)
+			return !SuperpositionHandler.hasCurio(player, EnigmaticItems.eldritchAmulet)
 					&& SuperpositionHandler.isTheWorthyOne(player) && super.canEquip(context, stack);
 		else
 			return false;

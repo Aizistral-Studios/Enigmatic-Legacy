@@ -11,6 +11,8 @@ import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
+import com.integral.enigmaticlegacy.registry.EnigmaticSounds;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
@@ -55,7 +57,6 @@ public class XPScroll extends ItemBaseCurio {
 
 	public XPScroll() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "xp_scroll"));
 	}
 
 	@Override
@@ -126,10 +127,10 @@ public class XPScroll extends ItemBaseCurio {
 
 			if (ItemNBTHelper.getBoolean(stack, "IsActive", false)) {
 				ItemNBTHelper.setBoolean(stack, "IsActive", false);
-				world.playSound(null, player.blockPosition(), EnigmaticLegacy.soundChargedOff, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOff, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			} else {
 				ItemNBTHelper.setBoolean(stack, "IsActive", true);
-				world.playSound(null, player.blockPosition(), EnigmaticLegacy.soundChargedOn, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOn, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 
@@ -147,7 +148,7 @@ public class XPScroll extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		ItemStack itemstack = SuperpositionHandler.getCurioStack(context.entity(), EnigmaticLegacy.xpScroll);
+		ItemStack itemstack = SuperpositionHandler.getCurioStack(context.entity(), EnigmaticItems.xpScroll);
 
 		if (!(context.entity() instanceof Player) || context.entity().level.isClientSide || !ItemNBTHelper.getBoolean(itemstack, "IsActive", false))
 			return;

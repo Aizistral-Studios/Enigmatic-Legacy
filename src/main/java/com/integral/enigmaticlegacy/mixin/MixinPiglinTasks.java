@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -29,7 +30,7 @@ public class MixinPiglinTasks {
 	private static final String AVARICE_SCROLL_TAG = EnigmaticLegacy.MODID + ":avarice_scroll_effect";
 
 	private static void markPiglinWithCondition(Piglin piglin, Player player) {
-		if (player != null && piglin != null && SuperpositionHandler.hasCurio(player, EnigmaticLegacy.avariceScroll))
+		if (player != null && piglin != null && SuperpositionHandler.hasCurio(player, EnigmaticItems.avariceScroll))
 			if (!piglin.getTags().contains(AVARICE_SCROLL_TAG)) {
 				piglin.addTag(AVARICE_SCROLL_TAG);
 			}
@@ -48,7 +49,7 @@ public class MixinPiglinTasks {
 	@Inject(at = @At("RETURN"), method = "isWearingGold", cancellable = true)
 	private static void onWearingGoldCheck(LivingEntity entity, CallbackInfoReturnable<Boolean> info) {
 		if (entity instanceof Player player) {
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.gemRing) || SuperpositionHandler.hasCurio(player, EnigmaticLegacy.avariceScroll)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.gemRing) || SuperpositionHandler.hasCurio(player, EnigmaticItems.avariceScroll)) {
 				info.setReturnValue(true);
 			}
 		}

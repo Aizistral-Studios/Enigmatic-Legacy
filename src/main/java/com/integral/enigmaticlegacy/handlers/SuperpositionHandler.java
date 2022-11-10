@@ -1,7 +1,5 @@
 package com.integral.enigmaticlegacy.handlers;
 
-import static com.integral.enigmaticlegacy.EnigmaticLegacy.soulCrystal;
-
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -49,6 +47,9 @@ import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 import com.integral.enigmaticlegacy.packets.clients.PacketUpdateCompass;
+import com.integral.enigmaticlegacy.registry.EnigmaticEffects;
+import com.integral.enigmaticlegacy.registry.EnigmaticEnchantments;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -1058,7 +1059,7 @@ public class SuperpositionHandler {
 
 	public static boolean isPermanentlyDead(Player player) {
 		// TODO Proper permadeath screen, Cursed Mode
-		return soulCrystal.getLostCrystals(player) >= 10
+		return EnigmaticItems.soulCrystal.getLostCrystals(player) >= 10
 				&& OmniconfigHandler.maxSoulCrystalLoss.getValue() >= 10;
 	}
 
@@ -1178,7 +1179,7 @@ public class SuperpositionHandler {
 	public static boolean canDropSoulCrystal(Player player, boolean hadRing) {
 		if (isAffectedBySoulLoss(player, hadRing)) {
 			int maxCrystalLoss = OmniconfigHandler.maxSoulCrystalLoss.getValue();
-			return EnigmaticLegacy.soulCrystal.getLostCrystals(player) < maxCrystalLoss;
+			return EnigmaticItems.soulCrystal.getLostCrystals(player) < maxCrystalLoss;
 		} else
 			return false;
 	}
@@ -1300,7 +1301,7 @@ public class SuperpositionHandler {
 	}
 
 	public static boolean isTheCursedOne(Player player) {
-		return SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cursedRing);
+		return SuperpositionHandler.hasCurio(player, EnigmaticItems.cursedRing);
 	}
 
 	public static boolean isTheWorthyOne(Player player) {
@@ -1326,7 +1327,7 @@ public class SuperpositionHandler {
 	}
 
 	public static boolean hasArchitectsFavor(Player player) {
-		return isTheBlessedOne(player) && SuperpositionHandler.hasCurio(player, EnigmaticLegacy.cosmicScroll);
+		return isTheBlessedOne(player) && SuperpositionHandler.hasCurio(player, EnigmaticItems.cosmicScroll);
 	}
 
 	public static String getSufferingTime(@Nullable Player player) {
@@ -1383,7 +1384,7 @@ public class SuperpositionHandler {
 			}
 		}
 
-		if (stack.getItem() == EnigmaticLegacy.cursedRing) {
+		if (stack.getItem() == EnigmaticItems.cursedRing) {
 			totalCurses+=7;
 		}
 
@@ -1396,10 +1397,10 @@ public class SuperpositionHandler {
 
 		for (ItemStack theStack : getFullEquipment(player)) {
 			if (theStack != null) {
-				if (theStack.getItem() != EnigmaticLegacy.cursedRing || !ringCounted) {
+				if (theStack.getItem() != EnigmaticItems.cursedRing || !ringCounted) {
 					count += getCurseAmount(theStack);
 
-					if (theStack.getItem() == EnigmaticLegacy.cursedRing) {
+					if (theStack.getItem() == EnigmaticItems.cursedRing) {
 						ringCounted = true;
 					}
 				}
@@ -1684,10 +1685,10 @@ public class SuperpositionHandler {
 	public static ItemStack getEnigmaticElytra(LivingEntity living) {
 		ItemStack stack = living.getItemBySlot(EquipmentSlot.CHEST);
 
-		if (stack.is(EnigmaticLegacy.enigmaticElytra))
+		if (stack.is(EnigmaticItems.enigmaticElytra))
 			return stack;
 		else
-			return getCurioStack(living, EnigmaticLegacy.enigmaticElytra);
+			return getCurioStack(living, EnigmaticItems.enigmaticElytra);
 	}
 
 	public static ItemStack maybeApplyEternalBinding(ItemStack stack) {
@@ -1697,7 +1698,7 @@ public class SuperpositionHandler {
 
 				map.remove(Enchantments.VANISHING_CURSE);
 				int level = map.remove(Enchantments.BINDING_CURSE);
-				map.put(EnigmaticLegacy.eternalBindingCurse, level);
+				map.put(EnigmaticEnchantments.eternalBindingCurse, level);
 				EnchantmentHelper.setEnchantments(map, stack);
 			}
 
@@ -1736,14 +1737,14 @@ public class SuperpositionHandler {
 
 							int strength = -1;
 
-							if (player.hasEffect(EnigmaticLegacy.blazingStrengthEffect)) {
-								MobEffectInstance effectInstance = player.getEffect(EnigmaticLegacy.blazingStrengthEffect);
+							if (player.hasEffect(EnigmaticEffects.blazingStrengthEffect)) {
+								MobEffectInstance effectInstance = player.getEffect(EnigmaticEffects.blazingStrengthEffect);
 								strength = effectInstance.getAmplifier();
-								player.removeEffect(EnigmaticLegacy.blazingStrengthEffect);
+								player.removeEffect(EnigmaticEffects.blazingStrengthEffect);
 								strength = strength > 2 ? 2 : strength;
 							}
 
-							player.addEffect(new MobEffectInstance(EnigmaticLegacy.blazingStrengthEffect, 1200, strength + 1, true, true));
+							player.addEffect(new MobEffectInstance(EnigmaticEffects.blazingStrengthEffect, 1200, strength + 1, true, true));
 
 							if (source.getDirectEntity() instanceof LivingEntity living && living.isAlive()) {
 								if (!living.fireImmune() && !(living instanceof Guardian)) {
@@ -1896,7 +1897,7 @@ public class SuperpositionHandler {
 			boolean override = false;
 
 			if (!render && entity != Minecraft.getInstance().player
-					&& EnigmaticLegacy.insignia.canSeeTrueName(Minecraft.getInstance().player)) {
+					&& EnigmaticItems.insignia.canSeeTrueName(Minecraft.getInstance().player)) {
 				name = entity.getDisplayName();
 				render = override = true;
 			}
@@ -1922,7 +1923,7 @@ public class SuperpositionHandler {
 			}
 
 			if (!override && entity != Minecraft.getInstance().player
-					&& EnigmaticLegacy.insignia.canSeeTrueName(Minecraft.getInstance().player)) {
+					&& EnigmaticItems.insignia.canSeeTrueName(Minecraft.getInstance().player)) {
 				stack.pushPose();
 				name = Component.literal("(" + entity.getDisplayName().getString() + ")");
 				f2 = -font.width(name) / 2;

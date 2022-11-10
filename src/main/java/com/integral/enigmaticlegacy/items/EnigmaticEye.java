@@ -14,6 +14,7 @@ import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
+import com.integral.enigmaticlegacy.registry.EnigmaticSounds;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -38,12 +39,11 @@ import net.minecraftforge.common.ForgeMod;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 
-public class ArchitectEye extends ItemBaseCurio {
+public class EnigmaticEye extends ItemBaseCurio {
 	private static final ResourceLocation EYE_ADVANCEMENT = new ResourceLocation(EnigmaticLegacy.MODID, "book/relics/architect_eye");
 
-	public ArchitectEye() {
+	public EnigmaticEye() {
 		super(getDefaultProperties().rarity(Rarity.EPIC).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "architect_eye"));
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -157,7 +157,7 @@ public class ArchitectEye extends ItemBaseCurio {
 				TransientPlayerData data = TransientPlayerData.get(player);
 				boolean wasNarratorUnlocked = data.getUnlockedNarrator();
 
-				level.playSound(null, player.blockPosition(), EnigmaticLegacy.soundChargedOn, SoundSource.PLAYERS, 1.0F, 1F);
+				level.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOn, SoundSource.PLAYERS, 1.0F, 1F);
 
 				if (!wasNarratorUnlocked) {
 					data.setUnlockedNarrator(true);

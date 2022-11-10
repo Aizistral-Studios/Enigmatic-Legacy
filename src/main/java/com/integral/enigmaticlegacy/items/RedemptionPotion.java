@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBasePotion;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -19,11 +20,10 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class AntiforbiddenPotion extends ItemBasePotion {
+public class RedemptionPotion extends ItemBasePotion {
 
-	public AntiforbiddenPotion() {
+	public RedemptionPotion() {
 		super(getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "antiforbidden_potion"));
 	}
 
 	@Override
@@ -39,12 +39,12 @@ public class AntiforbiddenPotion extends ItemBasePotion {
 
 	@Override
 	public void onConsumed(Level worldIn, Player player, ItemStack potion) {
-		EnigmaticLegacy.forbiddenFruit.defineConsumedFruit(player, false);
+		EnigmaticItems.forbiddenFruit.defineConsumedFruit(player, false);
 	}
 
 	@Override
 	public boolean canDrink(Level world, Player player, ItemStack potion) {
-		return EnigmaticLegacy.forbiddenFruit.haveConsumedFruit(player);
+		return EnigmaticItems.forbiddenFruit.haveConsumedFruit(player);
 	}
 
 

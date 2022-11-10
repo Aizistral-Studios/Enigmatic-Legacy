@@ -25,7 +25,6 @@ public class RecallPotion extends ItemBasePotion {
 
 	public RecallPotion() {
 		super(getDefaultProperties().stacksTo(1).rarity(Rarity.RARE));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "recall_potion"));
 	}
 
 	@Override

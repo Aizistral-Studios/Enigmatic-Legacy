@@ -11,6 +11,8 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.CosmicScroll;
 import com.integral.enigmaticlegacy.objects.Perhaps;
 import com.integral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
+import com.integral.enigmaticlegacy.registry.EnigmaticSounds;
 import com.integral.etherium.core.IEtheriumConfig;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
@@ -124,7 +126,7 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 
 	@Override
 	public Ingredient getRepairMaterial() {
-		return Ingredient.of(EnigmaticLegacy.etheriumIngot);
+		return Ingredient.of(EnigmaticItems.etheriumIngot);
 	}
 
 	@Override
@@ -180,12 +182,12 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 
 	@Override
 	public SoundEvent getAOESoundOff() {
-		return EnigmaticLegacy.soundChargedOff;
+		return EnigmaticSounds.soundChargedOff;
 	}
 
 	@Override
 	public SoundEvent getAOESoundOn() {
-		return EnigmaticLegacy.soundChargedOn;
+		return EnigmaticSounds.soundChargedOn;
 	}
 
 	@Override
@@ -230,7 +232,7 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 
 	@Override
 	public SoundEvent getShieldTriggerSound() {
-		return EnigmaticLegacy.soundShieldTrigger;
+		return EnigmaticSounds.soundShieldTrigger;
 	}
 
 	@Override

@@ -22,6 +22,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -99,7 +100,7 @@ public class SoulArchive {
 
 	private void synchronize() {
 		ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers().forEach(player -> {
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.soulCompass)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.soulCompass)) {
 				SuperpositionHandler.updateSoulCompass(player);
 			}
 		});

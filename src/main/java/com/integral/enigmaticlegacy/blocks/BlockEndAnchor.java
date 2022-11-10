@@ -66,8 +66,6 @@ public class BlockEndAnchor extends BaseEntityBlock {
 					return BlockEndAnchor.getScaledChargeLevel(state, 15);
 				}));
 		this.registerDefaultState(this.stateDefinition.any().setValue(CHARGE, Integer.valueOf(0)));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "end_anchor"));
-		EnigmaticLegacy.cutoutBlockRegistry.add(this);
 
 		DispenserBlock.registerBehavior(Items.ENDER_PEARL, new OptionalDispenseItemBehavior() {
 			@Override

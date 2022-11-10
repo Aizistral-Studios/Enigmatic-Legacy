@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.annotation.Nullable;
 
 import com.google.common.collect.Sets;
+import com.integral.enigmaticlegacy.config.EtheriumConfigHandler;
 import com.integral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.etherium.core.EtheriumUtil;
@@ -45,13 +46,11 @@ import net.minecraftforge.common.ToolActions;
 public class EtheriumShovel extends ItemEtheriumTool {
 	public Set<Material> effectiveMaterials;
 
-	public EtheriumShovel(IEtheriumConfig config) {
-		super(2.5F, -3.0F, config, BlockTags.MINEABLE_WITH_SHOVEL, EtheriumUtil.defaultProperties(config, EtheriumShovel.class)
-				.defaultDurability((int) (config.getToolMaterial().getUses() * 1.5))
+	public EtheriumShovel() {
+		super(2.5F, -3.0F, BlockTags.MINEABLE_WITH_SHOVEL, EtheriumUtil.defaultProperties(EtheriumShovel.class)
+				.defaultDurability((int) (EtheriumConfigHandler.instance().getToolMaterial().getUses() * 1.5))
 				.rarity(Rarity.RARE)
 				.fireResistant());
-
-		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_shovel"));
 
 		this.effectiveMaterials = Sets.newHashSet();
 		this.effectiveMaterials.add(Material.DIRT);
@@ -65,14 +64,14 @@ public class EtheriumShovel extends ItemEtheriumTool {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
-		if (this.config.getShovelMiningRadius() == -1)
+		if (this.getConfig().getShovelMiningRadius() == -1)
 			return;
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumShovel1", ChatFormatting.GOLD, this.config.getShovelMiningRadius() + this.config.getAOEBoost(Minecraft.getInstance().player), this.config.getShovelMiningDepth());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumShovel1", ChatFormatting.GOLD, this.getConfig().getShovelMiningRadius() + this.getConfig().getAOEBoost(Minecraft.getInstance().player), this.getConfig().getShovelMiningDepth());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-			if (!this.config.disableAOEShiftInhibition()) {
+			if (!this.getConfig().disableAOEShiftInhibition()) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumShovel2");
 			}
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumShovel3");
@@ -88,14 +87,14 @@ public class EtheriumShovel extends ItemEtheriumTool {
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getShovelMiningRadius() != -1) {
+		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.getConfig().getShovelMiningRadius() != -1) {
 			HitResult trace = AOEMiningHelper.calcRayTrace(world, (Player) entityLiving, ClipContext.Fluid.ANY);
 
 			if (trace.getType() == HitResult.Type.BLOCK) {
 				BlockHitResult blockTrace = (BlockHitResult) trace;
 				Direction face = blockTrace.getDirection();
 
-				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, this.effectiveMaterials, this.config.getShovelMiningRadius() + this.config.getAOEBoost((Player) entityLiving), this.config.getShovelMiningDepth(), false, pos, stack, (objPos, objState) -> {
+				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, this.effectiveMaterials, this.getConfig().getShovelMiningRadius() + this.getConfig().getAOEBoost((Player) entityLiving), this.getConfig().getShovelMiningDepth(), false, pos, stack, (objPos, objState) -> {
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 				});
 			}

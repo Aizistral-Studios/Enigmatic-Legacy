@@ -17,7 +17,6 @@ public class BlockAstralDust extends Block {
 	public BlockAstralDust() {
 		super(Properties.of(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).requiresCorrectToolForDrops()
 				.strength(3.0F, 10.0F).lightLevel(arg -> 10));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_block"));
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -21,7 +22,6 @@ public class EternalBindingCurse extends Enchantment {
 
 	public EternalBindingCurse(EquipmentSlot... slots) {
 		super(Enchantment.Rarity.RARE, EnchantmentCategory.WEARABLE, slots);
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "eternal_binding_curse"));
 
 		this.incompatibleKeywords.add("soulbound");
 		this.incompatibleKeywords.add("soulbinding");
@@ -49,9 +49,9 @@ public class EternalBindingCurse extends Enchantment {
 
 	@Override
 	public boolean canEnchant(ItemStack stack) {
-		return OmniconfigHandler.isItemEnabled(this) && !stack.is(EnigmaticLegacy.cursedRing)
-				&& !stack.is(EnigmaticLegacy.escapeScroll) && !stack.is(EnigmaticLegacy.enigmaticAmulet)
-				&& !stack.is(EnigmaticLegacy.desolationRing) && super.canEnchant(stack);
+		return OmniconfigHandler.isItemEnabled(this) && !stack.is(EnigmaticItems.cursedRing)
+				&& !stack.is(EnigmaticItems.escapeScroll) && !stack.is(EnigmaticItems.enigmaticAmulet)
+				&& !stack.is(EnigmaticItems.desolationRing) && super.canEnchant(stack);
 	}
 
 	@Override

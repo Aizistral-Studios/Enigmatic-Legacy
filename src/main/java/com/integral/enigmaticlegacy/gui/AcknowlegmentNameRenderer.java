@@ -2,10 +2,10 @@ package com.integral.enigmaticlegacy.gui;
 
 import java.util.function.Supplier;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.items.TheAcknowledgment;
 import com.integral.enigmaticlegacy.items.TheInfinitum;
 import com.integral.enigmaticlegacy.items.TheTwist;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
@@ -45,9 +45,9 @@ public class AcknowlegmentNameRenderer {
 
 		if (stack != null) {
 			if (stack.getItem() instanceof TheTwist) {
-				customName = EnigmaticLegacy.theTwist.getName(stack);
+				customName = EnigmaticItems.theTwist.getName(stack);
 			} else if (stack.getItem() instanceof TheInfinitum) {
-				customName = EnigmaticLegacy.theInfinitum.getName(stack);
+				customName = EnigmaticItems.theInfinitum.getName(stack);
 			}
 		}
 

@@ -12,6 +12,7 @@ import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.enigmaticlegacy.objects.AdvancedPotion;
+import com.integral.enigmaticlegacy.registry.EnigmaticPotions;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
@@ -43,7 +44,7 @@ public class UltimatePotionLingering extends ItemBase implements IAdvancedPotion
 	@OnlyIn(Dist.CLIENT)
 	public ItemStack getDefaultInstance() {
 		ItemStack stack = super.getDefaultInstance().copy();
-		PotionHelper.setAdvancedPotion(stack, EnigmaticLegacy.emptyPotion);
+		PotionHelper.setAdvancedPotion(stack, EnigmaticPotions.emptyPotion);
 		return stack.copy();
 	}
 
@@ -69,13 +70,13 @@ public class UltimatePotionLingering extends ItemBase implements IAdvancedPotion
 		if (this.allowedIn(group)) {
 
 			if (this.potionType == PotionType.COMMON) {
-				for (AdvancedPotion potion : EnigmaticLegacy.commonPotionTypes) {
+				for (AdvancedPotion potion : EnigmaticPotions.commonPotionTypes) {
 					ItemStack stack = new ItemStack(this);
 					ItemNBTHelper.setString(stack, "EnigmaticPotion", potion.getId());
 					items.add(stack);
 				}
 			} else {
-				for (AdvancedPotion potion : EnigmaticLegacy.ultimatePotionTypes) {
+				for (AdvancedPotion potion : EnigmaticPotions.ultimatePotionTypes) {
 					ItemStack stack = new ItemStack(this);
 					ItemNBTHelper.setString(stack, "EnigmaticPotion", potion.getId());
 					items.add(stack);

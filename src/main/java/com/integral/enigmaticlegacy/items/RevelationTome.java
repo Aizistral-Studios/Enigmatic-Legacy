@@ -11,6 +11,7 @@ import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
+import com.integral.enigmaticlegacy.registry.EnigmaticSounds;
 import com.integral.enigmaticlegacy.triggers.RevelationGainTrigger;
 
 import net.minecraft.client.Minecraft;
@@ -69,12 +70,10 @@ public class RevelationTome extends ItemBase implements Vanishable {
 	public final TomeType theType;
 	public final String persistantPointsTag;
 
-	public RevelationTome(Rarity rarity, TomeType type, String registryName) {
+	public RevelationTome(Rarity rarity, TomeType type) {
 		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(1));
 		this.theType = type;
 		this.persistantPointsTag = "enigmaticlegacy.revelation_points_" + this.theType.typeName;
-
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, registryName));
 	}
 
 	@Override
@@ -102,7 +101,7 @@ public class RevelationTome extends ItemBase implements Vanishable {
 				ExperienceHelper.addPlayerXP(player, xp);
 				SuperpositionHandler.setPersistentInteger(player, this.persistantPointsTag, currentPoints + revelation);
 
-				world.playSound(null, new BlockPos(player.position()), EnigmaticLegacy.soundLearn, SoundSource.PLAYERS, 0.75f, 1.0f);
+				world.playSound(null, new BlockPos(player.position()), EnigmaticSounds.soundLearn, SoundSource.PLAYERS, 0.75f, 1.0f);
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayer) player, this.theType, currentPoints + revelation);
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayer) player, TomeType.GENERIC, RevelationTome.getGenericPoints(player));
 			} else {

@@ -1,7 +1,5 @@
 package com.integral.enigmaticlegacy.mixin;
 
-import static com.integral.enigmaticlegacy.EnigmaticLegacy.abyssalHeart;
-
 import java.util.List;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,6 +13,7 @@ import com.integral.enigmaticlegacy.client.Quote;
 import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.objects.Vector3;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -42,7 +41,7 @@ public abstract class MixinEnderDragon extends Mob implements Enemy, IAbyssalHea
 				int heartsGained = SuperpositionHandler.getPersistentInteger(this.abyssalHeartOwner, "AbyssalHeartsGained", 0);
 
 				Vector3 center = Vector3.fromEntityCenter(this);
-				PermanentItemEntity heart = new PermanentItemEntity(this.level, center.x, center.y, center.z, new ItemStack(abyssalHeart, 1));
+				PermanentItemEntity heart = new PermanentItemEntity(this.level, center.x, center.y, center.z, new ItemStack(EnigmaticItems.abyssalHeart, 1));
 				heart.setOwnerId(this.abyssalHeartOwner.getUUID());
 				this.level.addFreshEntity(heart);
 

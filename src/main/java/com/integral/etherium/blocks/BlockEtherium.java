@@ -15,25 +15,15 @@ import net.minecraft.world.level.storage.loot.LootContext.Builder;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class BlockEtherium extends Block {
-	private final IEtheriumConfig config;
 
-	public BlockEtherium(IEtheriumConfig config) {
+	public BlockEtherium() {
 		super(Properties.of(Material.METAL, MaterialColor.COLOR_LIGHT_BLUE).requiresCorrectToolForDrops()
 				.strength(5.0F, 1200.0F).lightLevel(arg -> 10));
-		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_block"));
-		this.config = config;
 	}
 
 	@Override
 	public List<ItemStack> getDrops(BlockState state, Builder builder) {
-		List<ItemStack> stacklist = new ArrayList<ItemStack>();
-		stacklist.add(new ItemStack(this));
-		return stacklist;
-	}
-
-	@Override
-	public String getDescriptionId() {
-		return this.config.isStandalone() ? "block.enigmaticlegacy." + ForgeRegistries.BLOCKS.getKey(this).getPath() : super.getDescriptionId();
+		return List.of(new ItemStack(this));
 	}
 
 }

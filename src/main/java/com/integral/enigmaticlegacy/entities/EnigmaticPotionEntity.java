@@ -4,8 +4,9 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.PotionHelper;
+import com.integral.enigmaticlegacy.registry.EnigmaticEntities;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -29,7 +30,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.network.NetworkHooks;
-import net.minecraftforge.registries.ObjectHolder;
 
 /**
  * Modified version of Potion Entity designed specifically for Enigmatic
@@ -39,22 +39,19 @@ import net.minecraftforge.registries.ObjectHolder;
  */
 
 public class EnigmaticPotionEntity extends ThrowableItemProjectile implements ItemSupplier {
-	@ObjectHolder(value = EnigmaticLegacy.MODID + ":enigmatic_potion_entity", registryName = "entity_type")
-	public static EntityType<EnigmaticPotionEntity> TYPE;
-
-	private static final EntityDataAccessor<ItemStack> ITEM = SynchedEntityData.defineId(EnigmaticPotionEntity.class,
-			EntityDataSerializers.ITEM_STACK);
+	private static final EntityDataAccessor<ItemStack> ITEM = SynchedEntityData.defineId(
+			EnigmaticPotionEntity.class, EntityDataSerializers.ITEM_STACK);
 
 	public EnigmaticPotionEntity(EntityType<EnigmaticPotionEntity> type, Level world) {
 		super(type, world);
 	}
 
 	public EnigmaticPotionEntity(Level world, LivingEntity entity) {
-		super(EnigmaticPotionEntity.TYPE, entity, world);
+		super(EnigmaticEntities.ENIGMATIC_POTION, entity, world);
 	}
 
 	public EnigmaticPotionEntity(Level world, double x, double y, double z) {
-		super(EnigmaticPotionEntity.TYPE, x, y, z, world);
+		super(EnigmaticEntities.ENIGMATIC_POTION, x, y, z, world);
 	}
 
 	@Override
@@ -183,7 +180,7 @@ public class EnigmaticPotionEntity extends ThrowableItemProjectile implements It
 	}
 
 	private boolean isLingering() {
-		return this.getItem().getItem() == EnigmaticLegacy.ultimatePotionLingering;
+		return this.getItem().getItem() == EnigmaticItems.ultimatePotionLingering;
 	}
 
 	/**

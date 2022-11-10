@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.blocks.BlockEndAnchor;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.GenericBlockItem;
 import com.integral.enigmaticlegacy.objects.AnchorSearchResult;
+import com.integral.enigmaticlegacy.registry.EnigmaticBlocks;
 import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
@@ -62,7 +62,7 @@ public class EndAnchor extends GenericBlockItem {
 	}
 
 	public EndAnchor() {
-		super(EnigmaticLegacy.endAnchor, getDefaultProperties().stacksTo(1).fireResistant().rarity(Rarity.EPIC));
+		super(EnigmaticBlocks.endAnchor, getDefaultProperties().stacksTo(1).fireResistant().rarity(Rarity.EPIC));
 	}
 
 	@Override

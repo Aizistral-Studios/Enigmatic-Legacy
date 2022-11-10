@@ -64,7 +64,6 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 
 	public TheCube() {
 		super(getDefaultProperties().rarity(Rarity.EPIC).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "the_cube"));
 
 		this.worlds = ImmutableList.of(Level.OVERWORLD, Level.NETHER, Level.END);
 		this.randomBuffs = ImmutableList.of(MobEffects.ABSORPTION, MobEffects.DAMAGE_BOOST, MobEffects.REGENERATION,

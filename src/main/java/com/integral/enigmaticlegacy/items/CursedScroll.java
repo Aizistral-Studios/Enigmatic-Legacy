@@ -53,7 +53,6 @@ public class CursedScroll extends ItemBaseCurio implements ICursed {
 
 	public CursedScroll() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "cursed_scroll"));
 	}
 
 	@Override

@@ -1,8 +1,8 @@
 package com.integral.enigmaticlegacy.api.items;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
+import com.integral.enigmaticlegacy.registry.EnigmaticSounds;
 
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
@@ -27,7 +27,7 @@ public interface IMultiblockMiningTool {
 			ItemNBTHelper.setBoolean(stack, "MultiblockEffectsEnabled", true);
 
 			if (!player.level.isClientSide) {
-				player.level.playSound(null, player.blockPosition(), EnigmaticLegacy.soundChargedOn, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+				player.level.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOn, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 
@@ -38,7 +38,7 @@ public interface IMultiblockMiningTool {
 			ItemNBTHelper.setBoolean(stack, "MultiblockEffectsEnabled", false);
 
 			if (!player.level.isClientSide) {
-				player.level.playSound(null, player.blockPosition(), EnigmaticLegacy.soundChargedOff, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+				player.level.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOff, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 	}

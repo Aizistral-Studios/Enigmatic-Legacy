@@ -48,7 +48,6 @@ public class HeavenScroll extends ItemBaseCurio {
 
 	public HeavenScroll() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "heaven_scroll"));
 	}
 
 	public HeavenScroll(Properties properties) {

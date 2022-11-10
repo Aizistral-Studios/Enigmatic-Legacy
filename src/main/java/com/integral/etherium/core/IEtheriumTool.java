@@ -1,5 +1,6 @@
 package com.integral.etherium.core;
 
+import com.integral.enigmaticlegacy.config.EtheriumConfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 
 import net.minecraft.sounds.SoundSource;
@@ -8,10 +9,12 @@ import net.minecraft.world.item.ItemStack;
 
 public interface IEtheriumTool {
 
-	public IEtheriumConfig getConfig();
+	default IEtheriumConfig getConfig() {
+		return EtheriumConfigHandler.instance();
+	}
 
 	default boolean areaEffectsEnabled(Player player, ItemStack stack) {
-		return this.areaEffectsAllowed(stack) && (!player.isCrouching() || getConfig().disableAOEShiftInhibition());
+		return this.areaEffectsAllowed(stack) && (!player.isCrouching() || this.getConfig().disableAOEShiftInhibition());
 	}
 
 	default boolean areaEffectsAllowed(ItemStack stack) {
@@ -27,7 +30,7 @@ public interface IEtheriumTool {
 			ItemNBTHelper.setBoolean(stack, "MultiblockEffectsEnabled", true);
 
 			if (!player.level.isClientSide) {
-				player.level.playSound(null, player.blockPosition(), getConfig().getAOESoundOn(), SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+				player.level.playSound(null, player.blockPosition(), this.getConfig().getAOESoundOn(), SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 
@@ -38,7 +41,7 @@ public interface IEtheriumTool {
 			ItemNBTHelper.setBoolean(stack, "MultiblockEffectsEnabled", false);
 
 			if (!player.level.isClientSide) {
-				player.level.playSound(null, player.blockPosition(), getConfig().getAOESoundOff(), SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
+				player.level.playSound(null, player.blockPosition(), this.getConfig().getAOESoundOff(), SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 	}

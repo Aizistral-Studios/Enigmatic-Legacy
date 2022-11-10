@@ -11,9 +11,9 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 
 public class NemesisCurse extends Enchantment {
+
 	public NemesisCurse(final EquipmentSlot... slots) {
 		super(Enchantment.Rarity.RARE, EnchantmentCategory.WEAPON, slots);
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "nemesis_curse"));
 	}
 
 	@Override

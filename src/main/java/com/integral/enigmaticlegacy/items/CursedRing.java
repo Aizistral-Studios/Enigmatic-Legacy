@@ -15,6 +15,7 @@ import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 import com.integral.enigmaticlegacy.triggers.CursedRingEquippedTrigger;
 import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
@@ -192,7 +193,6 @@ public class CursedRing extends ItemBaseCurio {
 
 	public CursedRing() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "cursed_ring"));
 	}
 
 	@Override
@@ -297,7 +297,7 @@ public class CursedRing extends ItemBaseCurio {
 	}
 
 	public boolean isItemDeathPersistent(ItemStack stack) {
-		return stack.getItem().equals(this) || stack.getItem().equals(EnigmaticLegacy.enigmaticAmulet);
+		return stack.getItem().equals(this) || stack.getItem().equals(EnigmaticItems.enigmaticAmulet);
 	}
 
 	@Override
@@ -334,7 +334,7 @@ public class CursedRing extends ItemBaseCurio {
 				continue;
 			}
 
-			if (checkedEntity instanceof Piglin && !SuperpositionHandler.hasCurio(player, EnigmaticLegacy.avariceScroll)) {
+			if (checkedEntity instanceof Piglin && !SuperpositionHandler.hasCurio(player, EnigmaticItems.avariceScroll)) {
 				Piglin piglin = (Piglin) checkedEntity;
 
 				if (piglin.getTarget() == null || !piglin.getTarget().isAlive()) {
@@ -354,14 +354,14 @@ public class CursedRing extends ItemBaseCurio {
 
 				if (neutral instanceof TamableAnimal tamable && tamable.isTame()) {
 					continue;
-				} else if (SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide)) {
-					if (EnigmaticLegacy.animalGuide.isTamableAnimal(checkedEntity)) {
+				} else if (SuperpositionHandler.hasItem(player, EnigmaticItems.animalGuide)) {
+					if (EnigmaticItems.animalGuide.isTamableAnimal(checkedEntity)) {
 						continue;
 					}
 				} else if (neutral instanceof IronGolem golem && golem.isPlayerCreated()) {
 					continue;
 				} else if (neutral instanceof Bee) {
-					if (saveTheBees.getValue() || SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide)) {
+					if (saveTheBees.getValue() || SuperpositionHandler.hasItem(player, EnigmaticItems.animalGuide)) {
 						continue;
 					}
 				}

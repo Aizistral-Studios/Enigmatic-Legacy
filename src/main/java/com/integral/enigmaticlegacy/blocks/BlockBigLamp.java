@@ -9,8 +9,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LanternBlock;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext.Builder;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -21,11 +23,8 @@ public class BlockBigLamp extends LanternBlock {
 	protected final VoxelShape sittingLantern = Shapes.or(Block.box(1.0D, 0.0D, 1.0D, 15.0D, 14.0D, 15.0D));
 	protected final VoxelShape hangingLantern = Shapes.or(Block.box(1.0D, 1.0D, 1.0D, 15.0D, 15.0D, 15.0D));
 
-	public BlockBigLamp(Properties properties, String registryName) {
-		super(properties);
-
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, registryName));
-		EnigmaticLegacy.cutoutBlockRegistry.add(this);
+	public BlockBigLamp() {
+		super(BlockBehaviour.Properties.copy(Blocks.LANTERN));
 	}
 
 	@Override

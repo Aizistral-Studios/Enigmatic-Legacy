@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import com.integral.enigmaticlegacy.config.EtheriumConfigHandler;
 import com.integral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.etherium.core.EtheriumUtil;
@@ -40,13 +41,11 @@ import net.minecraftforge.common.ToolActions;
 
 public class EtheriumPickaxe extends ItemEtheriumTool {
 
-	public EtheriumPickaxe(IEtheriumConfig config) {
-		super(1F, -2.8F, config, BlockTags.MINEABLE_WITH_PICKAXE,
-				EtheriumUtil.defaultProperties(config, EtheriumPickaxe.class)
-				.defaultDurability((int) (config.getToolMaterial().getUses() * 1.5))
+	public EtheriumPickaxe() {
+		super(1F, -2.8F, BlockTags.MINEABLE_WITH_PICKAXE,
+				EtheriumUtil.defaultProperties(EtheriumPickaxe.class)
+				.defaultDurability((int) (EtheriumConfigHandler.instance().getToolMaterial().getUses() * 1.5))
 				.fireResistant());
-
-		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_pickaxe"));
 
 		this.effectiveMaterials.add(Material.METAL);
 		this.effectiveMaterials.add(Material.STONE);
@@ -57,21 +56,21 @@ public class EtheriumPickaxe extends ItemEtheriumTool {
 		this.effectiveMaterials.add(Material.SHULKER_SHELL);
 		this.effectiveMaterials.add(Material.AMETHYST);
 
-		this.config.getSorceryMaterial("MARBLE").ifPresent(this.effectiveMaterials::add);
-		this.config.getSorceryMaterial("BLACK_MARBLE").ifPresent(this.effectiveMaterials::add);
+		this.getConfig().getSorceryMaterial("MARBLE").ifPresent(this.effectiveMaterials::add);
+		this.getConfig().getSorceryMaterial("BLACK_MARBLE").ifPresent(this.effectiveMaterials::add);
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
-		if (this.config.getPickaxeMiningRadius() == -1)
+		if (this.getConfig().getPickaxeMiningRadius() == -1)
 			return;
 
 		if (Screen.hasShiftDown()) {
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumPickaxe1", ChatFormatting.GOLD, this.config.getPickaxeMiningRadius() + this.config.getAOEBoost(Minecraft.getInstance().player), this.config.getPickaxeMiningDepth());
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumPickaxe1", ChatFormatting.GOLD, this.getConfig().getPickaxeMiningRadius() + this.getConfig().getAOEBoost(Minecraft.getInstance().player), this.getConfig().getPickaxeMiningDepth());
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 
-			if (!this.config.disableAOEShiftInhibition()) {
+			if (!this.getConfig().disableAOEShiftInhibition()) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumPickaxe2");
 			}
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumPickaxe3");
@@ -87,13 +86,13 @@ public class EtheriumPickaxe extends ItemEtheriumTool {
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.config.getPickaxeMiningRadius() != -1) {
+		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.getConfig().getPickaxeMiningRadius() != -1) {
 			HitResult trace = AOEMiningHelper.calcRayTrace(world, (Player) entityLiving, ClipContext.Fluid.ANY);
 			if (trace.getType() == HitResult.Type.BLOCK) {
 				BlockHitResult blockTrace = (BlockHitResult) trace;
 				Direction face = blockTrace.getDirection();
 
-				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, this.effectiveMaterials, this.config.getPickaxeMiningRadius() + this.config.getAOEBoost((Player) entityLiving), this.config.getPickaxeMiningDepth(), true, pos, stack, (objPos, objState) -> {
+				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, this.effectiveMaterials, this.getConfig().getPickaxeMiningRadius() + this.getConfig().getAOEBoost((Player) entityLiving), this.getConfig().getPickaxeMiningDepth(), true, pos, stack, (objPos, objState) -> {
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 				});
 			}

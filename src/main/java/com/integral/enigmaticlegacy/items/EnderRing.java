@@ -68,7 +68,6 @@ public class EnderRing extends ItemBaseCurio {
 
 	public EnderRing() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ender_ring"));
 	}
 
 	@Override

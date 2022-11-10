@@ -3,6 +3,7 @@ package com.integral.enigmaticlegacy.blocks;
 import java.util.Random;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.registry.EnigmaticSounds;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -10,6 +11,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -31,7 +33,6 @@ public class BlockCosmicCake extends CakeBlock {
 
 	public BlockCosmicCake() {
 		super(Properties.copy(Blocks.CAKE));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "cosmic_cake"));
 	}
 
 	@Override
@@ -77,12 +78,12 @@ public class BlockCosmicCake extends CakeBlock {
 	}
 
 	@Override
-	public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, Random pRandom) {
+	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
 		int bites = 0;
-		if ((bites = pState.getValue(BITES)) > 0) {
-			pLevel.setBlock(pPos, pState.setValue(BITES, bites - 1), 3);
-			pLevel.levelEvent(LevelEvent.PARTICLES_DESTROY_BLOCK, pPos, Block.getId(pState));
-			pLevel.playSound(null, pPos, EnigmaticLegacy.soundEatReverse, SoundSource.BLOCKS, 1F, 0.5F + (float) Math.random() * 0.5F);
+		if ((bites = state.getValue(BITES)) > 0) {
+			level.setBlock(pos, state.setValue(BITES, bites - 1), 3);
+			level.levelEvent(LevelEvent.PARTICLES_DESTROY_BLOCK, pos, Block.getId(state));
+			level.playSound(null, pos, EnigmaticSounds.soundEatReverse, SoundSource.BLOCKS, 1F, 0.5F + (float) Math.random() * 0.5F);
 		}
 	}
 

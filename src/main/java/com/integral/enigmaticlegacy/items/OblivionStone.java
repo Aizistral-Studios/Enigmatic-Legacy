@@ -15,6 +15,8 @@ import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
+import com.integral.enigmaticlegacy.registry.EnigmaticSounds;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
@@ -70,7 +72,6 @@ public class OblivionStone extends ItemBase implements Vanishable {
 
 	public OblivionStone() {
 		super(ItemBase.getDefaultProperties().stacksTo(1).rarity(Rarity.RARE).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "oblivion_stone"));
 	}
 
 	@Override
@@ -185,7 +186,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 		int mode = ItemNBTHelper.getInt(stack, "ConsumptionMode", 0);
 
 		if (player.isCrouching()) {
-			world.playSound(null, player.blockPosition(), ItemNBTHelper.getBoolean(stack, "IsActive", true) ? EnigmaticLegacy.soundChargedOff : EnigmaticLegacy.soundChargedOn, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.blockPosition(), ItemNBTHelper.getBoolean(stack, "IsActive", true) ? EnigmaticSounds.soundChargedOff : EnigmaticSounds.soundChargedOn, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			ItemNBTHelper.setBoolean(stack, "IsActive", !ItemNBTHelper.getBoolean(stack, "IsActive", true));
 		} else {
 			if (mode >= 0 && mode < 2) {
@@ -226,7 +227,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 		for (int slot = 0; slot < player.getInventory().items.size(); slot++) {
 			if (!player.getInventory().items.get(slot).isEmpty()) {
 				filledStacks += 1;
-				if (player.getInventory().items.get(slot).getItem() != EnigmaticLegacy.oblivionStone) {
+				if (player.getInventory().items.get(slot).getItem() != EnigmaticItems.oblivionStone) {
 					stackMap.put(slot, player.getInventory().items.get(slot));
 				}
 			}

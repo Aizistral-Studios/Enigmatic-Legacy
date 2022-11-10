@@ -22,7 +22,6 @@ public class EscapeScroll extends ItemBaseCurio {
 
 	public EscapeScroll() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.RARE).stacksTo(1));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "escape_scroll"));
 	}
 
 	@Override

@@ -19,7 +19,6 @@ public class CursedStone extends ItemBase implements ICursed {
 
 	public CursedStone() {
 		super(getDefaultProperties().rarity(Rarity.EPIC).fireResistant().stacksTo(1));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "cursed_stone"));
 	}
 
 	@Override

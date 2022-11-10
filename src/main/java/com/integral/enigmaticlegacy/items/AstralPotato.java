@@ -28,7 +28,6 @@ public class AstralPotato extends ItemBaseFood {
 	public AstralPotato() {
 		super(getDefaultProperties().rarity(Rarity.EPIC).fireResistant(),
 				new FoodProperties.Builder().nutrition(8).saturationMod(1.4F).build());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_potato"));
 	}
 
 	@Override

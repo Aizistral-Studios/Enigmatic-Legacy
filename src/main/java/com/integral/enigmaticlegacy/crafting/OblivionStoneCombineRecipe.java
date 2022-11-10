@@ -3,8 +3,8 @@ package com.integral.enigmaticlegacy.crafting;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.items.OblivionStone;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -26,7 +26,7 @@ import net.minecraftforge.registries.ForgeRegistries;
  */
 
 public class OblivionStoneCombineRecipe extends CustomRecipe {
-	static final SimpleRecipeSerializer<OblivionStoneCombineRecipe> SERIALIZER = new SimpleRecipeSerializer<>(OblivionStoneCombineRecipe::new);
+	public static final SimpleRecipeSerializer<OblivionStoneCombineRecipe> SERIALIZER = new SimpleRecipeSerializer<>(OblivionStoneCombineRecipe::new);
 
 	public OblivionStoneCombineRecipe(ResourceLocation id) {
 		super(id);
@@ -41,7 +41,7 @@ public class OblivionStoneCombineRecipe extends CustomRecipe {
 			ItemStack checkedItemStack = inv.getItem(i);
 
 			if (!checkedItemStack.isEmpty()) {
-				if (checkedItemStack.getItem() == EnigmaticLegacy.oblivionStone) {
+				if (checkedItemStack.getItem() == EnigmaticItems.oblivionStone) {
 					if (voidStone == null) {
 						voidStone = checkedItemStack;
 					} else
@@ -87,7 +87,7 @@ public class OblivionStoneCombineRecipe extends CustomRecipe {
 			return returnedStack;
 
 		} else if (voidStone != null && stackList.size() == 0) {
-			ItemStack returnedStack = new ItemStack(EnigmaticLegacy.oblivionStone, 1);
+			ItemStack returnedStack = new ItemStack(EnigmaticItems.oblivionStone, 1);
 			returnedStack.setTag(voidStone.getOrCreateTag().copy());
 			returnedStack.removeTagKey("SupersolidID");
 			return returnedStack;
@@ -104,7 +104,7 @@ public class OblivionStoneCombineRecipe extends CustomRecipe {
 			ItemStack checkedItemStack = inv.getItem(i);
 
 			if (!checkedItemStack.isEmpty()) {
-				if (checkedItemStack.getItem() == EnigmaticLegacy.oblivionStone) {
+				if (checkedItemStack.getItem() == EnigmaticItems.oblivionStone) {
 					if (voidStone == null) {
 						voidStone = checkedItemStack;
 					} else

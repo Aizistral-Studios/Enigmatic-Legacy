@@ -7,12 +7,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
 public class EtheriumIngot extends Item {
-	private final IEtheriumConfig config;
 
-	public EtheriumIngot(IEtheriumConfig config) {
-		super(EtheriumUtil.defaultProperties(config, EtheriumIngot.class).stacksTo(64).fireResistant());
-		this.setRegistryName(new ResourceLocation(config.getOwnerMod(), "etherium_ingot"));
-		this.config = config;
+	public EtheriumIngot() {
+		super(EtheriumUtil.defaultProperties(EtheriumIngot.class).stacksTo(64).fireResistant());
 	}
 
 }

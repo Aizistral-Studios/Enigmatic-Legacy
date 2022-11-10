@@ -1,9 +1,9 @@
 package com.integral.enigmaticlegacy.packets.clients;
 import java.util.function.Supplier;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.integral.enigmaticlegacy.objects.SlotUnlockedToast;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.Toast;
@@ -40,13 +40,13 @@ public class PacketSlotUnlocked {
 		      ItemStack stack;
 		      
 		      if (msg.type.equals("ring"))
-		    	  stack = new ItemStack(EnigmaticLegacy.ironRing);
+		    	  stack = new ItemStack(EnigmaticItems.ironRing);
 		      else if (msg.type.equals("scroll"))
-		    	  stack = new ItemStack(EnigmaticLegacy.thiccScroll);
+		    	  stack = new ItemStack(EnigmaticItems.thiccScroll);
 		      else if (msg.type.equals("spellstone"))
-		    	  stack = new ItemStack(EnigmaticLegacy.voidPearl);
+		    	  stack = new ItemStack(EnigmaticItems.voidPearl);
 		      else
-		    	  stack = new ItemStack(EnigmaticLegacy.ironRing);
+		    	  stack = new ItemStack(EnigmaticItems.ironRing);
 		      
 		      Toast toast = new SlotUnlockedToast(stack, msg.type);
 		      EnigmaticEventHandler.scheduledToasts.add(toast);

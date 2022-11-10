@@ -3,6 +3,7 @@ package com.integral.etherium.items.generic;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
+import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.etherium.core.IEtheriumConfig;
 import com.integral.etherium.core.IEtheriumTool;
 
@@ -17,20 +18,13 @@ public abstract class ItemEtheriumTool extends DiggerItem implements IEtheriumTo
 	public Set<Material> effectiveMaterials;
 	public Set<TagKey<Block>> effectiveTags;
 	public ItemStack defaultInstance;
-	protected final IEtheriumConfig config;
 
-	public ItemEtheriumTool(float attackDamageIn, float attackSpeedIn, IEtheriumConfig config, TagKey<Block> blocks, Properties builder) {
-		super(attackDamageIn, attackSpeedIn, config.getToolMaterial(), blocks, builder);
+	public ItemEtheriumTool(float attackDamageIn, float attackSpeedIn, TagKey<Block> blocks, Properties builder) {
+		super(attackDamageIn, attackSpeedIn, EnigmaticMaterials.ETHERIUM, blocks, builder);
 
-		this.config = config;
 		this.effectiveMaterials = Sets.newHashSet();
 		this.effectiveTags = Sets.newHashSet();
 		this.defaultInstance = new ItemStack(this);
-	}
-
-	@Override
-	public IEtheriumConfig getConfig() {
-		return this.config;
 	}
 
 	@Override

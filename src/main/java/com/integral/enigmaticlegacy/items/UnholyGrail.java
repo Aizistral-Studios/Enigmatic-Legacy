@@ -8,6 +8,7 @@ import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 import com.integral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
 
 import net.minecraft.client.gui.screens.Screen;
@@ -35,7 +36,6 @@ public class UnholyGrail extends ItemBase implements Vanishable {
 
 	public UnholyGrail() {
 		super(ItemBase.getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "unholy_grail"));
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class UnholyGrail extends ItemBase implements Vanishable {
 		Player player = (Player) entityLiving;
 
 		if (!worldIn.isClientSide) {
-			boolean isTheWorthyOne = SuperpositionHandler.isTheCursedOne(player) && EnigmaticLegacy.forbiddenFruit.haveConsumedFruit(player);
+			boolean isTheWorthyOne = SuperpositionHandler.isTheCursedOne(player) && EnigmaticItems.forbiddenFruit.haveConsumedFruit(player);
 
 			if (!isTheWorthyOne) {
 				player.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 2, false, true));

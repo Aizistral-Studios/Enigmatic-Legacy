@@ -60,7 +60,6 @@ public class MonsterCharm extends ItemBaseCurio {
 
 	public MonsterCharm() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "monster_charm"));
 	}
 
 	@Override

@@ -29,7 +29,6 @@ public class DesolationRing extends ItemBaseCurio implements IEldritch {
 
 	public DesolationRing() {
 		super(getDefaultProperties().rarity(Rarity.EPIC));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "desolation_ring"));
 	}
 
 	@Override

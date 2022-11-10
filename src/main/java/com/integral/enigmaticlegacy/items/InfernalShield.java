@@ -35,7 +35,6 @@ public class InfernalShield extends ItemBase implements ICursed, Vanishable {
 
 	public InfernalShield() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).durability(10000));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "infernal_shield"));
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSE_ITEM_BEHAVIOR);
 	}
 

@@ -23,7 +23,6 @@ public class CurseTransposer extends EnchantmentTransposer implements ICursed {
 
 	public CurseTransposer() {
 		super(getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "curse_transposer"));
 	}
 
 	@Override

@@ -6,9 +6,10 @@ import java.util.UUID;
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.ForbiddenFruit;
-import com.integral.enigmaticlegacy.items.MagmaHeart;
+import com.integral.enigmaticlegacy.items.BlazingCore;
 import com.integral.enigmaticlegacy.items.MagnetRing;
 import com.integral.enigmaticlegacy.packets.clients.PacketSyncTransientData;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -115,7 +116,7 @@ public class TransientPlayerData {
 
 		double coolFiller;
 
-		if (MagmaHeart.traitorBar.getValue()) {
+		if (BlazingCore.traitorBar.getValue()) {
 			coolFiller = SuperpositionHandler.parabolicFunction(0, this.fireImmunityTimerCap - this.getFireDiff(), (double)this.fireImmunityTimerLast+(double)difference);
 		} else {
 			coolFiller = SuperpositionHandler.flippedParabolicFunction(0, this.fireImmunityTimerCap - this.getFireDiff(), (double)this.fireImmunityTimerLast+(double)difference);
@@ -150,7 +151,7 @@ public class TransientPlayerData {
 			this.needsSync = true;
 			this.spellstoneCooldown = newValue;
 
-			for (Item spellstone : EnigmaticLegacy.spellstoneList) {
+			for (Item spellstone : EnigmaticItems.SPELLSTONES) {
 				this.player.get().getCooldowns().addCooldown(spellstone, this.spellstoneCooldown);
 			}
 		}

@@ -11,6 +11,8 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
+import com.integral.enigmaticlegacy.registry.EnigmaticSounds;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
@@ -36,7 +38,6 @@ public class Insignia extends ItemBaseCurio {
 
 	public Insignia() {
 		super(getDefaultProperties().rarity(Rarity.UNCOMMON).stacksTo(1));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "insignia"));
 	}
 
 	@Override
@@ -82,7 +83,7 @@ public class Insignia extends ItemBaseCurio {
 	}
 
 	public boolean canSeeTrueName(Player player) {
-		return player.isCreative() || SuperpositionHandler.hasCurio(player, EnigmaticLegacy.architectEye);
+		return player.isCreative() || SuperpositionHandler.hasCurio(player, EnigmaticItems.architectEye);
 	}
 
 	@Override
@@ -105,10 +106,10 @@ public class Insignia extends ItemBaseCurio {
 
 			if (ItemNBTHelper.getBoolean(stack, "tagDisplayEnabled", true)) {
 				ItemNBTHelper.setBoolean(stack, "tagDisplayEnabled", false);
-				world.playSound(null, player.blockPosition(), EnigmaticLegacy.soundChargedOff, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOff, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			} else {
 				ItemNBTHelper.setBoolean(stack, "tagDisplayEnabled", true);
-				world.playSound(null, player.blockPosition(), EnigmaticLegacy.soundChargedOn, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOn, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			}
 
 			player.swing(handIn);

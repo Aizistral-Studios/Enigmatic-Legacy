@@ -120,7 +120,6 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 	public GolemHeart() {
 		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "golem_heart"));
 
 		this.immunityList.add(DamageSource.CACTUS.msgId);
 		this.immunityList.add(DamageSource.CRAMMING.msgId);

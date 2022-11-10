@@ -8,6 +8,7 @@ import com.integral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.objects.WitherExplosion;
 import com.integral.enigmaticlegacy.packets.clients.PacketWitherParticles;
+import com.integral.enigmaticlegacy.registry.EnigmaticEntities;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,7 +39,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.registries.ObjectHolder;
 
 public class UltimateWitherSkullEntity extends AbstractHurtingProjectile {
 	private static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(UltimateWitherSkullEntity.class, EntityDataSerializers.BOOLEAN);
@@ -46,9 +46,6 @@ public class UltimateWitherSkullEntity extends AbstractHurtingProjectile {
 
 	int targetID;
 	LivingEntity target;
-
-	@ObjectHolder(value = EnigmaticLegacy.MODID + ":ultimate_wither_skull_entity", registryName = "entity_type")
-	public static EntityType<UltimateWitherSkullEntity> TYPE;
 
 	public UltimateWitherSkullEntity(EntityType<? extends UltimateWitherSkullEntity> p_i50147_1_, Level p_i50147_2_) {
 		super(p_i50147_1_, p_i50147_2_);
@@ -58,7 +55,7 @@ public class UltimateWitherSkullEntity extends AbstractHurtingProjectile {
 	}
 
 	public UltimateWitherSkullEntity(Level worldIn, LivingEntity shooter) {
-		super(UltimateWitherSkullEntity.TYPE, shooter, 0, 0, 0, worldIn);
+		super(EnigmaticEntities.ULTIMATE_WITHER_SKULL, shooter, 0, 0, 0, worldIn);
 		this.xPower = 0;
 		this.yPower = 0;
 		this.zPower = 0;

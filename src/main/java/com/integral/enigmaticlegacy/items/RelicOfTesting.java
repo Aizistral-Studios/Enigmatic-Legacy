@@ -12,6 +12,7 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -38,7 +39,6 @@ public class RelicOfTesting extends ItemBase implements IHidden {
 
 	public RelicOfTesting() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).tab(null));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "relic_of_testing"));
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class RelicOfTesting extends ItemBase implements IHidden {
 
 		SuperpositionHandler.setSpellstoneCooldown(playerIn, 0);
 
-		SuperpositionHandler.setPersistentInteger(playerIn, EnigmaticLegacy.overworldRevelationTome.persistantPointsTag, 0);
+		SuperpositionHandler.setPersistentInteger(playerIn, EnigmaticItems.overworldRevelationTome.persistantPointsTag, 0);
 
 		ItemStack checkTag = playerIn.getInventory().offhand.get(0);
 
@@ -104,7 +104,7 @@ public class RelicOfTesting extends ItemBase implements IHidden {
 
 		for (Creeper creeper : list) {
 			creeper.goalSelector.addGoal(1, new AvoidEntityGoal<>(creeper, Player.class, (arg) -> {
-				return arg instanceof Player ? SuperpositionHandler.hasCurio(arg, EnigmaticLegacy.enigmaticAmulet) : false;
+				return arg instanceof Player ? SuperpositionHandler.hasCurio(arg, EnigmaticItems.enigmaticAmulet) : false;
 			}, 6.0F, 1.0D, 1.2D, EntitySelector.NO_CREATIVE_OR_SPECTATOR::test));
 
 			if (creeper.getTarget() == entity) {

@@ -31,7 +31,6 @@ public class GemOfBinding extends ItemBase implements Vanishable {
 
 	public GemOfBinding() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.UNCOMMON).stacksTo(1));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "gem_of_binding"));
 	}
 
 	@Override

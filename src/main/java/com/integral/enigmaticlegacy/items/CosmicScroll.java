@@ -84,7 +84,6 @@ public class CosmicScroll extends ItemBaseCurio implements IHidden {
 
 	public CosmicScroll() {
 		super(getDefaultProperties().tab(null).rarity(Rarity.EPIC));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "cosmic_scroll"));
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 

@@ -1,9 +1,9 @@
 package com.integral.enigmaticlegacy.gui;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.items.MagnetRing;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
@@ -19,7 +19,7 @@ public class ToggleMagnetEffectsButton extends PlayerInventoryButton {
 
 	@Override
 	protected boolean beforeRender(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
-		boolean hasRing = SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.magnetRing) || SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticLegacy.superMagnetRing);
+		boolean hasRing = SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticItems.magnetRing) || SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticItems.superMagnetRing);
 
 		if (!hasRing || !MagnetRing.inventoryButtonEnabled.getValue()) {
 			this.active = false;

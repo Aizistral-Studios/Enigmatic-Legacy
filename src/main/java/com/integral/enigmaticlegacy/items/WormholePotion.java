@@ -40,7 +40,6 @@ public class WormholePotion extends ItemBase implements IBound {
 
 	public WormholePotion() {
 		super(ItemBase.getDefaultProperties().stacksTo(1).rarity(Rarity.RARE));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "wormhole_potion"));
 	}
 
 	@Override

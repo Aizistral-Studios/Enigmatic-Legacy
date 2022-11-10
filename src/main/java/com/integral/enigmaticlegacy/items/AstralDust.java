@@ -10,7 +10,6 @@ public class AstralDust extends ItemBase {
 
 	public AstralDust() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "astral_dust"));
 	}
 
 }

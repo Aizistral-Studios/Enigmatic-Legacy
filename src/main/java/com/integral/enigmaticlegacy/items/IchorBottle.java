@@ -29,7 +29,6 @@ public class IchorBottle extends ItemBasePotion {
 
 	public IchorBottle() {
 		super(getDefaultProperties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ichor_bottle"));
 	}
 
 	@Override

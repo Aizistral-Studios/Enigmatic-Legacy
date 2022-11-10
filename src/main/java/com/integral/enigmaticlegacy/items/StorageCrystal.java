@@ -9,6 +9,7 @@ import com.integral.enigmaticlegacy.api.items.IPermanentCrystal;
 import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBase;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -29,7 +30,6 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, Vanis
 
 	public StorageCrystal() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).fireResistant().tab(null));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "storage_crystal"));
 	}
 
 	public ItemStack storeDropsOnCrystal(Collection<ItemEntity> drops, Player player, @Nullable ItemStack embeddedSoulCrystal) {
@@ -81,7 +81,7 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, Vanis
 		ExperienceHelper.addPlayerXP(player, exp);
 
 		if (retrieveSoul != null) {
-			EnigmaticLegacy.soulCrystal.retrieveSoulFromCrystal(player, retrieveSoul);
+			EnigmaticItems.soulCrystal.retrieveSoulFromCrystal(player, retrieveSoul);
 		} else {
 			player.level.playSound(null, new BlockPos(player.position()), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.0f);
 		}

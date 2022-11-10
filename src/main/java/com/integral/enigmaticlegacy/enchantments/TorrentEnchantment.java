@@ -16,10 +16,9 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.TridentImpalerEnchantment;
 
 public class TorrentEnchantment extends Enchantment {
+
 	public TorrentEnchantment(EquipmentSlot... slots) {
 		super(Enchantment.Rarity.RARE, EnchantmentCategory.TRIDENT, slots);
-
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "torrent"));
 	}
 
 	@Override

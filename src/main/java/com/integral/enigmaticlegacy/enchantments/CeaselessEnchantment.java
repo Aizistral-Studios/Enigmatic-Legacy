@@ -29,7 +29,6 @@ public class CeaselessEnchantment extends Enchantment {
 
 	public CeaselessEnchantment(final EquipmentSlot... slots) {
 		super(Enchantment.Rarity.RARE, EnchantmentCategory.CROSSBOW, slots);
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ceaseless"));
 	}
 
 	@Override

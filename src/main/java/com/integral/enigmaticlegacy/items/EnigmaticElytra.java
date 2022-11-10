@@ -12,6 +12,7 @@ import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
 import com.integral.enigmaticlegacy.objects.Vector3;
 import com.integral.enigmaticlegacy.packets.server.PacketUpdateElytraBoosting;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -58,7 +59,6 @@ public class EnigmaticElytra extends ItemBaseCurio implements Wearable {
 
 	public EnigmaticElytra() {
 		super(ItemBaseCurio.getDefaultProperties().durability(5000).fireResistant().rarity(Rarity.EPIC));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "enigmatic_elytra"));
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSE_ITEM_BEHAVIOR);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
@@ -133,7 +133,7 @@ public class EnigmaticElytra extends ItemBaseCurio implements Wearable {
 
 	@Override
 	public boolean isValidRepairItem(ItemStack repairedItem, ItemStack material) {
-		return material.is(EnigmaticLegacy.etheriumIngot);
+		return material.is(EnigmaticItems.etheriumIngot);
 	}
 
 	@Override

@@ -7,8 +7,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.nbt.CompoundTag;
@@ -44,7 +44,7 @@ public abstract class MixinEnchantmentContainer extends AbstractContainerMenu {
 			// so we need to forget our own class to avoid alerting the compiler
 			EnchantmentMenu container = (EnchantmentMenu) (Object) this;
 
-			if (EnigmaticLegacy.enchanterPearl.isPresent(player)) {
+			if (EnigmaticItems.enchanterPearl.isPresent(player)) {
 				ItemStack inputItem = container.enchantSlots.getItem(0);
 				int levelsRequired = clickedID + 1;
 
@@ -121,7 +121,7 @@ public abstract class MixinEnchantmentContainer extends AbstractContainerMenu {
 			}
 
 			if (containerUser != null) {
-				if (EnigmaticLegacy.enchanterPearl.isPresent(containerUser)) {
+				if (EnigmaticItems.enchanterPearl.isPresent(containerUser)) {
 					info.setReturnValue(64);
 					return;
 				}

@@ -14,6 +14,7 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseCurio;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
@@ -125,12 +126,12 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	}
 
 	public boolean hasColor(Player player, AmuletColor color) {
-		if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.ascensionAmulet))
+		if (SuperpositionHandler.hasCurio(player, EnigmaticItems.ascensionAmulet))
 			return true;
 
-		ItemStack enigmaticAmulet = SuperpositionHandler.getCurioStack(player, EnigmaticLegacy.enigmaticAmulet);
+		ItemStack enigmaticAmulet = SuperpositionHandler.getCurioStack(player, EnigmaticItems.enigmaticAmulet);
 
-		if ((enigmaticAmulet != null) && (EnigmaticLegacy.enigmaticAmulet.getColor(enigmaticAmulet) == color))
+		if ((enigmaticAmulet != null) && (EnigmaticItems.enigmaticAmulet.getColor(enigmaticAmulet) == color))
 			return true;
 		else
 			return false;
@@ -195,7 +196,6 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 	protected EnigmaticAmulet(Properties properties, String name) {
 		super(properties);
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, name));
 	}
 
 	@OnlyIn(Dist.CLIENT)

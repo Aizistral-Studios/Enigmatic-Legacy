@@ -11,6 +11,8 @@ import com.integral.enigmaticlegacy.items.SoulCrystal;
 import com.integral.enigmaticlegacy.items.StorageCrystal;
 import com.integral.enigmaticlegacy.packets.clients.PacketHandleItemPickup;
 import com.integral.enigmaticlegacy.packets.clients.PacketRecallParticles;
+import com.integral.enigmaticlegacy.registry.EnigmaticEntities;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -35,7 +37,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PacketDistributor;
-import net.minecraftforge.registries.ObjectHolder;
 
 /**
  * Modified copy of ItemEntity that has special properties
@@ -52,9 +53,6 @@ public class PermanentItemEntity extends Entity {
 	private UUID owner;
 	private Vec3 position;
 
-	@ObjectHolder(value = EnigmaticLegacy.MODID + ":permanent_item_entity", registryName = "entity_type")
-	public static EntityType<PermanentItemEntity> TYPE;
-
 	public float hoverStart = (float) (Math.random() * Math.PI * 2.0D);
 
 	public PermanentItemEntity(EntityType<PermanentItemEntity> type, Level world) {
@@ -62,7 +60,7 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	public PermanentItemEntity(Level world, double x, double y, double z) {
-		this(PermanentItemEntity.TYPE, world);
+		this(EnigmaticEntities.PERMANENT_ITEM_ENTITY, world);
 		y = y <= world.getMinBuildHeight() ? world.getMinBuildHeight() + 8 : y;
 
 		this.setPos(x, y, z);
@@ -269,7 +267,7 @@ public class PermanentItemEntity extends Entity {
 			boolean isPlayerOwner = player.getUUID().equals(this.getOwnerId());
 			boolean allowPickUp = false;
 
-			if (item instanceof StorageCrystal && (isPlayerOwner || !EnigmaticLegacy.enigmaticAmulet.isVesselOwnerOnly())) {
+			if (item instanceof StorageCrystal && (isPlayerOwner || !EnigmaticItems.enigmaticAmulet.isVesselOwnerOnly())) {
 				allowPickUp = true;
 			} else if (item instanceof SoulCrystal && isPlayerOwner) {
 				allowPickUp = true;
@@ -283,7 +281,7 @@ public class PermanentItemEntity extends Entity {
 					if (!isPlayerOwner && embeddedSoul != null)
 						return;
 
-					EnigmaticLegacy.storageCrystal.retrieveDropsFromCrystal(itemstack, player, embeddedSoul);
+					EnigmaticItems.storageCrystal.retrieveDropsFromCrystal(itemstack, player, embeddedSoul);
 					SoulArchive.getInstance().removeItem(this);
 
 					/*
@@ -295,7 +293,7 @@ public class PermanentItemEntity extends Entity {
 					 */
 
 				} else if (item instanceof SoulCrystal) {
-					if (!EnigmaticLegacy.soulCrystal.retrieveSoulFromCrystal(player, itemstack))
+					if (!EnigmaticItems.soulCrystal.retrieveSoulFromCrystal(player, itemstack))
 						return;
 					else {
 						SoulArchive.getInstance().removeItem(this);
@@ -329,9 +327,9 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	public boolean containsSoul() {
-		if (this.getItem().is(EnigmaticLegacy.soulCrystal))
+		if (this.getItem().is(EnigmaticItems.soulCrystal))
 			return true;
-		else if (this.getItem().is(EnigmaticLegacy.storageCrystal))
+		else if (this.getItem().is(EnigmaticItems.storageCrystal))
 			return ItemNBTHelper.getNBT(this.getItem()).contains("embeddedSoul");
 		else
 			return false;

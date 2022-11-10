@@ -11,6 +11,7 @@ import com.integral.enigmaticlegacy.api.items.ISpellstone;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
 
@@ -92,7 +93,6 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 
 	public VoidPearl() {
 		super(ItemSpellstoneCurio.getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "void_pearl"));
 
 		this.immunityList.add(DamageSource.DROWN.msgId);
 		this.immunityList.add(DamageSource.IN_WALL.msgId);
@@ -171,7 +171,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 
 			for (MobEffectInstance effect : new ArrayList<>(player.getActiveEffects())) {
 				if (effect.getEffect() == MobEffects.NIGHT_VISION) {
-					if (effect.getDuration() >= EnigmaticLegacy.miningCharm.nightVisionDuration-10 && effect.getDuration() <= EnigmaticLegacy.miningCharm.nightVisionDuration) {
+					if (effect.getDuration() >= EnigmaticItems.miningCharm.nightVisionDuration-10 && effect.getDuration() <= EnigmaticItems.miningCharm.nightVisionDuration) {
 						continue;
 					}
 				} else if (ForgeRegistries.MOB_EFFECTS.getKey(effect.getEffect()).equals(new ResourceLocation("mana-and-artifice", "chrono-exhaustion"))) {
@@ -183,7 +183,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 
 			if (player.tickCount % 10 == 0) {
 				List<LivingEntity> entities = player.level.getEntitiesOfClass(LivingEntity.class, new AABB(player.getX() - shadowRange.getValue(), player.getY() - shadowRange.getValue(), player.getZ() - shadowRange.getValue(), player.getX() + shadowRange.getValue(), player.getY() + shadowRange.getValue(), player.getZ() + shadowRange.getValue()));
-				boolean hasAnimalGuide = SuperpositionHandler.hasItem(player, EnigmaticLegacy.animalGuide);
+				boolean hasAnimalGuide = SuperpositionHandler.hasItem(player, EnigmaticItems.animalGuide);
 
 				if (entities.contains(player)) {
 					entities.remove(player);
@@ -191,13 +191,13 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 
 				for (LivingEntity victim : entities) {
 					if (victim.level.getMaxLocalRawBrightness(victim.blockPosition(), 0) < 3 || (victim instanceof Phantom && !victim.isOnFire())) {
-						if (hasAnimalGuide && EnigmaticLegacy.animalGuide.isProtectedAnimal(victim)) {
+						if (hasAnimalGuide && EnigmaticItems.animalGuide.isProtectedAnimal(victim)) {
 							continue;
 						}
 
 						if (victim instanceof Player) {
 							Player playerVictim = (Player) victim;
-							if (SuperpositionHandler.hasCurio(playerVictim, EnigmaticLegacy.voidPearl)) {
+							if (SuperpositionHandler.hasCurio(playerVictim, EnigmaticItems.voidPearl)) {
 								playerVictim.addEffect(new MobEffectInstance(MobEffects.WITHER, 80, 1, false, true));
 								continue;
 							}

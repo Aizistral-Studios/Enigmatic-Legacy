@@ -9,20 +9,19 @@ import java.util.UUID;
 import java.util.WeakHashMap;
 
 import com.integral.enigmaticlegacy.EnigmaticLegacy;
-import com.integral.enigmaticlegacy.blocks.TileEndAnchor;
 import com.integral.enigmaticlegacy.client.QuoteHandler;
 import com.integral.enigmaticlegacy.client.fx.PermanentItemPickupParticle;
 import com.integral.enigmaticlegacy.client.renderers.EndAnchorRenderer;
 import com.integral.enigmaticlegacy.client.renderers.EnigmaticElytraLayer;
 import com.integral.enigmaticlegacy.client.renderers.PermanentItemRenderer;
 import com.integral.enigmaticlegacy.client.renderers.UltimateWitherSkullRenderer;
-import com.integral.enigmaticlegacy.entities.EnigmaticPotionEntity;
-import com.integral.enigmaticlegacy.entities.PermanentItemEntity;
-import com.integral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 import com.integral.enigmaticlegacy.gui.PermadeathScreen;
 import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.objects.RevelationTomeToast;
 import com.integral.enigmaticlegacy.objects.TransientPlayerData;
+import com.integral.enigmaticlegacy.registry.EnigmaticEntities;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
+import com.integral.enigmaticlegacy.registry.EnigmaticTiles;
 import com.integral.etherium.client.ShieldAuraLayer;
 
 import net.minecraft.client.Minecraft;
@@ -124,7 +123,7 @@ public class ClientProxy extends CommonProxy {
 		Entity entity = player.level.getEntity(entityID);
 
 		if (entity != null) {
-			Item item = reviveType == 0 ? EnigmaticLegacy.cosmicScroll : EnigmaticLegacy.theCube;
+			Item item = reviveType == 0 ? EnigmaticItems.cosmicScroll : EnigmaticItems.theCube;
 			int i = 40;
 			Minecraft.getInstance().particleEngine.createTrackingEmitter(entity, ParticleTypes.TOTEM_OF_UNDYING, 30);
 
@@ -194,11 +193,11 @@ public class ClientProxy extends CommonProxy {
 
 	@OnlyIn(Dist.CLIENT)
 	public void onClientSetup(FMLClientSetupEvent event) {
-		ItemProperties.register(EnigmaticLegacy.infernalShield, new ResourceLocation("blocking"),
+		ItemProperties.register(EnigmaticItems.infernalShield, new ResourceLocation("blocking"),
 				(stack, world, entity, seed) -> entity != null && entity.isUsingItem()
 				&& entity.getUseItem() == stack ? 1 : 0);
 
-		ItemProperties.register(EnigmaticLegacy.theInfinitum, new ResourceLocation(EnigmaticLegacy.MODID, "the_infinitum_open"), (stack, world, entity, seed) -> {
+		ItemProperties.register(EnigmaticItems.theInfinitum, new ResourceLocation(EnigmaticLegacy.MODID, "the_infinitum_open"), (stack, world, entity, seed) -> {
 			if (entity instanceof Player player) {
 				for (InfinitumCounterEntry entry : this.theInfinitumHoldTicks) {
 					if (entry.getPlayer() == player && entry.getStack() == stack)
@@ -217,7 +216,7 @@ public class ClientProxy extends CommonProxy {
 			return 0;
 		});
 
-		BlockEntityRenderers.register(TileEndAnchor.TYPE, EndAnchorRenderer::new);
+		BlockEntityRenderers.register(EnigmaticTiles.END_ANCHOR, EndAnchorRenderer::new);
 	}
 
 	@Override
@@ -271,9 +270,9 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void initEntityRendering() {
-		EntityRenderers.register(PermanentItemEntity.TYPE, renderManager -> new PermanentItemRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
-		EntityRenderers.register(EnigmaticPotionEntity.TYPE, ThrownItemRenderer::new);
-		EntityRenderers.register(UltimateWitherSkullEntity.TYPE, UltimateWitherSkullRenderer::new);
+		EntityRenderers.register(EnigmaticEntities.PERMANENT_ITEM_ENTITY, renderManager -> new PermanentItemRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
+		EntityRenderers.register(EnigmaticEntities.ENIGMATIC_POTION, ThrownItemRenderer::new);
+		EntityRenderers.register(EnigmaticEntities.ULTIMATE_WITHER_SKULL, UltimateWitherSkullRenderer::new);
 	}
 
 	@Override

@@ -16,9 +16,9 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 
 public class SlayerEnchantment extends Enchantment {
+
 	public SlayerEnchantment(EquipmentSlot... slots) {
 		super(Enchantment.Rarity.COMMON, EnchantmentCategory.WEAPON, slots);
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "slayer"));
 	}
 
 	@Override

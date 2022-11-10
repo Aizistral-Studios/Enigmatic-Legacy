@@ -26,11 +26,10 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class DarkMirror extends ItemBase implements ICursed, Vanishable {
+public class TwistedMirror extends ItemBase implements ICursed, Vanishable {
 
-	public DarkMirror() {
+	public TwistedMirror() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.RARE).stacksTo(1));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "dark_mirror"));
 	}
 
 	/*

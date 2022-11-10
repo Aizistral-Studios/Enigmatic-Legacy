@@ -77,7 +77,6 @@ public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 
 	public GuardianHeart() {
 		super(getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "guardian_heart"));
 	}
 
 	@Override

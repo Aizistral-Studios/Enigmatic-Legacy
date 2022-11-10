@@ -48,7 +48,6 @@ public class TheAcknowledgment extends ItemBase implements Vanishable {
 
 	protected TheAcknowledgment(Properties props, String name, double attackDamage, double attackSpeed) {
 		super(props);
-		this.setRegistryName(EnigmaticLegacy.MODID, name);
 
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 		builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(Item.BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", attackDamage, AttributeModifier.Operation.ADDITION));

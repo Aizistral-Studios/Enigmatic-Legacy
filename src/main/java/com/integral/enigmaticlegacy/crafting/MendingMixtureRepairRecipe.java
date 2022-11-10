@@ -3,7 +3,7 @@ package com.integral.enigmaticlegacy.crafting;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -19,7 +19,7 @@ import net.minecraft.world.level.Level;
  */
 
 public class MendingMixtureRepairRecipe extends CustomRecipe {
-	static final SimpleRecipeSerializer<MendingMixtureRepairRecipe> SERIALIZER = new SimpleRecipeSerializer<>(MendingMixtureRepairRecipe::new);
+	public static final SimpleRecipeSerializer<MendingMixtureRepairRecipe> SERIALIZER = new SimpleRecipeSerializer<>(MendingMixtureRepairRecipe::new);
 
 	public MendingMixtureRepairRecipe(ResourceLocation id) {
 		super(id);
@@ -39,7 +39,7 @@ public class MendingMixtureRepairRecipe extends CustomRecipe {
 
 		if (stackList.size() == 2)
 			if (stackList.get(0).isDamageableItem() || stackList.get(1).isDamageableItem())
-				if (stackList.get(0).getItem() == EnigmaticLegacy.mendingMixture || stackList.get(1).getItem() == EnigmaticLegacy.mendingMixture) {
+				if (stackList.get(0).getItem() == EnigmaticItems.mendingMixture || stackList.get(1).getItem() == EnigmaticItems.mendingMixture) {
 					ItemStack tool = stackList.get(0).isDamageableItem() ? stackList.get(0).copy() : stackList.get(1).copy();
 
 					tool.setDamageValue(0);
@@ -63,7 +63,7 @@ public class MendingMixtureRepairRecipe extends CustomRecipe {
 
 		if (stackList.size() == 2)
 			if (stackList.get(0).isDamageableItem() || stackList.get(1).isDamageableItem())
-				if (stackList.get(0).getItem() == EnigmaticLegacy.mendingMixture || stackList.get(1).getItem() == EnigmaticLegacy.mendingMixture)
+				if (stackList.get(0).getItem() == EnigmaticItems.mendingMixture || stackList.get(1).getItem() == EnigmaticItems.mendingMixture)
 					return true;
 
 		return false;

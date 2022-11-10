@@ -2,9 +2,9 @@ package com.integral.enigmaticlegacy.items;
 
 import java.util.List;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.GenericBlockItem;
+import com.integral.enigmaticlegacy.registry.EnigmaticBlocks;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 public class CosmicCake extends GenericBlockItem {
 
 	public CosmicCake() {
-		super(EnigmaticLegacy.cosmicCake, getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC));
+		super(EnigmaticBlocks.cosmicCake, getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC));
 	}
 
 	@Override

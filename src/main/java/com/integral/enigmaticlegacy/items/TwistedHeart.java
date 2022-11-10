@@ -15,11 +15,10 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.Vanishable;
 import net.minecraft.world.level.Level;
 
-public class TwistedCore extends ItemBase implements ICursed, Vanishable {
+public class TwistedHeart extends ItemBase implements ICursed, Vanishable {
 
-	public TwistedCore() {
+	public TwistedHeart() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "twisted_core"));
 	}
 
 	@Override

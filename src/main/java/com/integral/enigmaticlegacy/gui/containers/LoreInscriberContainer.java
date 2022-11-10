@@ -6,9 +6,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.LoreFragment;
+import com.integral.enigmaticlegacy.registry.EnigmaticMenus;
+import com.integral.enigmaticlegacy.registry.EnigmaticSounds;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundSource;
@@ -50,7 +51,7 @@ public class LoreInscriberContainer extends AbstractContainerMenu {
 	}
 
 	private LoreInscriberContainer(int id, Inventory Inventory, ContainerLevelAccess worldPosCallable) {
-		this(EnigmaticLegacy.LORE_INSCRIBER_CONTAINER, id, Inventory, worldPosCallable);
+		this(EnigmaticMenus.LORE_INSCRIBER_CONTAINER, id, Inventory, worldPosCallable);
 	}
 
 	private LoreInscriberContainer(@Nullable MenuType<?> p_i231587_1_, int p_i231587_2_, Inventory playerInv, ContainerLevelAccess p_i231587_4_) {
@@ -209,7 +210,7 @@ public class LoreInscriberContainer extends AbstractContainerMenu {
 		this.craftSlotsInv.setItem(0, ItemStack.EMPTY);
 
 		if (!player.level.isClientSide) {
-			player.level.playSound(null, player.blockPosition(), EnigmaticLegacy.soundWrite, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
+			player.level.playSound(null, player.blockPosition(), EnigmaticSounds.soundWrite, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 		}
 
 		return stack;

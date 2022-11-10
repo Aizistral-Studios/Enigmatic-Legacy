@@ -21,7 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class HunterGuide extends ItemBase implements Vanishable {
+public class HunterGuidebook extends ItemBase implements Vanishable {
 
 	public static Omniconfig.IntParameter effectiveDistance;
 	public static Omniconfig.PerhapsParameter synergyDamageReduction;
@@ -42,9 +42,8 @@ public class HunterGuide extends ItemBase implements Vanishable {
 		builder.popPrefix();
 	}
 
-	public HunterGuide() {
+	public HunterGuidebook() {
 		super(getDefaultProperties().stacksTo(1).rarity(Rarity.RARE));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "hunter_guide"));
 	}
 
 	@Override

@@ -32,6 +32,6 @@ public @interface ConfigurableItem {
 	 * "Whether or not {@link #value()} should be enabled."
 	 */
 
-	public String value();
+	public String value() default "";
 
 }

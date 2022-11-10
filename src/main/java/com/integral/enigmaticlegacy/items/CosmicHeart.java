@@ -27,7 +27,6 @@ public class CosmicHeart extends ItemBase implements Vanishable {
 
 	public CosmicHeart() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "cosmic_heart"));
 	}
 
 	@Override

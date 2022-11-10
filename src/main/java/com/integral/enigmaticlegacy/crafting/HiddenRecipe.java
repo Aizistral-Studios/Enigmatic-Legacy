@@ -5,10 +5,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 
-import com.integral.enigmaticlegacy.EnigmaticLegacy;
 import com.integral.enigmaticlegacy.config.OmniconfigHandler;
 import com.integral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.integral.enigmaticlegacy.items.CosmicHeart;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -21,7 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class HiddenRecipe extends CustomRecipe {
-	static final SimpleRecipeSerializer<HiddenRecipe> SERIALIZER = new SimpleRecipeSerializer<>(HiddenRecipe::new);
+	public static final SimpleRecipeSerializer<HiddenRecipe> SERIALIZER = new SimpleRecipeSerializer<>(HiddenRecipe::new);
 	static final Map<ItemStack[][], ItemStack> RECIPES = new HashMap<>();
 	static final Entry<ItemStack[][], ItemStack> EMPTY = new Entry<ItemStack[][], ItemStack>() {
 		private final ItemStack[][] recipe = new ItemStack[][] {
@@ -64,7 +64,7 @@ public class HiddenRecipe extends CustomRecipe {
 					if (slotStack.getItem() != entry.getKey()[r][i].getItem()) {
 						continue recipes;
 					} else {
-						if (slotStack.is(EnigmaticLegacy.enigmaticAmulet) || slotStack.is(EnigmaticLegacy.ascensionAmulet)) {
+						if (slotStack.is(EnigmaticItems.enigmaticAmulet) || slotStack.is(EnigmaticItems.ascensionAmulet)) {
 							amuletNBT = Optional.of(slotStack.getTag().copy());
 						}
 					}
@@ -92,7 +92,7 @@ public class HiddenRecipe extends CustomRecipe {
 
 					if (slotStack.getItem() != array[r][i].getItem()) {
 						continue recipes;
-					} else if (RECIPES.get(array).is(EnigmaticLegacy.cosmicScroll) &&
+					} else if (RECIPES.get(array).is(EnigmaticItems.cosmicScroll) &&
 							slotStack.getItem() instanceof CosmicHeart &&
 							!ItemNBTHelper.getBoolean(slotStack, "isBelieverBlessed", false)) {
 						continue recipes;

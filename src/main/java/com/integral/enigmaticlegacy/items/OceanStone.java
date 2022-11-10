@@ -15,6 +15,7 @@ import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
+import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
@@ -89,7 +90,6 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 
 	public OceanStone() {
 		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.RARE));
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ocean_stone"));
 
 		this.immunityList.add(DamageSource.DROWN.msgId);
 
@@ -203,7 +203,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	@Override
 	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
 		if (context.entity() instanceof ServerPlayer player) {
-			EnigmaticLegacy.miningCharm.removeNightVisionEffect(player, this.nightVisionDuration);
+			EnigmaticItems.miningCharm.removeNightVisionEffect(player, this.nightVisionDuration);
 			player.getAttributes().removeAttributeModifiers(this.createAttributeMap(player));
 		}
 	}
@@ -211,14 +211,14 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
 		if (context.entity() instanceof ServerPlayer player)
-			if (SuperpositionHandler.hasCurio(player, EnigmaticLegacy.oceanStone)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.oceanStone)) {
 				if (player.isEyeInFluid(FluidTags.WATER)) {
 					EnigmaticEventHandler.isApplyingNightVision = true;
 					player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
 					EnigmaticEventHandler.isApplyingNightVision = false;
 					player.setAirSupply(300);
 				} else {
-					EnigmaticLegacy.miningCharm.removeNightVisionEffect(player, this.nightVisionDuration);
+					EnigmaticItems.miningCharm.removeNightVisionEffect(player, this.nightVisionDuration);
 				}
 
 				player.getAttributes().addTransientAttributeModifiers(this.createAttributeMap(player));

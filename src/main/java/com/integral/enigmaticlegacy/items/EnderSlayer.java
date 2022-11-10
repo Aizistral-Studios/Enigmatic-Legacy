@@ -75,7 +75,6 @@ public class EnderSlayer extends SwordItem implements ICursed {
 
 	public EnderSlayer() {
 		super(EnigmaticMaterials.ENDERSLAYER, attackDamage.getValue(), (float) attackSpeed.getValue(), ItemBaseTool.getDefaultProperties().defaultDurability(2000).rarity(Rarity.EPIC).fireResistant());
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "ender_slayer"));
 	}
 
 	public boolean isEndDweller(LivingEntity entity) {

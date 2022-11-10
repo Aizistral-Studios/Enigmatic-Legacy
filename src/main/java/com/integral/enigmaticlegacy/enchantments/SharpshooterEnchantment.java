@@ -12,9 +12,9 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.Enchantments;
 
 public class SharpshooterEnchantment extends Enchantment {
-	public SharpshooterEnchantment(final EquipmentSlot... slots) {
+
+	public SharpshooterEnchantment(EquipmentSlot... slots) {
 		super(Enchantment.Rarity.RARE, EnchantmentCategory.CROSSBOW, slots);
-		this.setRegistryName(new ResourceLocation(EnigmaticLegacy.MODID, "sharpshooter"));
 	}
 
 	@Override
