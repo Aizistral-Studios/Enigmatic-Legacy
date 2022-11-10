@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -17,8 +18,8 @@ public class MixinItemRenderer {
 			+ "Lnet/minecraft/client/renderer/block/model/ItemTransforms$TransformType;"
 			+ "ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;"
 			+ "IILnet/minecraft/client/resources/model/BakedModel;)V", at = @At(value = "INVOKE", target =
-			"Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/world/item/Item;)Z", ordinal = 3), require = 1)
-	private boolean redirectCompassCheck(ItemStack stack, Item item) {
+			"Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/tags/TagKey;)Z", ordinal = 0), require = 1)
+	private boolean redirectCompassCheck(ItemStack stack, TagKey item) {
 		boolean result = stack.is(EnigmaticItems.theInfinitum) || stack.is(item);
 		return result;
 	}

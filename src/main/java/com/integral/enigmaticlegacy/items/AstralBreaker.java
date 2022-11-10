@@ -9,12 +9,16 @@ import com.integral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.integral.enigmaticlegacy.api.items.IMultiblockMiningTool;
 import com.integral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.integral.enigmaticlegacy.config.EtheriumConfigHandler;
+import com.integral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.integral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.integral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.integral.enigmaticlegacy.items.generic.ItemBaseTool;
 import com.integral.enigmaticlegacy.packets.clients.PacketFlameParticles;
 import com.integral.enigmaticlegacy.registry.EnigmaticItems;
 import com.integral.etherium.core.IEtheriumConfig;
+import com.integral.etherium.items.EtheriumAxe;
+import com.integral.etherium.items.EtheriumPickaxe;
+import com.integral.etherium.items.EtheriumShovel;
 import com.integral.omniconfig.Configuration;
 import com.integral.omniconfig.wrappers.Omniconfig;
 import com.integral.omniconfig.wrappers.OmniconfigWrapper;
@@ -33,6 +37,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
@@ -86,9 +91,13 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 				.rarity(Rarity.EPIC)
 				.fireResistant());
 
-		this.effectiveMaterials.addAll(EnigmaticItems.etheriumPickaxe.effectiveMaterials);
-		this.effectiveMaterials.addAll(EnigmaticItems.etheriumAxe.effectiveMaterials);
-		this.effectiveMaterials.addAll(EnigmaticItems.etheriumShovel.effectiveMaterials);
+		this.effectiveMaterials.addAll(((EtheriumPickaxe) this.findTool("etherium_pickaxe")).effectiveMaterials);
+		this.effectiveMaterials.addAll(((EtheriumAxe) this.findTool("etherium_axe")).effectiveMaterials);
+		this.effectiveMaterials.addAll(((EtheriumShovel) this.findTool("etherium_shovel")).effectiveMaterials);
+	}
+
+	private Item findTool(String name) {
+		return SuperpositionHandler.findItem(EnigmaticLegacy.MODID, name);
 	}
 
 	@Override

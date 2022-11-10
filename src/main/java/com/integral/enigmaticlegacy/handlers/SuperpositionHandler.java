@@ -1565,7 +1565,7 @@ public class SuperpositionHandler {
 				String fieldName = annotationData.memberName();
 
 				Field field = retainerClass.getDeclaredField(fieldName);
-				if (!itemName.isEmpty()) {
+				if (itemName != null && !itemName.isEmpty()) {
 					accessibilityGeneratorMap.put(itemName, field);
 				}
 			} catch (Exception ex) {
@@ -1987,6 +1987,10 @@ public class SuperpositionHandler {
 		}
 
 		return info;
+	}
+
+	public static Item findItem(String namespace, String name) {
+		return ForgeRegistries.ITEMS.getValue(new ResourceLocation(namespace, name));
 	}
 
 	/**

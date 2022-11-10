@@ -21,14 +21,12 @@ import net.minecraftforge.common.ToolAction;
 public abstract class ItemBaseTool extends DiggerItem {
 	public Set<Material> effectiveMaterials;
 	public Set<ToolAction> toolActions;
-	public ItemStack defaultInstance;
 
 	public ItemBaseTool(float attackDamageIn, float attackSpeedIn, Tier tier, TagKey<Block> effectiveBlocksIn, Properties builder) {
 		super(attackDamageIn, attackSpeedIn, tier, effectiveBlocksIn, builder);
 
 		this.effectiveMaterials = Sets.newHashSet();
 		this.toolActions = Sets.newHashSet();
-		this.defaultInstance = new ItemStack(this);
 	}
 
 	public ItemBaseTool(Tier tier) {

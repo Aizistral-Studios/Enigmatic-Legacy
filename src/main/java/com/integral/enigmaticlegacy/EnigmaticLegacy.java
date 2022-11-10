@@ -118,6 +118,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
@@ -184,7 +185,6 @@ public class EnigmaticLegacy {
 	public static final CommonProxy PROXY = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	public static final List<Triple<LootTable, LootPool, Exception>> exceptionList = new ArrayList<>();
 
-	@SuppressWarnings("deprecation")
 	public EnigmaticLegacy() {
 		LOGGER.info("Constructing mod instance...");
 
@@ -205,7 +205,6 @@ public class EnigmaticLegacy {
 		this.loadClass(EnigmaticBlocks.class);
 		this.loadClass(EnigmaticSounds.class);
 		this.loadClass(EnigmaticEffects.class);
-		this.loadClass(EnigmaticPotions.class);
 		this.loadClass(EnigmaticRecipes.class);
 		this.loadClass(EnigmaticEntities.class);
 		this.loadClass(EnigmaticEnchantments.class);
@@ -215,9 +214,9 @@ public class EnigmaticLegacy {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientRegistries);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::intermodStuff);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onLoadComplete);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(keybindHandler::onRegisterKeybinds);
 		FMLJavaModLoadingContext.get().getModEventBus().register(this);
 		FMLJavaModLoadingContext.get().getModEventBus().register(PROXY);
-		FMLJavaModLoadingContext.get().getModEventBus().register(keybindHandler);
 
 		MinecraftForge.EVENT_BUS.register(this);
 		MinecraftForge.EVENT_BUS.register(PROXY);
@@ -318,6 +317,8 @@ public class EnigmaticLegacy {
 
 	private void setup(final FMLCommonSetupEvent event) {
 		LOGGER.info("Initializing common setup phase...");
+
+		this.loadClass(EnigmaticPotions.class);
 
 		damageTypesFire.add(DamageSource.LAVA.msgId);
 		damageTypesFire.add(DamageSource.IN_FIRE.msgId);
@@ -470,7 +471,9 @@ public class EnigmaticLegacy {
 				return color > 0 ? -1 : PotionHelper.getColor(stack);
 
 				return color > 0 ? -1 : PotionUtils.getColor(stack);
-		}, EnigmaticItems.ultimatePotionBase, EnigmaticItems.ultimatePotionSplash, EnigmaticItems.ultimatePotionLingering, EnigmaticItems.commonPotionBase, EnigmaticItems.commonPotionSplash, EnigmaticItems.commonPotionLingering);
+		}, EnigmaticItems.ultimatePotionBase, EnigmaticItems.ultimatePotionSplash,
+				EnigmaticItems.ultimatePotionLingering, EnigmaticItems.commonPotionBase,
+				EnigmaticItems.commonPotionSplash, EnigmaticItems.commonPotionLingering);
 
 		LOGGER.info("Colors registered successfully.");
 	}

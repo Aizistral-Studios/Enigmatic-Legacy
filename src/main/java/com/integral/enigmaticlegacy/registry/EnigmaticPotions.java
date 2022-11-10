@@ -15,7 +15,7 @@ import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 
-public class EnigmaticPotions extends AbstractRegistry<Potion> {
+public class EnigmaticPotions {
 	private static final EnigmaticPotions INSTANCE = new EnigmaticPotions();
 
 	public static final List<AdvancedPotion> ultimatePotionTypes;
@@ -105,7 +105,7 @@ public class EnigmaticPotions extends AbstractRegistry<Potion> {
 	}
 
 	private EnigmaticPotions() {
-		super(ForgeRegistries.POTIONS);
+		super();
 	}
 
 }

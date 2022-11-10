@@ -17,14 +17,12 @@ import net.minecraft.world.level.material.Material;
 public abstract class ItemEtheriumTool extends DiggerItem implements IEtheriumTool {
 	public Set<Material> effectiveMaterials;
 	public Set<TagKey<Block>> effectiveTags;
-	public ItemStack defaultInstance;
 
 	public ItemEtheriumTool(float attackDamageIn, float attackSpeedIn, TagKey<Block> blocks, Properties builder) {
 		super(attackDamageIn, attackSpeedIn, EnigmaticMaterials.ETHERIUM, blocks, builder);
 
 		this.effectiveMaterials = Sets.newHashSet();
 		this.effectiveTags = Sets.newHashSet();
-		this.defaultInstance = new ItemStack(this);
 	}
 
 	@Override

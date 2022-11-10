@@ -143,7 +143,7 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 	public static final EtheriumScraps etheriumScraps = null;
 
 	@ConfigurableItem("Ultimate Potions")
-	@ObjectHolder(value = MODID + ":ultimate_potion_base", registryName = "item")
+	@ObjectHolder(value = MODID + ":ultimate_potion", registryName = "item")
 	public static final UltimatePotionBase ultimatePotionBase = null;
 
 	@ConfigurableItem("Ultimate Potions")
@@ -155,7 +155,7 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 	public static final UltimatePotionLingering ultimatePotionLingering = null;
 
 	@ConfigurableItem("Common Potions")
-	@ObjectHolder(value = MODID + ":common_potion_base", registryName = "item")
+	@ObjectHolder(value = MODID + ":common_potion", registryName = "item")
 	public static final UltimatePotionBase commonPotionBase = null;
 
 	@ConfigurableItem("Common Potions")
@@ -275,7 +275,7 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 	public static final CursedScroll cursedScroll = null;
 
 	@ConfigurableItem("Emblem of Bloodstained Valor")
-	@ObjectHolder(value = MODID + ":berserk_emblem", registryName = "item")
+	@ObjectHolder(value = MODID + ":berserk_charm", registryName = "item")
 	public static final BerserkEmblem berserkEmblem = null;
 
 	@ConfigurableItem("Heart of the Earth")
@@ -481,7 +481,7 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 		this.register("cursed_ring", CursedRing::new);
 		this.register("twisted_mirror", TwistedMirror::new);
 		this.register("cursed_scroll", CursedScroll::new);
-		this.register("berserk_emblem", BerserkEmblem::new);
+		this.register("berserk_charm", BerserkEmblem::new);
 		this.register("guardian_heart", GuardianHeart::new);
 		this.register("the_twist", TheTwist::new);
 		this.register("evil_essence", EvilEssence::new);

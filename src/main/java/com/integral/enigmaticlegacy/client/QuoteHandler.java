@@ -76,7 +76,7 @@ public class QuoteHandler {
 	}
 
 	@SubscribeEvent
-	public void onOverlayRender(ScreenEvent.Render.Post event) {
+	public void onScreenRender(ScreenEvent.Render.Post event) {
 		if (this.currentQuote != null && this.delayTicks <= 0) {
 			this.drawQuote(event.getPoseStack(), Minecraft.getInstance().getWindow());
 			Minecraft.getInstance().getSoundManager().resume();

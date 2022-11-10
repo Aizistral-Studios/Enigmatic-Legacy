@@ -22,8 +22,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 
 public class EnigmaticBlocks extends AbstractRegistry<Block> {
-	private static final EnigmaticBlocks INSTANCE = new EnigmaticBlocks();
 	private static final Map<ResourceLocation, BlockItemSupplier> BLOCK_ITEM_MAP = new HashMap<>();
+	private static final EnigmaticBlocks INSTANCE = new EnigmaticBlocks();
 
 	@ObjectHolder(value = MODID + ":massive_lamp", registryName = "block")
 	public static final BlockMassiveLamp massiveLamp = null;
