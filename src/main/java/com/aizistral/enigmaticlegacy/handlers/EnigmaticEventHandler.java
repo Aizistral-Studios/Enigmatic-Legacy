@@ -2964,7 +2964,7 @@ public class EnigmaticEventHandler {
 				if (SuperpositionHandler.getPersistentBoolean(player, "DestroyedCursedRing", false)) {
 					SuperpositionHandler.removePersistentTag(player, "DestroyedCursedRing");
 					Quote.getRandom(Quote.RING_DESTRUCTION).playIfUnlocked((ServerPlayer) player, 10);
-				} else if (THEY_SEE_ME_ROLLIN.nextDouble() > 0.5)
+				} else if (THEY_SEE_ME_ROLLIN.nextDouble() > 0.2)
 					if (SuperpositionHandler.getPersistentBoolean(player, "DeathFromEntity", false)) {
 						Quote.getRandom(Quote.DEATH_QUOTES_ENTITY).playIfUnlocked((ServerPlayer) player, 10);
 					} else {
