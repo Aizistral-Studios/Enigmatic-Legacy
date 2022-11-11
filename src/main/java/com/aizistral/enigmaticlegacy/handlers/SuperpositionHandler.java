@@ -26,6 +26,7 @@ import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.capabilities.IPlaytimeCounter;
 import com.aizistral.enigmaticlegacy.api.generic.ConfigurableItem;
 import com.aizistral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.aizistral.enigmaticlegacy.api.items.ISpellstone;
@@ -1304,21 +1305,6 @@ public class SuperpositionHandler {
 		return SuperpositionHandler.hasCurio(player, EnigmaticItems.CURSED_RING);
 	}
 
-	public static boolean isTheWorthyOne(Player player) {
-		if (isTheCursedOne(player)) {
-			int timeWithRing = EnigmaticLegacy.PROXY.getTimeWithCurses(player);
-			int timeWithoutRing = EnigmaticLegacy.PROXY.getTimeWithoutCurses(player);
-
-			if (timeWithRing <= 0)
-				return false;
-			else if (timeWithoutRing <= 0)
-				return true;
-
-			return timeWithRing/timeWithoutRing >= 199;
-		} else
-			return false;
-	}
-
 	public static boolean isTheBlessedOne(Player player) {
 		if (EnigmaticLegacy.SOUL_OF_THE_ARCHITECT.equals(player.getUUID()))
 			return true;
@@ -1330,12 +1316,29 @@ public class SuperpositionHandler {
 		return isTheBlessedOne(player) && SuperpositionHandler.hasCurio(player, EnigmaticItems.COSMIC_SCROLL);
 	}
 
+	public static boolean isTheWorthyOne(Player player) {
+		if (isTheCursedOne(player)) {
+			var counter = IPlaytimeCounter.get(player);
+			long timeWithRing = counter.getTimeWithCurses();
+			long timeWithoutRing = counter.getTimeWithoutCurses();
+
+			if (timeWithRing <= 0)
+				return false;
+			else if (timeWithoutRing <= 0)
+				return true;
+
+			return timeWithRing/timeWithoutRing >= 199L;
+		} else
+			return false;
+	}
+
 	public static String getSufferingTime(@Nullable Player player) {
 		if (player == null)
 			return "0%";
 		else {
-			int timeWithRing = EnigmaticLegacy.PROXY.getTimeWithCurses(player);
-			int timeWithoutRing = EnigmaticLegacy.PROXY.getTimeWithoutCurses(player);
+			var counter = IPlaytimeCounter.get(player);
+			long timeWithRing = counter.getTimeWithCurses();
+			long timeWithoutRing = counter.getTimeWithoutCurses();
 			if (timeWithRing <= 0)
 				return "0%";
 			else if (timeWithoutRing <= 0)

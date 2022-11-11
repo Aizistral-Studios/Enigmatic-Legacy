@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import org.apache.commons.lang3.tuple.Triple;
 
+import com.aizistral.enigmaticlegacy.api.capabilities.PlayerPlaytimeCounter;
 import com.aizistral.enigmaticlegacy.api.items.IAdvancedPotionItem.PotionType;
 import com.aizistral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
 import com.aizistral.enigmaticlegacy.api.materials.EnigmaticMaterials;
@@ -140,6 +141,7 @@ import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
@@ -152,6 +154,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -175,9 +178,6 @@ public class EnigmaticLegacy {
 	public static EnigmaticEventHandler enigmaticHandler;
 	public static EnigmaticKeybindHandler keybindHandler;
 	public static List<String> damageTypesFire = new ArrayList<String>();
-
-	public static ResourceLocation timeWithCursesStat;
-	public static ResourceLocation timeWithoutCursesStat;
 
 	public static EtheriumConfigHandler etheriumConfig;
 
@@ -311,7 +311,7 @@ public class EnigmaticLegacy {
 		LOGGER.info("Load completion phase finished successfully");
 	}
 
-	private void setup(final FMLCommonSetupEvent event) {
+	private void setup(FMLCommonSetupEvent event) {
 		LOGGER.info("Initializing common setup phase...");
 
 		this.loadClass(EnigmaticPotions.class);
@@ -368,14 +368,19 @@ public class EnigmaticLegacy {
 		LOGGER.info("Registering stats...");
 
 		event.enqueueWork(() -> {
-			timeWithCursesStat = this.makeCustomStat("play_time_with_seven_curses", StatFormatter.TIME);
-			timeWithoutCursesStat = this.makeCustomStat("play_time_without_seven_curses", StatFormatter.TIME);
+			Registry.register(Registry.CUSTOM_STAT, PlayerPlaytimeCounter.TIME_WITH_CURSES_STAT.getPath(),
+					PlayerPlaytimeCounter.TIME_WITH_CURSES_STAT);
+			Stats.CUSTOM.get(PlayerPlaytimeCounter.TIME_WITH_CURSES_STAT, StatFormatter.TIME);
+
+			Registry.register(Registry.CUSTOM_STAT, PlayerPlaytimeCounter.TIME_WITHOUT_CURSES_STAT.getPath(),
+					PlayerPlaytimeCounter.TIME_WITHOUT_CURSES_STAT);
+			Stats.CUSTOM.get(PlayerPlaytimeCounter.TIME_WITHOUT_CURSES_STAT, StatFormatter.TIME);
 		});
 
 		LOGGER.info("Common setup phase finished successfully.");
 	}
 
-	private void clientRegistries(final FMLClientSetupEvent event) {
+	private void clientRegistries(FMLClientSetupEvent event) {
 		LOGGER.info("Initializing client setup phase...");
 		EnigmaticItems.ENIGMATIC_AMULET.registerVariants();
 		EnigmaticItems.ENIGMATIC_EYE.registerVariants();
@@ -389,7 +394,7 @@ public class EnigmaticLegacy {
 		LOGGER.info("Client setup phase finished successfully.");
 	}
 
-	private void intermodStuff(final InterModEnqueueEvent event) {
+	private void intermodStuff(InterModEnqueueEvent event) {
 		LOGGER.info("Sending messages to Curios API...");
 		SuperpositionHandler.registerCurioType("charm", 1, false, null);
 		SuperpositionHandler.registerCurioType("ring", 2, false, null);
@@ -441,32 +446,24 @@ public class EnigmaticLegacy {
 		return ModList.get().isLoaded("enigmaticlockbox");
 	}
 
-	private ResourceLocation makeCustomStat(String pKey, StatFormatter pFormatter) {
-		ResourceLocation resourcelocation = new ResourceLocation(EnigmaticLegacy.MODID, pKey);
-		Registry.register(Registry.CUSTOM_STAT, pKey, resourcelocation);
-		Stats.CUSTOM.get(resourcelocation, pFormatter);
-		return resourcelocation;
-	}
-
-	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public static void stitchTextures(TextureStitchEvent.Pre evt) {
-		if (evt.getAtlas().location() == InventoryMenu.BLOCK_ATLAS) {
-			evt.addSprite(new ResourceLocation(MODID, "slots/empty_spellstone_slot"));
-			evt.addSprite(new ResourceLocation(MODID, "slots/empty_scroll_slot"));
+	@OnlyIn(Dist.CLIENT)
+	public void stitchTextures(TextureStitchEvent.Pre event) {
+		if (event.getAtlas().location() == InventoryMenu.BLOCK_ATLAS) {
+			event.addSprite(new ResourceLocation(MODID, "slots/empty_spellstone_slot"));
+			event.addSprite(new ResourceLocation(MODID, "slots/empty_scroll_slot"));
 		}
 	}
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
-	public void onColorInit(final RegisterColorHandlersEvent.Item event) {
+	public void onColorInit(RegisterColorHandlersEvent.Item event) {
 		LOGGER.info("Initializing colors registration...");
 
 		event.register((stack, color) -> {
 			if (PotionHelper.isAdvancedPotion(stack))
 				return color > 0 ? -1 : PotionHelper.getColor(stack);
-
-				return color > 0 ? -1 : PotionUtils.getColor(stack);
+				else return color > 0 ? -1 : PotionUtils.getColor(stack);
 		}, EnigmaticItems.ULTIMATE_POTION, EnigmaticItems.ULTIMATE_POTION_SPLASH,
 				EnigmaticItems.ULTIMATE_POTION_LINGERING, EnigmaticItems.COMMON_POTION,
 				EnigmaticItems.COMMON_POTION_SPLASH, EnigmaticItems.COMMON_POTION_LINGERING);

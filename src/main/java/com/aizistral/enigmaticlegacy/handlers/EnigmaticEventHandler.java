@@ -15,6 +15,9 @@ import java.util.WeakHashMap;
 import org.apache.commons.lang3.tuple.Triple;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.capabilities.EnigmaticCapabilities;
+import com.aizistral.enigmaticlegacy.api.capabilities.IPlaytimeCounter;
+import com.aizistral.enigmaticlegacy.api.capabilities.PlayerPlaytimeCounter;
 import com.aizistral.enigmaticlegacy.api.events.EndPortalActivatedEvent;
 import com.aizistral.enigmaticlegacy.api.events.EnterBlockEvent;
 import com.aizistral.enigmaticlegacy.api.events.SummonedEntityEvent;
@@ -233,7 +236,9 @@ import net.minecraftforge.client.event.ViewportEvent.RenderFog;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
@@ -310,6 +315,13 @@ public class EnigmaticEventHandler {
 	public static boolean isApplyingNightVision = false;
 	private long clientWorldTicks = 0;
 
+	@SubscribeEvent
+	public void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event) {
+		if (event.getObject() instanceof Player player) {
+			event.addCapability(EnigmaticCapabilities.ID_PLAYTIME_COUNTER,
+					new PlayerPlaytimeCounter.Provider(player));
+		}
+	}
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
@@ -949,12 +961,11 @@ public class EnigmaticEventHandler {
 
 	private void syncPlayTime(Player player) {
 		if (!player.level.isClientSide) {
-			int withCurses = EnigmaticLegacy.PROXY.getStats(player, timeWithCursesStat);
-			int withoutCurses = EnigmaticLegacy.PROXY.getStats(player, timeWithoutCursesStat);
-
-			EnigmaticLegacy.PROXY.cacheStats(player.getUUID(), withoutCurses, withCurses);
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64, player.level.dimension())),
-					new PacketSyncPlayTime(player.getUUID(), withCurses, withoutCurses));
+			var counter = IPlaytimeCounter.get(player);
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() ->
+			new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64,
+					player.level.dimension())), new PacketSyncPlayTime(player.getUUID(),
+							counter.getTimeWithCurses(), counter.getTimeWithoutCurses()));
 		}
 	}
 
@@ -992,10 +1003,12 @@ public class EnigmaticEventHandler {
 
 		if (event.getEntity() instanceof Player player) {
 			if (!player.level.isClientSide) {
+				var counter = IPlaytimeCounter.get(player);
+
 				if (SuperpositionHandler.isTheCursedOne(player)) {
-					player.awardStat(Stats.CUSTOM.get(timeWithCursesStat), 1);
+					counter.incrementTimeWithCurses();
 				} else {
-					player.awardStat(Stats.CUSTOM.get(timeWithoutCursesStat), 1);
+					counter.incrementTimeWithoutCurses();
 				}
 
 				if (SuperpositionHandler.hasCurio(player, EnigmaticItems.DESOLATION_RING) && SuperpositionHandler.isTheWorthyOne(player)) {
@@ -2174,6 +2187,11 @@ public class EnigmaticEventHandler {
 		Player oldPlayer = event.getOriginal();
 
 		if (event.isWasDeath() && newPlayer instanceof ServerPlayer && oldPlayer instanceof ServerPlayer) {
+			oldPlayer.revive();
+			var oldCounter = IPlaytimeCounter.get(oldPlayer);
+			var newCounter = IPlaytimeCounter.get(newPlayer);
+			newCounter.deserializeNBT(oldCounter.serializeNBT());
+
 			if (!EnigmaticItems.ELDRITCH_AMULET.reclaimInventory((ServerPlayer) oldPlayer, (ServerPlayer) newPlayer)) {
 				for (int i = 0; i < 4; i++) {
 					Tag tag = SuperpositionHandler.getPersistentTag(oldPlayer, "EternallyBoundArmor" + i, null);

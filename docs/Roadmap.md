@@ -5,7 +5,7 @@
 - [x] Make The Architect's Favor separate from the main mod and include it under different license terms;
 - [x] Make the path to obtaining The Architect's Favor less illuminated;
 - [ ] Make Soul Crystals pickup-able for everyone, regardless of who they were dropped by, with some way to obtain them in an item form. Also special cursed-only weapon to tear them out of other players and some way to get more of them without other players;
-- [ ] Reconsider playtime accounting mechanism for Ring of the Seven Curses;
+- [x] Reconsider playtime accounting mechanism for Ring of the Seven Curses;
 - [x] Rename `architect_eye` to `enigmatic_eye`;
 - [x] Re-integrate Enigmatic Lockbox into the main mod under new license;
 - [x] Re-integrate Etherium into the main mod;

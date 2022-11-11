@@ -365,14 +365,6 @@ public class ClientProxy extends CommonProxy {
 		return Minecraft.getInstance().getUser().getName();
 	}
 
-	@Override
-	public int getStats(Player player, ResourceLocation stat) {
-		if (player instanceof LocalPlayer playerLP)
-			return playerLP.getStats().getValue(Stats.CUSTOM.get(stat));
-		else
-			return super.getStats(player, stat);
-	}
-
 	private static class InfinitumCounterEntry {
 		private final WeakReference<ItemStack> stack;
 		private final WeakReference<Player> player;

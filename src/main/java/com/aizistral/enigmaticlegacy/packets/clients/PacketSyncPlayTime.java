@@ -4,15 +4,17 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.capabilities.IPlaytimeCounter;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 
 public class PacketSyncPlayTime {
 	private UUID playerID;
-	private int timeWithCurses, timeWithoutCurses;
+	private long timeWithCurses, timeWithoutCurses;
 
-	public PacketSyncPlayTime(UUID playerID, int timeWithCurses, int timeWithoutCurses) {
+	public PacketSyncPlayTime(UUID playerID, long timeWithCurses, long timeWithoutCurses) {
 		this.playerID = playerID;
 		this.timeWithCurses = timeWithCurses;
 		this.timeWithoutCurses =  timeWithoutCurses;
@@ -20,17 +22,22 @@ public class PacketSyncPlayTime {
 
 	public static void encode(PacketSyncPlayTime msg, FriendlyByteBuf buf) {
 		buf.writeUUID(msg.playerID);
-		buf.writeInt(msg.timeWithCurses);
-		buf.writeInt(msg.timeWithoutCurses);
+		buf.writeLong(msg.timeWithCurses);
+		buf.writeLong(msg.timeWithoutCurses);
 	}
 
 	public static PacketSyncPlayTime decode(FriendlyByteBuf buf) {
-		return new PacketSyncPlayTime(buf.readUUID(), buf.readInt(), buf.readInt());
+		return new PacketSyncPlayTime(buf.readUUID(), buf.readLong(), buf.readLong());
 	}
 
 	public static void handle(PacketSyncPlayTime msg, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
-			EnigmaticLegacy.PROXY.cacheStats(msg.playerID, msg.timeWithoutCurses, msg.timeWithCurses);
+			Minecraft.getInstance().level.players().stream().filter(player -> player.getUUID().equals(msg.playerID))
+			.findAny().ifPresent(player -> {
+				var counter = IPlaytimeCounter.get(player);
+				counter.setTimeWithCurses(msg.timeWithCurses);
+				counter.setTimeWithoutCurses(msg.timeWithoutCurses);
+			});
 		});
 
 		ctx.get().setPacketHandled(true);

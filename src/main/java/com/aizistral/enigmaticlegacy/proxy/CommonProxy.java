@@ -22,11 +22,9 @@ import net.minecraftforge.server.ServerLifecycleHooks;
 
 public class CommonProxy {
 	protected final Map<Player, TransientPlayerData> commonTransientPlayerData;
-	protected final Map<UUID, Tuple<Integer, Integer>> cursesTimeCache;
 
 	public CommonProxy() {
 		this.commonTransientPlayerData = new WeakHashMap<>();
-		this.cursesTimeCache = new WeakHashMap<>();
 	}
 
 	public void displayPermadeathScreen() {
@@ -35,7 +33,6 @@ public class CommonProxy {
 
 	public void clearTransientData() {
 		this.commonTransientPlayerData.clear();
-		this.cursesTimeCache.clear();
 	}
 
 	public Map<Player, TransientPlayerData> getTransientPlayerData(boolean clientOnly) {
@@ -113,31 +110,6 @@ public class CommonProxy {
 
 	public void updateInfinitumCounters() {
 		// NO-OP
-	}
-
-	public int getStats(Player player, ResourceLocation stat) {
-		if (player instanceof ServerPlayer playerMP)
-			return playerMP.getStats().getValue(Stats.CUSTOM.get(stat));
-		else
-			return 0;
-	}
-
-	public void cacheStats(UUID playerID, int timeWithoutCurses, int timeWithCurses) {
-		this.cursesTimeCache.put(playerID, new Tuple<Integer, Integer>(timeWithoutCurses, timeWithCurses));
-	}
-
-	public int getTimeWithoutCurses(Player player) {
-		if (this.cursesTimeCache.containsKey(player.getUUID()))
-			return this.cursesTimeCache.get(player.getUUID()).getA();
-		else
-			return 0;
-	}
-
-	public int getTimeWithCurses(Player player) {
-		if (this.cursesTimeCache.containsKey(player.getUUID()))
-			return this.cursesTimeCache.get(player.getUUID()).getB();
-		else
-			return 0;
 	}
 
 	public void displayReviveAnimation(int entityID, int reviveType) {
