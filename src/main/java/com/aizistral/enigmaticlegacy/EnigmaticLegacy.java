@@ -474,7 +474,7 @@ public class EnigmaticLegacy {
 		LOGGER.info("Colors registered successfully.");
 	}
 
-	public static final CreativeModeTab enigmaticTab = new CreativeModeTab("enigmaticCreativeTab") {
+	public static final CreativeModeTab MAIN_TAB = new CreativeModeTab("enigmaticCreativeTab") {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack makeIcon() {
@@ -482,7 +482,7 @@ public class EnigmaticLegacy {
 		}
 	};
 
-	public static final CreativeModeTab enigmaticPotionTab = new CreativeModeTab("enigmaticPotionCreativeTab") {
+	public static final CreativeModeTab POTION_TAB = new CreativeModeTab("enigmaticPotionCreativeTab") {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack makeIcon() {

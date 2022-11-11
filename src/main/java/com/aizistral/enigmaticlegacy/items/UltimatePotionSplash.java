@@ -35,7 +35,7 @@ public class UltimatePotionSplash extends ItemBase implements IAdvancedPotionIte
 	public PotionType potionType;
 
 	public UltimatePotionSplash(Rarity rarity, PotionType type) {
-		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(1).tab(EnigmaticLegacy.enigmaticPotionTab));
+		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(1).tab(EnigmaticLegacy.POTION_TAB));
 
 		this.potionType = type;
 	}

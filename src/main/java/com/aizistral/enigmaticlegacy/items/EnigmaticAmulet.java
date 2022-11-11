@@ -207,7 +207,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 
 	@Override
 	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-		if (group == EnigmaticLegacy.enigmaticTab) {
+		if (group == EnigmaticLegacy.MAIN_TAB) {
 			for (AmuletColor color : AmuletColor.values()) {
 				items.add(this.setColor(new ItemStack(this), color));
 			}

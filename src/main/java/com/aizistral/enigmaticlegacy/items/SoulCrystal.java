@@ -40,7 +40,7 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, Vanishab
 	public Map<Player, Multimap<Attribute, AttributeModifier>> attributeDispatcher = new WeakHashMap<>();
 
 	public SoulCrystal() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).fireResistant().tab(EnigmaticLegacy.enigmaticTab));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).fireResistant().tab(EnigmaticLegacy.MAIN_TAB));
 	}
 
 	@Override

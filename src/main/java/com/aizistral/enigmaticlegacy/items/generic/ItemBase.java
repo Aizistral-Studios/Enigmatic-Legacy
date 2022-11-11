@@ -37,7 +37,7 @@ public abstract class ItemBase extends Item {
 	public static Properties getDefaultProperties() {
 		Properties props = new Item.Properties();
 
-		props.tab(EnigmaticLegacy.enigmaticTab);
+		props.tab(EnigmaticLegacy.MAIN_TAB);
 		props.stacksTo(64);
 		props.rarity(Rarity.COMMON);
 

@@ -38,7 +38,7 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 	public PotionType potionType;
 
 	public UltimatePotionBase(Rarity rarity, PotionType type) {
-		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(1).tab(EnigmaticLegacy.enigmaticPotionTab));
+		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(1).tab(EnigmaticLegacy.POTION_TAB));
 
 		this.potionType = type;
 	}
