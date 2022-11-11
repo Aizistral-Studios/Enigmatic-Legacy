@@ -34,7 +34,7 @@ import net.minecraftforge.common.ToolActions;
 public class InfernalShield extends ItemBase implements ICursed, Vanishable {
 
 	public InfernalShield() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).durability(10000));
+		super(ItemBase.getDefaultProperties().fireResistant().rarity(Rarity.EPIC).stacksTo(1).durability(10000));
 		DispenserBlock.registerBehavior(this, ArmorItem.DISPENSE_ITEM_BEHAVIOR);
 	}
 
