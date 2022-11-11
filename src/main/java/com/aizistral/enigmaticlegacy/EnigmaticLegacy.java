@@ -163,11 +163,14 @@ public class EnigmaticLegacy {
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
-	public static EnigmaticLegacy enigmaticLegacy;
-	public static final LoggerWrapper LOGGER = new LoggerWrapper("Enigmatic Legacy");
-	public static SimpleChannel packetInstance;
-
+	private static final String PTC_VERSION = "1";
 	public static final int HOW_COOL_I_AM = Integer.MAX_VALUE;
+	public static final LoggerWrapper LOGGER = new LoggerWrapper("Enigmatic Legacy");
+	public static final UUID SOUL_OF_THE_ARCHITECT = UUID.fromString("bfa45411-874a-4ee0-b3bd-00c716059d95");
+	public static final CommonProxy PROXY = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+
+	public static EnigmaticLegacy enigmaticLegacy;
+	public static SimpleChannel packetInstance;
 
 	public static EnigmaticEventHandler enigmaticHandler;
 	public static EnigmaticKeybindHandler keybindHandler;
@@ -176,14 +179,7 @@ public class EnigmaticLegacy {
 	public static ResourceLocation timeWithCursesStat;
 	public static ResourceLocation timeWithoutCursesStat;
 
-	public static final UUID SOUL_OF_THE_ARCHITECT = UUID.fromString("bfa45411-874a-4ee0-b3bd-00c716059d95");
-
 	public static EtheriumConfigHandler etheriumConfig;
-
-	private static final String PTC_VERSION = "1";
-
-	public static final CommonProxy PROXY = DistExecutor.unsafeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
-	public static final List<Triple<LootTable, LootPool, Exception>> exceptionList = new ArrayList<>();
 
 	public EnigmaticLegacy() {
 		LOGGER.info("Constructing mod instance...");

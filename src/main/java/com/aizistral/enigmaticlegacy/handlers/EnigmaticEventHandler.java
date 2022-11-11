@@ -1,11 +1,6 @@
 package com.aizistral.enigmaticlegacy.handlers;
 
-import static com.aizistral.enigmaticlegacy.EnigmaticLegacy.PROXY;
-import static com.aizistral.enigmaticlegacy.EnigmaticLegacy.enigmaticLegacy;
-import static com.aizistral.enigmaticlegacy.EnigmaticLegacy.etheriumConfig;
-import static com.aizistral.enigmaticlegacy.EnigmaticLegacy.exceptionList;
-import static com.aizistral.enigmaticlegacy.EnigmaticLegacy.timeWithCursesStat;
-import static com.aizistral.enigmaticlegacy.EnigmaticLegacy.timeWithoutCursesStat;
+import static com.aizistral.enigmaticlegacy.EnigmaticLegacy.*;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -470,22 +465,7 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void serverStarted(ServerStartedEvent event) {
-		if (!exceptionList.isEmpty()) {
-			EnigmaticLegacy.LOGGER.fatal("Some stupid mods once again attempted to add unnamed LootPools to loot tables!");
-			for (Triple<LootTable, LootPool, Exception> triple : exceptionList) {
-				LootTable table = triple.getLeft();
-				LootPool pool = triple.getMiddle();
-				Exception ex = triple.getRight();
-
-				EnigmaticLegacy.LOGGER.fatal("Loot table in question: " + table);
-				EnigmaticLegacy.LOGGER.fatal("LootPool in question: " + pool);
-				EnigmaticLegacy.LOGGER.fatal("Examine the stacktrace below to see what mod have caused this.");
-				ex.printStackTrace();
-			}
-
-			if (OmniconfigHandler.crashOnUnnamedPool.getValue())
-				throw new RuntimeException(exceptionList.get(0).getRight());
-		}
+		// NO-OP
 	}
 
 	@SubscribeEvent

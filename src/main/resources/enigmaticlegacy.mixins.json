@@ -13,7 +13,6 @@
 	"MixinEnchantmentContainer",
 	"MixinHoglinTasks",
 	"MixinEnchantmentHelper",
-	"MixinLootTable",
 	"MixinCharmEffects",
 	"MixinStarterGear",
 	"MixinPlayer",
