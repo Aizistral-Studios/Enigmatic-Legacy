@@ -10,7 +10,7 @@ import com.aizistral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.aizistral.enigmaticlegacy.objects.TransientPlayerData;
 import com.aizistral.enigmaticlegacy.objects.Vector3;
 import com.aizistral.enigmaticlegacy.packets.server.PacketUpdateElytraBoosting;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
@@ -133,7 +133,7 @@ public class EnigmaticElytra extends ItemBaseCurio implements Wearable {
 
 	@Override
 	public boolean isValidRepairItem(ItemStack repairedItem, ItemStack material) {
-		return material.is(EnigmaticItems.etheriumIngot);
+		return material.is(EnigmaticItems.ETHERIUM_INGOT);
 	}
 
 	@Override

@@ -3,7 +3,7 @@ import java.util.function.Supplier;
 
 import com.aizistral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.aizistral.enigmaticlegacy.objects.SlotUnlockedToast;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.Toast;
@@ -40,17 +40,17 @@ public class PacketSlotUnlocked {
 		      ItemStack stack;
 		      
 		      if (msg.type.equals("ring"))
-		    	  stack = new ItemStack(EnigmaticItems.ironRing);
+		    	  stack = new ItemStack(EnigmaticItems.IRON_RING);
 		      else if (msg.type.equals("scroll"))
-		    	  stack = new ItemStack(EnigmaticItems.thiccScroll);
+		    	  stack = new ItemStack(EnigmaticItems.THICC_SCROLL);
 		      else if (msg.type.equals("spellstone"))
-		    	  stack = new ItemStack(EnigmaticItems.voidPearl);
+		    	  stack = new ItemStack(EnigmaticItems.VOID_PEARL);
 		      else
-		    	  stack = new ItemStack(EnigmaticItems.ironRing);
+		    	  stack = new ItemStack(EnigmaticItems.IRON_RING);
 		      
 		      Toast toast = new SlotUnlockedToast(stack, msg.type);
-		      EnigmaticEventHandler.scheduledToasts.add(toast);
-		      EnigmaticEventHandler.deferredToast.put(player, 5);
+		      EnigmaticEventHandler.SCHEDULED_TOASTS.add(toast);
+		      EnigmaticEventHandler.DEFERRED_TOASTS.put(player, 5);
 		      
 		    });
 		    ctx.get().setPacketHandled(true);

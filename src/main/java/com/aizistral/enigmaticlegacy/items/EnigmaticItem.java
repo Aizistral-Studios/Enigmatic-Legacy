@@ -17,7 +17,7 @@ import com.aizistral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.aizistral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.aizistral.enigmaticlegacy.objects.Vector3;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketWitherParticles;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
 
@@ -124,7 +124,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 
 	public void handleEnigmaticFlight(final Player player) {
 		try {
-			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.enigmaticItem)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.ENIGMATIC_ITEM)) {
 				this.flightMap.put(player, true);
 				if (!player.getAbilities().mayfly) {
 					player.getAbilities().mayfly = true;

@@ -16,7 +16,7 @@ import org.apache.commons.io.IOUtils;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.entities.PermanentItemEntity;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -100,7 +100,7 @@ public class SoulArchive {
 
 	private void synchronize() {
 		ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers().forEach(player -> {
-			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.soulCompass)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.SOUL_COMPASS)) {
 				SuperpositionHandler.updateSoulCompass(player);
 			}
 		});

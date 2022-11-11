@@ -1,4 +1,4 @@
-package com.aizistral.enigmaticlegacy.registry;
+package com.aizistral.enigmaticlegacy.registries;
 
 import com.aizistral.enigmaticlegacy.crafting.BindToPlayerRecipe;
 import com.aizistral.enigmaticlegacy.crafting.BlessedShapedRecipe;

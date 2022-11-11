@@ -11,8 +11,8 @@ import com.aizistral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBaseCurio;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticSounds;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticSounds;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
 
@@ -127,10 +127,10 @@ public class XPScroll extends ItemBaseCurio {
 
 			if (ItemNBTHelper.getBoolean(stack, "IsActive", false)) {
 				ItemNBTHelper.setBoolean(stack, "IsActive", false);
-				world.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOff, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticSounds.CHARGED_OFF, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			} else {
 				ItemNBTHelper.setBoolean(stack, "IsActive", true);
-				world.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOn, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticSounds.CHARGED_ON, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 
@@ -148,7 +148,7 @@ public class XPScroll extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		ItemStack itemstack = SuperpositionHandler.getCurioStack(context.entity(), EnigmaticItems.xpScroll);
+		ItemStack itemstack = SuperpositionHandler.getCurioStack(context.entity(), EnigmaticItems.XP_SCROLL);
 
 		if (!(context.entity() instanceof Player) || context.entity().level.isClientSide || !ItemNBTHelper.getBoolean(itemstack, "IsActive", false))
 			return;

@@ -8,7 +8,7 @@ import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.aizistral.enigmaticlegacy.triggers.UseUnholyGrailTrigger;
 
 import net.minecraft.client.gui.screens.Screen;
@@ -56,7 +56,7 @@ public class UnholyGrail extends ItemBase implements Vanishable {
 		Player player = (Player) entityLiving;
 
 		if (!worldIn.isClientSide) {
-			boolean isTheWorthyOne = SuperpositionHandler.isTheCursedOne(player) && EnigmaticItems.forbiddenFruit.haveConsumedFruit(player);
+			boolean isTheWorthyOne = SuperpositionHandler.isTheCursedOne(player) && EnigmaticItems.FORBIDDEN_FRUIT.haveConsumedFruit(player);
 
 			if (!isTheWorthyOne) {
 				player.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 2, false, true));

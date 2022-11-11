@@ -19,9 +19,9 @@ import com.aizistral.enigmaticlegacy.gui.PermadeathScreen;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.objects.RevelationTomeToast;
 import com.aizistral.enigmaticlegacy.objects.TransientPlayerData;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticEntities;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticTiles;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticEntities;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticTiles;
 import com.aizistral.etherium.client.ShieldAuraLayer;
 
 import net.minecraft.client.Minecraft;
@@ -67,7 +67,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class ClientProxy extends CommonProxy {
-	private static final Random random = new Random();
+	private static final Random RANDOM = new Random();
 	protected final Map<Player, TransientPlayerData> clientTransientPlayerData;
 	protected final List<InfinitumCounterEntry> theInfinitumHoldTicks;
 
@@ -123,7 +123,7 @@ public class ClientProxy extends CommonProxy {
 		Entity entity = player.level.getEntity(entityID);
 
 		if (entity != null) {
-			Item item = reviveType == 0 ? EnigmaticItems.cosmicScroll : EnigmaticItems.theCube;
+			Item item = reviveType == 0 ? EnigmaticItems.COSMIC_SCROLL : EnigmaticItems.THE_CUBE;
 			int i = 40;
 			Minecraft.getInstance().particleEngine.createTrackingEmitter(entity, ParticleTypes.TOTEM_OF_UNDYING, 30);
 
@@ -156,7 +156,7 @@ public class ClientProxy extends CommonProxy {
 			// TODO Verify fix... someday
 
 			Minecraft.getInstance().particleEngine.add(new PermanentItemPickupParticle(Minecraft.getInstance().getEntityRenderDispatcher(), Minecraft.getInstance().renderBuffers(), Minecraft.getInstance().level, pickuper, entity));
-			Minecraft.getInstance().level.playLocalSound(pickuper.getX(), pickuper.getY(), pickuper.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, (ClientProxy.random.nextFloat() - ClientProxy.random.nextFloat()) * 1.4F + 2.0F, false);
+			Minecraft.getInstance().level.playLocalSound(pickuper.getX(), pickuper.getY(), pickuper.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, (ClientProxy.RANDOM.nextFloat() - ClientProxy.RANDOM.nextFloat()) * 1.4F + 2.0F, false);
 		} catch (Throwable ex) {
 			Exception log = new Exception("Unknown error when rendering permanent item pickup", ex);
 			EnigmaticLegacy.LOGGER.catching(log);
@@ -193,11 +193,11 @@ public class ClientProxy extends CommonProxy {
 
 	@OnlyIn(Dist.CLIENT)
 	public void onClientSetup(FMLClientSetupEvent event) {
-		ItemProperties.register(EnigmaticItems.infernalShield, new ResourceLocation("blocking"),
+		ItemProperties.register(EnigmaticItems.INFERNAL_SHIELD, new ResourceLocation("blocking"),
 				(stack, world, entity, seed) -> entity != null && entity.isUsingItem()
 				&& entity.getUseItem() == stack ? 1 : 0);
 
-		ItemProperties.register(EnigmaticItems.theInfinitum, new ResourceLocation(EnigmaticLegacy.MODID, "the_infinitum_open"), (stack, world, entity, seed) -> {
+		ItemProperties.register(EnigmaticItems.THE_INFINITUM, new ResourceLocation(EnigmaticLegacy.MODID, "the_infinitum_open"), (stack, world, entity, seed) -> {
 			if (entity instanceof Player player) {
 				for (InfinitumCounterEntry entry : this.theInfinitumHoldTicks) {
 					if (entry.getPlayer() == player && entry.getStack() == stack)
@@ -341,13 +341,13 @@ public class ClientProxy extends CommonProxy {
 			world.addParticle(ParticleTypes.HAPPY_VILLAGER, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 0.0D, 0.0D, 0.0D);
 
 			for(int i = 0; i < data; ++i) {
-				double d2 = random.nextGaussian() * 0.02D;
-				double d3 = random.nextGaussian() * 0.02D;
-				double d4 = random.nextGaussian() * 0.02D;
+				double d2 = RANDOM.nextGaussian() * 0.02D;
+				double d3 = RANDOM.nextGaussian() * 0.02D;
+				double d4 = RANDOM.nextGaussian() * 0.02D;
 				double d5 = 0.5D - d0;
-				double d6 = pos.getX() + d5 + random.nextDouble() * d0 * 2.0D;
-				double d7 = pos.getY() + random.nextDouble() * d1;
-				double d8 = pos.getZ() + d5 + random.nextDouble() * d0 * 2.0D;
+				double d6 = pos.getX() + d5 + RANDOM.nextDouble() * d0 * 2.0D;
+				double d7 = pos.getY() + RANDOM.nextDouble() * d1;
+				double d8 = pos.getZ() + d5 + RANDOM.nextDouble() * d0 * 2.0D;
 
 				world.addParticle(ParticleTypes.HAPPY_VILLAGER, d6, d7, d8, d2, d3, d4);
 			}

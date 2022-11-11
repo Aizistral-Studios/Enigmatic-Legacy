@@ -14,7 +14,7 @@ import com.aizistral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBaseTool;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketFlameParticles;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.aizistral.etherium.core.IEtheriumConfig;
 import com.aizistral.etherium.items.EtheriumAxe;
 import com.aizistral.etherium.items.EtheriumPickaxe;

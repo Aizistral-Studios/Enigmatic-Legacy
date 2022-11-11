@@ -5,8 +5,8 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import com.aizistral.enigmaticlegacy.helpers.PotionHelper;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticEntities;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticEntities;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -180,7 +180,7 @@ public class EnigmaticPotionEntity extends ThrowableItemProjectile implements It
 	}
 
 	private boolean isLingering() {
-		return this.getItem().getItem() == EnigmaticItems.ultimatePotionLingering;
+		return this.getItem().getItem() == EnigmaticItems.ULTIMATE_POTION_LINGERING;
 	}
 
 	/**

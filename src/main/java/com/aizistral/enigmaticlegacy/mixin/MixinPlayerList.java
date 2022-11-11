@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.aizistral.enigmaticlegacy.items.EndAnchor;
 import com.aizistral.enigmaticlegacy.objects.AnchorSearchResult;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticBlocks;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticBlocks;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ClientboundChangeDifficultyPacket;
@@ -93,7 +93,7 @@ public class MixinPlayerList {
 		boolean usedAnchorCharge = false;
 		if (optional.isPresent()) {
 			BlockState respawnState = newLevel.getBlockState(pos);
-			boolean isAnchor = respawnState.is(Blocks.RESPAWN_ANCHOR) || respawnState.is(EnigmaticBlocks.endAnchor);
+			boolean isAnchor = respawnState.is(Blocks.RESPAWN_ANCHOR) || respawnState.is(EnigmaticBlocks.END_ANCHOR);
 			Vec3 vec3 = optional.get();
 			float f1;
 			if (!respawnState.is(BlockTags.BEDS) && !isAnchor) {

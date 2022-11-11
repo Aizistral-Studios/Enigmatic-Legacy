@@ -12,8 +12,8 @@ import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBaseCurio;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticSounds;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticSounds;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
 import com.google.common.collect.HashMultimap;
@@ -115,7 +115,7 @@ public class MiningCharm extends ItemBaseCurio {
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
 		if (context.entity() instanceof Player player && !context.entity().level.isClientSide)
-			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.miningCharm)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.MINING_CHARM)) {
 				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
 					if (enableNightVision.getValue()) {
 						if (player.getY() < 50 && !player.level.dimension().equals(Level.NETHER)
@@ -143,11 +143,11 @@ public class MiningCharm extends ItemBaseCurio {
 
 		if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
 			ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", false);
-			world.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOff, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.blockPosition(), EnigmaticSounds.CHARGED_OFF, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 		} else {
 			if (enableNightVision.getValue()) {
 				ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", true);
-				world.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOn, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticSounds.CHARGED_ON, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 

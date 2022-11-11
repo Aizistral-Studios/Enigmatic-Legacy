@@ -7,7 +7,7 @@ import com.aizistral.enigmaticlegacy.config.OmniconfigHandler;
 import com.aizistral.enigmaticlegacy.packets.server.PacketEnderRingKey;
 import com.aizistral.enigmaticlegacy.packets.server.PacketSpellstoneKey;
 import com.aizistral.enigmaticlegacy.packets.server.PacketXPScrollKey;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
@@ -81,7 +81,7 @@ public class EnigmaticKeybindHandler {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketXPScrollKey(true));
 		}
 
-		if (this.spellstoneAbilityKey.isDown() && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticItems.enigmaticItem)) {
+		if (this.spellstoneAbilityKey.isDown() && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticItems.ENIGMATIC_ITEM)) {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true));
 		} else if (this.spellstoneAbilityKey.consumeClick() && SuperpositionHandler.hasSpellstone(Minecraft.getInstance().player)) {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true));
@@ -89,7 +89,7 @@ public class EnigmaticKeybindHandler {
 			LocalPlayer player = Minecraft.getInstance().player;
 
 			if (!player.isInWater() && !player.isOnGround() && !player.isCreative() && !player.isSpectator()
-					&& SuperpositionHandler.hasCurio(player, EnigmaticItems.angelBlessing)) {
+					&& SuperpositionHandler.hasCurio(player, EnigmaticItems.ANGEL_BLESSING)) {
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true));
 			}
 		}

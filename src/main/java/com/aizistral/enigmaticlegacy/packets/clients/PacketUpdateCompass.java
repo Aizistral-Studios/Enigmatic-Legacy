@@ -2,7 +2,7 @@ package com.aizistral.enigmaticlegacy.packets.clients;
 
 import java.util.function.Supplier;
 
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -33,7 +33,7 @@ public class PacketUpdateCompass {
 
 	public static void handle(PacketUpdateCompass msg, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
-			EnigmaticItems.soulCompass.setNearestCrystal(msg.noValid ? null : new BlockPos(msg.x, msg.y, msg.z));
+			EnigmaticItems.SOUL_COMPASS.setNearestCrystal(msg.noValid ? null : new BlockPos(msg.x, msg.y, msg.z));
 		});
 
 		ctx.get().setPacketHandled(true);

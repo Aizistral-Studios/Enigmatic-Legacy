@@ -2,7 +2,7 @@ package com.aizistral.enigmaticlegacy.crafting;
 
 import com.aizistral.enigmaticlegacy.api.items.ITaintable;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticRecipes;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticRecipes;
 import com.google.gson.JsonObject;
 
 import net.minecraft.core.NonNullList;

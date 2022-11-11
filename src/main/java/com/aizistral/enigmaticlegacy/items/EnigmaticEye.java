@@ -12,7 +12,7 @@ import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.aizistral.enigmaticlegacy.objects.TransientPlayerData;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticSounds;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticSounds;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
@@ -157,7 +157,7 @@ public class EnigmaticEye extends ItemBaseCurio {
 				TransientPlayerData data = TransientPlayerData.get(player);
 				boolean wasNarratorUnlocked = data.getUnlockedNarrator();
 
-				level.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOn, SoundSource.PLAYERS, 1.0F, 1F);
+				level.playSound(null, player.blockPosition(), EnigmaticSounds.CHARGED_ON, SoundSource.PLAYERS, 1.0F, 1F);
 
 				if (!wasNarratorUnlocked) {
 					data.setUnlockedNarrator(true);

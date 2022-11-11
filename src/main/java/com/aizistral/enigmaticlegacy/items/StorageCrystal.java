@@ -9,7 +9,7 @@ import com.aizistral.enigmaticlegacy.api.items.IPermanentCrystal;
 import com.aizistral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -81,7 +81,7 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, Vanis
 		ExperienceHelper.addPlayerXP(player, exp);
 
 		if (retrieveSoul != null) {
-			EnigmaticItems.soulCrystal.retrieveSoulFromCrystal(player, retrieveSoul);
+			EnigmaticItems.SOUL_CRYSTAL.retrieveSoulFromCrystal(player, retrieveSoul);
 		} else {
 			player.level.playSound(null, new BlockPos(player.position()), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.0f);
 		}

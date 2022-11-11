@@ -3,7 +3,7 @@ package com.aizistral.enigmaticlegacy.crafting;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -39,7 +39,7 @@ public class MendingMixtureRepairRecipe extends CustomRecipe {
 
 		if (stackList.size() == 2)
 			if (stackList.get(0).isDamageableItem() || stackList.get(1).isDamageableItem())
-				if (stackList.get(0).getItem() == EnigmaticItems.mendingMixture || stackList.get(1).getItem() == EnigmaticItems.mendingMixture) {
+				if (stackList.get(0).getItem() == EnigmaticItems.MENDING_MIXTURE || stackList.get(1).getItem() == EnigmaticItems.MENDING_MIXTURE) {
 					ItemStack tool = stackList.get(0).isDamageableItem() ? stackList.get(0).copy() : stackList.get(1).copy();
 
 					tool.setDamageValue(0);
@@ -63,7 +63,7 @@ public class MendingMixtureRepairRecipe extends CustomRecipe {
 
 		if (stackList.size() == 2)
 			if (stackList.get(0).isDamageableItem() || stackList.get(1).isDamageableItem())
-				if (stackList.get(0).getItem() == EnigmaticItems.mendingMixture || stackList.get(1).getItem() == EnigmaticItems.mendingMixture)
+				if (stackList.get(0).getItem() == EnigmaticItems.MENDING_MIXTURE || stackList.get(1).getItem() == EnigmaticItems.MENDING_MIXTURE)
 					return true;
 
 		return false;

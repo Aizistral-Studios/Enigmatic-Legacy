@@ -1,4 +1,4 @@
-package com.aizistral.enigmaticlegacy.registry;
+package com.aizistral.enigmaticlegacy.registries;
 
 import com.aizistral.enigmaticlegacy.api.generic.ModRegistry;
 import com.aizistral.enigmaticlegacy.effects.*;
@@ -14,10 +14,10 @@ public class EnigmaticEffects extends AbstractRegistry<MobEffect> {
 	private static final EnigmaticEffects INSTANCE = new EnigmaticEffects();
 
 	@ObjectHolder(value = MODID + ":blazing_strength", registryName = "mob_effect")
-	public static final BlazingStrengthEffect blazingStrengthEffect = null;
+	public static final BlazingStrengthEffect BLAZING_STRENGTH = null;
 
 	@ObjectHolder(value = MODID + ":molten_heart", registryName = "mob_effect")
-	public static final MoltenHeartEffect moltenHeartEffect = null;
+	public static final MoltenHeartEffect MOLTEN_HEART = null;
 
 	private EnigmaticEffects() {
 		super(ForgeRegistries.MOB_EFFECTS);

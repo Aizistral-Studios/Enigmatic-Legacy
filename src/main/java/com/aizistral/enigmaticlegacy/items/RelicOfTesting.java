@@ -12,7 +12,7 @@ import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
 import com.aizistral.enigmaticlegacy.objects.TransientPlayerData;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -60,7 +60,7 @@ public class RelicOfTesting extends ItemBase implements IHidden {
 
 		SuperpositionHandler.setSpellstoneCooldown(playerIn, 0);
 
-		SuperpositionHandler.setPersistentInteger(playerIn, EnigmaticItems.overworldRevelationTome.persistantPointsTag, 0);
+		SuperpositionHandler.setPersistentInteger(playerIn, EnigmaticItems.TATTERED_TOME.persistantPointsTag, 0);
 
 		ItemStack checkTag = playerIn.getInventory().offhand.get(0);
 
@@ -104,7 +104,7 @@ public class RelicOfTesting extends ItemBase implements IHidden {
 
 		for (Creeper creeper : list) {
 			creeper.goalSelector.addGoal(1, new AvoidEntityGoal<>(creeper, Player.class, (arg) -> {
-				return arg instanceof Player ? SuperpositionHandler.hasCurio(arg, EnigmaticItems.enigmaticAmulet) : false;
+				return arg instanceof Player ? SuperpositionHandler.hasCurio(arg, EnigmaticItems.ENIGMATIC_AMULET) : false;
 			}, 6.0F, 1.0D, 1.2D, EntitySelector.NO_CREATIVE_OR_SPECTATOR::test));
 
 			if (creeper.getTarget() == entity) {

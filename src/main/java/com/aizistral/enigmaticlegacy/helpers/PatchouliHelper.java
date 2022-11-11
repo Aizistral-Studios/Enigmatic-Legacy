@@ -1,6 +1,6 @@
 package com.aizistral.enigmaticlegacy.helpers;
 
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +17,7 @@ public class PatchouliHelper {
 	}
 
 	public static Book getAknowledgment() {
-		return PatchouliHelper.getBook(Registry.ITEM.getKey(EnigmaticItems.theAcknowledgment));
+		return PatchouliHelper.getBook(Registry.ITEM.getKey(EnigmaticItems.THE_ACKNOWLEDGMENT));
 	}
 
 	private static void setEntryState(ResourceLocation entryLocation, boolean read) {

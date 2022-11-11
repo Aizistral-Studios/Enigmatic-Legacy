@@ -3,7 +3,7 @@ package com.aizistral.enigmaticlegacy.blocks;
 import java.util.Random;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticSounds;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticSounds;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -83,7 +83,7 @@ public class BlockCosmicCake extends CakeBlock {
 		if ((bites = state.getValue(BITES)) > 0) {
 			level.setBlock(pos, state.setValue(BITES, bites - 1), 3);
 			level.levelEvent(LevelEvent.PARTICLES_DESTROY_BLOCK, pos, Block.getId(state));
-			level.playSound(null, pos, EnigmaticSounds.soundEatReverse, SoundSource.BLOCKS, 1F, 0.5F + (float) Math.random() * 0.5F);
+			level.playSound(null, pos, EnigmaticSounds.EAT_REVERSE, SoundSource.BLOCKS, 1F, 0.5F + (float) Math.random() * 0.5F);
 		}
 	}
 

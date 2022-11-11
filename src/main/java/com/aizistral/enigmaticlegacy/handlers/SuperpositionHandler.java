@@ -43,9 +43,9 @@ import com.aizistral.enigmaticlegacy.objects.Vector3;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketUpdateCompass;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticEffects;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticEnchantments;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticEffects;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticEnchantments;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.aizistral.omniconfig.Configuration;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
 import com.google.common.base.Objects;
@@ -159,8 +159,8 @@ import top.theillusivec4.curios.api.type.util.ICuriosHelper;
  */
 
 public class SuperpositionHandler {
-	public static final Random random = new Random();
-	public static final char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
+	public static final Random RANDOM = new Random();
+	public static final char[] ALPHABET = "abcdefghijklmnopqrstuvwxyz".toUpperCase().toCharArray();
 	public static final UUID SCROLL_SLOT_UUID = UUID.fromString("ae465e52-ffc2-4f57-b09a-066aa0cea3d4");
 	public static final UUID SPELLSTONE_SLOT_UUID = UUID.fromString("63df175a-0d6d-4163-8ef1-218bcb42feba");
 	public static final UUID RING_SLOT_UUID = UUID.fromString("76012386-aa31-4c17-8d6a-e9dd29affcb0");
@@ -929,17 +929,17 @@ public class SuperpositionHandler {
 		String number = "";
 
 		while (number.length() < 4) {
-			number = number.concat("" + SuperpositionHandler.random.nextInt(10));
+			number = number.concat("" + RANDOM.nextInt(10));
 		}
 
 		number = number.concat("-");
 
 		while (number.length() < 7) {
-			number = number.concat("" + SuperpositionHandler.alphabet[SuperpositionHandler.random.nextInt(SuperpositionHandler.alphabet.length)]);
+			number = number.concat("" + ALPHABET[RANDOM.nextInt(ALPHABET.length)]);
 		}
 
 		while (number.length() < 9) {
-			number = number.concat("" + SuperpositionHandler.random.nextInt(10));
+			number = number.concat("" + RANDOM.nextInt(10));
 		}
 
 		return number;
@@ -1059,7 +1059,7 @@ public class SuperpositionHandler {
 
 	public static boolean isPermanentlyDead(Player player) {
 		// TODO Proper permadeath screen, Cursed Mode
-		return EnigmaticItems.soulCrystal.getLostCrystals(player) >= 10
+		return EnigmaticItems.SOUL_CRYSTAL.getLostCrystals(player) >= 10
 				&& OmniconfigHandler.maxSoulCrystalLoss.getValue() >= 10;
 	}
 
@@ -1179,7 +1179,7 @@ public class SuperpositionHandler {
 	public static boolean canDropSoulCrystal(Player player, boolean hadRing) {
 		if (isAffectedBySoulLoss(player, hadRing)) {
 			int maxCrystalLoss = OmniconfigHandler.maxSoulCrystalLoss.getValue();
-			return EnigmaticItems.soulCrystal.getLostCrystals(player) < maxCrystalLoss;
+			return EnigmaticItems.SOUL_CRYSTAL.getLostCrystals(player) < maxCrystalLoss;
 		} else
 			return false;
 	}
@@ -1301,7 +1301,7 @@ public class SuperpositionHandler {
 	}
 
 	public static boolean isTheCursedOne(Player player) {
-		return SuperpositionHandler.hasCurio(player, EnigmaticItems.cursedRing);
+		return SuperpositionHandler.hasCurio(player, EnigmaticItems.CURSED_RING);
 	}
 
 	public static boolean isTheWorthyOne(Player player) {
@@ -1327,7 +1327,7 @@ public class SuperpositionHandler {
 	}
 
 	public static boolean hasArchitectsFavor(Player player) {
-		return isTheBlessedOne(player) && SuperpositionHandler.hasCurio(player, EnigmaticItems.cosmicScroll);
+		return isTheBlessedOne(player) && SuperpositionHandler.hasCurio(player, EnigmaticItems.COSMIC_SCROLL);
 	}
 
 	public static String getSufferingTime(@Nullable Player player) {
@@ -1384,7 +1384,7 @@ public class SuperpositionHandler {
 			}
 		}
 
-		if (stack.getItem() == EnigmaticItems.cursedRing) {
+		if (stack.getItem() == EnigmaticItems.CURSED_RING) {
 			totalCurses+=7;
 		}
 
@@ -1397,10 +1397,10 @@ public class SuperpositionHandler {
 
 		for (ItemStack theStack : getFullEquipment(player)) {
 			if (theStack != null) {
-				if (theStack.getItem() != EnigmaticItems.cursedRing || !ringCounted) {
+				if (theStack.getItem() != EnigmaticItems.CURSED_RING || !ringCounted) {
 					count += getCurseAmount(theStack);
 
-					if (theStack.getItem() == EnigmaticItems.cursedRing) {
+					if (theStack.getItem() == EnigmaticItems.CURSED_RING) {
 						ringCounted = true;
 					}
 				}
@@ -1618,7 +1618,7 @@ public class SuperpositionHandler {
 
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.PLAYER.with((() -> player)),
 				new PacketUpdateCompass(pos.getX(), pos.getY(), pos.getZ(), noValid));
-		EnigmaticEventHandler.lastSoulCompassUpdate.put(player, player.tickCount);
+		EnigmaticEventHandler.LAST_SOUL_COMPASS_UPDATE.put(player, player.tickCount);
 		return optional;
 	}
 
@@ -1685,10 +1685,10 @@ public class SuperpositionHandler {
 	public static ItemStack getEnigmaticElytra(LivingEntity living) {
 		ItemStack stack = living.getItemBySlot(EquipmentSlot.CHEST);
 
-		if (stack.is(EnigmaticItems.enigmaticElytra))
+		if (stack.is(EnigmaticItems.ENIGMATIC_ELYTRA))
 			return stack;
 		else
-			return getCurioStack(living, EnigmaticItems.enigmaticElytra);
+			return getCurioStack(living, EnigmaticItems.ENIGMATIC_ELYTRA);
 	}
 
 	public static ItemStack maybeApplyEternalBinding(ItemStack stack) {
@@ -1698,7 +1698,7 @@ public class SuperpositionHandler {
 
 				map.remove(Enchantments.VANISHING_CURSE);
 				int level = map.remove(Enchantments.BINDING_CURSE);
-				map.put(EnigmaticEnchantments.eternalBindingCurse, level);
+				map.put(EnigmaticEnchantments.ETERNAL_BINDING, level);
 				EnchantmentHelper.setEnchantments(map, stack);
 			}
 
@@ -1737,14 +1737,14 @@ public class SuperpositionHandler {
 
 							int strength = -1;
 
-							if (player.hasEffect(EnigmaticEffects.blazingStrengthEffect)) {
-								MobEffectInstance effectInstance = player.getEffect(EnigmaticEffects.blazingStrengthEffect);
+							if (player.hasEffect(EnigmaticEffects.BLAZING_STRENGTH)) {
+								MobEffectInstance effectInstance = player.getEffect(EnigmaticEffects.BLAZING_STRENGTH);
 								strength = effectInstance.getAmplifier();
-								player.removeEffect(EnigmaticEffects.blazingStrengthEffect);
+								player.removeEffect(EnigmaticEffects.BLAZING_STRENGTH);
 								strength = strength > 2 ? 2 : strength;
 							}
 
-							player.addEffect(new MobEffectInstance(EnigmaticEffects.blazingStrengthEffect, 1200, strength + 1, true, true));
+							player.addEffect(new MobEffectInstance(EnigmaticEffects.BLAZING_STRENGTH, 1200, strength + 1, true, true));
 
 							if (source.getDirectEntity() instanceof LivingEntity living && living.isAlive()) {
 								if (!living.fireImmune() && !(living instanceof Guardian)) {
@@ -1757,7 +1757,7 @@ public class SuperpositionHandler {
 										living.invulnerableTime = 0;
 										living.hurt(new EntityDamageSource(DamageSource.ON_FIRE.msgId, player), 4F);
 										living.setSecondsOnFire(4);
-										EnigmaticEventHandler.knockbackThatBastard.remove(living);
+										EnigmaticEventHandler.KNOCKBACK_THAT_BASTARD.remove(living);
 									}
 								}
 							}
@@ -1824,7 +1824,7 @@ public class SuperpositionHandler {
 				replacements = SPECIAL_SYMBOLS;
 			}
 
-			ch = replacements[random.nextInt(replacements.length)];
+			ch = replacements[RANDOM.nextInt(replacements.length)];
 
 			newArray[i] = ch;
 		}
@@ -1861,7 +1861,7 @@ public class SuperpositionHandler {
 		else if (filtered.size() == 1)
 			return filtered.get(0);
 		else
-			return filtered.get(random.nextInt(filtered.size()));
+			return filtered.get(RANDOM.nextInt(filtered.size()));
 	}
 
 	public static String getMD5Hash(String string) {
@@ -1897,7 +1897,7 @@ public class SuperpositionHandler {
 			boolean override = false;
 
 			if (!render && entity != Minecraft.getInstance().player
-					&& EnigmaticItems.insignia.canSeeTrueName(Minecraft.getInstance().player)) {
+					&& EnigmaticItems.INSIGNIA.canSeeTrueName(Minecraft.getInstance().player)) {
 				name = entity.getDisplayName();
 				render = override = true;
 			}
@@ -1923,7 +1923,7 @@ public class SuperpositionHandler {
 			}
 
 			if (!override && entity != Minecraft.getInstance().player
-					&& EnigmaticItems.insignia.canSeeTrueName(Minecraft.getInstance().player)) {
+					&& EnigmaticItems.INSIGNIA.canSeeTrueName(Minecraft.getInstance().player)) {
 				stack.pushPose();
 				name = Component.literal("(" + entity.getDisplayName().getString() + ")");
 				f2 = -font.width(name) / 2;

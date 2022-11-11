@@ -25,7 +25,7 @@ public abstract class MixinVillager extends AbstractVillager {
 
 	@Inject(method = "spawnGolemIfNeeded", at = @At("RETURN"), cancellable = true)
 	private void onGolemCreation(ServerLevel level, long gameTime, int villagersRequired, CallbackInfo info) {
-		if (EnigmaticEventHandler.desolationBoxes.values().stream().anyMatch(this.getBoundingBox()::intersects)) {
+		if (EnigmaticEventHandler.DESOLATION_BOXES.values().stream().anyMatch(this.getBoundingBox()::intersects)) {
 			info.cancel();
 		}
 	}

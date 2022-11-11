@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.config.OmniconfigHandler;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -49,9 +49,9 @@ public class EternalBindingCurse extends Enchantment {
 
 	@Override
 	public boolean canEnchant(ItemStack stack) {
-		return OmniconfigHandler.isItemEnabled(this) && !stack.is(EnigmaticItems.cursedRing)
-				&& !stack.is(EnigmaticItems.escapeScroll) && !stack.is(EnigmaticItems.enigmaticAmulet)
-				&& !stack.is(EnigmaticItems.desolationRing) && super.canEnchant(stack);
+		return OmniconfigHandler.isItemEnabled(this) && !stack.is(EnigmaticItems.CURSED_RING)
+				&& !stack.is(EnigmaticItems.ESCAPE_SCROLL) && !stack.is(EnigmaticItems.ENIGMATIC_AMULET)
+				&& !stack.is(EnigmaticItems.DESOLATION_RING) && super.canEnchant(stack);
 	}
 
 	@Override

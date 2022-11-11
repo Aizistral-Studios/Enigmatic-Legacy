@@ -10,8 +10,8 @@ import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.items.CosmicScroll;
 import com.aizistral.enigmaticlegacy.objects.Perhaps;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticSounds;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticSounds;
 import com.aizistral.etherium.core.IEtheriumConfig;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
@@ -126,7 +126,7 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 
 	@Override
 	public Ingredient getRepairMaterial() {
-		return Ingredient.of(EnigmaticItems.etheriumIngot);
+		return Ingredient.of(EnigmaticItems.ETHERIUM_INGOT);
 	}
 
 	@Override
@@ -182,12 +182,12 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 
 	@Override
 	public SoundEvent getAOESoundOff() {
-		return EnigmaticSounds.soundChargedOff;
+		return EnigmaticSounds.CHARGED_OFF;
 	}
 
 	@Override
 	public SoundEvent getAOESoundOn() {
-		return EnigmaticSounds.soundChargedOn;
+		return EnigmaticSounds.CHARGED_ON;
 	}
 
 	@Override
@@ -232,7 +232,7 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 
 	@Override
 	public SoundEvent getShieldTriggerSound() {
-		return EnigmaticSounds.soundShieldTrigger;
+		return EnigmaticSounds.SHIELD_TRIGGER;
 	}
 
 	@Override

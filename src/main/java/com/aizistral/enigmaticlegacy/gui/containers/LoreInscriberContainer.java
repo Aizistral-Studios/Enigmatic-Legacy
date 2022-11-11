@@ -8,8 +8,8 @@ import org.apache.logging.log4j.Logger;
 
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.LoreFragment;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticMenus;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticSounds;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticMenus;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticSounds;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.sounds.SoundSource;
@@ -210,7 +210,7 @@ public class LoreInscriberContainer extends AbstractContainerMenu {
 		this.craftSlotsInv.setItem(0, ItemStack.EMPTY);
 
 		if (!player.level.isClientSide) {
-			player.level.playSound(null, player.blockPosition(), EnigmaticSounds.soundWrite, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
+			player.level.playSound(null, player.blockPosition(), EnigmaticSounds.WRITE, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 		}
 
 		return stack;

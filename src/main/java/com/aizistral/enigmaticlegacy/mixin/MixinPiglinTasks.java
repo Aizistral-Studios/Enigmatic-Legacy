@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -30,7 +30,7 @@ public class MixinPiglinTasks {
 	private static final String AVARICE_SCROLL_TAG = EnigmaticLegacy.MODID + ":avarice_scroll_effect";
 
 	private static void markPiglinWithCondition(Piglin piglin, Player player) {
-		if (player != null && piglin != null && SuperpositionHandler.hasCurio(player, EnigmaticItems.avariceScroll))
+		if (player != null && piglin != null && SuperpositionHandler.hasCurio(player, EnigmaticItems.AVARICE_SCROLL))
 			if (!piglin.getTags().contains(AVARICE_SCROLL_TAG)) {
 				piglin.addTag(AVARICE_SCROLL_TAG);
 			}
@@ -49,7 +49,7 @@ public class MixinPiglinTasks {
 	@Inject(at = @At("RETURN"), method = "isWearingGold", cancellable = true)
 	private static void onWearingGoldCheck(LivingEntity entity, CallbackInfoReturnable<Boolean> info) {
 		if (entity instanceof Player player) {
-			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.goldenRing) || SuperpositionHandler.hasCurio(player, EnigmaticItems.avariceScroll)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.GOLDEN_RING) || SuperpositionHandler.hasCurio(player, EnigmaticItems.AVARICE_SCROLL)) {
 				info.setReturnValue(true);
 			}
 		}
@@ -91,7 +91,7 @@ public class MixinPiglinTasks {
 					generatedLoot.forEach(lootStack -> {
 						if (lootStack != null && !lootStack.isEmpty()) {
 
-							double multiplier = EnigmaticEventHandler.theySeeMeRollin.nextDouble()*2.0;
+							double multiplier = EnigmaticEventHandler.THEY_SEE_ME_ROLLIN.nextDouble()*2.0;
 							int bonusAmount = (int)Math.round(lootStack.getCount() * multiplier);
 							int newCount = lootStack.getCount() + bonusAmount;
 							lootStack.setCount(newCount);

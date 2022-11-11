@@ -1,4 +1,4 @@
-package com.aizistral.enigmaticlegacy.registry;
+package com.aizistral.enigmaticlegacy.registries;
 
 import com.aizistral.enigmaticlegacy.blocks.TileEndAnchor;
 
@@ -19,7 +19,7 @@ public class EnigmaticTiles extends AbstractRegistry<BlockEntityType<?>> {
 	private EnigmaticTiles() {
 		super(ForgeRegistries.BLOCK_ENTITY_TYPES);
 		this.register("tile_end_anchor", () -> BlockEntityType.Builder.<TileEndAnchor>of(
-				TileEndAnchor::new, EnigmaticBlocks.endAnchor).build(Util.fetchChoiceType(
+				TileEndAnchor::new, EnigmaticBlocks.END_ANCHOR).build(Util.fetchChoiceType(
 						References.BLOCK_ENTITY, MODID + ":tile_end_anchor")));
 	}
 

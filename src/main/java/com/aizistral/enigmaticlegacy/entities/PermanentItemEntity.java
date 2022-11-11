@@ -11,8 +11,8 @@ import com.aizistral.enigmaticlegacy.items.SoulCrystal;
 import com.aizistral.enigmaticlegacy.items.StorageCrystal;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketHandleItemPickup;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketRecallParticles;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticEntities;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticEntities;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -267,7 +267,7 @@ public class PermanentItemEntity extends Entity {
 			boolean isPlayerOwner = player.getUUID().equals(this.getOwnerId());
 			boolean allowPickUp = false;
 
-			if (item instanceof StorageCrystal && (isPlayerOwner || !EnigmaticItems.enigmaticAmulet.isVesselOwnerOnly())) {
+			if (item instanceof StorageCrystal && (isPlayerOwner || !EnigmaticItems.ENIGMATIC_AMULET.isVesselOwnerOnly())) {
 				allowPickUp = true;
 			} else if (item instanceof SoulCrystal && isPlayerOwner) {
 				allowPickUp = true;
@@ -281,7 +281,7 @@ public class PermanentItemEntity extends Entity {
 					if (!isPlayerOwner && embeddedSoul != null)
 						return;
 
-					EnigmaticItems.storageCrystal.retrieveDropsFromCrystal(itemstack, player, embeddedSoul);
+					EnigmaticItems.STORAGE_CRYSTAL.retrieveDropsFromCrystal(itemstack, player, embeddedSoul);
 					SoulArchive.getInstance().removeItem(this);
 
 					/*
@@ -293,7 +293,7 @@ public class PermanentItemEntity extends Entity {
 					 */
 
 				} else if (item instanceof SoulCrystal) {
-					if (!EnigmaticItems.soulCrystal.retrieveSoulFromCrystal(player, itemstack))
+					if (!EnigmaticItems.SOUL_CRYSTAL.retrieveSoulFromCrystal(player, itemstack))
 						return;
 					else {
 						SoulArchive.getInstance().removeItem(this);
@@ -327,9 +327,9 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	public boolean containsSoul() {
-		if (this.getItem().is(EnigmaticItems.soulCrystal))
+		if (this.getItem().is(EnigmaticItems.SOUL_CRYSTAL))
 			return true;
-		else if (this.getItem().is(EnigmaticItems.storageCrystal))
+		else if (this.getItem().is(EnigmaticItems.STORAGE_CRYSTAL))
 			return ItemNBTHelper.getNBT(this.getItem()).contains("embeddedSoul");
 		else
 			return false;

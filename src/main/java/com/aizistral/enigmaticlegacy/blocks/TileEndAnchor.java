@@ -1,6 +1,6 @@
 package com.aizistral.enigmaticlegacy.blocks;
 
-import com.aizistral.enigmaticlegacy.registry.EnigmaticTiles;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticTiles;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

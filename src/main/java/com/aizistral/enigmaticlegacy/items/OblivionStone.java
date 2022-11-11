@@ -13,8 +13,8 @@ import com.aizistral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticSounds;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticSounds;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
 import com.google.common.collect.ArrayListMultimap;
@@ -186,7 +186,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 		int mode = ItemNBTHelper.getInt(stack, "ConsumptionMode", 0);
 
 		if (player.isCrouching()) {
-			world.playSound(null, player.blockPosition(), ItemNBTHelper.getBoolean(stack, "IsActive", true) ? EnigmaticSounds.soundChargedOff : EnigmaticSounds.soundChargedOn, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.blockPosition(), ItemNBTHelper.getBoolean(stack, "IsActive", true) ? EnigmaticSounds.CHARGED_OFF : EnigmaticSounds.CHARGED_ON, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			ItemNBTHelper.setBoolean(stack, "IsActive", !ItemNBTHelper.getBoolean(stack, "IsActive", true));
 		} else {
 			if (mode >= 0 && mode < 2) {
@@ -227,7 +227,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 		for (int slot = 0; slot < player.getInventory().items.size(); slot++) {
 			if (!player.getInventory().items.get(slot).isEmpty()) {
 				filledStacks += 1;
-				if (player.getInventory().items.get(slot).getItem() != EnigmaticItems.voidStone) {
+				if (player.getInventory().items.get(slot).getItem() != EnigmaticItems.VOID_STONE) {
 					stackMap.put(slot, player.getInventory().items.get(slot));
 				}
 			}

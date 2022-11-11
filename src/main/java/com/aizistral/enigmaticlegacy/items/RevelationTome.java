@@ -11,7 +11,7 @@ import com.aizistral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticSounds;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticSounds;
 import com.aizistral.enigmaticlegacy.triggers.RevelationGainTrigger;
 
 import net.minecraft.client.Minecraft;
@@ -101,7 +101,7 @@ public class RevelationTome extends ItemBase implements Vanishable {
 				ExperienceHelper.addPlayerXP(player, xp);
 				SuperpositionHandler.setPersistentInteger(player, this.persistantPointsTag, currentPoints + revelation);
 
-				world.playSound(null, new BlockPos(player.position()), EnigmaticSounds.soundLearn, SoundSource.PLAYERS, 0.75f, 1.0f);
+				world.playSound(null, new BlockPos(player.position()), EnigmaticSounds.LEARN, SoundSource.PLAYERS, 0.75f, 1.0f);
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayer) player, this.theType, currentPoints + revelation);
 				RevelationGainTrigger.INSTANCE.trigger((ServerPlayer) player, TomeType.GENERIC, RevelationTome.getGenericPoints(player));
 			} else {

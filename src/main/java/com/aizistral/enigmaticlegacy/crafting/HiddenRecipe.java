@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 import com.aizistral.enigmaticlegacy.config.OmniconfigHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.items.CosmicHeart;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import java.util.Optional;
 
@@ -65,7 +65,7 @@ public class HiddenRecipe extends CustomRecipe {
 					if (slotStack.getItem() != entry.getKey()[r][i].getItem()) {
 						continue recipes;
 					} else {
-						if (slotStack.is(EnigmaticItems.enigmaticAmulet) || slotStack.is(EnigmaticItems.ascensionAmulet)) {
+						if (slotStack.is(EnigmaticItems.ENIGMATIC_AMULET) || slotStack.is(EnigmaticItems.ASCENSION_AMULET)) {
 							amuletNBT = Optional.of(slotStack.getTag().copy());
 						}
 					}
@@ -93,7 +93,7 @@ public class HiddenRecipe extends CustomRecipe {
 
 					if (slotStack.getItem() != array[r][i].getItem()) {
 						continue recipes;
-					} else if (RECIPES.get(array).is(EnigmaticItems.cosmicScroll) &&
+					} else if (RECIPES.get(array).is(EnigmaticItems.COSMIC_SCROLL) &&
 							slotStack.getItem() instanceof CosmicHeart &&
 							!ItemNBTHelper.getBoolean(slotStack, "isBelieverBlessed", false)) {
 						continue recipes;

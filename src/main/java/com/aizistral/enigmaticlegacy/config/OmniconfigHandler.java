@@ -23,7 +23,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import vazkii.patchouli.common.base.PatchouliConfig.TextOverflowMode;
 
 public class OmniconfigHandler {
-	private static final Map<Field, Omniconfig.BooleanParameter> itemsOptions = new HashMap<>();
+	private static final Map<Field, Omniconfig.BooleanParameter> ITEMS_OPTIONS = new HashMap<>();
 
 	public static Omniconfig.BooleanParameter customDungeonLootEnabled;
 	public static Omniconfig.BooleanParameter bonusWoolRecipesEnabled;
@@ -48,7 +48,7 @@ public class OmniconfigHandler {
 
 		// TODO Try to put EnabledCondition in recipe unlocking advancements
 
-		for (Field optionalItemField : itemsOptions.keySet()) {
+		for (Field optionalItemField : ITEMS_OPTIONS.keySet()) {
 			try {
 				//System.out.println("Field: " + optionalItemField);
 				if (optionalItemField.get(null) != null) {
@@ -57,9 +57,9 @@ public class OmniconfigHandler {
 					//System.out.println("Passed object: " + item);
 					//System.out.println("Equal?: " + Objects.equal(item, optionalItem));
 
-					if (Objects.equal(item, optionalItem) && itemsOptions.get(optionalItemField) != null)
+					if (Objects.equal(item, optionalItem) && ITEMS_OPTIONS.get(optionalItemField) != null)
 						//System.out.println("Checks out; returning this boy.");
-						return itemsOptions.get(optionalItemField).getValue();
+						return ITEMS_OPTIONS.get(optionalItemField).getValue();
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -164,7 +164,7 @@ public class OmniconfigHandler {
 				.getBoolean("RetriggerRecipeUnlocks", true);
 
 		Multimap<String, Field> accessibilityGeneratorMap = SuperpositionHandler.retainAccessibilityGeneratorMap(EnigmaticLegacy.MODID);
-		itemsOptions.clear();
+		ITEMS_OPTIONS.clear();
 		builder.forceSynchronized(true);
 
 		for (String itemName : accessibilityGeneratorMap.keySet()) {
@@ -174,7 +174,7 @@ public class OmniconfigHandler {
 
 			Omniconfig.BooleanParameter param = builder.comment("Whether or not " + itemName + " should be enabled.").getBoolean(optionName, true);
 			for (Field associatedField : accessibilityGeneratorMap.get(itemName)) {
-				itemsOptions.put(associatedField, param);
+				ITEMS_OPTIONS.put(associatedField, param);
 			}
 		}
 

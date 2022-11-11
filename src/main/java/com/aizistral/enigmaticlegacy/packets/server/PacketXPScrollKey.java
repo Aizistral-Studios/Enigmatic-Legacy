@@ -3,7 +3,7 @@ package com.aizistral.enigmaticlegacy.packets.server;
 import java.util.function.Supplier;
 
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
@@ -37,9 +37,9 @@ public class PacketXPScrollKey {
 		ctx.get().enqueueWork(() -> {
 			ServerPlayer playerServ = ctx.get().getSender();
 
-			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticItems.xpScroll)) {
-				ItemStack scroll = SuperpositionHandler.getCurioStack(playerServ, EnigmaticItems.xpScroll);
-				EnigmaticItems.xpScroll.trigger(playerServ.level, scroll, playerServ, InteractionHand.MAIN_HAND, false);
+			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticItems.XP_SCROLL)) {
+				ItemStack scroll = SuperpositionHandler.getCurioStack(playerServ, EnigmaticItems.XP_SCROLL);
+				EnigmaticItems.XP_SCROLL.trigger(playerServ.level, scroll, playerServ, InteractionHand.MAIN_HAND, false);
 			}
 
 		});

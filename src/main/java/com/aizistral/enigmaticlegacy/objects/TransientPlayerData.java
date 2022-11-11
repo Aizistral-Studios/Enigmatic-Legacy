@@ -9,7 +9,7 @@ import com.aizistral.enigmaticlegacy.items.BlazingCore;
 import com.aizistral.enigmaticlegacy.items.ForbiddenFruit;
 import com.aizistral.enigmaticlegacy.items.MagnetRing;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketSyncTransientData;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

@@ -11,7 +11,7 @@ import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.aizistral.enigmaticlegacy.objects.TransientPlayerData;
 import com.aizistral.enigmaticlegacy.objects.Vector3;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.aizistral.omniconfig.Configuration;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
@@ -144,7 +144,7 @@ public class MagnetRing extends ItemBaseCurio {
 
 	@Override
 	public boolean canEquip(SlotContext context, ItemStack stack) {
-		return super.canEquip(context, stack) && !SuperpositionHandler.hasCurio(context.entity(), EnigmaticItems.superMagnetRing);
+		return super.canEquip(context, stack) && !SuperpositionHandler.hasCurio(context.entity(), EnigmaticItems.SUPER_MAGNET_RING);
 	}
 
 	public boolean hasMagnetEffectsDisabled(Player player) {

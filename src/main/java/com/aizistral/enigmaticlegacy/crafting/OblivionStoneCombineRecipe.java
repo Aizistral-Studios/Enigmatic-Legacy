@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.aizistral.enigmaticlegacy.items.OblivionStone;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -41,7 +41,7 @@ public class OblivionStoneCombineRecipe extends CustomRecipe {
 			ItemStack checkedItemStack = inv.getItem(i);
 
 			if (!checkedItemStack.isEmpty()) {
-				if (checkedItemStack.getItem() == EnigmaticItems.voidStone) {
+				if (checkedItemStack.getItem() == EnigmaticItems.VOID_STONE) {
 					if (voidStone == null) {
 						voidStone = checkedItemStack;
 					} else
@@ -87,7 +87,7 @@ public class OblivionStoneCombineRecipe extends CustomRecipe {
 			return returnedStack;
 
 		} else if (voidStone != null && stackList.size() == 0) {
-			ItemStack returnedStack = new ItemStack(EnigmaticItems.voidStone, 1);
+			ItemStack returnedStack = new ItemStack(EnigmaticItems.VOID_STONE, 1);
 			returnedStack.setTag(voidStone.getOrCreateTag().copy());
 			returnedStack.removeTagKey("SupersolidID");
 			return returnedStack;
@@ -104,7 +104,7 @@ public class OblivionStoneCombineRecipe extends CustomRecipe {
 			ItemStack checkedItemStack = inv.getItem(i);
 
 			if (!checkedItemStack.isEmpty()) {
-				if (checkedItemStack.getItem() == EnigmaticItems.voidStone) {
+				if (checkedItemStack.getItem() == EnigmaticItems.VOID_STONE) {
 					if (voidStone == null) {
 						voidStone = checkedItemStack;
 					} else

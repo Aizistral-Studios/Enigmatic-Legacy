@@ -10,7 +10,7 @@ import com.aizistral.enigmaticlegacy.blocks.BlockEndAnchor;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.generic.GenericBlockItem;
 import com.aizistral.enigmaticlegacy.objects.AnchorSearchResult;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticBlocks;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticBlocks;
 import com.aizistral.omniconfig.Configuration;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
@@ -62,7 +62,7 @@ public class EndAnchor extends GenericBlockItem {
 	}
 
 	public EndAnchor() {
-		super(EnigmaticBlocks.endAnchor, getDefaultProperties().stacksTo(1).fireResistant().rarity(Rarity.EPIC));
+		super(EnigmaticBlocks.END_ANCHOR, getDefaultProperties().stacksTo(1).fireResistant().rarity(Rarity.EPIC));
 	}
 
 	@Override

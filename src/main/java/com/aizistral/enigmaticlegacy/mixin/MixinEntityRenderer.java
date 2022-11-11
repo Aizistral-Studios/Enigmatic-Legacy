@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.gui.Font;
@@ -33,10 +33,10 @@ public abstract class MixinEntityRenderer {
 	@Inject(method = "renderNameTag", at = @At("HEAD"), cancellable = true)
 	private void onRenderNameTag(Entity entity, Component name, PoseStack stack, MultiBufferSource buffer, int packedLight, CallbackInfo info) {
 		if (entity instanceof Player player) {
-			ItemStack insignia = SuperpositionHandler.getCurioStack(player, EnigmaticItems.insignia);
+			ItemStack insignia = SuperpositionHandler.getCurioStack(player, EnigmaticItems.INSIGNIA);
 
 			if (insignia != null && !insignia.isEmpty()) {
-				Optional<Component> customName = EnigmaticItems.insignia.getCustomName(insignia);
+				Optional<Component> customName = EnigmaticItems.INSIGNIA.getCustomName(insignia);
 
 				if (customName.isPresent()) {
 					info.cancel();

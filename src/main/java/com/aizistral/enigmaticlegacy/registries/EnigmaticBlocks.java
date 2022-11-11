@@ -1,4 +1,4 @@
-package com.aizistral.enigmaticlegacy.registry;
+package com.aizistral.enigmaticlegacy.registries;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,34 +26,34 @@ public class EnigmaticBlocks extends AbstractRegistry<Block> {
 	private static final EnigmaticBlocks INSTANCE = new EnigmaticBlocks();
 
 	@ObjectHolder(value = MODID + ":massive_lamp", registryName = "block")
-	public static final BlockMassiveLamp massiveLamp = null;
+	public static final BlockMassiveLamp MASSIVE_LAMP = null;
 
 	@ObjectHolder(value = MODID + ":massive_shroomlamp", registryName = "block")
-	public static final BlockMassiveLamp massiveShroomlamp = null;
+	public static final BlockMassiveLamp MASSIVE_SHROOMLAMP = null;
 
 	@ObjectHolder(value = MODID + ":massive_redstonelamp", registryName = "block")
-	public static final BlockMassiveLamp massiveRedstonelamp = null;
+	public static final BlockMassiveLamp MASSIVE_REDSTONELAMP = null;
 
 	@ObjectHolder(value = MODID + ":big_lamp", registryName = "block")
-	public static final BlockBigLamp bigLamp = null;
+	public static final BlockBigLamp BIG_LAMP = null;
 
 	@ObjectHolder(value = MODID + ":big_shroomlamp", registryName = "block")
-	public static final BlockBigLamp bigShroomlamp = null;
+	public static final BlockBigLamp BIG_SHROOMLAMP = null;
 
 	@ObjectHolder(value = MODID + ":big_redstonelamp", registryName = "block")
-	public static final BlockBigLamp bigRedstonelamp = null;
+	public static final BlockBigLamp BIG_REDSTONELAMP = null;
 
 	@ObjectHolder(value = MODID + ":etherium_block", registryName = "block")
-	public static final BlockEtherium etheriumBlock = null;
+	public static final BlockEtherium ETHERIUM_BLOCK = null;
 
 	@ObjectHolder(value = MODID + ":cosmic_cake", registryName = "block")
-	public static final BlockCosmicCake cosmicCake = null;
+	public static final BlockCosmicCake COSMIC_CAKE = null;
 
 	@ObjectHolder(value = MODID + ":astral_block", registryName = "block")
-	public static final BlockAstralDust astralBlock = null;
+	public static final BlockAstralDust ASTRAL_BLOCK = null;
 
 	@ObjectHolder(value = MODID + ":end_anchor", registryName = "block")
-	public static final BlockEndAnchor endAnchor = null;
+	public static final BlockEndAnchor END_ANCHOR = null;
 
 	private EnigmaticBlocks() {
 		super(ForgeRegistries.BLOCKS);

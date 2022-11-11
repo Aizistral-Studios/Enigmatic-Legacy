@@ -1,4 +1,4 @@
-package com.aizistral.enigmaticlegacy.registry;
+package com.aizistral.enigmaticlegacy.registries;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.alchemy.Potion;
@@ -16,35 +16,35 @@ public class EnigmaticEnchantments extends AbstractRegistry<Enchantment> {
 
 	@ConfigurableItem("Sharpshooter Enchantment")
 	@ObjectHolder(value = MODID + ":sharpshooter", registryName = "enchantment")
-	public static final SharpshooterEnchantment sharpshooterEnchantment = null;
+	public static final SharpshooterEnchantment SHARPSHOOTER = null;
 
 	@ConfigurableItem("Ceaseless Enchantment")
 	@ObjectHolder(value = MODID + ":ceaseless", registryName = "enchantment")
-	public static final CeaselessEnchantment ceaselessEnchantment = null;
+	public static final CeaselessEnchantment CEASELESS = null;
 
 	@ConfigurableItem("Torrent Enchantment")
 	@ObjectHolder(value = MODID + ":torrent", registryName = "enchantment")
-	public static final TorrentEnchantment torrentEnchantment = null;
+	public static final TorrentEnchantment TORRENT = null;
 
 	@ConfigurableItem("Wrath Enchantment")
 	@ObjectHolder(value = MODID + ":wrath", registryName = "enchantment")
-	public static final WrathEnchantment wrathEnchantment = null;
+	public static final WrathEnchantment WRATH = null;
 
 	@ConfigurableItem("Slayer Enchantment")
 	@ObjectHolder(value = MODID + ":slayer", registryName = "enchantment")
-	public static final SlayerEnchantment slayerEnchantment = null;
+	public static final SlayerEnchantment SLAYER = null;
 
 	@ConfigurableItem("Curse of Nemesis")
 	@ObjectHolder(value = MODID + ":nemesis", registryName = "enchantment")
-	public static final NemesisCurse nemesisCurse = null;
+	public static final NemesisCurse NEMESIS = null;
 
 	@ConfigurableItem("Curse of Eternal Binding")
 	@ObjectHolder(value = MODID + ":eternal_binding", registryName = "enchantment")
-	public static final EternalBindingCurse eternalBindingCurse = null;
+	public static final EternalBindingCurse ETERNAL_BINDING = null;
 
 	@ConfigurableItem("Curse of Sorrow")
 	@ObjectHolder(value = MODID + ":sorrow", registryName = "enchantment")
-	public static final SorrowCurse sorrowCurse = null;
+	public static final SorrowCurse SORROW = null;
 
 	private EnigmaticEnchantments() {
 		super(ForgeRegistries.ENCHANTMENTS);

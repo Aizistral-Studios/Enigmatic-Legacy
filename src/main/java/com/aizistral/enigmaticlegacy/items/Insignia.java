@@ -9,8 +9,8 @@ import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBaseCurio;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticSounds;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticSounds;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
@@ -83,7 +83,7 @@ public class Insignia extends ItemBaseCurio {
 	}
 
 	public boolean canSeeTrueName(Player player) {
-		return player.isCreative() || SuperpositionHandler.hasCurio(player, EnigmaticItems.enigmaticEye);
+		return player.isCreative() || SuperpositionHandler.hasCurio(player, EnigmaticItems.ENIGMATIC_EYE);
 	}
 
 	@Override
@@ -106,10 +106,10 @@ public class Insignia extends ItemBaseCurio {
 
 			if (ItemNBTHelper.getBoolean(stack, "tagDisplayEnabled", true)) {
 				ItemNBTHelper.setBoolean(stack, "tagDisplayEnabled", false);
-				world.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOff, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticSounds.CHARGED_OFF, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			} else {
 				ItemNBTHelper.setBoolean(stack, "tagDisplayEnabled", true);
-				world.playSound(null, player.blockPosition(), EnigmaticSounds.soundChargedOn, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticSounds.CHARGED_ON, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			}
 
 			player.swing(handIn);

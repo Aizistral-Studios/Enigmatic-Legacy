@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
@@ -25,7 +25,7 @@ public class MixinHoglinTasks {
 		if (returnedTarget.isPresent() && returnedTarget.orElse(null) instanceof Player) {
 			Player returnedPlayer = (Player) returnedTarget.orElse(null);
 
-			if (SuperpositionHandler.hasItem(returnedPlayer, EnigmaticItems.animalGuidebook)) {
+			if (SuperpositionHandler.hasItem(returnedPlayer, EnigmaticItems.ANIMAL_GUIDEBOOK)) {
 				info.setReturnValue(Optional.empty());
 			}
 		}

@@ -8,7 +8,7 @@ import com.aizistral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.aizistral.enigmaticlegacy.objects.Vector3;
 import com.aizistral.enigmaticlegacy.objects.WitherExplosion;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketWitherParticles;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticEntities;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticEntities;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +22,7 @@ public class MixinVillagerEntity {
 		if (forgottenObject instanceof Villager) {
 			Villager villager = (Villager) forgottenObject;
 
-			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.avariceScroll)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.AVARICE_SCROLL)) {
 				for (MerchantOffer trade : villager.getOffers()) {
 					double discountValue = 0.35;
 					int discount = (int) Math.floor(discountValue * trade.getBaseCostA().getCount());

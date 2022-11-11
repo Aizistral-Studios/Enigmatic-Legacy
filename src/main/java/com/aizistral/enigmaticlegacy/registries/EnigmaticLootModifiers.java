@@ -1,4 +1,4 @@
-package com.aizistral.enigmaticlegacy.registry;
+package com.aizistral.enigmaticlegacy.registries;
 
 import com.aizistral.enigmaticlegacy.objects.SpecialLootModifier;
 import com.mojang.serialization.Codec;

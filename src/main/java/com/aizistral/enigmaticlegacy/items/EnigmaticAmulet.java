@@ -12,7 +12,7 @@ import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBaseCurio;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
 import com.google.common.collect.HashMultimap;
@@ -126,12 +126,12 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	}
 
 	public boolean hasColor(Player player, AmuletColor color) {
-		if (SuperpositionHandler.hasCurio(player, EnigmaticItems.ascensionAmulet))
+		if (SuperpositionHandler.hasCurio(player, EnigmaticItems.ASCENSION_AMULET))
 			return true;
 
-		ItemStack enigmaticAmulet = SuperpositionHandler.getCurioStack(player, EnigmaticItems.enigmaticAmulet);
+		ItemStack enigmaticAmulet = SuperpositionHandler.getCurioStack(player, EnigmaticItems.ENIGMATIC_AMULET);
 
-		if ((enigmaticAmulet != null) && (EnigmaticItems.enigmaticAmulet.getColor(enigmaticAmulet) == color))
+		if ((enigmaticAmulet != null) && (EnigmaticItems.ENIGMATIC_AMULET.getColor(enigmaticAmulet) == color))
 			return true;
 		else
 			return false;

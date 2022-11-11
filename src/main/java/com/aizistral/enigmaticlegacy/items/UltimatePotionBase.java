@@ -11,7 +11,7 @@ import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.helpers.PotionHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
 import com.aizistral.enigmaticlegacy.objects.AdvancedPotion;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticPotions;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticPotions;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.NonNullList;
@@ -53,7 +53,7 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 	@OnlyIn(Dist.CLIENT)
 	public ItemStack getDefaultInstance() {
 		ItemStack stack = super.getDefaultInstance().copy();
-		PotionHelper.setAdvancedPotion(stack, EnigmaticPotions.emptyPotion);
+		PotionHelper.setAdvancedPotion(stack, EnigmaticPotions.EMPTY_POTION);
 		return stack.copy();
 	}
 
@@ -73,13 +73,13 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 		if (this.allowedIn(group)) {
 
 			if (this.potionType == PotionType.COMMON) {
-				for (AdvancedPotion potion : EnigmaticPotions.commonPotionTypes) {
+				for (AdvancedPotion potion : EnigmaticPotions.COMMON_POTIONS) {
 					ItemStack stack = new ItemStack(this);
 					ItemNBTHelper.setString(stack, "EnigmaticPotion", potion.getId());
 					items.add(stack);
 				}
 			} else {
-				for (AdvancedPotion potion : EnigmaticPotions.ultimatePotionTypes) {
+				for (AdvancedPotion potion : EnigmaticPotions.ULTIMATE_POTIONS) {
 					ItemStack stack = new ItemStack(this);
 					ItemNBTHelper.setString(stack, "EnigmaticPotion", potion.getId());
 					items.add(stack);

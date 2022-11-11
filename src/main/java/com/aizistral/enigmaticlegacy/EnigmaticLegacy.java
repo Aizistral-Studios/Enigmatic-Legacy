@@ -74,17 +74,17 @@ import com.aizistral.enigmaticlegacy.packets.server.PacketUpdateElytraBoosting;
 import com.aizistral.enigmaticlegacy.packets.server.PacketXPScrollKey;
 import com.aizistral.enigmaticlegacy.proxy.ClientProxy;
 import com.aizistral.enigmaticlegacy.proxy.CommonProxy;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticBlocks;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticEffects;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticEnchantments;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticEntities;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticLootModifiers;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticMenus;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticPotions;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticRecipes;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticSounds;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticTiles;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticBlocks;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticEffects;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticEnchantments;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticEntities;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticLootModifiers;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticMenus;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticPotions;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticRecipes;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticSounds;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticTiles;
 import com.aizistral.enigmaticlegacy.triggers.BeheadingTrigger;
 import com.aizistral.enigmaticlegacy.triggers.CursedInventoryChangedTrigger;
 import com.aizistral.enigmaticlegacy.triggers.CursedRingEquippedTrigger;
@@ -219,7 +219,7 @@ public class EnigmaticLegacy {
 		MinecraftForge.EVENT_BUS.register(enigmaticHandler);
 		MinecraftForge.EVENT_BUS.register(keybindHandler);
 		MinecraftForge.EVENT_BUS.register(new EnigmaticUpdateHandler());
-		MinecraftForge.EVENT_BUS.register(new EtheriumEventHandler(etheriumConfig, EnigmaticItems.etheriumOre));
+		MinecraftForge.EVENT_BUS.register(new EtheriumEventHandler(etheriumConfig, EnigmaticItems.ETHERIUM_ORE));
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStart);
 		MinecraftForge.EVENT_BUS.addListener(this::onServerStarted);
 
@@ -237,66 +237,66 @@ public class EnigmaticLegacy {
 	public void onLoadComplete(FMLLoadCompleteEvent event) {
 		LOGGER.info("Initializing load completion phase...");
 
-		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.angelBlessing);
-		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.golemHeart);
-		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.oceanStone);
-		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.blazingCore);
-		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.eyeOfNebula);
-		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.voidPearl);
-		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.theCube);
-		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.enigmaticItem);
+		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.ANGEL_BLESSING);
+		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.GOLEM_HEART);
+		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.OCEAN_STONE);
+		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.BLAZING_CORE);
+		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.EYE_OF_NEBULA);
+		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.VOID_PEARL);
+		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.THE_CUBE);
+		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.ENIGMATIC_ITEM);
 
 		LOGGER.info("Registering brewing recipes...");
 
-		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.recallPotion)) {
-			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.AWKWARD)), Ingredient.of(Items.ENDER_EYE), new ItemStack(EnigmaticItems.recallPotion), new ResourceLocation(MODID, "recall_potion")));
+		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.RECALL_POTION)) {
+			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.of(PotionHelper.createVanillaPotion(Items.POTION, Potions.AWKWARD)), Ingredient.of(Items.ENDER_EYE), new ItemStack(EnigmaticItems.RECALL_POTION), new ResourceLocation(MODID, "recall_potion")));
 		}
 
-		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.twistedPotion)) {
-			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.of(EnigmaticItems.recallPotion), Ingredient.of(EnigmaticItems.twistedHeart), new ItemStack(EnigmaticItems.twistedPotion), new ResourceLocation(MODID, "twisted_potion")));
+		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.TWISTED_POTION)) {
+			BrewingRecipeRegistry.addRecipe(new SpecialBrewingRecipe(Ingredient.of(EnigmaticItems.RECALL_POTION), Ingredient.of(EnigmaticItems.TWISTED_HEART), new ItemStack(EnigmaticItems.TWISTED_POTION), new ResourceLocation(MODID, "twisted_potion")));
 		}
 
-		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.commonPotionBase)) {
+		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.COMMON_POTION)) {
 			PotionHelper.registerCommonPotions();
 		}
 
-		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ultimatePotionBase)) {
+		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ULTIMATE_POTION)) {
 			PotionHelper.registerBasicUltimatePotions();
 			PotionHelper.registerSplashUltimatePotions();
 			PotionHelper.registerLingeringUltimatePotions();
 		}
 
-		BrewingRecipeRegistry.addRecipe(new ValidationBrewingRecipe(Ingredient.of(EnigmaticItems.recallPotion, EnigmaticItems.twistedPotion, EnigmaticItems.ultimatePotionLingering, EnigmaticItems.commonPotionLingering), null));
+		BrewingRecipeRegistry.addRecipe(new ValidationBrewingRecipe(Ingredient.of(EnigmaticItems.RECALL_POTION, EnigmaticItems.TWISTED_POTION, EnigmaticItems.ULTIMATE_POTION_LINGERING, EnigmaticItems.COMMON_POTION_LINGERING), null));
 
-		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.theCube)) {
-			HiddenRecipe.addRecipe(new ItemStack(EnigmaticItems.theCube),
-					new ItemStack(EnigmaticItems.golemHeart), new ItemStack(EnigmaticItems.cosmicHeart), new ItemStack(EnigmaticItems.blazingCore),
-					new ItemStack(EnigmaticItems.angelBlessing), new ItemStack(Blocks.OBSIDIAN), new ItemStack(EnigmaticItems.eyeOfNebula),
-					new ItemStack(EnigmaticItems.oceanStone), new ItemStack(EnigmaticItems.cosmicHeart), new ItemStack(EnigmaticItems.voidPearl)
+		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.THE_CUBE)) {
+			HiddenRecipe.addRecipe(new ItemStack(EnigmaticItems.THE_CUBE),
+					new ItemStack(EnigmaticItems.GOLEM_HEART), new ItemStack(EnigmaticItems.COSMIC_HEART), new ItemStack(EnigmaticItems.BLAZING_CORE),
+					new ItemStack(EnigmaticItems.ANGEL_BLESSING), new ItemStack(Blocks.OBSIDIAN), new ItemStack(EnigmaticItems.EYE_OF_NEBULA),
+					new ItemStack(EnigmaticItems.OCEAN_STONE), new ItemStack(EnigmaticItems.COSMIC_HEART), new ItemStack(EnigmaticItems.VOID_PEARL)
 					);
 		}
 
-		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ascensionAmulet)) {
-			HiddenRecipe.addRecipe(new ItemStack(EnigmaticItems.ascensionAmulet),
-					new ItemStack(Items.AMETHYST_SHARD), new ItemStack(EnigmaticItems.astralDust), new ItemStack(Items.AMETHYST_SHARD),
-					new ItemStack(EnigmaticItems.etheriumIngot), new ItemStack(EnigmaticItems.enigmaticAmulet), new ItemStack(EnigmaticItems.etheriumIngot),
-					new ItemStack(Items.DRAGON_BREATH), new ItemStack(EnigmaticItems.cosmicHeart), new ItemStack(Items.DRAGON_BREATH)
+		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ASCENSION_AMULET)) {
+			HiddenRecipe.addRecipe(new ItemStack(EnigmaticItems.ASCENSION_AMULET),
+					new ItemStack(Items.AMETHYST_SHARD), new ItemStack(EnigmaticItems.ASTRAL_DUST), new ItemStack(Items.AMETHYST_SHARD),
+					new ItemStack(EnigmaticItems.ETHERIUM_INGOT), new ItemStack(EnigmaticItems.ENIGMATIC_AMULET), new ItemStack(EnigmaticItems.ETHERIUM_INGOT),
+					new ItemStack(Items.DRAGON_BREATH), new ItemStack(EnigmaticItems.COSMIC_HEART), new ItemStack(Items.DRAGON_BREATH)
 					);
 		}
 
-		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.eldritchAmulet)) {
-			HiddenRecipe.addRecipe(new ItemStack(EnigmaticItems.eldritchAmulet),
-					new ItemStack(EnigmaticItems.evilEssence), new ItemStack(EnigmaticItems.abyssalHeart), new ItemStack(EnigmaticItems.evilEssence),
-					new ItemStack(Items.NETHERITE_INGOT), new ItemStack(EnigmaticItems.ascensionAmulet), new ItemStack(Items.NETHERITE_INGOT),
-					new ItemStack(EnigmaticItems.twistedHeart), new ItemStack(Items.NETHER_STAR), new ItemStack(EnigmaticItems.twistedHeart)
+		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ELDRITCH_AMULET)) {
+			HiddenRecipe.addRecipe(new ItemStack(EnigmaticItems.ELDRITCH_AMULET),
+					new ItemStack(EnigmaticItems.EVIL_ESSENCE), new ItemStack(EnigmaticItems.ABYSSAL_HEART), new ItemStack(EnigmaticItems.EVIL_ESSENCE),
+					new ItemStack(Items.NETHERITE_INGOT), new ItemStack(EnigmaticItems.ASCENSION_AMULET), new ItemStack(Items.NETHERITE_INGOT),
+					new ItemStack(EnigmaticItems.TWISTED_HEART), new ItemStack(Items.NETHER_STAR), new ItemStack(EnigmaticItems.TWISTED_HEART)
 					);
 		}
 
-		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.cosmicScroll)) {
-			HiddenRecipe.addRecipe(new ItemStack(EnigmaticItems.cosmicScroll),
-					new ItemStack(EnigmaticItems.astralDust), new ItemStack(Items.ENCHANTED_GOLDEN_APPLE), new ItemStack(EnigmaticItems.astralDust),
-					new ItemStack(EnigmaticItems.etheriumIngot), new ItemStack(EnigmaticItems.darkestScroll), new ItemStack(EnigmaticItems.etheriumIngot),
-					new ItemStack(EnigmaticItems.astralDust), new ItemStack(EnigmaticItems.cosmicHeart), new ItemStack(EnigmaticItems.astralDust)
+		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.COSMIC_SCROLL)) {
+			HiddenRecipe.addRecipe(new ItemStack(EnigmaticItems.COSMIC_SCROLL),
+					new ItemStack(EnigmaticItems.ASTRAL_DUST), new ItemStack(Items.ENCHANTED_GOLDEN_APPLE), new ItemStack(EnigmaticItems.ASTRAL_DUST),
+					new ItemStack(EnigmaticItems.ETHERIUM_INGOT), new ItemStack(EnigmaticItems.DARKEST_SCROLL), new ItemStack(EnigmaticItems.ETHERIUM_INGOT),
+					new ItemStack(EnigmaticItems.ASTRAL_DUST), new ItemStack(EnigmaticItems.COSMIC_HEART), new ItemStack(EnigmaticItems.ASTRAL_DUST)
 					);
 		}
 
@@ -377,9 +377,9 @@ public class EnigmaticLegacy {
 
 	private void clientRegistries(final FMLClientSetupEvent event) {
 		LOGGER.info("Initializing client setup phase...");
-		EnigmaticItems.enigmaticAmulet.registerVariants();
-		EnigmaticItems.enigmaticEye.registerVariants();
-		EnigmaticItems.soulCompass.registerVariants();
+		EnigmaticItems.ENIGMATIC_AMULET.registerVariants();
+		EnigmaticItems.ENIGMATIC_EYE.registerVariants();
+		EnigmaticItems.SOUL_COMPASS.registerVariants();
 
 		PROXY.initEntityRendering();
 
@@ -419,17 +419,17 @@ public class EnigmaticLegacy {
 		// I'd really like there to be a weak multimap or something
 
 		PROXY.clearTransientData();
-		EnigmaticEventHandler.angeredGuardians.clear();
-		EnigmaticEventHandler.postmortalPossession.clear();
-		EnigmaticEventHandler.knockbackThatBastard.clear();
-		EnigmaticEventHandler.deferredToast.clear();
-		EnigmaticEventHandler.desolationBoxes.clear();
-		EnigmaticEventHandler.lastSoulCompassUpdate.clear();
-		EnigmaticEventHandler.lastHealth.clear();
-		EnigmaticItems.soulCrystal.attributeDispatcher.clear();
-		EnigmaticItems.enigmaticItem.flightMap.clear();
-		EnigmaticItems.heavenScroll.flyMap.clear();
-		EnigmaticItems.theCube.clearLocationCache();
+		EnigmaticEventHandler.AGERED_GUARDIANS.clear();
+		EnigmaticEventHandler.POSTMORTAL_POSESSIONS.clear();
+		EnigmaticEventHandler.KNOCKBACK_THAT_BASTARD.clear();
+		EnigmaticEventHandler.DEFERRED_TOASTS.clear();
+		EnigmaticEventHandler.DESOLATION_BOXES.clear();
+		EnigmaticEventHandler.LAST_SOUL_COMPASS_UPDATE.clear();
+		EnigmaticEventHandler.LAST_HEALTH.clear();
+		EnigmaticItems.SOUL_CRYSTAL.attributeDispatcher.clear();
+		EnigmaticItems.ENIGMATIC_ITEM.flightMap.clear();
+		EnigmaticItems.HEAVEN_SCROLL.flyMap.clear();
+		EnigmaticItems.THE_CUBE.clearLocationCache();
 		RegisteredMeleeAttack.clearRegistry();
 	}
 
@@ -467,9 +467,9 @@ public class EnigmaticLegacy {
 				return color > 0 ? -1 : PotionHelper.getColor(stack);
 
 				return color > 0 ? -1 : PotionUtils.getColor(stack);
-		}, EnigmaticItems.ultimatePotionBase, EnigmaticItems.ultimatePotionSplash,
-				EnigmaticItems.ultimatePotionLingering, EnigmaticItems.commonPotionBase,
-				EnigmaticItems.commonPotionSplash, EnigmaticItems.commonPotionLingering);
+		}, EnigmaticItems.ULTIMATE_POTION, EnigmaticItems.ULTIMATE_POTION_SPLASH,
+				EnigmaticItems.ULTIMATE_POTION_LINGERING, EnigmaticItems.COMMON_POTION,
+				EnigmaticItems.COMMON_POTION_SPLASH, EnigmaticItems.COMMON_POTION_LINGERING);
 
 		LOGGER.info("Colors registered successfully.");
 	}
@@ -478,7 +478,7 @@ public class EnigmaticLegacy {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack makeIcon() {
-			return new ItemStack(EnigmaticItems.enigmaticItem);
+			return new ItemStack(EnigmaticItems.ENIGMATIC_ITEM);
 		}
 	};
 
@@ -486,7 +486,7 @@ public class EnigmaticLegacy {
 		@Override
 		@OnlyIn(Dist.CLIENT)
 		public ItemStack makeIcon() {
-			return new ItemStack(EnigmaticItems.recallPotion);
+			return new ItemStack(EnigmaticItems.RECALL_POTION);
 		}
 	};
 

@@ -1,4 +1,4 @@
-package com.aizistral.enigmaticlegacy.registry;
+package com.aizistral.enigmaticlegacy.registries;
 
 import com.aizistral.enigmaticlegacy.api.generic.ModRegistry;
 import com.aizistral.enigmaticlegacy.client.Quote;
@@ -14,28 +14,28 @@ public class EnigmaticSounds extends AbstractRegistry<SoundEvent> {
 	private static final EnigmaticSounds INSTANCE = new EnigmaticSounds();
 
 	@ObjectHolder(value = MODID + ":misc.hhon", registryName = "sound_event")
-	public static final SoundEvent soundChargedOn = null;
+	public static final SoundEvent CHARGED_ON = null;
 
 	@ObjectHolder(value = MODID + ":misc.hhoff", registryName = "sound_event")
-	public static final SoundEvent soundChargedOff = null;
+	public static final SoundEvent CHARGED_OFF = null;
 
 	@ObjectHolder(value = MODID + ":misc.shield_trigger", registryName = "sound_event")
-	public static final SoundEvent soundShieldTrigger = null;
+	public static final SoundEvent SHIELD_TRIGGER = null;
 
 	@ObjectHolder(value = MODID + ":misc.deflect", registryName = "sound_event")
-	public static final SoundEvent soundDeflect = null;
+	public static final SoundEvent DEFLECT = null;
 
 	@ObjectHolder(value = MODID + ":misc.write", registryName = "sound_event")
-	public static final SoundEvent soundWrite = null;
+	public static final SoundEvent WRITE = null;
 
 	@ObjectHolder(value = MODID + ":misc.learn", registryName = "sound_event")
-	public static final SoundEvent soundLearn = null;
+	public static final SoundEvent LEARN = null;
 
 	@ObjectHolder(value = MODID + ":misc.sword_hit_reject", registryName = "sound_event")
-	public static final SoundEvent soundSwordHitReject = null;
+	public static final SoundEvent SWORD_HIT_REJECT = null;
 
 	@ObjectHolder(value = MODID + ":misc.uneat", registryName = "sound_event")
-	public static final SoundEvent soundEatReverse = null;
+	public static final SoundEvent EAT_REVERSE = null;
 
 	private EnigmaticSounds() {
 		super(ForgeRegistries.SOUND_EVENTS);

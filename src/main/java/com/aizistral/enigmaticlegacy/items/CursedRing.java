@@ -13,7 +13,7 @@ import com.aizistral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBaseCurio;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.aizistral.enigmaticlegacy.triggers.CursedRingEquippedTrigger;
 import com.aizistral.omniconfig.Configuration;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
@@ -297,7 +297,7 @@ public class CursedRing extends ItemBaseCurio {
 	}
 
 	public boolean isItemDeathPersistent(ItemStack stack) {
-		return stack.getItem().equals(this) || stack.getItem().equals(EnigmaticItems.enigmaticAmulet);
+		return stack.getItem().equals(this) || stack.getItem().equals(EnigmaticItems.ENIGMATIC_AMULET);
 	}
 
 	@Override
@@ -334,7 +334,7 @@ public class CursedRing extends ItemBaseCurio {
 				continue;
 			}
 
-			if (checkedEntity instanceof Piglin && !SuperpositionHandler.hasCurio(player, EnigmaticItems.avariceScroll)) {
+			if (checkedEntity instanceof Piglin && !SuperpositionHandler.hasCurio(player, EnigmaticItems.AVARICE_SCROLL)) {
 				Piglin piglin = (Piglin) checkedEntity;
 
 				if (piglin.getTarget() == null || !piglin.getTarget().isAlive()) {
@@ -354,14 +354,14 @@ public class CursedRing extends ItemBaseCurio {
 
 				if (neutral instanceof TamableAnimal tamable && tamable.isTame()) {
 					continue;
-				} else if (SuperpositionHandler.hasItem(player, EnigmaticItems.animalGuidebook)) {
-					if (EnigmaticItems.animalGuidebook.isTamableAnimal(checkedEntity)) {
+				} else if (SuperpositionHandler.hasItem(player, EnigmaticItems.ANIMAL_GUIDEBOOK)) {
+					if (EnigmaticItems.ANIMAL_GUIDEBOOK.isTamableAnimal(checkedEntity)) {
 						continue;
 					}
 				} else if (neutral instanceof IronGolem golem && golem.isPlayerCreated()) {
 					continue;
 				} else if (neutral instanceof Bee) {
-					if (saveTheBees.getValue() || SuperpositionHandler.hasItem(player, EnigmaticItems.animalGuidebook)) {
+					if (saveTheBees.getValue() || SuperpositionHandler.hasItem(player, EnigmaticItems.ANIMAL_GUIDEBOOK)) {
 						continue;
 					}
 				}

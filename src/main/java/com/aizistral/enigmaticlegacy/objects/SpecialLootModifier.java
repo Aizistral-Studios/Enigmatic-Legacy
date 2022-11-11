@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import com.aizistral.enigmaticlegacy.config.OmniconfigHandler;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -40,26 +40,26 @@ public class SpecialLootModifier extends LootModifier {
 
 		if (entity instanceof ServerPlayer player) {
 			if (this.isVanillaChest(context)) {
-				if (OmniconfigHandler.isItemEnabled(EnigmaticItems.enigmaticEye))
+				if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ENIGMATIC_EYE))
 					if (!SuperpositionHandler.hasPersistentTag(player, "LootedArchitectEye")) {
 						SuperpositionHandler.setPersistentBoolean(player, "LootedArchitectEye", true);
-						generatedLoot.add(new ItemStack(EnigmaticItems.enigmaticEye, 1));
+						generatedLoot.add(new ItemStack(EnigmaticItems.ENIGMATIC_EYE, 1));
 					}
 
 				if (SuperpositionHandler.hasPersistentTag(player, "LootedIchorBottle")) {
-					generatedLoot.removeIf(stack -> stack.is(EnigmaticItems.ichorBottle));
-				} else if (generatedLoot.stream().anyMatch(stack -> stack.is(EnigmaticItems.ichorBottle))) {
+					generatedLoot.removeIf(stack -> stack.is(EnigmaticItems.ICHOR_BOTTLE));
+				} else if (generatedLoot.stream().anyMatch(stack -> stack.is(EnigmaticItems.ICHOR_BOTTLE))) {
 					SuperpositionHandler.setPersistentBoolean(player, "LootedIchorBottle", true);
 				}
 			}
 
-			if (OmniconfigHandler.isItemEnabled(EnigmaticItems.astralFruit))
+			if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ASTRAL_FRUIT))
 				if ("minecraft:chests/end_city_treasure".equals(String.valueOf(context.getQueriedLootTableId()))) {
 					if (!SuperpositionHandler.hasPersistentTag(player, "LootedFirstEndCityChest")) {
 						SuperpositionHandler.setPersistentBoolean(player, "LootedFirstEndCityChest", true);
 
 						if (SuperpositionHandler.isTheCursedOne(player)) {
-							generatedLoot.add(new ItemStack(EnigmaticItems.astralFruit, 1));
+							generatedLoot.add(new ItemStack(EnigmaticItems.ASTRAL_FRUIT, 1));
 						}
 					}
 				}

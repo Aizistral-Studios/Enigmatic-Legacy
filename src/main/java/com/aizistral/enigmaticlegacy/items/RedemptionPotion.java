@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBasePotion;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -39,12 +39,12 @@ public class RedemptionPotion extends ItemBasePotion {
 
 	@Override
 	public void onConsumed(Level worldIn, Player player, ItemStack potion) {
-		EnigmaticItems.forbiddenFruit.defineConsumedFruit(player, false);
+		EnigmaticItems.FORBIDDEN_FRUIT.defineConsumedFruit(player, false);
 	}
 
 	@Override
 	public boolean canDrink(Level world, Player player, ItemStack potion) {
-		return EnigmaticItems.forbiddenFruit.haveConsumedFruit(player);
+		return EnigmaticItems.FORBIDDEN_FRUIT.haveConsumedFruit(player);
 	}
 
 

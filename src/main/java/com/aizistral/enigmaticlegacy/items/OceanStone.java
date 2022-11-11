@@ -13,7 +13,7 @@ import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.aizistral.omniconfig.Configuration;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
@@ -203,7 +203,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	@Override
 	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
 		if (context.entity() instanceof ServerPlayer player) {
-			EnigmaticItems.miningCharm.removeNightVisionEffect(player, this.nightVisionDuration);
+			EnigmaticItems.MINING_CHARM.removeNightVisionEffect(player, this.nightVisionDuration);
 			player.getAttributes().removeAttributeModifiers(this.createAttributeMap(player));
 		}
 	}
@@ -211,14 +211,14 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
 		if (context.entity() instanceof ServerPlayer player)
-			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.oceanStone)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.OCEAN_STONE)) {
 				if (player.isEyeInFluid(FluidTags.WATER)) {
 					EnigmaticEventHandler.isApplyingNightVision = true;
 					player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
 					EnigmaticEventHandler.isApplyingNightVision = false;
 					player.setAirSupply(300);
 				} else {
-					EnigmaticItems.miningCharm.removeNightVisionEffect(player, this.nightVisionDuration);
+					EnigmaticItems.MINING_CHARM.removeNightVisionEffect(player, this.nightVisionDuration);
 				}
 
 				player.getAttributes().addTransientAttributeModifiers(this.createAttributeMap(player));

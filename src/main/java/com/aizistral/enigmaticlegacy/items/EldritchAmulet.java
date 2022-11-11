@@ -12,7 +12,7 @@ import com.aizistral.enigmaticlegacy.api.items.IEldritch;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
-import com.aizistral.enigmaticlegacy.registry.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
@@ -121,7 +121,7 @@ public class EldritchAmulet extends AscensionAmulet implements IEldritch {
 	@Override
 	public boolean canEquip(SlotContext context, ItemStack stack) {
 		if (context.entity() instanceof Player player)
-			return !SuperpositionHandler.hasCurio(player, EnigmaticItems.eldritchAmulet)
+			return !SuperpositionHandler.hasCurio(player, EnigmaticItems.ELDRITCH_AMULET)
 					&& SuperpositionHandler.isTheWorthyOne(player) && super.canEquip(context, stack);
 		else
 			return false;
