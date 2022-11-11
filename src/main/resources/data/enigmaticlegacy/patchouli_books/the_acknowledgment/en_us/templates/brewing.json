@@ -1,5 +1,5 @@
 {
-  "processor": "com.integral.enigmaticlegacy.handlers.AdvancedBrewingRecipeProcessor",
+  "processor": "com.aizistral.enigmaticlegacy.handlers.AdvancedBrewingRecipeProcessor",
   "components": [
     {
       "type": "patchouli:header",

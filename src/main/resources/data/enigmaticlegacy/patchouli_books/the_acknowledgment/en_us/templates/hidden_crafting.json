@@ -1,5 +1,5 @@
 {
-  "processor": "com.integral.enigmaticlegacy.handlers.HiddenRecipeProcessor",
+  "processor": "com.aizistral.enigmaticlegacy.handlers.HiddenRecipeProcessor",
   "components": [
     {
       "type": "patchouli:header",

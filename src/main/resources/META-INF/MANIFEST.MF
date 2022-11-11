@@ -1,1 +1,1 @@
-MixinConnector: com.integral.enigmaticlegacy.MixinConnector
+MixinConnector: com.aizistral.enigmaticlegacy.MixinConnector
