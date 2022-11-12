@@ -1134,9 +1134,8 @@
 	
 	"book.enigmaticlegacy.entry.sharpshooter_enchantment.name": "Sharpshooter",
 	"book.enigmaticlegacy.entry.sharpshooter_enchantment.heading.1": "The Enchantment",
-	"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.1": "One of possible crossbow enchantments, this one stands among the most useful.<br2/>It increases the damage that arrows shot with the crossbow deal, somewhat similar to Power on bows. The difference here, however, is that unlike bows, arrows infused with power of this enchantment will always deal same amount of damage, instead of it varying to some",
-	"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.2": "degree. The exact formula of resulting damage value can be spelled as following: <&l>6 + (3 * [<&5>Sharpshooter Level<&0>])$(clear).<br2/>This means that at maximum level of V that this enchantment can have, your arrows will deal stable total of 21 damage each.<br2/>",
-	"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.3": "Sharpshooter does only affect arrows - it will not increase damage of fireworks, for instance.<br2/>Furthermore, it cannot be combined with Multishot or Piercing.",
+	"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.1": "One of possible crossbow enchantments, this one stands among the most useful.<br2/>It increases the damage that arrows shot with the crossbow deal, somewhat similar to Power on bows. More precisely, for each level of Sharpshooter applied base damage of the crossbow will be increased by <&l>+40%$(clear).",
+	"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.2": "Sharpshooter only affects arrows - it will not increase damage of fireworks, for instance. Furthermore, it cannot be combined with Multishot or Piercing.",
 	
 	
 	"book.enigmaticlegacy.entry.nemesis_curse.name": "Nemesis",

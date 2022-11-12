@@ -34,7 +34,6 @@ import com.aizistral.enigmaticlegacy.gui.GUIUtils;
 import com.aizistral.enigmaticlegacy.gui.PermadeathScreen;
 import com.aizistral.enigmaticlegacy.gui.ToggleMagnetEffectsButton;
 import com.aizistral.enigmaticlegacy.helpers.BlueSkiesHelper;
-import com.aizistral.enigmaticlegacy.helpers.CrossbowHelper;
 import com.aizistral.enigmaticlegacy.helpers.EnigmaticEnchantmentHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
@@ -200,6 +199,7 @@ import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.food.FoodData;
+import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -255,6 +255,7 @@ import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
+import net.minecraftforge.event.entity.living.LivingGetProjectileEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
@@ -314,6 +315,23 @@ public class EnigmaticEventHandler {
 	public static boolean isPoisonHurt = false;
 	public static boolean isApplyingNightVision = false;
 	private long clientWorldTicks = 0;
+
+	@SubscribeEvent
+	public void onGetProjectile(LivingGetProjectileEvent event) {
+		ItemStack weapon = event.getProjectileWeaponItemStack();
+
+		if (weapon.getItem() instanceof CrossbowItem && weapon.getEnchantmentLevel(EnigmaticEnchantments.CEASELESS) > 0) {
+			ItemStack arrows = event.getProjectileItemStack();
+
+			if (arrows.isEmpty() && CeaselessEnchantment.allowNoArrow.getValue()) {
+				event.setProjectileItemStack(new ItemStack(Items.ARROW, 64));
+			} else if (arrows.getItem() instanceof ArrowItem) {
+				ItemStack arrowsCopy = arrows.copy();
+				arrowsCopy.setCount(64);
+				event.setProjectileItemStack(arrowsCopy);
+			}
+		}
+	}
 
 	@SubscribeEvent
 	public void onAttachCapabilities(AttachCapabilitiesEvent<Entity> event) {
@@ -478,79 +496,6 @@ public class EnigmaticEventHandler {
 	@SubscribeEvent
 	public void serverStarted(ServerStartedEvent event) {
 		// NO-OP
-	}
-
-	@SubscribeEvent
-	public void onItemUse(LivingEntityUseItemEvent.Stop event) {
-		if (event.getItem().getItem() instanceof CrossbowItem && event.getEntity() instanceof Player) {
-			CrossbowItem crossbow = (CrossbowItem) event.getItem().getItem();
-			ItemStack crossbowStack = event.getItem();
-
-			/*
-			 * Make sure that our crossbow actually has any of this mod's enchantments,
-			 * since otherwise overriding it's behavior is unneccessary.
-			 */
-
-			if (!EnigmaticEnchantmentHelper.hasCustomCrossbowEnchantments(crossbowStack))
-				return;
-
-			// Cancelling the event to prevent vanilla functionality from working
-			event.setCanceled(true);
-
-			/*
-			 * Same code as in CrossbowItem#onPlayerStoppedUsing, but CrossbowItem#hasAmmo is
-			 * replaced with altered method from CrossbowHelper, to enforce custom behavior.
-			 */
-
-			int i = crossbow.getUseDuration(crossbowStack) - event.getDuration();
-			float f = CrossbowItem.getPowerForTime(i, crossbowStack);
-			if (f >= 1.0F && !CrossbowItem.isCharged(crossbowStack) && CrossbowHelper.hasAmmo(event.getEntity(), crossbowStack)) {
-				CrossbowItem.setCharged(crossbowStack, true);
-				SoundSource soundSource = event.getEntity() instanceof Player ? SoundSource.PLAYERS : SoundSource.HOSTILE;
-				event.getEntity().level.playSound((Player) null, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), SoundEvents.CROSSBOW_LOADING_END, soundSource, 1.0F, 1.0F / (THEY_SEE_ME_ROLLIN.nextFloat() * 0.5F + 1.0F) + 0.2F);
-			}
-
-		}
-	}
-
-	@SubscribeEvent
-	public void onPlayerClick(PlayerInteractEvent event) {
-		if (event instanceof PlayerInteractEvent.RightClickItem || event instanceof PlayerInteractEvent.RightClickBlock || event instanceof PlayerInteractEvent.EntityInteract) {
-			if (event.getItemStack().getItem() instanceof CrossbowItem) {
-				ItemStack itemstack = event.getItemStack();
-
-				/*
-				 * Make sure that our crossbow actually has any of this mod's enchantments,
-				 * since otherwise overriding it's behavior is unneccessary.
-				 */
-
-				if (!EnigmaticEnchantmentHelper.hasCustomCrossbowEnchantments(itemstack))
-					return;
-
-				// Cancelling the event to prevent vanilla functionality from working
-				event.setCanceled(true);
-
-				/*
-				 * Same code as in CrossbowItem#onItemRightClick, but CrossbowItem#fireProjectiles is
-				 * replaced with altered method from CrossbowHelper, to enforce custom behavior.
-				 */
-
-				if (CrossbowItem.isCharged(itemstack)) {
-					CrossbowHelper.fireProjectiles(event.getLevel(), event.getEntity(), event.getHand(), itemstack, CrossbowItem.getShootingPower(itemstack), 1.0F);
-					CrossbowItem.setCharged(itemstack, false);
-					event.setCancellationResult(InteractionResult.CONSUME);
-				} else if (!event.getEntity().getProjectile(itemstack).isEmpty() || (CeaselessEnchantment.allowNoArrow.getValue() && EnigmaticEnchantmentHelper.hasCeaselessEnchantment(itemstack))) {
-					if (!CrossbowItem.isCharged(itemstack)) {
-						((CrossbowItem) Items.CROSSBOW).startSoundPlayed = false;
-						((CrossbowItem) Items.CROSSBOW).midLoadSoundPlayed = false;
-						event.getEntity().startUsingItem(event.getHand());
-					}
-					event.setCancellationResult(InteractionResult.CONSUME);
-				} else {
-					event.setCancellationResult(InteractionResult.FAIL);
-				}
-			}
-		}
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -1872,23 +1817,7 @@ public class EnigmaticEventHandler {
 			}
 		}
 
-		if (event.getSource().getDirectEntity() instanceof AbstractArrow) {
-			AbstractArrow arrow = (AbstractArrow) event.getSource().getDirectEntity();
-
-			for (String tag : arrow.getTags()) {
-				if (tag.startsWith(CrossbowHelper.sharpshooterTagPrefix)) {
-
-					/*
-					 * Since our custom tag is just a prefix + enchantment level, we can remove
-					 * that prefix from received String and freely parse remaining Integer.
-					 */
-
-					int dmg = Integer.parseInt(tag.replace(CrossbowHelper.sharpshooterTagPrefix, ""));
-					event.setAmount(dmg);
-					break;
-				}
-			}
-		} else if (event.getSource().getDirectEntity() instanceof Player && "player".equals(event.getSource().msgId)) {
+		if (event.getSource().getDirectEntity() instanceof Player && "player".equals(event.getSource().msgId)) {
 			Player player = (Player) event.getSource().getDirectEntity();
 
 			/*
@@ -2988,7 +2917,6 @@ public class EnigmaticEventHandler {
 					} else {
 						Quote.getRandom(Quote.DEATH_QUOTES).playIfUnlocked((ServerPlayer) player, 10);
 					}
-
 				if (!player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
 					if (SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL)) {
 						SuperpositionHandler.unlockSpecialSlot("scroll", event.getEntity());

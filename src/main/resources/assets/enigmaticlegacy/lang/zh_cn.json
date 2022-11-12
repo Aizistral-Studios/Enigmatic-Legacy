@@ -1132,13 +1132,6 @@
   "book.enigmaticlegacy.entry.ceaseless_enchantment.page.3": "神射手只会影响箭矢，例如，它不会增加烟火的伤害。<br2/>此外，它与多重射击和穿透附魔冲突。",
   
   
-  "book.enigmaticlegacy.entry.sharpshooter_enchantment.name": "神射手",
-  "book.enigmaticlegacy.entry.sharpshooter_enchantment.heading.1": "附魔",
-  "book.enigmaticlegacy.entry.sharpshooter_enchantment.page.1": "一种可以附在弩的上附魔，在一众附魔中用处极为突出。<br2/>它增加了由弩射出的箭矢的伤害，就像弓的力量附魔那样，但有一些不同，此附魔影响的箭矢将始终造成相同的伤害，而不是浮动伤害。",
-  "book.enigmaticlegacy.entry.sharpshooter_enchantment.page.2": "这是伤害的公式：<&l>6 + (3 * [<&5>神射手等级<&0>])$(clear)。<br2/>这意味着，当这个附魔的等级为最高值 V 的时候，你的箭矢将稳定造成 21 伤害。<br2/>",
-  "book.enigmaticlegacy.entry.sharpshooter_enchantment.page.3": "神射手只会影响箭矢，例如，它不会增加烟火的伤害。<br2/>此外，它与多重射击和穿透附魔冲突。",
-  
-  
   "book.enigmaticlegacy.entry.nemesis_curse.name": "复仇诅咒",
   "book.enigmaticlegacy.entry.nemesis_curse.heading.1": "复仇",
   "book.enigmaticlegacy.entry.nemesis_curse.page.1": "一种鲜为人知的诅咒型附魔，相比其他诅咒更奇异和难明。<br2/>它仅能附着在近战武器上，像剑或斧。如果你使用带有复仇诅咒的武器进行攻击，自身将受到造成的伤害的 25% 伤害。<br2/>",

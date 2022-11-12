@@ -1107,13 +1107,6 @@
 "book.enigmaticlegacy.entry.ceaseless_enchantment.page.3": "명사수는 화살에만 영향을 미칩니다 - 예를 들어, 폭죽의 피해를 증가시키지 않습니다.<br2/>또한 다중발사나 관통과 함께 사용할 수 없습니다.",
 
 
-"book.enigmaticlegacy.entry.sharpshooter_enchantment.name": "명사수",
-"book.enigmaticlegacy.entry.sharpshooter_enchantment.heading.1": "마법 부여",
-"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.1": "가장 유용한 마법 부여들 중 하나로, 석궁에 적용 가능합니다.<br2/>활의 힘 마법 부여와 비슷하게, 석궁으로 발사하는 화살의 피해량을 증가시킵니다. 활과 다른 점은, 이 마법의 힘이 깃든 화살은 오차 없이, 항상 같은 양의 피해를 입힌다는 것입니다.",
-"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.2": "정확한 피해량 계산 공식은 다음과 같습니다 : <&l>6 + (3 * [<&5>명사수 마법 부여 등급<&0>])$(clear).<br2/>즉, 이 마법 부여의 최고 등급인 V 등급에서, 화살은 정확히 21만큼의 피해를 입히게 될 것입니다.<br2/>",
-"book.enigmaticlegacy.entry.sharpshooter_enchantment.page.3": "명사수는 일반 화살에만 적용됩니다 - 예를 들어, 폭죽의 피해량을 증가시키지는 않습니다.<br2/>또한, 다중 발사와 관통 마법 부여와 동시에 부여될 수 없습니다.",
-
-
 "book.enigmaticlegacy.entry.nemesis_curse.name": "천벌",
 "book.enigmaticlegacy.entry.nemesis_curse.heading.1": "저주",
 "book.enigmaticlegacy.entry.nemesis_curse.page.1": "저주받은 마법 부여 중 하나인 이 마법 부여는 다른 마법 부여보다 신기하고 모호합니다.<br2/>검이나 도끼 같은 근거리 무기에서만 볼 수 있습니다. 천벌 저주가 담긴 무기로 직접 공격할 경우, 가한 피해의 25%%정도를 자신에게 돌려받게 됩니다.<br2/>",

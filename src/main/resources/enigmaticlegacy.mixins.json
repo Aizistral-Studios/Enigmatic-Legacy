@@ -29,7 +29,8 @@
 	"MixinSummonedEntityTrigger",
 	"MixinEnterBlockTrigger",
 	"MixinItemStack",
-	"MixinPlayerList"
+	"MixinPlayerList",
+	"MixinCrossbowItem"
   ],
   "client": [
 	"AccessorDisconnectedScreen",
