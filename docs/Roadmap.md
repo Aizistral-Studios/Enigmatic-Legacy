@@ -1,5 +1,5 @@
 # Don't-Forget-To-Do-Someday List
-- [ ] Change update handler, so that update info is always pulled from master branch and can be fetched for different Minecraft versions individually. Alternatively, ditch current system entirely and use CurseForge API for fetching updates;
+- [ ] Change update handler, so that update info is always pulled from master branch and can be fetched for different Minecraft versions individually;
 - [x] Figure something out with blasted tooltips. The way we currently address damnable auto-wrapping from Forge, unfortunately, breaks a lot of other mods trying to add something to Enigmatic Legacy's tooltips. I am yet to attempt to post an issue on the matter to Forge repository, but my experience tells me that suggesting change on their side is often a futile effort, so we must be prepared to deal with this ourselves;
 - [x] Migrate everything from `com.integral` to `com.aizistral`;
 - [x] Make The Architect's Favor separate from the main mod and include it under different license terms;
