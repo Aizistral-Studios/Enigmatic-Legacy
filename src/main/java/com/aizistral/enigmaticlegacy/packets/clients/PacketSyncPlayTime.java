@@ -8,6 +8,8 @@ import com.aizistral.enigmaticlegacy.api.capabilities.IPlaytimeCounter;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.NetworkEvent;
 
 public class PacketSyncPlayTime {
@@ -32,15 +34,20 @@ public class PacketSyncPlayTime {
 
 	public static void handle(PacketSyncPlayTime msg, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
-			Minecraft.getInstance().level.players().stream().filter(player -> player.getUUID().equals(msg.playerID))
-			.findAny().ifPresent(player -> {
-				var counter = IPlaytimeCounter.get(player);
-				counter.setTimeWithCurses(msg.timeWithCurses);
-				counter.setTimeWithoutCurses(msg.timeWithoutCurses);
-			});
+			handle(msg.playerID, msg.timeWithCurses, msg.timeWithoutCurses);
 		});
 
 		ctx.get().setPacketHandled(true);
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	private static void handle(UUID playerID, long timeWithCurses, long timeWithoutCurses) {
+		Minecraft.getInstance().level.players().stream().filter(player -> player.getUUID().equals(playerID))
+		.findAny().ifPresent(player -> {
+			var counter = IPlaytimeCounter.get(player);
+			counter.setTimeWithCurses(timeWithCurses);
+			counter.setTimeWithoutCurses(timeWithoutCurses);
+		});
 	}
 }
 

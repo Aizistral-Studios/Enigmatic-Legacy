@@ -37,18 +37,6 @@ public class EnigmaticKeybindHandler {
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
-	public void onRegisterKeybinds(RegisterKeyMappingsEvent event) {
-		this.enderRingKey = new KeyMapping("key.enderRing", GLFW.GLFW_KEY_I, "key.categories.enigmaticLegacy");
-		this.spellstoneAbilityKey = new KeyMapping("key.spellstoneAbility", GLFW.GLFW_KEY_K, "key.categories.enigmaticLegacy");
-		this.xpScrollKey = new KeyMapping("key.xpScroll", GLFW.GLFW_KEY_J, "key.categories.enigmaticLegacy");
-
-		event.register(this.enderRingKey);
-		event.register(this.spellstoneAbilityKey);
-		event.register(this.xpScrollKey);
-	}
-
-	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
 	public void onKeyInput(TickEvent.ClientTickEvent event) {
 		if (event.phase != TickEvent.Phase.START || !Minecraft.getInstance().isWindowActive() || Minecraft.getInstance().player == null)
 			return;

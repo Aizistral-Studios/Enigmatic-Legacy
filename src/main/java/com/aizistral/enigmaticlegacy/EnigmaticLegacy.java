@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.lang3.tuple.Triple;
+import org.lwjgl.glfw.GLFW;
 
 import com.aizistral.enigmaticlegacy.api.capabilities.PlayerPlaytimeCounter;
 import com.aizistral.enigmaticlegacy.api.items.IAdvancedPotionItem.PotionType;
@@ -101,6 +102,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
@@ -138,6 +140,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
@@ -210,7 +213,6 @@ public class EnigmaticLegacy {
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientRegistries);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::intermodStuff);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onLoadComplete);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(keybindHandler::onRegisterKeybinds);
 		FMLJavaModLoadingContext.get().getModEventBus().register(this);
 		FMLJavaModLoadingContext.get().getModEventBus().register(PROXY);
 
@@ -444,6 +446,18 @@ public class EnigmaticLegacy {
 
 	public boolean isLockboxPresent() {
 		return ModList.get().isLoaded("enigmaticlockbox");
+	}
+
+	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
+	public void onRegisterKeybinds(RegisterKeyMappingsEvent event) {
+		keybindHandler.enderRingKey = new KeyMapping("key.enderRing", GLFW.GLFW_KEY_I, "key.categories.enigmaticLegacy");
+		keybindHandler.spellstoneAbilityKey = new KeyMapping("key.spellstoneAbility", GLFW.GLFW_KEY_K, "key.categories.enigmaticLegacy");
+		keybindHandler.xpScrollKey = new KeyMapping("key.xpScroll", GLFW.GLFW_KEY_J, "key.categories.enigmaticLegacy");
+
+		event.register(keybindHandler.enderRingKey);
+		event.register(keybindHandler.spellstoneAbilityKey);
+		event.register(keybindHandler.xpScrollKey);
 	}
 
 	@SubscribeEvent
