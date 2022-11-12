@@ -165,7 +165,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 @Mod(EnigmaticLegacy.MODID)
 public class EnigmaticLegacy {
 	public static final String MODID = "enigmaticlegacy";
-	public static final String VERSION = "2.25.0";
+	public static final String VERSION = "2.26.0";
 	public static final String RELEASE_TYPE = "Release";
 	public static final String NAME = "Enigmatic Legacy";
 
