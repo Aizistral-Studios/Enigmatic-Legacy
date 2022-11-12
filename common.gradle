@@ -14,7 +14,7 @@ println(" - OS Archetype: " + System.getProperty('os.arch'))
 
 minecraft {
 	println("Specifying MCP mappings...")
-    mappings channel: 'official', version: project.version_mcp
+    mappings channel: 'parchment', version: project.version_mcp
 	
 	runs {
         client {
@@ -58,11 +58,12 @@ repositories {
 	
 	
 	//flatDir {  dirs 'deps' }
-	maven { url "file:///${project.projectDir}/deps/" } // I'LL FUCKING STAB YOUR PARENTS
+	maven {  url "file:///${project.projectDir}/deps/" } // I'LL FUCKING STAB YOUR PARENTS
 	maven {  url = "https://maven.theillusivec4.top/" } // curios
-	maven { url 'https://maven.blamejared.com' } // patchouli
+	maven {  url 'https://maven.blamejared.com' } // patchouli
 	maven {  url = "https://repo.spongepowered.org/maven" } // mixin
     maven {	 url "https://dvs1.progwml6.com/files/maven/" } // no idea
+	maven {  url = 'https://maven.parchmentmc.org'  }
 }
 
 dependencies {
