@@ -103,7 +103,9 @@ curseforge {
         changelogType = 'html'
         changelog = file('docs/changelog.html')
 		
-		addGameVersion '1.18.2'
+		addGameVersion '1.19.2'
+		addGameVersion 'Forge'
+		addGameVersion 'Java 17'
 		
 		relations {
 			requiredDependency 'curios'
@@ -124,7 +126,8 @@ modrinth {
     versionType = "release"
 	changelog = rootProject.file("docs/changelog.html").text
     uploadFile = jar
-    gameVersions = ["1.18.2"]
+    gameVersions = ["1.19.2"]
+	loaders = ['forge']
     dependencies {
 		// The scope can be `required`, `optional`, or `incompatible`
 		required.project "nU0bVIaL"
