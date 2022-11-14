@@ -124,7 +124,7 @@ modrinth {
     versionNumber = project.version
 	versionName = "Enigmatic Legacy v" + project.version
     versionType = "release"
-	changelog = rootProject.file("docs/changelog.html").text
+	changelog = "See on CurseForge: https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy/files"
     uploadFile = jar
     gameVersions = ["1.19.2"]
 	loaders = ['forge']
