@@ -42,6 +42,7 @@ import top.theillusivec4.curios.api.SlotContext;
 
 public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 	public static final List<Item> EXCLUDED_ARMOR = new ArrayList<>();
+	private static String[] excludedArmorRaw = new String[0];
 	public static Omniconfig.IntParameter spellstoneCooldown;
 	public static Omniconfig.DoubleParameter defaultArmorBonus;
 	public static Omniconfig.DoubleParameter superArmorBonus;
@@ -97,10 +98,12 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 
 		builder.popPrefix();
 
-		String[] exclusions = builder.config.getStringList("GolemHeartExcludedArmor", builder.getCurrentCategory(), new String[] { "minecraft:elytra" },
+		excludedArmorRaw = builder.config.getStringList("GolemHeartExcludedArmor", builder.getCurrentCategory(), new String[] { "minecraft:elytra", "enigmaticlegacy:enigmatic_elytra" },
 				"List of items that should not be counted as armor by Heart of the Golem, even when equipped in armor slots.");
+	}
 
-		Arrays.stream(exclusions).forEach(entry -> {
+	public static void buildArmorExclusions() {
+		Arrays.stream(excludedArmorRaw).forEach(entry -> {
 			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(entry));
 
 			if (item != null) {
@@ -110,7 +113,6 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 			}
 		});
 	}
-
 
 	//private static final ResourceLocation TEXTURE = new ResourceLocation(EnigmaticLegacy.MODID, "textures/models/armor/dark_armor.png");
 	public Object model;

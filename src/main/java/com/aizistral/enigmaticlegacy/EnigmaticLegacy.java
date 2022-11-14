@@ -40,6 +40,7 @@ import com.aizistral.enigmaticlegacy.helpers.PotionHelper;
 import com.aizistral.enigmaticlegacy.items.CosmicCake;
 import com.aizistral.enigmaticlegacy.items.CosmicScroll;
 import com.aizistral.enigmaticlegacy.items.EndAnchor;
+import com.aizistral.enigmaticlegacy.items.GolemHeart;
 import com.aizistral.enigmaticlegacy.items.generic.GenericBlockItem;
 import com.aizistral.enigmaticlegacy.objects.LoggerWrapper;
 import com.aizistral.enigmaticlegacy.objects.RegisteredMeleeAttack;
@@ -317,6 +318,7 @@ public class EnigmaticLegacy {
 		LOGGER.info("Initializing common setup phase...");
 
 		this.loadClass(EnigmaticPotions.class);
+		GolemHeart.buildArmorExclusions();
 
 		damageTypesFire.add(DamageSource.LAVA.msgId);
 		damageTypesFire.add(DamageSource.IN_FIRE.msgId);
