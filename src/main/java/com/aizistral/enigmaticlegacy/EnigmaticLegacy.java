@@ -82,6 +82,7 @@ import com.aizistral.enigmaticlegacy.registries.EnigmaticEffects;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticEnchantments;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticEntities;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticLootFunctions;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticLootModifiers;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticMenus;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticPotions;
@@ -317,7 +318,9 @@ public class EnigmaticLegacy {
 	private void setup(FMLCommonSetupEvent event) {
 		LOGGER.info("Initializing common setup phase...");
 
-		this.loadClass(EnigmaticPotions.class);
+		event.enqueueWork(() -> this.loadClass(EnigmaticLootFunctions.class));
+		event.enqueueWork(() -> this.loadClass(EnigmaticPotions.class));
+
 		GolemHeart.buildArmorExclusions();
 
 		damageTypesFire.add(DamageSource.LAVA.msgId);
