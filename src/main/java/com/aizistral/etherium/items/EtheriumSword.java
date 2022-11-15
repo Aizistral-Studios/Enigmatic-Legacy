@@ -39,11 +39,6 @@ public class EtheriumSword extends SwordItem implements IEtheriumTool {
 	}
 
 	@Override
-	public IEtheriumConfig getConfig() {
-		return this.getConfig();
-	}
-
-	@Override
 	@OnlyIn(Dist.CLIENT)
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
