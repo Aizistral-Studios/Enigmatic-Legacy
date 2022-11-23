@@ -248,7 +248,6 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
-import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -259,10 +258,11 @@ import net.minecraftforge.event.entity.living.LivingGetProjectileEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.event.entity.player.AdvancementEvent.AdvancementEarnEvent;
+import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -2839,8 +2839,7 @@ public class EnigmaticEventHandler {
 	}
 
 	@SubscribeEvent
-	@SuppressWarnings("deprecation")
-	public void onAdvancement(AdvancementEarnEvent event) {
+	public void onAdvancement(AdvancementEvent event) {
 		String id = event.getAdvancement().getId().toString();
 		Player player = event.getEntity();
 
@@ -2990,16 +2989,17 @@ public class EnigmaticEventHandler {
 
 
 	@SubscribeEvent
-	public void onAttackTargetSet(LivingChangeTargetEvent event) {
-		if (event.getNewTarget() instanceof Player) {
-			Player player = (Player) event.getNewTarget();
+	public void onAttackTargetSet(LivingSetAttackTargetEvent event) {
+		if (event.getTarget() instanceof Player) {
+			Player player = (Player) event.getTarget();
 
 			if (event.getEntity() instanceof Mob) {
 				Mob insect = (Mob) event.getEntity();
 
 				if (insect.getMobType() == MobType.ARTHROPOD)
 					if (SuperpositionHandler.hasAntiInsectAcknowledgement(player)) {
-						event.setCanceled(true);
+						insect.setTarget(null);
+						//event.setCanceled(true);
 					}
 
 				if (insect instanceof Guardian && insect.getClass() != ElderGuardian.class) {
@@ -3007,7 +3007,8 @@ public class EnigmaticEventHandler {
 						boolean isBlacklisted = AGERED_GUARDIANS.containsEntry(player, insect);
 
 						if (insect.getLastHurtByMob() != player && !isBlacklisted) {
-							event.setCanceled(true);
+							insect.setTarget(null);
+							//event.setCanceled(true);
 						} else {
 							if (!isBlacklisted) {
 								AGERED_GUARDIANS.put(player, (Guardian)insect);
