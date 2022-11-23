@@ -310,6 +310,7 @@ public class EnigmaticEventHandler {
 	public static final Map<Player, AABB> DESOLATION_BOXES = new WeakHashMap<>();
 	public static final Map<Player, Float> LAST_HEALTH = new WeakHashMap<>();
 	public static final Map<Player, Integer> LAST_SOUL_COMPASS_UPDATE = new WeakHashMap<>();
+	public static final List<ServerPlayer> SCHEDULED_DATA_SYNC = new ArrayList<>();
 
 	public static int scheduledCubeRevive = -1;
 	public static boolean isPoisonHurt = false;
@@ -948,6 +949,11 @@ public class EnigmaticEventHandler {
 
 		if (event.getEntity() instanceof Player player) {
 			if (!player.level.isClientSide) {
+				SCHEDULED_DATA_SYNC.removeIf(p -> {
+					TransientPlayerData.get(p).syncToPlayer();
+					return true;
+				});
+
 				var counter = IPlaytimeCounter.get(player);
 
 				if (SuperpositionHandler.isTheCursedOne(player)) {
@@ -2199,16 +2205,23 @@ public class EnigmaticEventHandler {
 
 		EnigmaticItems.SOUL_CRYSTAL.updatePlayerSoulMap(newPlayer);
 	}
+
 	@SubscribeEvent
 	public void entityJoinWorld(EntityJoinLevelEvent event) {
 		Entity entity = event.getEntity();
 
 		if (entity instanceof ServerPlayer joinedPlayer) {
 			EnigmaticItems.SOUL_CRYSTAL.updatePlayerSoulMap(joinedPlayer);
+			TransientPlayerData joinedData = TransientPlayerData.get(joinedPlayer);
+
 			ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers().forEach(serverPlayer -> {
-				TransientPlayerData.get(joinedPlayer).syncToPlayer(serverPlayer);
-				TransientPlayerData.get(serverPlayer).syncToPlayer(joinedPlayer);
+				if (serverPlayer != joinedPlayer) {
+					joinedData.syncToPlayer(serverPlayer);
+					TransientPlayerData.get(serverPlayer).syncToPlayer(joinedPlayer);
+				}
 			});
+
+			SCHEDULED_DATA_SYNC.add(joinedPlayer);
 		}
 
 		if (entity instanceof PathfinderMob mob && ((PathfinderMob)entity).getMobType() == MobType.ARTHROPOD) {

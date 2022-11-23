@@ -438,6 +438,7 @@ public class EnigmaticLegacy {
 		EnigmaticEventHandler.DESOLATION_BOXES.clear();
 		EnigmaticEventHandler.LAST_SOUL_COMPASS_UPDATE.clear();
 		EnigmaticEventHandler.LAST_HEALTH.clear();
+		EnigmaticEventHandler.SCHEDULED_DATA_SYNC.clear();
 		EnigmaticItems.SOUL_CRYSTAL.attributeDispatcher.clear();
 		EnigmaticItems.ENIGMATIC_ITEM.flightMap.clear();
 		EnigmaticItems.HEAVEN_SCROLL.flyMap.clear();
