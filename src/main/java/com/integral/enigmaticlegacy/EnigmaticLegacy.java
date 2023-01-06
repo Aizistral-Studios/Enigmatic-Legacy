@@ -755,7 +755,7 @@ public class EnigmaticLegacy {
 
 	private ResourceLocation makeCustomStat(String pKey, StatFormatter pFormatter) {
 		ResourceLocation resourcelocation = new ResourceLocation(EnigmaticLegacy.MODID, pKey);
-		Registry.register(Registry.CUSTOM_STAT, pKey, resourcelocation);
+		Registry.register(Registry.CUSTOM_STAT, resourcelocation, resourcelocation);
 		Stats.CUSTOM.get(resourcelocation, pFormatter);
 		return resourcelocation;
 	}
