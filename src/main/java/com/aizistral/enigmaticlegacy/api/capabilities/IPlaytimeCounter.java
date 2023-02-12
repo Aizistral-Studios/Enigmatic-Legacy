@@ -43,6 +43,11 @@ public interface IPlaytimeCounter extends INBTSerializable<CompoundTag> {
 		}
 
 		@Override
+		public void matchStats() {
+			// NO-OP
+		}
+
+		@Override
 		public CompoundTag serializeNBT() {
 			return new CompoundTag();
 		}
@@ -68,6 +73,8 @@ public interface IPlaytimeCounter extends INBTSerializable<CompoundTag> {
 	public void incrementTimeWithoutCurses();
 
 	public void incrementTimeWithCurses();
+
+	public void matchStats();
 
 	@Override
 	public CompoundTag serializeNBT();

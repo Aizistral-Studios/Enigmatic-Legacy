@@ -65,6 +65,12 @@ public class PlayerPlaytimeCounter implements IPlaytimeCounter {
 		this.updateStat(TIME_WITH_CURSES_STAT, (int) ++this.timeWithCurses);
 	}
 
+	@Override
+	public void matchStats() {
+		this.updateStat(TIME_WITH_CURSES_STAT, (int) this.timeWithCurses);
+		this.updateStat(TIME_WITHOUT_CURSES_STAT, (int) this.timeWithoutCurses);
+	}
+
 	private void updateStat(ResourceLocation stat, int value) {
 		if (this.player instanceof ServerPlayer player) {
 			player.getStats().setValue(player, Stats.CUSTOM.get(stat), value);

@@ -375,11 +375,11 @@ public class EnigmaticLegacy {
 		LOGGER.info("Registering stats...");
 
 		event.enqueueWork(() -> {
-			Registry.register(Registry.CUSTOM_STAT, PlayerPlaytimeCounter.TIME_WITH_CURSES_STAT.getPath(),
+			Registry.register(Registry.CUSTOM_STAT, PlayerPlaytimeCounter.TIME_WITH_CURSES_STAT,
 					PlayerPlaytimeCounter.TIME_WITH_CURSES_STAT);
 			Stats.CUSTOM.get(PlayerPlaytimeCounter.TIME_WITH_CURSES_STAT, StatFormatter.TIME);
 
-			Registry.register(Registry.CUSTOM_STAT, PlayerPlaytimeCounter.TIME_WITHOUT_CURSES_STAT.getPath(),
+			Registry.register(Registry.CUSTOM_STAT, PlayerPlaytimeCounter.TIME_WITHOUT_CURSES_STAT,
 					PlayerPlaytimeCounter.TIME_WITHOUT_CURSES_STAT);
 			Stats.CUSTOM.get(PlayerPlaytimeCounter.TIME_WITHOUT_CURSES_STAT, StatFormatter.TIME);
 		});

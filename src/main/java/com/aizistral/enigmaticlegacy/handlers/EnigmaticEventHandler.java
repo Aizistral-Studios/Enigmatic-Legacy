@@ -908,6 +908,7 @@ public class EnigmaticEventHandler {
 	private void syncPlayTime(Player player) {
 		if (!player.level.isClientSide) {
 			var counter = IPlaytimeCounter.get(player);
+			counter.matchStats();
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() ->
 			new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64,
 					player.level.dimension())), new PacketSyncPlayTime(player.getUUID(),
