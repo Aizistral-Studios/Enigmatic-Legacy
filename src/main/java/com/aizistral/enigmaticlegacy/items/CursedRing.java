@@ -180,6 +180,10 @@ public class CursedRing extends ItemBaseCurio {
 
 			// Ugly but gets the job done
 			neutralAngerBlacklist.clear();
+
+			// See https://github.com/Aizistral-Studios/Enigmatic-Legacy/pull/412
+			neutralAngerBlacklist.add(new ResourceLocation("the_bumblezone", "bee_queen"));
+
 			String[] blacklist = builder.config.getStringList("CursedRingNeutralAngerBlacklist", "The Seven Curses", new String[0], "List of entities that should never be affected"
 					+ " by the Second Curse of Ring of the Seven Curses. Examples: minecraft:iron_golem, minecraft:zombified_piglin. Changing this option required game restart to take effect.");
 
