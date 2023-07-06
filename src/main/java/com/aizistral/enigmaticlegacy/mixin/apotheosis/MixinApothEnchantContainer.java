@@ -2,147 +2,132 @@ package com.aizistral.enigmaticlegacy.mixin.apotheosis;
 
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.EnchantmentMenu;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import shadows.apotheosis.Apoth;
-import shadows.apotheosis.advancements.EnchantedTrigger;
+import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.apotheosis.ench.table.ApothEnchantContainer;
-import shadows.apotheosis.ench.table.EnchantingRecipe;
 import shadows.apotheosis.ench.table.IEnchantableItem;
-import shadows.apotheosis.util.FloatReferenceHolder;
 
 import java.util.List;
+import java.util.Map;
 
-@Mixin(ApothEnchantContainer.class)
+/**
+ * Priority is set higher to run after other modifications (e.g. changes to the result of getEnchantmentList)<br>
+ * (<a href="https://github.com/Daripher/Passive-Skill-Tree">Example Mod</a>)
+ */
+@Mixin(value = ApothEnchantContainer.class, priority = 1500, remap = false)
 public class MixinApothEnchantContainer extends EnchantmentMenu {
     public MixinApothEnchantContainer(int containerID, final Inventory playerInventory) {
         super(containerID, playerInventory);
     }
 
-    @Shadow @Final protected FloatReferenceHolder eterna;
-    @Shadow @Final protected FloatReferenceHolder quanta;
-    @Shadow @Final protected FloatReferenceHolder arcana;
-    @Shadow @Final protected FloatReferenceHolder rectification;
+    @Unique
+    private ItemStack enigmaticLegacy$copyBeforeEnchanted;
 
-    /**
-     * Copied Original method (1.19.2 - 6.2.1)
-     */
-    @Override
-    public boolean clickMenuButton(Player player, int id) {
-        // New :: START
-        boolean hasPearl = EnigmaticItems.ENCHANTER_PEARL.isPresent(player);
-        // New :: END
+    @Unique
+    private List<EnchantmentInstance> enigmaticLegacy$storedEnchantmentList;
 
-        int level = this.costs[id];
-        ItemStack preFinalItem = this.enchantSlots.getItem(0);
-        // New :: Need to do this so that the field is considered final
-        ItemStack lapis = hasPearl ? Items.LAPIS_LAZULI.getDefaultInstance() : this.getSlot(1).getItem();
+    @Inject(method = "lambda$clickMenuButton$0", at = @At(value = "HEAD"))
+    public void storeBeforeEnchant(ItemStack toEnchant, int id, final Player player, int cost, final ItemStack lapis, int level, final Level world, final BlockPos pos, final CallbackInfo ci) {
+        enigmaticLegacy$copyBeforeEnchanted = toEnchant.copy();
+    }
 
-        // New :: START
-        if (hasPearl) {
-            lapis.setCount(64);
-        }
-        // New :: END
+    @ModifyVariable(method = "lambda$clickMenuButton$0", at = @At(value = "STORE"), name = "list")
+    public List<EnchantmentInstance> storeListOfEnchants(final List<EnchantmentInstance> list) {
+        enigmaticLegacy$storedEnchantmentList = list;
+        return list;
+    }
 
-        int cost = id + 1;
-        if ((lapis.isEmpty() || lapis.getCount() < cost) && !player.getAbilities().instabuild) {
-            return false;
-        } else if (this.costs[id] > 0
-                && !preFinalItem.isEmpty()
-                && (player.experienceLevel >= cost && player.experienceLevel >= this.costs[id] || player.getAbilities().instabuild)) {
-            this.access
-                    .execute(
-                            (world, pos) -> {
-                                // New :: `preFinalItem` was previously `toEnchant` - need to do this to re-assign later for the merge
-                                ItemStack toEnchant = preFinalItem;
+    @Inject(method = "lambda$clickMenuButton$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;awardStat(Lnet/minecraft/resources/ResourceLocation;)V", shift = At.Shift.BEFORE))
+    public void handleEnchanterPearl(final ItemStack toEnchant, int id, final Player player, int cost, final ItemStack lapis, int level, final Level world, final BlockPos pos, final CallbackInfo ci) {
+        if (EnigmaticItems.ENCHANTER_PEARL.isPresent(player)) {
+            if (enigmaticLegacy$storedEnchantmentList.get(0).enchantment == Apoth.Enchantments.INFUSION.get()) {
+                // Ignore Infusion enchants
+                return;
+            }
 
-                                float eterna = this.eterna.get();
-                                float quanta = this.quanta.get();
-                                float arcana = this.arcana.get();
-                                float rectification = this.rectification.get();
-                                List<EnchantmentInstance> list = this.getEnchantmentList(toEnchant, id, this.costs[id]);
-                                if (!list.isEmpty()) {
-                                    // New :: START
-                                    ItemStack doubleRoll = ItemStack.EMPTY;
+            // Use Apotheosis enchantment method
+            enigmaticLegacy$copyBeforeEnchanted = ((IEnchantableItem) enigmaticLegacy$copyBeforeEnchanted.getItem()).onEnchantment(enigmaticLegacy$copyBeforeEnchanted, enigmaticLegacy$storedEnchantmentList);
 
-                                    if (hasPearl) {
-                                        // Doing this here to work with a clean un-enchanted item
-                                        doubleRoll = EnchantmentHelper.enchantItem(player.getRandom(), toEnchant.copy(), Math.min(costs[id] + 7, 40), true);
-                                    }
-                                    // New :: END
+            // The enchantment result gets directly set in the `enchantSlots` not in the ItemStack
+            ItemStack enchantedItem = this.enchantSlots.getItem(0);
+            enchantedItem = enigmaticLegacy$mergeEnchantments(enchantedItem, enigmaticLegacy$copyBeforeEnchanted, false, false);
+            enchantedItem = SuperpositionHandler.maybeApplyEternalBinding(enchantedItem);
 
-                                    player.onEnchantmentPerformed(toEnchant, cost);
-                                    if (((EnchantmentInstance)list.get(0)).enchantment == Apoth.Enchantments.INFUSION.get()) {
-                                        EnchantingRecipe match = EnchantingRecipe.findMatch(world, toEnchant, eterna, quanta, arcana);
-                                        if (match == null) {
-                                            return;
-                                        }
-
-                                        this.enchantSlots.setItem(0, match.assemble(toEnchant, eterna, quanta, arcana));
-                                    } else {
-                                        this.enchantSlots.setItem(0, ((IEnchantableItem)toEnchant.getItem()).onEnchantment(toEnchant, list));
-                                    }
-
-                                    if (!player.getAbilities().instabuild) {
-                                        lapis.shrink(cost);
-                                        if (lapis.isEmpty()) {
-                                            this.enchantSlots.setItem(1, ItemStack.EMPTY);
-                                        }
-                                    }
-
-                                    // New :: START
-                                    if (hasPearl) {
-                                        toEnchant = SuperpositionHandler.mergeEnchantments(toEnchant, doubleRoll, false, false);
-                                        toEnchant = SuperpositionHandler.maybeApplyEternalBinding(toEnchant);
-
-                                        enchantSlots.setItem(0, toEnchant);
-                                    }
-                                    // New :: END
-
-                                    player.awardStat(Stats.ENCHANT_ITEM);
-                                    if (player instanceof ServerPlayer) {
-                                        ((EnchantedTrigger) CriteriaTriggers.ENCHANTED_ITEM)
-                                                .trigger((ServerPlayer)player, toEnchant, level, eterna, quanta, arcana, rectification);
-                                    }
-
-                                    this.enchantSlots.setChanged();
-                                    this.enchantmentSeed.set(player.getEnchantmentSeed());
-                                    this.slotsChanged(this.enchantSlots);
-                                    world.playSound(
-                                            (Player)null, pos, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, world.random.nextFloat() * 0.1F + 0.9F
-                                    );
-                                }
-                            }
-                    );
-            return true;
-        } else {
-            return false;
+            enchantSlots.setItem(0, enchantedItem);
         }
     }
 
-    // TODO :: Keeping this around in case there is a way to avoid overriding the entire method
-//    /** Enchanter Pearl disables lapis cost (Ignore the "There are no possible signatures for this injector") */
-//    @ModifyVariable(method = "clickMenuButton", at = @At(value = "STORE"), name = "lapis", remap = false)
-//    public ItemStack fakeLapis(final ItemStack lapis, /* Method arguments: */ final Player player) {
-//        if (EnigmaticItems.ENCHANTER_PEARL.isPresent(player)) {
-//            ItemStack dummy = Items.LAPIS_LAZULI.getDefaultInstance();
-//            dummy.setCount(64);
-//            return dummy;
-//        }
-//
-//        return lapis;
-//    }
+    /** Enchanter Pearl disables lapis cost (Ignore the "There are no possible signatures for this injector") */
+    @ModifyVariable(method = "clickMenuButton", at = @At(value = "STORE"), name = "lapis")
+    public ItemStack fakeLapis(final ItemStack lapis, /* Method arguments: */ final Player player) {
+        // Ignore the "There are no possible signatures for this injector" error
+        if (EnigmaticItems.ENCHANTER_PEARL.isPresent(player)) {
+            ItemStack fakeLapis = Items.LAPIS_LAZULI.getDefaultInstance();
+            fakeLapis.setCount(64);
+            return fakeLapis;
+        }
+
+        return lapis;
+    }
+
+    /** Copied from {@link SuperpositionHandler#mergeEnchantments} to use {@link EnchHooks}, seemed simpler than handling class loading etc. */
+    @Unique
+    private ItemStack enigmaticLegacy$mergeEnchantments(final ItemStack input, final ItemStack mergeFrom, boolean overmerge, boolean onlyTreasure) {
+        ItemStack returnedStack = input.copy();
+        Map<Enchantment, Integer> inputEnchants = EnchantmentHelper.getEnchantments(returnedStack);
+        Map<Enchantment, Integer> mergedEnchants = EnchantmentHelper.getEnchantments(mergeFrom);
+
+        for(Enchantment mergedEnchant : mergedEnchants.keySet()) {
+            if (mergedEnchant != null) {
+                int inputEnchantLevel = inputEnchants.getOrDefault(mergedEnchant, 0);
+                int mergedEnchantLevel = mergedEnchants.get(mergedEnchant);
+
+                if (!overmerge) {
+                    // +1 when the levels match, otherwise pick the higher one
+                    mergedEnchantLevel = inputEnchantLevel == mergedEnchantLevel ? Math.min(mergedEnchantLevel + 1, EnchHooks.getMaxLevel(mergedEnchant)) : Math.max(mergedEnchantLevel, inputEnchantLevel);
+                } else {
+                    // Always add +1 if both items have the enchantment
+                    mergedEnchantLevel = inputEnchantLevel > 0 ? Math.max(mergedEnchantLevel, inputEnchantLevel) + 1 : Math.max(mergedEnchantLevel, inputEnchantLevel);
+                    mergedEnchantLevel = Math.min(mergedEnchantLevel, EnchHooks.getMaxLevel(mergedEnchant));
+                }
+
+                boolean compatible = mergedEnchant.canEnchant(input);
+                if (input.getItem() instanceof EnchantedBookItem) {
+                    compatible = true;
+                }
+
+                for(Enchantment originalEnchant : inputEnchants.keySet()) {
+                    if (originalEnchant != mergedEnchant && !mergedEnchant.isCompatibleWith(originalEnchant)) {
+                        compatible = false;
+                    }
+                }
+
+                if (compatible) {
+                    if (!onlyTreasure || EnchHooks.isTreasureOnly(mergedEnchant) || mergedEnchant.isCurse()) {
+                        inputEnchants.put(mergedEnchant, mergedEnchantLevel);
+                    }
+                }
+            }
+        }
+
+        EnchantmentHelper.setEnchantments(inputEnchants, returnedStack);
+        return returnedStack;
+    }
 }
