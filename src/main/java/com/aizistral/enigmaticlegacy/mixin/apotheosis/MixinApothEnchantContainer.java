@@ -40,12 +40,20 @@ public abstract class MixinApothEnchantContainer {
     /** {@link net.minecraft.world.Container#setItem(int, ItemStack)} seems to clear all information (enchantment stats, costs, etc.) from the instance - that's why we get the list of enchantments while that information is still available */
     @Inject(method = "lambda$clickMenuButton$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/Container;setItem(ILnet/minecraft/world/item/ItemStack;)V", shift = At.Shift.BEFORE, ordinal = 1))
     public void prepareDoubleRoll(final ItemStack toEnchant, int id, final Player player, int cost, final ItemStack lapis, int level, final Level world, final BlockPos pos, final CallbackInfo ci) {
-        enigmaticLegacy$copyBeforeEnchanted = toEnchant.copy();
+        if (EnigmaticItems.ENCHANTER_PEARL.isPresent(player)) {
+            enigmaticLegacy$copyBeforeEnchanted = toEnchant.copy();
 
-        // TODO :: Add config to not use a new seed for the double roll?
-        ApothEnchantContainer container = (ApothEnchantContainer) (Object) this;
-        container.enchantmentSeed.set(container.random.nextInt());
-        enigmaticLegacy$storedEnchantmentList = getEnchantmentList(enigmaticLegacy$copyBeforeEnchanted, id, level);
+            ApothEnchantContainer container = (ApothEnchantContainer) (Object) this;
+            int storedValue = container.enchantmentSeed.get();
+
+            container.enchantmentSeed.set(container.random.nextInt());
+            enigmaticLegacy$storedEnchantmentList = getEnchantmentList(enigmaticLegacy$copyBeforeEnchanted, id, level);
+            /*
+            Not sure if this is needed (gets overwritten by `player.getEnchantmentSeed()` shortly afterward anyway
+            (List of enchantments has already been collected (using the same seed as the list of clues) at this point)
+            */
+            container.enchantmentSeed.set(storedValue);
+        }
     }
 
     /** Handle the double enchanting effect */
