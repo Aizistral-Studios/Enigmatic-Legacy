@@ -37,7 +37,7 @@ public abstract class MixinApothEnchantContainer {
 
     @Shadow(remap = false) private List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int enchantSlot, int level) { return null; }
 
-    /** `this.enchantSlots.setItem(...)` seems to clear all information (enchantment stats, costs, etc.) from the instance - that's why we get the list of enchantments why that information is still available */
+    /** {@link net.minecraft.world.Container#setItem(int, ItemStack)} seems to clear all information (enchantment stats, costs, etc.) from the instance - that's why we get the list of enchantments while that information is still available */
     @Inject(method = "lambda$clickMenuButton$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/Container;setItem(ILnet/minecraft/world/item/ItemStack;)V", shift = At.Shift.BEFORE, ordinal = 1))
     public void prepareDoubleRoll(final ItemStack toEnchant, int id, final Player player, int cost, final ItemStack lapis, int level, final Level world, final BlockPos pos, final CallbackInfo ci) {
         enigmaticLegacy$copyBeforeEnchanted = toEnchant.copy();
@@ -90,7 +90,7 @@ public abstract class MixinApothEnchantContainer {
         return lapis;
     }
 
-    /** Copied from {@link SuperpositionHandler#mergeEnchantments} to use {@link EnchHooks}, seemed simpler than handling class loading etc. */
+    /** Copied from {@link SuperpositionHandler#mergeEnchantments(ItemStack, ItemStack, boolean, boolean)} to use {@link EnchHooks}, seemed simpler than handling class loading etc. */
     @Unique
     private ItemStack enigmaticLegacy$mergeEnchantments(final ItemStack input, final ItemStack mergeFrom, boolean overmerge, boolean onlyTreasure) {
         ItemStack returnedStack = input.copy();
