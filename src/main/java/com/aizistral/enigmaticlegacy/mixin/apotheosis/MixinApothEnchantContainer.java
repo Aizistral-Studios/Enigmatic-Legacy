@@ -44,7 +44,7 @@ public class MixinApothEnchantContainer extends EnchantmentMenu {
     private List<EnchantmentInstance> enigmaticLegacy$storedEnchantmentList;
 
     @Inject(method = "lambda$clickMenuButton$0", at = @At(value = "HEAD"))
-    public void storeBeforeEnchant(ItemStack toEnchant, int id, final Player player, int cost, final ItemStack lapis, int level, final Level world, final BlockPos pos, final CallbackInfo ci) {
+    public void storeBeforeEnchant(final ItemStack toEnchant, int id, final Player player, int cost, final ItemStack lapis, int level, final Level world, final BlockPos pos, final CallbackInfo ci) {
         enigmaticLegacy$copyBeforeEnchanted = toEnchant.copy();
     }
 
@@ -54,7 +54,8 @@ public class MixinApothEnchantContainer extends EnchantmentMenu {
         return list;
     }
 
-    @Inject(method = "lambda$clickMenuButton$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;awardStat(Lnet/minecraft/resources/ResourceLocation;)V", shift = At.Shift.BEFORE))
+    /** Handle the double enchanting effect */
+    @Inject(method = "lambda$clickMenuButton$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;awardStat(Lnet/minecraft/resources/ResourceLocation;)V", shift = At.Shift.BEFORE), remap = true)
     public void handleEnchanterPearl(final ItemStack toEnchant, int id, final Player player, int cost, final ItemStack lapis, int level, final Level world, final BlockPos pos, final CallbackInfo ci) {
         if (EnigmaticItems.ENCHANTER_PEARL.isPresent(player)) {
             if (enigmaticLegacy$storedEnchantmentList.get(0).enchantment == Apoth.Enchantments.INFUSION.get()) {
@@ -66,18 +67,22 @@ public class MixinApothEnchantContainer extends EnchantmentMenu {
             enigmaticLegacy$copyBeforeEnchanted = ((IEnchantableItem) enigmaticLegacy$copyBeforeEnchanted.getItem()).onEnchantment(enigmaticLegacy$copyBeforeEnchanted, enigmaticLegacy$storedEnchantmentList);
 
             // The enchantment result gets directly set in the `enchantSlots` not in the ItemStack
-            ItemStack enchantedItem = this.enchantSlots.getItem(0);
+            ItemStack enchantedItem = enchantSlots.getItem(0);
             enchantedItem = enigmaticLegacy$mergeEnchantments(enchantedItem, enigmaticLegacy$copyBeforeEnchanted, false, false);
             enchantedItem = SuperpositionHandler.maybeApplyEternalBinding(enchantedItem);
+
+            // TODO :: Also need to modify toEnchant since it gets passed to CriteriaTriggers.ENCHANTED_ITEM? Seems to be used for checking (?) advancements
 
             enchantSlots.setItem(0, enchantedItem);
         }
     }
 
-    /** Enchanter Pearl disables lapis cost (Ignore the "There are no possible signatures for this injector") */
-    @ModifyVariable(method = "clickMenuButton", at = @At(value = "STORE"), name = "lapis")
+    /**
+     * Enchanter Pearl disables lapis cost<br>
+     * The "There are no possible signatures for this injector" error is not accurate<br>
+     */
+    @ModifyVariable(method = "clickMenuButton", at = @At(value = "STORE"), name = "lapis", remap = true)
     public ItemStack fakeLapis(final ItemStack lapis, /* Method arguments: */ final Player player) {
-        // Ignore the "There are no possible signatures for this injector" error
         if (EnigmaticItems.ENCHANTER_PEARL.isPresent(player)) {
             ItemStack fakeLapis = Items.LAPIS_LAZULI.getDefaultInstance();
             fakeLapis.setCount(64);
