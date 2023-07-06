@@ -3,9 +3,7 @@ package com.aizistral.enigmaticlegacy.mixin.apotheosis;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -14,15 +12,18 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import shadows.apotheosis.Apoth;
 import shadows.apotheosis.ench.asm.EnchHooks;
 import shadows.apotheosis.ench.table.ApothEnchantContainer;
 import shadows.apotheosis.ench.table.IEnchantableItem;
+import shadows.apotheosis.ench.table.RealEnchantmentHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -32,16 +33,12 @@ import java.util.Map;
  * (<a href="https://github.com/Daripher/Passive-Skill-Tree">Example Mod</a>)
  */
 @Mixin(value = ApothEnchantContainer.class, priority = 1500, remap = false)
-public class MixinApothEnchantContainer extends EnchantmentMenu {
-    public MixinApothEnchantContainer(int containerID, final Inventory playerInventory) {
-        super(containerID, playerInventory);
-    }
+public class MixinApothEnchantContainer {
+    @Unique private ItemStack enigmaticLegacy$copyBeforeEnchanted;
+    @Unique private List<EnchantmentInstance> enigmaticLegacy$storedEnchantmentList;
 
-    @Unique
-    private ItemStack enigmaticLegacy$copyBeforeEnchanted;
+    @Shadow private List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int enchantSlot, int level) { return null; }
 
-    @Unique
-    private List<EnchantmentInstance> enigmaticLegacy$storedEnchantmentList;
 
     @Inject(method = "lambda$clickMenuButton$0", at = @At(value = "HEAD"))
     public void storeBeforeEnchant(final ItemStack toEnchant, int id, final Player player, int cost, final ItemStack lapis, int level, final Level world, final BlockPos pos, final CallbackInfo ci) {
@@ -50,30 +47,43 @@ public class MixinApothEnchantContainer extends EnchantmentMenu {
 
     @ModifyVariable(method = "lambda$clickMenuButton$0", at = @At(value = "STORE"), name = "list")
     public List<EnchantmentInstance> storeListOfEnchants(final List<EnchantmentInstance> list) {
+        // FIXME :: Currently only used to check if its a fusion enchant - can probably be removed
         enigmaticLegacy$storedEnchantmentList = list;
         return list;
     }
 
     /** Handle the double enchanting effect */
-    @Inject(method = "lambda$clickMenuButton$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;awardStat(Lnet/minecraft/resources/ResourceLocation;)V", shift = At.Shift.BEFORE), remap = true)
-    public void handleEnchanterPearl(final ItemStack toEnchant, int id, final Player player, int cost, final ItemStack lapis, int level, final Level world, final BlockPos pos, final CallbackInfo ci) {
+    @Inject(method = "lambda$clickMenuButton$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;awardStat(Lnet/minecraft/resources/ResourceLocation;)V", shift = At.Shift.BEFORE), remap = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    public void handleEnchanterPearl(final ItemStack toEnchant, int id, final Player player, int cost, final ItemStack lapis, int level, final Level world, final BlockPos pos, final CallbackInfo ci, /* Locals: */ final ItemStack itemStack, float eterna, float quanta, float arcana, float rectification) {
         if (EnigmaticItems.ENCHANTER_PEARL.isPresent(player)) {
             if (enigmaticLegacy$storedEnchantmentList.get(0).enchantment == Apoth.Enchantments.INFUSION.get()) {
                 // Ignore Infusion enchants
                 return;
             }
 
-            // Use Apotheosis enchantment method
-            enigmaticLegacy$copyBeforeEnchanted = ((IEnchantableItem) enigmaticLegacy$copyBeforeEnchanted.getItem()).onEnchantment(enigmaticLegacy$copyBeforeEnchanted, enigmaticLegacy$storedEnchantmentList);
+            /* FIXME
+            The levels (enchantment stats, costs etc.) for this object are only set on LocalPlayer but not ServerPlayer (and we are working with ServerPlayer here)
+            That's why we cannot just use container.getEnchantmentList(...)`
+            */
+            ApothEnchantContainer container = (ApothEnchantContainer) (Object) this;
 
-            // The enchantment result gets directly set in the `enchantSlots` not in the ItemStack
-            ItemStack enchantedItem = enchantSlots.getItem(0);
+            // Setting a new seed here using `container.enchantmentSeed.get()` causes it to be identical to the previous seed
+            List<EnchantmentInstance> list = RealEnchantmentHelper.selectEnchantment(
+                    container.random, enigmaticLegacy$copyBeforeEnchanted, level, quanta, arcana, rectification, false
+            );
+
+            // Use Apotheosis enchantment method
+            enigmaticLegacy$copyBeforeEnchanted = ((IEnchantableItem) enigmaticLegacy$copyBeforeEnchanted.getItem()).onEnchantment(enigmaticLegacy$copyBeforeEnchanted, list);
+
+            /*
+            The enchantment result gets directly set in the `enchantSlots` not in the ItemStack
+            If the modifications are done using `toEnchant` then it will cause enchanted books to be reverted back to being tomes (if they previously were tomes) when merging
+            */
+            ItemStack enchantedItem = container.enchantSlots.getItem(0);
             enchantedItem = enigmaticLegacy$mergeEnchantments(enchantedItem, enigmaticLegacy$copyBeforeEnchanted, false, false);
             enchantedItem = SuperpositionHandler.maybeApplyEternalBinding(enchantedItem);
 
-            // TODO :: Also need to modify toEnchant since it gets passed to CriteriaTriggers.ENCHANTED_ITEM? Seems to be used for checking (?) advancements
-
-            enchantSlots.setItem(0, enchantedItem);
+            container.enchantSlots.setItem(0, enchantedItem);
         }
     }
 
@@ -82,7 +92,8 @@ public class MixinApothEnchantContainer extends EnchantmentMenu {
      * The "There are no possible signatures for this injector" error is not accurate<br>
      */
     @ModifyVariable(method = "clickMenuButton", at = @At(value = "STORE"), name = "lapis", remap = true)
-    public ItemStack fakeLapis(final ItemStack lapis, /* Method arguments: */ final Player player) {
+    public ItemStack fakeLapis(final ItemStack lapis, /* Method parameter: */ final Player player) {
+        // Store reference to client container?
         if (EnigmaticItems.ENCHANTER_PEARL.isPresent(player)) {
             ItemStack fakeLapis = Items.LAPIS_LAZULI.getDefaultInstance();
             fakeLapis.setCount(64);
