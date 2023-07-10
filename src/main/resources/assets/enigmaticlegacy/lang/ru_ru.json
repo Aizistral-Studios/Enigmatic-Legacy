@@ -103,8 +103,10 @@
 	"item.enigmaticlegacy.enigmatic_elytra": "Величественные крылья",
 	"block.enigmaticlegacy.etherium_block": "Эфириумовый блок",
 	"block.enigmaticlegacy.cosmic_cake": "Торт бесконечности",
+	"block.enigmaticlegacy.end_anchor": "Якорь измерений",
 	"item.enigmaticlegacy.enigmatic_eye_dormant": "Дремлющее око",
 	"item.enigmaticlegacy.enigmatic_eye_active": "Загадачное око",
+	"item.enigmaticlegacy.ichor_bottle": "Бутылочка ихора",
 	
 	"block.enigmaticlegacy.big_lamp": "Лампа",
 	"block.enigmaticlegacy.massive_lamp": "Укреплённая лампа",
@@ -243,6 +245,11 @@
 	"status.enigmaticlegacy.outdated": "Обнаружена новая версия §6Enigmatic Legacy§5: %1$s. Вам стоит оценить её!",
 	"status.enigmaticlegacy.noconnection": "Enigmatic Legacy не удалось проверить наличие обновлений.",
 	"world.enigmaticlegacy.name": "Мир #",
+	"gui.enigmaticlegacy.permadeathTitle": "Конец",
+	"gui.enigmaticlegacy.toWorldList": "Вернуться к списку миров",
+	"gameMode.enigmaticlegacy.cursed": "§cПроклятый режим",
+	"gameMode.enigmaticlegacy.cursedHardcore": "§4Проклятый Хардкор!",
+	"gameMode.enigmaticlegacy.fractured": "§4Усопший",
 	
 	"enigmaticlegacy.toasts.slotUnlocked.title": "%1$s разблокирован!",
 	"enigmaticlegacy.toasts.slotUnlocked.text1": "Теперь вы можете экипировать их",
@@ -952,6 +959,20 @@
 
 	"tooltip.enigmaticlegacy.enigmaticEyeAwakened1": "§5Тот, кто использует его для наблюдения за вами и окружающим миром, кажется,",
 	"tooltip.enigmaticlegacy.enigmaticEyeAwakened2": "§5не в состоянии физически добраться до вас... Или не желает этого делать.",
+
+	"tooltip.enigmaticlegacy.enigmaticElytra1": "§5Удерживайте клавишу прыжка во время полета, чтобы постоянно",
+	"tooltip.enigmaticlegacy.enigmaticElytra2": "§5ускоряться вперед. Крылья повреждаются",
+	"tooltip.enigmaticlegacy.enigmaticElytra3": "§5быстрее при ускорении.",
+
+	"tooltip.enigmaticlegacy.ichorBottle1": "§5Чтобы презирать богов, надо их знать...",
+	"tooltip.enigmaticlegacy.ichorBottle2": "§5Выпей, чтобы получить §6+1§d Ячейку для амулета §5навсегда.",
+	
+	"tooltip.enigmaticlegacy.endAnchor1": "§5Работает во всех измерениях.",
+	"tooltip.enigmaticlegacy.endAnchor1_alt": "§5Работает только в §6Краю.",
+	"tooltip.enigmaticlegacy.endAnchor1_alt2": "§5Работает в большинстве измерений.",
+	"tooltip.enigmaticlegacy.endAnchor2": "§5Для перезарядки требуется §6Жемчуг Эндера§5.",
+	"tooltip.enigmaticlegacy.endAnchor3": "§5Имеет §6%1$s§5 шанс не тратить заряд",
+	"tooltip.enigmaticlegacy.endAnchor4": "§5при возрождении.",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Начертание",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Тепло",
