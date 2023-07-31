@@ -179,7 +179,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 			}
 
 			if (player.tickCount % 10 == 0) {
-				List<LivingEntity> entities = player.level.getEntitiesOfClass(LivingEntity.class, new AABB(player.getX() - shadowRange.getValue(), player.getY() - shadowRange.getValue(), player.getZ() - shadowRange.getValue(), player.getX() + shadowRange.getValue(), player.getY() + shadowRange.getValue(), player.getZ() + shadowRange.getValue()));
+				List<LivingEntity> entities = player.level().getEntitiesOfClass(LivingEntity.class, new AABB(player.getX() - shadowRange.getValue(), player.getY() - shadowRange.getValue(), player.getZ() - shadowRange.getValue(), player.getX() + shadowRange.getValue(), player.getY() + shadowRange.getValue(), player.getZ() + shadowRange.getValue()));
 				boolean hasAnimalGuide = SuperpositionHandler.hasItem(player, EnigmaticItems.ANIMAL_GUIDEBOOK);
 
 				if (entities.contains(player)) {
@@ -187,7 +187,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 				}
 
 				for (LivingEntity victim : entities) {
-					if (victim.level.getMaxLocalRawBrightness(victim.blockPosition(), 0) < 3 || (victim instanceof Phantom && !victim.isOnFire())) {
+					if (victim.level().getMaxLocalRawBrightness(victim.blockPosition(), 0) < 3 || (victim instanceof Phantom && !victim.isOnFire())) {
 						if (hasAnimalGuide && EnigmaticItems.ANIMAL_GUIDEBOOK.isProtectedAnimal(victim)) {
 							continue;
 						}
@@ -204,7 +204,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 							boolean attack = victim.hurt(victim.damageSources().source(EnigmaticDamageTypes.DARKNESS, player), (float) baseDarknessDamage.getValue());
 
 							if (attack) {
-								player.level.playSound(null, victim.blockPosition(), SoundEvents.PHANTOM_BITE, SoundSource.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
+								player.level().playSound(null, victim.blockPosition(), SoundEvents.PHANTOM_BITE, SoundSource.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));
 
 								victim.addEffect(new MobEffectInstance(MobEffects.WITHER, 80, 1, false, true));
 								victim.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2, false, true));

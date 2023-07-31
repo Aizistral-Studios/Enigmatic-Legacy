@@ -108,10 +108,10 @@ public class SoulArchive {
 	}
 
 	public void addItem(PermanentItemEntity item) {
-		SoulData record = new SoulData(item.level.dimension().location(), item.getUUID(), item.getOwnerId(),
+		SoulData record = new SoulData(item.level().dimension().location(), item.getUUID(), item.getOwnerId(),
 				item.blockPosition(), item.containsSoul() ? 0 : 1);
 
-		if (this.data.put(item.level.dimension(), record)) {
+		if (this.data.put(item.level().dimension(), record)) {
 			this.save();
 			this.synchronize();
 		}

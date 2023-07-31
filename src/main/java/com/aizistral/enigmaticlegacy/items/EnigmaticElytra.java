@@ -87,7 +87,7 @@ public class EnigmaticElytra extends ItemBaseCurio implements IBindable {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		if (context.entity() instanceof Player player && player.level.isClientSide) {
+		if (context.entity() instanceof Player player && player.level().isClientSide) {
 			this.handleBoosting(player);
 		}
 
@@ -169,7 +169,7 @@ public class EnigmaticElytra extends ItemBaseCurio implements IBindable {
 	@Override
 	public boolean elytraFlightTick(ItemStack stack, LivingEntity entity, int flightTicks) {
 		if (entity instanceof Player player) {
-			if (!entity.level.isClientSide) {
+			if (!entity.level().isClientSide) {
 				int nextFlightTick = flightTicks + 1;
 
 				if (nextFlightTick % 10 == 0) {
@@ -219,7 +219,7 @@ public class EnigmaticElytra extends ItemBaseCurio implements IBindable {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onPlayerTickClient(TickEvent.PlayerTickEvent event) {
-		if (event.phase == Phase.START && event.player.level.isClientSide()) {
+		if (event.phase == Phase.START && event.player.level().isClientSide()) {
 			Player player = event.player;
 
 			if (TransientPlayerData.get(player).isElytraBoosting()) {
@@ -239,7 +239,7 @@ public class EnigmaticElytra extends ItemBaseCurio implements IBindable {
 				for (int counter = 0; counter <= amount; counter++) {
 					Vector3 vec = Vector3.fromEntityCenter(player);
 					vec = vec.add(Math.random() - 0.5, -1.0 + Math.random() - 0.5, Math.random() - 0.5);
-					player.level.addParticle(ParticleTypes.DRAGON_BREATH, true, vec.x, vec.y, vec.z, ((Math.random()-0.5D)*2.0D)*rangeModifier, ((Math.random()-0.5D)*2.0D)*rangeModifier, ((Math.random()-0.5D)*2.0D)*rangeModifier);
+					player.level().addParticle(ParticleTypes.DRAGON_BREATH, true, vec.x, vec.y, vec.z, ((Math.random()-0.5D)*2.0D)*rangeModifier, ((Math.random()-0.5D)*2.0D)*rangeModifier, ((Math.random()-0.5D)*2.0D)*rangeModifier);
 				}
 			}
 		}

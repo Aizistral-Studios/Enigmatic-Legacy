@@ -50,8 +50,8 @@ public class PacketEnderRingKey {
 					public void removed(Player playerIn) {
 						super.removed(playerIn);
 
-						if (!playerIn.level.isClientSide) {
-							playerIn.level.playSound(null, playerServ.blockPosition(), SoundEvents.ENDER_CHEST_CLOSE, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+						if (!playerIn.level().isClientSide) {
+							playerIn.level().playSound(null, playerServ.blockPosition(), SoundEvents.ENDER_CHEST_CLOSE, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 						}
 					}
 				};
@@ -62,7 +62,7 @@ public class PacketEnderRingKey {
 				playerServ.containerMenu = container;
 				net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(new net.minecraftforge.event.entity.player.PlayerContainerEvent.Open(playerServ, playerServ.containerMenu));
 
-				playerServ.level.playSound(null, playerServ.blockPosition(), SoundEvents.ENDER_CHEST_OPEN, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+				playerServ.level().playSound(null, playerServ.blockPosition(), SoundEvents.ENDER_CHEST_OPEN, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
 			}
 		});

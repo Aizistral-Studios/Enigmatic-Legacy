@@ -88,7 +88,7 @@ public class MegaSponge extends ItemBaseCurio implements Vanishable {
 
 		BlockPos pos = null;
 
-		if (!player.level.hasChunksAt(i, k, i1, j, l, j1))
+		if (!player.level().hasChunksAt(i, k, i1, j, l, j1))
 			return null;
 		else {
 			try {
@@ -98,9 +98,9 @@ public class MegaSponge extends ItemBaseCurio implements Vanishable {
 					for (int i2 = k; i2 < l; ++i2) {
 						for (int j2 = i1; j2 < j1; ++j2) {
 							blockpos$pooledmutableblockpos.set(l1, i2, j2);
-							FluidState ifluidstate = player.level.getFluidState(blockpos$pooledmutableblockpos);
+							FluidState ifluidstate = player.level().getFluidState(blockpos$pooledmutableblockpos);
 							if (ifluidstate.is(fluidTag)) {
-								ifluidstate.tick(player.level, blockpos$pooledmutableblockpos);
+								ifluidstate.tick(player.level(), blockpos$pooledmutableblockpos);
 								pos = new BlockPos(l1, i2, j2);
 							}
 						}
@@ -116,11 +116,11 @@ public class MegaSponge extends ItemBaseCurio implements Vanishable {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		if (context.entity() instanceof Player player && !player.level.isClientSide) {
+		if (context.entity() instanceof Player player && !player.level().isClientSide) {
 			if (!player.getCooldowns().isOnCooldown(this)) {
 				List<BlockPos> doomedWaterBlocks = new ArrayList<BlockPos>();
 				BlockPos initialPos = this.getCollidedWater(FluidTags.WATER, player);
-				BlockState initialState = initialPos != null ? player.level.getBlockState(initialPos) : null;
+				BlockState initialState = initialPos != null ? player.level().getBlockState(initialPos) : null;
 
 				if (initialPos != null && initialState != null)
 					if (initialState.getFluidState() != null && initialState.getFluidState().is(FluidTags.WATER)) {
@@ -133,7 +133,7 @@ public class MegaSponge extends ItemBaseCurio implements Vanishable {
 							List<BlockPos> outputBlocks = new ArrayList<BlockPos>();
 
 							for (BlockPos checkedPos : processedBlocks) {
-								outputBlocks.addAll(this.getNearbyWater(player.level, checkedPos));
+								outputBlocks.addAll(this.getNearbyWater(player.level(), checkedPos));
 							}
 
 							processedBlocks.clear();
@@ -151,13 +151,13 @@ public class MegaSponge extends ItemBaseCurio implements Vanishable {
 						processedBlocks.clear();
 
 						for (BlockPos exterminatedBlock : doomedWaterBlocks) {
-							this.absorbWaterBlock(exterminatedBlock, player.level.getBlockState(exterminatedBlock), player.level);
+							this.absorbWaterBlock(exterminatedBlock, player.level().getBlockState(exterminatedBlock), player.level());
 						}
 
 						doomedWaterBlocks.clear();
 
-						player.level.playSound(null, player.blockPosition(), SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64, player.level.dimension())), new PacketPortalParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 40, 1.0D, false));
+						player.level().playSound(null, player.blockPosition(), SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64, player.level().dimension())), new PacketPortalParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 40, 1.0D, false));
 						player.getCooldowns().addCooldown(this, 20);
 
 					}

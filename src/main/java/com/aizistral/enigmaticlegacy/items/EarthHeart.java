@@ -25,7 +25,7 @@ public class EarthHeart extends ItemBase implements ITaintable, Vanishable {
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (entityIn instanceof Player && !entityIn.level.isClientSide) {
+		if (entityIn instanceof Player && !entityIn.level().isClientSide) {
 			Player player = (Player) entityIn;
 			this.handleTaintable(stack, player);
 		}

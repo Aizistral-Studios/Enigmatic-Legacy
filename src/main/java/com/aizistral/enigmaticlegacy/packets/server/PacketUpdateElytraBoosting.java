@@ -30,7 +30,7 @@ public class PacketUpdateElytraBoosting {
 			ServerPlayer player = ctx.get().getSender();
 
 			if (msg.boosting) {
-				player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDER_EYE_LAUNCH, SoundSource.AMBIENT, 3.0F, 1.0F);
+				player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ENDER_EYE_LAUNCH, SoundSource.AMBIENT, 3.0F, 1.0F);
 			}
 
 			TransientPlayerData data = TransientPlayerData.get(player);

@@ -75,11 +75,11 @@ public class PacketGenericParticleEffect {
 				double distHearts = 0.5;
 
 				for (int counter = 0; counter < 4; counter++) {
-					player.level.addParticle(ParticleTypes.ANGRY_VILLAGER, true, pos.x+SuperpositionHandler.getRandomNegative()*distHearts, pos.y+SuperpositionHandler.getRandomNegative()*distHearts, pos.z+SuperpositionHandler.getRandomNegative()*distHearts, SuperpositionHandler.getRandomNegative() * 1.05, SuperpositionHandler.getRandomNegative() * 1.05, SuperpositionHandler.getRandomNegative() * 1.05);
+					player.level().addParticle(ParticleTypes.ANGRY_VILLAGER, true, pos.x+SuperpositionHandler.getRandomNegative()*distHearts, pos.y+SuperpositionHandler.getRandomNegative()*distHearts, pos.z+SuperpositionHandler.getRandomNegative()*distHearts, SuperpositionHandler.getRandomNegative() * 1.05, SuperpositionHandler.getRandomNegative() * 1.05, SuperpositionHandler.getRandomNegative() * 1.05);
 				}
 
 				for (int counter = 0; counter < 12; counter++) {
-					player.level.addParticle(ParticleTypes.LARGE_SMOKE, true, pos.x, pos.y, pos.z, SuperpositionHandler.getRandomNegative() * dist, SuperpositionHandler.getRandomNegative() * dist, SuperpositionHandler.getRandomNegative() * dist);
+					player.level().addParticle(ParticleTypes.LARGE_SMOKE, true, pos.x, pos.y, pos.z, SuperpositionHandler.getRandomNegative() * dist, SuperpositionHandler.getRandomNegative() * dist, SuperpositionHandler.getRandomNegative() * dist);
 				}
 
 			}

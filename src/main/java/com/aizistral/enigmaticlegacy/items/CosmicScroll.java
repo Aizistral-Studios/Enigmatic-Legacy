@@ -180,7 +180,7 @@ public class CosmicScroll extends ItemBaseCurio implements IHidden {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		if (!context.entity().level.isClientSide)
+		if (!context.entity().level().isClientSide)
 			if (this.hasCooldown(stack)) {
 				this.setCooldown(stack, this.getCooldown(stack) - 1);
 			}
@@ -225,7 +225,7 @@ public class CosmicScroll extends ItemBaseCurio implements IHidden {
 
 	@SubscribeEvent
 	public void onLivingDeath(LivingDeathEvent event) {
-		if (event.getEntity() instanceof Player && !event.getEntity().level.isClientSide) {
+		if (event.getEntity() instanceof Player && !event.getEntity().level().isClientSide) {
 			Player player = (Player) event.getEntity();
 
 			if (SuperpositionHandler.isTheBlessedOne(player)) {
@@ -244,7 +244,7 @@ public class CosmicScroll extends ItemBaseCurio implements IHidden {
 
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() ->
 					new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128,
-							player.level.dimension())), new PacketCosmicRevive(player.getId(), 0));
+							player.level().dimension())), new PacketCosmicRevive(player.getId(), 0));
 				}
 			}
 		}

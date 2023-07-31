@@ -31,7 +31,7 @@ public class CosmicHeart extends ItemBase implements Vanishable {
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (entityIn instanceof Player && !entityIn.level.isClientSide) {
+		if (entityIn instanceof Player && !entityIn.level().isClientSide) {
 			Player player = (Player) entityIn;
 
 			if (SuperpositionHandler.isTheBlessedOne(player)) {

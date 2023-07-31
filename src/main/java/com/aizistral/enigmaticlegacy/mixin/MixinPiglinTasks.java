@@ -50,8 +50,8 @@ public class MixinPiglinTasks {
 	private static void onPiglinItemPickup(Piglin piglin, ItemEntity itemEntity, CallbackInfo info) {
 		UUID ownerID = itemEntity.thrower;
 
-		if (!itemEntity.isAlive() && itemEntity.level instanceof ServerLevel && ownerID != null) {
-			ServerLevel world = (ServerLevel) itemEntity.level;
+		if (!itemEntity.isAlive() && itemEntity.level() instanceof ServerLevel && ownerID != null) {
+			ServerLevel world = (ServerLevel) itemEntity.level();
 			markPiglinWithCondition(piglin, world.getPlayerByUUID(ownerID));
 		}
 
@@ -68,7 +68,7 @@ public class MixinPiglinTasks {
 	private static void onPiglinBarter(Piglin piglin, boolean repay, CallbackInfo info) {
 		ItemStack stack = piglin.getItemInHand(InteractionHand.OFF_HAND);
 
-		if (piglin.level instanceof ServerLevel && piglin.getTags().contains(AVARICE_SCROLL_TAG)) {
+		if (piglin.level() instanceof ServerLevel && piglin.getTags().contains(AVARICE_SCROLL_TAG)) {
 			piglin.removeTag(AVARICE_SCROLL_TAG);
 
 			if (piglin.isAdult()) {

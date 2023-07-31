@@ -72,7 +72,7 @@ public class SuperMagnetRing extends MagnetRing {
 	public void curioTick(SlotContext context, ItemStack stack) {
 		LivingEntity living = context.entity();
 
-		if (invertShift.getValue() ? !living.isCrouching() : living.isCrouching() || living.level.isClientSide || !(living instanceof Player))
+		if (invertShift.getValue() ? !living.isCrouching() : living.isCrouching() || living.level().isClientSide || !(living instanceof Player))
 			return;
 
 		Player player = (Player) living;
@@ -84,7 +84,7 @@ public class SuperMagnetRing extends MagnetRing {
 		double y = living.getY() + 0.75;
 		double z = living.getZ();
 
-		List<ItemEntity> items = living.level.getEntitiesOfClass(ItemEntity.class, new AABB(x - range.getValue(), y - range.getValue(), z - range.getValue(), x + range.getValue(), y + range.getValue(), z + range.getValue()));
+		List<ItemEntity> items = living.level().getEntitiesOfClass(ItemEntity.class, new AABB(x - range.getValue(), y - range.getValue(), z - range.getValue(), x + range.getValue(), y + range.getValue(), z + range.getValue()));
 		int pulled = 0;
 		for (ItemEntity item : items)
 			if (this.canPullItem(item)) {

@@ -30,7 +30,7 @@ public class PacketSyncTransientData {
 			// In current implementation it's just not possible, since no need yet exists.
 
 			if (msg.playerData != null)
-				if (msg.playerData.getPlayer().level.isClientSide) {
+				if (msg.playerData.getPlayer().level().isClientSide) {
 					TransientPlayerData.set(msg.playerData.getPlayer(), msg.playerData);
 				}
 		});

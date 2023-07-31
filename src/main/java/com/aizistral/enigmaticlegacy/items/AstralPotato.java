@@ -48,7 +48,7 @@ public class AstralPotato extends ItemBaseFood {
 	@Override
 	public void onConsumed(Level worldIn, Player player, ItemStack food) {
 		if (player instanceof ServerPlayer playerMP) {
-			player.level.playSound(null, player.blockPosition(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 0.5F, 1);
+			player.level().playSound(null, player.blockPosition(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 0.5F, 1);
 			player.teleportTo(player.getX() + (0.5 - random.nextDouble()) * 4.0, player.getY(), player.getZ() + (0.5 - random.nextDouble()) * 4.0);
 		}
 	}

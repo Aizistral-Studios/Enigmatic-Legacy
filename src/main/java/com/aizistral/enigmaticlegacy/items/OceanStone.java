@@ -157,7 +157,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 		if (SuperpositionHandler.hasSpellstoneCooldown(player))
 			return;
 
-		if (!player.level.dimension().location().toString().equals("minecraft:the_end") && !player.level.dimension().location().toString().equals("minecraft:the_nether"))
+		if (!player.level().dimension().location().toString().equals("minecraft:the_end") && !player.level().dimension().location().toString().equals("minecraft:the_nether"))
 			if (!world.getLevelData().isThundering()) {
 				boolean paybackReceived = false;
 

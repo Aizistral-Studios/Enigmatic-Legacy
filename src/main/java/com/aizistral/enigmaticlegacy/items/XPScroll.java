@@ -150,11 +150,11 @@ public class XPScroll extends ItemBaseCurio {
 	public void curioTick(SlotContext context, ItemStack stack) {
 		ItemStack itemstack = SuperpositionHandler.getCurioStack(context.entity(), EnigmaticItems.XP_SCROLL);
 
-		if (!(context.entity() instanceof Player) || context.entity().level.isClientSide || !ItemNBTHelper.getBoolean(itemstack, "IsActive", false))
+		if (!(context.entity() instanceof Player) || context.entity().level().isClientSide || !ItemNBTHelper.getBoolean(itemstack, "IsActive", false))
 			return;
 
 		Player player = (Player) context.entity();
-		Level world = player.level;
+		Level world = player.level();
 		int xpPortion = this.getXPPortion(player);
 
 		if (ItemNBTHelper.getBoolean(itemstack, "AbsorptionMode", true)) {

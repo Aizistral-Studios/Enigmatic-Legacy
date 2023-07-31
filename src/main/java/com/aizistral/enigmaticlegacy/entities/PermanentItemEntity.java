@@ -80,7 +80,7 @@ public class PermanentItemEntity extends Entity {
 
 	@OnlyIn(Dist.CLIENT)
 	private PermanentItemEntity(PermanentItemEntity p_i231561_1_) {
-		super(p_i231561_1_.getType(), p_i231561_1_.level);
+		super(p_i231561_1_.getType(), p_i231561_1_.level());
 		this.setItem(p_i231561_1_.getItem().copy());
 		this.copyPosition(p_i231561_1_);
 		this.age = p_i231561_1_.age;
@@ -112,7 +112,7 @@ public class PermanentItemEntity extends Entity {
 		if (this.getItem().isEmpty()) {
 			this.discard();
 		} else {
-			if (!this.level.isClientSide && this.position != null) {
+			if (!this.level().isClientSide && this.position != null) {
 				if (!this.position().equals(this.position)) {
 					this.teleportTo(this.position.x, this.position.y, this.position.z);
 				}
@@ -133,15 +133,15 @@ public class PermanentItemEntity extends Entity {
 				this.setDeltaMovement(this.getDeltaMovement().add(0.0D, -0.04D, 0.0D));
 			}
 
-			if (this.level.isClientSide) {
+			if (this.level().isClientSide) {
 				this.noPhysics = false;
 
-				this.level.addParticle(ParticleTypes.PORTAL, this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), ((Math.random() - 0.5) * 2.0), ((Math.random() - 0.5) * 2.0), ((Math.random() - 0.5) * 2.0));
+				this.level().addParticle(ParticleTypes.PORTAL, this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), ((Math.random() - 0.5) * 2.0), ((Math.random() - 0.5) * 2.0), ((Math.random() - 0.5) * 2.0));
 			}
 
 			++this.age;
 
-			if (!this.level.isClientSide) {
+			if (!this.level().isClientSide) {
 				double d0 = this.getDeltaMovement().subtract(vec3d).lengthSqr();
 				if (d0 > 0.01D) {
 					this.hasImpulse = true;
@@ -176,7 +176,7 @@ public class PermanentItemEntity extends Entity {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (this.level.isClientSide || !this.isAlive())
+		if (this.level().isClientSide || !this.isAlive())
 			return false;
 
 		if (SuperpositionHandler.isAbsolute(source)) {
@@ -192,7 +192,7 @@ public class PermanentItemEntity extends Entity {
 		if (reason == RemovalReason.DISCARDED || reason == RemovalReason.KILLED) {
 			EnigmaticLegacy.LOGGER.warn("[WARN] Removing Permanent Item Entity: " + this);
 
-			if (!this.level.isClientSide) {
+			if (!this.level().isClientSide) {
 				SoulArchive.getInstance().removeItem(this);
 			}
 		}
@@ -257,7 +257,7 @@ public class PermanentItemEntity extends Entity {
 
 	@Override
 	public void playerTouch(Player player) {
-		if (!this.level.isClientSide) {
+		if (!this.level().isClientSide) {
 			if (this.pickupDelay > 0)
 				return;
 
@@ -302,10 +302,10 @@ public class PermanentItemEntity extends Entity {
 					}
 				}
 
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), 64, player.level.dimension())), new PacketRecallParticles(this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), 48, false));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), 64, player.level().dimension())), new PacketRecallParticles(this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), 48, false));
 
 				player.take(this, i);
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY(), this.getZ(), 64, this.level.dimension())), new PacketHandleItemPickup(player.getId(), this.getId()));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY(), this.getZ(), 64, this.level().dimension())), new PacketHandleItemPickup(player.getId(), this.getId()));
 
 				EnigmaticLegacy.LOGGER.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
 				this.discard();
@@ -315,7 +315,7 @@ public class PermanentItemEntity extends Entity {
 				if (itemstack.isEmpty()) {
 					player.take(this, i);
 
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY(), this.getZ(), 64, this.level.dimension())), new PacketHandleItemPickup(player.getId(), this.getId()));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY(), this.getZ(), 64, this.level().dimension())), new PacketHandleItemPickup(player.getId(), this.getId()));
 
 					EnigmaticLegacy.LOGGER.info("Player " + player.getGameProfile().getName() + " picking up: " + this);
 					this.discard();

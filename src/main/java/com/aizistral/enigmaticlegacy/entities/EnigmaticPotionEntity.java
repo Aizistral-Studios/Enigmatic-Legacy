@@ -97,7 +97,7 @@ public class EnigmaticPotionEntity extends ThrowableItemProjectile implements It
 	 */
 	@Override
 	protected void onHit(HitResult result) {
-		if (!this.level.isClientSide) {
+		if (!this.level().isClientSide) {
 			ItemStack itemstack = this.getItem();
 
 			List<MobEffectInstance> list = PotionHelper.getEffects(itemstack);
@@ -120,14 +120,14 @@ public class EnigmaticPotionEntity extends ThrowableItemProjectile implements It
 				}
 			}
 
-			this.level.levelEvent(i, new BlockPos(this.blockPosition()), PotionHelper.getColor(itemstack));
+			this.level().levelEvent(i, new BlockPos(this.blockPosition()), PotionHelper.getColor(itemstack));
 			this.discard();
 		}
 	}
 
 	private void triggerSplash(List<MobEffectInstance> p_213888_1_, @Nullable Entity p_213888_2_) {
 		AABB axisalignedbb = this.getBoundingBox().inflate(4.0D, 2.0D, 4.0D);
-		List<LivingEntity> list = this.level.getEntitiesOfClass(LivingEntity.class, axisalignedbb);
+		List<LivingEntity> list = this.level().getEntitiesOfClass(LivingEntity.class, axisalignedbb);
 		if (!list.isEmpty()) {
 			for (LivingEntity livingentity : list) {
 				if (livingentity.isAffectedByPotions()) {
@@ -160,7 +160,7 @@ public class EnigmaticPotionEntity extends ThrowableItemProjectile implements It
 	}
 
 	private void makeAreaOfEffectCloud(ItemStack stack, List<MobEffectInstance> list) {
-		AreaEffectCloud areaeffectcloudentity = new AreaEffectCloud(this.level, this.getX(),
+		AreaEffectCloud areaeffectcloudentity = new AreaEffectCloud(this.level(), this.getX(),
 				this.getY(), this.getZ());
 		areaeffectcloudentity.setOwner((LivingEntity) this.getOwner());
 		areaeffectcloudentity.setRadius(3.0F);
@@ -177,7 +177,7 @@ public class EnigmaticPotionEntity extends ThrowableItemProjectile implements It
 
 		areaeffectcloudentity.setFixedColor(PotionHelper.getColor(stack));
 
-		this.level.addFreshEntity(areaeffectcloudentity);
+		this.level().addFreshEntity(areaeffectcloudentity);
 	}
 
 	private boolean isLingering() {

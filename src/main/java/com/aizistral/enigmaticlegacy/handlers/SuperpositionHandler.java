@@ -301,7 +301,7 @@ public class SuperpositionHandler {
 		ICurioItem item = (ICurioItem) curio.getItem();
 
 		CuriosApi.getCuriosHelper().getCuriosHandler(entity).ifPresent(handler -> {
-			if (!entity.level.isClientSide) {
+			if (!entity.level().isClientSide) {
 				Map<String, ICurioStacksHandler> curios = handler.getCurios();
 
 				cycle: for (Map.Entry<String, ICurioStacksHandler> entry : curios.entrySet()) {
@@ -419,7 +419,7 @@ public class SuperpositionHandler {
 
 		for (int distance = 1; distance < maxDist; ++distance) {
 			target = target.add(new Vector3(player.getLookAngle()).multiply(distance)).add(0.0, 0.5, 0.0);
-			List<LivingEntity> list = player.level.getEntitiesOfClass(LivingEntity.class, new AABB(target.x - range, target.y - range, target.z - range, target.x + range, target.y + range, target.z + range));
+			List<LivingEntity> list = player.level().getEntitiesOfClass(LivingEntity.class, new AABB(target.x - range, target.y - range, target.z - range, target.x + range, target.y + range, target.z + range));
 			list.removeIf(entity -> entity == player || !player.hasLineOfSight(entity));
 			entities.addAll(list);
 
@@ -532,7 +532,7 @@ public class SuperpositionHandler {
 				if (!world.isEmptyBlock(new BlockPos(x, y + counter - 1, z)) && world.getBlockState(new BlockPos(x, y + counter - 1, z)).canOcclude() && world.isEmptyBlock(new BlockPos(x, y + counter, z)) && world.isEmptyBlock(new BlockPos(x, y + counter + 1, z))) {
 					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
 
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level.dimension())), new PacketPortalParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 72, 1.0F, false));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level().dimension())), new PacketPortalParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 72, 1.0F, false));
 
 					if (entity instanceof ServerPlayer) {
 						ServerPlayer player = (ServerPlayer) entity;
@@ -542,7 +542,7 @@ public class SuperpositionHandler {
 					}
 
 					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level.dimension())), new PacketRecallParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 48, false));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level().dimension())), new PacketRecallParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 48, false));
 					return true;
 				}
 			}
@@ -550,7 +550,7 @@ public class SuperpositionHandler {
 			for (int counter = 0; counter <= checkAxis; counter++) {
 				if (!world.isEmptyBlock(new BlockPos(x, y - counter - 1, z)) && world.getBlockState(new BlockPos(x, y - counter - 1, z)).canOcclude() && world.isEmptyBlock(new BlockPos(x, y - counter, z)) && world.isEmptyBlock(new BlockPos(x, y - counter + 1, z))) {
 					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level.dimension())), new PacketRecallParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 48, false));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level().dimension())), new PacketRecallParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 48, false));
 
 					if (entity instanceof ServerPlayer) {
 						ServerPlayer player = (ServerPlayer) entity;
@@ -560,7 +560,7 @@ public class SuperpositionHandler {
 					}
 
 					world.playSound(null, entity.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level.dimension())), new PacketRecallParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 48, false));
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(entity.getX(), entity.getY(), entity.getZ(), 128, entity.level().dimension())), new PacketRecallParticles(entity.getX(), entity.getY() + (entity.getBbHeight() / 2), entity.getZ(), 48, false));
 					return true;
 				}
 			}
@@ -1085,14 +1085,14 @@ public class SuperpositionHandler {
 	 */
 
 	public static boolean isInBeaconRange(Player player) {
-		if (player.level.isClientSide)
+		if (player.level().isClientSide)
 			return false;
 
 		List<BeaconBlockEntity> list = new ArrayList<BeaconBlockEntity>();
 		boolean inRange = false;
 
-		ServerLevel level = (ServerLevel) player.level;
-		ServerChunkCache cache = (ServerChunkCache) player.level.getChunkSource();
+		ServerLevel level = (ServerLevel) player.level();
+		ServerChunkCache cache = (ServerChunkCache) player.level().getChunkSource();
 
 		for (ChunkHolder holder : cache.chunkMap.visibleChunkMap.values()) {
 			ChunkPos pos = holder.getPos();
@@ -1173,7 +1173,7 @@ public class SuperpositionHandler {
 
 	public static boolean isAffectedBySoulLoss(Player player, boolean hadRing) {
 		int dropMode = OmniconfigHandler.soulCrystalsMode.getValue(); // TODO Use Enum config
-		boolean keepInventory = player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY);
+		boolean keepInventory = player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY);
 
 		if (dropMode == 0)
 			return hadRing;
@@ -1210,7 +1210,7 @@ public class SuperpositionHandler {
 	}
 
 	public static void sendToDimension(ServerPlayer player, ResourceKey<Level> dimension, ITeleporter teleporter) {
-		if (!player.level.dimension().equals(dimension)) {
+		if (!player.level().dimension().equals(dimension)) {
 			ServerLevel world = SuperpositionHandler.getWorld(dimension);
 			if (world != null) {
 				player.changeDimension(world, teleporter);
@@ -1226,15 +1226,15 @@ public class SuperpositionHandler {
 		ResourceKey<Level> respawnDimension = AdvancedSpawnLocationHelper.getPlayerRespawnDimension(serverPlayer);
 		ServerLevel respawnWorld = SuperpositionHandler.getWorld(respawnDimension);
 
-		serverPlayer.level.playSound(null, serverPlayer.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+		serverPlayer.level().playSound(null, serverPlayer.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 128, serverPlayer.level.dimension())), new PacketPortalParticles(serverPlayer.getX(), serverPlayer.getY() + (serverPlayer.getBbHeight() / 2), serverPlayer.getZ(), 100, 1.25F, false));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 128, serverPlayer.level().dimension())), new PacketPortalParticles(serverPlayer.getX(), serverPlayer.getY() + (serverPlayer.getBbHeight() / 2), serverPlayer.getZ(), 100, 1.25F, false));
 
 		Optional<Vec3> vec = AdvancedSpawnLocationHelper.getValidSpawn(respawnWorld, serverPlayer);
 		Optional<Vec3> vec2;
 		ServerLevel destinationWorld = vec.isPresent() ? respawnWorld : serverPlayer.server.overworld();
 
-		if (!serverPlayer.getLevel().equals(destinationWorld)) {
+		if (!serverPlayer.level().equals(destinationWorld)) {
 			serverPlayer.changeDimension(destinationWorld, new RealSmoothTeleporter());
 		}
 
@@ -1251,12 +1251,12 @@ public class SuperpositionHandler {
 			Vec3 trueVec = vec2.get();
 			serverPlayer.teleportTo(trueVec.x, trueVec.y, trueVec.z);
 		} else {
-			AdvancedSpawnLocationHelper.fuckBackToSpawn(serverPlayer.getLevel(), serverPlayer);
+			AdvancedSpawnLocationHelper.fuckBackToSpawn(serverPlayer.level(), serverPlayer);
 		}
 
-		serverPlayer.level.playSound(null, serverPlayer.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+		serverPlayer.level().playSound(null, serverPlayer.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 128, serverPlayer.level.dimension())), new PacketRecallParticles(serverPlayer.getX(), serverPlayer.getY() + (serverPlayer.getBbHeight() / 2), serverPlayer.getZ(), 48, false));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ(), 128, serverPlayer.level().dimension())), new PacketRecallParticles(serverPlayer.getX(), serverPlayer.getY() + (serverPlayer.getBbHeight() / 2), serverPlayer.getZ(), 48, false));
 
 		return destinationWorld;
 	}
@@ -1623,7 +1623,7 @@ public class SuperpositionHandler {
 	}
 
 	public static Optional<Tuple<UUID, BlockPos>> updateSoulCompass(ServerPlayer player) {
-		var optional = SoulArchive.getInstance().findNearest(player.level, player.blockPosition());
+		var optional = SoulArchive.getInstance().findNearest(player.level(), player.blockPosition());
 		boolean noValid = optional.isEmpty();
 		BlockPos pos = noValid ? BlockPos.ZERO : optional.get().getB();
 

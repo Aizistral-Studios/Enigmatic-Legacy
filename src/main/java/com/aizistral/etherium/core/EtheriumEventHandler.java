@@ -46,8 +46,8 @@ public class EtheriumEventHandler {
 					LivingEntity attacker = ((LivingEntity) event.getSource().getEntity());
 					Vector3 vec = Vector3.fromEntityCenter(player).subtract(Vector3.fromEntityCenter(event.getSource().getEntity())).normalize();
 					attacker.knockback(0.75F, vec.x, vec.z);
-					player.level.playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundSource.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
-					player.level.playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundSource.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
+					player.level().playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundSource.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
+					player.level().playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundSource.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
 				}
 
 				event.setAmount(event.getAmount() * this.config.getShieldReduction().asModifierInverted());
@@ -57,7 +57,7 @@ public class EtheriumEventHandler {
 
 	@SubscribeEvent
 	public void onEntityAttacked(LivingAttackEvent event) {
-		if (event.getEntity().level.isClientSide)
+		if (event.getEntity().level().isClientSide)
 			return;
 
 		// TODO Figure out a way to account for shield blocking
@@ -73,7 +73,7 @@ public class EtheriumEventHandler {
 				if (EtheriumArmor.hasShield(player)) {
 					event.setCanceled(true);
 
-					player.level.playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundSource.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
+					player.level().playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundSource.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
 				}
 			}
 		}

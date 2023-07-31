@@ -798,8 +798,8 @@ public class EnigmaticEventHandler {
 				Player player = Minecraft.getInstance().player;
 
 				if (player != null) {
-					if (this.clientWorldTicks != player.level.getGameTime()) {
-						this.clientWorldTicks = player.level.getGameTime();
+					if (this.clientWorldTicks != player.level().getGameTime()) {
+						this.clientWorldTicks = player.level().getGameTime();
 						EnigmaticLegacy.PROXY.updateInfinitumCounters();
 					}
 				}
@@ -957,12 +957,12 @@ public class EnigmaticEventHandler {
 	}
 
 	private void syncPlayTime(Player player) {
-		if (!player.level.isClientSide) {
+		if (!player.level().isClientSide) {
 			var counter = IPlaytimeCounter.get(player);
 			counter.matchStats();
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() ->
 			new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64,
-					player.level.dimension())), new PacketSyncPlayTime(player.getUUID(),
+					player.level().dimension())), new PacketSyncPlayTime(player.getUUID(),
 							counter.getTimeWithCurses(), counter.getTimeWithoutCurses()));
 		}
 	}
@@ -972,9 +972,9 @@ public class EnigmaticEventHandler {
 		if (event.getEntity() instanceof ServerPlayer player) {
 			LAST_SOUL_COMPASS_UPDATE.remove(player);
 
-			if (event.getEntity().level.dimension() == Level.NETHER) {
+			if (event.getEntity().level().dimension() == Level.NETHER) {
 				Quote.SULFUR_AIR.playOnceIfUnlocked(player, 240);
-			} else if (event.getEntity().level.dimension() == Level.END) {
+			} else if (event.getEntity().level().dimension() == Level.END) {
 				Quote.TORTURED_ROCKS.playOnceIfUnlocked(player, 240);
 			}
 		}
@@ -985,7 +985,7 @@ public class EnigmaticEventHandler {
 		if (!event.getEntity().isAlive())
 			return;
 
-		if (!event.getEntity().level.isClientSide) {
+		if (!event.getEntity().level().isClientSide) {
 			if (event.getEntity() instanceof EnderMan || event.getEntity() instanceof Shulker) {
 				int cooldown = event.getEntity().getPersistentData().getInt("ELTeleportBlock");
 
@@ -1000,7 +1000,7 @@ public class EnigmaticEventHandler {
 		}
 
 		if (event.getEntity() instanceof Player player) {
-			if (!player.level.isClientSide) {
+			if (!player.level().isClientSide) {
 				SCHEDULED_DATA_SYNC.removeIf(p -> {
 					TransientPlayerData.get(p).syncToPlayer();
 					return true;
@@ -1031,14 +1031,14 @@ public class EnigmaticEventHandler {
 							BlockPos pos = tuple.getB();
 
 							if (player.distanceToSqr(pos.getX(), pos.getY(), pos.getZ()) < 256) {
-								player.level.getChunkAt(pos);
+								player.level().getChunkAt(pos);
 								UUID id = tuple.getA();
 								int radius = 3;
 
 								AABB box = new AABB(pos.getX() - radius, pos.getY() - radius, pos.getZ() - radius,
 										pos.getX() + radius, pos.getY() + radius, pos.getZ() + radius);
 
-								List<PermanentItemEntity> list = player.level.getEntitiesOfClass(PermanentItemEntity.class, box, entity -> entity.getUUID().equals(id));
+								List<PermanentItemEntity> list = player.level().getEntitiesOfClass(PermanentItemEntity.class, box, entity -> entity.getUUID().equals(id));
 
 								if (list.size() <= 0) {
 									SoulArchive.getInstance().removeItem(id);
@@ -1254,11 +1254,11 @@ public class EnigmaticEventHandler {
 			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.ESCAPE_SCROLL)) {
 				POSTMORTAL_POSESSIONS.put(player, EnigmaticItems.ESCAPE_SCROLL);
 
-				if (!player.level.isClientSide) {
+				if (!player.level().isClientSide) {
 					ItemStack tomeStack = SuperpositionHandler.getCurioStack(player, EnigmaticItems.ESCAPE_SCROLL);
-					PermanentItemEntity droppedTomeStack = new PermanentItemEntity(player.level, player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), tomeStack.copy());
+					PermanentItemEntity droppedTomeStack = new PermanentItemEntity(player.level(), player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), tomeStack.copy());
 					droppedTomeStack.setPickupDelay(10);
-					player.level.addFreshEntity(droppedTomeStack);
+					player.level().addFreshEntity(droppedTomeStack);
 
 					tomeStack.shrink(1);
 				}
@@ -1319,15 +1319,15 @@ public class EnigmaticEventHandler {
 						getEnchantmentLevel(Enchantments.VANISHING_CURSE) <= 0, DropRule.ALWAYS_KEEP);
 			}
 
-			if (this.hadUnholyStone(player) && player.level.dimension() == PROXY.getNetherKey()) {
+			if (this.hadUnholyStone(player) && player.level().dimension() == PROXY.getNetherKey()) {
 				BlockPos deathPos = player.blockPosition();
 
-				if (this.isThereLava(player.level, deathPos)) {
+				if (this.isThereLava(player.level(), deathPos)) {
 					BlockPos surfacePos = deathPos;
 
 					while (true) {
 						BlockPos nextAbove = surfacePos.offset(0, 1, 0);
-						if (this.isThereLava(player.level, nextAbove)) {
+						if (this.isThereLava(player.level(), nextAbove)) {
 							surfacePos = nextAbove;
 							continue;
 						} else {
@@ -1343,9 +1343,9 @@ public class EnigmaticEventHandler {
 						boolean checkArea = BlockPos.betweenClosedStream(surfacePos.offset(-3, i, -3), surfacePos.offset(3, i, 3))
 								.map(blockPos -> {
 									if (fi <= 0)
-										return this.isThereLava(player.level, blockPos);
+										return this.isThereLava(player.level(), blockPos);
 									else
-										return player.level.isEmptyBlock(blockPos) || this.isThereLava(player.level, blockPos);
+										return player.level().isEmptyBlock(blockPos) || this.isThereLava(player.level(), blockPos);
 								})
 								.reduce((prevResult, nextElement) -> {
 									return prevResult && nextElement;
@@ -1360,7 +1360,7 @@ public class EnigmaticEventHandler {
 						SuperpositionHandler.destroyCurio(player, EnigmaticItems.CURSED_RING);
 						SuperpositionHandler.destroyCurio(player, EnigmaticItems.DESOLATION_RING);
 
-						player.level.playSound(null, player.blockPosition(), SoundEvents.WITHER_DEATH, SoundSource.PLAYERS, 1.0F, 0.5F);
+						player.level().playSound(null, player.blockPosition(), SoundEvents.WITHER_DEATH, SoundSource.PLAYERS, 1.0F, 0.5F);
 						SuperpositionHandler.setPersistentBoolean(player, "DestroyedCursedRing", true);
 					}
 				}
@@ -1379,7 +1379,7 @@ public class EnigmaticEventHandler {
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onLivingDeath(LivingDeathEvent event) {
 
-		if (event.getEntity() instanceof Player && !event.getEntity().level.isClientSide) {
+		if (event.getEntity() instanceof Player && !event.getEntity().level().isClientSide) {
 			Player player = (Player) event.getEntity();
 
 			/*
@@ -1427,14 +1427,14 @@ public class EnigmaticEventHandler {
 					event.setCanceled(true);
 					player.setHealth(player.getMaxHealth()*0.3F);
 
-					EnigmaticItems.THE_CUBE.triggerActiveAbility(player.level, player, SuperpositionHandler.getCurioStack(player, EnigmaticItems.THE_CUBE));
+					EnigmaticItems.THE_CUBE.triggerActiveAbility(player.level(), player, SuperpositionHandler.getCurioStack(player, EnigmaticItems.THE_CUBE));
 
 					player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 1200, 2));
 					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 1));
 					player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 1200, 0));
 					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 1200, 1));
 
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())),
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level().dimension())),
 							new PacketCosmicRevive(player.getId(), 1));
 				}
 			}
@@ -1479,7 +1479,7 @@ public class EnigmaticEventHandler {
 				Player player = (Player) result.getEntity();
 				Entity arrow = event.getEntity();
 
-				if (!player.level.isClientSide) {
+				if (!player.level().isClientSide) {
 					if (arrow instanceof Projectile) {
 						Projectile projectile = (Projectile) arrow;
 
@@ -1543,8 +1543,8 @@ public class EnigmaticEventHandler {
 						arrow.getTags().removeIf(tag -> tag.startsWith("AB_DEFLECTED"));
 						arrow.addTag("AB_DEFLECTED:" + arrow.tickCount);
 
-						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64.0D, player.level.dimension())), new PacketForceArrowRotations(arrow.getId(), arrow.getYRot(), arrow.getXRot(), arrow.getDeltaMovement().x, arrow.getDeltaMovement().y, arrow.getDeltaMovement().z, arrow.getX(), arrow.getY(), arrow.getZ()));
-						player.level.playSound(null, player.blockPosition(), EnigmaticSounds.DEFLECT, SoundSource.PLAYERS, 1.0F, 0.95F + (float) (Math.random() * 0.1D));
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64.0D, player.level().dimension())), new PacketForceArrowRotations(arrow.getId(), arrow.getYRot(), arrow.getXRot(), arrow.getDeltaMovement().x, arrow.getDeltaMovement().y, arrow.getDeltaMovement().z, arrow.getX(), arrow.getY(), arrow.getZ()));
+						player.level().playSound(null, player.blockPosition(), EnigmaticSounds.DEFLECT, SoundSource.PLAYERS, 1.0F, 0.95F + (float) (Math.random() * 0.1D));
 					}
 				} /*else {
 					if (event.getEntity().getTags().contains("enigmaticlegacy.redirected")) {
@@ -1558,7 +1558,7 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onEntityAttacked(LivingAttackEvent event) {
-		if (event.getEntity().level.isClientSide)
+		if (event.getEntity().level().isClientSide)
 			return;
 
 		/*
@@ -1648,7 +1648,7 @@ public class EnigmaticEventHandler {
 				if (EyeOfNebula.dodgeProbability.getValue().roll() && player.invulnerableTime <= 10 && event.getSource().getEntity() instanceof LivingEntity) {
 
 					for (int counter = 0; counter <= 32; counter++) {
-						if (SuperpositionHandler.validTeleportRandomly(player, player.level, (int) EyeOfNebula.dodgeRange.getValue())) {
+						if (SuperpositionHandler.validTeleportRandomly(player, player.level(), (int) EyeOfNebula.dodgeRange.getValue())) {
 							break;
 						}
 					}
@@ -1667,9 +1667,9 @@ public class EnigmaticEventHandler {
 							event.setCanceled(true);
 						}
 
-						if (data.getFireImmunityTimer() == 0 && !player.level.isClientSide) {
-							player.level.playSound(null, player.blockPosition(), SoundEvents.LAVA_EXTINGUISH, SoundSource.PLAYERS, 1.0F, 0.5F + (THEY_SEE_ME_ROLLIN.nextFloat() * 0.5F));
-							EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 32, player.level.dimension())), new PacketWitherParticles(player.getX(), player.getY(0.25D), player.getZ(), 8, false, 1));
+						if (data.getFireImmunityTimer() == 0 && !player.level().isClientSide) {
+							player.level().playSound(null, player.blockPosition(), SoundEvents.LAVA_EXTINGUISH, SoundSource.PLAYERS, 1.0F, 0.5F + (THEY_SEE_ME_ROLLIN.nextFloat() * 0.5F));
+							EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 32, player.level().dimension())), new PacketWitherParticles(player.getX(), player.getY(0.25D), player.getZ(), 8, false, 1));
 						}
 
 						data.setFireImmunityTimer(data.getFireImmunityTimer()+200);
@@ -1687,17 +1687,17 @@ public class EnigmaticEventHandler {
 
 			if (player.getMainHandItem() != null && player.getMainHandItem().getItem() == EnigmaticItems.EXTRADIMENSIONAL_EYE)
 				if (ItemNBTHelper.verifyExistance(player.getMainHandItem(), "BoundDimension"))
-					if (ItemNBTHelper.getString(player.getMainHandItem(), "BoundDimension", "minecraft:overworld").equals(event.getEntity().level.dimension().location().toString())) {
+					if (ItemNBTHelper.getString(player.getMainHandItem(), "BoundDimension", "minecraft:overworld").equals(event.getEntity().level().dimension().location().toString())) {
 						event.setCanceled(true);
 						ItemStack stack = player.getMainHandItem();
 
-						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 128, event.getEntity().level.dimension())), new PacketPortalParticles(event.getEntity().getX(), event.getEntity().getY() + (event.getEntity().getBbHeight() / 2), event.getEntity().getZ(), 96, 1.5D, false));
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 128, event.getEntity().level().dimension())), new PacketPortalParticles(event.getEntity().getX(), event.getEntity().getY() + (event.getEntity().getBbHeight() / 2), event.getEntity().getZ(), 96, 1.5D, false));
 
-						event.getEntity().level.playSound(null, event.getEntity().blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+						event.getEntity().level().playSound(null, event.getEntity().blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 						event.getEntity().teleportTo(ItemNBTHelper.getDouble(stack, "BoundX", 0D), ItemNBTHelper.getDouble(stack, "BoundY", 0D), ItemNBTHelper.getDouble(stack, "BoundZ", 0D));
-						event.getEntity().level.playSound(null, event.getEntity().blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+						event.getEntity().level().playSound(null, event.getEntity().blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 
-						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 128, event.getEntity().level.dimension())), new PacketRecallParticles(event.getEntity().getX(), event.getEntity().getY() + (event.getEntity().getBbHeight() / 2), event.getEntity().getZ(), 48, false));
+						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), 128, event.getEntity().level().dimension())), new PacketRecallParticles(event.getEntity().getX(), event.getEntity().getY() + (event.getEntity().getBbHeight() / 2), event.getEntity().getZ(), 48, false));
 
 						if (!player.getAbilities().instabuild) {
 							stack.shrink(1);
@@ -1769,7 +1769,7 @@ public class EnigmaticEventHandler {
 			LAST_HEALTH.put(player, player.getHealth());
 		}
 
-		if (event.getSource().getDirectEntity() instanceof Player && !event.getSource().getDirectEntity().level.isClientSide) {
+		if (event.getSource().getDirectEntity() instanceof Player && !event.getSource().getDirectEntity().level().isClientSide) {
 			Player player = (Player) event.getSource().getDirectEntity();
 
 			float lifesteal = 0;
@@ -1798,7 +1798,7 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onEntityAttacked(AttackEntityEvent event) {
-		if (!event.getEntity().level.isClientSide) {
+		if (!event.getEntity().level().isClientSide) {
 			RegisteredMeleeAttack.registerAttack(event.getEntity());
 		}
 	}
@@ -1821,7 +1821,7 @@ public class EnigmaticEventHandler {
 		if (event.getEntity() instanceof ServerPlayer player && event.getSource().getEntity() != null) {
 			if (event.getAmount() > EnigmaticItems.THE_CUBE.getDamageLimit(player) && SuperpositionHandler.hasCurio(player, EnigmaticItems.THE_CUBE)) {
 				event.setCanceled(true);
-				player.level.playSound(null, player.blockPosition(), SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1F, 1F);
+				player.level().playSound(null, player.blockPosition(), SoundEvents.ITEM_BREAK, SoundSource.PLAYERS, 1F, 1F);
 
 				if (event.getSource().getDirectEntity() instanceof LivingEntity living) {
 					Vector3 look = new Vector3(living.position()).subtract(new Vector3(player.position())).normalize();
@@ -1937,7 +1937,7 @@ public class EnigmaticEventHandler {
 				} else if (mainhandStack.is(EnigmaticItems.ENDER_SLAYER)) {
 					if (SuperpositionHandler.isTheCursedOne(player)) {
 						if (EnigmaticItems.ENDER_SLAYER.isEndDweller(event.getEntity())) {
-							if (player.level.dimension().equals(PROXY.getEndKey())) {
+							if (player.level().dimension().equals(PROXY.getEndKey())) {
 								if (event.getEntity() instanceof EnderMan
 										&& RegisteredMeleeAttack.getRegisteredAttackStregth(player) >= 1F) {
 									event.setAmount((event.getAmount() + 100F) * 10F);
@@ -2137,7 +2137,7 @@ public class EnigmaticEventHandler {
 				LivingEntity owner = pet.getOwner();
 
 				if (owner instanceof Player && SuperpositionHandler.hasItem((Player)owner, EnigmaticItems.HUNTER_GUIDEBOOK)) {
-					if (owner.level == pet.level && owner.distanceTo(pet) <= HunterGuidebook.effectiveDistance.getValue()) {
+					if (owner.level() == pet.level() && owner.distanceTo(pet) <= HunterGuidebook.effectiveDistance.getValue()) {
 						event.setCanceled(true);
 						owner.hurt(event.getSource(), SuperpositionHandler.hasItem((Player)owner, EnigmaticItems.ANIMAL_GUIDEBOOK) ? (event.getAmount()*HunterGuidebook.synergyDamageReduction.getValue().asModifierInverted()) : event.getAmount());
 					}
@@ -2150,7 +2150,7 @@ public class EnigmaticEventHandler {
 				if (event.getAmount() <= EnigmaticItems.THE_CUBE.getDamageLimit(player) && THEY_SEE_ME_ROLLIN.nextDouble() <= 0.35) {
 					event.setCanceled(true);
 					living.hurt(event.getSource(), event.getAmount());
-					player.level.playSound(null, player.blockPosition(), EnigmaticSounds.SWORD_HIT_REJECT, SoundSource.PLAYERS, 1F, 1F);
+					player.level().playSound(null, player.blockPosition(), EnigmaticSounds.SWORD_HIT_REJECT, SoundSource.PLAYERS, 1F, 1F);
 				} else {
 					EnigmaticItems.THE_CUBE.applyRandomEffect(living, false);
 				}
@@ -2301,7 +2301,7 @@ public class EnigmaticEventHandler {
 		int bonusExp = 0;
 
 		if (event.getEntity() instanceof ServerPlayer) {
-			if (this.hadEnigmaticAmulet((Player) event.getEntity()) && !event.getEntity().level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+			if (this.hadEnigmaticAmulet((Player) event.getEntity()) && !event.getEntity().level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
 				event.setCanceled(true);
 			}
 		} else if (event.getEntity() instanceof Monster) {
@@ -2482,14 +2482,14 @@ public class EnigmaticEventHandler {
 			deathLocation.putDouble("x", player.getX());
 			deathLocation.putDouble("y", player.getY());
 			deathLocation.putDouble("z", player.getZ());
-			deathLocation.putString("dimension", player.level.dimension().location().toString());
+			deathLocation.putString("dimension", player.level().dimension().location().toString());
 
 			SuperpositionHandler.setPersistentTag(player, "LastDeathLocation", deathLocation);
 
 			boolean droppedCrystal = false;
 			boolean hadEscapeScroll = this.hadEscapeScroll(player);
 
-			DimensionalPosition dimPoint = hadEscapeScroll ? SuperpositionHandler.getRespawnPoint(player) : new DimensionalPosition(player.getX(), player.getY(), player.getZ(), player.level);
+			DimensionalPosition dimPoint = hadEscapeScroll ? SuperpositionHandler.getRespawnPoint(player) : new DimensionalPosition(player.getX(), player.getY(), player.getZ(), player.level());
 
 			if (hadEscapeScroll) {
 				BlockPos respawnPos = player.getRespawnPosition();
@@ -2502,8 +2502,8 @@ public class EnigmaticEventHandler {
 					isEndAnchor = true;
 				}
 
-				player.level.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketPortalParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 100, 1.25F, false));
+				player.level().playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level().dimension())), new PacketPortalParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 100, 1.25F, false));
 
 				for (ItemEntity dropIt : event.getDrops()) {
 					ItemEntity alternativeDrop = new ItemEntity(dimPoint.world, dimPoint.posX, dimPoint.posY, dimPoint.posZ, dropIt.getItem());
@@ -2580,17 +2580,17 @@ public class EnigmaticEventHandler {
 			Player player = (Player) event.getSource().getEntity();
 			LivingEntity killed = event.getEntity();
 
-			if (killed instanceof EnderMan && killed.level.dimension().equals(PROXY.getEndKey())
+			if (killed instanceof EnderMan && killed.level().dimension().equals(PROXY.getEndKey())
 					&& killed.getPersistentData().getBoolean("EnderSlayerVictim")) {
 				int extraXP = 0;
 
 				for (ItemEntity entity : event.getDrops()) {
 					if (entity.getItem() != null) {
 						if (entity.getItem().is(Items.ENDER_PEARL)) {
-							this.dropXPOrb(killed.level, killed.getX(), killed.getY(), killed.getZ(), 10);
+							this.dropXPOrb(killed.level(), killed.getX(), killed.getY(), killed.getZ(), 10);
 							//extraXP += 10;
 						} else if (entity.getItem().is(Items.ENDER_EYE)) {
-							this.dropXPOrb(killed.level, killed.getX(), killed.getY(), killed.getZ(), 20);
+							this.dropXPOrb(killed.level(), killed.getX(), killed.getY(), killed.getZ(), 20);
 							//extraXP += 20;
 						}
 					}
@@ -2896,7 +2896,7 @@ public class EnigmaticEventHandler {
 
 			ServerRecipeBook book = player.getRecipeBook();
 			if (OmniconfigHandler.retriggerRecipeUnlocks.getValue()) {
-				for (Recipe<?> theRecipe : player.level.getRecipeManager().getRecipes()) {
+				for (Recipe<?> theRecipe : player.level().getRecipeManager().getRecipes()) {
 					if (book.contains(theRecipe)) {
 						CriteriaTriggers.RECIPE_UNLOCKED.trigger(player, theRecipe);
 					}
@@ -2973,7 +2973,7 @@ public class EnigmaticEventHandler {
 		 * permanently unlocked, when the player respawns.
 		 */
 
-		if (!player.level.isClientSide) {
+		if (!player.level().isClientSide) {
 			LAST_SOUL_COMPASS_UPDATE.remove(player);
 
 			if (!event.isEndConquered()) {
@@ -2986,7 +2986,7 @@ public class EnigmaticEventHandler {
 					} else {
 						Quote.getRandom(Quote.DEATH_QUOTES).playIfUnlocked((ServerPlayer) player, 10);
 					}
-				if (!player.level.getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
+				if (!player.level().getGameRules().getBoolean(GameRules.RULE_KEEPINVENTORY)) {
 					if (SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENABLESCROLL)) {
 						SuperpositionHandler.unlockSpecialSlot("scroll", event.getEntity());
 					}
@@ -3048,11 +3048,11 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onItemCrafted(PlayerEvent.ItemCraftedEvent event) {
-		if (event.getEntity() != null && !event.getEntity().level.isClientSide) {
+		if (event.getEntity() != null && !event.getEntity().level().isClientSide) {
 			if ((event.getInventory().countItem(EnigmaticItems.ENCHANTMENT_TRANSPOSER) == 1 || event.getInventory().countItem(EnigmaticItems.CURSE_TRANSPOSER) == 1) && event.getCrafting().getItem() == Items.ENCHANTED_BOOK) {
-				event.getEntity().level.playSound(null, event.getEntity().blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
+				event.getEntity().level().playSound(null, event.getEntity().blockPosition(), SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 			} else if (event.getCrafting().getItem() == EnigmaticItems.CURSED_STONE) {
-				event.getEntity().level.playSound(null, event.getEntity().blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
+				event.getEntity().level().playSound(null, event.getEntity().blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 			}
 		}
 	}
@@ -3098,7 +3098,7 @@ public class EnigmaticEventHandler {
 	 */
 
 	public void addDrop(LivingDropsEvent event, ItemStack drop) {
-		ItemEntity entityitem = new ItemEntity(event.getEntity().level, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), drop);
+		ItemEntity entityitem = new ItemEntity(event.getEntity().level(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), drop);
 		entityitem.setPickUpDelay(10);
 		event.getDrops().add(entityitem);
 	}
@@ -3152,8 +3152,8 @@ public class EnigmaticEventHandler {
 					player.getInventory().setItem(8, amuletStack);
 				} else {
 					if (!player.getInventory().add(amuletStack)) {
-						ItemEntity dropAmulet = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), amuletStack);
-						player.level.addFreshEntity(dropAmulet);
+						ItemEntity dropAmulet = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), amuletStack);
+						player.level().addFreshEntity(dropAmulet);
 					}
 				}
 
@@ -3173,8 +3173,8 @@ public class EnigmaticEventHandler {
 						player.getInventory().setItem(7, cursedRingStack);
 					} else {
 						if (!player.getInventory().add(cursedRingStack)) {
-							ItemEntity dropRing = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), cursedRingStack);
-							player.level.addFreshEntity(dropRing);
+							ItemEntity dropRing = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), cursedRingStack);
+							player.level().addFreshEntity(dropRing);
 						}
 					}
 				} else {

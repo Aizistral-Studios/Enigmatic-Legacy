@@ -43,11 +43,11 @@ public class LoreInscriberContainer extends AbstractContainerMenu {
 	private String unparsedInputField;
 
 	public LoreInscriberContainer(int syncID, Inventory playerInv) {
-		this(syncID, playerInv, ContainerLevelAccess.create(playerInv.player.level, playerInv.player.blockPosition()));
+		this(syncID, playerInv, ContainerLevelAccess.create(playerInv.player.level(), playerInv.player.blockPosition()));
 	}
 
 	public LoreInscriberContainer(int syncID, Inventory playerInv, FriendlyByteBuf extras) {
-		this(syncID, playerInv, ContainerLevelAccess.create(playerInv.player.level, playerInv.player.blockPosition()));
+		this(syncID, playerInv, ContainerLevelAccess.create(playerInv.player.level(), playerInv.player.blockPosition()));
 	}
 
 	private LoreInscriberContainer(int id, Inventory Inventory, ContainerLevelAccess worldPosCallable) {
@@ -209,8 +209,8 @@ public class LoreInscriberContainer extends AbstractContainerMenu {
 	protected ItemStack claimResult(Player player, ItemStack stack) {
 		this.craftSlotsInv.setItem(0, ItemStack.EMPTY);
 
-		if (!player.level.isClientSide) {
-			player.level.playSound(null, player.blockPosition(), EnigmaticSounds.WRITE, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
+		if (!player.level().isClientSide) {
+			player.level().playSound(null, player.blockPosition(), EnigmaticSounds.WRITE, SoundSource.PLAYERS, 1.0F, (float) (0.9F + (Math.random() * 0.1F)));
 		}
 
 		return stack;
