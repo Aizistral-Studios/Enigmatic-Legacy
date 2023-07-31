@@ -84,7 +84,7 @@ public class ExtradimensionalEye extends ItemBase implements Vanishable {
 			ItemNBTHelper.setDouble(itemstack, "BoundY", playerIn.getY());
 			ItemNBTHelper.setDouble(itemstack, "BoundZ", playerIn.getZ());
 
-			ItemNBTHelper.setString(itemstack, "BoundDimension", playerIn.level.dimension().location().toString());
+			ItemNBTHelper.setString(itemstack, "BoundDimension", playerIn.level().dimension().location().toString());
 			playerIn.swing(handIn);
 			return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
 		}

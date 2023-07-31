@@ -72,8 +72,8 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, Vanis
 			CompoundTag nbt = crystalNBT.getCompound("storedStack" + c);
 			ItemStack stack = ItemStack.of(nbt);
 			if (!player.getInventory().add(stack)) {
-				ItemEntity drop = new ItemEntity(player.level, player.getX(), player.getY(), player.getZ(), stack);
-				player.level.addFreshEntity(drop);
+				ItemEntity drop = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), stack);
+				player.level().addFreshEntity(drop);
 			}
 			crystalNBT.remove("storedStack" + c);
 		}
@@ -83,7 +83,7 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, Vanis
 		if (retrieveSoul != null) {
 			EnigmaticItems.SOUL_CRYSTAL.retrieveSoulFromCrystal(player, retrieveSoul);
 		} else {
-			player.level.playSound(null, new BlockPos(player.position()), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.0f);
+			player.level().playSound(null, new BlockPos(player.position()), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.0f);
 		}
 
 		ItemNBTHelper.setBoolean(crystal, "isStored", false);

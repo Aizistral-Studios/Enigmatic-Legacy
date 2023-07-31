@@ -127,7 +127,7 @@ public class UltimateWitherSkullEntity extends AbstractHurtingProjectile {
 
 				if (targetId != -1) {
 					try {
-						this.target = (LivingEntity) this.level.getEntity(targetId);
+						this.target = (LivingEntity) this.level().getEntity(targetId);
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
@@ -177,17 +177,17 @@ public class UltimateWitherSkullEntity extends AbstractHurtingProjectile {
 
 		}
 
-		if (this.level.isClientSide || this.getOwner() == null)
+		if (this.level().isClientSide || this.getOwner() == null)
 			return;
 
 		if (this.tickCount < 10) {
-			Vector3 res = AOEMiningHelper.calcRayTrace(this.level, (Player) this.getOwner(), ClipContext.Fluid.NONE, 128);
+			Vector3 res = AOEMiningHelper.calcRayTrace(this.level(), (Player) this.getOwner(), ClipContext.Fluid.NONE, 128);
 
 			this.initMotion((LivingEntity) this.getOwner(), res.x - this.getX(), res.y - this.getY(), res.z - this.getZ(), 0.1F);
 
 			return;
 		} else if (this.tickCount == 10) {
-			Vector3 res = AOEMiningHelper.calcRayTrace(this.level, (Player) this.getOwner(), ClipContext.Fluid.NONE, 128);
+			Vector3 res = AOEMiningHelper.calcRayTrace(this.level(), (Player) this.getOwner(), ClipContext.Fluid.NONE, 128);
 
 			this.initMotion((LivingEntity) this.getOwner(), res.x - this.getX(), res.y - this.getY(), res.z - this.getZ(), 1.5F);
 		} else if (this.tickCount >= 400) {
@@ -203,7 +203,7 @@ public class UltimateWitherSkullEntity extends AbstractHurtingProjectile {
 	 */
 	@Override
 	protected void onHit(HitResult result) {
-		if (!this.level.isClientSide) {
+		if (!this.level().isClientSide) {
 
 			this.clearInvincibility();
 
@@ -231,21 +231,21 @@ public class UltimateWitherSkullEntity extends AbstractHurtingProjectile {
 			}
 
 			float explosionRadius = this.isSkullInvulnerable() ? 1.5F : 1.0F;
-			WitherExplosion explosion = new WitherExplosion(this.level, this, this.getX(), this.getY(), this.getZ(), explosionRadius, false, Explosion.BlockInteraction.DESTROY);
+			WitherExplosion explosion = new WitherExplosion(this.level(), this, this.getX(), this.getY(), this.getZ(), explosionRadius, false, Explosion.BlockInteraction.DESTROY);
 
 
-			if (!net.minecraftforge.event.ForgeEventFactory.onExplosionStart(this.level, explosion)) {
+			if (!net.minecraftforge.event.ForgeEventFactory.onExplosionStart(this.level(), explosion)) {
 				explosion.explode();
 				explosion.finalizeExplosion(true);
 
-				for(ServerPlayer serverPlayer : this.level.getServer().getLevel(this.level.dimension()).players()) {
+				for(ServerPlayer serverPlayer : this.level().getServer().getLevel(this.level().dimension()).players()) {
 					if (serverPlayer.distanceToSqr(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z) < 4096.0D) {
 						serverPlayer.connection.send(new ClientboundExplodePacket(explosion.getPosition().x, explosion.getPosition().y, explosion.getPosition().z, explosionRadius, explosion.getToBlow(), explosion.getHitPlayers().get(serverPlayer)));
 					}
 				}
 			}
 
-			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY(), this.getZ(), 64, this.level.dimension())), new PacketWitherParticles(this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), this.isSkullInvulnerable() ? 20 : 16, false));
+			EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(this.getX(), this.getY(), this.getZ(), 64, this.level().dimension())), new PacketWitherParticles(this.getX(), this.getY() + (this.getBbHeight() / 2), this.getZ(), this.isSkullInvulnerable() ? 20 : 16, false));
 
 			this.discard();
 		}
@@ -253,7 +253,7 @@ public class UltimateWitherSkullEntity extends AbstractHurtingProjectile {
 	}
 
 	public void clearInvincibility() {
-		List<LivingEntity> entities = this.level.getEntitiesOfClass(LivingEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(this, 3D));
+		List<LivingEntity> entities = this.level().getEntitiesOfClass(LivingEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(this, 3D));
 		for (LivingEntity entity : entities) {
 			entity.invulnerableTime = 0;
 		}

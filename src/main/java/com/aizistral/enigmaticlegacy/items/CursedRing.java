@@ -311,7 +311,7 @@ public class CursedRing extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		if (context.entity().level.isClientSide || !(context.entity() instanceof Player))
+		if (context.entity().level().isClientSide || !(context.entity() instanceof Player))
 			return;
 
 		Player player = (Player) context.entity();
@@ -319,8 +319,8 @@ public class CursedRing extends ItemBaseCurio {
 		if (player.isCreative() || player.isSpectator())
 			return;
 
-		List<LivingEntity> genericMobs = player.level.getEntitiesOfClass(LivingEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, neutralAngerRange.getValue()));
-		List<EnderMan> endermen = player.level.getEntitiesOfClass(EnderMan.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, endermenRandomportRange.getValue()));
+		List<LivingEntity> genericMobs = player.level().getEntitiesOfClass(LivingEntity.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, neutralAngerRange.getValue()));
+		List<EnderMan> endermen = player.level().getEntitiesOfClass(EnderMan.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, endermenRandomportRange.getValue()));
 
 		for (EnderMan enderman : endermen) {
 			if (random.nextDouble() <= (0.002 * endermenRandomportFrequency.getValue())) {

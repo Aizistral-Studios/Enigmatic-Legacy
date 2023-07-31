@@ -58,7 +58,7 @@ public class PacketPortalParticles {
 			}
 
 			for (int counter = 0; counter <= amount; counter++) {
-				player.level.addParticle(ParticleTypes.PORTAL, true, msg.x, msg.y, msg.z, ((Math.random()-0.5D)*2.0D)*msg.rangeModifier, ((Math.random()-0.5D)*2.0D)*msg.rangeModifier, ((Math.random()-0.5D)*2.0D)*msg.rangeModifier);
+				player.level().addParticle(ParticleTypes.PORTAL, true, msg.x, msg.y, msg.z, ((Math.random()-0.5D)*2.0D)*msg.rangeModifier, ((Math.random()-0.5D)*2.0D)*msg.rangeModifier, ((Math.random()-0.5D)*2.0D)*msg.rangeModifier);
 			}
 
 

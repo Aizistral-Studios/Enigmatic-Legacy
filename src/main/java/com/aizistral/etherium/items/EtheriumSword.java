@@ -69,7 +69,7 @@ public class EtheriumSword extends SwordItem implements IEtheriumTool {
 			this.toggleAreaEffects(player, stack);
 
 			return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
-		} else if (!player.level.isClientSide) {
+		} else if (!player.level().isClientSide) {
 			if (!player.getCooldowns().isOnCooldown(this) && this.areaEffectsEnabled(player, stack)) {
 				Vector3 look = new Vector3(player.getLookAngle());
 				Vector3 dir = look.multiply(1D);

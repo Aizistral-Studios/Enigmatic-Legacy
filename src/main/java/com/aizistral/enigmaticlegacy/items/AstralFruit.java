@@ -59,7 +59,7 @@ public class AstralFruit extends ItemBaseFood implements ICursed, Vanishable {
 		if (player instanceof ServerPlayer playerMP) {
 			SuperpositionHandler.setPersistentBoolean(playerMP, "ConsumedAstralFruit", true);
 			SuperpositionHandler.unlockSpecialSlot("ring", playerMP);
-			playerMP.level.playSound(null, playerMP.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, 1F);
+			playerMP.level().playSound(null, playerMP.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, 1F);
 
 			double multiplier = 1;
 

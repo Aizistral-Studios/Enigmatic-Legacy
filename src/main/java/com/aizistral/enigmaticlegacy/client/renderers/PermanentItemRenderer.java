@@ -71,7 +71,7 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 
 		int i = itemstack.isEmpty() ? 187 : Item.getId(itemstack.getItem()) + itemstack.getDamageValue();
 		this.random.setSeed(i);
-		BakedModel ibakedmodel = this.itemRenderer.getModel(itemstack, entityIn.level, null, entityIn.getId());
+		BakedModel ibakedmodel = this.itemRenderer.getModel(itemstack, entityIn.level(), null, entityIn.getId());
 		boolean flag = ibakedmodel.isGui3d();
 		int j = this.getModelCount(itemstack);
 		float f = 0.25F;

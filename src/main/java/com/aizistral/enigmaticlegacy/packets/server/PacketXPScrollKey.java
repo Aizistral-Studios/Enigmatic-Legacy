@@ -39,7 +39,7 @@ public class PacketXPScrollKey {
 
 			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticItems.XP_SCROLL)) {
 				ItemStack scroll = SuperpositionHandler.getCurioStack(playerServ, EnigmaticItems.XP_SCROLL);
-				EnigmaticItems.XP_SCROLL.trigger(playerServ.level, scroll, playerServ, InteractionHand.MAIN_HAND, false);
+				EnigmaticItems.XP_SCROLL.trigger(playerServ.level(), scroll, playerServ, InteractionHand.MAIN_HAND, false);
 			}
 
 		});

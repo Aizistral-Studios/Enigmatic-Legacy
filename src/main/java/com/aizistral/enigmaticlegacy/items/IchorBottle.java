@@ -53,7 +53,7 @@ public class IchorBottle extends ItemBasePotion {
 		if (player instanceof ServerPlayer playerMP) {
 			SuperpositionHandler.setPersistentBoolean(playerMP, "ConsumedIchorBottle", true);
 			SuperpositionHandler.unlockSpecialSlot("charm", playerMP);
-			playerMP.level.playSound(null, playerMP.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, 1F);
+			playerMP.level().playSound(null, playerMP.blockPosition(), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0F, 1F);
 
 			double multiplier = 1;
 

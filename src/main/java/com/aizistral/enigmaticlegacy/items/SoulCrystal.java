@@ -66,8 +66,8 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, Vanishab
 		if (lostFragments > 0) {
 			this.setLostCrystals(player, lostFragments - 1);
 
-			if (!player.level.isClientSide) {
-				player.level.playSound(null, new BlockPos(player.position()), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.0f);
+			if (!player.level().isClientSide) {
+				player.level().playSound(null, new BlockPos(player.position()), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.0f);
 			}
 
 			return true;
@@ -129,8 +129,8 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, Vanishab
 
 		if (this.retrieveSoulFromCrystal(player, stack)) {
 			Vector3 playerCenter = Vector3.fromEntityCenter(player);
-			if (!player.level.isClientSide) {
-				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(playerCenter.x, playerCenter.y, playerCenter.z, 64, player.level.dimension())), new PacketRecallParticles(playerCenter.x, playerCenter.y, playerCenter.z, 48, false));
+			if (!player.level().isClientSide) {
+				EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(playerCenter.x, playerCenter.y, playerCenter.z, 64, player.level().dimension())), new PacketRecallParticles(playerCenter.x, playerCenter.y, playerCenter.z, 48, false));
 			}
 
 			player.swing(hand);

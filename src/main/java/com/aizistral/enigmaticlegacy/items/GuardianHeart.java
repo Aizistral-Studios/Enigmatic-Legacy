@@ -111,7 +111,7 @@ public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
 		if (entity instanceof Player && !world.isClientSide) {
 			Player player = (Player) entity;
-			List<Monster> genericMobs = player.level.getEntitiesOfClass(Monster.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, abilityRange.getValue()));
+			List<Monster> genericMobs = player.level().getEntitiesOfClass(Monster.class, SuperpositionHandler.getBoundingBoxAroundEntity(player, abilityRange.getValue()));
 
 			if (SuperpositionHandler.isTheCursedOne(player) && Inventory.isHotbarSlot(itemSlot) && !player.getCooldowns().isOnCooldown(this)) {
 				Monster oneWatched = null;
@@ -128,7 +128,7 @@ public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 				if (oneWatched != null && oneWatched.isAlive()) {
 					final Monster theOne = oneWatched;
 					Vector3 vec = Vector3.fromEntityCenter(theOne);
-					List<Monster> surroundingMobs = player.level.getEntitiesOfClass(Monster.class, SuperpositionHandler.getBoundingBoxAroundEntity(theOne, enrageRange.getValue()), (living) -> { return living.isAlive() && theOne.hasLineOfSight(living); });
+					List<Monster> surroundingMobs = player.level().getEntitiesOfClass(Monster.class, SuperpositionHandler.getBoundingBoxAroundEntity(theOne, enrageRange.getValue()), (living) -> { return living.isAlive() && theOne.hasLineOfSight(living); });
 					Monster closestMonster = SuperpositionHandler.getClosestEntity(surroundingMobs, (monster) -> monster != theOne, vec.x, vec.y, vec.z);
 
 					//System.out.println("Closest monster: " + closestMonster);
@@ -144,11 +144,11 @@ public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 							this.setAttackTarget(otherMonster, theOne);
 						}
 
-						player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.HOSTILE, 1.0F, 1.0F);
+						player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ELDER_GUARDIAN_CURSE, SoundSource.HOSTILE, 1.0F, 1.0F);
 
 						if (player instanceof ServerPlayer) {
 							ServerPlayer serverPlayer = (ServerPlayer) player;
-							EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(theOne.getX(), theOne.getY(), theOne.getZ(), 64, theOne.level.dimension())), new PacketGenericParticleEffect(theOne.getX(), theOne.getEyeY(), theOne.getZ(), 0, false, Effect.GUARDIAN_CURSE));
+							EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(theOne.getX(), theOne.getY(), theOne.getZ(), 64, theOne.level().dimension())), new PacketGenericParticleEffect(theOne.getX(), theOne.getEyeY(), theOne.getZ(), 0, false, Effect.GUARDIAN_CURSE));
 						}
 
 						player.getCooldowns().addCooldown(this, abilityCooldown.getValue());
@@ -162,7 +162,7 @@ public class GuardianHeart extends ItemBase implements ICursed, Vanishable {
 					final Guardian guardian = (Guardian) monster;
 
 					if (guardian.getTarget() == null) {
-						List<Monster> surroundingMobs = player.level.getEntitiesOfClass(Monster.class, SuperpositionHandler.getBoundingBoxAroundEntity(guardian, 12), (living) -> { return living.isAlive() && guardian.hasLineOfSight(living); });
+						List<Monster> surroundingMobs = player.level().getEntitiesOfClass(Monster.class, SuperpositionHandler.getBoundingBoxAroundEntity(guardian, 12), (living) -> { return living.isAlive() && guardian.hasLineOfSight(living); });
 						Monster closestMonster = SuperpositionHandler.getClosestEntity(surroundingMobs, (checked) -> { return !(checked instanceof Guardian); }, guardian.getX(), guardian.getY(), guardian.getZ());
 
 						if (closestMonster != null) {

@@ -222,7 +222,7 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 						try {
 							CachedTeleportationLocation location = future.get();
 
-							if (location.dimension() == player.level.dimension()) {
+							if (location.dimension() == player.level().dimension()) {
 								this.generateCachedLocation((ServerPlayer) player);
 							}
 						} catch (Exception ex) {
@@ -265,21 +265,21 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 		ResourceKey<Level> key = location.dimension();
 
 		world.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketRecallParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 48, false));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level().dimension())), new PacketRecallParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 48, false));
 		player.teleportTo(location.x(), location.y(), location.z());
 
-		if (player.level.dimension() != key) {
+		if (player.level().dimension() != key) {
 			SuperpositionHandler.sendToDimension(player, key);
 			player.teleportTo(location.x(), location.y(), location.z());
 		}
 
 		world.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2D)));
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level.dimension())), new PacketRecallParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 48, false));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level().dimension())), new PacketRecallParticles(player.getX(), player.getY() + (player.getBbHeight() / 2), player.getZ(), 48, false));
 
 		SuperpositionHandler.setSpellstoneCooldown(player, this.getCooldown(player));
 
 		EnigmaticLegacy.LOGGER.getInternal().info("Player {} triggered active ability of Non-Euclidean Cube. Teleported to D: {}, X: {}, Y: {}, Z: {}.",
-				player.getGameProfile().getName(), player.level.dimension(), player.getX(), player.getY(), player.getZ());
+				player.getGameProfile().getName(), player.level().dimension(), player.getX(), player.getY(), player.getZ());
 	}
 
 	private void generateCachedLocation(ServerPlayer player) {
@@ -299,7 +299,7 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	private CachedTeleportationLocation findRandomLocation(ServerPlayer player) {
-		ResourceKey<Level> key = SuperpositionHandler.getRandomElement(this.worlds, player.level.dimension());
+		ResourceKey<Level> key = SuperpositionHandler.getRandomElement(this.worlds, player.level().dimension());
 		ServerLevel level = SuperpositionHandler.getWorld(key);
 
 		if (level == null) {

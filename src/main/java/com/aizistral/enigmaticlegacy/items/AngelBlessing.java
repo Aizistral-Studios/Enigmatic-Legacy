@@ -156,12 +156,12 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 	public void curioTick(SlotContext context, ItemStack stack) {
 		LivingEntity living = context.entity();
 
-		if (living.level.isClientSide)
+		if (living.level().isClientSide)
 			return;
 
-		List<AbstractHurtingProjectile> projectileEntities = living.level.getEntitiesOfClass(AbstractHurtingProjectile.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
-		List<AbstractArrow> arrowEntities = living.level.getEntitiesOfClass(AbstractArrow.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
-		List<ThrowableItemProjectile> potionEntities = living.level.getEntitiesOfClass(ThrowableItemProjectile.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
+		List<AbstractHurtingProjectile> projectileEntities = living.level().getEntitiesOfClass(AbstractHurtingProjectile.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
+		List<AbstractArrow> arrowEntities = living.level().getEntitiesOfClass(AbstractArrow.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
+		List<ThrowableItemProjectile> potionEntities = living.level().getEntitiesOfClass(ThrowableItemProjectile.class, new AABB(living.getX() - this.range, living.getY() - this.range, living.getZ() - this.range, living.getX() + this.range, living.getY() + this.range, living.getZ() + this.range));
 
 		for (AbstractHurtingProjectile entity : projectileEntities) {
 			this.redirect(living, entity);
@@ -189,7 +189,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 		if ((redirected instanceof AbstractArrow arrow && arrow.getOwner() == bearer)
 				|| (redirected instanceof ThrowableItemProjectile projectile && projectile.getOwner() == bearer)) {
 			if (redirected.getTags().contains("AB_ACCELERATED")) {
-				if (redirected.level instanceof ServerLevel level) {
+				if (redirected.level() instanceof ServerLevel level) {
 					//ServerChunkCache cache = level.getChunkSource();
 					//cache.broadcastAndSend(redirected, new ClientboundSetEntityMotionPacket(redirected));
 					//cache.broadcastAndSend(redirected, new ClientboundTeleportEntityPacket(redirected));
@@ -212,8 +212,8 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 			if (redirected.addTag("AB_ACCELERATED")) {
 				redirected.setDeltaMovement(redirected.getDeltaMovement().x * 1.75D, redirected.getDeltaMovement().y * 1.75D, redirected.getDeltaMovement().z * 1.75D);
 
-				if (redirected.level instanceof ServerLevel level) {
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(bearer.getX(), bearer.getY(), bearer.getZ(), 64.0D, bearer.level.dimension())), new PacketForceArrowRotations(redirected.getId(), redirected.getYRot(), redirected.getXRot(), redirected.getDeltaMovement().x, redirected.getDeltaMovement().y, redirected.getDeltaMovement().z, redirected.getX(), redirected.getY(), redirected.getZ()));
+				if (redirected.level() instanceof ServerLevel level) {
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(bearer.getX(), bearer.getY(), bearer.getZ(), 64.0D, bearer.level().dimension())), new PacketForceArrowRotations(redirected.getId(), redirected.getYRot(), redirected.getXRot(), redirected.getDeltaMovement().x, redirected.getDeltaMovement().y, redirected.getDeltaMovement().z, redirected.getX(), redirected.getY(), redirected.getZ()));
 				}
 
 				//EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(bearer.getX(), bearer.getY(), bearer.getZ(), 64.0D, bearer.level.dimension())), new PacketForceArrowRotations(redirected.getId(), redirected.getYRot(), redirected.getXRot(), redirected.getDeltaMovement().x, redirected.getDeltaMovement().y, redirected.getDeltaMovement().z, redirected.getX(), redirected.getY(), redirected.getZ()));

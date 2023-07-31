@@ -24,7 +24,7 @@ public class TransientPlayerData {
 	// TODO Wrap variables into param objects
 
 	public static TransientPlayerData get(Player player) {
-		boolean clientOnly = player.level.isClientSide;
+		boolean clientOnly = player.level().isClientSide;
 
 		if (EnigmaticLegacy.PROXY.getTransientPlayerData(clientOnly).containsKey(player))
 			return EnigmaticLegacy.PROXY.getTransientPlayerData(clientOnly).get(player);
@@ -37,7 +37,7 @@ public class TransientPlayerData {
 	}
 
 	public static boolean set(Player player, TransientPlayerData data) {
-		boolean clientOnly = player.level.isClientSide;
+		boolean clientOnly = player.level().isClientSide;
 
 		if (data != null) {
 			EnigmaticLegacy.PROXY.getTransientPlayerData(clientOnly).put(player, data);
@@ -48,7 +48,7 @@ public class TransientPlayerData {
 
 	public void syncToClients(float blockRadius) {
 		Player player = this.getPlayer();
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), blockRadius, player.level.dimension())), new PacketSyncTransientData(this));
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), blockRadius, player.level().dimension())), new PacketSyncTransientData(this));
 	}
 
 	public void syncToAllClients() {

@@ -67,7 +67,7 @@ public class PacketFlameParticles {
 				amount *= modifier;
 
 				for (int counter = 0; counter <= amount; counter++) {
-					player.level.addParticle(ParticleTypes.FLAME, true, msg.x + (Math.random() - 0.5), msg.y + (Math.random() - 0.5), msg.z + (Math.random() - 0.5), (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D);
+					player.level().addParticle(ParticleTypes.FLAME, true, msg.x + (Math.random() - 0.5), msg.y + (Math.random() - 0.5), msg.z + (Math.random() - 0.5), (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D, (Math.random() - 0.5D) * 0.1D);
 				}
 
 			});

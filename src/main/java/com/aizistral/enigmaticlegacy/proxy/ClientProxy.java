@@ -120,7 +120,7 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void displayReviveAnimation(int entityID, int reviveType) {
 		Player player = this.getClientPlayer();
-		Entity entity = player.level.getEntity(entityID);
+		Entity entity = player.level().getEntity(entityID);
 
 		if (entity != null) {
 			Item item = reviveType == 0 ? EnigmaticItems.COSMIC_SCROLL : EnigmaticItems.THE_CUBE;
@@ -130,10 +130,10 @@ public class ClientProxy extends CommonProxy {
 			int amount = 50;
 
 			for (int counter = 0; counter <= amount; counter++) {
-				player.level.addParticle(ParticleTypes.FLAME, true, entity.getX() + (Math.random() - 0.5), entity.getY() + (entity.getBbHeight()/2) + (Math.random() - 0.5), entity.getZ() + (Math.random() - 0.5), (Math.random() - 0.5D) * 0.2, (Math.random() - 0.5D) * 0.2, (Math.random() - 0.5D) * 0.2);
+				player.level().addParticle(ParticleTypes.FLAME, true, entity.getX() + (Math.random() - 0.5), entity.getY() + (entity.getBbHeight()/2) + (Math.random() - 0.5), entity.getZ() + (Math.random() - 0.5), (Math.random() - 0.5D) * 0.2, (Math.random() - 0.5D) * 0.2, (Math.random() - 0.5D) * 0.2);
 			}
 
-			player.level.playLocalSound(entity.getX(), entity.getY(), entity.getZ(), SoundEvents.TOTEM_USE, entity.getSoundSource(), 1.0F, 1.0F, false);
+			player.level().playLocalSound(entity.getX(), entity.getY(), entity.getZ(), SoundEvents.TOTEM_USE, entity.getSoundSource(), 1.0F, 1.0F, false);
 
 			if (entity == player) {
 				ItemStack stack = SuperpositionHandler.getCurioStack(player, item);
@@ -282,12 +282,12 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public boolean isInVanillaDimension(Player player) {
-		return player.level.dimension().equals(this.getOverworldKey()) || player.level.dimension().equals(this.getNetherKey()) || player.level.dimension().equals(this.getEndKey());
+		return player.level().dimension().equals(this.getOverworldKey()) || player.level().dimension().equals(this.getNetherKey()) || player.level().dimension().equals(this.getEndKey());
 	}
 
 	@Override
 	public boolean isInDimension(Player player, ResourceKey<Level> world) {
-		return player.level.dimension().equals(world);
+		return player.level().dimension().equals(world);
 	}
 
 	@Override

@@ -158,8 +158,8 @@ public class OblivionStone extends ItemBase implements Vanishable {
 
 		other.setCount(0);
 
-		if (player.level.isClientSide) {
-			player.level.playSound(player, player.blockPosition(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 0.25F, 1.2F + (float) Math.random() * 0.4F);
+		if (player.level().isClientSide) {
+			player.level().playSound(player, player.blockPosition(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 0.25F, 1.2F + (float) Math.random() * 0.4F);
 		}
 
 		return true;
@@ -172,8 +172,8 @@ public class OblivionStone extends ItemBase implements Vanishable {
 
 		slot.set(ItemStack.EMPTY);
 
-		if (player.level.isClientSide) {
-			player.level.playSound(player, player.blockPosition(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 0.25F, 1.2F + (float) Math.random() * 0.4F);
+		if (player.level().isClientSide) {
+			player.level().playSound(player, player.blockPosition(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 0.25F, 1.2F + (float) Math.random() * 0.4F);
 		}
 
 		return true;

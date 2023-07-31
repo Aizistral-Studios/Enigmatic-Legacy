@@ -89,7 +89,7 @@ public class PetGuidebook extends ItemBase implements Vanishable {
 	@Override
 	public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
 		if (player.isCreative()) {
-			if (!player.level.isClientSide) {
+			if (!player.level().isClientSide) {
 				boolean tamable = this.isTamableAnimal(target);
 				MutableComponent reply = Component.literal(tamable ?
 						"Yep, this animal seems tamable." : "Nope, this animal is not considered tamable.");

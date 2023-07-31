@@ -122,8 +122,8 @@ public class SoulCompass extends ItemBase implements ICursed {
 				if (entity == null)
 					return 0.0F;
 				else {
-					if (level == null && entity.level instanceof ClientLevel) {
-						level = (ClientLevel) entity.level;
+					if (level == null && entity.level() instanceof ClientLevel) {
+						level = (ClientLevel) entity.level();
 					}
 
 					assert level != null;

@@ -34,7 +34,7 @@ public class PacketCosmicRevive {
 				EnigmaticLegacy.PROXY.displayReviveAnimation(msg.entityID, msg.reviveType);
 			} else {
 				Player player = EnigmaticLegacy.PROXY.getClientPlayer();
-				Entity entity = player.level.getEntity(msg.entityID);
+				Entity entity = player.level().getEntity(msg.entityID);
 
 				if (entity == player) {
 					EnigmaticEventHandler.scheduledCubeRevive = 5;

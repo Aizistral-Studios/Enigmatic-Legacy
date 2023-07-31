@@ -120,7 +120,7 @@ public class MagnetRing extends ItemBaseCurio {
 		double y = living.getY() + 0.75;
 		double z = living.getZ();
 
-		List<ItemEntity> items = living.level.getEntitiesOfClass(ItemEntity.class, new AABB(x - range.getValue(), y - range.getValue(), z - range.getValue(), x + range.getValue(), y + range.getValue(), z + range.getValue()));
+		List<ItemEntity> items = living.level().getEntitiesOfClass(ItemEntity.class, new AABB(x - range.getValue(), y - range.getValue(), z - range.getValue(), x + range.getValue(), y + range.getValue(), z + range.getValue()));
 		int pulled = 0;
 		for (ItemEntity item : items)
 			if (this.canPullItem(item)) {

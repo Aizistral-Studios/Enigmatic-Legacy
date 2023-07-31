@@ -36,19 +36,19 @@ public abstract class MixinEnderDragon extends Mob implements Enemy, IAbyssalHea
 
 	@Inject(method = "tickDeath", at = @At("RETURN"), require = 1)
 	private void onTickDeath(CallbackInfo info) {
-		if (this.dragonDeathTime == 200 && this.level instanceof ServerLevel) {
+		if (this.dragonDeathTime == 200 && this.level() instanceof ServerLevel) {
 			if (this.abyssalHeartOwner != null) {
 				int heartsGained = SuperpositionHandler.getPersistentInteger(this.abyssalHeartOwner, "AbyssalHeartsGained", 0);
 
 				Vector3 center = Vector3.fromEntityCenter(this);
-				PermanentItemEntity heart = new PermanentItemEntity(this.level, center.x, center.y, center.z, new ItemStack(EnigmaticItems.ABYSSAL_HEART, 1));
+				PermanentItemEntity heart = new PermanentItemEntity(this.level(), center.x, center.y, center.z, new ItemStack(EnigmaticItems.ABYSSAL_HEART, 1));
 				heart.setOwnerId(this.abyssalHeartOwner.getUUID());
-				this.level.addFreshEntity(heart);
+				this.level().addFreshEntity(heart);
 
 				SuperpositionHandler.setPersistentInteger(this.abyssalHeartOwner, "AbyssalHeartsGained", heartsGained + 1);
 			}
 
-			List<ServerPlayer> players = this.level.getEntitiesOfClass(ServerPlayer.class,
+			List<ServerPlayer> players = this.level().getEntitiesOfClass(ServerPlayer.class,
 					SuperpositionHandler.getBoundingBoxAroundEntity(this, 256));
 
 			players.forEach(player -> Quote.WITH_DRAGONS.playOnceIfUnlocked(player, 140));

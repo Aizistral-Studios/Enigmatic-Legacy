@@ -98,7 +98,7 @@ public class EldritchAmulet extends AscensionAmulet implements IEldritch {
 	public void curioTick(SlotContext context, ItemStack stack) {
 		if (context.entity() instanceof ServerPlayer player && player.tickCount % 5 == 0
 				&& SuperpositionHandler.isTheWorthyOne(player)) {
-			List<LivingEntity> entities = SuperpositionHandler.getObservedEntities(player, player.level, 3, 128, false);
+			List<LivingEntity> entities = SuperpositionHandler.getObservedEntities(player, player.level(), 3, 128, false);
 			for (LivingEntity entity : entities) {
 				if (entity instanceof ServerPlayer otherPlayer && SuperpositionHandler.hasCurio(otherPlayer, this)
 						&& SuperpositionHandler.isTheWorthyOne(otherPlayer)) {

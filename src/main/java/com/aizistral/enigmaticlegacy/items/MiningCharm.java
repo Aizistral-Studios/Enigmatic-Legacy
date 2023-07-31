@@ -114,14 +114,14 @@ public class MiningCharm extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		if (context.entity() instanceof Player player && !context.entity().level.isClientSide)
+		if (context.entity() instanceof Player player && !context.entity().level().isClientSide)
 			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.MINING_CHARM)) {
 				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
 					if (enableNightVision.getValue()) {
-						if (player.getY() < 50 && !player.level.dimension().equals(Level.NETHER)
-								&& !player.level.dimension().equals(Level.END)
+						if (player.getY() < 50 && !player.level().dimension().equals(Level.NETHER)
+								&& !player.level().dimension().equals(Level.END)
 								&& !player.isEyeInFluid(FluidTags.WATER)
-								&& !player.level.canSeeSkyFromBelowWater(player.blockPosition())
+								&& !player.level().canSeeSkyFromBelowWater(player.blockPosition())
 								/*&& player.level.getMaxLocalRawBrightness(player.blockPosition(), 0) <= 8*/) {
 
 							EnigmaticEventHandler.isApplyingNightVision = true;

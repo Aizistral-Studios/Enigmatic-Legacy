@@ -72,7 +72,7 @@ public class HeavenScroll extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		if (context.entity().level.isClientSide)
+		if (context.entity().level().isClientSide)
 			return;
 
 		if (context.entity() instanceof Player player) {
