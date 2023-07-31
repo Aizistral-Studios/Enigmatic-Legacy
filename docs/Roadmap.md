@@ -9,4 +9,5 @@
 - [x] Rename `architect_eye` to `enigmatic_eye`;
 - [x] Re-integrate Enigmatic Lockbox into the main mod under new license;
 - [x] Re-integrate Etherium into the main mod;
-- [x] Add build action on Github.
+- [x] Add build action on Github;
+- [ ] Make cosmic scroll more balanced by removing free scroll slot modifier.
