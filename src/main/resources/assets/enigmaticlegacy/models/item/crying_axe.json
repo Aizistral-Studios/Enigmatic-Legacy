@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "enigmaticlegacy:items/crying_axe"
+        "layer0": "enigmaticlegacy:item/crying_axe"
     }
 }

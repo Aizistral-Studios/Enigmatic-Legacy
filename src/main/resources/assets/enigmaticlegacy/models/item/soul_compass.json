@@ -1,7 +1,7 @@
 {
     "parent": "minecraft:item/generated",
     "textures": {
-        "layer0": "enigmaticlegacy:items/compass_16"
+        "layer0": "enigmaticlegacy:item/compass_16"
     },
     "overrides": [
         { "predicate": { "angle": 0.000000 }, "model": "enigmaticlegacy:item/soul_compass" },

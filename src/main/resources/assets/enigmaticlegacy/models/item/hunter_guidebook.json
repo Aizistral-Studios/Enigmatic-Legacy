@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "enigmaticlegacy:items/hunter_guidebook"
+        "layer0": "enigmaticlegacy:item/hunter_guidebook"
     }
 }

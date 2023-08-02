@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "enigmaticlegacy:items/unholy_grail"
+        "layer0": "enigmaticlegacy:item/unholy_grail"
     }
 }

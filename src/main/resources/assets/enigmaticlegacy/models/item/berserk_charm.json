@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "enigmaticlegacy:items/berserk_charm"
+        "layer0": "enigmaticlegacy:item/berserk_charm"
     }
 }

@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "enigmaticlegacy:items/quote_player"
+        "layer0": "enigmaticlegacy:item/quote_player"
     }
 }

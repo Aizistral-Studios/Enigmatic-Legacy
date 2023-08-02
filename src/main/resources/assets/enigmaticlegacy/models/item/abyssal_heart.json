@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "enigmaticlegacy:items/abyssal_heart"
+        "layer0": "enigmaticlegacy:item/abyssal_heart"
     }
 }

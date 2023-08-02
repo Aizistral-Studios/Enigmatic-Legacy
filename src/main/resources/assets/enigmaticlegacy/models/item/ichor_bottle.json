@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "enigmaticlegacy:items/ichor_bottle"
+        "layer0": "enigmaticlegacy:item/ichor_bottle"
     }
 }

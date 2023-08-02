@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "enigmaticlegacy:items/thicc_scroll"
+        "layer0": "enigmaticlegacy:item/thicc_scroll"
     }
 }

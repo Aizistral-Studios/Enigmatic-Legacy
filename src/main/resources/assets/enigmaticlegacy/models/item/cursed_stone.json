@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "enigmaticlegacy:items/cursed_stone"
+        "layer0": "enigmaticlegacy:item/cursed_stone"
     }
 }
