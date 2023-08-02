@@ -10,6 +10,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
@@ -18,8 +19,8 @@ import net.minecraft.world.level.Level;
 public class CursedShapedRecipe extends ShapedRecipe {
 	// TODO We need one custom recipe handler for all our mod stuff
 
-	public CursedShapedRecipe(ResourceLocation idIn, String groupIn, int recipeWidthIn, int recipeHeightIn, NonNullList<Ingredient> recipeItemsIn, ItemStack recipeOutputIn) {
-		super(idIn, groupIn, recipeWidthIn, recipeHeightIn, recipeItemsIn, recipeOutputIn);
+	public CursedShapedRecipe(ResourceLocation id, String group, CraftingBookCategory category, int width, int height, NonNullList<Ingredient> recipeItems, ItemStack result) {
+		super(id, group, category, width, height, recipeItems, result);
 	}
 
 	@Override
@@ -64,13 +65,13 @@ public class CursedShapedRecipe extends ShapedRecipe {
 		@Override
 		public CursedShapedRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			ShapedRecipe recipe = SHAPED_RECIPE.fromJson(recipeId, json);
-			return new CursedShapedRecipe(recipe.getId(), recipe.getGroup(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), this.handleTainted(recipe.getIngredients()), recipe.getResultItem());
+			return new CursedShapedRecipe(recipe.getId(), recipe.getGroup(), recipe.category(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), this.handleTainted(recipe.getIngredients()), recipe.getResultItem());
 		}
 
 		@Override
 		public CursedShapedRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			ShapedRecipe recipe = SHAPED_RECIPE.fromNetwork(recipeId, buffer);
-			return new CursedShapedRecipe(recipe.getId(), recipe.getGroup(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), this.handleTainted(recipe.getIngredients()), recipe.getResultItem());
+			return new CursedShapedRecipe(recipe.getId(), recipe.getGroup(), recipe.category(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), this.handleTainted(recipe.getIngredients()), recipe.getResultItem());
 		}
 
 		@Override

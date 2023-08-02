@@ -8,6 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
@@ -24,8 +25,8 @@ public class ShapelessNoReturnRecipe extends ShapelessRecipe {
 	private final ItemStack recipeOutput;
 	private final NonNullList<Ingredient> recipeItems;
 
-	public ShapelessNoReturnRecipe(ResourceLocation id, String group, ItemStack output, NonNullList<Ingredient> inputs) {
-		super(id, group, output, inputs);
+	public ShapelessNoReturnRecipe(ResourceLocation id, String group, CraftingBookCategory category, ItemStack output, NonNullList<Ingredient> inputs) {
+		super(id, group, category, output, inputs);
 
 		this.group = group;
 		this.recipeOutput = output;
@@ -47,13 +48,13 @@ public class ShapelessNoReturnRecipe extends ShapelessRecipe {
 		@Override
 		public ShapelessNoReturnRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			ShapelessRecipe recipe = SHAPELESS_RECIPE.fromJson(recipeId, json);
-			return new ShapelessNoReturnRecipe(recipe.getId(), recipe.getGroup(), recipe.getResultItem(), recipe.getIngredients());
+			return new ShapelessNoReturnRecipe(recipe.getId(), recipe.getGroup(), recipe.category(), recipe.getResultItem(), recipe.getIngredients());
 		}
 
 		@Override
 		public ShapelessNoReturnRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			ShapelessRecipe recipe = SHAPELESS_RECIPE.fromNetwork(recipeId, buffer);
-			return new ShapelessNoReturnRecipe(recipe.getId(), recipe.getGroup(), recipe.getResultItem(), recipe.getIngredients());
+			return new ShapelessNoReturnRecipe(recipe.getId(), recipe.getGroup(), recipe.category(), recipe.getResultItem(), recipe.getIngredients());
 		}
 
 		@Override

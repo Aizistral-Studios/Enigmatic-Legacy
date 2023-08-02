@@ -13,9 +13,10 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
@@ -26,10 +27,10 @@ import net.minecraft.world.level.Level;
  */
 
 public class EnchantmentTransposingRecipe extends CustomRecipe {
-	public static final SimpleRecipeSerializer<EnchantmentTransposingRecipe> SERIALIZER = new SimpleRecipeSerializer<>(EnchantmentTransposingRecipe::new);
+	public static final SimpleCraftingRecipeSerializer<EnchantmentTransposingRecipe> SERIALIZER = new SimpleCraftingRecipeSerializer<>(EnchantmentTransposingRecipe::new);
 
-	public EnchantmentTransposingRecipe(ResourceLocation id) {
-		super(id);
+	public EnchantmentTransposingRecipe(ResourceLocation id, CraftingBookCategory ctg) {
+		super(id, ctg);
 	}
 
 	@Override

@@ -8,9 +8,10 @@ import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.Level;
 
 /**
@@ -19,10 +20,10 @@ import net.minecraft.world.level.Level;
  */
 
 public class MendingMixtureRepairRecipe extends CustomRecipe {
-	public static final SimpleRecipeSerializer<MendingMixtureRepairRecipe> SERIALIZER = new SimpleRecipeSerializer<>(MendingMixtureRepairRecipe::new);
+	public static final SimpleCraftingRecipeSerializer<MendingMixtureRepairRecipe> SERIALIZER = new SimpleCraftingRecipeSerializer<>(MendingMixtureRepairRecipe::new);
 
-	public MendingMixtureRepairRecipe(ResourceLocation id) {
-		super(id);
+	public MendingMixtureRepairRecipe(ResourceLocation id, CraftingBookCategory ctg) {
+		super(id, ctg);
 	}
 
 	@Override

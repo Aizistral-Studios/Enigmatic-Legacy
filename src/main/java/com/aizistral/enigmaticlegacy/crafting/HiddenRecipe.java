@@ -15,14 +15,15 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class HiddenRecipe extends CustomRecipe {
-	public static final SimpleRecipeSerializer<HiddenRecipe> SERIALIZER = new SimpleRecipeSerializer<>(HiddenRecipe::new);
+	public static final SimpleCraftingRecipeSerializer<HiddenRecipe> SERIALIZER = new SimpleCraftingRecipeSerializer<>(HiddenRecipe::new);
 	static final Map<ItemStack[][], ItemStack> RECIPES = new HashMap<>();
 	static final Entry<ItemStack[][], ItemStack> EMPTY = new Entry<ItemStack[][], ItemStack>() {
 		private final ItemStack[][] recipe = new ItemStack[][] {
@@ -47,8 +48,8 @@ public class HiddenRecipe extends CustomRecipe {
 		}
 	};
 
-	public HiddenRecipe(ResourceLocation id) {
-		super(id);
+	public HiddenRecipe(ResourceLocation id, CraftingBookCategory ctg) {
+		super(id, ctg);
 	}
 
 	@Override
