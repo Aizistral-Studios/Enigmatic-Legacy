@@ -3,8 +3,8 @@
   "minVersion": "0.8",
   "package": "com.aizistral.enigmaticlegacy.mixin",
   "compatibilityLevel": "JAVA_17",
+  "plugin": "com.aizistral.enigmaticlegacy.mixin.ApplyMixinPlugin",
   "refmap": "enigmaticlegacy.refmap.json",
-  "verbose": true,
   "mixins": [
 	"MixinPiglinTasks",
 	"MixinVillagerEntity",
@@ -30,7 +30,8 @@
 	"MixinEnterBlockTrigger",
 	"MixinItemStack",
 	"MixinPlayerList",
-	"MixinCrossbowItem"
+	"MixinCrossbowItem",
+    "apotheosis.MixinApothEnchantContainer"
   ],
   "client": [
 	"AccessorDisconnectedScreen",

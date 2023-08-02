@@ -56,14 +56,12 @@ sourceSets.main.resources {
 repositories {
 	println("Specifying repositories...")
 	
-	
-	//flatDir {  dirs 'deps' }
-	maven {  url "file:///${project.projectDir}/deps/" } // I'LL FUCKING STAB YOUR PARENTS
-	maven {  url = "https://maven.theillusivec4.top/" } // curios
-	maven {  url 'https://maven.blamejared.com' } // patchouli
-	maven {  url = "https://repo.spongepowered.org/maven" } // mixin
-    maven {	 url "https://dvs1.progwml6.com/files/maven/" } // no idea
-	maven {  url = 'https://maven.parchmentmc.org'  }
+    maven { url 'https://maven.blamejared.com' } // JEI & more
+	maven { url = "https://maven.theillusivec4.top/" } // Curios
+    maven { url "https://cursemaven.com" } // CurseForge
+	maven { url = "https://repo.spongepowered.org/maven" } // Mixin
+	maven { url = 'https://maven.parchmentmc.org' } // Parchment
+//	maven {  url "file:///${project.projectDir}/deps/" } // I'LL FUCKING STAB YOUR PARENTS
 }
 
 dependencies {

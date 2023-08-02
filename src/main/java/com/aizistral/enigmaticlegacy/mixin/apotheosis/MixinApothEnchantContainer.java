@@ -1,0 +1,144 @@
+package com.aizistral.enigmaticlegacy.mixin.apotheosis;
+
+import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.EnchantedBookItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.level.Level;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import shadows.apotheosis.Apoth;
+import shadows.apotheosis.ench.asm.EnchHooks;
+import shadows.apotheosis.ench.table.ApothEnchantContainer;
+import shadows.apotheosis.ench.table.IEnchantableItem;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Priority is set higher to run after other modifications (e.g. changes to the result of getEnchantmentList)<br>
+ * (<a href="https://github.com/Daripher/Passive-Skill-Tree">Example Mod</a>)
+ */
+@Mixin(value = ApothEnchantContainer.class, priority = 1500)
+public abstract class MixinApothEnchantContainer {
+    @Unique private ItemStack enigmaticLegacy$copyBeforeEnchanted;
+    @Unique private List<EnchantmentInstance> enigmaticLegacy$storedEnchantmentList;
+
+    @Shadow(remap = false) private List<EnchantmentInstance> getEnchantmentList(ItemStack stack, int enchantSlot, int level) { return null; }
+
+    /** {@link net.minecraft.world.Container#setItem(int, ItemStack)} seems to clear all information (enchantment stats, costs, etc.) from the instance - that's why we get the list of enchantments while that information is still available */
+    @Inject(method = "lambda$clickMenuButton$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/Container;setItem(ILnet/minecraft/world/item/ItemStack;)V", shift = At.Shift.BEFORE, ordinal = 1))
+    public void prepareDoubleRoll(final ItemStack toEnchant, int id, final Player player, int cost, final ItemStack lapis, int level, final Level world, final BlockPos pos, final CallbackInfo ci) {
+        if (EnigmaticItems.ENCHANTER_PEARL.isPresent(player)) {
+            enigmaticLegacy$copyBeforeEnchanted = toEnchant.copy();
+
+            ApothEnchantContainer container = (ApothEnchantContainer) (Object) this;
+            int storedValue = container.enchantmentSeed.get();
+
+            container.enchantmentSeed.set(container.random.nextInt());
+            enigmaticLegacy$storedEnchantmentList = getEnchantmentList(enigmaticLegacy$copyBeforeEnchanted, id, level);
+            /*
+            Not sure if this is needed (gets overwritten by `player.getEnchantmentSeed()` shortly afterward anyway
+            (List of enchantments has already been collected (using the same seed as the list of clues) at this point)
+            */
+            container.enchantmentSeed.set(storedValue);
+        }
+    }
+
+    /** Handle the double enchanting effect */
+    @Inject(method = "lambda$clickMenuButton$0", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;awardStat(Lnet/minecraft/resources/ResourceLocation;)V", shift = At.Shift.BEFORE))
+    public void handleEnchanterPearl(final ItemStack toEnchant, int id, final Player player, int cost, final ItemStack lapis, int level, final Level world, final BlockPos pos, final CallbackInfo ci) {
+        if (EnigmaticItems.ENCHANTER_PEARL.isPresent(player)) {
+            if (enigmaticLegacy$storedEnchantmentList == null || enigmaticLegacy$storedEnchantmentList.get(0).enchantment == Apoth.Enchantments.INFUSION.get()) {
+                // Ignore Infusion enchants
+                return;
+            }
+
+            // Use Apotheosis enchantment method
+            enigmaticLegacy$copyBeforeEnchanted = ((IEnchantableItem) enigmaticLegacy$copyBeforeEnchanted.getItem()).onEnchantment(enigmaticLegacy$copyBeforeEnchanted, enigmaticLegacy$storedEnchantmentList);
+
+            ApothEnchantContainer container = (ApothEnchantContainer) (Object) this;
+
+            /*
+            The enchantment result gets directly set in the `enchantSlots` not in the ItemStack
+            If the modifications are done using `toEnchant` then it will cause enchanted books to be reverted back to being tomes (if they previously were tomes) when merging
+            */
+            ItemStack enchantedItem = container.enchantSlots.getItem(0);
+            enchantedItem = enigmaticLegacy$mergeEnchantments(enchantedItem, enigmaticLegacy$copyBeforeEnchanted, false, false);
+            enchantedItem = SuperpositionHandler.maybeApplyEternalBinding(enchantedItem);
+
+            container.enchantSlots.setItem(0, enchantedItem);
+        }
+    }
+
+    /**
+     * Enchanter Pearl disables lapis cost<br>
+     * The "There are no possible signatures for this injector" error is not accurate<br>
+     */
+    @ModifyVariable(method = "clickMenuButton", at = @At(value = "STORE"), name = "lapis")
+    public ItemStack fakeLapis(final ItemStack lapis, /* Method arguments: */ final Player player) {
+        // Store reference to client container?
+        if (EnigmaticItems.ENCHANTER_PEARL.isPresent(player)) {
+            ItemStack fakeLapis = Items.LAPIS_LAZULI.getDefaultInstance();
+            fakeLapis.setCount(64);
+            return fakeLapis;
+        }
+
+        return lapis;
+    }
+
+    /** Copied from {@link SuperpositionHandler#mergeEnchantments(ItemStack, ItemStack, boolean, boolean)} to use {@link EnchHooks}, seemed simpler than handling class loading etc. */
+    @Unique
+    private ItemStack enigmaticLegacy$mergeEnchantments(final ItemStack input, final ItemStack mergeFrom, boolean overmerge, boolean onlyTreasure) {
+        ItemStack returnedStack = input.copy();
+        Map<Enchantment, Integer> inputEnchants = EnchantmentHelper.getEnchantments(returnedStack);
+        Map<Enchantment, Integer> mergedEnchants = EnchantmentHelper.getEnchantments(mergeFrom);
+
+        for(Enchantment mergedEnchant : mergedEnchants.keySet()) {
+            if (mergedEnchant != null) {
+                int inputEnchantLevel = inputEnchants.getOrDefault(mergedEnchant, 0);
+                int mergedEnchantLevel = mergedEnchants.get(mergedEnchant);
+
+                if (!overmerge) {
+                    // +1 when the levels match, otherwise pick the higher one
+                    mergedEnchantLevel = inputEnchantLevel == mergedEnchantLevel ? Math.min(mergedEnchantLevel + 1, EnchHooks.getMaxLevel(mergedEnchant)) : Math.max(mergedEnchantLevel, inputEnchantLevel);
+                } else {
+                    // Always add +1 if both items have the enchantment
+                    mergedEnchantLevel = inputEnchantLevel > 0 ? Math.max(mergedEnchantLevel, inputEnchantLevel) + 1 : Math.max(mergedEnchantLevel, inputEnchantLevel);
+                    mergedEnchantLevel = Math.min(mergedEnchantLevel, EnchHooks.getMaxLevel(mergedEnchant));
+                }
+
+                boolean compatible = mergedEnchant.canEnchant(input);
+                if (input.getItem() instanceof EnchantedBookItem) {
+                    compatible = true;
+                }
+
+                for(Enchantment originalEnchant : inputEnchants.keySet()) {
+                    if (originalEnchant != mergedEnchant && !mergedEnchant.isCompatibleWith(originalEnchant)) {
+                        compatible = false;
+                    }
+                }
+
+                if (compatible) {
+                    if (!onlyTreasure || EnchHooks.isTreasureOnly(mergedEnchant) || mergedEnchant.isCurse()) {
+                        inputEnchants.put(mergedEnchant, mergedEnchantLevel);
+                    }
+                }
+            }
+        }
+
+        EnchantmentHelper.setEnchantments(inputEnchants, returnedStack);
+        return returnedStack;
+    }
+}

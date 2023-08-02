@@ -1,1 +1,0 @@
-MixinConnector: com.aizistral.enigmaticlegacy.MixinConnector
