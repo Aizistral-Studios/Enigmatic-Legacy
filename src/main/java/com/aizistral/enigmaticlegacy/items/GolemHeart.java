@@ -30,11 +30,13 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.FallingBlock;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -126,7 +128,7 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 		this.immunityList.add(DamageSource.CACTUS.msgId);
 		this.immunityList.add(DamageSource.CRAMMING.msgId);
 		this.immunityList.add(DamageSource.IN_WALL.msgId);
-		this.immunityList.add(DamageSource.FALLING_BLOCK.msgId);
+		this.immunityList.add(DamageSource.fallingBlock(null).msgId);
 		this.immunityList.add(DamageSource.SWEET_BERRY_BUSH.msgId);
 
 		Supplier<Float> meleeResistanceSupplier = () -> meleeResistance.getValue().asModifierInverted();

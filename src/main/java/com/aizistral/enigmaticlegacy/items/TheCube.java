@@ -83,7 +83,7 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 		this.immunityList.add(DamageSource.FLY_INTO_WALL.msgId);
 		this.immunityList.add(DamageSource.CACTUS.msgId);
 		this.immunityList.add(DamageSource.IN_WALL.msgId);
-		this.immunityList.add(DamageSource.FALLING_BLOCK.msgId);
+		this.immunityList.add(DamageSource.fallingBlock(null).msgId);
 		this.immunityList.add(DamageSource.SWEET_BERRY_BUSH.msgId);
 	}
 
