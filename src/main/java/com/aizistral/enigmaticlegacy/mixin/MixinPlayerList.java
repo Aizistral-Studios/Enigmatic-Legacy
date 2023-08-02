@@ -80,7 +80,7 @@ public class MixinPlayerList {
 		PlayerList list = (PlayerList) (Object) this;
 
 		ServerLevel newLevel = level != null && optional.isPresent() ? level : this.server.overworld();
-		ServerPlayer newPlayer = new ServerPlayer(this.server, newLevel, player.getGameProfile(), null);
+		ServerPlayer newPlayer = new ServerPlayer(this.server, newLevel, player.getGameProfile());
 		newPlayer.connection = player.connection;
 		newPlayer.restoreFrom(player, keep);
 		newPlayer.setId(player.getId());
@@ -117,7 +117,7 @@ public class MixinPlayerList {
 		}
 
 		LevelData leveldata = newPlayer.level.getLevelData();
-		newPlayer.connection.send(new ClientboundRespawnPacket(newPlayer.level.dimensionTypeId(), newPlayer.level.dimension(), BiomeManager.obfuscateSeed(newPlayer.getLevel().getSeed()), newPlayer.gameMode.getGameModeForPlayer(), newPlayer.gameMode.getPreviousGameModeForPlayer(), newPlayer.getLevel().isDebug(), newPlayer.getLevel().isFlat(), keep, newPlayer.getLastDeathLocation()));
+		newPlayer.connection.send(new ClientboundRespawnPacket(newPlayer.level.dimensionTypeId(), newPlayer.level.dimension(), BiomeManager.obfuscateSeed(newPlayer.getLevel().getSeed()), newPlayer.gameMode.getGameModeForPlayer(), newPlayer.gameMode.getPreviousGameModeForPlayer(), newPlayer.getLevel().isDebug(), newPlayer.getLevel().isFlat(), (byte)3, newPlayer.getLastDeathLocation()));
 		newPlayer.connection.teleport(newPlayer.getX(), newPlayer.getY(), newPlayer.getZ(), newPlayer.getYRot(), newPlayer.getXRot());
 		newPlayer.connection.send(new ClientboundSetDefaultSpawnPositionPacket(newLevel.getSharedSpawnPos(), newLevel.getSharedSpawnAngle()));
 		newPlayer.connection.send(new ClientboundChangeDifficultyPacket(leveldata.getDifficulty(), leveldata.isDifficultyLocked()));
