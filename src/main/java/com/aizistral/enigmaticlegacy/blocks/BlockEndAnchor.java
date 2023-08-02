@@ -24,6 +24,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.DismountHelper;
@@ -151,13 +152,7 @@ public class BlockEndAnchor extends BaseEntityBlock {
 			return isWaterThatWouldFlow(p_55854_, level);
 		});
 		final boolean flag1 = flag || level.getFluidState(pos.above()).is(FluidTags.WATER);
-		ExplosionDamageCalculator explosiondamagecalculator = new ExplosionDamageCalculator() {
-			@Override
-			public Optional<Float> getBlockExplosionResistance(Explosion p_55904_, BlockGetter p_55905_, BlockPos p_55906_, BlockState p_55907_, FluidState p_55908_) {
-				return p_55906_.equals(pos) && flag1 ? Optional.of(Blocks.WATER.getExplosionResistance()) : super.getBlockExplosionResistance(p_55904_, p_55905_, p_55906_, p_55907_, p_55908_);
-			}
-		};
-		level.explode(null, DamageSource.badRespawnPointExplosion(), explosiondamagecalculator, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 5.0F, true, Explosion.BlockInteraction.DESTROY);
+		level.explode(null, DamageSource.badRespawnPointExplosion(pos.getCenter()), null, pos.getCenter(), 5.0F, true, Level.ExplosionInteraction.BLOCK);
 	}
 
 	public static boolean canSetSpawn(Level level) {
