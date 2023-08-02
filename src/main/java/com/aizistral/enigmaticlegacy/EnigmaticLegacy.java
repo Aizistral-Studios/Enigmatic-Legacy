@@ -472,14 +472,16 @@ public class EnigmaticLegacy {
 		event.register(keybindHandler.xpScrollKey);
 	}
 
-	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
-	public void stitchTextures(TextureStitchEvent.Pre event) {
-		if (event.getAtlas().location() == InventoryMenu.BLOCK_ATLAS) {
-			event.addSprite(new ResourceLocation(MODID, "slots/empty_spellstone_slot"));
-			event.addSprite(new ResourceLocation(MODID, "slots/empty_scroll_slot"));
-		}
-	}
+	//  Thx Forge :\
+	//
+	//	@SubscribeEvent
+	//	@OnlyIn(Dist.CLIENT)
+	//	public void stitchTextures(TextureStitchEvent.Pre event) {
+	//		if (event.getAtlas().location() == InventoryMenu.BLOCK_ATLAS) {
+	//			event.addSprite(new ResourceLocation(MODID, "slots/empty_spellstone_slot"));
+	//			event.addSprite(new ResourceLocation(MODID, "slots/empty_scroll_slot"));
+	//		}
+	//	}
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
