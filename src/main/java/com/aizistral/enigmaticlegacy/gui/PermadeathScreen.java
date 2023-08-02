@@ -36,11 +36,12 @@ public class PermadeathScreen extends Screen {
 
 		this.message = MultiLineLabel.create(this.font, ((MutableComponent)this.reason).withStyle(ChatFormatting.WHITE), this.width - 50);
 		this.textHeight = this.message.getLineCount() * 9;
-		this.addRenderableWidget(new Button(this.width / 2 - 100, Math.min(this.height / 2 + this.textHeight / 2 + 9, this.height - 30), 200, 20,
-				Component.translatable("gui.enigmaticlegacy.toWorldList"), (p_96002_) -> {
-					active = null;
-					this.minecraft.setScreen(this.parent);
-				}));
+
+		this.addRenderableWidget(Button.builder(Component.translatable("gui.enigmaticlegacy.toWorldList"), b -> {
+			active = null;
+			this.minecraft.setScreen(this.parent);
+		}).bounds(this.width / 2 - 100, Math.min(this.height / 2 + this.textHeight / 2 + 9, this.height - 30), 200, 20)
+				.build());
 	}
 
 	@Override
