@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"ambientocclusion": false,
 	"textures": {
-		"0": "enigmaticlegacy:blocks/gradient_x64",
-		"1": "enigmaticlegacy:blocks/chiseled_polished_blackstone",
-		"particle": "enigmaticlegacy:blocks/chiseled_polished_blackstone"
+		"0": "enigmaticlegacy:block/gradient_x64",
+		"1": "enigmaticlegacy:block/chiseled_polished_blackstone",
+		"particle": "enigmaticlegacy:block/chiseled_polished_blackstone"
 	},
 	"elements": [
 		{

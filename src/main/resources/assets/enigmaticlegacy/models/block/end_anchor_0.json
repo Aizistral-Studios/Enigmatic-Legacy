@@ -1,6 +1,6 @@
 {
   "parent": "enigmaticlegacy:block/end_anchor",
   "textures": {
-		"main": "enigmaticlegacy:blocks/end_anchor_0"
+		"main": "enigmaticlegacy:block/end_anchor_0"
 	}
 }

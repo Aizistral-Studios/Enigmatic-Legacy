@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "enigmaticlegacy:blocks/astral_block"
+    "all": "enigmaticlegacy:block/astral_block"
   }
 }

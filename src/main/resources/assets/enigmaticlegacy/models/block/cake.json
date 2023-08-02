@@ -1,9 +1,9 @@
 {
     "textures": {
-        "particle": "enigmaticlegacy:blocks/cake_side",
-        "bottom": "enigmaticlegacy:blocks/cake_bottom",
-        "top": "enigmaticlegacy:blocks/cake_top",
-        "side": "enigmaticlegacy:blocks/cake_side"
+        "particle": "enigmaticlegacy:block/cake_side",
+        "bottom": "enigmaticlegacy:block/cake_bottom",
+        "top": "enigmaticlegacy:block/cake_top",
+        "side": "enigmaticlegacy:block/cake_side"
     },
     "elements": [
         {   "from": [ 1, 0, 1 ],
