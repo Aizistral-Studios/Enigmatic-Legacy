@@ -504,12 +504,12 @@ public class EnigmaticLegacy {
 		LOGGER.info("Initializing creative tab registration...");
 
 		MAIN_TAB = event.registerCreativeModeTab(new ResourceLocation(MODID, "tab_main"), builder -> {
-			builder.title(Component.translatable("item_group.enigmaticCreativeTab"))
+			builder.title(Component.translatable("itemGroup.enigmaticCreativeTab"))
 			.icon(() -> new ItemStack(EnigmaticItems.ENIGMATIC_ITEM));
 		});
 
 		POTION_TAB = event.registerCreativeModeTab(new ResourceLocation(MODID, "tab_potions"), builder -> {
-			builder.title(Component.translatable("item_group.enigmaticPotionCreativeTab"))
+			builder.title(Component.translatable("itemGroup.enigmaticPotionCreativeTab"))
 			.icon(() -> new ItemStack(EnigmaticItems.RECALL_POTION));
 		});
 
