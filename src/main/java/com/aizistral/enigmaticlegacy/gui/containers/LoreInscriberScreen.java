@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.CommandBlockEditScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -35,7 +36,6 @@ public class LoreInscriberScreen extends AbstractContainerScreen<LoreInscriberCo
 	}
 
 	protected void initFields() {
-		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
 		this.nameField = new EditBox(this.font, i + 55, j + 30, 95, 12, Component.translatable("container.repair"));
@@ -60,7 +60,6 @@ public class LoreInscriberScreen extends AbstractContainerScreen<LoreInscriberCo
 	public void removed() {
 		super.removed();
 		this.menu.removeSlotListener(this);
-		this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
 	}
 
 	@Override
