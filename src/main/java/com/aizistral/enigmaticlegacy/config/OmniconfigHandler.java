@@ -20,7 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.registries.ForgeRegistries;
-import vazkii.patchouli.common.base.PatchouliConfig.TextOverflowMode;
+import vazkii.patchouli.api.PatchouliConfigAccess.TextOverflowMode;
 
 public class OmniconfigHandler {
 	private static final Map<Field, Omniconfig.BooleanParameter> ITEMS_OPTIONS = new HashMap<>();
