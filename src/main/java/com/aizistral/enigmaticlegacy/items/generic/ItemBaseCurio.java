@@ -3,10 +3,12 @@ package com.aizistral.enigmaticlegacy.items.generic;
 import java.util.Map;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -73,7 +75,6 @@ public abstract class ItemBaseCurio extends ItemBase implements ICurioItem, Vani
 	public static Properties getDefaultProperties() {
 		Properties props = new Item.Properties();
 
-		props.tab(EnigmaticLegacy.MAIN_TAB);
 		props.stacksTo(1);
 		props.rarity(Rarity.COMMON);
 

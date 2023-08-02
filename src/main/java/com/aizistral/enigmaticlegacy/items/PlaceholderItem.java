@@ -4,6 +4,7 @@ import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Rarity;
 
 public class PlaceholderItem extends ItemBase {
@@ -13,7 +14,12 @@ public class PlaceholderItem extends ItemBase {
 	}
 
 	public PlaceholderItem(String name, Rarity rarity, int maxStackSize) {
-		super(ItemBase.getDefaultProperties().tab(null).rarity(rarity).stacksTo(maxStackSize));
+		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(maxStackSize));
+	}
+
+	@Override
+	public CreativeModeTab getCreativeTab() {
+		return null;
 	}
 
 }

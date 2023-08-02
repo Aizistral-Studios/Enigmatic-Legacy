@@ -9,9 +9,11 @@ import com.aizistral.enigmaticlegacy.api.items.IAdvancedPotionItem;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.helpers.PotionHelper;
+import com.aizistral.enigmaticlegacy.items.EnigmaticAmulet.AmuletColor;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
 import com.aizistral.enigmaticlegacy.objects.AdvancedPotion;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticPotions;
+import com.google.common.collect.ImmutableList;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.NonNullList;
@@ -38,7 +40,7 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 	public PotionType potionType;
 
 	public UltimatePotionBase(Rarity rarity, PotionType type) {
-		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(1).tab(EnigmaticLegacy.POTION_TAB));
+		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(1));
 
 		this.potionType = type;
 	}
@@ -69,24 +71,29 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 	}
 
 	@Override
-	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-		if (this.allowedIn(group)) {
+	public CreativeModeTab getCreativeTab() {
+		return EnigmaticLegacy.POTION_TAB;
+	}
 
-			if (this.potionType == PotionType.COMMON) {
-				for (AdvancedPotion potion : EnigmaticPotions.COMMON_POTIONS) {
-					ItemStack stack = new ItemStack(this);
-					ItemNBTHelper.setString(stack, "EnigmaticPotion", potion.getId());
-					items.add(stack);
-				}
-			} else {
-				for (AdvancedPotion potion : EnigmaticPotions.ULTIMATE_POTIONS) {
-					ItemStack stack = new ItemStack(this);
-					ItemNBTHelper.setString(stack, "EnigmaticPotion", potion.getId());
-					items.add(stack);
-				}
+	@Override
+	public List<ItemStack> getCreativeTabStacks() {
+		ImmutableList.Builder<ItemStack> items = ImmutableList.builder();
+
+		if (this.potionType == PotionType.COMMON) {
+			for (AdvancedPotion potion : EnigmaticPotions.COMMON_POTIONS) {
+				ItemStack stack = new ItemStack(this);
+				ItemNBTHelper.setString(stack, "EnigmaticPotion", potion.getId());
+				items.add(stack);
+			}
+		} else {
+			for (AdvancedPotion potion : EnigmaticPotions.ULTIMATE_POTIONS) {
+				ItemStack stack = new ItemStack(this);
+				ItemNBTHelper.setString(stack, "EnigmaticPotion", potion.getId());
+				items.add(stack);
 			}
 		}
 
+		return items.build();
 	}
 
 	@Override

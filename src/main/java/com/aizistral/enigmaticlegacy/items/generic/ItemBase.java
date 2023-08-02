@@ -3,12 +3,14 @@ package com.aizistral.enigmaticlegacy.items.generic;
 import java.util.Random;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -16,7 +18,7 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 
-public abstract class ItemBase extends Item {
+public abstract class ItemBase extends Item implements ICreativeTabMember {
 	protected static final Random random = new Random();
 	protected boolean isPlaceholder;
 
@@ -34,10 +36,14 @@ public abstract class ItemBase extends Item {
 		// Insert existential void here
 	}
 
+	@Override
+	public CreativeModeTab getCreativeTab() {
+		return EnigmaticLegacy.MAIN_TAB;
+	}
+
 	public static Properties getDefaultProperties() {
 		Properties props = new Item.Properties();
 
-		props.tab(EnigmaticLegacy.MAIN_TAB);
 		props.stacksTo(64);
 		props.rarity(Rarity.COMMON);
 

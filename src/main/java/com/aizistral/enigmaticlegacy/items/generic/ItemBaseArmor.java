@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
 import com.aizistral.enigmaticlegacy.client.models.UnseenArmorModel;
 
 import net.minecraft.client.model.HumanoidModel;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -23,7 +25,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
 @SuppressWarnings("deprecation")
-public abstract class ItemBaseArmor extends ArmorItem {
+public abstract class ItemBaseArmor extends ArmorItem implements ICreativeTabMember {
 	@OnlyIn(Dist.CLIENT)
 	private HumanoidModel<?> model;
 
@@ -72,10 +74,14 @@ public abstract class ItemBaseArmor extends ArmorItem {
 		return true;
 	}
 
+	@Override
+	public CreativeModeTab getCreativeTab() {
+		return EnigmaticLegacy.MAIN_TAB;
+	}
+
 	public static Properties getDefaultProperties() {
 		Properties props = new Item.Properties();
 
-		props.tab(EnigmaticLegacy.MAIN_TAB);
 		props.stacksTo(1);
 		props.rarity(Rarity.COMMON);
 

@@ -2,19 +2,24 @@ package com.aizistral.etherium.items.generic;
 
 import java.util.Set;
 
+import org.jetbrains.annotations.Nullable;
+
+import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
 import com.aizistral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.aizistral.etherium.core.IEtheriumConfig;
 import com.aizistral.etherium.core.IEtheriumTool;
 import com.google.common.collect.Sets;
 
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 
-public abstract class ItemEtheriumTool extends DiggerItem implements IEtheriumTool {
+public abstract class ItemEtheriumTool extends DiggerItem implements IEtheriumTool, ICreativeTabMember {
 	public Set<Material> effectiveMaterials;
 	public Set<TagKey<Block>> effectiveTags;
 
@@ -23,6 +28,11 @@ public abstract class ItemEtheriumTool extends DiggerItem implements IEtheriumTo
 
 		this.effectiveMaterials = Sets.newHashSet();
 		this.effectiveTags = Sets.newHashSet();
+	}
+
+	@Override
+	public CreativeModeTab getCreativeTab() {
+		return EnigmaticLegacy.MAIN_TAB;
 	}
 
 	@Override

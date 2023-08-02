@@ -5,6 +5,8 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
 import com.aizistral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.aizistral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -27,6 +29,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
@@ -36,7 +39,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EtheriumAxe extends AxeItem implements IEtheriumTool {
+public class EtheriumAxe extends AxeItem implements IEtheriumTool, ICreativeTabMember {
 	public Set<Material> effectiveMaterials;
 
 	public EtheriumAxe() {
@@ -52,6 +55,11 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool {
 		this.effectiveMaterials.add(Material.VEGETABLE);
 
 		this.getConfig().getSorceryMaterial("INFUSED_WOOD").ifPresent(this.effectiveMaterials::add);
+	}
+
+	@Override
+	public CreativeModeTab getCreativeTab() {
+		return EnigmaticLegacy.MAIN_TAB;
 	}
 
 	@Override

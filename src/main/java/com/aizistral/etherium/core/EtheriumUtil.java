@@ -28,22 +28,6 @@ public class EtheriumUtil {
 		props.stacksTo(1);
 		props.rarity(Rarity.RARE);
 
-		if (config.isStandalone()) {
-			if (isAmong(itemClass, EnderRod.class, EtheriumOre.class, EtheriumIngot.class, EtheriumScraps.class, EtheriumNugget.class)) {
-				props.tab(CreativeModeTab.TAB_MATERIALS);
-			} else if (isAmong(itemClass, EtheriumAxe.class, EtheriumPickaxe.class, EtheriumScythe.class, EtheriumShovel.class)) {
-				props.tab(CreativeModeTab.TAB_TOOLS);
-			} else if (isAmong(itemClass, EtheriumSword.class, EtheriumArmor.class)) {
-				props.tab(CreativeModeTab.TAB_COMBAT);
-			} else if (itemClass == BlockEtherium.class) {
-				props.tab(CreativeModeTab.TAB_BUILDING_BLOCKS);
-			} else {
-				props.tab(CreativeModeTab.TAB_MISC);
-			}
-		} else {
-			props.tab(config.getCreativeTab());
-		}
-
 		return props;
 	}
 

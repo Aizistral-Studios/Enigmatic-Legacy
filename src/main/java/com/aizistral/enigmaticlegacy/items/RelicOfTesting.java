@@ -26,6 +26,7 @@ import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
@@ -38,7 +39,12 @@ public class RelicOfTesting extends ItemBase implements IHidden {
 	public Random lootRandomizer = new Random();
 
 	public RelicOfTesting() {
-		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).tab(null));
+		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1));
+	}
+
+	@Override
+	public CreativeModeTab getCreativeTab() {
+		return null;
 	}
 
 	@Override

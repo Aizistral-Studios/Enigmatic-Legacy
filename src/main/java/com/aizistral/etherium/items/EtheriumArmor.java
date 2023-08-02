@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
 import com.aizistral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
 import com.aizistral.enigmaticlegacy.config.EtheriumConfigHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -20,17 +22,23 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class EtheriumArmor extends ArmorItem {
+public class EtheriumArmor extends ArmorItem implements ICreativeTabMember {
 
 	public EtheriumArmor(EquipmentSlot slot) {
 		super(EnigmaticArmorMaterials.ETHERIUM, slot,
 				EtheriumUtil.defaultProperties(EtheriumArmor.class).fireResistant());
+	}
+
+	@Override
+	public CreativeModeTab getCreativeTab() {
+		return EnigmaticLegacy.MAIN_TAB;
 	}
 
 	@Override

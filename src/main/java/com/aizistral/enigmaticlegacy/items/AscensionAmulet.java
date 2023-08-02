@@ -67,13 +67,6 @@ public class AscensionAmulet extends EnigmaticAmulet {
 	}
 
 	@Override
-	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-		if (this.allowedIn(group)) {
-			items.add(new ItemStack(this));
-		}
-	}
-
-	@Override
 	@OnlyIn(Dist.CLIENT)
 	protected void addAttributes(List<Component> list, ItemStack stack) {
 		ItemLoreHelper.addLocalizedFormattedString(list, "curios.modifiers.charm", ChatFormatting.GOLD);

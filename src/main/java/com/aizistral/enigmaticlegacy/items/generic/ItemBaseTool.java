@@ -3,11 +3,13 @@ package com.aizistral.enigmaticlegacy.items.generic;
 import java.util.Set;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
 import com.aizistral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.google.common.collect.Sets;
 
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -18,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ToolAction;
 
-public abstract class ItemBaseTool extends DiggerItem {
+public abstract class ItemBaseTool extends DiggerItem implements ICreativeTabMember {
 	public Set<Material> effectiveMaterials;
 	public Set<ToolAction> toolActions;
 
@@ -53,10 +55,14 @@ public abstract class ItemBaseTool extends DiggerItem {
 		return super.canPerformAction(stack, toolAction) || this.toolActions.contains(toolAction);
 	}
 
+	@Override
+	public CreativeModeTab getCreativeTab() {
+		return EnigmaticLegacy.MAIN_TAB;
+	}
+
 	public static Properties getDefaultProperties() {
 		Properties props = new Item.Properties();
 
-		props.tab(EnigmaticLegacy.MAIN_TAB);
 		props.stacksTo(1);
 		props.rarity(Rarity.COMMON);
 

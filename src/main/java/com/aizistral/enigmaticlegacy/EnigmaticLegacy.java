@@ -9,6 +9,7 @@ import org.lwjgl.glfw.GLFW;
 
 import com.aizistral.enigmaticlegacy.api.capabilities.PlayerPlaytimeCounter;
 import com.aizistral.enigmaticlegacy.api.items.IAdvancedPotionItem.PotionType;
+import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
 import com.aizistral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
 import com.aizistral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.aizistral.enigmaticlegacy.blocks.BlockAstralDust;
@@ -109,6 +110,8 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
@@ -148,6 +151,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -162,7 +166,9 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.ObjectHolder;
 
 @Mod(EnigmaticLegacy.MODID)
 public class EnigmaticLegacy {
@@ -491,21 +497,37 @@ public class EnigmaticLegacy {
 		LOGGER.info("Colors registered successfully.");
 	}
 
-	public static final CreativeModeTab MAIN_TAB = new CreativeModeTab("enigmaticCreativeTab") {
-		@Override
-		@OnlyIn(Dist.CLIENT)
-		public ItemStack makeIcon() {
-			return new ItemStack(EnigmaticItems.ENIGMATIC_ITEM);
-		}
-	};
+	@SubscribeEvent
+	public void onCreativeTabRegistry(CreativeModeTabEvent.Register event) {
+		LOGGER.info("Initializing creative tab registration...");
 
-	public static final CreativeModeTab POTION_TAB = new CreativeModeTab("enigmaticPotionCreativeTab") {
-		@Override
-		@OnlyIn(Dist.CLIENT)
-		public ItemStack makeIcon() {
-			return new ItemStack(EnigmaticItems.RECALL_POTION);
-		}
-	};
+		MAIN_TAB = event.registerCreativeModeTab(new ResourceLocation(MODID, "tab_main"), builder -> {
+			builder.title(Component.translatable("item_group.enigmaticCreativeTab"))
+			.icon(() -> new ItemStack(EnigmaticItems.ENIGMATIC_ITEM));
+		});
+
+		POTION_TAB = event.registerCreativeModeTab(new ResourceLocation(MODID, "tab_potions"), builder -> {
+			builder.title(Component.translatable("item_group.enigmaticPotionCreativeTab"))
+			.icon(() -> new ItemStack(EnigmaticItems.RECALL_POTION));
+		});
+
+		LOGGER.info("Creative tabs registered successfully.");
+	}
+
+	@SubscribeEvent
+	public void onCreativeTabContents(CreativeModeTabEvent.BuildContents event) {
+		ForgeRegistries.ITEMS.forEach(item -> {
+			if (item instanceof ICreativeTabMember member) {
+				if (event.getTab() != member.getCreativeTab())
+					return;
+
+				member.getCreativeTabStacks().forEach(event::accept);
+			}
+		});
+	}
+
+	public static CreativeModeTab MAIN_TAB = null;
+	public static CreativeModeTab POTION_TAB = null;
 
 	public static final Rarity LEGENDARY = Rarity.create("legendary", ChatFormatting.GOLD);
 

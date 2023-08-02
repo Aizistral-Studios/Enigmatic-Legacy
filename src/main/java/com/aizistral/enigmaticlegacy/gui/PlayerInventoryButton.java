@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
 
 public abstract class PlayerInventoryButton extends ImageButton {
@@ -53,7 +54,7 @@ public abstract class PlayerInventoryButton extends ImageButton {
 			}
 		} else if (this.parentGui instanceof CreativeModeInventoryScreen) {
 			CreativeModeInventoryScreen gui = (CreativeModeInventoryScreen) this.parentGui;
-			boolean isInventoryTab = gui.getSelectedTab() == CreativeModeTab.TAB_INVENTORY.getId();
+			boolean isInventoryTab = gui.selectedTab == CreativeModeTabs.INVENTORY;
 
 			if (!isInventoryTab) {
 				this.active = false;

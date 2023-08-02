@@ -34,6 +34,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
@@ -83,8 +84,13 @@ public class CosmicScroll extends ItemBaseCurio implements IHidden {
 	}
 
 	public CosmicScroll() {
-		super(getDefaultProperties().tab(null).rarity(Rarity.EPIC));
+		super(getDefaultProperties().rarity(Rarity.EPIC));
 		MinecraftForge.EVENT_BUS.register(this);
+	}
+
+	@Override
+	public CreativeModeTab getCreativeTab() {
+		return null;
 	}
 
 	@Override

@@ -16,6 +16,7 @@ import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.ChatFormatting;
@@ -206,12 +207,14 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	}
 
 	@Override
-	public void fillItemCategory(CreativeModeTab group, NonNullList<ItemStack> items) {
-		if (group == EnigmaticLegacy.MAIN_TAB) {
-			for (AmuletColor color : AmuletColor.values()) {
-				items.add(this.setColor(new ItemStack(this), color));
-			}
+	public List<ItemStack> getCreativeTabStacks() {
+		ImmutableList.Builder<ItemStack> builder = ImmutableList.builder();
+
+		for (AmuletColor color : AmuletColor.values()) {
+			builder.add(this.setColor(new ItemStack(this), color));
 		}
+
+		return builder.build();
 	}
 
 	@Override
