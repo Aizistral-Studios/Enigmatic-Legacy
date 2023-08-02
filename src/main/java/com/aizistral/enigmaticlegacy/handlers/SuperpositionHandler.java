@@ -366,7 +366,7 @@ public class SuperpositionHandler {
 
 	public static SoundEvent registerSound(final String soundName) {
 		ResourceLocation location = new ResourceLocation("enigmaticlegacy", soundName);
-		SoundEvent event = new SoundEvent(location);
+		SoundEvent event = SoundEvent.createVariableRangeEvent(location);
 		ForgeRegistries.SOUND_EVENTS.register(location, event);
 		return event;
 	}

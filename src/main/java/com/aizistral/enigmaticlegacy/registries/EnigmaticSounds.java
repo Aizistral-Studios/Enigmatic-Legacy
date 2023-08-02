@@ -50,7 +50,7 @@ public class EnigmaticSounds extends AbstractRegistry<SoundEvent> {
 	}
 
 	private void register(String name) {
-		this.register(name, () -> new SoundEvent(new ResourceLocation(MODID, name)));
+		this.register(name, () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(MODID, name)));
 	}
 
 	@Override
