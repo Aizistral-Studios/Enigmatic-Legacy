@@ -26,6 +26,7 @@ import com.google.gson.reflect.TypeToken;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -93,7 +94,7 @@ public class SoulArchive {
 		List<SoulData> list =  new Gson().fromJson(text, SOUL_RECORDS_TYPE);
 
 		list.forEach(record -> {
-			ResourceKey<Level> key = ResourceKey.create(Registry.DIMENSION_REGISTRY, record.dimension);
+			ResourceKey<Level> key = ResourceKey.create(Registries.DIMENSION, record.dimension);
 			this.data.put(key, record);
 		});
 	}

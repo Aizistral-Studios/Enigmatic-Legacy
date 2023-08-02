@@ -14,6 +14,7 @@ import com.aizistral.enigmaticlegacy.packets.clients.PacketRecallParticles;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -58,7 +59,7 @@ public class TwistedPotion extends ItemBasePotion implements ICursed {
 
 			if (location != null) {
 				double x = location.getDouble("x"), y = location.getDouble("y"), z = location.getDouble("z");
-				ResourceKey<Level> dimension = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(location.getString("dimension")));
+				ResourceKey<Level> dimension = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(location.getString("dimension")));
 
 				player.level.playSound(null, player.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
 				player.level.playSound(null, player.blockPosition(), SoundEvents.PLAYER_HURT, SoundSource.PLAYERS, 1, 1);

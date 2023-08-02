@@ -4,6 +4,8 @@ import java.util.List;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -150,7 +152,7 @@ public class EnigmaticEnchantmentContainer extends EnchantmentMenu {
 							List<EnchantmentInstance> list = this.getEnchantmentList(itemstack, j1, this.enchantLevels[j1]);
 							if (list != null && !list.isEmpty()) {
 								EnchantmentInstance enchantmentdata = list.get(this.rand.nextInt(list.size()));
-								this.enchantClue[j1] = Registry.ENCHANTMENT.getId(enchantmentdata.enchantment);
+								this.enchantClue[j1] = BuiltInRegistries.ENCHANTMENT.getId(enchantmentdata.enchantment);
 								this.worldClue[j1] = enchantmentdata.level;
 							}
 						}

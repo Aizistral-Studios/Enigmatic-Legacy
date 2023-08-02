@@ -4,6 +4,7 @@ import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
 import vazkii.patchouli.client.base.PersistentData;
 import vazkii.patchouli.client.base.PersistentData.BookData;
 import vazkii.patchouli.client.book.BookEntry;
@@ -17,7 +18,7 @@ public class PatchouliHelper {
 	}
 
 	public static Book getAknowledgment() {
-		return PatchouliHelper.getBook(Registry.ITEM.getKey(EnigmaticItems.THE_ACKNOWLEDGMENT));
+		return PatchouliHelper.getBook(ForgeRegistries.ITEMS.getKey(EnigmaticItems.THE_ACKNOWLEDGMENT));
 	}
 
 	private static void setEntryState(ResourceLocation entryLocation, boolean read) {
