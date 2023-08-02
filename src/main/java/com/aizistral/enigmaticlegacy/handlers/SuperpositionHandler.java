@@ -23,6 +23,7 @@ import javax.annotation.Nullable;
 
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.joml.Matrix4f;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
@@ -55,7 +56,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Pair;
-import com.mojang.math.Matrix4f;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;

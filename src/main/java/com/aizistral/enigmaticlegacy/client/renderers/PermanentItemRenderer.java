@@ -2,16 +2,19 @@ package com.aizistral.enigmaticlegacy.client.renderers;
 
 import java.util.Random;
 
+import org.joml.Vector3f;
+
 import com.aizistral.enigmaticlegacy.api.items.IPermanentCrystal;
 import com.aizistral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.ItemEntityRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -79,7 +82,7 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 		float f2 = this.shouldBob() ? ibakedmodel.getTransforms().getTransform(ItemTransforms.TransformType.GROUND).scale.y() : 0;
 		PoseStackIn.translate(0.0D, f1 + 0.25F * f2, 0.0D);
 		float f3 = entityIn.getItemHover(partialTicks);
-		PoseStackIn.mulPose(Vector3f.YP.rotation(f3));
+		PoseStackIn.mulPose(Axis.YP.rotation(f3));
 		if (!flag) {
 			float f7 = -0.0F * (j - 1) * 0.5F;
 			float f8 = -0.0F * (j - 1) * 0.5F;

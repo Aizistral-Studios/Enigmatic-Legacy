@@ -5,10 +5,9 @@ import java.math.MathContext;
 import java.math.RoundingMode;
 import java.util.Objects;
 
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
-
-import com.mojang.math.Vector3f;
-import com.mojang.math.Vector4f;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
