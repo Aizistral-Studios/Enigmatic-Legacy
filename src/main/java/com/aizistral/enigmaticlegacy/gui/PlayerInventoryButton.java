@@ -71,7 +71,7 @@ public abstract class PlayerInventoryButton extends ImageButton {
 			}
 
 			RenderSystem.enableDepthTest();
-			blit(poseStack, this.x, this.y, this.xTexStart, i, this.width, this.height, this.textureWidth, this.textureHeight);
+			blit(poseStack, this.getX(), this.getY(), this.xTexStart, i, this.width, this.height, this.textureWidth, this.textureHeight);
 			if (this.isHovered) {
 				this.renderToolTip(poseStack, mouseX, mouseY);
 			}

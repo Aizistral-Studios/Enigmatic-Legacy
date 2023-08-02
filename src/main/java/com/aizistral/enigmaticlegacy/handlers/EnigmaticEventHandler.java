@@ -695,8 +695,8 @@ public class EnigmaticEventHandler {
 			int x = enderOffsets.getA();
 			int y = enderOffsets.getB();
 
-			enderButton.x = gui.getGuiLeft() + x;
-			enderButton.y = gui.getGuiTop() + y;
+			enderButton.setX(gui.getGuiLeft() + x);
+			enderButton.setY(gui.getGuiTop() + y);
 
 			evt.addListener(enderButton);
 
@@ -710,8 +710,8 @@ public class EnigmaticEventHandler {
 			x = magnetOffsets.getA();
 			y = magnetOffsets.getB();
 
-			magnetButton.x = gui.getGuiLeft() + x;
-			magnetButton.y = gui.getGuiTop() + y;
+			magnetButton.setX(gui.getGuiLeft() + x);
+			magnetButton.setY(gui.getGuiTop() + y);
 
 			evt.addListener(magnetButton);
 
@@ -719,7 +719,7 @@ public class EnigmaticEventHandler {
 				evt.getListenersList().forEach(listener -> {
 					if (QuarkHelper.getMiniButtonClass().isInstance(listener)) {
 						Button button = (Button) listener;
-						button.y -= 22;
+						button.setY(button.getY() - 22);
 					}
 				});
 			}
