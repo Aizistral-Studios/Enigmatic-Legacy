@@ -259,9 +259,9 @@ import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.entity.player.AdvancementEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
@@ -892,14 +892,15 @@ public class EnigmaticEventHandler {
 	}
 
 	@SubscribeEvent
-	public void onEntitySpawn(LivingSpawnEvent.CheckSpawn event) {
-		if (event.getSpawnReason() == MobSpawnType.NATURAL) {
+	public void onEntitySpawn(MobSpawnEvent.FinalizeSpawn event) {
+		if (event.getSpawnType() == MobSpawnType.NATURAL) {
 			LivingEntity entity = event.getEntity();
 
 			if (entity instanceof Piglin || entity instanceof ZombifiedPiglin || entity instanceof IronGolem
 					|| entity instanceof EnderMan) {
 				if (DESOLATION_BOXES.values().stream().anyMatch(entity.getBoundingBox()::intersects)) {
-					event.setResult(Result.DENY);
+					event.setSpawnCancelled(true);
+					event.setCanceled(true);
 				}
 			}
 		}
