@@ -1,6 +1,5 @@
 {
-    "parent": "enigmaticlegacy:item/infernal_shield_idle",
-    "gui_light": "front",
+    "parent": "enigmaticlegacy:item/infernal_shield_idle_in_hand",
 	"display": {
         "thirdperson_righthand": {
             "rotation": [ 45, 135, 0 ],
