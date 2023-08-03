@@ -9,6 +9,7 @@ import com.aizistral.etherium.core.IEtheriumConfig;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.crafting.Ingredient;
 
@@ -40,14 +41,14 @@ public enum EnigmaticArmorMaterials implements ArmorMaterial {
 	}
 
 	@Override
-	public int getDurabilityForSlot(EquipmentSlot slot) {
-		int durability = MAX_DAMAGE_ARRAY[slot.getIndex()] * this.maxDamageFactor;
+	public int getDurabilityForType(ArmorItem.Type slot) {
+		int durability = MAX_DAMAGE_ARRAY[slot.ordinal()] * this.maxDamageFactor;
 		return durability;
 	}
 
 	@Override
-	public int getDefenseForSlot(EquipmentSlot slot) {
-		return this.damageReductionAmountArray[slot.getIndex()];
+	public int getDefenseForType(ArmorItem.Type slot) {
+		return this.damageReductionAmountArray[slot.ordinal()];
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import com.aizistral.enigmaticlegacy.items.*;
 import com.aizistral.enigmaticlegacy.items.generic.GenericBlockItem;
 import com.aizistral.etherium.items.*;
 
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
@@ -459,10 +460,10 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 		this.register("etherium_shovel", EtheriumShovel::new);
 		this.register("etherium_sword", EtheriumSword::new);
 		this.register("etherium_scythe", EtheriumScythe::new);
-		this.register("etherium_helmet", () -> new EtheriumArmor(EquipmentSlot.HEAD));
-		this.register("etherium_chestplate", () -> new EtheriumArmor(EquipmentSlot.CHEST));
-		this.register("etherium_leggings", () -> new EtheriumArmor(EquipmentSlot.LEGS));
-		this.register("etherium_boots", () -> new EtheriumArmor(EquipmentSlot.FEET));
+		this.register("etherium_helmet", () -> new EtheriumArmor(ArmorItem.Type.HELMET));
+		this.register("etherium_chestplate", () -> new EtheriumArmor(ArmorItem.Type.CHESTPLATE));
+		this.register("etherium_leggings", () -> new EtheriumArmor(ArmorItem.Type.LEGGINGS));
+		this.register("etherium_boots", () -> new EtheriumArmor(ArmorItem.Type.BOOTS));
 		this.register("ender_rod", EnderRod::new);
 		this.register("astral_dust", AstralDust::new);
 		this.register("lore_inscriber", LoreInscriber::new);

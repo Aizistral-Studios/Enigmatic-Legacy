@@ -31,7 +31,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EtheriumArmor extends ArmorItem implements ICreativeTabMember {
 
-	public EtheriumArmor(EquipmentSlot slot) {
+	public EtheriumArmor(ArmorItem.Type slot) {
 		super(EnigmaticArmorMaterials.ETHERIUM, slot,
 				EtheriumUtil.defaultProperties(EtheriumArmor.class).fireResistant());
 	}
@@ -72,13 +72,13 @@ public class EtheriumArmor extends ArmorItem implements ICreativeTabMember {
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			EtheriumArmor armor = (EtheriumArmor) stack.getItem();
-			if (armor.getSlot() == EquipmentSlot.HEAD) {
+			if (armor.getType() == Type.HELMET) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumHelmet1");
-			} else if (armor.getSlot() == EquipmentSlot.CHEST) {
+			} else if (armor.getType() == Type.CHESTPLATE) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumChestplate1");
-			} else if (armor.getSlot() == EquipmentSlot.LEGS) {
+			} else if (armor.getType() == Type.LEGGINGS) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumLeggings1");
-			} else if (armor.getSlot() == EquipmentSlot.FEET) {
+			} else if (armor.getType() == Type.BOOTS) {
 				ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.etheriumBoots1");
 			}
 		} else {

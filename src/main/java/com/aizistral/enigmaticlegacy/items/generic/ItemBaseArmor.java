@@ -29,11 +29,11 @@ public abstract class ItemBaseArmor extends ArmorItem implements ICreativeTabMem
 	@OnlyIn(Dist.CLIENT)
 	private HumanoidModel<?> model;
 
-	public ItemBaseArmor(ArmorMaterial materialIn, EquipmentSlot slot, Properties builder) {
+	public ItemBaseArmor(ArmorMaterial materialIn, ArmorItem.Type slot, Properties builder) {
 		super(materialIn, slot, builder);
 	}
 
-	public ItemBaseArmor(ArmorMaterial materialIn, EquipmentSlot slot) {
+	public ItemBaseArmor(ArmorMaterial materialIn, ArmorItem.Type slot) {
 		this(materialIn, slot, ItemBaseArmor.getDefaultProperties());
 	}
 
