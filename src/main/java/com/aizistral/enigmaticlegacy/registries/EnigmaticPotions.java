@@ -80,6 +80,7 @@ public class EnigmaticPotions {
 		ultimatePotions.add(ULTIMATE_INVISIBILITY);
 		ultimatePotions.add(ULTIMATE_LEAPING);
 		ultimatePotions.add(ULTIMATE_FIRE_RESISTANCE);
+		ultimatePotions.add(ULTIMATE_SWIFTNESS);
 		ultimatePotions.add(ULTIMATE_SLOWNESS);
 		ultimatePotions.add(ULTIMATE_TURTLE_MASTER);
 		ultimatePotions.add(ULTIMATE_WATER_BREATHING);
