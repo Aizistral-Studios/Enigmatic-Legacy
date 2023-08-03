@@ -9,6 +9,7 @@ import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.ChatFormatting;
@@ -35,6 +36,11 @@ public class AscensionAmulet extends EnigmaticAmulet {
 
 	protected AscensionAmulet(Properties properties, String name) {
 		super(properties, name);
+	}
+
+	@Override
+	public List<ItemStack> getCreativeTabStacks() {
+		return ImmutableList.of(new ItemStack(this));
 	}
 
 	@Override

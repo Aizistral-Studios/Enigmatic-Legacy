@@ -1,5 +1,7 @@
 package com.aizistral.enigmaticlegacy.items.generic;
 
+import java.util.function.Supplier;
+
 import org.jetbrains.annotations.Nullable;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
@@ -12,24 +14,24 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 
 public class GenericBlockItem extends BlockItem implements ICreativeTabMember {
-	private final CreativeModeTab tab;
+	private final Supplier<CreativeModeTab> tab; // supplier cuz weird shit happens otherwise
 
 	public GenericBlockItem(Block blockIn) {
 		this(blockIn, GenericBlockItem.getDefaultProperties());
 	}
 
 	public GenericBlockItem(Block blockIn, Properties props) {
-		this(blockIn, props, EnigmaticLegacy.MAIN_TAB);
+		this(blockIn, props, () -> EnigmaticLegacy.MAIN_TAB);
 	}
 
-	public GenericBlockItem(Block blockIn, Properties props, @Nullable CreativeModeTab tab) {
+	public GenericBlockItem(Block blockIn, Properties props, Supplier<@Nullable CreativeModeTab> tab) {
 		super(blockIn, props);
 		this.tab = tab;
 	}
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return this.tab;
+		return this.tab.get();
 	}
 
 	public static Properties getDefaultProperties() {

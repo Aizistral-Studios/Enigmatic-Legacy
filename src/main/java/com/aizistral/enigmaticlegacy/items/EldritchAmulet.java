@@ -14,6 +14,7 @@ import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 
 import net.minecraft.ChatFormatting;
@@ -45,6 +46,11 @@ public class EldritchAmulet extends AscensionAmulet implements IEldritch {
 
 	public EldritchAmulet() {
 		super(getDefaultProperties().rarity(Rarity.EPIC).fireResistant(), "eldritch_amulet");
+	}
+
+	@Override
+	public List<ItemStack> getCreativeTabStacks() {
+		return ImmutableList.of(new ItemStack(this));
 	}
 
 	@Override
