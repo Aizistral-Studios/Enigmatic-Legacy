@@ -8,6 +8,7 @@ import java.util.Map;
 import com.aizistral.enigmaticlegacy.items.EnchantmentTransposer;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -34,7 +35,7 @@ public class EnchantmentTransposingRecipe extends CustomRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingContainer inv) {
+	public ItemStack assemble(CraftingContainer inv, RegistryAccess access) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 		ItemStack transposer = null;
 

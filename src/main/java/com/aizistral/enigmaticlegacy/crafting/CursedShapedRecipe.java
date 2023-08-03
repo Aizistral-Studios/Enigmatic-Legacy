@@ -6,6 +6,7 @@ import com.aizistral.enigmaticlegacy.registries.EnigmaticRecipes;
 import com.google.gson.JsonObject;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -44,8 +45,8 @@ public class CursedShapedRecipe extends ShapedRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingContainer inv) {
-		return super.assemble(inv);
+	public ItemStack assemble(CraftingContainer inv, RegistryAccess access) {
+		return super.assemble(inv, access);
 	}
 
 	public static class Serializer implements RecipeSerializer<CursedShapedRecipe> {
@@ -65,13 +66,13 @@ public class CursedShapedRecipe extends ShapedRecipe {
 		@Override
 		public CursedShapedRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			ShapedRecipe recipe = SHAPED_RECIPE.fromJson(recipeId, json);
-			return new CursedShapedRecipe(recipe.getId(), recipe.getGroup(), recipe.category(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), this.handleTainted(recipe.getIngredients()), recipe.getResultItem());
+			return new CursedShapedRecipe(recipe.getId(), recipe.getGroup(), recipe.category(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), this.handleTainted(recipe.getIngredients()), recipe.getResultItem(null));
 		}
 
 		@Override
 		public CursedShapedRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			ShapedRecipe recipe = SHAPED_RECIPE.fromNetwork(recipeId, buffer);
-			return new CursedShapedRecipe(recipe.getId(), recipe.getGroup(), recipe.category(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), this.handleTainted(recipe.getIngredients()), recipe.getResultItem());
+			return new CursedShapedRecipe(recipe.getId(), recipe.getGroup(), recipe.category(), recipe.getRecipeWidth(), recipe.getRecipeHeight(), this.handleTainted(recipe.getIngredients()), recipe.getResultItem(null));
 		}
 
 		@Override

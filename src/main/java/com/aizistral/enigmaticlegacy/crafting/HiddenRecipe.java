@@ -11,6 +11,7 @@ import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
 import java.util.Optional;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
@@ -53,7 +54,7 @@ public class HiddenRecipe extends CustomRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingContainer inv) {
+	public ItemStack assemble(CraftingContainer inv, RegistryAccess access) {
 		ItemStack output = ItemStack.EMPTY;
 
 		Optional<CompoundTag> amuletNBT = Optional.empty();
@@ -109,7 +110,7 @@ public class HiddenRecipe extends CustomRecipe {
 	}
 
 	@Override
-	public ItemStack getResultItem() {
+	public ItemStack getResultItem(RegistryAccess access) {
 		return ItemStack.EMPTY;
 	}
 

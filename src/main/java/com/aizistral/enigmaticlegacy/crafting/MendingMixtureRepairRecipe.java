@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
@@ -27,7 +28,7 @@ public class MendingMixtureRepairRecipe extends CustomRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingContainer inv) {
+	public ItemStack assemble(CraftingContainer inv, RegistryAccess access) {
 		List<ItemStack> stackList = new ArrayList<ItemStack>();
 
 		for (int i = 0; i < inv.getContainerSize(); i++) {

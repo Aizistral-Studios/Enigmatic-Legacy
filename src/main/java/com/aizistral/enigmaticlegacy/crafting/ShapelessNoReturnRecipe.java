@@ -48,13 +48,13 @@ public class ShapelessNoReturnRecipe extends ShapelessRecipe {
 		@Override
 		public ShapelessNoReturnRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			ShapelessRecipe recipe = SHAPELESS_RECIPE.fromJson(recipeId, json);
-			return new ShapelessNoReturnRecipe(recipe.getId(), recipe.getGroup(), recipe.category(), recipe.getResultItem(), recipe.getIngredients());
+			return new ShapelessNoReturnRecipe(recipe.getId(), recipe.getGroup(), recipe.category(), recipe.getResultItem(null), recipe.getIngredients());
 		}
 
 		@Override
 		public ShapelessNoReturnRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			ShapelessRecipe recipe = SHAPELESS_RECIPE.fromNetwork(recipeId, buffer);
-			return new ShapelessNoReturnRecipe(recipe.getId(), recipe.getGroup(), recipe.category(), recipe.getResultItem(), recipe.getIngredients());
+			return new ShapelessNoReturnRecipe(recipe.getId(), recipe.getGroup(), recipe.category(), recipe.getResultItem(null), recipe.getIngredients());
 		}
 
 		@Override
