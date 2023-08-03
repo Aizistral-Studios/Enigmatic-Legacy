@@ -11,6 +11,7 @@ import com.aizistral.enigmaticlegacy.brewing.SpecialBrewingRecipe;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.Level;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
@@ -39,7 +40,7 @@ public class AdvancedBrewingRecipeProcessor implements IComponentProcessor {
 	}
 
 	@Override
-	public void setup(IVariableProvider variables) {
+	public void setup(Level level, IVariableProvider variables) {
 		ResourceLocation recipeId = new ResourceLocation(variables.get("recipe").asString());
 		int index = variables.get("index").asNumber().intValue();
 
@@ -47,7 +48,7 @@ public class AdvancedBrewingRecipeProcessor implements IComponentProcessor {
 	}
 
 	@Override
-	public IVariable process(String key) {
+	public IVariable process(Level level, String key) {
 		if (this.recipe instanceof SpecialBrewingRecipe) {
 			SpecialBrewingRecipe special = (SpecialBrewingRecipe) this.recipe;
 

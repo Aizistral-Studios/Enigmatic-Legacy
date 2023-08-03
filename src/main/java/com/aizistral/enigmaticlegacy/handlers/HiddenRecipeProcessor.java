@@ -4,6 +4,7 @@ import com.aizistral.enigmaticlegacy.crafting.HiddenRecipe;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import vazkii.patchouli.api.IComponentProcessor;
 import vazkii.patchouli.api.IVariable;
 import vazkii.patchouli.api.IVariableProvider;
@@ -13,7 +14,7 @@ public class HiddenRecipeProcessor implements IComponentProcessor {
 	private ItemStack output;
 
 	@Override
-	public void setup(IVariableProvider variables) {
+	public void setup(Level level, IVariableProvider variables) {
 		ResourceLocation recipeId = new ResourceLocation(variables.get("recipe").asString());
 		var recipe = HiddenRecipe.getRecipe(recipeId);
 
@@ -22,7 +23,7 @@ public class HiddenRecipeProcessor implements IComponentProcessor {
 	}
 
 	@Override
-	public IVariable process(String key) {
+	public IVariable process(Level level, String key) {
 		if (key.startsWith("input1"))
 			return IVariable.from(this.grid[0][0]);
 		else if (key.startsWith("input2"))
