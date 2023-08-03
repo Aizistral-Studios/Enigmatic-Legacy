@@ -43,7 +43,7 @@ public class EtheriumSword extends SwordItem implements IEtheriumTool, ICreative
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticLegacy.MAIN_TAB;
+		return EnigmaticLegacy.mainTab;
 	}
 
 	@Override

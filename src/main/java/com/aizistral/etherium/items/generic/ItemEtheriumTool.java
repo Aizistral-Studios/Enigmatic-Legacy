@@ -32,7 +32,7 @@ public abstract class ItemEtheriumTool extends DiggerItem implements IEtheriumTo
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticLegacy.MAIN_TAB;
+		return EnigmaticLegacy.mainTab;
 	}
 
 	@Override

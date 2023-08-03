@@ -503,12 +503,12 @@ public class EnigmaticLegacy {
 	public void onCreativeTabRegistry(CreativeModeTabEvent.Register event) {
 		LOGGER.info("Initializing creative tab registration...");
 
-		POTION_TAB = event.registerCreativeModeTab(new ResourceLocation(MODID, "tab_potions"), builder -> {
+		potionTab = event.registerCreativeModeTab(new ResourceLocation(MODID, "tab_potions"), builder -> {
 			builder.title(Component.translatable("itemGroup.enigmaticPotionCreativeTab"))
 			.icon(() -> new ItemStack(EnigmaticItems.RECALL_POTION));
 		});
 
-		MAIN_TAB = event.registerCreativeModeTab(new ResourceLocation(MODID, "tab_main"), builder -> {
+		mainTab = event.registerCreativeModeTab(new ResourceLocation(MODID, "tab_main"), builder -> {
 			builder.title(Component.translatable("itemGroup.enigmaticCreativeTab"))
 			.icon(() -> new ItemStack(EnigmaticItems.ENIGMATIC_ITEM));
 		});
@@ -528,8 +528,8 @@ public class EnigmaticLegacy {
 		});
 	}
 
-	public static CreativeModeTab MAIN_TAB = null;
-	public static CreativeModeTab POTION_TAB = null;
+	public static CreativeModeTab mainTab = null;
+	public static CreativeModeTab potionTab = null;
 
 	public static final Rarity LEGENDARY = Rarity.create("legendary", ChatFormatting.GOLD);
 

@@ -76,7 +76,7 @@ public abstract class ItemBaseArmor extends ArmorItem implements ICreativeTabMem
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticLegacy.MAIN_TAB;
+		return EnigmaticLegacy.mainTab;
 	}
 
 	public static Properties getDefaultProperties() {

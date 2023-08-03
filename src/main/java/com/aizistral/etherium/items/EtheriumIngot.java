@@ -17,7 +17,7 @@ public class EtheriumIngot extends Item implements ICreativeTabMember {
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticLegacy.MAIN_TAB;
+		return EnigmaticLegacy.mainTab;
 	}
 
 }
