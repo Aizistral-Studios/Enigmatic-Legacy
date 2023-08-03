@@ -53,6 +53,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.PacketDistributor;
 import top.theillusivec4.caelus.api.CaelusApi;
 import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.type.capability.ICurio.SoundInfo;
 
 public class EnigmaticElytra extends ItemBaseCurio implements IBindable {
 	private static final AttributeModifier ELYTRA_MODIFIER = new AttributeModifier(UUID.fromString("44dfce5a-2f09-4f19-bc29-9b0324cd2a40"), EnigmaticLegacy.MODID+":elytra_modifier", 1.0, AttributeModifier.Operation.ADDITION);
@@ -156,8 +157,8 @@ public class EnigmaticElytra extends ItemBaseCurio implements IBindable {
 	}
 
 	@Override
-	public SoundEvent getEquipSound() {
-		return SoundEvents.ARMOR_EQUIP_ELYTRA;
+	public SoundInfo getEquipSound(SlotContext slotContext, ItemStack stack) {
+		return new SoundInfo(SoundEvents.ARMOR_EQUIP_ELYTRA, 1F, 1F);
 	}
 
 	@Override
