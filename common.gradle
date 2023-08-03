@@ -131,6 +131,8 @@ modrinth {
     dependencies {
 		// The scope can be `required`, `optional`, or `incompatible`
 		required.project "nU0bVIaL"
+		required.project "vvuO3ImH"
+		required.project "40FYwb4z"
     }
 	
 	syncBodyFrom = rootProject.file("docs/README.md").text
