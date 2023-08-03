@@ -925,7 +925,7 @@
 	"tooltip.enigmaticlegacy.theInfinitum6": "§6+%1$s §dLifesteal",
 	"tooltip.enigmaticlegacy.theInfinitum7": "§5Can bear most sword enchantments.",
 	"tooltip.enigmaticlegacy.theInfinitum8": "§5Each attack inflicts horrific debuffs.",
-	"tooltip.enigmaticlegacy.theInfinitum9": "§5When held, provides §685% §dChance§5 that otherwise",
+	"tooltip.enigmaticlegacy.theInfinitum9": "§5When held, provides §6%1$s §dChance§5 that otherwise",
 	"tooltip.enigmaticlegacy.theInfinitum10": "§5lethal damage won't kill you.",
 	
 	"tooltip.enigmaticlegacy.enderSlayer1": "§5To exterminate them all...",
