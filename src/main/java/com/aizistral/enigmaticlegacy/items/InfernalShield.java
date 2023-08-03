@@ -99,7 +99,9 @@ public class InfernalShield extends ItemBase implements ICursed, Vanishable {
 	public void inventoryTick(ItemStack stack, Level world, Entity holder, int slot, boolean hand) {
 		if (holder instanceof ServerPlayer player && player.isOnFire() && SuperpositionHandler.isTheCursedOne(player)) {
 			if (player.getMainHandItem() == stack || player.getOffhandItem() == stack) {
-				player.clearFire();
+				if (!player.isInLava()) {
+					player.clearFire();
+				}
 			}
 		}
 	}
