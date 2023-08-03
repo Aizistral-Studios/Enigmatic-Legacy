@@ -67,7 +67,7 @@ public class SoulCrystal extends ItemBase implements IPermanentCrystal, Vanishab
 			this.setLostCrystals(player, lostFragments - 1);
 
 			if (!player.level.isClientSide) {
-				player.level.playSound(null, new BlockPos(player.position()), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.0f);
+				player.level.playSound(null, BlockPos.containing(player.position()), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.0f);
 			}
 
 			return true;

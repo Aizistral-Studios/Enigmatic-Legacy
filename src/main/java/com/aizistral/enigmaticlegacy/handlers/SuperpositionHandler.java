@@ -1282,7 +1282,7 @@ public class SuperpositionHandler {
 			 */
 			trueVec = new Vec3(destinationWorld.getSharedSpawnPos().getX() + 0.5, destinationWorld.getSharedSpawnPos().getY() + 0.5, destinationWorld.getSharedSpawnPos().getZ() + 0.5);
 
-			while (!destinationWorld.getBlockState(new BlockPos(trueVec)).isAir() && trueVec.y < 255.0D) {
+			while (!destinationWorld.getBlockState(BlockPos.containing(trueVec)).isAir() && trueVec.y < 255.0D) {
 				trueVec = trueVec.add(0, 1D, 0);
 			}
 

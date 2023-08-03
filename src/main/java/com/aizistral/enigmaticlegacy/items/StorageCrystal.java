@@ -89,7 +89,7 @@ public class StorageCrystal extends ItemBase implements IPermanentCrystal, Vanis
 		if (retrieveSoul != null) {
 			EnigmaticItems.SOUL_CRYSTAL.retrieveSoulFromCrystal(player, retrieveSoul);
 		} else {
-			player.level.playSound(null, new BlockPos(player.position()), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.0f);
+			player.level.playSound(null, BlockPos.containing(player.position()), SoundEvents.BEACON_ACTIVATE, SoundSource.PLAYERS, 1.0f, 1.0f);
 		}
 
 		ItemNBTHelper.setBoolean(crystal, "isStored", false);

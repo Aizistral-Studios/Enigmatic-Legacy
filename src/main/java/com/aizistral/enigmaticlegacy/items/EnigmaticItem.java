@@ -154,7 +154,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 	}
 
 	private void launchWitherSkull(Level world, Player player, boolean invulnerable) {
-		world.levelEvent((Player) null, 1024, new BlockPos(player.position()), 0);
+		world.levelEvent((Player) null, 1024, BlockPos.containing(player.position()), 0);
 
 		Vector3 look = new Vector3(player.getLookAngle()).multiply(1, 0, 1);
 
