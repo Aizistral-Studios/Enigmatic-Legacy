@@ -9,15 +9,18 @@ import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
 import com.google.common.collect.ImmutableList;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 
 public class MoltenHeartEffect extends MobEffect {
-	private static final List<String> IMMUNITIES = ImmutableList.of(DamageSource.LAVA.msgId,
-			DamageSource.IN_FIRE.msgId, DamageSource.ON_FIRE.msgId, DamageSource.HOT_FLOOR.msgId);
+	private static final List<ResourceKey<DamageType>> IMMUNITIES = ImmutableList.of(DamageTypes.LAVA,
+			DamageTypes.IN_FIRE, DamageTypes.ON_FIRE, DamageTypes.HOT_FLOOR);
 
 	public static Omniconfig.DoubleParameter lavafogDensity;
 
@@ -52,8 +55,8 @@ public class MoltenHeartEffect extends MobEffect {
 		return true;
 	}
 
-	public boolean providesImmunity(DamageSource to) {
-		return IMMUNITIES.contains(to.msgId);
+	public boolean providesImmunity(DamageSource source) {
+		return IMMUNITIES.stream().anyMatch(source::is);
 	}
 
 }

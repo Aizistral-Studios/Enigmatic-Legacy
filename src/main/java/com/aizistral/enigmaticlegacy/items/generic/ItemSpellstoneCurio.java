@@ -14,6 +14,9 @@ import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
 
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
@@ -31,8 +34,8 @@ public abstract class ItemSpellstoneCurio extends ItemBaseCurio implements ISpel
 		builder.popPrefix();
 	}
 
-	public List<String> immunityList = new ArrayList<String>();
-	public HashMap<String, Supplier<Float>> resistanceList = new HashMap<String, Supplier<Float>>();
+	public List<ResourceKey<DamageType>> immunityList = new ArrayList<>();
+	public HashMap<ResourceKey<DamageType>, Supplier<Float>> resistanceList = new HashMap<>();
 
 	public ItemSpellstoneCurio() {
 		this(ItemSpellstoneCurio.getDefaultProperties());

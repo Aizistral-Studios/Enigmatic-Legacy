@@ -35,6 +35,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -73,18 +74,18 @@ public class TheCube extends ItemSpellstoneCurio implements ISpellstone {
 				MobEffects.HUNGER, MobEffects.LEVITATION, MobEffects.MOVEMENT_SLOWDOWN, MobEffects.WEAKNESS,
 				MobEffects.POISON, MobEffects.WITHER);
 
-		this.immunityList.add(DamageSource.ON_FIRE.msgId);
-		this.immunityList.add(DamageSource.IN_FIRE.msgId);
-		this.immunityList.add(DamageSource.LAVA.msgId);
-		this.immunityList.add(DamageSource.HOT_FLOOR.msgId);
-		this.immunityList.add(DamageSource.CRAMMING.msgId);
-		this.immunityList.add(DamageSource.DROWN.msgId);
-		this.immunityList.add(DamageSource.FALL.msgId);
-		this.immunityList.add(DamageSource.FLY_INTO_WALL.msgId);
-		this.immunityList.add(DamageSource.CACTUS.msgId);
-		this.immunityList.add(DamageSource.IN_WALL.msgId);
-		this.immunityList.add(DamageSource.fallingBlock(null).msgId);
-		this.immunityList.add(DamageSource.SWEET_BERRY_BUSH.msgId);
+		this.immunityList.add(DamageTypes.ON_FIRE);
+		this.immunityList.add(DamageTypes.IN_FIRE);
+		this.immunityList.add(DamageTypes.LAVA);
+		this.immunityList.add(DamageTypes.HOT_FLOOR);
+		this.immunityList.add(DamageTypes.CRAMMING);
+		this.immunityList.add(DamageTypes.DROWN);
+		this.immunityList.add(DamageTypes.FALL);
+		this.immunityList.add(DamageTypes.FLY_INTO_WALL);
+		this.immunityList.add(DamageTypes.CACTUS);
+		this.immunityList.add(DamageTypes.IN_WALL);
+		this.immunityList.add(DamageTypes.FALLING_BLOCK);
+		this.immunityList.add(DamageTypes.SWEET_BERRY_BUSH);
 	}
 
 	@Override

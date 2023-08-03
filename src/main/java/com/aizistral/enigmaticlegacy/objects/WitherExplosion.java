@@ -41,7 +41,6 @@ public class WitherExplosion extends Explosion {
 		this.z = zIn;
 		this.causesFire = causesFireIn;
 		this.mode = modeIn;
-		DamageSource.explosion(this);
 		new Vec3(this.x, this.y, this.z);
 	}
 

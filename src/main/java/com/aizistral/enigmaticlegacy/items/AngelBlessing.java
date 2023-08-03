@@ -27,6 +27,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -82,11 +83,11 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 	public AngelBlessing() {
 		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.RARE));
 
-		this.immunityList.add(DamageSource.FALL.msgId);
-		this.immunityList.add(DamageSource.FLY_INTO_WALL.msgId);
+		this.immunityList.add(DamageTypes.FALL);
+		this.immunityList.add(DamageTypes.FLY_INTO_WALL);
 
-		this.resistanceList.put(DamageSource.WITHER.msgId, () -> 2F);
-		this.resistanceList.put(DamageSource.OUT_OF_WORLD.msgId, () -> 2F);
+		this.resistanceList.put(DamageTypes.WITHER, () -> 2F);
+		this.resistanceList.put(DamageTypes.OUT_OF_WORLD, () -> 2F);
 	}
 
 	@Override

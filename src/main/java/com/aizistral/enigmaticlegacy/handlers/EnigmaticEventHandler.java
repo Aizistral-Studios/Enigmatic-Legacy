@@ -64,7 +64,6 @@ import com.aizistral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.aizistral.enigmaticlegacy.mixin.AccessorAbstractArrowEntity;
 import com.aizistral.enigmaticlegacy.mixin.AccessorAdvancementCommands;
 import com.aizistral.enigmaticlegacy.objects.CooldownMap;
-import com.aizistral.enigmaticlegacy.objects.DamageSourceNemesisCurse;
 import com.aizistral.enigmaticlegacy.objects.DimensionalPosition;
 import com.aizistral.enigmaticlegacy.objects.Perhaps;
 import com.aizistral.enigmaticlegacy.objects.QuarkHelper;
@@ -86,6 +85,7 @@ import com.aizistral.enigmaticlegacy.packets.server.PacketEnchantingGUI;
 import com.aizistral.enigmaticlegacy.packets.server.PacketEnderRingKey;
 import com.aizistral.enigmaticlegacy.packets.server.PacketToggleMagnetEffects;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticBlocks;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticDamageTypes;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticEffects;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticEnchantments;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
@@ -140,7 +140,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -1335,13 +1335,13 @@ public class EnigmaticEventHandler {
 			 * Immortality handler for Heart of Creation and Pearl of the Void.
 			 */
 
-			if (isPoisonHurt && event.getSource() == DamageSource.MAGIC) {
+			if (isPoisonHurt && event.getSource().is(DamageTypes.MAGIC)) {
 				event.setCanceled(true);
 				player.setHealth(1);
 			} else if (LAST_HEALTH.containsKey(player) && LAST_HEALTH.get(player) >= 1.5F && SuperpositionHandler.hasCurio(player, EnigmaticItems.THE_CUBE)) {
 				event.setCanceled(true);
 				player.setHealth(1);
-			} else if (SuperpositionHandler.hasCurio(player, EnigmaticItems.ENIGMATIC_ITEM) || player.getInventory().contains(new ItemStack(EnigmaticItems.ENIGMATIC_ITEM)) || event.getSource() instanceof DamageSourceNemesisCurse) {
+			} else if (SuperpositionHandler.hasCurio(player, EnigmaticItems.ENIGMATIC_ITEM) || player.getInventory().contains(new ItemStack(EnigmaticItems.ENIGMATIC_ITEM)) || event.getSource().is(EnigmaticDamageTypes.NEMESIS_CURSE)) {
 				event.setCanceled(true);
 				player.setHealth(1);
 			} else if (SuperpositionHandler.hasCurio(player, EnigmaticItems.VOID_PEARL) && Math.random() <= VoidPearl.undeadProbability.getValue().asMultiplier(false)) {
@@ -1560,7 +1560,7 @@ public class EnigmaticEventHandler {
 				}*/
 			}
 
-			if (event.getSource().msgId == DamageSource.FALL.msgId) {
+			if (event.getSource().is(DamageTypes.FALL)) {
 				if (EnigmaticItems.ENIGMATIC_AMULET.hasColor(player, AmuletColor.MAGENTA) && event.getAmount() <= 2.0f) {
 					event.setCanceled(true);
 				}
@@ -1571,7 +1571,7 @@ public class EnigmaticEventHandler {
 				for (ItemStack advancedCurioStack : advancedCurios) {
 					ItemSpellstoneCurio advancedCurio = (ItemSpellstoneCurio) advancedCurioStack.getItem();
 
-					if (advancedCurio.immunityList.contains(event.getSource().msgId)) {
+					if (advancedCurio.immunityList.stream().anyMatch(event.getSource()::is)) {
 						event.setCanceled(true);
 					}
 
@@ -1608,7 +1608,7 @@ public class EnigmaticEventHandler {
 			}
 
 			if (!player.getAbilities().invulnerable && player.getEffect(MobEffects.FIRE_RESISTANCE) == null)
-				if (SuperpositionHandler.hasCurio(player, EnigmaticItems.BLAZING_CORE) && !event.isCanceled() && event.getSource().msgId.equals(DamageSource.LAVA.msgId)) {
+				if (SuperpositionHandler.hasCurio(player, EnigmaticItems.BLAZING_CORE) && !event.isCanceled() && event.getSource().is(DamageTypes.LAVA)) {
 					TransientPlayerData data = TransientPlayerData.get(player);
 
 					if (data.getFireImmunityTimer() < data.getFireImmunityTimerCap()) {
@@ -1625,7 +1625,7 @@ public class EnigmaticEventHandler {
 					}
 				}
 
-		} else if (event.getSource().getDirectEntity() instanceof Player && "player".equals(event.getSource().msgId)) {
+		} else if (event.getSource().getDirectEntity() instanceof Player && event.getSource().is(DamageTypes.PLAYER_ATTACK)) {
 			Player player = (Player) event.getSource().getDirectEntity();
 
 			/*
@@ -1824,7 +1824,7 @@ public class EnigmaticEventHandler {
 			}
 		}
 
-		if (event.getSource().getDirectEntity() instanceof Player && "player".equals(event.getSource().msgId)) {
+		if (event.getSource().getDirectEntity() instanceof Player && event.getSource().is(DamageTypes.PLAYER_ATTACK)) {
 			Player player = (Player) event.getSource().getDirectEntity();
 
 			/*
@@ -1914,7 +1914,7 @@ public class EnigmaticEventHandler {
 				if (EnigmaticEnchantmentHelper.hasNemesisCurseEnchantment(mainhandStack)) {
 					float supposedDamage = event.getAmount()*0.35F;
 
-					player.hurt(new DamageSourceNemesisCurse(event.getEntity()), supposedDamage);
+					player.hurt(player.damageSources().source(EnigmaticDamageTypes.NEMESIS_CURSE, event.getEntity()), supposedDamage);
 				}
 			} else {
 				event.setAmount(event.getAmount() + bonusDamage);
@@ -1934,7 +1934,7 @@ public class EnigmaticEventHandler {
 					ItemSpellstoneCurio advancedCurio = (ItemSpellstoneCurio) advancedCurioStack.getItem();
 					Mob trueSource = event.getSource().getEntity() instanceof Mob ? (Mob)event.getSource().getEntity() : null;
 
-					if (event.getSource().msgId.startsWith("explosion") && advancedCurio == EnigmaticItems.GOLEM_HEART && SuperpositionHandler.hasAnyArmor(player)) {
+					if ((event.getSource().is(DamageTypes.EXPLOSION) || event.getSource().is(DamageTypes.PLAYER_EXPLOSION)) && advancedCurio == EnigmaticItems.GOLEM_HEART && SuperpositionHandler.hasAnyArmor(player)) {
 						continue;
 					} else if (advancedCurio == EnigmaticItems.BLAZING_CORE && trueSource != null && (trueSource.getMobType() == MobType.WATER || trueSource instanceof Drowned)) {
 						event.setAmount(event.getAmount() * 2F);
@@ -1944,13 +1944,16 @@ public class EnigmaticEventHandler {
 						event.setAmount(event.getAmount() * OceanStone.underwaterCreaturesResistance.getValue().asModifierInverted());
 					}
 
-					if (advancedCurio.resistanceList.containsKey(event.getSource().msgId)) {
-						event.setAmount(event.getAmount() * advancedCurio.resistanceList.get(event.getSource().msgId).get());
+					for (var type : advancedCurio.resistanceList.keySet()) {
+						if (event.getSource().is(type)) {
+							event.setAmount(event.getAmount() * advancedCurio.resistanceList.get(event.getSource().typeHolder().unwrapKey()).get());
+							break;
+						}
 					}
 				}
 			}
 
-			if (event.getSource().msgId == DamageSource.FALL.msgId) {
+			if (event.getSource().is(DamageTypes.FALL)) {
 				if (EnigmaticItems.ENIGMATIC_AMULET.hasColor(player, AmuletColor.MAGENTA)) {
 					event.setAmount(event.getAmount() - 2.0f);
 				}
@@ -1961,10 +1964,10 @@ public class EnigmaticEventHandler {
 			 */
 
 			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.BLAZING_CORE)) {
-				if (event.getSource().getEntity() instanceof LivingEntity && EnigmaticItems.BLAZING_CORE.nemesisList.contains(event.getSource().msgId)) {
+				if (event.getSource().getEntity() instanceof LivingEntity && EnigmaticItems.BLAZING_CORE.nemesisList.stream().anyMatch(event.getSource()::is)) {
 					LivingEntity attacker = (LivingEntity) event.getSource().getEntity();
 					if (!attacker.fireImmune()) {
-						attacker.hurt(new EntityDamageSource(DamageSource.ON_FIRE.msgId, player), (float) BlazingCore.damageFeedback.getValue());
+						attacker.hurt(attacker.damageSources().source(DamageTypes.ON_FIRE, player), (float) BlazingCore.damageFeedback.getValue());
 						attacker.setSecondsOnFire(BlazingCore.ignitionFeedback.getValue());
 					}
 				}
@@ -2063,7 +2066,7 @@ public class EnigmaticEventHandler {
 			event.setAmount(event.getAmount()+damageBoost);
 
 			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.EYE_OF_NEBULA)) {
-				if (event.getSource().isMagic() || event.getSource().msgId == DamageSource.WITHER.msgId || event.getSource().msgId == DamageSource.DRAGON_BREATH.msgId) {
+				if (SuperpositionHandler.isMagic(event.getSource())) {
 					event.setAmount(event.getAmount() * EyeOfNebula.magicBoost.getValue().asModifier(true));
 				}
 			}

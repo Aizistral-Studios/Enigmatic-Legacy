@@ -29,6 +29,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -93,9 +94,9 @@ public class EyeOfNebula extends ItemSpellstoneCurio implements ISpellstone {
 		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.EPIC));
 
 		Supplier<Float> magicResistanceSupplier = () -> magicResistance.getValue().asModifierInverted();
-		this.resistanceList.put(DamageSource.MAGIC.getMsgId(), magicResistanceSupplier);
-		this.resistanceList.put(DamageSource.DRAGON_BREATH.getMsgId(), magicResistanceSupplier);
-		this.resistanceList.put(DamageSource.WITHER.getMsgId(), magicResistanceSupplier);
+		this.resistanceList.put(DamageTypes.MAGIC, magicResistanceSupplier);
+		this.resistanceList.put(DamageTypes.DRAGON_BREATH, magicResistanceSupplier);
+		this.resistanceList.put(DamageTypes.WITHER, magicResistanceSupplier);
 	}
 
 	@Override

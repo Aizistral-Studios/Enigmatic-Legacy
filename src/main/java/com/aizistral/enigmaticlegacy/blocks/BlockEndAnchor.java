@@ -152,7 +152,7 @@ public class BlockEndAnchor extends BaseEntityBlock {
 			return isWaterThatWouldFlow(p_55854_, level);
 		});
 		final boolean flag1 = flag || level.getFluidState(pos.above()).is(FluidTags.WATER);
-		level.explode(null, DamageSource.badRespawnPointExplosion(pos.getCenter()), null, pos.getCenter(), 5.0F, true, Level.ExplosionInteraction.BLOCK);
+		level.explode(null, level.damageSources().badRespawnPointExplosion(pos.getCenter()), null, pos.getCenter(), 5.0F, true, Level.ExplosionInteraction.BLOCK);
 	}
 
 	public static boolean canSetSpawn(Level level) {

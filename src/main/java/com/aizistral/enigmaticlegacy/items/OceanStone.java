@@ -32,6 +32,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -91,13 +93,13 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	public OceanStone() {
 		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.RARE));
 
-		this.immunityList.add(DamageSource.DROWN.msgId);
+		this.immunityList.add(DamageTypes.DROWN);
 
-		this.resistanceList.put(DamageSource.IN_FIRE.msgId, () -> 2F);
-		this.resistanceList.put(DamageSource.ON_FIRE.msgId, () -> 2F);
-		this.resistanceList.put(DamageSource.LAVA.msgId, () -> 2F);
-		this.resistanceList.put(DamageSource.HOT_FLOOR.msgId, () -> 2F);
-		this.resistanceList.put("fireball", () -> 2F);
+		this.resistanceList.put(DamageTypes.IN_FIRE, () -> 2F);
+		this.resistanceList.put(DamageTypes.ON_FIRE, () -> 2F);
+		this.resistanceList.put(DamageTypes.LAVA, () -> 2F);
+		this.resistanceList.put(DamageTypes.HOT_FLOOR, () -> 2F);
+		this.resistanceList.put(DamageTypes.FIREBALL, () -> 2F);
 	}
 
 	@Override

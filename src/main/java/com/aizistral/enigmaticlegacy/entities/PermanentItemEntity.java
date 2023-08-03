@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.handlers.SoulArchive;
+import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.items.SoulCrystal;
 import com.aizistral.enigmaticlegacy.items.StorageCrystal;
@@ -178,7 +179,7 @@ public class PermanentItemEntity extends Entity {
 		if (this.level.isClientSide || !this.isAlive())
 			return false;
 
-		if (source.isBypassMagic()) {
+		if (SuperpositionHandler.isAbsolute(source)) {
 			EnigmaticLegacy.LOGGER.warn("[WARN] Attacked permanent item entity with absolute DamageSource: " + source);
 			this.kill();
 			return true;

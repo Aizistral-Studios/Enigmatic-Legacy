@@ -21,6 +21,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -215,13 +216,13 @@ public class UltimateWitherSkullEntity extends AbstractHurtingProjectile {
 					return;
 
 				if (this.getOwner() != null) {
-					if (entity.hurt(DamageSource.indirectMagic(this, this.getOwner()), this.isSkullInvulnerable() ? 24.0F : 8.0F)) {
+					if (entity.hurt(entity.damageSources().indirectMagic(this, this.getOwner()), this.isSkullInvulnerable() ? 24.0F : 8.0F)) {
 						if (entity.isAlive()) {
 							this.doEnchantDamageEffects((LivingEntity) this.getOwner(), entity);
 						}
 					}
 				} else {
-					entity.hurt(DamageSource.MAGIC, this.isSkullInvulnerable() ? 16.0F : 5.0F);
+					entity.hurt(entity.damageSources().magic(), this.isSkullInvulnerable() ? 16.0F : 5.0F);
 				}
 
 				if (entity instanceof LivingEntity) {

@@ -26,6 +26,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -125,25 +126,25 @@ public class GolemHeart extends ItemSpellstoneCurio implements ISpellstone {
 	public GolemHeart() {
 		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.UNCOMMON));
 
-		this.immunityList.add(DamageSource.CACTUS.msgId);
-		this.immunityList.add(DamageSource.CRAMMING.msgId);
-		this.immunityList.add(DamageSource.IN_WALL.msgId);
-		this.immunityList.add(DamageSource.fallingBlock(null).msgId);
-		this.immunityList.add(DamageSource.SWEET_BERRY_BUSH.msgId);
+		this.immunityList.add(DamageTypes.CACTUS);
+		this.immunityList.add(DamageTypes.CRAMMING);
+		this.immunityList.add(DamageTypes.IN_WALL);
+		this.immunityList.add(DamageTypes.FALLING_BLOCK);
+		this.immunityList.add(DamageTypes.SWEET_BERRY_BUSH);
 
 		Supplier<Float> meleeResistanceSupplier = () -> meleeResistance.getValue().asModifierInverted();
 		Supplier<Float> explosionResistanceSupplier = () -> explosionResistance.getValue().asModifierInverted();
 		Supplier<Float> magicVulnerabilitySupplier = () -> (float) vulnerabilityModifier.getValue();
 
-		this.resistanceList.put(DamageSource.GENERIC.msgId, meleeResistanceSupplier);
-		this.resistanceList.put("mob", meleeResistanceSupplier);
-		this.resistanceList.put("player", meleeResistanceSupplier);
-		this.resistanceList.put("explosion", explosionResistanceSupplier);
-		this.resistanceList.put("explosion.player", explosionResistanceSupplier);
+		this.resistanceList.put(DamageTypes.GENERIC, meleeResistanceSupplier);
+		this.resistanceList.put(DamageTypes.MOB_ATTACK, meleeResistanceSupplier);
+		this.resistanceList.put(DamageTypes.PLAYER_ATTACK, meleeResistanceSupplier);
+		this.resistanceList.put(DamageTypes.EXPLOSION, explosionResistanceSupplier);
+		this.resistanceList.put(DamageTypes.PLAYER_EXPLOSION, explosionResistanceSupplier);
 
-		this.resistanceList.put(DamageSource.MAGIC.msgId, magicVulnerabilitySupplier);
-		this.resistanceList.put(DamageSource.WITHER.msgId, magicVulnerabilitySupplier);
-		this.resistanceList.put(DamageSource.DRAGON_BREATH.msgId, magicVulnerabilitySupplier);
+		this.resistanceList.put(DamageTypes.MAGIC, magicVulnerabilitySupplier);
+		this.resistanceList.put(DamageTypes.WITHER, magicVulnerabilitySupplier);
+		this.resistanceList.put(DamageTypes.DRAGON_BREATH, magicVulnerabilitySupplier);
 
 		this.initAttributes();
 	}

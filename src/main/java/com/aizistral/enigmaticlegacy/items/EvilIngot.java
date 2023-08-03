@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.items.ICursed;
+import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
 
@@ -23,7 +24,7 @@ public class EvilIngot extends ItemBase implements ICursed {
 
 	@Override
 	public boolean canBeHurtBy(DamageSource source) {
-		return !source.isExplosion();
+		return !SuperpositionHandler.isExplosion(source);
 	}
 
 	@Override

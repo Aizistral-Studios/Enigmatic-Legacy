@@ -11,6 +11,7 @@ import com.aizistral.enigmaticlegacy.api.items.ISpellstone;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticDamageTypes;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
@@ -19,11 +20,13 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -88,22 +91,16 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 		builder.popPrefix();
 	}
 
-	public List<String> healList = new ArrayList<String>();
-	public DamageSource theDarkness;
+	public List<ResourceKey<DamageType>> healList = new ArrayList<>();
 
 	public VoidPearl() {
 		super(ItemSpellstoneCurio.getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC).fireResistant());
 
-		this.immunityList.add(DamageSource.DROWN.msgId);
-		this.immunityList.add(DamageSource.IN_WALL.msgId);
+		this.immunityList.add(DamageTypes.DROWN);
+		this.immunityList.add(DamageTypes.IN_WALL);
 
-		this.healList.add(DamageSource.WITHER.msgId);
-		this.healList.add(DamageSource.MAGIC.msgId);
-
-		this.theDarkness = new DamageSource("darkness");
-		this.theDarkness.bypassMagic();
-		this.theDarkness.bypassArmor();
-		this.theDarkness.setMagic();
+		this.healList.add(DamageTypes.WITHER);
+		this.healList.add(DamageTypes.MAGIC);
 	}
 
 	@Override
@@ -204,10 +201,7 @@ public class VoidPearl extends ItemSpellstoneCurio implements ISpellstone {
 						}
 
 						if (!(victim instanceof Player) || player.canHarmPlayer((Player) victim)) {
-							IndirectEntityDamageSource darkness = new IndirectEntityDamageSource("darkness", player, null);
-							darkness.bypassMagic().bypassArmor().setMagic();
-
-							boolean attack = victim.hurt(darkness, (float) baseDarknessDamage.getValue());
+							boolean attack = victim.hurt(victim.damageSources().source(EnigmaticDamageTypes.DARKNESS, player), (float) baseDarknessDamage.getValue());
 
 							if (attack) {
 								player.level.playSound(null, victim.blockPosition(), SoundEvents.PHANTOM_BITE, SoundSource.PLAYERS, 1.0F, (float) (0.3F + (Math.random() * 0.4D)));

@@ -79,6 +79,7 @@ import com.aizistral.enigmaticlegacy.packets.server.PacketXPScrollKey;
 import com.aizistral.enigmaticlegacy.proxy.ClientProxy;
 import com.aizistral.enigmaticlegacy.proxy.CommonProxy;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticBlocks;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticDamageTypes;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticEffects;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticEnchantments;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticEntities;
@@ -112,12 +113,15 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.StatFormatter;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -188,7 +192,7 @@ public class EnigmaticLegacy {
 
 	public static EnigmaticEventHandler enigmaticHandler;
 	public static EnigmaticKeybindHandler keybindHandler;
-	public static List<String> damageTypesFire = new ArrayList<String>();
+	public static List<ResourceKey<DamageType>> damageTypesFire = new ArrayList<>();
 
 	public static EtheriumConfigHandler etheriumConfig;
 
@@ -325,13 +329,14 @@ public class EnigmaticLegacy {
 		LOGGER.info("Initializing common setup phase...");
 
 		event.enqueueWork(() -> this.loadClass(EnigmaticLootFunctions.class));
+		event.enqueueWork(() -> this.loadClass(EnigmaticDamageTypes.class));
 		event.enqueueWork(() -> this.loadClass(EnigmaticPotions.class));
 
 		GolemHeart.buildArmorExclusions();
 
-		damageTypesFire.add(DamageSource.LAVA.msgId);
-		damageTypesFire.add(DamageSource.IN_FIRE.msgId);
-		damageTypesFire.add(DamageSource.ON_FIRE.msgId);
+		damageTypesFire.add(DamageTypes.LAVA);
+		damageTypesFire.add(DamageTypes.IN_FIRE);
+		damageTypesFire.add(DamageTypes.ON_FIRE);
 
 		LOGGER.info("Registering packets...");
 		packetInstance = NetworkRegistry.ChannelBuilder.named(new ResourceLocation(MODID, "main")).networkProtocolVersion(() -> PTC_VERSION).clientAcceptedVersions(PTC_VERSION::equals).serverAcceptedVersions(PTC_VERSION::equals).simpleChannel();

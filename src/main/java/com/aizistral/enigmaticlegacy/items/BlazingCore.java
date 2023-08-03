@@ -18,8 +18,11 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
@@ -72,20 +75,20 @@ public class BlazingCore extends ItemSpellstoneCurio implements ISpellstone {
 		builder.popPrefix();
 	}
 
-	public List<String> nemesisList = new ArrayList<String>();
+	public List<ResourceKey<DamageType>> nemesisList = new ArrayList<>();
 
 	public BlazingCore() {
 		super(ItemSpellstoneCurio.getDefaultProperties().rarity(Rarity.UNCOMMON).fireResistant());
 
 		//this.immunityList.add(DamageSource.LAVA.damageType);
-		this.immunityList.add(DamageSource.IN_FIRE.msgId);
-		this.immunityList.add(DamageSource.ON_FIRE.msgId);
-		this.immunityList.add(DamageSource.HOT_FLOOR.msgId);
+		this.immunityList.add(DamageTypes.IN_FIRE);
+		this.immunityList.add(DamageTypes.ON_FIRE);
+		this.immunityList.add(DamageTypes.HOT_FLOOR);
 		//immunityList.add("fireball");
 
-		this.nemesisList.add("mob");
-		this.nemesisList.add(DamageSource.GENERIC.msgId);
-		this.nemesisList.add("player");
+		this.nemesisList.add(DamageTypes.MOB_ATTACK);
+		this.nemesisList.add(DamageTypes.GENERIC);
+		this.nemesisList.add(DamageTypes.PLAYER_ATTACK);
 		//nemesisList.add("arrow");
 	}
 

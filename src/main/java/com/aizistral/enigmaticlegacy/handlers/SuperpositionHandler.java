@@ -87,9 +87,10 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffectUtil;
@@ -1729,7 +1730,7 @@ public class SuperpositionHandler {
 
 				piercingArrow = false; // defend against Piercing... for now
 
-				if (!source.isBypassArmor() && ((IProperShieldUser)blocker).isActuallyReallyBlocking() && !piercingArrow) {
+				if (!source.is(DamageTypeTags.BYPASSES_SHIELD) && ((IProperShieldUser) blocker).isActuallyReallyBlocking() && !piercingArrow) {
 					Vec3 sourcePos = source.getSourcePosition();
 					if (sourcePos != null) {
 						Vec3 lookVec = blocker.getViewVector(1.0F);
@@ -1758,7 +1759,7 @@ public class SuperpositionHandler {
 										return SuperpositionHandler.class.getName().equals(element.getClassName());
 									}).count() < 2) {
 										living.invulnerableTime = 0;
-										living.hurt(new EntityDamageSource(DamageSource.ON_FIRE.msgId, player), 4F);
+										living.hurt(living.damageSources().source(DamageTypes.ON_FIRE, player), 4F);
 										living.setSecondsOnFire(4);
 										EnigmaticEventHandler.KNOCKBACK_THAT_BASTARD.remove(living);
 									}
@@ -2035,6 +2036,29 @@ public class SuperpositionHandler {
 
 	public static boolean isWorldFractured(File world) {
 		return EnigmaticTransience.read(world).isPermanentlyDead();
+	}
+
+	public static boolean isMagic(DamageSource source) {
+		return source.is(DamageTypes.MAGIC) || source.is(DamageTypes.WITHER) || source.is(DamageTypes.WITHER_SKULL)
+				|| source.is(DamageTypes.DRAGON_BREATH) || source.is(DamageTypes.INDIRECT_MAGIC)
+				|| source.is(DamageTypes.THORNS);
+	}
+
+	public static boolean isExplosion(DamageSource source) {
+		return source.is(DamageTypeTags.IS_EXPLOSION);
+	}
+
+	public static boolean isBypassingArmor(DamageSource source) {
+		return source.is(DamageTypeTags.BYPASSES_ARMOR);
+	}
+
+	public static boolean isBypassingMagic(DamageSource source) {
+		return source.is(DamageTypeTags.BYPASSES_ENCHANTMENTS);
+	}
+
+	// TODO This logic may be improvable
+	public static boolean isAbsolute(DamageSource source) {
+		return source.is(DamageTypeTags.BYPASSES_INVULNERABILITY);
 	}
 
 }

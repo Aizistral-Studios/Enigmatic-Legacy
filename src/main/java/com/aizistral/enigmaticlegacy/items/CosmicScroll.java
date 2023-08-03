@@ -25,6 +25,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -254,7 +255,7 @@ public class CosmicScroll extends ItemBaseCurio implements IHidden {
 		if (event.getAmount() >= Float.MAX_VALUE)
 			return;
 
-		if (event.getSource().getDirectEntity() instanceof Player && "player".equals(event.getSource().msgId)) {
+		if (event.getSource().getDirectEntity() instanceof Player && event.getSource().is(DamageTypes.PLAYER_ATTACK)) {
 			Player player = (Player) event.getSource().getDirectEntity();
 			float bonusDamage = 0F;
 

@@ -28,6 +28,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -60,19 +61,19 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 	public EnigmaticItem() {
 		super(ItemBaseCurio.getDefaultProperties().rarity(Rarity.EPIC).fireResistant());
 
-		this.immunityList.add(DamageSource.FALL.msgId);
-		this.immunityList.add(DamageSource.FLY_INTO_WALL.msgId);
-		this.immunityList.add(DamageSource.CACTUS.msgId);
-		this.immunityList.add(DamageSource.CRAMMING.msgId);
-		this.immunityList.add(DamageSource.DROWN.msgId);
-		this.immunityList.add(DamageSource.HOT_FLOOR.msgId);
-		this.immunityList.add(DamageSource.LAVA.msgId);
-		this.immunityList.add(DamageSource.IN_FIRE.msgId);
-		this.immunityList.add(DamageSource.ON_FIRE.msgId);
-		this.immunityList.add(DamageSource.IN_WALL.msgId);
-		this.immunityList.add(DamageSource.OUT_OF_WORLD.msgId);
-		this.immunityList.add(DamageSource.STARVE.msgId);
-		this.immunityList.add(DamageSource.SWEET_BERRY_BUSH.msgId);
+		this.immunityList.add(DamageTypes.FALL);
+		this.immunityList.add(DamageTypes.FLY_INTO_WALL);
+		this.immunityList.add(DamageTypes.CACTUS);
+		this.immunityList.add(DamageTypes.CRAMMING);
+		this.immunityList.add(DamageTypes.DROWN);
+		this.immunityList.add(DamageTypes.HOT_FLOOR);
+		this.immunityList.add(DamageTypes.LAVA);
+		this.immunityList.add(DamageTypes.IN_FIRE);
+		this.immunityList.add(DamageTypes.ON_FIRE);
+		this.immunityList.add(DamageTypes.IN_WALL);
+		this.immunityList.add(DamageTypes.OUT_OF_WORLD);
+		this.immunityList.add(DamageTypes.STARVE);
+		this.immunityList.add(DamageTypes.SWEET_BERRY_BUSH);
 
 	}
 

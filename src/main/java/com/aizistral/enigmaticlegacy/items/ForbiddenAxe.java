@@ -18,6 +18,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.SwordItem;
@@ -76,8 +77,8 @@ public class ForbiddenAxe extends SwordItem {
 		if (Minecraft.getInstance().player != null) {
 			ICuriosItemHandler handler = CuriosApi.getCuriosHelper().getCuriosHandler(Minecraft.getInstance().player).orElse(null);
 
-			if (handler != null) {
-				looting += handler.getLootingLevel(DamageSource.GENERIC, Minecraft.getInstance().player, looting);
+			if (handler != null && worldIn != null) {
+				looting += handler.getLootingLevel(worldIn.damageSources().generic(), Minecraft.getInstance().player, looting);
 			}
 		}
 
