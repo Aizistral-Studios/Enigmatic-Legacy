@@ -17,6 +17,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -76,6 +77,16 @@ public class AvariceScroll extends ItemBaseCurio implements ICursed {
 	@Override
 	public int getFortuneLevel(SlotContext slotContext, LootContext lootContext, ItemStack curio) {
 		return super.getFortuneLevel(slotContext, lootContext, curio) + 1;
+	}
+
+	@Override
+	public boolean makesPiglinsNeutral(ItemStack stack, LivingEntity wearer) {
+		return true;
+	}
+
+	@Override
+	public boolean makesPiglinsNeutral(SlotContext slotContext, ItemStack stack) {
+		return true;
 	}
 
 }

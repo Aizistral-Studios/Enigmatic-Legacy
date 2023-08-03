@@ -46,15 +46,6 @@ public class MixinPiglinTasks {
 		return newStacks;
 	}
 
-	@Inject(at = @At("RETURN"), method = "isWearingGold", cancellable = true)
-	private static void onWearingGoldCheck(LivingEntity entity, CallbackInfoReturnable<Boolean> info) {
-		if (entity instanceof Player player) {
-			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.GOLDEN_RING) || SuperpositionHandler.hasCurio(player, EnigmaticItems.AVARICE_SCROLL)) {
-				info.setReturnValue(true);
-			}
-		}
-	}
-
 	@Inject(at = @At("RETURN"), method = "pickUpItem")
 	private static void onPiglinItemPickup(Piglin piglin, ItemEntity itemEntity, CallbackInfo info) {
 		UUID ownerID = itemEntity.getThrower();

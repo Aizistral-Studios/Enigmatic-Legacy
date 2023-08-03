@@ -56,8 +56,13 @@ public class GoldenRing extends ItemBaseCurio {
 		return attributes;
 	}
 
-	//@Override
-	public boolean rendersPiglinsNeutral(String identifier, ItemStack stack, LivingEntity wearer) {
+	@Override
+	public boolean makesPiglinsNeutral(ItemStack stack, LivingEntity wearer) {
+		return true;
+	}
+
+	@Override
+	public boolean makesPiglinsNeutral(SlotContext slotContext, ItemStack stack) {
 		return true;
 	}
 
