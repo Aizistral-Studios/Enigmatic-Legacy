@@ -30,7 +30,8 @@
 	"MixinEnterBlockTrigger",
 	"MixinItemStack",
 	"MixinPlayerList",
-	"MixinCrossbowItem"
+	"MixinCrossbowItem",
+	"MixinBindingCurseEnchantment"
   ],
   "client": [
 	"AccessorDisconnectedScreen",

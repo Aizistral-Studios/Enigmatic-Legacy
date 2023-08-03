@@ -3,17 +3,18 @@ package com.aizistral.enigmaticlegacy.items.generic;
 import java.util.Map;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.items.IBindable;
 import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Vanishable;
-import net.minecraft.world.item.Wearable;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -22,7 +23,7 @@ import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
-public abstract class ItemBaseCurio extends ItemBase implements ICurioItem, Vanishable, Wearable {
+public abstract class ItemBaseCurio extends ItemBase implements ICurioItem, IBindable, Vanishable {
 
 	public ItemBaseCurio() {
 		this(getDefaultProperties());

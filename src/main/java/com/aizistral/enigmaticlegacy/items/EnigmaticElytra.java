@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.items.IBindable;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBaseCurio;
@@ -34,10 +35,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ElytraItem;
+import net.minecraft.world.item.Equipable;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.Wearable;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.gameevent.GameEvent;
@@ -52,7 +54,7 @@ import net.minecraftforge.network.PacketDistributor;
 import top.theillusivec4.caelus.api.CaelusApi;
 import top.theillusivec4.curios.api.SlotContext;
 
-public class EnigmaticElytra extends ItemBaseCurio implements Wearable {
+public class EnigmaticElytra extends ItemBaseCurio implements IBindable {
 	private static final AttributeModifier ELYTRA_MODIFIER = new AttributeModifier(UUID.fromString("44dfce5a-2f09-4f19-bc29-9b0324cd2a40"), EnigmaticLegacy.MODID+":elytra_modifier", 1.0, AttributeModifier.Operation.ADDITION);
 	@OnlyIn(Dist.CLIENT)
 	private static boolean isBoosting;
