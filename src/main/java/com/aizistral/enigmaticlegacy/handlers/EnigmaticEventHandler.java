@@ -2855,7 +2855,7 @@ public class EnigmaticEventHandler {
 		}
 	}
 
-	@SubscribeEvent
+	@SubscribeEvent // TODO Update in 1.20
 	public void onAdvancement(AdvancementEvent event) {
 		String id = event.getAdvancement().getId().toString();
 		Player player = event.getEntity();
@@ -3005,7 +3005,7 @@ public class EnigmaticEventHandler {
 	}
 
 
-	@SubscribeEvent
+	@SubscribeEvent // TODO Update in 1.20
 	public void onAttackTargetSet(LivingSetAttackTargetEvent event) {
 		if (event.getTarget() instanceof Player) {
 			Player player = (Player) event.getTarget();
