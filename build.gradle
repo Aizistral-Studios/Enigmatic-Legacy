@@ -93,11 +93,6 @@ dependencies {
 
     // TODO :: Is this needed?
     implementation fg.deobf("curse.maven:world-name-randomizer-348277:4074642") // 1.19.2 - 1.5.0
-
-    // # --- Apotheosis & dependencies --- #
-    implementation fg.deobf('curse.maven:apotheosis-313970:4547399') // 1.19.2 - 6.2.1
-    // Only needed to run it locally
-    implementation fg.deobf("curse.maven:placebo-283644:4546960") // 1.19.2 - 7.2.0
 }
 
 processResources {

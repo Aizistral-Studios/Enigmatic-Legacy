@@ -46,6 +46,10 @@ public class LoggerWrapper {
 		this.logger.error(this.markError, line);
 	}
 
+	public void error(String line, Exception e) {
+		this.logger.error(this.markError, line, e);
+	}
+
 	public void catching(Throwable ex) {
 		this.logger.catching(ex);
 	}
