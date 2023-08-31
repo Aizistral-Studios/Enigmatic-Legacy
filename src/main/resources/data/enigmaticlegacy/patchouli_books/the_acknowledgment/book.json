@@ -21,6 +21,7 @@
 	"show_toasts": true,
 	"pause_game": false,
 	"text_overflow_mode": "overflow",
+	"use_resource_pack": true,
 	
 	"macros": {
 		"<br/>": "$(br)",
