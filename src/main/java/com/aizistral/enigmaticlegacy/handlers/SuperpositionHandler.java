@@ -1134,7 +1134,14 @@ public class SuperpositionHandler {
 	}
 
 	public static boolean hasItem(Player player, Item item) {
-		return player.getInventory().contains(new ItemStack(item));
+		for (List<ItemStack> list : player.getInventory().compartments) {
+			for (ItemStack itemstack : list) {
+				if (!itemstack.isEmpty() && itemstack.is(item))
+					return true;
+			}
+		}
+
+		return false;
 	}
 
 	public static boolean hasExactStack(Player player, ItemStack stack) {
