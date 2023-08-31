@@ -2,7 +2,7 @@
 	"name": "item.enigmaticlegacy.the_acknowledgment",
 	"landing_text": "book.enigmaticlegacy.landing_text",
 	"version": "~the_acknowledgment_edition",
-	"creative_tab": "enigmaticCreativeTab",
+	"creative_tab": "enigmaticlegacy:tab_main",
 	"use_blocky_font": false,
 	"filler_texture": "enigmaticlegacy:textures/gui/page_filler.png",
 	"book_texture": "enigmaticlegacy:textures/gui/the_acknowledgment.png",
