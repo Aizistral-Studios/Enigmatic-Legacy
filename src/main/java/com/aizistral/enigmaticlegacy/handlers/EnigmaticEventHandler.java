@@ -1837,19 +1837,21 @@ public class EnigmaticEventHandler {
 			}
 
 			if (player instanceof ServerPlayer && SuperpositionHandler.isTheCursedOne(player)) {
-				if (event.getEntity() instanceof ServerPlayer targetPlayer) {
-					targetPlayer.getCooldowns().addCooldown(Items.ENDER_PEARL, 400);
-					targetPlayer.getCooldowns().addCooldown(EnigmaticItems.RECALL_POTION, 400);
-					targetPlayer.getCooldowns().addCooldown(EnigmaticItems.TWISTED_MIRROR, 400);
+				if (player.getMainHandItem().is(EnigmaticItems.ENDER_SLAYER)) {
+					if (event.getEntity() instanceof ServerPlayer targetPlayer) {
+						targetPlayer.getCooldowns().addCooldown(Items.ENDER_PEARL, 400);
+						targetPlayer.getCooldowns().addCooldown(EnigmaticItems.RECALL_POTION, 400);
+						targetPlayer.getCooldowns().addCooldown(EnigmaticItems.TWISTED_MIRROR, 400);
 
-					if (SuperpositionHandler.hasCurio(targetPlayer, EnigmaticItems.EYE_OF_NEBULA)
-							|| SuperpositionHandler.hasCurio(targetPlayer, EnigmaticItems.THE_CUBE)) {
-						SuperpositionHandler.setSpellstoneCooldown(targetPlayer, 400);
+						if (SuperpositionHandler.hasCurio(targetPlayer, EnigmaticItems.EYE_OF_NEBULA)
+								|| SuperpositionHandler.hasCurio(targetPlayer, EnigmaticItems.THE_CUBE)) {
+							SuperpositionHandler.setSpellstoneCooldown(targetPlayer, 400);
+						}
 					}
-				}
 
-				if (event.getEntity() instanceof EnderMan || event.getEntity() instanceof Shulker) {
-					event.getEntity().getPersistentData().putInt("ELTeleportBlock", 400);
+					if (event.getEntity() instanceof EnderMan || event.getEntity() instanceof Shulker) {
+						event.getEntity().getPersistentData().putInt("ELTeleportBlock", 400);
+					}
 				}
 			}
 
