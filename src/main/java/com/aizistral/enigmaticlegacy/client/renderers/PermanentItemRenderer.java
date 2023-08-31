@@ -22,9 +22,11 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
 
 /**
  * Copy of default ItemRenderer for PermanentItemEntity.
@@ -79,7 +81,7 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 		int j = this.getModelCount(itemstack);
 		float f = 0.25F;
 		float f1 = Mth.sin((entityIn.getAge() + partialTicks) / 10.0F + entityIn.hoverStart) * 0.1F + 0.1F;
-		float f2 = this.shouldBob() ? ibakedmodel.getTransforms().getTransform(ItemTransforms.TransformType.GROUND).scale.y() : 0;
+		float f2 = this.shouldBob() ? ibakedmodel.getTransforms().getTransform(ItemDisplayContext.GROUND).scale.y() : 0;
 		PoseStackIn.translate(0.0D, f1 + 0.25F * f2, 0.0D);
 		float f3 = entityIn.getItemHover(partialTicks);
 		PoseStackIn.mulPose(Axis.YP.rotation(f3));
@@ -105,7 +107,7 @@ public class PermanentItemRenderer extends EntityRenderer<PermanentItemEntity> {
 				}
 			}
 
-			this.itemRenderer.render(itemstack, ItemTransforms.TransformType.GROUND, false, PoseStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY, ibakedmodel);
+			this.itemRenderer.render(itemstack, ItemDisplayContext.GROUND, false, PoseStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY, ibakedmodel);
 			PoseStackIn.popPose();
 			if (!flag) {
 				PoseStackIn.translate(0.0, 0.0, 0.09375F);

@@ -43,7 +43,7 @@ public class UltimateWitherSkullRenderer extends EntityRenderer<UltimateWitherSk
 
 		PoseStackIn.scale(-inflate, -inflate, inflate);
 
-		float f = Mth.rotlerp(entityIn.yRotO, entityIn.getYRot(), partialTicks);
+		float f = Mth.rotLerp(entityIn.yRotO, entityIn.getYRot(), partialTicks);
 		float f1 = Mth.lerp(partialTicks, entityIn.xRotO, entityIn.getXRot());
 		VertexConsumer ivertexbuilder = bufferIn.getBuffer(this.skeletonHeadModel.renderType(this.getTextureLocation(entityIn)));
 		this.skeletonHeadModel.setupAnim(0.0F, f, f1);

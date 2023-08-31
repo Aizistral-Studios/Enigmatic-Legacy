@@ -36,7 +36,7 @@ public abstract class PlayerInventoryButton extends ImageButton {
 	}
 
 	@Override
-	public void renderButton(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+	public void renderWidget(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
 		this.active = true;
 
 		if (this.parentGui instanceof InventoryScreen || this.parentGui instanceof CuriosScreen) {

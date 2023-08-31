@@ -34,7 +34,7 @@ public class RevelationTomeToast implements Toast {
 		toastGui.getMinecraft().font.draw(ms, I18n.get("enigmaticlegacy.toasts.revelationTome.title", this.xpPoints), 30, 7, -11534256);
 		toastGui.getMinecraft().font.draw(ms, I18n.get("enigmaticlegacy.toasts.revelationTome.text", this.revelationPoints), 30, 17, -16777216);
 
-		toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem(this.tome, 8, 8);
+		toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem(ms, this.tome, 8, 8);
 
 		return delta >= 5000L ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
 	}

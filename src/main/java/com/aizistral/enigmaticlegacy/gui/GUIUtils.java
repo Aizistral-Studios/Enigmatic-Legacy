@@ -26,7 +26,6 @@ public class GUIUtils {
 		float endBlue = (endColor & 255) / 255.0F;
 
 		RenderSystem.enableDepthTest();
-		RenderSystem.disableTexture();
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.setShader(GameRenderer::getPositionColorShader);
@@ -41,7 +40,6 @@ public class GUIUtils {
 		tessellator.end();
 
 		RenderSystem.disableBlend();
-		RenderSystem.enableTexture();
 	}
 
 }

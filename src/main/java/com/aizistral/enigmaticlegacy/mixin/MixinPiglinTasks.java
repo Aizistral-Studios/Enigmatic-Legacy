@@ -48,7 +48,7 @@ public class MixinPiglinTasks {
 
 	@Inject(at = @At("RETURN"), method = "pickUpItem")
 	private static void onPiglinItemPickup(Piglin piglin, ItemEntity itemEntity, CallbackInfo info) {
-		UUID ownerID = itemEntity.getThrower();
+		UUID ownerID = itemEntity.thrower;
 
 		if (!itemEntity.isAlive() && itemEntity.level instanceof ServerLevel && ownerID != null) {
 			ServerLevel world = (ServerLevel) itemEntity.level;

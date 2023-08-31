@@ -1906,7 +1906,7 @@ public class SuperpositionHandler {
 				render = override = true;
 			}
 
-			boolean discrete = !entity.isDiscrete();
+			boolean flag = !entity.isDiscrete();
 			float f = entity.getBbHeight() + 0.5F;
 			int i = 0;
 			stack.pushPose();
@@ -1919,10 +1919,10 @@ public class SuperpositionHandler {
 			float f2 = -font.width(name) / 2;
 
 			if (render) {
-				font.drawInBatch(name, f2, i, 553648127, false, matrix4f, buffer, discrete, j, packedLight);
+				font.drawInBatch(name, f2, i, 553648127, false, matrix4f, buffer, flag ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.NORMAL, j, packedLight);
 
-				if (discrete) {
-					font.drawInBatch(name, f2, i, -1, false, matrix4f, buffer, false, 0, packedLight);
+				if (flag) {
+					font.drawInBatch(name, f2, i, -1, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight);
 				}
 			}
 
@@ -1937,10 +1937,10 @@ public class SuperpositionHandler {
 				stack.scale(scale, scale, scale);
 				matrix4f = stack.last().pose();
 
-				font.drawInBatch(name, f2, i - offset, 553648127, false, matrix4f, buffer, discrete, j, packedLight);
+				font.drawInBatch(name, f2, i - offset, 553648127, false, matrix4f, buffer, flag ? Font.DisplayMode.SEE_THROUGH : Font.DisplayMode.NORMAL, j, packedLight);
 
-				if (discrete) {
-					font.drawInBatch(name, f2, i - offset, -1, false, matrix4f, buffer, false, 0, packedLight);
+				if (flag) {
+					font.drawInBatch(name, f2, i - offset, -1, false, matrix4f, buffer, Font.DisplayMode.NORMAL, 0, packedLight);
 				}
 				stack.popPose();
 			}
