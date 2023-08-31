@@ -100,7 +100,12 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.ArgumentType;
+import com.mojang.brigadier.arguments.LongArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;
@@ -120,6 +125,8 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.commands.arguments.GameProfileArgument;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -279,6 +286,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
+import net.minecraftforge.server.command.EnumArgument;
 import top.theillusivec4.caelus.api.RenderCapeEvent;
 import top.theillusivec4.curios.api.event.DropRulesEvent;
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
@@ -438,7 +446,8 @@ public class EnigmaticEventHandler {
 		});
 
 		builder.then(Commands.argument("advancement", ResourceLocationArgument.id())
-				.suggests(AccessorAdvancementCommands.getAdvancementSuggestions()).executes(source -> {
+				.suggests(AccessorAdvancementCommands.getAdvancementSuggestions())
+				.executes(source -> {
 					ServerPlayer player = source.getSource().getPlayerOrException();
 					Advancement adv = ResourceLocationArgument.getAdvancement(source, "advancement");
 
@@ -456,6 +465,47 @@ public class EnigmaticEventHandler {
 				}));
 
 		event.getDispatcher().register(builder);
+
+		builder = Commands.literal("getringtime").requires((source) -> source.hasPermission(4))
+				.then(Commands.argument("player", EntityArgument.player())
+						.executes(EnigmaticEventHandler::handleGetRingTime));
+
+		event.getDispatcher().register(builder);
+
+		builder = Commands.literal("setringtime").requires((source) -> source.hasPermission(4))
+				.then(Commands.argument("player", EntityArgument.player())
+						.then(Commands.argument("ticks", LongArgumentType.longArg(0))
+								.executes(EnigmaticEventHandler::handleSetRingTime)));
+
+		event.getDispatcher().register(builder);
+	}
+
+	private static int handleGetRingTime(CommandContext<CommandSourceStack> source) throws CommandSyntaxException {
+		ServerPlayer player = EntityArgument.getPlayer(source, "player");
+		IPlaytimeCounter counter =  IPlaytimeCounter.get(player);
+		String name = player.getDisplayName().getString();
+		long time = counter.getTimeWithCurses();
+		String percent = SuperpositionHandler.getSufferingTime(player);
+
+		Component reply =  Component.literal(name + " is bearing the Seven Curses for " + time
+				+ " ticks, or " + percent + " of their time in this world.").withStyle(ChatFormatting.GREEN);
+		source.getSource().sendSuccess(reply, true);
+		return Command.SINGLE_SUCCESS;
+	}
+
+	private static int handleSetRingTime(CommandContext<CommandSourceStack> source) throws CommandSyntaxException {
+		ServerPlayer player = EntityArgument.getPlayer(source, "player");
+		long ticks = LongArgumentType.getLong(source, "ticks");
+		IPlaytimeCounter counter =  IPlaytimeCounter.get(player);
+		String name = player.getDisplayName().getString();
+
+		counter.setTimeWithCurses(ticks);
+		ticks = counter.getTimeWithCurses();
+
+		Component reply =  Component.literal(name + "'s time with Seven Curses was set to " + ticks
+				+ " ticks.").withStyle(ChatFormatting.GREEN);
+		source.getSource().sendSuccess(reply, true);
+		return Command.SINGLE_SUCCESS;
 	}
 
 	@SubscribeEvent
