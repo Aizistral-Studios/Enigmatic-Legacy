@@ -31,7 +31,7 @@ public class EnigmaticTabs extends AbstractRegistry<CreativeModeTab> {
 	public static final CreativeModeTab MAIN = null;
 
 	@ObjectHolder(value = MODID + ":tab_potions", registryName = "creative_mode_tab")
-	public static final BlockMassiveLamp POTIONS = null;
+	public static final CreativeModeTab POTIONS = null;
 
 	private EnigmaticTabs() {
 		super(Registries.CREATIVE_MODE_TAB);
