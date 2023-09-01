@@ -73,12 +73,19 @@ dependencies {
     annotationProcessor 'org.ow2.asm:asm-commons:7.2'
     annotationProcessor 'org.ow2.asm:asm-util:7.2'
 	
-	// These are 1.19 dependencies
-	compileOnly fg.deobf('generic:curios:forge-1.19.4-5.1.5.3')
-	compileOnly fg.deobf('generic:caelus:forge-1.19.4-3.0.0.10')
-	compileOnly fg.deobf('generic:Patchouli:1.19.4-79.1-FORGE')
+	// These are 1.20 dependencies
+	compileOnly fg.deobf('generic:curios:forge-5.2.0-beta.3+1.20.1')
+	compileOnly fg.deobf('generic:Patchouli:1.20.1-81-FORGE')
+	compileOnly fg.deobf('generic:caelus:forge-3.1.0+1.20')
 	compileOnly fg.deobf('generic:jei:1.18.2-forge-10.2.1.283-stripped')
 	compileOnly fg.deobf('generic:WorldNameRandomizer:FORGE-1.19.2-v1.5.0')
+	
+	// These are 1.19 dependencies
+	//compileOnly fg.deobf('generic:curios:forge-1.19.4-5.1.5.3')
+	//compileOnly fg.deobf('generic:caelus:forge-1.19.4-3.0.0.10')
+	//compileOnly fg.deobf('generic:Patchouli:1.19.4-79.1-FORGE')
+	//compileOnly fg.deobf('generic:jei:1.18.2-forge-10.2.1.283-stripped')
+	//compileOnly fg.deobf('generic:WorldNameRandomizer:FORGE-1.19.2-v1.5.0')
 	
 	// These are 1.18 dependencies
 	//compileOnly fg.deobf('generic:curios:forge-1.18.2-5.0.6.3')
