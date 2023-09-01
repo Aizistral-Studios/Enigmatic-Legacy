@@ -5,12 +5,12 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
 import com.aizistral.enigmaticlegacy.api.materials.EnigmaticArmorMaterials;
 import com.aizistral.enigmaticlegacy.config.EtheriumConfigHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticTabs;
 import com.aizistral.etherium.core.EtheriumUtil;
 import com.aizistral.etherium.core.IEtheriumConfig;
 
@@ -38,7 +38,7 @@ public class EtheriumArmor extends ArmorItem implements ICreativeTabMember {
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticLegacy.mainTab;
+		return EnigmaticTabs.MAIN;
 	}
 
 	@Override

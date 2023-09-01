@@ -129,7 +129,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -148,13 +147,16 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.client.CreativeModeTabSearchRegistry;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.common.CreativeModeTabRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.CreativeModeTabEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
@@ -505,24 +507,7 @@ public class EnigmaticLegacy {
 	}
 
 	@SubscribeEvent
-	public void onCreativeTabRegistry(CreativeModeTabEvent.Register event) {
-		LOGGER.info("Initializing creative tab registration...");
-
-		potionTab = event.registerCreativeModeTab(new ResourceLocation(MODID, "tab_potions"), builder -> {
-			builder.title(Component.translatable("itemGroup.enigmaticPotionCreativeTab"))
-			.icon(() -> new ItemStack(EnigmaticItems.RECALL_POTION));
-		});
-
-		mainTab = event.registerCreativeModeTab(new ResourceLocation(MODID, "tab_main"), builder -> {
-			builder.title(Component.translatable("itemGroup.enigmaticCreativeTab"))
-			.icon(() -> new ItemStack(EnigmaticItems.ENIGMATIC_ITEM));
-		});
-
-		LOGGER.info("Creative tabs registered successfully.");
-	}
-
-	@SubscribeEvent
-	public void onCreativeTabContents(CreativeModeTabEvent.BuildContents event) {
+	public void onCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
 		ForgeRegistries.ITEMS.forEach(item -> {
 			if (item instanceof ICreativeTabMember member) {
 				if (event.getTab() != member.getCreativeTab())
@@ -532,9 +517,6 @@ public class EnigmaticLegacy {
 			}
 		});
 	}
-
-	public static CreativeModeTab mainTab = null;
-	public static CreativeModeTab potionTab = null;
 
 	public static final Rarity LEGENDARY = Rarity.create("legendary", ChatFormatting.GOLD);
 

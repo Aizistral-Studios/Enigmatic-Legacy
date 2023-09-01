@@ -2,9 +2,9 @@ package com.aizistral.enigmaticlegacy.items.generic;
 
 import java.util.Set;
 
-import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
 import com.aizistral.enigmaticlegacy.api.materials.EnigmaticMaterials;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticTabs;
 import com.google.common.collect.Sets;
 
 import net.minecraft.tags.BlockTags;
@@ -57,7 +57,7 @@ public abstract class ItemBaseTool extends DiggerItem implements ICreativeTabMem
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticLegacy.mainTab;
+		return EnigmaticTabs.MAIN;
 	}
 
 	public static Properties getDefaultProperties() {

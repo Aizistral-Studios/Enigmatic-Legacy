@@ -4,8 +4,8 @@ import java.util.function.Supplier;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticTabs;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
@@ -21,7 +21,7 @@ public class GenericBlockItem extends BlockItem implements ICreativeTabMember {
 	}
 
 	public GenericBlockItem(Block blockIn, Properties props) {
-		this(blockIn, props, () -> EnigmaticLegacy.mainTab);
+		this(blockIn, props, () -> EnigmaticTabs.MAIN);
 	}
 
 	public GenericBlockItem(Block blockIn, Properties props, Supplier<@Nullable CreativeModeTab> tab) {

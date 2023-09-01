@@ -5,11 +5,11 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
 import com.aizistral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.aizistral.enigmaticlegacy.helpers.AOEMiningHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticTabs;
 import com.aizistral.etherium.core.EtheriumUtil;
 import com.aizistral.etherium.core.IEtheriumConfig;
 import com.aizistral.etherium.core.IEtheriumTool;
@@ -59,7 +59,7 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool, ICreativeTabM
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticLegacy.mainTab;
+		return EnigmaticTabs.MAIN;
 	}
 
 	@Override

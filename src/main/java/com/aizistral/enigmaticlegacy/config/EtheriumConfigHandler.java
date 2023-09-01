@@ -12,6 +12,7 @@ import com.aizistral.enigmaticlegacy.objects.Perhaps;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticSounds;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticTabs;
 import com.aizistral.etherium.core.IEtheriumConfig;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
@@ -143,7 +144,7 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticLegacy.mainTab;
+		return EnigmaticTabs.MAIN;
 	}
 
 	@Override

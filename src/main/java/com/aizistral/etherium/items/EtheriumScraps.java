@@ -1,7 +1,7 @@
 package com.aizistral.etherium.items;
 
-import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticTabs;
 import com.aizistral.etherium.core.EtheriumUtil;
 import com.aizistral.etherium.core.IEtheriumConfig;
 
@@ -17,7 +17,7 @@ public class EtheriumScraps extends Item implements ICreativeTabMember {
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticLegacy.mainTab;
+		return EnigmaticTabs.MAIN;
 	}
 
 }

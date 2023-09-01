@@ -4,9 +4,9 @@ import java.util.Set;
 
 import org.jetbrains.annotations.Nullable;
 
-import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
 import com.aizistral.enigmaticlegacy.api.materials.EnigmaticMaterials;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticTabs;
 import com.aizistral.etherium.core.IEtheriumConfig;
 import com.aizistral.etherium.core.IEtheriumTool;
 import com.google.common.collect.Sets;
@@ -32,7 +32,7 @@ public abstract class ItemEtheriumTool extends DiggerItem implements IEtheriumTo
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticLegacy.mainTab;
+		return EnigmaticTabs.MAIN;
 	}
 
 	@Override

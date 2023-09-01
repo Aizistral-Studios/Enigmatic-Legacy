@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.items.IAdvancedPotionItem;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
@@ -13,6 +12,7 @@ import com.aizistral.enigmaticlegacy.items.EnigmaticAmulet.AmuletColor;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
 import com.aizistral.enigmaticlegacy.objects.AdvancedPotion;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticPotions;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticTabs;
 import com.google.common.collect.ImmutableList;
 
 import net.minecraft.advancements.CriteriaTriggers;
@@ -72,7 +72,7 @@ public class UltimatePotionBase extends ItemBase implements IAdvancedPotionItem 
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticLegacy.potionTab;
+		return EnigmaticTabs.POTIONS;
 	}
 
 	@Override

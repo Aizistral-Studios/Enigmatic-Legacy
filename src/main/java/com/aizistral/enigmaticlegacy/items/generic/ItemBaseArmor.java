@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.items.ICreativeTabMember;
 import com.aizistral.enigmaticlegacy.client.models.UnseenArmorModel;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticTabs;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.Entity;
@@ -76,7 +77,7 @@ public abstract class ItemBaseArmor extends ArmorItem implements ICreativeTabMem
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticLegacy.mainTab;
+		return EnigmaticTabs.MAIN;
 	}
 
 	public static Properties getDefaultProperties() {
