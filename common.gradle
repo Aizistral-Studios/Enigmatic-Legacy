@@ -103,7 +103,7 @@ curseforge {
         changelogType = 'html'
         changelog = file('docs/changelog.html')
 		
-		addGameVersion '1.19.3'
+		addGameVersion '1.19.4'
 		addGameVersion 'Forge'
 		addGameVersion 'Java 17'
 		
@@ -126,7 +126,7 @@ modrinth {
     versionType = "release"
 	changelog = "See on CurseForge: https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy/files"
     uploadFile = jar
-    gameVersions = ["1.19.3"]
+    gameVersions = ["1.19.4"]
 	loaders = ['forge']
     dependencies {
 		// The scope can be `required`, `optional`, or `incompatible`
