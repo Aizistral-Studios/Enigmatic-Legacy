@@ -6,6 +6,7 @@ import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
@@ -32,7 +33,7 @@ public class UseUnholyGrailTrigger extends SimpleCriterionTrigger<UseUnholyGrail
 
 	@Nonnull
 	@Override
-	public UseUnholyGrailTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.Composite playerPred, DeserializationContext conditions) {
+	public UseUnholyGrailTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull ContextAwarePredicate playerPred, DeserializationContext conditions) {
 		return new UseUnholyGrailTrigger.Instance(playerPred, GsonHelper.getAsString(json, "is_the_worthy_one", null));
 	}
 
@@ -43,7 +44,7 @@ public class UseUnholyGrailTrigger extends SimpleCriterionTrigger<UseUnholyGrail
 	static class Instance extends AbstractCriterionTriggerInstance {
 		private final Boolean isTheWorthyOne;
 
-		Instance(EntityPredicate.Composite playerPred, String isTheWorthyOne) {
+		Instance(ContextAwarePredicate playerPred, String isTheWorthyOne) {
 			super(UseUnholyGrailTrigger.ID, playerPred);
 			this.isTheWorthyOne = isTheWorthyOne != null ? Boolean.parseBoolean(isTheWorthyOne) : null;
 		}

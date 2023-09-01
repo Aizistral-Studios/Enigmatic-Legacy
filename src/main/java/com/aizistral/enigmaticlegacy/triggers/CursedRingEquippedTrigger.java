@@ -6,6 +6,7 @@ import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
@@ -26,7 +27,7 @@ public class CursedRingEquippedTrigger extends SimpleCriterionTrigger<CursedRing
 
 	@Nonnull
 	@Override
-	public CursedRingEquippedTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.Composite playerPred, DeserializationContext conditions) {
+	public CursedRingEquippedTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull ContextAwarePredicate playerPred, DeserializationContext conditions) {
 		return new CursedRingEquippedTrigger.Instance(playerPred);
 	}
 
@@ -35,7 +36,7 @@ public class CursedRingEquippedTrigger extends SimpleCriterionTrigger<CursedRing
 	}
 
 	static class Instance extends AbstractCriterionTriggerInstance {
-		Instance(EntityPredicate.Composite playerPred) {
+		Instance(ContextAwarePredicate playerPred) {
 			super(CursedRingEquippedTrigger.ID, playerPred);
 		}
 

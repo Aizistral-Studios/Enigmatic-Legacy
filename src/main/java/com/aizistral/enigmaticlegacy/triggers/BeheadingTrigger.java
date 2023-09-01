@@ -6,6 +6,7 @@ import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
@@ -31,7 +32,7 @@ public class BeheadingTrigger extends SimpleCriterionTrigger<BeheadingTrigger.In
 
 	@Nonnull
 	@Override
-	public BeheadingTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.Composite playerPred, DeserializationContext conditions) {
+	public BeheadingTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull ContextAwarePredicate playerPred, DeserializationContext conditions) {
 		return new BeheadingTrigger.Instance(playerPred);
 	}
 
@@ -40,7 +41,7 @@ public class BeheadingTrigger extends SimpleCriterionTrigger<BeheadingTrigger.In
 	}
 
 	static class Instance extends AbstractCriterionTriggerInstance {
-		Instance(EntityPredicate.Composite playerPred) {
+		Instance(ContextAwarePredicate playerPred) {
 			super(BeheadingTrigger.ID, playerPred);
 		}
 

@@ -11,6 +11,7 @@ import com.google.gson.JsonObject;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.EntityPredicate;
@@ -39,7 +40,7 @@ public class CursedInventoryChangedTrigger extends SimpleCriterionTrigger<Cursed
 	}
 
 	@Override
-	public CursedInventoryChangedTrigger.TriggerInstance createInstance(JsonObject pJson, EntityPredicate.Composite pEntityPredicate, DeserializationContext pConditionsParser) {
+	public CursedInventoryChangedTrigger.TriggerInstance createInstance(JsonObject pJson, ContextAwarePredicate pEntityPredicate, DeserializationContext pConditionsParser) {
 		JsonObject jsonobject = GsonHelper.getAsJsonObject(pJson, "slots", new JsonObject());
 		MinMaxBounds.Ints minmaxbounds$ints = MinMaxBounds.Ints.fromJson(jsonobject.get("occupied"));
 		MinMaxBounds.Ints minmaxbounds$ints1 = MinMaxBounds.Ints.fromJson(jsonobject.get("full"));
@@ -80,7 +81,7 @@ public class CursedInventoryChangedTrigger extends SimpleCriterionTrigger<Cursed
 		private final MinMaxBounds.Ints slotsEmpty;
 		private final ItemPredicate[] predicates;
 
-		public TriggerInstance(EntityPredicate.Composite pPlayer, MinMaxBounds.Ints pSlotsOccupied, MinMaxBounds.Ints pSlotsFull, MinMaxBounds.Ints pSlotsEmpty, ItemPredicate[] pPredicates) {
+		public TriggerInstance(ContextAwarePredicate pPlayer, MinMaxBounds.Ints pSlotsOccupied, MinMaxBounds.Ints pSlotsFull, MinMaxBounds.Ints pSlotsEmpty, ItemPredicate[] pPredicates) {
 			super(CursedInventoryChangedTrigger.ID, pPlayer);
 			this.slotsOccupied = pSlotsOccupied;
 			this.slotsFull = pSlotsFull;
@@ -89,7 +90,7 @@ public class CursedInventoryChangedTrigger extends SimpleCriterionTrigger<Cursed
 		}
 
 		public static CursedInventoryChangedTrigger.TriggerInstance hasItems(ItemPredicate... pItems) {
-			return new CursedInventoryChangedTrigger.TriggerInstance(EntityPredicate.Composite.ANY, MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, pItems);
+			return new CursedInventoryChangedTrigger.TriggerInstance(ContextAwarePredicate.ANY, MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, MinMaxBounds.Ints.ANY, pItems);
 		}
 
 		public static CursedInventoryChangedTrigger.TriggerInstance hasItems(ItemLike... pItems) {

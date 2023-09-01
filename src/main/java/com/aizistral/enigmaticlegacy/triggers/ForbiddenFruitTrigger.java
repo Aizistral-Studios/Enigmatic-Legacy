@@ -6,6 +6,7 @@ import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
 import net.minecraft.advancements.critereon.DeserializationContext;
 import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
@@ -26,7 +27,7 @@ public class ForbiddenFruitTrigger extends SimpleCriterionTrigger<ForbiddenFruit
 
 	@Nonnull
 	@Override
-	public ForbiddenFruitTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull EntityPredicate.Composite playerPred, DeserializationContext conditions) {
+	public ForbiddenFruitTrigger.Instance createInstance(@Nonnull JsonObject json, @Nonnull ContextAwarePredicate playerPred, DeserializationContext conditions) {
 		return new ForbiddenFruitTrigger.Instance(playerPred);
 	}
 
@@ -35,7 +36,7 @@ public class ForbiddenFruitTrigger extends SimpleCriterionTrigger<ForbiddenFruit
 	}
 
 	static class Instance extends AbstractCriterionTriggerInstance {
-		Instance(EntityPredicate.Composite playerPred) {
+		Instance(ContextAwarePredicate playerPred) {
 			super(ForbiddenFruitTrigger.ID, playerPred);
 		}
 
