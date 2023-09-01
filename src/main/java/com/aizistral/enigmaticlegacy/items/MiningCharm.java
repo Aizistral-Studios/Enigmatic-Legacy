@@ -172,7 +172,7 @@ public class MiningCharm extends ItemBaseCurio {
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
 		Multimap<Attribute, AttributeModifier> atts = HashMultimap.create();
 
-		atts.put(net.minecraftforge.common.ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(UUID.fromString("08c3c83d-7137-4b42-880f-b146bcb64d2e"), "Reach bonus", reachDistanceBonus.getValue(), AttributeModifier.Operation.ADDITION));
+		atts.put(net.minecraftforge.common.ForgeMod.BLOCK_REACH.get(), new AttributeModifier(UUID.fromString("08c3c83d-7137-4b42-880f-b146bcb64d2e"), "Reach bonus", reachDistanceBonus.getValue(), AttributeModifier.Operation.ADDITION));
 
 		return atts;
 	}

@@ -186,7 +186,7 @@ public class EnigmaticEye extends ItemBaseCurio {
 						UUID.fromString("d020cd5d-c050-49e4-a0ea-ef27adf7e6d0"), 1, Operation.ADDITION);
 			}
 
-			attributes.put(ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(UUID.fromString("313fba36-cc58-4106-a42b-66b7fd420c5a"), "Reach Bonus", 3.0F, AttributeModifier.Operation.ADDITION));
+			attributes.put(ForgeMod.BLOCK_REACH.get(), new AttributeModifier(UUID.fromString("313fba36-cc58-4106-a42b-66b7fd420c5a"), "Reach Bonus", 3.0F, AttributeModifier.Operation.ADDITION));
 		}
 
 		return attributes;
