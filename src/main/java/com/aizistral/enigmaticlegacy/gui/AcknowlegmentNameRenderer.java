@@ -11,6 +11,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
@@ -54,14 +55,14 @@ public class AcknowlegmentNameRenderer {
 		this.name = customName;
 	}
 
-	public void drawHeader(PoseStack ms) {
+	public void drawHeader(GuiGraphics graphics) {
 		RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-		GuiBook.drawFromTexture(ms, this.gui.book, -8, 12, 0, 180, 140, 31);
+		GuiBook.drawFromTexture(graphics, this.gui.book, -8, 12, 0, 180, 140, 31);
 
 		int color = this.book.nameplateColor;
-		this.font.get().draw(ms, this.name, 13, 16, color);
+		graphics.drawString(this.font.get(), this.name, 13, 16, color);
 		Component toDraw = this.book.getSubtitle().withStyle(this.book.getFontStyle());
-		this.font.get().draw(ms, toDraw, 24, 24, color);
+		graphics.drawString(this.font.get(), toDraw, 24, 24, color);
 	}
 
 }

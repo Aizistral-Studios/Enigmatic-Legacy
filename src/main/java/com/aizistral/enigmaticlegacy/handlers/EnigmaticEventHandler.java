@@ -111,7 +111,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.toasts.Toast;
@@ -562,7 +563,8 @@ public class EnigmaticEventHandler {
 
 			float partialTick = event.getPartialTick();
 			float barFiller = data.getFireImmunityFraction(partialTick);
-			PoseStack PoseStack = event.getPoseStack();
+			GuiGraphics graphics = event.getGuiGraphics();
+			PoseStack pose = graphics.pose();
 			int x = event.getWindow().getGuiScaledWidth() / 2 - 91;
 
 			int xCorrection = 0;
@@ -578,9 +580,9 @@ public class EnigmaticEventHandler {
 			if (true) {
 				int k = (int)(barFiller * 183.0F);
 				int l = event.getWindow().getGuiScaledHeight() - 32 + 3;
-				GuiComponent.blit(PoseStack, x+xCorrection, l+yCorrection, 0, 0, 182, 5, 256, 256);
+				graphics.blit(FIREBAR_LOCATION, x+xCorrection, l+yCorrection, 0, 0, 182, 5, 256, 256);
 				if (k > 0) {
-					GuiComponent.blit(PoseStack, x+xCorrection, l+yCorrection, 0, 5, k, 5, 256, 256);
+					graphics.blit(FIREBAR_LOCATION, x+xCorrection, l+yCorrection, 0, 5, k, 5, 256, 256);
 				}
 			}
 
@@ -604,11 +606,11 @@ public class EnigmaticEventHandler {
 
 				int boundaryColor = 5832704;
 
-				mc.font.draw(PoseStack, title, i1 + 1, j1, boundaryColor);
-				mc.font.draw(PoseStack, title, i1 - 1, j1, boundaryColor);
-				mc.font.draw(PoseStack, title, i1, j1 + 1, boundaryColor);
-				mc.font.draw(PoseStack, title, i1, j1 - 1, boundaryColor);
-				mc.font.draw(PoseStack, title, i1, j1, 16770638);
+				graphics.drawString(mc.font, title, i1 + 1, j1, boundaryColor);
+				graphics.drawString(mc.font, title, i1 - 1, j1, boundaryColor);
+				graphics.drawString(mc.font, title, i1, j1 + 1, boundaryColor);
+				graphics.drawString(mc.font, title, i1, j1 - 1, boundaryColor);
+				graphics.drawString(mc.font, title, i1, j1, 16770638);
 			}
 
 		} else if (event.getOverlay().equals(VanillaGuiOverlay.AIR_LEVEL.type())) {
@@ -671,7 +673,7 @@ public class EnigmaticEventHandler {
 						y = top + (THEY_SEE_ME_ROLLIN.nextInt(3) - 1);
 					}
 
-					mc.gui.blit(event.getPoseStack(), x, y, 0, 0, 9, 9);
+					event.getGuiGraphics().blit(ICONS_LOCATION, x, y, 0, 0, 9, 9);
 
 					/*
 					if (idx < level) {
@@ -683,7 +685,7 @@ public class EnigmaticEventHandler {
 				}
 				RenderSystem.disableBlend();
 
-				RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
+				RenderSystem.setShaderTexture(0, new ResourceLocation("textures/gui/icons.png"));
 			}
 
 		}

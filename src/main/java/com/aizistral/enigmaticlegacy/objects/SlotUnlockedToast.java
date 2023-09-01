@@ -4,6 +4,8 @@ import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.resources.language.I18n;
@@ -19,6 +21,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class SlotUnlockedToast implements Toast {
+	private static final ResourceLocation TEXTURE = new ResourceLocation(EnigmaticLegacy.MODID, "textures/gui/enigmatic_toasts.png");
 	private long firstDrawTime;
 	private ItemStack drawnStack;
 	private String identifier;
@@ -29,21 +32,24 @@ public class SlotUnlockedToast implements Toast {
 	}
 
 	@Override
-	public Toast.Visibility render(PoseStack PoseStack, ToastComponent toastGui, long delta) {
-		RenderSystem.setShaderTexture(0, new ResourceLocation(EnigmaticLegacy.MODID, "textures/gui/enigmatic_toasts.png"));
+	public Toast.Visibility render(GuiGraphics graphics, ToastComponent toastGui, long delta) {
+		RenderSystem.setShaderTexture(0, TEXTURE);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-		toastGui.blit(PoseStack, 0, 0, 0, 0, 160, 43);
-		toastGui.getMinecraft().font.draw(PoseStack, I18n.get("enigmaticlegacy.toasts.slotUnlocked.title", I18n.get("enigmaticlegacy.curiotype." + this.identifier)), 7.0F, 7.0F, -11534256);
-		toastGui.getMinecraft().font.draw(PoseStack, I18n.get("enigmaticlegacy.toasts.slotUnlocked.text1"), 30.0F, 18.0F, -16777216);
-		toastGui.getMinecraft().font.draw(PoseStack, I18n.get("enigmaticlegacy.toasts.slotUnlocked.text2"), 30.0F, 28.0F, -16777216);
+		Font font = toastGui.getMinecraft().font;
+
+		graphics.blit(TEXTURE, 0, 0, 0, 0, 160, 43);
+		graphics.drawString(font, I18n.get("enigmaticlegacy.toasts.slotUnlocked.title",
+				I18n.get("enigmaticlegacy.curiotype." + this.identifier)), 7, 7, -11534256);
+		graphics.drawString(font, I18n.get("enigmaticlegacy.toasts.slotUnlocked.text1"), 30, 18, -16777216);
+		graphics.drawString(font, I18n.get("enigmaticlegacy.toasts.slotUnlocked.text2"), 30, 28, -16777216);
+
+		graphics.renderFakeItem(this.drawnStack, 8, 18);
 
 		//RenderHelper.turnBackOn();
 		//GlStateManager._pushMatrix();
 		//GlStateManager._scalef(1.6F, 1.6F, 1.0F);
 		//GlStateManager._popMatrix();
-
-		toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem(PoseStack, this.drawnStack, 8, 18);
 		return delta - this.firstDrawTime >= 5000L ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
 
 	}

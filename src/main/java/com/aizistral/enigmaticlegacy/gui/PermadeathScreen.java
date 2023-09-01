@@ -3,6 +3,7 @@ package com.aizistral.enigmaticlegacy.gui;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.MultiLineLabel;
 import net.minecraft.client.gui.screens.Screen;
@@ -45,12 +46,13 @@ public class PermadeathScreen extends Screen {
 	}
 
 	@Override
-	public void render(PoseStack stack, int mouseX, int mouseY, float partialTick) {
+	public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
 		this.init();
 
-		this.renderBackground(stack);
-		drawCenteredString(stack, this.font, this.title, this.width / 2, this.height / 2 - this.textHeight / 2 - 9 * 2, 11184810);
-		this.message.renderCentered(stack, this.width / 2, this.height / 2 - this.textHeight / 2);
-		super.render(stack, mouseX, mouseY, partialTick);
+		this.renderBackground(graphics);
+		graphics.drawCenteredString(this.font, this.title, this.width / 2, this.height / 2 - this.textHeight / 2 -
+				9 * 2, 11184810);
+		this.message.renderCentered(graphics, this.width / 2, this.height / 2 - this.textHeight / 2);
+		super.render(graphics, mouseX, mouseY, partialTick);
 	}
 }

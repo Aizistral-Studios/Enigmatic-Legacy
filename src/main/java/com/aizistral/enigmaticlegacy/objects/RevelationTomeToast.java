@@ -6,6 +6,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.resources.language.I18n;
@@ -25,16 +27,17 @@ public class RevelationTomeToast implements Toast {
 	@Nonnull
 	@Override
 	@SuppressWarnings("resource")
-	public Visibility render(PoseStack ms, ToastComponent toastGui, long delta) {
+	public Visibility render(GuiGraphics graphics, ToastComponent toastGui, long delta) {
 		Minecraft mc = Minecraft.getInstance();
 		RenderSystem.setShaderTexture(0, TEXTURE);
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		toastGui.blit(ms, 0, 0, 0, 32, 160, 32);
+		graphics.blit(TEXTURE, 0, 0, 0, 32, 160, 32);
 
-		toastGui.getMinecraft().font.draw(ms, I18n.get("enigmaticlegacy.toasts.revelationTome.title", this.xpPoints), 30, 7, -11534256);
-		toastGui.getMinecraft().font.draw(ms, I18n.get("enigmaticlegacy.toasts.revelationTome.text", this.revelationPoints), 30, 17, -16777216);
+		Font font = toastGui.getMinecraft().font;
 
-		toastGui.getMinecraft().getItemRenderer().renderAndDecorateItem(ms, this.tome, 8, 8);
+		graphics.drawString(font, I18n.get("enigmaticlegacy.toasts.revelationTome.title", this.xpPoints), 30, 7, -11534256);
+		graphics.drawString(font, I18n.get("enigmaticlegacy.toasts.revelationTome.text", this.revelationPoints), 30, 17, -16777216);
+		graphics.renderFakeItem(this.tome, 8, 8);
 
 		return delta >= 5000L ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
 	}

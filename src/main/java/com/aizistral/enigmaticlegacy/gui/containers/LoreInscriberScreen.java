@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CommandBlockEditScreen;
@@ -63,24 +64,24 @@ public class LoreInscriberScreen extends AbstractContainerScreen<LoreInscriberCo
 	}
 
 	@Override
-	public void render(PoseStack PoseStack, int x, int y, float partialTicksIGuess) {
-		this.renderBackground(PoseStack);
-		super.render(PoseStack, x, y, partialTicksIGuess);
+	public void render(GuiGraphics graphics, int x, int y, float partialTicksIGuess) {
+		this.renderBackground(graphics);
+		super.render(graphics, x, y, partialTicksIGuess);
 		RenderSystem.disableBlend();
-		this.renderNameField(PoseStack, x, y, partialTicksIGuess);
-		this.renderTooltip(PoseStack, x, y);
+		this.renderNameField(graphics, x, y, partialTicksIGuess);
+		this.renderTooltip(graphics, x, y);
 	}
 
 	@Override
-	protected void renderBg(PoseStack PoseStack, float partialTicks, int x, int y) {
+	protected void renderBg(GuiGraphics graphics, float partialTicks, int x, int y) {
 		RenderSystem.clearColor(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderSystem.setShaderTexture(0, this.guiTexture);
 		int i = (this.width - this.imageWidth) / 2;
 		int j = (this.height - this.imageHeight) / 2;
-		this.blit(PoseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
-		this.blit(PoseStack, i + 52, j + 26, 0, this.imageHeight + (this.menu.getSlot(0).hasItem() ? 0 : 16), 102, 16);
+		graphics.blit(this.guiTexture, i, j, 0, 0, this.imageWidth, this.imageHeight);
+		graphics.blit(this.guiTexture, i + 52, j + 26, 0, this.imageHeight + (this.menu.getSlot(0).hasItem() ? 0 : 16), 102, 16);
 		if (this.menu.getSlot(0).hasItem() && !this.menu.getSlot(1).hasItem()) {
-			this.blit(PoseStack, i + 71, j + 49, this.imageWidth, 0, 28, 21);
+			graphics.blit(this.guiTexture, i + 71, j + 49, this.imageWidth, 0, 28, 21);
 		}
 	}
 
@@ -114,8 +115,8 @@ public class LoreInscriberScreen extends AbstractContainerScreen<LoreInscriberCo
 	}
 
 	@Override
-	protected void renderLabels(PoseStack PoseStack, int x, int y) {
-		this.font.draw(PoseStack, this.title, 52F, 13F, 4210752);
+	protected void renderLabels(GuiGraphics graphics, int x, int y) {
+		graphics.drawString(this.font, this.title, 52, 13, 4210752);
 		//this.font.draw(PoseStack, this.Inventory.getDisplayName(), JsonConfigHandler.getFloat("playerInvX"), JsonConfigHandler.getFloat("playerInvY"), 4210752);
 
 		RenderSystem.disableBlend();
@@ -145,8 +146,8 @@ public class LoreInscriberScreen extends AbstractContainerScreen<LoreInscriberCo
 		 */
 	}
 
-	public void renderNameField(PoseStack PoseStack, int mouseX, int mouseY, float partialTicks) {
-		this.nameField.render(PoseStack, mouseX, mouseY, partialTicks);
+	public void renderNameField(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
+		this.nameField.render(graphics, mouseX, mouseY, partialTicks);
 	}
 
 	/**

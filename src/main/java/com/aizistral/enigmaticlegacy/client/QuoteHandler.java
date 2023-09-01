@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.LevelLoadingScreen;
 import net.minecraft.client.gui.screens.ReceivingLevelScreen;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
@@ -72,13 +73,13 @@ public class QuoteHandler {
 		if (Minecraft.getInstance().screen != null || this.currentQuote == null || this.delayTicks > 0)
 			return;
 
-		this.drawQuote(event.getPoseStack(), event.getWindow());
+		this.drawQuote(event.getGuiGraphics(), event.getWindow());
 	}
 
 	@SubscribeEvent
 	public void onScreenRender(ScreenEvent.Render.Post event) {
 		if (this.currentQuote != null && this.delayTicks <= 0) {
-			this.drawQuote(event.getPoseStack(), Minecraft.getInstance().getWindow());
+			this.drawQuote(event.getGuiGraphics(), Minecraft.getInstance().getWindow());
 			Minecraft.getInstance().getSoundManager().resume();
 		}
 	}
@@ -93,7 +94,7 @@ public class QuoteHandler {
 		//		}
 	}
 
-	private void drawQuote(PoseStack stack, Window window) {
+	private void drawQuote(GuiGraphics graphics, Window window) {
 		if (this.currentQuote.getSubtitles().getDuration() - this.getPlayTime() <= 0.1) {
 			if (Quote.NARRATOR_INTROS.contains(this.currentQuote) && Minecraft.getInstance().player != null) {
 				this.sendExperimentalInfo(Minecraft.getInstance().player);
@@ -127,6 +128,7 @@ public class QuoteHandler {
 			alphaMod = 0xFF;
 		}
 
+		PoseStack stack = graphics.pose();
 		int width = window.getGuiScaledWidth() / 2 - SuperpositionHandler.greatestWidth(font, text) / 2;
 		int height = window.getGuiScaledHeight() - 70 - ((font.lineHeight + 2) * (text.length - 1));
 
@@ -144,7 +146,8 @@ public class QuoteHandler {
 
 		int counter = 0;
 		for (String line : text) {
-			font.drawShadow(stack, line, window.getGuiScaledWidth() / 2 - font.width(line) / 2, height + (counter * (font.lineHeight + 2)), color2, true);
+			graphics.drawString(font, line, window.getGuiScaledWidth() / 2 - font.width(line) / 2, height +
+					(counter * (font.lineHeight + 2)), color2, true);
 			counter++;
 		}
 

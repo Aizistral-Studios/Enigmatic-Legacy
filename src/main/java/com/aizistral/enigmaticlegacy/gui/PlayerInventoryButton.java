@@ -5,12 +5,14 @@ import javax.annotation.Nonnull;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.CreativeModeTab;
@@ -36,7 +38,7 @@ public abstract class PlayerInventoryButton extends ImageButton {
 	}
 
 	@Override
-	public void renderWidget(@Nonnull PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+	public void renderWidget(@Nonnull GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
 		this.active = true;
 
 		if (this.parentGui instanceof InventoryScreen || this.parentGui instanceof CuriosScreen) {
@@ -54,7 +56,8 @@ public abstract class PlayerInventoryButton extends ImageButton {
 			}
 		} else if (this.parentGui instanceof CreativeModeInventoryScreen) {
 			CreativeModeInventoryScreen gui = (CreativeModeInventoryScreen) this.parentGui;
-			boolean isInventoryTab = gui.selectedTab == CreativeModeTabs.INVENTORY;
+			boolean isInventoryTab = gui.selectedTab == BuiltInRegistries.CREATIVE_MODE_TAB
+					.getOrThrow(CreativeModeTabs.INVENTORY);
 
 			if (!isInventoryTab) {
 				this.active = false;
@@ -62,7 +65,7 @@ public abstract class PlayerInventoryButton extends ImageButton {
 			}
 		}
 
-		if (this.beforeRender(poseStack, mouseX, mouseY, partialTicks)) {
+		if (this.beforeRender(graphics, mouseX, mouseY, partialTicks)) {
 			RenderSystem.setShader(GameRenderer::getPositionTexShader);
 			RenderSystem.setShaderTexture(0, this.resourceLocation);
 			int i = this.yTexStart;
@@ -71,11 +74,12 @@ public abstract class PlayerInventoryButton extends ImageButton {
 			}
 
 			RenderSystem.enableDepthTest();
-			blit(poseStack, this.getX(), this.getY(), this.xTexStart, i, this.width, this.height, this.textureWidth, this.textureHeight);
+			graphics.blit(this.resourceLocation, this.getX(), this.getY(), this.xTexStart, i, this.width, this.height,
+					this.textureWidth, this.textureHeight);
 		}
 	}
 
-	protected abstract boolean beforeRender(PoseStack poseStack, int mouseX, int mouseY, float partialTicks);
+	protected abstract boolean beforeRender(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks);
 
 	public abstract Tuple<Integer, Integer> getOffsets(boolean creative);
 
