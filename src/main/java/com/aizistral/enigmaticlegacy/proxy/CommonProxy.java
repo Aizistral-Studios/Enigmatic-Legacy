@@ -53,12 +53,12 @@ public class CommonProxy {
 
 	public boolean isInVanillaDimension(Player player) {
 		ServerPlayer serverPlayer = (ServerPlayer) player;
-		return serverPlayer.getLevel().dimension().equals(this.getOverworldKey()) || serverPlayer.getLevel().dimension().equals(this.getNetherKey()) || serverPlayer.getLevel().dimension().equals(this.getEndKey());
+		return serverPlayer.level().dimension().equals(this.getOverworldKey()) || serverPlayer.level().dimension().equals(this.getNetherKey()) || serverPlayer.level().dimension().equals(this.getEndKey());
 	}
 
 	public boolean isInDimension(Player player, ResourceKey<Level> world) {
 		ServerPlayer serverPlayer = (ServerPlayer) player;
-		return serverPlayer.getLevel().dimension().equals(world);
+		return serverPlayer.level().dimension().equals(world);
 	}
 
 	public Level getCentralWorld() {
