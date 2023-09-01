@@ -37,7 +37,6 @@
 	"AccessorDisconnectedScreen",
 	"MixinForgeHooksClient",
 	"MixinGuiBookLanding",
-	"MixinItemRenderer",
 	"MixinMiniInventoryButton",
 	"MixinEntityRenderer",
 	"MixinWorldListEntry",
