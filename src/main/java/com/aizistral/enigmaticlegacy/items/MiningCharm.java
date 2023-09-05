@@ -118,12 +118,13 @@ public class MiningCharm extends ItemBaseCurio {
 		MobEffectInstance effect = player.getEffect(MobEffects.NIGHT_VISION);
 
 		if (effect != null) {
-			// Should be a safe value - e.g. night vision goggles from relics applies the effect every 15 ticks
+			/*
+			Should be a safe value
+			(e.g. night vision goggles from relics applies the effect every 15 ticks)
+			1 less than the tick count check to make sure the effect is gone before the next minimize duration call
+			(otherwise the effect will just be kept forever)
+			*/
 			effect.duration = 19;
-			player.removeEffect(MobEffects.NIGHT_VISION);
-			EnigmaticEventHandler.isApplyingNightVision = true;
-			player.addEffect(effect);
-			EnigmaticEventHandler.isApplyingNightVision = false;
 		}
 	}
 
