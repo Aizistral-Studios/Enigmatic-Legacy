@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "enigmaticlegacy:items/earth_heart"
+        "layer0": "enigmaticlegacy:item/earth_heart"
     }
 }

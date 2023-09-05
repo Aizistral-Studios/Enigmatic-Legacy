@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "enigmaticlegacy:items/dark_chestplate"
+        "layer0": "enigmaticlegacy:item/dark_chestplate"
     }
 }

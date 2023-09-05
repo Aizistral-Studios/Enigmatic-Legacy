@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "enigmaticlegacy:items/the_one_box"
+        "layer0": "enigmaticlegacy:item/the_one_box"
     }
 }

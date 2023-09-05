@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "enigmaticlegacy:items/mending_mixture"
+        "layer0": "enigmaticlegacy:item/mending_mixture"
     }
 }

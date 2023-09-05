@@ -1,5 +1,5 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "enigmaticlegacy:items/blazing_core"    }
+        "layer0": "enigmaticlegacy:item/blazing_core"    }
 }
