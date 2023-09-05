@@ -218,7 +218,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 					EnigmaticEventHandler.isApplyingNightVision = false;
 					player.setAirSupply(300);
 				} else {
-					EnigmaticItems.MINING_CHARM.removeNightVisionEffect(player, this.nightVisionDuration);
+					EnigmaticItems.MINING_CHARM.minimizeDuration(player);
 				}
 
 				player.getAttributes().addTransientAttributeModifiers(this.createAttributeMap(player));
