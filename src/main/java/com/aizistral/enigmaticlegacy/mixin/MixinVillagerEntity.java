@@ -19,9 +19,7 @@ public class MixinVillagerEntity {
 	private void onSpecialPrices(Player player, CallbackInfo info) {
 		Object forgottenObject = this;
 
-		if (forgottenObject instanceof Villager) {
-			Villager villager = (Villager) forgottenObject;
-
+		if (forgottenObject instanceof Villager villager) {
 			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.AVARICE_SCROLL)) {
 				for (MerchantOffer trade : villager.getOffers()) {
 					double discountValue = 0.35;

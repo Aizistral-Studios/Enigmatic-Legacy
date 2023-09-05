@@ -22,9 +22,7 @@ public class MixinHoglinTasks {
 	private static void onHoglinShallAttack(Hoglin hoglin, CallbackInfoReturnable<Optional<? extends LivingEntity>> info) {
 		Optional<? extends LivingEntity> returnedTarget = info.getReturnValue();
 
-		if (returnedTarget.isPresent() && returnedTarget.orElse(null) instanceof Player) {
-			Player returnedPlayer = (Player) returnedTarget.orElse(null);
-
+		if (returnedTarget.isPresent() && returnedTarget.orElse(null) instanceof Player returnedPlayer) {
 			if (SuperpositionHandler.hasItem(returnedPlayer, EnigmaticItems.ANIMAL_GUIDEBOOK)) {
 				info.setReturnValue(Optional.empty());
 			}

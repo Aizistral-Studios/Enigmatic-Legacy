@@ -1,42 +1,42 @@
 package com.aizistral.enigmaticlegacy.mixin;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
-
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Mixin(PiglinAi.class)
 public class MixinPiglinTasks {
-	private static final String AVARICE_SCROLL_TAG = EnigmaticLegacy.MODID + ":avarice_scroll_effect";
+	@Unique private static final String AVARICE_SCROLL_TAG = EnigmaticLegacy.MODID + ":avarice_scroll_effect";
 
-	private static void markPiglinWithCondition(Piglin piglin, Player player) {
+	@Unique
+	private static void enigmaticLegacy$markPiglinWithCondition(Piglin piglin, Player player) {
 		if (player != null && piglin != null && SuperpositionHandler.hasCurio(player, EnigmaticItems.AVARICE_SCROLL))
 			if (!piglin.getTags().contains(AVARICE_SCROLL_TAG)) {
 				piglin.addTag(AVARICE_SCROLL_TAG);
 			}
 	}
 
-	private static List<ItemStack> distributeExcess(ItemStack stack) {
+	@Unique
+	private static List<ItemStack> enigmaticLegacy$distributeExcess(ItemStack stack) {
 		List<ItemStack> newStacks = new ArrayList<>();
 
 		while (stack.getCount() > stack.getMaxStackSize()) {
@@ -46,30 +46,19 @@ public class MixinPiglinTasks {
 		return newStacks;
 	}
 
-	@Inject(at = @At("RETURN"), method = "isWearingGold", cancellable = true)
-	private static void onWearingGoldCheck(LivingEntity entity, CallbackInfoReturnable<Boolean> info) {
-		if (entity instanceof Player player) {
-			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.GOLDEN_RING) || SuperpositionHandler.hasCurio(player, EnigmaticItems.AVARICE_SCROLL)) {
-				info.setReturnValue(true);
-			}
-		}
-	}
-
 	@Inject(at = @At("RETURN"), method = "pickUpItem")
 	private static void onPiglinItemPickup(Piglin piglin, ItemEntity itemEntity, CallbackInfo info) {
 		UUID ownerID = itemEntity.getThrower();
 
-		if (!itemEntity.isAlive() && itemEntity.level instanceof ServerLevel && ownerID != null) {
-			ServerLevel world = (ServerLevel) itemEntity.level;
-			markPiglinWithCondition(piglin, world.getPlayerByUUID(ownerID));
+		if (!itemEntity.isAlive() && itemEntity.level instanceof ServerLevel world && ownerID != null) {
+			enigmaticLegacy$markPiglinWithCondition(piglin, world.getPlayerByUUID(ownerID));
 		}
-
 	}
 
 	@Inject(at = @At("RETURN"), method = "mobInteract")
 	private static void onBarterByHand(Piglin piglin, Player player, InteractionHand hand, CallbackInfoReturnable<InteractionResult> info) {
 		if (info.getReturnValue() == InteractionResult.CONSUME) {
-			markPiglinWithCondition(piglin, player);
+			enigmaticLegacy$markPiglinWithCondition(piglin, player);
 		}
 	}
 
@@ -96,7 +85,7 @@ public class MixinPiglinTasks {
 							int newCount = lootStack.getCount() + bonusAmount;
 							lootStack.setCount(newCount);
 
-							newStacks.addAll(distributeExcess(lootStack));
+							newStacks.addAll(enigmaticLegacy$distributeExcess(lootStack));
 						}
 					});
 

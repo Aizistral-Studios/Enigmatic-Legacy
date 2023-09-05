@@ -78,4 +78,8 @@ public class AvariceScroll extends ItemBaseCurio implements ICursed {
 		return super.getFortuneLevel(slotContext, lootContext, curio) + 1;
 	}
 
+	@Override
+	public boolean makesPiglinsNeutral(SlotContext slotContext, ItemStack stack) {
+		return true;
+	}
 }

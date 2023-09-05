@@ -1,5 +1,6 @@
 package com.aizistral.enigmaticlegacy.mixin;
 
+import com.aizistral.enigmaticlegacy.items.CursedRing;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -31,8 +32,8 @@ public class MixinPhantomSpawner {
 	private int ticksUntilSpawn = 0;
 
 	@Inject(at = @At("RETURN"), method = "tick", cancellable = true)
-	private void onHandlePhantomSpawns(ServerLevel world, boolean p_230253_2_, boolean p_230253_3_, CallbackInfoReturnable<Integer> info) {
-		if (!p_230253_2_) {
+	private void onHandlePhantomSpawns(ServerLevel world, boolean spawnEnemies, boolean spawnFriendlies, CallbackInfoReturnable<Integer> info) {
+		if (!spawnEnemies) {
 			// NO-OP
 		} else if (!world.getGameRules().getBoolean(GameRules.RULE_DOINSOMNIA)) {
 			// NO-OP
@@ -57,7 +58,7 @@ public class MixinPhantomSpawner {
 									ServerStatsCounter serverstatisticsmanager = player.getStats();
 									int ticksSinceRest = Mth.clamp(serverstatisticsmanager.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)), 1, Integer.MAX_VALUE);
 
-									if (SuperpositionHandler.hasCurio(player, EnigmaticItems.CURSED_RING))
+									if (SuperpositionHandler.hasCurio(player, EnigmaticItems.CURSED_RING) && !CursedRing.disableInsomnia.getValue())
 										if (random.nextInt(ticksSinceRest) <= 72000) {
 											BlockPos blockpos1 = blockpos.above(20 + random.nextInt(15)).east(-10 + random.nextInt(21)).south(-10 + random.nextInt(21));
 											BlockState blockstate = world.getBlockState(blockpos1);

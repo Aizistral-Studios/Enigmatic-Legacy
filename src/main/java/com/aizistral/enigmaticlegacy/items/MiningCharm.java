@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.aizistral.enigmaticlegacy.handlers.EnigmaticEventHandler;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
@@ -22,7 +21,6 @@ import com.google.common.collect.Multimap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
@@ -102,12 +100,35 @@ public class MiningCharm extends ItemBaseCurio {
 		ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.miningCharmNightVision", null, mode.getString());
 	}
 
-	public void removeNightVisionEffect(Player player, int duration) {
-		if (player.getEffect(MobEffects.NIGHT_VISION) != null) {
-			MobEffectInstance effect = player.getEffect(MobEffects.NIGHT_VISION);
+	// TODO :: Find a better solution
+	private int markForRemoval = -1;
+	private int previousDuration;
 
-			if (effect.getDuration() <= (duration - 1)) {
+	public void removeNightVisionEffect(Player player, int baseDuration) {
+		MobEffectInstance effect = player.getEffect(MobEffects.NIGHT_VISION);
+
+		if (markForRemoval > 0) {
+			markForRemoval--;
+			return;
+		}
+
+		if (markForRemoval == 0) {
+			if (effect != null && effect.getDuration() < previousDuration) {
 				player.removeEffect(MobEffects.NIGHT_VISION);
+			}
+
+			markForRemoval = -1;
+			return;
+		}
+
+		if (effect != null) {
+			if (effect.getDuration() <= (baseDuration - 1)) {
+				markForRemoval = 5;
+				/*
+				Store to later check if it has actually decreased within the 5 ticks
+				If not it means there is another item granting night vision
+				*/
+				previousDuration = effect.getDuration();
 			}
 		}
 	}
@@ -127,8 +148,8 @@ public class MiningCharm extends ItemBaseCurio {
 							EnigmaticEventHandler.isApplyingNightVision = true;
 							player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
 							EnigmaticEventHandler.isApplyingNightVision = false;
-						} else {
-							//this.removeNightVisionEffect(player, this.nightVisionDuration);
+						} else if (player.getY() > 60) {
+							this.removeNightVisionEffect(player, this.nightVisionDuration);
 						}
 					} else {
 						ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", false);

@@ -58,8 +58,10 @@ mixin {
     config "enigmaticlegacy.mixins.json"
 }
 
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
 minecraft {
-	println("Specifying Access Transformer configuration...")	
+	println("Specifying Access Transformer configuration...")
 	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 }
 

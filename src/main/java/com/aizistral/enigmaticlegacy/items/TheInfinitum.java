@@ -95,7 +95,7 @@ public class TheInfinitum extends TheAcknowledgment implements IEldritch {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theInfinitum8");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theInfinitum9");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theInfinitum9", ChatFormatting.GOLD, undeadProbability + "%");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.theInfinitum10");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
 			ItemLoreHelper.indicateWorthyOnesOnly(list);

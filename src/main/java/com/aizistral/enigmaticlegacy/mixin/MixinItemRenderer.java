@@ -14,14 +14,9 @@ import net.minecraft.world.item.ItemStack;
 @Mixin(ItemRenderer.class)
 public class MixinItemRenderer {
 
-	@Redirect(method = "render(Lnet/minecraft/world/item/ItemStack;"
-			+ "Lnet/minecraft/client/renderer/block/model/ItemTransforms$TransformType;"
-			+ "ZLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;"
-			+ "IILnet/minecraft/client/resources/model/BakedModel;)V", at = @At(value = "INVOKE", target =
-			"Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/tags/TagKey;)Z", ordinal = 0), require = 1)
-	private boolean redirectCompassCheck(ItemStack stack, TagKey item) {
-		boolean result = stack.is(EnigmaticItems.THE_INFINITUM) || stack.is(item);
-		return result;
+	@Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;is(Lnet/minecraft/tags/TagKey;)Z", ordinal = 0), require = 1)
+	private boolean redirectCompassCheck(ItemStack stack, TagKey<Item> item) {
+		return stack.is(EnigmaticItems.THE_INFINITUM) || stack.is(item);
 	}
 
 }

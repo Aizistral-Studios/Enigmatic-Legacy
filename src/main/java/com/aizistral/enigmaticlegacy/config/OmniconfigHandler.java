@@ -191,7 +191,7 @@ public class OmniconfigHandler {
 
 		maxSoulCrystalLoss = builder
 				.comment("Maximum amount of Soul Crystals a player can lose before they won't drop anymore."
-						+ " If set to 10 - player can loose all of them, and doing so will result in permadeath."
+						+ " If set to 10 - player can lose all of them, and doing so will result in permadeath."
 						+ " Each crystal lost subtracts 10% of from their maximum possible health value.")
 				.min(1)
 				.max(10)

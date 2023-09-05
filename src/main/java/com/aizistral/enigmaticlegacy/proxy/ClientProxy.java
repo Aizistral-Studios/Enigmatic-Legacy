@@ -193,30 +193,32 @@ public class ClientProxy extends CommonProxy {
 
 	@OnlyIn(Dist.CLIENT)
 	public void onClientSetup(FMLClientSetupEvent event) {
-		ItemProperties.register(EnigmaticItems.INFERNAL_SHIELD, new ResourceLocation("blocking"),
-				(stack, world, entity, seed) -> entity != null && entity.isUsingItem()
-				&& entity.getUseItem() == stack ? 1 : 0);
+		event.enqueueWork(() -> {
+			ItemProperties.register(EnigmaticItems.INFERNAL_SHIELD, new ResourceLocation("blocking"),
+					(stack, world, entity, seed) -> entity != null && entity.isUsingItem()
+					&& entity.getUseItem() == stack ? 1 : 0);
 
-		ItemProperties.register(EnigmaticItems.THE_INFINITUM, new ResourceLocation(EnigmaticLegacy.MODID, "the_infinitum_open"), (stack, world, entity, seed) -> {
-			if (entity instanceof Player player) {
-				for (InfinitumCounterEntry entry : this.theInfinitumHoldTicks) {
-					if (entry.getPlayer() == player && entry.getStack() == stack)
-						return entry.animValue;
+			ItemProperties.register(EnigmaticItems.THE_INFINITUM, new ResourceLocation(EnigmaticLegacy.MODID, "the_infinitum_open"), (stack, world, entity, seed) -> {
+				if (entity instanceof Player player) {
+					for (InfinitumCounterEntry entry : this.theInfinitumHoldTicks) {
+						if (entry.getPlayer() == player && entry.getStack() == stack)
+							return entry.animValue;
+					}
+
+					ItemStack mainhand = player.getMainHandItem();
+					ItemStack offhand = player.getOffhandItem();
+
+					if (mainhand == stack || offhand == stack)
+						if (SuperpositionHandler.isTheWorthyOne(player)) {
+							this.theInfinitumHoldTicks.add(new InfinitumCounterEntry(player, stack));
+						}
 				}
 
-				ItemStack mainhand = player.getMainHandItem();
-				ItemStack offhand = player.getOffhandItem();
+				return 0;
+			});
 
-				if (mainhand == stack || offhand == stack)
-					if (SuperpositionHandler.isTheWorthyOne(player)) {
-						this.theInfinitumHoldTicks.add(new InfinitumCounterEntry(player, stack));
-					}
-			}
-
-			return 0;
+			BlockEntityRenderers.register(EnigmaticTiles.END_ANCHOR, EndAnchorRenderer::new);
 		});
-
-		BlockEntityRenderers.register(EnigmaticTiles.END_ANCHOR, EndAnchorRenderer::new);
 	}
 
 	@Override
