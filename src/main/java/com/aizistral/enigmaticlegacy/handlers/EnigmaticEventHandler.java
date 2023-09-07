@@ -900,7 +900,7 @@ public class EnigmaticEventHandler {
 			miningBoost += 0.6F;
 		}
 
-		if (!event.getEntity().isOnGround())
+		if (!event.getEntity().onGround())
 			if (SuperpositionHandler.hasCurio(event.getEntity(), EnigmaticItems.HEAVEN_SCROLL) || SuperpositionHandler.hasCurio(event.getEntity(), EnigmaticItems.FABULOUS_SCROLL) || SuperpositionHandler.hasCurio(event.getEntity(), EnigmaticItems.ENIGMATIC_ITEM)) {
 				correctedSpeed *= 5F;
 			}

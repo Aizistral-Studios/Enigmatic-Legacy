@@ -76,7 +76,7 @@ public class EnigmaticKeybindHandler {
 		} else if (jumpClicked) {
 			LocalPlayer player = Minecraft.getInstance().player;
 
-			if (!player.isInWater() && !player.isOnGround() && !player.isCreative() && !player.isSpectator()
+			if (!player.isInWater() && !player.onGround() && !player.isCreative() && !player.isSpectator()
 					&& SuperpositionHandler.hasCurio(player, EnigmaticItems.ANGEL_BLESSING)) {
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true));
 			}
