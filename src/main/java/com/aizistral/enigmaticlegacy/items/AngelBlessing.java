@@ -87,7 +87,7 @@ public class AngelBlessing extends ItemSpellstoneCurio  {
 		this.immunityList.add(DamageTypes.FLY_INTO_WALL);
 
 		this.resistanceList.put(DamageTypes.WITHER, () -> 2F);
-		this.resistanceList.put(DamageTypes.OUT_OF_WORLD, () -> 2F);
+		this.resistanceList.put(DamageTypes.FELL_OUT_OF_WORLD, () -> 2F);
 	}
 
 	@Override

@@ -71,7 +71,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 		this.immunityList.add(DamageTypes.IN_FIRE);
 		this.immunityList.add(DamageTypes.ON_FIRE);
 		this.immunityList.add(DamageTypes.IN_WALL);
-		this.immunityList.add(DamageTypes.OUT_OF_WORLD);
+		this.immunityList.add(DamageTypes.FELL_OUT_OF_WORLD);
 		this.immunityList.add(DamageTypes.STARVE);
 		this.immunityList.add(DamageTypes.SWEET_BERRY_BUSH);
 
