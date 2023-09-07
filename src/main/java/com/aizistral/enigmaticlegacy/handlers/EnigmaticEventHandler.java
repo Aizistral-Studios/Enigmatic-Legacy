@@ -456,7 +456,8 @@ public class EnigmaticEventHandler {
 						boolean have = SuperpositionHandler.hasAdvancement(player, adv.getId());
 						MutableComponent reply = Component.literal("Advancement exists, and you "
 								+ (have ? "do" : "don't") + " have it.");
-						source.getSource().sendSuccess(reply.withStyle(have ? ChatFormatting.GREEN : ChatFormatting.RED), true);
+						source.getSource().sendSuccess(() -> reply.withStyle(have ? ChatFormatting.GREEN
+								: ChatFormatting.RED), true);
 						return 1;
 					} else {
 						MutableComponent reply = Component.literal("Advancement does not exist.");
@@ -490,7 +491,7 @@ public class EnigmaticEventHandler {
 
 		Component reply =  Component.literal(name + " is bearing the Seven Curses for " + time
 				+ " ticks, or " + percent + " of their time in this world.").withStyle(ChatFormatting.GREEN);
-		source.getSource().sendSuccess(reply, true);
+		source.getSource().sendSuccess(() -> reply, true);
 		return Command.SINGLE_SUCCESS;
 	}
 
@@ -505,7 +506,7 @@ public class EnigmaticEventHandler {
 
 		Component reply =  Component.literal(name + "'s time with Seven Curses was set to " + ticks
 				+ " ticks.").withStyle(ChatFormatting.GREEN);
-		source.getSource().sendSuccess(reply, true);
+		source.getSource().sendSuccess(() -> reply, true);
 		return Command.SINGLE_SUCCESS;
 	}
 
