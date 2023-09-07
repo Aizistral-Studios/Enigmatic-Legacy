@@ -44,7 +44,7 @@ public class MixinForgeHooksClient {
 			Font forcedFont, Font fallbackFont, CallbackInfoReturnable<List<ClientTooltipComponent>> info) {
 
 		if (stack != null && ForgeRegistries.ITEMS.getKey(stack.getItem()).getNamespace().equals(EnigmaticLegacy.MODID)) {
-			Font font = getTooltipFont(forcedFont, stack, fallbackFont);
+			Font font = getTooltipFont(stack, fallbackFont);
 			List<Either<FormattedText, TooltipComponent>> elements = textElements.stream().map((Function<FormattedText, Either<FormattedText, TooltipComponent>>) Either::left).collect(Collectors.toCollection(ArrayList::new));
 			itemComponent.ifPresent(c -> elements.add(1, Either.right(c)));
 
