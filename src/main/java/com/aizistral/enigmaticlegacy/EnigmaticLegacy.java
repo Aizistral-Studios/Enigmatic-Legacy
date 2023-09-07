@@ -90,6 +90,7 @@ import com.aizistral.enigmaticlegacy.registries.EnigmaticMenus;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticPotions;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticRecipes;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticSounds;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticTabs;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticTiles;
 import com.aizistral.enigmaticlegacy.triggers.BeheadingTrigger;
 import com.aizistral.enigmaticlegacy.triggers.CursedInventoryChangedTrigger;
@@ -221,6 +222,7 @@ public class EnigmaticLegacy {
 		this.loadClass(EnigmaticEntities.class);
 		this.loadClass(EnigmaticEnchantments.class);
 		this.loadClass(EnigmaticLootModifiers.class);
+		this.loadClass(EnigmaticTabs.class);
 
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientRegistries);
