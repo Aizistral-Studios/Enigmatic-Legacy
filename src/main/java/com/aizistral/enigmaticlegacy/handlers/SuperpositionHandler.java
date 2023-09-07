@@ -1056,7 +1056,7 @@ public class SuperpositionHandler {
 	 * Checks item, NBT, and meta if the item is not damageable
 	 */
 	public static boolean stackEqualExact(ItemStack stack1, ItemStack stack2) {
-		return stack1.getItem() == stack2.getItem() && ItemStack.tagMatches(stack1, stack2);
+		return stack1.getItem() == stack2.getItem() && ItemStack.isSameItemSameTags(stack1, stack2);
 	}
 
 	public static boolean isPermanentlyDead(Player player) {
@@ -1251,7 +1251,7 @@ public class SuperpositionHandler {
 			Vec3 trueVec = vec2.get();
 			serverPlayer.teleportTo(trueVec.x, trueVec.y, trueVec.z);
 		} else {
-			AdvancedSpawnLocationHelper.fuckBackToSpawn(serverPlayer.level(), serverPlayer);
+			AdvancedSpawnLocationHelper.fuckBackToSpawn(serverPlayer.serverLevel(), serverPlayer);
 		}
 
 		serverPlayer.level().playSound(null, serverPlayer.blockPosition(), SoundEvents.ENDERMAN_TELEPORT, SoundSource.PLAYERS, 1.0F, (float) (0.8F + (Math.random() * 0.2)));
