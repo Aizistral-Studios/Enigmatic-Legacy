@@ -324,7 +324,7 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 	public static final GoldenRing GOLDEN_RING = null;
 
 	@ConfigurableItem("Unholy Stone")
-	@ObjectHolder(value = MODID + ":unholy_stone", registryName = "item")
+	@ObjectHolder(value = MODID + ":cursed_stone", registryName = "item")
 	public static final CursedStone CURSED_STONE = null;
 
 	@ConfigurableItem("Enchanter's Pearl")
