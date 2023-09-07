@@ -38,7 +38,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @Mixin(value = ForgeHooksClient.class, remap = false)
 public class MixinForgeHooksClient {
 
-	@Inject(method = "gatherTooltipComponents(Lnet/minecraft/world/item/ItemStack;Ljava/util/List;Ljava/util/Optional;IIILnet/minecraft/client/gui/Font;Lnet/minecraft/client/gui/Font;)Ljava/util/List;", at = @At("RETURN"), cancellable = true)
+	//@Inject(method = "gatherTooltipComponents(Lnet/minecraft/world/item/ItemStack;Ljava/util/List;Ljava/util/Optional;IIILnet/minecraft/client/gui/Font;Lnet/minecraft/client/gui/Font;)Ljava/util/List;", at = @At("RETURN"), cancellable = true)
 	private static void onGatherTooltipComponents(ItemStack stack, List<? extends FormattedText> textElements,
 			Optional<TooltipComponent> itemComponent, int mouseX, int screenWidth, int screenHeight,
 			Font forcedFont, Font fallbackFont, CallbackInfoReturnable<List<ClientTooltipComponent>> info) {
