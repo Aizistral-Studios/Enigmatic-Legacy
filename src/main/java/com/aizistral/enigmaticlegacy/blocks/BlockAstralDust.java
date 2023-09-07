@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootContext.Builder;
 
 public class BlockAstralDust extends Block {
@@ -20,7 +21,7 @@ public class BlockAstralDust extends Block {
 	}
 
 	@Override
-	public List<ItemStack> getDrops(BlockState state, Builder builder) {
+	public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
 		return List.of(new ItemStack(this));
 	}
 
