@@ -12,7 +12,6 @@ import com.google.gson.JsonElement;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.LootTables;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.LootTableLoadEvent;
 
@@ -25,7 +24,7 @@ import net.minecraftforge.event.LootTableLoadEvent;
 public class MixinForgeHooks {
 
 	@Inject(at = @At("RETURN"), method = "loadLootTable", cancellable = true, remap = false)
-	private static void onLoadLootTable(Gson gson, ResourceLocation name, JsonElement data, boolean custom, LootTables lootTableManager, CallbackInfoReturnable<LootTable> info) {
+	private static void onLoadLootTable(Gson gson, ResourceLocation name, JsonElement data, boolean custom, CallbackInfoReturnable<LootTable> info) {
 		LootTable returnedTable = info.getReturnValue();
 
 		if (custom && returnedTable != null) {
@@ -41,7 +40,7 @@ public class MixinForgeHooks {
 
 			EnigmaticLegacy.LOGGER.debug("Force dispatching LootTableLoadEvent for " + name + "...");
 
-			LootTableLoadEvent event = new LootTableLoadEvent(name, returnedTable, lootTableManager);
+			LootTableLoadEvent event = new LootTableLoadEvent(name, returnedTable);
 			EnigmaticLegacy.enigmaticHandler.onLootTablesLoaded(event);
 
 			if (event.isCanceled()) {
