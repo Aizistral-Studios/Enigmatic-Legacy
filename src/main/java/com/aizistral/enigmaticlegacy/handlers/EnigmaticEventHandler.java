@@ -256,6 +256,7 @@ import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.ProjectileImpactEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingChangeTargetEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
@@ -266,7 +267,6 @@ import net.minecraftforge.event.entity.living.LivingGetProjectileEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
@@ -3062,29 +3062,24 @@ public class EnigmaticEventHandler {
 
 
 	@SubscribeEvent // TODO Update in 1.20
-	public void onAttackTargetSet(LivingSetAttackTargetEvent event) {
-		if (event.getTarget() instanceof Player) {
-			Player player = (Player) event.getTarget();
-
-			if (event.getEntity() instanceof Mob) {
-				Mob insect = (Mob) event.getEntity();
-
+	public void onAttackTargetSet(LivingChangeTargetEvent event) {
+		if (event.getNewTarget() instanceof Player player) {
+			if (event.getEntity() instanceof Mob insect) {
 				if (insect.getMobType() == MobType.ARTHROPOD)
 					if (SuperpositionHandler.hasAntiInsectAcknowledgement(player)) {
-						insect.setTarget(null);
-						//event.setCanceled(true);
+						event.setCanceled(true);
 					}
 
 				if (insect instanceof Guardian && insect.getClass() != ElderGuardian.class) {
-					if (SuperpositionHandler.hasItem(player, EnigmaticItems.GUARDIAN_HEART) && SuperpositionHandler.isTheCursedOne(player)) {
+					if (SuperpositionHandler.hasItem(player, EnigmaticItems.GUARDIAN_HEART)
+							&& SuperpositionHandler.isTheCursedOne(player)) {
 						boolean isBlacklisted = AGERED_GUARDIANS.containsEntry(player, insect);
 
 						if (insect.getLastHurtByMob() != player && !isBlacklisted) {
-							insect.setTarget(null);
-							//event.setCanceled(true);
+							event.setCanceled(true);
 						} else {
 							if (!isBlacklisted) {
-								AGERED_GUARDIANS.put(player, (Guardian)insect);
+								AGERED_GUARDIANS.put(player, (Guardian) insect);
 							}
 						}
 					}
