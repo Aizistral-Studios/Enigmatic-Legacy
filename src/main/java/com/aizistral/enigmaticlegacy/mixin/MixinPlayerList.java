@@ -76,7 +76,7 @@ public class MixinPlayerList {
 			return;
 
 		this.players.remove(player);
-		player.level().removePlayerImmediately(player, Entity.RemovalReason.DISCARDED);
+		player.serverLevel().removePlayerImmediately(player, Entity.RemovalReason.DISCARDED);
 		PlayerList list = (PlayerList) (Object) this;
 
 		ServerLevel newLevel = level != null && optional.isPresent() ? level : this.server.overworld();
@@ -107,7 +107,8 @@ public class MixinPlayerList {
 			newPlayer.setRespawnPosition(newLevel.dimension(), pos, angle, forced, false);
 			usedAnchorCharge = !keep && isAnchor && EndAnchor.useEndAnchor(newLevel, pos, respawnState);
 		} else if (pos != null && !endRespawn) {
-			newPlayer.connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.NO_RESPAWN_BLOCK_AVAILABLE, 0.0F));
+			newPlayer.connection.send(new ClientboundGameEventPacket(
+					ClientboundGameEventPacket.NO_RESPAWN_BLOCK_AVAILABLE, 0.0F));
 		} else if (pos != null && endRespawn) {
 			newPlayer.setRespawnPosition(Level.END, pos, angle, forced, false);
 		}
@@ -116,12 +117,21 @@ public class MixinPlayerList {
 			newPlayer.setPos(newPlayer.getX(), newPlayer.getY() + 1.0D, newPlayer.getZ());
 		}
 
+		byte keepByte = (byte) (keep ? 1 : 0);
 		LevelData leveldata = newPlayer.level().getLevelData();
-		newPlayer.connection.send(new ClientboundRespawnPacket(newPlayer.level().dimensionTypeId(), newPlayer.level().dimension(), BiomeManager.obfuscateSeed(newPlayer.level().getSeed()), newPlayer.gameMode.getGameModeForPlayer(), newPlayer.gameMode.getPreviousGameModeForPlayer(), newPlayer.level().isDebug(), newPlayer.level().isFlat(), (byte)3, newPlayer.getLastDeathLocation()));
-		newPlayer.connection.teleport(newPlayer.getX(), newPlayer.getY(), newPlayer.getZ(), newPlayer.getYRot(), newPlayer.getXRot());
-		newPlayer.connection.send(new ClientboundSetDefaultSpawnPositionPacket(newLevel.getSharedSpawnPos(), newLevel.getSharedSpawnAngle()));
-		newPlayer.connection.send(new ClientboundChangeDifficultyPacket(leveldata.getDifficulty(), leveldata.isDifficultyLocked()));
-		newPlayer.connection.send(new ClientboundSetExperiencePacket(newPlayer.experienceProgress, newPlayer.totalExperience, newPlayer.experienceLevel));
+		newPlayer.connection.send(new ClientboundRespawnPacket(newPlayer.level().dimensionTypeId(),
+				newPlayer.level().dimension(), BiomeManager.obfuscateSeed(newPlayer.serverLevel().getSeed()),
+				newPlayer.gameMode.getGameModeForPlayer(), newPlayer.gameMode.getPreviousGameModeForPlayer(),
+				newPlayer.level().isDebug(), newPlayer.serverLevel().isFlat(), keepByte, newPlayer.getLastDeathLocation(),
+				newPlayer.getPortalCooldown()));
+		newPlayer.connection.teleport(newPlayer.getX(), newPlayer.getY(), newPlayer.getZ(), newPlayer.getYRot(),
+				newPlayer.getXRot());
+		newPlayer.connection.send(new ClientboundSetDefaultSpawnPositionPacket(newLevel.getSharedSpawnPos(),
+				newLevel.getSharedSpawnAngle()));
+		newPlayer.connection.send(new ClientboundChangeDifficultyPacket(leveldata.getDifficulty(),
+				leveldata.isDifficultyLocked()));
+		newPlayer.connection.send(new ClientboundSetExperiencePacket(newPlayer.experienceProgress,
+				newPlayer.totalExperience, newPlayer.experienceLevel));
 		list.sendLevelInfo(newPlayer, newLevel);
 		list.sendPlayerPermissionLevel(newPlayer);
 		newLevel.addRespawnedPlayer(newPlayer);
