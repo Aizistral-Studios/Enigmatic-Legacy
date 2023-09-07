@@ -17,17 +17,13 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ToolAction;
 
 public abstract class ItemBaseTool extends DiggerItem implements ICreativeTabMember {
-	public Set<Material> effectiveMaterials;
 	public Set<ToolAction> toolActions;
 
 	public ItemBaseTool(float attackDamageIn, float attackSpeedIn, Tier tier, TagKey<Block> effectiveBlocksIn, Properties builder) {
 		super(attackDamageIn, attackSpeedIn, tier, effectiveBlocksIn, builder);
-
-		this.effectiveMaterials = Sets.newHashSet();
 		this.toolActions = Sets.newHashSet();
 	}
 
@@ -40,14 +36,13 @@ public abstract class ItemBaseTool extends DiggerItem implements ICreativeTabMem
 	}
 
 	@Override
-	public boolean isCorrectToolForDrops(ItemStack stack, BlockState blockIn) {
-		return super.isCorrectToolForDrops(stack, blockIn) || this.effectiveMaterials.contains(blockIn.getMaterial());
+	public boolean isCorrectToolForDrops(ItemStack stack, BlockState blockIn) { // TODO Something about this
+		return super.isCorrectToolForDrops(stack, blockIn) /*|| this.effectiveMaterials.contains(blockIn.getMaterial())*/;
 	}
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
-		Material material = state.getMaterial();
-		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.speed;
+		return !this.isCorrectToolForDrops(stack, state) ? super.getDestroySpeed(stack, state) : this.speed;
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package com.aizistral.enigmaticlegacy.helpers;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import java.util.function.Predicate;
 
 import javax.annotation.Nullable;
 
@@ -25,7 +26,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -34,7 +34,7 @@ public class AOEMiningHelper {
 	public static final Random random = new Random();
 
 	/** Attempt to break blocks around the given pos in a 3x3x1 square relative to the targeted face.*/
-	public static void attemptBreakNeighbors(Level world, BlockPos pos, Player player, Set<Block> effectiveOn, Set<Material> effectiveMaterials, boolean checkHarvestLevel) {
+	public static void attemptBreakNeighbors(Level world, BlockPos pos, Player player, Set<Block> effectiveOn, Predicate<BlockState> predicate, boolean checkHarvestLevel) {
 		HitResult trace = AOEMiningHelper.calcRayTrace(world, player, ClipContext.Fluid.ANY);
 
 		if (trace.getType() == HitResult.Type.BLOCK) {
@@ -62,7 +62,7 @@ public class AOEMiningHelper {
 						target = pos.offset(0, a, b);
 					}
 
-					AOEMiningHelper.attemptBreak(world, target, player, effectiveOn, effectiveMaterials, fortuneLevel, silkLevel, checkHarvestLevel, null, (objPos, objState) -> {
+					AOEMiningHelper.attemptBreak(world, target, player, effectiveOn, predicate, fortuneLevel, silkLevel, checkHarvestLevel, null, (objPos, objState) -> {
 					});
 				}
 			}
@@ -78,12 +78,12 @@ public class AOEMiningHelper {
 	 * or not damage the tool used for mining the block.
 	 */
 
-	public static void attemptBreak(Level world, BlockPos pos, Player player, Set<Block> effectiveOn, Set<Material> effectiveMaterials, int fortuneLevel, int silkLevel, boolean checkHarvestLevel, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
+	public static void attemptBreak(Level world, BlockPos pos, Player player, Set<Block> effectiveOn, Predicate<BlockState> predicate, int fortuneLevel, int silkLevel, boolean checkHarvestLevel, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
 		BlockState state = world.getBlockState(pos);
 		BlockEntity iCertainlyHopeYouHaveATileEntityLicense = world.getBlockEntity(pos);
 
 		boolean validHarvest = !checkHarvestLevel || player.getMainHandItem().isCorrectToolForDrops(state);
-		boolean isEffective = effectiveOn.contains(state.getBlock()) || effectiveMaterials.contains(state.getMaterial());
+		boolean isEffective = effectiveOn.contains(state.getBlock()) || predicate.test(state);
 		boolean unbreakable = state.is(BlockTags.WITHER_IMMUNE) || state.getBlock() == Blocks.SPAWNER || state.getDestroySpeed(world, pos) < 0F;
 
 		if (validHarvest && isEffective && !unbreakable) {
@@ -125,7 +125,7 @@ public class AOEMiningHelper {
 		}
 	}
 
-	public static void harvestPlane(Level world, Player player, Direction dir, BlockPos pos, Set<Material> effectiveMaterials, int radius, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
+	public static void harvestPlane(Level world, Player player, Direction dir, BlockPos pos, Predicate<BlockState> predicate, int radius, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
 		int fortuneLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, player.getMainHandItem());
 		int silkLevel = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getMainHandItem());
 		int supRad = (radius - 1) / 2;
@@ -149,12 +149,12 @@ public class AOEMiningHelper {
 						continue;
 					}
 
-				AOEMiningHelper.attemptBreak(world, target, player, Sets.newHashSet(), effectiveMaterials, fortuneLevel, silkLevel, harvestLevelCheck, tool, toolDamageConsumer);
+				AOEMiningHelper.attemptBreak(world, target, player, Sets.newHashSet(), predicate, fortuneLevel, silkLevel, harvestLevelCheck, tool, toolDamageConsumer);
 			}
 		}
 	}
 
-	public static void harvestCube(Level world, Player player, Direction dir, BlockPos centralPos, Set<Material> effectiveMaterials, int planeRadius, int depth, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
+	public static void harvestCube(Level world, Player player, Direction dir, BlockPos centralPos, Predicate<BlockState> predicate, int planeRadius, int depth, boolean harvestLevelCheck, @Nullable BlockPos excludedBlock, ItemStack tool, BiConsumer<BlockPos, BlockState> toolDamageConsumer) {
 
 		for (int a = 0; a < depth; a++) {
 			int x = 0;
@@ -180,7 +180,7 @@ public class AOEMiningHelper {
 				x += a;
 			}
 
-			AOEMiningHelper.harvestPlane(world, player, dir, new BlockPos(centralPos).offset(x, y, z), effectiveMaterials, planeRadius, harvestLevelCheck, excludedBlock, tool, toolDamageConsumer);
+			AOEMiningHelper.harvestPlane(world, player, dir, new BlockPos(centralPos).offset(x, y, z), predicate, planeRadius, harvestLevelCheck, excludedBlock, tool, toolDamageConsumer);
 		}
 	}
 

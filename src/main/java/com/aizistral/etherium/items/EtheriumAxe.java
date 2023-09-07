@@ -35,26 +35,13 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EtheriumAxe extends AxeItem implements IEtheriumTool, ICreativeTabMember {
-	public Set<Material> effectiveMaterials;
 
 	public EtheriumAxe() {
 		super(EnigmaticMaterials.ETHERIUM, 10, -3.2F, EtheriumUtil.defaultProperties(EtheriumAxe.class).fireResistant());
-
-		this.effectiveMaterials = Sets.newHashSet();
-		this.effectiveMaterials.add(Material.WOOD);
-		this.effectiveMaterials.add(Material.LEAVES);
-		this.effectiveMaterials.add(Material.CACTUS);
-		this.effectiveMaterials.add(Material.BAMBOO);
-		this.effectiveMaterials.add(Material.NETHER_WOOD);
-		this.effectiveMaterials.add(Material.BAMBOO_SAPLING);
-		this.effectiveMaterials.add(Material.VEGETABLE);
-
-		this.getConfig().getSorceryMaterial("INFUSED_WOOD").ifPresent(this.effectiveMaterials::add);
 	}
 
 	@Override
@@ -88,11 +75,11 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool, ICreativeTabM
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.getConfig().getAxeMiningVolume() != -1) {
+		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && /*this.effectiveMaterials.contains(state.getMaterial()) &&*/ !world.isClientSide && this.getConfig().getAxeMiningVolume() != -1) {
 			Direction face = Direction.UP;
 			int volume = this.getConfig().getAxeMiningVolume() + (this.getConfig().getAOEBoost((Player) entityLiving));
 
-			AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos.offset(0, (volume - 1) / 2, 0), this.effectiveMaterials, volume, volume, false, pos, stack, (objPos, objState) -> {
+			AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos.offset(0, (volume - 1) / 2, 0), (s) -> false, volume, volume, false, pos, stack, (objPos, objState) -> {
 				stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 			});
 		}
@@ -102,8 +89,7 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool, ICreativeTabM
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
-		Material material = state.getMaterial();
-		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.speed;
+		return !this.isCorrectToolForDrops(stack, state) ? super.getDestroySpeed(stack, state) : this.speed;
 	}
 
 	@Override

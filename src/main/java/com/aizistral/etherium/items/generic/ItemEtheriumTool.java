@@ -17,16 +17,12 @@ import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 
 public abstract class ItemEtheriumTool extends DiggerItem implements IEtheriumTool, ICreativeTabMember {
-	public Set<Material> effectiveMaterials;
 	public Set<TagKey<Block>> effectiveTags;
 
 	public ItemEtheriumTool(float attackDamageIn, float attackSpeedIn, TagKey<Block> blocks, Properties builder) {
 		super(attackDamageIn, attackSpeedIn, EnigmaticMaterials.ETHERIUM, blocks, builder);
-
-		this.effectiveMaterials = Sets.newHashSet();
 		this.effectiveTags = Sets.newHashSet();
 	}
 
@@ -37,21 +33,20 @@ public abstract class ItemEtheriumTool extends DiggerItem implements IEtheriumTo
 
 	@Override
 	public boolean isCorrectToolForDrops(ItemStack stack, BlockState blockIn) {
-		return super.isCorrectToolForDrops(stack, blockIn) || this.hasAnyTag(blockIn, this.effectiveTags) || this.effectiveMaterials.contains(blockIn.getMaterial());
+		return super.isCorrectToolForDrops(stack, blockIn) || this.hasAnyTag(blockIn, this.effectiveTags);
 	}
 
-	protected boolean hasAnyTag(BlockState blockstate, Set<TagKey<Block>> tags) {
-		return tags.stream().anyMatch(tag -> this.hasTag(blockstate, tag));
+	protected boolean hasAnyTag(BlockState state, Set<TagKey<Block>> tags) {
+		return tags.stream().anyMatch(tag -> this.hasTag(state, tag));
 	}
 
-	protected boolean hasTag(BlockState blockstate, TagKey<Block> tag) {
-		return blockstate.is(tag);
+	protected boolean hasTag(BlockState state, TagKey<Block> tag) {
+		return state.is(tag);
 	}
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
-		Material material = state.getMaterial();
-		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.speed;
+		return !this.hasAnyTag(state, this.effectiveTags) ? super.getDestroySpeed(stack, state) : this.speed;
 	}
 
 }

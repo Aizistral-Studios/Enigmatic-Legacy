@@ -4,19 +4,13 @@ import java.util.Set;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeHooks;
 
 public interface IBaseTool {
-	public Set<Material> getEffectiveMaterials();
 	public float getEfficiency();
 
 	default boolean canHarvestBlock(BlockState blockIn, Player player) {
-		if (ForgeHooks.isCorrectToolForDrops(blockIn, player))
-			return true;
-
-		Material material = blockIn.getMaterial();
-		return this.getEffectiveMaterials().contains(material);
+		return ForgeHooks.isCorrectToolForDrops(blockIn, player);
 	}
 
 	/*default float getDestroySpeed(ItemStack stack, BlockState state) {

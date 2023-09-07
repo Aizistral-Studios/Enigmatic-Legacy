@@ -32,11 +32,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BucketPickup;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.SpongeBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -161,7 +161,6 @@ public class MegaSponge extends ItemBaseCurio implements Vanishable {
 						player.getCooldowns().addCooldown(this, 20);
 
 					}
-
 			}
 		}
 	}
@@ -171,7 +170,7 @@ public class MegaSponge extends ItemBaseCurio implements Vanishable {
 			// Whatever
 		} else if (state.getBlock() instanceof LiquidBlock) {
 			world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
-		} else if (state.getMaterial() == Material.WATER_PLANT || state.getMaterial() == Material.REPLACEABLE_WATER_PLANT) {
+		} else if (!state.is(Blocks.KELP) && !state.is(Blocks.KELP_PLANT) && !state.is(Blocks.SEAGRASS) && !state.is(Blocks.TALL_SEAGRASS)) {
 			BlockEntity tileentity = state.hasBlockEntity() ? world.getBlockEntity(pos) : null;
 			Block.dropResources(state, world, pos, tileentity);
 			world.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);

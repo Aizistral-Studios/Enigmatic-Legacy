@@ -38,7 +38,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -46,25 +45,12 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 
 public class EtheriumScythe extends SwordItem implements IEtheriumTool {
-	protected static final Map<Block, BlockState> HOE_LOOKUP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK, Blocks.FARMLAND.defaultBlockState(), Blocks.DIRT_PATH, Blocks.FARMLAND.defaultBlockState(), Blocks.DIRT, Blocks.FARMLAND.defaultBlockState(), Blocks.COARSE_DIRT, Blocks.DIRT.defaultBlockState()));
-	public Set<Material> effectiveMaterials;
+	protected static final Map<Block, BlockState> HOE_LOOKUP = Maps.newHashMap(ImmutableMap.of(Blocks.GRASS_BLOCK,
+			Blocks.FARMLAND.defaultBlockState(), Blocks.DIRT_PATH, Blocks.FARMLAND.defaultBlockState(), Blocks.DIRT,
+			Blocks.FARMLAND.defaultBlockState(), Blocks.COARSE_DIRT, Blocks.DIRT.defaultBlockState()));
 
 	public EtheriumScythe() {
 		super(EnigmaticMaterials.ETHERIUM, 3, -2.0F, EtheriumUtil.defaultProperties(EtheriumScythe.class).fireResistant());
-
-		this.effectiveMaterials = Sets.newHashSet();
-		this.effectiveMaterials.add(Material.LEAVES);
-		this.effectiveMaterials.add(Material.BAMBOO);
-		this.effectiveMaterials.add(Material.BAMBOO_SAPLING);
-		this.effectiveMaterials.add(Material.REPLACEABLE_WATER_PLANT);
-		this.effectiveMaterials.add(Material.PLANT);
-		this.effectiveMaterials.add(Material.WATER_PLANT);
-		this.effectiveMaterials.add(Material.REPLACEABLE_PLANT);
-		this.effectiveMaterials.add(Material.CACTUS);
-		this.effectiveMaterials.add(Material.VEGETABLE);
-		this.effectiveMaterials.add(Material.MOSS);
-		this.effectiveMaterials.add(Material.REPLACEABLE_FIREPROOF_PLANT);
-		this.effectiveMaterials.add(Material.SCULK);
 	}
 
 	@Override
@@ -139,11 +125,11 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.getConfig().getScytheMiningVolume() != -1) {
+		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && /*this.effectiveMaterials.contains(state.getMaterial()) &&*/ !world.isClientSide && this.getConfig().getScytheMiningVolume() != -1) {
 			Direction face = Direction.UP;
 			int volume = this.getConfig().getScytheMiningVolume() + (this.getConfig().getAOEBoost((Player) entityLiving));
 
-			AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos.offset(0, (volume - 1) / 2, 0), this.effectiveMaterials, volume, volume, false, pos, stack, (objPos, objState) -> {
+			AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos.offset(0, (volume - 1) / 2, 0), (s) -> false, volume, volume, false, pos, stack, (objPos, objState) -> {
 				stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 			});
 		}
@@ -153,8 +139,7 @@ public class EtheriumScythe extends SwordItem implements IEtheriumTool {
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
-		Material material = state.getMaterial();
-		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.getTier().getSpeed();
+		return !this.isCorrectToolForDrops(stack, state) ? super.getDestroySpeed(stack, state) : this.getTier().getSpeed();
 	}
 
 }

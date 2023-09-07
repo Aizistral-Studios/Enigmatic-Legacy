@@ -31,7 +31,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -46,18 +45,6 @@ public class EtheriumPickaxe extends ItemEtheriumTool {
 				EtheriumUtil.defaultProperties(EtheriumPickaxe.class)
 				.defaultDurability((int) (EtheriumConfigHandler.instance().getToolMaterial().getUses() * 1.5))
 				.fireResistant());
-
-		this.effectiveMaterials.add(Material.METAL);
-		this.effectiveMaterials.add(Material.STONE);
-		this.effectiveMaterials.add(Material.HEAVY_METAL);
-		this.effectiveMaterials.add(Material.GLASS);
-		this.effectiveMaterials.add(Material.ICE_SOLID);
-		this.effectiveMaterials.add(Material.ICE);
-		this.effectiveMaterials.add(Material.SHULKER_SHELL);
-		this.effectiveMaterials.add(Material.AMETHYST);
-
-		this.getConfig().getSorceryMaterial("MARBLE").ifPresent(this.effectiveMaterials::add);
-		this.getConfig().getSorceryMaterial("BLACK_MARBLE").ifPresent(this.effectiveMaterials::add);
 	}
 
 	@Override
@@ -86,13 +73,13 @@ public class EtheriumPickaxe extends ItemEtheriumTool {
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.getConfig().getPickaxeMiningRadius() != -1) {
+		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.isCorrectToolForDrops(stack, state) && !world.isClientSide && this.getConfig().getPickaxeMiningRadius() != -1) {
 			HitResult trace = AOEMiningHelper.calcRayTrace(world, (Player) entityLiving, ClipContext.Fluid.ANY);
 			if (trace.getType() == HitResult.Type.BLOCK) {
 				BlockHitResult blockTrace = (BlockHitResult) trace;
 				Direction face = blockTrace.getDirection();
 
-				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, this.effectiveMaterials, this.getConfig().getPickaxeMiningRadius() + this.getConfig().getAOEBoost((Player) entityLiving), this.getConfig().getPickaxeMiningDepth(), true, pos, stack, (objPos, objState) -> {
+				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, (s) -> this.isCorrectToolForDrops(stack, s), this.getConfig().getPickaxeMiningRadius() + this.getConfig().getAOEBoost((Player) entityLiving), this.getConfig().getPickaxeMiningDepth(), true, pos, stack, (objPos, objState) -> {
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 				});
 			}

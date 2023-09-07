@@ -35,7 +35,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.api.distmarker.Dist;
@@ -44,21 +43,12 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 
 public class EtheriumShovel extends ItemEtheriumTool {
-	public Set<Material> effectiveMaterials;
 
 	public EtheriumShovel() {
 		super(2.5F, -3.0F, BlockTags.MINEABLE_WITH_SHOVEL, EtheriumUtil.defaultProperties(EtheriumShovel.class)
 				.defaultDurability((int) (EtheriumConfigHandler.instance().getToolMaterial().getUses() * 1.5))
 				.rarity(Rarity.RARE)
 				.fireResistant());
-
-		this.effectiveMaterials = Sets.newHashSet();
-		this.effectiveMaterials.add(Material.DIRT);
-		this.effectiveMaterials.add(Material.CLAY);
-		this.effectiveMaterials.add(Material.GRASS);
-		this.effectiveMaterials.add(Material.TOP_SNOW);
-		this.effectiveMaterials.add(Material.TOP_SNOW);
-		this.effectiveMaterials.add(Material.SAND);
 	}
 
 	@Override
@@ -87,14 +77,14 @@ public class EtheriumShovel extends ItemEtheriumTool {
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && this.getConfig().getShovelMiningRadius() != -1) {
+		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && /*this.effectiveMaterials.contains(state.getMaterial()) &&*/ !world.isClientSide && this.getConfig().getShovelMiningRadius() != -1) {
 			HitResult trace = AOEMiningHelper.calcRayTrace(world, (Player) entityLiving, ClipContext.Fluid.ANY);
 
 			if (trace.getType() == HitResult.Type.BLOCK) {
 				BlockHitResult blockTrace = (BlockHitResult) trace;
 				Direction face = blockTrace.getDirection();
 
-				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, this.effectiveMaterials, this.getConfig().getShovelMiningRadius() + this.getConfig().getAOEBoost((Player) entityLiving), this.getConfig().getShovelMiningDepth(), false, pos, stack, (objPos, objState) -> {
+				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, (s) -> false, this.getConfig().getShovelMiningRadius() + this.getConfig().getAOEBoost((Player) entityLiving), this.getConfig().getShovelMiningDepth(), false, pos, stack, (objPos, objState) -> {
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 				});
 			}
@@ -131,8 +121,7 @@ public class EtheriumShovel extends ItemEtheriumTool {
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
-		Material material = state.getMaterial();
-		return !this.effectiveMaterials.contains(material) ? super.getDestroySpeed(stack, state) : this.speed;
+		return !this.isCorrectToolForDrops(stack, state) ? super.getDestroySpeed(stack, state) : this.speed;
 	}
 
 	@Override

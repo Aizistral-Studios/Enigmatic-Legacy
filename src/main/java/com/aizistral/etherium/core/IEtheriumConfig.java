@@ -13,7 +13,6 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.fml.ModList;
 
 public interface IEtheriumConfig {
@@ -59,19 +58,5 @@ public interface IEtheriumConfig {
 	public void knockBack(LivingEntity entityIn, float strength, double xRatio, double zRatio);
 
 	public boolean isStandalone();
-
-	public default Optional<Material> getSorceryMaterial(String name) {
-		if (ModList.get().isLoaded("astralsorcery")) {
-			try {
-				Class<?> sorceryBlockMaterials = Class.forName("hellfirepvp.astralsorcery.common.lib.MaterialsAS");
-				Material material = (Material) sorceryBlockMaterials.getField(name).get(null);
-				return Optional.ofNullable(material);
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-		}
-
-		return Optional.empty();
-	}
 
 }

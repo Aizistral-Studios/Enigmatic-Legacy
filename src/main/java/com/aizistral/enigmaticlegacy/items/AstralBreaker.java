@@ -53,6 +53,7 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.network.PacketDistributor;
 
+// TODO Make sure Astral Breaker actually works
 public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool {
 	public static Omniconfig.IntParameter miningRadius;
 	public static Omniconfig.IntParameter miningDepth;
@@ -90,10 +91,6 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 				.defaultDurability(4000)
 				.rarity(Rarity.EPIC)
 				.fireResistant());
-
-		this.effectiveMaterials.addAll(((EtheriumPickaxe) this.findTool("etherium_pickaxe")).effectiveMaterials);
-		this.effectiveMaterials.addAll(((EtheriumAxe) this.findTool("etherium_axe")).effectiveMaterials);
-		this.effectiveMaterials.addAll(((EtheriumShovel) this.findTool("etherium_shovel")).effectiveMaterials);
 	}
 
 	private Item findTool(String name) {
@@ -130,14 +127,14 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 			this.spawnFlameParticles(world, pos);
 		}
 
-		if (entityLiving instanceof Player player && this.areaEffectsEnabled(player, stack) && this.effectiveMaterials.contains(state.getMaterial()) && !world.isClientSide && miningRadius.getValue() != -1) {
+		if (entityLiving instanceof Player player && this.areaEffectsEnabled(player, stack) /*&& this.effectiveMaterials.contains(state.getMaterial())*/ && !world.isClientSide && miningRadius.getValue() != -1) {
 			HitResult trace = AOEMiningHelper.calcRayTrace(world, player, ClipContext.Fluid.ANY);
 
 			if (trace.getType() == HitResult.Type.BLOCK) {
 				BlockHitResult blockTrace = (BlockHitResult) trace;
 				Direction face = blockTrace.getDirection();
 
-				AOEMiningHelper.harvestCube(world, player, face, pos, this.effectiveMaterials, miningRadius.getValue() + EtheriumConfigHandler.instance().getAOEBoost(player), miningDepth.getValue(), true, pos, stack, (objPos, objState) -> {
+				AOEMiningHelper.harvestCube(world, player, face, pos, (s) -> false, miningRadius.getValue() + EtheriumConfigHandler.instance().getAOEBoost(player), miningDepth.getValue(), true, pos, stack, (objPos, objState) -> {
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 					this.spawnFlameParticles(world, objPos);
 				});
