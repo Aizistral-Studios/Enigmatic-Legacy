@@ -15,6 +15,9 @@ public class Generator {
         DataGenerator generator = event.getGenerator();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
-        generator.addProvider(event.includeServer(), new ModItemTagsProvider(generator, new BlockTagsProvider(generator, EnigmaticLegacy.MODID, existingFileHelper), EnigmaticLegacy.MODID, existingFileHelper));
+        ModBlockTagsProvider blockTagsProvider = new ModBlockTagsProvider(generator, EnigmaticLegacy.MODID, existingFileHelper);
+
+        generator.addProvider(event.includeServer(), blockTagsProvider);
+        generator.addProvider(event.includeServer(), new ModItemTagsProvider(generator, blockTagsProvider, EnigmaticLegacy.MODID, existingFileHelper));
     }
 }

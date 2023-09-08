@@ -4,6 +4,7 @@ import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -52,5 +53,9 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 .add(EnigmaticItems.EVIL_INGOT);
         tag(Tags.Items.NUGGETS).add(EnigmaticItems.ETHERIUM_NUGGET);
         tag(Tags.Items.ORES).add(EnigmaticItems.ETHERIUM_ORE);
+
+        tag(ItemTags.COMPASSES)
+                .add(EnigmaticItems.SOUL_COMPASS)
+                .add(EnigmaticItems.THE_INFINITUM);
     }
 }
