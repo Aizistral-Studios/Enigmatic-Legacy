@@ -21,7 +21,8 @@ import net.minecraftforge.common.TierSortingRegistry;
 public enum EnigmaticMaterials implements Tier {
 	FORBIDDENAXE(0, 2000, 6.0F, 3.0F, 16, () -> Ingredient.EMPTY),
 	ENDERSLAYER(0, 2000, 6.0F, 3.0F, 16, () -> Ingredient.of(Blocks.OBSIDIAN)),
-	ETHERIUM(5, 3000, 8.0F, 5.0F, 32, () -> getEtheriumConfig().getRepairMaterial());
+	ETHERIUM(5, 3000, 8.0F, 5.0F, 32, () -> getEtheriumConfig().getRepairMaterial()),
+	CREATION(6, 10000, 32.0F, 0.0F, 40, () -> Ingredient.EMPTY);
 
 	private static IEtheriumConfig etheriumConfig;
 
@@ -42,7 +43,10 @@ public enum EnigmaticMaterials implements Tier {
 
 		if (harvestLevelIn == 5) {
 			TierSortingRegistry.registerTier(this, new ResourceLocation("enigmaticlegacy", "etherium"),
-					List.of((Object[])Tiers.values()), List.of());
+					List.of((Object[]) Tiers.values()), List.of());
+		} else if (harvestLevelIn == 6) {
+			TierSortingRegistry.registerTier(this, new ResourceLocation("enigmaticlegacy", "creation"),
+					List.of((Object[]) Tiers.values()), List.of());
 		}
 	}
 
