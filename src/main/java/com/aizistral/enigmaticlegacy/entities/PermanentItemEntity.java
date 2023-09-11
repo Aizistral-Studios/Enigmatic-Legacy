@@ -365,6 +365,11 @@ public class PermanentItemEntity extends Entity {
 		return false;
 	}
 
+	@Override
+	public boolean isCurrentlyGlowing() {
+		return true;
+	}
+
 	public ItemStack getItem() {
 		return this.getEntityData().get(PermanentItemEntity.ITEM);
 	}
