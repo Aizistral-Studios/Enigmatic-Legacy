@@ -109,6 +109,7 @@
 	"item.enigmaticlegacy.ichor_bottle": "Bottle of Ichor",
 	"item.enigmaticlegacy.quote_player": "Quote Player",
 	"item.enigmaticlegacy.insignia": "Charming Insignia",
+	"item.enigmaticlegacy.the_judgement": "The Judgement",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -998,6 +999,15 @@
 	"tooltip.enigmaticlegacy.endAnchor2": "§5Requires §6Ender Pearls§5 to recharge.",
 	"tooltip.enigmaticlegacy.endAnchor3": "§5Has §6%1$s§5 chance to not spend charge",
 	"tooltip.enigmaticlegacy.endAnchor4": "§5upon respawn.",
+	
+	"tooltip.enigmaticlegacy.theJudgement1": "§5Upon attack, deals damage to every",
+	"tooltip.enigmaticlegacy.theJudgement2": "§5creature within a radius of §6%s§6 blocks§5",
+	"tooltip.enigmaticlegacy.theJudgement3": "§5from the target.",
+	"tooltip.enigmaticlegacy.theJudgement4": "§5In §6Clear Drops§5 mode, also removes all",
+	"tooltip.enigmaticlegacy.theJudgement5": "§5drops in the attack radius.",
+	"tooltip.enigmaticlegacy.theJudgement6": "§dMode: %s",
+	"tooltip.enigmaticlegacy.theJudgementMode0": "§6Normal",
+	"tooltip.enigmaticlegacy.theJudgementMode1": "§6Clear Drops",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",
