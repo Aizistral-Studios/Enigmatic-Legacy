@@ -107,6 +107,8 @@
 	"item.enigmaticlegacy.enigmatic_eye_dormant": "Дремлющее око",
 	"item.enigmaticlegacy.enigmatic_eye_active": "Загадачное око",
 	"item.enigmaticlegacy.ichor_bottle": "Бутылочка ихора",
+	"item.enigmaticlegacy.quote_player": "Проигрыватель цитат",
+	"item.enigmaticlegacy.insignia": "Чарующая эмблема",
 	
 	"block.enigmaticlegacy.big_lamp": "Лампа",
 	"block.enigmaticlegacy.massive_lamp": "Укреплённая лампа",
@@ -964,8 +966,24 @@
 	"tooltip.enigmaticlegacy.enigmaticElytra2": "§5ускоряться вперед. Элитры повреждаются",
 	"tooltip.enigmaticlegacy.enigmaticElytra3": "§5быстрее при ускорении.",
 
-	"tooltip.enigmaticlegacy.ichorBottle1": "§5Чтобы презирать богов, надо их знать...",
-	"tooltip.enigmaticlegacy.ichorBottle2": "§5Выпей, чтобы получить §6+1§d Ячейку для амулета §5навсегда.",
+	"tooltip.enigmaticlegacy.enigmaticEyeAwakened1": "§5Тот, кто использует его для наблюдения за вами и окружающим миром, кажется,",
+	"tooltip.enigmaticlegacy.enigmaticEyeAwakened2": "§5не в состоянии физически добраться до вас, или не желает этого делать.",
+	"tooltip.enigmaticlegacy.enigmaticEyeAwakened3": "§5Независимо от того, способен ли он на это или просто",
+	"tooltip.enigmaticlegacy.enigmaticEyeAwakened4": "§5не желает устанавливать какой-либо контакт за пределами",
+	"tooltip.enigmaticlegacy.enigmaticEyeAwakened5": "§5ментального, это остается загадкой.",
+	"tooltip.enigmaticlegacy.enigmaticEyeAwakened6": "§5Раскрывает настоящие имена игроков, носящих §6Чарующую эмблему§5.",
+
+	"tooltip.enigmaticlegacy.quotePlayer1": "§5Нажмите §6Right-Click§5, чтобы проиграть выбранную цитату.",
+	"tooltip.enigmaticlegacy.quotePlayer2": "§5Нажмите §6Shift+Right-Click§5 для переключения",
+	"tooltip.enigmaticlegacy.quotePlayer3": "§5доступных цитат.",
+	"tooltip.enigmaticlegacy.quotePlayerSelection": "§dТекущая цитата: §6%1$s",
+
+	"tooltip.enigmaticlegacy.insignia1": "§5Заменяет ваше имя, если переименовать в §6Наковальне§5.",
+	"tooltip.enigmaticlegacy.insignia2": "§5Позволяет вам видеть своё имя.",
+	"tooltip.enigmaticlegacy.insignia3": "§6Shift+Right-Click§5 чтобы включить.",
+	"tooltip.enigmaticlegacy.insigniaTagDisplayEnabled": "§dОтображение имени: §6Включено",
+	"tooltip.enigmaticlegacy.insigniaTagDisplayDisabled": "§dОтображение имени: §6Отключено",
+	"tooltip.enigmaticlegacy.insigniaName": "§dТекущее имя: %1$s",
 	
 	"tooltip.enigmaticlegacy.endAnchor1": "§5Работает во всех измерениях.",
 	"tooltip.enigmaticlegacy.endAnchor1_alt": "§5Работает только в §6Краю.",
