@@ -960,18 +960,18 @@
 	"tooltip.enigmaticlegacy.enigmaticEye3": "§5рискнуть, привлечь внимание кого-то... или чего-то.",
 
 	"tooltip.enigmaticlegacy.enigmaticEyeAwakened1": "§5Тот, кто использует его для наблюдения за вами и окружающим миром, кажется,",
-	"tooltip.enigmaticlegacy.enigmaticEyeAwakened2": "§5не в состоянии физически добраться до вас... Или не желает этого делать.",
-
-	"tooltip.enigmaticlegacy.enigmaticElytra1": "§5Удерживайте клавишу прыжка во время полета, чтобы постоянно",
-	"tooltip.enigmaticlegacy.enigmaticElytra2": "§5ускоряться вперед. Элитры повреждаются",
-	"tooltip.enigmaticlegacy.enigmaticElytra3": "§5быстрее при ускорении.",
-
-	"tooltip.enigmaticlegacy.enigmaticEyeAwakened1": "§5Тот, кто использует его для наблюдения за вами и окружающим миром, кажется,",
 	"tooltip.enigmaticlegacy.enigmaticEyeAwakened2": "§5не в состоянии физически добраться до вас, или не желает этого делать.",
 	"tooltip.enigmaticlegacy.enigmaticEyeAwakened3": "§5Независимо от того, способен ли он на это или просто",
 	"tooltip.enigmaticlegacy.enigmaticEyeAwakened4": "§5не желает устанавливать какой-либо контакт за пределами",
 	"tooltip.enigmaticlegacy.enigmaticEyeAwakened5": "§5ментального, это остается загадкой.",
 	"tooltip.enigmaticlegacy.enigmaticEyeAwakened6": "§5Раскрывает настоящие имена игроков, носящих §6Чарующую эмблему§5.",
+
+	"tooltip.enigmaticlegacy.enigmaticElytra1": "§5Удерживайте клавишу прыжка во время полета, чтобы постоянно",
+	"tooltip.enigmaticlegacy.enigmaticElytra2": "§5ускоряться вперед. Элитры повреждаются",
+	"tooltip.enigmaticlegacy.enigmaticElytra3": "§5быстрее при ускорении.",
+
+	"tooltip.enigmaticlegacy.ichorBottle1": "§5Чтобы презирать богов, надо их знать...",
+	"tooltip.enigmaticlegacy.ichorBottle2": "§5Выпей, чтобы получить §6+1§d Ячейку для амулета §5навсегда.",
 
 	"tooltip.enigmaticlegacy.quotePlayer1": "§5Нажмите §6Right-Click§5, чтобы проиграть выбранную цитату.",
 	"tooltip.enigmaticlegacy.quotePlayer2": "§5Нажмите §6Shift+Right-Click§5 для переключения",
