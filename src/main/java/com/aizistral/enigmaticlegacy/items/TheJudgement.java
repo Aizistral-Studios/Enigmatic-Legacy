@@ -1,26 +1,16 @@
 package com.aizistral.enigmaticlegacy.items;
 
-import java.util.List;
-
-import org.jetbrains.annotations.NotNull;
-
-import com.aizistral.enigmaticlegacy.api.items.ICursed;
-import com.aizistral.enigmaticlegacy.api.materials.EnigmaticMaterials;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
-import com.aizistral.enigmaticlegacy.items.generic.ItemBaseCurio;
-import com.aizistral.enigmaticlegacy.items.generic.ItemBaseTool;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticSounds;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -32,22 +22,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.decoration.HangingEntity;
-import net.minecraft.world.entity.decoration.ItemFrame;
-import net.minecraft.world.entity.decoration.Painting;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.LavaCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.util.List;
 
 public class TheJudgement extends ItemBase {
 	public static final float ATTACK_DAMAGE = 1000F;
@@ -77,14 +62,19 @@ public class TheJudgement extends ItemBase {
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (target.level().isClientSide)
+		if (target.level.isClientSide())
 			return false;
 
-		Level level = target.level();
-		boolean player = attacker instanceof Player;
+		Level level = target.level;
 		AABB box = target.getBoundingBox().inflate(64);
-		DamageSource source = player ? level.damageSources().playerAttack((Player) attacker)
-				: level.damageSources().mobAttack(attacker);
+
+		DamageSource source;
+
+		if (attacker instanceof Player player) {
+			source = DamageSource.playerAttack(player);
+		} else {
+			source = DamageSource.mobAttack(attacker);
+		}
 
 		var targets = level.getEntitiesOfClass(LivingEntity.class, box, e -> e != attacker && e != target
 				&& e.distanceToSqr(target) < ATTACK_RADIUS * ATTACK_RADIUS);
