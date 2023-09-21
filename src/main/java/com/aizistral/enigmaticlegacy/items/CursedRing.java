@@ -1,14 +1,5 @@
 package com.aizistral.enigmaticlegacy.items;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
-import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -20,7 +11,6 @@ import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -55,6 +45,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
 
+import javax.annotation.Nullable;
+import java.util.*;
+
 public class CursedRing extends ItemBaseCurio {
 	public static Omniconfig.PerhapsParameter painMultiplier;
 	public static Omniconfig.PerhapsParameter monsterDamageDebuff;
@@ -74,6 +67,9 @@ public class CursedRing extends ItemBaseCurio {
 	public static Omniconfig.BooleanParameter enableLore;
 	public static Omniconfig.BooleanParameter concealAbilities;
 	public static Omniconfig.BooleanParameter disableInsomnia;
+
+	public static Omniconfig.DoubleParameter equippedTimeRequired;
+	public static Omniconfig.IntParameter minimumTimeRequired;
 
 	public static Omniconfig.BooleanParameter ultraHardcore;
 	public static Omniconfig.BooleanParameter autoEquip;
@@ -177,6 +173,15 @@ public class CursedRing extends ItemBaseCurio {
 			saveTheBees = builder
 					.comment("If true, bees will never affected by the Second Curse of Ring of the Seven Curses.")
 					.getBoolean("DontTouchMyBees", false);
+
+			minimumTimeRequired = builder
+					.comment("Specify in ticks (20 ticks = 1 second) the amount of time the ring needs to be equipped before being able to unlock eldritch items.")
+					.max(20 * 60 * 60 * 24 * 5) // 5 days
+					.getInt("MinimumTimeRequired", 100_000);
+
+			equippedTimeRequired = builder
+					.comment("The % of playtime the ring needs to be equipped before being able to unlock eldritch items.")
+					.getDouble("equippedTimeRequired", 30.0);
 
 			// Ugly but gets the job done
 			neutralAngerBlacklist.clear();

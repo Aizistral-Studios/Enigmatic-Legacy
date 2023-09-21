@@ -1,30 +1,5 @@
 package com.aizistral.enigmaticlegacy.handlers;
 
-import java.io.File;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.security.MessageDigest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Optional;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.apache.commons.lang3.mutable.MutableBoolean;
-import org.apache.commons.lang3.tuple.ImmutableTriple;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.capabilities.IPlaytimeCounter;
 import com.aizistral.enigmaticlegacy.api.generic.ConfigurableItem;
@@ -33,6 +8,7 @@ import com.aizistral.enigmaticlegacy.api.items.ISpellstone;
 import com.aizistral.enigmaticlegacy.api.quack.IProperShieldUser;
 import com.aizistral.enigmaticlegacy.config.OmniconfigHandler;
 import com.aizistral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
+import com.aizistral.enigmaticlegacy.items.CursedRing;
 import com.aizistral.enigmaticlegacy.items.GolemHeart;
 import com.aizistral.enigmaticlegacy.items.InfernalShield;
 import com.aizistral.enigmaticlegacy.items.TheAcknowledgment;
@@ -56,7 +32,6 @@ import com.google.common.collect.Multimap;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.math.Matrix4f;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.client.Minecraft;
@@ -70,11 +45,7 @@ import net.minecraft.nbt.ByteTag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.CommonComponents;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.FormattedText;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.*;
 import net.minecraft.network.chat.contents.LiteralContents;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceKey;
@@ -144,6 +115,9 @@ import net.minecraftforge.forgespi.language.ModFileScanData;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
+import org.apache.commons.lang3.mutable.MutableBoolean;
+import org.apache.commons.lang3.tuple.ImmutableTriple;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.SlotTypeMessage;
@@ -152,6 +126,17 @@ import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 import top.theillusivec4.curios.api.type.util.ICuriosHelper;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.security.MessageDigest;
+import java.util.*;
+import java.util.Map.Entry;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * The core and vessel for most most of the handling methods in the Enigmatic Legacy.
@@ -1323,9 +1308,8 @@ public class SuperpositionHandler {
 		return isTheBlessedOne(player) && SuperpositionHandler.hasCurio(player, EnigmaticItems.COSMIC_SCROLL);
 	}
 
-	public static boolean isTheWorthyOne(Player player) {
+	public static boolean isTheWorthyOne(final Player player, final IPlaytimeCounter counter) {
 		if (isTheCursedOne(player)) {
-			var counter = IPlaytimeCounter.get(player);
 			long timeWithRing = counter.getTimeWithCurses();
 			long timeWithoutRing = counter.getTimeWithoutCurses();
 
@@ -1334,16 +1318,26 @@ public class SuperpositionHandler {
 			else if (timeWithoutRing <= 0)
 				return true;
 
-			return timeWithRing/timeWithoutRing >= 199L;
+			long total = timeWithRing + timeWithoutRing;
+			double percentage = ((double) timeWithRing / total) * 100;
+
+			return total >= CursedRing.minimumTimeRequired.getValue() && percentage >= CursedRing.equippedTimeRequired.getValue();
 		} else
 			return false;
 	}
 
-	public static String getSufferingTime(@Nullable Player player) {
+	public static boolean isTheWorthyOne(final Player player) {
+		if (!isTheCursedOne(player)) {
+			return false;
+		}
+
+		return isTheWorthyOne(player, IPlaytimeCounter.get(player));
+	}
+
+	public static String getSufferingTime(@Nullable final Player player, final IPlaytimeCounter counter) {
 		if (player == null)
 			return "0%";
 		else {
-			var counter = IPlaytimeCounter.get(player);
 			long timeWithRing = counter.getTimeWithCurses();
 			long timeWithoutRing = counter.getTimeWithoutCurses();
 			if (timeWithRing <= 0)
@@ -1351,7 +1345,7 @@ public class SuperpositionHandler {
 			else if (timeWithoutRing <= 0)
 				return "100%";
 
-			if (timeWithRing > 100000 || timeWithoutRing > 100000) {
+			if (timeWithRing > 100_000 || timeWithoutRing > 1_000_00) {
 				timeWithRing = timeWithRing / 100;
 				timeWithoutRing = timeWithoutRing / 100;
 
@@ -1372,12 +1366,16 @@ public class SuperpositionHandler {
 				text += ringPercent + "%";
 			}
 
-			if ("99.5%".equals(text) && !isTheWorthyOne(player)) {
-				text = "99.4%";
-			}
-
 			return text;
 		}
+	}
+
+	public static String getSufferingTime(@Nullable final Player player) {
+		if (player == null) {
+			return "0%";
+		}
+
+		return getSufferingTime(player, IPlaytimeCounter.get(player));
 	}
 
 	public static float getMissingHealthPool(Player player) {

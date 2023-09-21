@@ -799,7 +799,7 @@
   "tooltip.enigmaticlegacy.cursedOnesOnly2": "才能使用该物品。",
   
   "tooltip.enigmaticlegacy.worthyOnesOnly1": "§5获得使用这种物品的资格需要付出极大的牺牲：",
-  "tooltip.enigmaticlegacy.worthyOnesOnly2": "§5你必须在自来到世界以来§699.5%§的时间",
+  "tooltip.enigmaticlegacy.worthyOnesOnly2": "§5你必须在自来到世界以来§6{0}%§的时间",
   "tooltip.enigmaticlegacy.worthyOnesOnly3": "§5都在七咒的折磨下度过。",
   "tooltip.enigmaticlegacy.worthyOnesOnly4": "目前这段时间的占比为：",
 

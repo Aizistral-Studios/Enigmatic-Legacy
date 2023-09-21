@@ -1,12 +1,9 @@
 package com.aizistral.enigmaticlegacy.helpers;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.capabilities.IPlaytimeCounter;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
-
+import com.aizistral.enigmaticlegacy.items.CursedRing;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -18,6 +15,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ItemLoreHelper {
 
@@ -43,15 +43,30 @@ public class ItemLoreHelper {
 		ChatFormatting format = ChatFormatting.DARK_RED;
 		Player player = Minecraft.getInstance().player;
 
+		String percentageText = " ";
+		boolean hasToWait = false;
+
 		if (player != null) {
-			format = SuperpositionHandler.isTheWorthyOne(Minecraft.getInstance().player) ? ChatFormatting.GOLD : ChatFormatting.DARK_RED;
+			IPlaytimeCounter counter = IPlaytimeCounter.get(player);
+			hasToWait = counter.getTimeWithCurses() < CursedRing.minimumTimeRequired.getValue();
+			percentageText += SuperpositionHandler.getSufferingTime(player, counter);
+
+			if (SuperpositionHandler.isTheWorthyOne(player, counter)) {
+				format = ChatFormatting.GOLD;
+			}
+		} else {
+			percentageText += "0%";
 		}
 
 		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly1"));
-		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly2"));
+		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly2", CursedRing.equippedTimeRequired.getValue()));
 		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly3"));
 		list.add(Component.translatable("tooltip.enigmaticlegacy.void"));
-		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly4").withStyle(format).append(Component.literal(" " + SuperpositionHandler.getSufferingTime(player)).withStyle(ChatFormatting.LIGHT_PURPLE)));
+		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly4").withStyle(format).append(Component.literal(percentageText).withStyle(ChatFormatting.LIGHT_PURPLE)));
+
+		if (hasToWait) {
+			list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly5").withStyle(format));
+		}
 	}
 
 	@OnlyIn(Dist.CLIENT)
