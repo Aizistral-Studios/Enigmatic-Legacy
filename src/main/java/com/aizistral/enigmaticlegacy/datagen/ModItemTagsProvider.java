@@ -17,6 +17,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
     @Override
     @SuppressWarnings("ConstantConditions")
     protected void addTags() {
+        // Tools
         tag(Tags.Items.TOOLS)
                 .add(EnigmaticItems.ENDER_SLAYER)
                 .add(EnigmaticItems.FORBIDDEN_AXE)
@@ -38,6 +39,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(Tags.Items.TOOLS_HOES).add(EnigmaticItems.ETHERIUM_SCYTHE);
         tag(Tags.Items.TOOLS_SHIELDS).add(EnigmaticItems.INFERNAL_SHIELD);
 
+        // Armor
         tag(Tags.Items.ARMORS)
                 .add(EnigmaticItems.ETHERIUM_HELMET)
                 .add(EnigmaticItems.ETHERIUM_CHESTPLATE)
@@ -48,12 +50,11 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(Tags.Items.ARMORS_LEGGINGS).add(EnigmaticItems.ETHERIUM_LEGGINGS);
         tag(Tags.Items.ARMORS_BOOTS).add(EnigmaticItems.ETHERIUM_BOOTS);
 
+        // Misc.
         tag(Tags.Items.INGOTS)
                 .add(EnigmaticItems.ETHERIUM_INGOT)
                 .add(EnigmaticItems.EVIL_INGOT);
         tag(Tags.Items.NUGGETS).add(EnigmaticItems.ETHERIUM_NUGGET);
-        tag(Tags.Items.ORES).add(EnigmaticItems.ETHERIUM_ORE);
-
         tag(ItemTags.COMPASSES)
                 .add(EnigmaticItems.SOUL_COMPASS)
                 .add(EnigmaticItems.THE_INFINITUM);

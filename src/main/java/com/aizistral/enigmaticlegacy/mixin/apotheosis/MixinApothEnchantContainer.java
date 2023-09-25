@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 @Pseudo
-@Mixin(targets = "shadows.apotheosis.ench.table.ApothEnchantContainer", priority = 1500) // Probably not needed anymore
+@Mixin(targets = "shadows.apotheosis.ench.table.ApothEnchantmentMenu", priority = 1500) // Probably not needed anymore
 public abstract class MixinApothEnchantContainer extends EnchantmentMenu {
     @Unique
     private ItemStack enigmaticLegacy$copyBeforeEnchanted;
@@ -102,7 +102,7 @@ public abstract class MixinApothEnchantContainer extends EnchantmentMenu {
     /**
      * Without explicitly naming the class path here it will crash due to not finding a proper injection point
      */
-    @ModifyVariable(method = "shadows.apotheosis.ench.table.ApothEnchantContainer.clickMenuButton(Lnet/minecraft/world/entity/player/Player;I)Z", at = @At(value = "STORE"), name = "lapis")
+    @ModifyVariable(method = "shadows.apotheosis.ench.table.ApothEnchantmentMenu.clickMenuButton(Lnet/minecraft/world/entity/player/Player;I)Z", at = @At(value = "STORE"), name = "lapis")
     public ItemStack fakeLapis(final ItemStack lapis, /* Method parameters: */ final Player player) {
         if (EnigmaticItems.ENCHANTER_PEARL.isPresent(player)) {
             ItemStack fakeLapis = Items.LAPIS_LAZULI.getDefaultInstance();

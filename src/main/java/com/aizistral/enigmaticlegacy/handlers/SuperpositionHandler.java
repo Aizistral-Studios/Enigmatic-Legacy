@@ -1318,6 +1318,12 @@ public class SuperpositionHandler {
 			else if (timeWithoutRing <= 0)
 				return true;
 
+			// Is this to prevent from numbers getting too high?
+			if (timeWithRing > 100_000 || timeWithoutRing > 100_000) {
+				timeWithRing = timeWithRing / 100;
+				timeWithoutRing = timeWithoutRing / 100;
+			}
+
 			long total = timeWithRing + timeWithoutRing;
 			double percentage = ((double) timeWithRing / total) * 100;
 
@@ -1345,7 +1351,7 @@ public class SuperpositionHandler {
 			else if (timeWithoutRing <= 0)
 				return "100%";
 
-			if (timeWithRing > 100_000 || timeWithoutRing > 1_000_00) {
+			if (timeWithRing > 100_000 || timeWithoutRing > 100_000) {
 				timeWithRing = timeWithRing / 100;
 				timeWithoutRing = timeWithoutRing / 100;
 
