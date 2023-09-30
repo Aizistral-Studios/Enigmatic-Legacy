@@ -73,6 +73,9 @@ public class CursedRing extends ItemBaseCurio {
 
 	public static Omniconfig.BooleanParameter ultraHardcore;
 	public static Omniconfig.BooleanParameter autoEquip;
+
+	public static Omniconfig.BooleanParameter startWith;
+
 	public static final List<ResourceLocation> neutralAngerBlacklist = new ArrayList<>();
 
 	@SubscribeConfig(receiveClient = true)
@@ -177,11 +180,16 @@ public class CursedRing extends ItemBaseCurio {
 			minimumTimeRequired = builder
 					.comment("Specify in ticks (20 ticks = 1 second) the amount of time the ring needs to be equipped before being able to unlock eldritch items.")
 					.max(20 * 60 * 60 * 24 * 5) // 5 days
-					.getInt("MinimumTimeRequired", 100_000);
+					.getInt("MinimumTimeRequired", 20 * 60 * 60 * 2); // 2 hours
 
 			equippedTimeRequired = builder
 					.comment("The % of playtime the ring needs to be equipped before being able to unlock eldritch items.")
+					.max(100.0)
 					.getDouble("equippedTimeRequired", 30.0);
+
+			startWith = builder
+					.comment("Whether a player should start with this item or not.")
+					.getBoolean("startWith", true);
 
 			// Ugly but gets the job done
 			neutralAngerBlacklist.clear();

@@ -3081,7 +3081,7 @@ public class EnigmaticEventHandler {
 		 * the world.
 		 */
 
-		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ENIGMATIC_AMULET))
+		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ENIGMATIC_AMULET) && EnigmaticAmulet.startWith.getValue())
 			if (!SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_ENIGMATICGIFT)) {
 
 				ItemStack amuletStack = new ItemStack(EnigmaticItems.ENIGMATIC_AMULET);
@@ -3109,8 +3109,7 @@ public class EnigmaticEventHandler {
 		/*
 		 * Another one for Ring of the Seven Curses.
 		 */
-
-		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.CURSED_RING))
+		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.CURSED_RING) && CursedRing.startWith.getValue())
 			if (!SuperpositionHandler.hasPersistentTag(player, EnigmaticEventHandler.NBT_KEY_CURSEDGIFT)) {
 				ItemStack cursedRingStack = new ItemStack(EnigmaticItems.CURSED_RING);
 

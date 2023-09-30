@@ -49,6 +49,7 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	public static Omniconfig.BooleanParameter seededColorGen;
 	public static Omniconfig.BooleanParameter multiequip;
 	public static Omniconfig.DoubleParameter savedXPFraction;
+	public static Omniconfig.BooleanParameter startWith;
 	public static final String amuletColorTag = "AssignedColor";
 	public static final String amuletInscriptionTag = "Inscription";
 
@@ -82,6 +83,10 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 				.comment("What fraction of player's experience should be stored in Extradimensional Vessel upon their death. "
 						+ "Experience that is not stored will be lost forever. 1.0 means that all experience is saved.")
 				.max(1).getDouble("SavedXPFraction", 1.0);
+
+		startWith = builder
+				.comment("Whether a player should start with this item or not.")
+				.getBoolean("startWith", true);
 
 		builder.popPrefix();
 	}
