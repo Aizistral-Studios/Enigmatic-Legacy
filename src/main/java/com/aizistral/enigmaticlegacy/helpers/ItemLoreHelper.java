@@ -45,13 +45,16 @@ public class ItemLoreHelper {
 
 		String percentageText = " ";
 		boolean hasToWait = false;
+		boolean isTheWorthyOne = false;
 
 		if (player != null) {
 			IPlaytimeCounter counter = IPlaytimeCounter.get(player);
 			hasToWait = counter.getTimeWithCurses() < CursedRing.minimumTimeRequired.getValue();
 			percentageText += SuperpositionHandler.getSufferingTime(player, counter);
 
-			if (SuperpositionHandler.isTheWorthyOne(player, counter)) {
+			isTheWorthyOne = SuperpositionHandler.isTheWorthyOne(player, counter);
+
+			if (isTheWorthyOne) {
 				format = ChatFormatting.GOLD;
 			}
 		} else {
@@ -64,7 +67,7 @@ public class ItemLoreHelper {
 		list.add(Component.translatable("tooltip.enigmaticlegacy.void"));
 		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly4").withStyle(format).append(Component.literal(percentageText).withStyle(ChatFormatting.LIGHT_PURPLE)));
 
-		if (hasToWait) {
+		if (isTheWorthyOne && hasToWait) {
 			list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly5").withStyle(format));
 		}
 	}
