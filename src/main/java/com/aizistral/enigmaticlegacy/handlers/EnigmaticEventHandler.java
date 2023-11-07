@@ -2442,9 +2442,8 @@ public class EnigmaticEventHandler {
 				ServerLevel respawnLevel = ServerLifecycleHooks.getCurrentServer().getLevel(player.getRespawnDimension());
 				boolean isEndAnchor = false;
 
-				if (respawnLevel.getBlockState(respawnPos).is(EnigmaticBlocks.END_ANCHOR)) {
-					dimPoint = new DimensionalPosition(respawnPos.getX() + 0.5, respawnPos.getY() + 1.5,
-							respawnPos.getZ() + 0.5, respawnLevel);
+				if (respawnPos != null && respawnLevel.getBlockState(respawnPos).is(EnigmaticBlocks.END_ANCHOR)) {
+					dimPoint = new DimensionalPosition(respawnPos.getX() + 0.5, respawnPos.getY() + 1.5, respawnPos.getZ() + 0.5, respawnLevel);
 					isEndAnchor = true;
 				}
 
