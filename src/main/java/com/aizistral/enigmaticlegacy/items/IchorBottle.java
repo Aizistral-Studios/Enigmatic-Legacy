@@ -28,7 +28,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class IchorBottle extends ItemBasePotion {
 
 	public IchorBottle() {
-		super(getDefaultProperties().stacksTo(1).rarity(Rarity.UNCOMMON).fireResistant());
+		super(getDefaultProperties().rarity(Rarity.UNCOMMON).fireResistant());
 	}
 
 	@Override

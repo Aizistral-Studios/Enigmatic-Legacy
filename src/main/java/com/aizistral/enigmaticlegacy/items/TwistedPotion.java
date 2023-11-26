@@ -33,7 +33,7 @@ import net.minecraftforge.network.PacketDistributor;
 public class TwistedPotion extends ItemBasePotion implements ICursed {
 
 	public TwistedPotion() {
-		super(getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC));
+		super(getDefaultProperties().rarity(Rarity.EPIC));
 	}
 
 	@Override

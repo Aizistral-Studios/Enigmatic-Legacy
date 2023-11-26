@@ -15,13 +15,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public abstract class ItemBasePotion extends ItemBase {
-
 	public ItemBasePotion() {
-		this(getDefaultProperties().stacksTo(1));
+		this(getDefaultProperties());
 	}
 
 	public ItemBasePotion(Properties props) {
-		super(props);
+		super(props.stacksTo(ItemBasePotion.getStackSize()));
 	}
 
 	@Override
@@ -82,4 +81,7 @@ public abstract class ItemBasePotion extends ItemBase {
 		// NO-OP
 	}
 
+	public static int getStackSize() {
+		return 16;
+	}
 }

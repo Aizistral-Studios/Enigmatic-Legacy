@@ -1,4 +1,4 @@
-// 1.19.2	2023-09-09T01:08:09.2391511	Tags for minecraft:item
+// 1.19.2	2023-11-26T12:17:09.4951963	Tags for minecraft:item
 33c36e9186d67be2a8635ae9b7e0c111340ab132 data/forge/tags/items/armors.json
 1c07b453f7ac8895b0e3309bd5e7b13cea14c79b data/forge/tags/items/armors/boots.json
 9ccdf2ea990caeeae1c4369124d3703bde9a1d96 data/forge/tags/items/armors/chestplates.json
@@ -6,7 +6,6 @@
 e218ca8264a369ccc2575f8d9507d513582f5b90 data/forge/tags/items/armors/leggings.json
 9afe4004c5634d47c2af72885378b24241900f08 data/forge/tags/items/ingots.json
 8bb76ff4cd8f5c9649397f7b2223dcc199c28e16 data/forge/tags/items/nuggets.json
-055de05f881de64ae985e82f19254c0efaea5891 data/forge/tags/items/ores.json
 d3a15f671247cd004d48e52d361cd3e11691a149 data/forge/tags/items/tools.json
 8be60a15ba878eb0c3ef03a9909949a5082b9dc2 data/forge/tags/items/tools/axes.json
 7a6156a85b571346f16cff09742799cbbc94bd8f data/forge/tags/items/tools/hoes.json

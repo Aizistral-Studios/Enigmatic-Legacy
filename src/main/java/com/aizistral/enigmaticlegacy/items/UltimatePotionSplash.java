@@ -11,6 +11,7 @@ import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.helpers.PotionHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
+import com.aizistral.enigmaticlegacy.items.generic.ItemBasePotion;
 import com.aizistral.enigmaticlegacy.objects.AdvancedPotion;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticPotions;
 
@@ -35,7 +36,7 @@ public class UltimatePotionSplash extends ItemBase implements IAdvancedPotionIte
 	public PotionType potionType;
 
 	public UltimatePotionSplash(Rarity rarity, PotionType type) {
-		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(1).tab(EnigmaticLegacy.POTION_TAB));
+		super(ItemBase.getDefaultProperties().rarity(rarity).stacksTo(ItemBasePotion.getStackSize()).tab(EnigmaticLegacy.POTION_TAB));
 
 		this.potionType = type;
 	}
