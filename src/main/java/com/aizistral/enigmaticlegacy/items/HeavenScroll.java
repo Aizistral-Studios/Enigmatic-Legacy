@@ -70,29 +70,46 @@ public class HeavenScroll extends ItemBaseCurio {
 		}
 	}
 
+	// Don't charge xp if the player is in creative mode for some reason
+	// but do only charge them when they are actually flying.
+	protected boolean shouldCheckXpDrain(Player player) {
+		return !player.isCreative() && player.getAbilities().flying;
+	}
+
+	protected boolean canFly(Player player, boolean inRangeCheckedAndSucceeded)
+	{
+		return ExperienceHelper.getPlayerXP(player) > 0 && (inRangeCheckedAndSucceeded || SuperpositionHandler.isInBeaconRange(player));
+	}
+
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
 		if (context.entity().level.isClientSide)
 			return;
 
 		if (context.entity() instanceof Player player) {
-			if (Math.random() <= (this.baseXpConsumptionProbability * xpCostModifier.getValue()) && player.getAbilities().flying) {
-				ExperienceHelper.drainPlayerXP(player, 1);
+			//since we don't need to check if in range of beacon here, we can run this xp check every frame.
+			if (shouldCheckXpDrain(player) && Math.random() <= this.baseXpConsumptionProbability) {
+				//hook into xp cost modifier from config.
+				ExperienceHelper.drainPlayerXP(player, (int) xpCostModifier.getValue());
 			}
 
-			this.handleFlight(player);
+			// we pass false here, because we only want heaven scroll to check beacon
+			// range once per 20 ticks which is handled in the below function.
+			this.handleFlight(player, false);
 		}
-
 	}
 
-	protected void handleFlight(Player player) {
+	protected void handleFlight(Player player, boolean inRangeCheckedAndSucceeded) {
+		//don't check in range every tick as it is expensive. Particularly for multiple people.
+		//instead, check once per second, based on the player's tick count
+		//If we're here from fabulous scroll, we automatically know we can skip this
+		if (player.tickCount % 20 != 0)
+			return;
+
 		try {
-			if (ExperienceHelper.getPlayerXP(player) > 0 && SuperpositionHandler.isInBeaconRange(player)) {
-
-				if (!player.getAbilities().mayfly) {
-					player.getAbilities().mayfly = true;
-				}
-
+			if (canFly(player, inRangeCheckedAndSucceeded)) {
+				player.getAbilities().mayfly = true;
+				//since we're only updating once per 20 ticks, we can leave this here as we won't be spamming update packets
 				player.onUpdateAbilities();
 				this.flyMap.put(player, 100);
 
