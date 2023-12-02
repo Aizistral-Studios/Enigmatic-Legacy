@@ -111,7 +111,8 @@ public class HeavenScroll extends ItemBaseCurio {
 				player.getAbilities().mayfly = true;
 				//since we're only updating once per 20 ticks, we can leave this here as we won't be spamming update packets
 				player.onUpdateAbilities();
-				this.flyMap.put(player, 100);
+				//reduced from 100 down to 5, as we now only run this code once per second.
+				this.flyMap.put(player, 5);
 
 			} else if (this.flyMap.get(player) > 1) {
 				this.flyMap.put(player, this.flyMap.get(player)-1);
