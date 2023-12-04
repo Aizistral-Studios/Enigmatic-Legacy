@@ -948,13 +948,9 @@ public class EnigmaticEventHandler {
 	public void onEntitySpawn(MobSpawnEvent.FinalizeSpawn event) {
 		if (event.getSpawnType() == MobSpawnType.NATURAL) {
 			LivingEntity entity = event.getEntity();
-
-			if (entity instanceof Piglin || entity instanceof ZombifiedPiglin || entity instanceof IronGolem
-					|| entity instanceof EnderMan) {
-				if (DESOLATION_BOXES.values().stream().anyMatch(entity.getBoundingBox()::intersects)) {
+			if (DESOLATION_BOXES.values().stream().anyMatch(entity.getBoundingBox()::intersects)) {
 					event.setSpawnCancelled(true);
 					event.setCanceled(true);
-				}
 			}
 		}
 	}
