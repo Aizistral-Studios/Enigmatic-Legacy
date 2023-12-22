@@ -22,6 +22,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -34,14 +36,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class EtheriumAxe extends AxeItem implements IEtheriumTool, ICreativeTabMember {
+	public Set<TagKey<Block>> effectiveTags;
 
 	public EtheriumAxe() {
 		super(EnigmaticMaterials.ETHERIUM, 10, -3.2F, EtheriumUtil.defaultProperties(EtheriumAxe.class).fireResistant());
+		this.effectiveTags = Sets.newHashSet();
+		this.effectiveTags.add(BlockTags.MINEABLE_WITH_AXE);
 	}
 
 	@Override
@@ -75,11 +81,11 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool, ICreativeTabM
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && /*this.effectiveMaterials.contains(state.getMaterial()) &&*/ !world.isClientSide && this.getConfig().getAxeMiningVolume() != -1) {
+		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.isCorrectToolForDrops(stack, state) && !world.isClientSide && this.getConfig().getAxeMiningVolume() != -1) {
 			Direction face = Direction.UP;
 			int volume = this.getConfig().getAxeMiningVolume() + (this.getConfig().getAOEBoost((Player) entityLiving));
 
-			AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos.offset(0, (volume - 1) / 2, 0), (s) -> false, volume, volume, false, pos, stack, (objPos, objState) -> {
+			AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos.offset(0, (volume - 1) / 2, 0), (s) -> this.isCorrectToolForDrops(stack, s), volume, volume, true, pos, stack, (objPos, objState) -> {
 				stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 			});
 		}
@@ -88,8 +94,21 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool, ICreativeTabM
 	}
 
 	@Override
+	public boolean isCorrectToolForDrops(ItemStack stack, BlockState blockIn) {
+		return super.isCorrectToolForDrops(stack, blockIn) || this.hasAnyTag(blockIn, this.effectiveTags);
+	}
+
+	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
-		return !this.isCorrectToolForDrops(stack, state) ? super.getDestroySpeed(stack, state) : this.speed;
+		return !this.hasAnyTag(state, this.effectiveTags) ? super.getDestroySpeed(stack, state) : this.getTier().getSpeed();
+	}
+
+	protected boolean hasAnyTag(BlockState state, Set<TagKey<Block>> tags) {
+		return tags.stream().anyMatch(tag -> this.hasTag(state, tag));
+	}
+
+	protected boolean hasTag(BlockState state, TagKey<Block> tag) {
+		return state.is(tag);
 	}
 
 	@Override
