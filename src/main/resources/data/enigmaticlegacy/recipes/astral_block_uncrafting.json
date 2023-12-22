@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:astral_block"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "enigmaticlegacy:astral_block"
+    }
+  ],
+  "result": {
+    "item": "enigmaticlegacy:astral_dust",
+	"count": 9
+  }
+}
