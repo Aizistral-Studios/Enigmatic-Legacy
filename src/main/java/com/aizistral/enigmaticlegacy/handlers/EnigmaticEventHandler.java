@@ -2002,7 +2002,7 @@ public class EnigmaticEventHandler {
 
 					for (var type : advancedCurio.resistanceList.keySet()) {
 						if (event.getSource().is(type)) {
-							event.setAmount(event.getAmount() * advancedCurio.resistanceList.get(event.getSource().typeHolder().unwrapKey()).get());
+							event.setAmount(event.getAmount() * advancedCurio.resistanceList.get(event.getSource().typeHolder().unwrapKey().get()).get());
 							break;
 						}
 					}
