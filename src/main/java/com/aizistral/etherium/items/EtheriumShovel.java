@@ -77,14 +77,14 @@ public class EtheriumShovel extends ItemEtheriumTool {
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entityLiving) {
-		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && /*this.effectiveMaterials.contains(state.getMaterial()) &&*/ !world.isClientSide && this.getConfig().getShovelMiningRadius() != -1) {
+		if (entityLiving instanceof Player && this.areaEffectsEnabled((Player) entityLiving, stack) && this.isCorrectToolForDrops(stack, state) && !world.isClientSide && this.getConfig().getShovelMiningRadius() != -1) {
 			HitResult trace = AOEMiningHelper.calcRayTrace(world, (Player) entityLiving, ClipContext.Fluid.ANY);
 
 			if (trace.getType() == HitResult.Type.BLOCK) {
 				BlockHitResult blockTrace = (BlockHitResult) trace;
 				Direction face = blockTrace.getDirection();
 
-				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, (s) -> false, this.getConfig().getShovelMiningRadius() + this.getConfig().getAOEBoost((Player) entityLiving), this.getConfig().getShovelMiningDepth(), false, pos, stack, (objPos, objState) -> {
+				AOEMiningHelper.harvestCube(world, (Player) entityLiving, face, pos, (s) -> this.isCorrectToolForDrops(stack, s), this.getConfig().getShovelMiningRadius() + this.getConfig().getAOEBoost((Player) entityLiving), this.getConfig().getShovelMiningDepth(), false, pos, stack, (objPos, objState) -> {
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 				});
 			}
@@ -102,11 +102,6 @@ public class EtheriumShovel extends ItemEtheriumTool {
 	}
 
 	@Override
-	public boolean isCorrectToolForDrops(BlockState blockIn) {
-		return Items.DIAMOND_SHOVEL.isCorrectToolForDrops(blockIn);
-	}
-
-	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 		player.startUsingItem(hand);
@@ -117,11 +112,6 @@ public class EtheriumShovel extends ItemEtheriumTool {
 			return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);
 		} else
 			return super.use(world, player, hand);
-	}
-
-	@Override
-	public float getDestroySpeed(ItemStack stack, BlockState state) {
-		return !this.isCorrectToolForDrops(stack, state) ? super.getDestroySpeed(stack, state) : this.speed;
 	}
 
 	@Override

@@ -31,6 +31,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Tuple;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.LevelResource;
 import net.minecraftforge.server.ServerLifecycleHooks;
@@ -48,10 +49,21 @@ public class SoulArchive {
 		this.saveFile = new File(saveFolder, "soul_archive.json");
 	}
 
+	public Optional<Tuple<UUID, BlockPos>> findNearest(Player player, BlockPos pos) {
+		var data =  this.data.get(player.level().dimension()).stream()
+				.filter(record -> record.type == 0)
+				.filter(record -> Objects.equals(record.ownerID, player.getUUID()))
+				.reduce((r1, r2) -> pos.distSqr(r1.pos) > pos.distSqr(r2.pos) ? r2 : r1)
+				.orElse(null);
+
+		return data != null ? Optional.of(new Tuple<>(data.id, data.pos)) : Optional.empty();
+	}
+
 	public Optional<Tuple<UUID, BlockPos>> findNearest(Level level, BlockPos pos) {
-		var data =  this.data.get(level.dimension()).stream().filter(record -> record.type == 0)
-				.reduce((record1, record2) -> pos.distSqr(record1.pos) > pos.distSqr(record2.pos) ?
-						record2 : record1).orElse(null);
+		var data =  this.data.get(level.dimension()).stream()
+				.filter(record -> record.type == 0)
+				.reduce((r1, r2) -> pos.distSqr(r1.pos) > pos.distSqr(r2.pos) ? r2 : r1)
+				.orElse(null);
 
 		return data != null ? Optional.of(new Tuple<>(data.id, data.pos)) : Optional.empty();
 	}

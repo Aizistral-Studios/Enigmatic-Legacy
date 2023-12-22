@@ -18,6 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -27,12 +28,28 @@ import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BlockCosmicCake extends CakeBlock {
 	private static final FoodProperties AS_TASTY_AS = Foods.GOLDEN_CARROT;
+	protected static final VoxelShape[] SHAPE_BY_BITE = new VoxelShape[] {
+			Block.box(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D),
+			Block.box(1.0D, 0.0D, 2.5D, 15.0D, 8.0D, 15.0D),
+			Block.box(1.0D, 0.0D, 4.5D, 15.0D, 8.0D, 15.0D),
+			Block.box(1.0D, 0.0D, 6.5D, 15.0D, 8.0D, 15.0D),
+			Block.box(1.0D, 0.0D, 8.5D, 15.0D, 8.0D, 15.0D),
+			Block.box(1.0D, 0.0D, 10.5D, 15.0D, 8.0D, 15.0D),
+			Block.box(1.0D, 0.0D, 12.0D, 15.0D, 8.0D, 15.0D)
+	};
 
 	public BlockCosmicCake() {
 		super(Properties.copy(Blocks.CAKE));
+	}
+
+	@Override
+	public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+		return SHAPE_BY_BITE[pState.getValue(BITES)];
 	}
 
 	@Override

@@ -39,6 +39,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+// TODO Make wayfinder make soul crystals glow, also give it the mode to point to personal crystals only
 public class SoulCompass extends ItemBase implements ICursed {
 	@OnlyIn(Dist.CLIENT)
 	private CompassWobble wobble;

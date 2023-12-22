@@ -21,30 +21,41 @@ import net.minecraftforge.common.ToolAction;
 
 public abstract class ItemBaseTool extends DiggerItem implements ICreativeTabMember {
 	public Set<ToolAction> toolActions;
+	public Set<TagKey<Block>> effectiveTags;
 
-	public ItemBaseTool(float attackDamageIn, float attackSpeedIn, Tier tier, TagKey<Block> effectiveBlocksIn, Properties builder) {
-		super(attackDamageIn, attackSpeedIn, tier, effectiveBlocksIn, builder);
+	public ItemBaseTool(float attackDamageIn, float attackSpeedIn, Tier tier, Properties builder, Set<TagKey<Block>> effectiveBlocksIn) {
+		super(attackDamageIn, attackSpeedIn, tier, effectiveBlocksIn.stream().findAny().get(), builder);
 		this.toolActions = Sets.newHashSet();
+		this.effectiveTags = effectiveBlocksIn;
 	}
 
+	@SuppressWarnings("unchecked")
 	public ItemBaseTool(Tier tier) {
-		this(4F, -2.8F, tier, BlockTags.MINEABLE_WITH_PICKAXE, ItemBaseTool.getDefaultProperties());
+		this(4F, -2.8F, tier, ItemBaseTool.getDefaultProperties(), Sets.newHashSet(BlockTags.MINEABLE_WITH_PICKAXE));
 	}
 
+	@SuppressWarnings("unchecked")
 	public ItemBaseTool() {
-		this(4F, -2.8F, EnigmaticMaterials.ETHERIUM, BlockTags.MINEABLE_WITH_PICKAXE, ItemBaseTool.getDefaultProperties());
+		this(4F, -2.8F, EnigmaticMaterials.ETHERIUM, ItemBaseTool.getDefaultProperties(), Sets.newHashSet(BlockTags.MINEABLE_WITH_PICKAXE));
 	}
 
 	@Override
-	public boolean isCorrectToolForDrops(ItemStack stack, BlockState blockIn) { // TODO Something about this
-		return super.isCorrectToolForDrops(stack, blockIn) /*|| this.effectiveMaterials.contains(blockIn.getMaterial())*/;
+	public boolean isCorrectToolForDrops(ItemStack stack, BlockState blockIn) {
+		return super.isCorrectToolForDrops(stack, blockIn) || this.hasAnyTag(blockIn, this.effectiveTags);
 	}
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
-		return !this.isCorrectToolForDrops(stack, state) ? super.getDestroySpeed(stack, state) : this.speed;
+		return !this.hasAnyTag(state, this.effectiveTags) ? super.getDestroySpeed(stack, state) : this.speed;
 	}
 
+	protected boolean hasAnyTag(BlockState state, Set<TagKey<Block>> tags) {
+		return tags.stream().anyMatch(tag -> this.hasTag(state, tag));
+	}
+
+	protected boolean hasTag(BlockState state, TagKey<Block> tag) {
+		return state.is(tag);
+	}
 	@Override
 	public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
 		return super.canPerformAction(stack, toolAction) || this.toolActions.contains(toolAction);

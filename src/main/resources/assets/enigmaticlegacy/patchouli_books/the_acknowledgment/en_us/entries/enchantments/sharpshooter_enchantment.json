@@ -18,14 +18,6 @@
 			"link_recipe": false,
 			"title": "book.enigmaticlegacy.entry.sharpshooter_enchantment.heading.1",
             "text": "book.enigmaticlegacy.entry.sharpshooter_enchantment.page.2"
-        },
-		{
-            "type": "text",
-            "text": "book.enigmaticlegacy.entry.sharpshooter_enchantment.page.3"
-        },
-		{
-            "type": "empty",
-            "draw_filler": false
         }
     ]
 }

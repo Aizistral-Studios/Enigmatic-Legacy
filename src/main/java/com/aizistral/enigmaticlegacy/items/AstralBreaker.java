@@ -22,6 +22,7 @@ import com.aizistral.etherium.items.EtheriumShovel;
 import com.aizistral.omniconfig.Configuration;
 import com.aizistral.omniconfig.wrappers.Omniconfig;
 import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
+import com.google.common.collect.Sets;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
@@ -54,6 +55,7 @@ import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.network.PacketDistributor;
 
 // TODO Make sure Astral Breaker actually works
+// ... and fix the thing where it works like shears?
 public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool {
 	public static Omniconfig.IntParameter miningRadius;
 	public static Omniconfig.IntParameter miningDepth;
@@ -71,7 +73,6 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 					.max(128 - 1)
 					.getInt("MiningRadius", 3);
 
-
 			miningDepth = builder
 					.comment("The depth of Astral Breaker AOE mining.")
 					.max(128 - 1)
@@ -85,12 +86,19 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 		builder.popPrefix();
 	}
 
+	@SuppressWarnings("unchecked")
 	public AstralBreaker() {
-		super(4F, -2.8F, EnigmaticMaterials.ETHERIUM, BlockTags.MINEABLE_WITH_PICKAXE,
+		super(4F, -2.8F, EnigmaticMaterials.ETHERIUM,
 				ItemBaseTool.getDefaultProperties()
 				.defaultDurability(4000)
 				.rarity(Rarity.EPIC)
-				.fireResistant());
+				.fireResistant(),
+				Sets.newHashSet(
+						BlockTags.MINEABLE_WITH_PICKAXE,
+						BlockTags.MINEABLE_WITH_AXE,
+						BlockTags.MINEABLE_WITH_SHOVEL,
+						BlockTags.MINEABLE_WITH_HOE
+						));
 	}
 
 	private Item findTool(String name) {
@@ -127,14 +135,14 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 			this.spawnFlameParticles(world, pos);
 		}
 
-		if (entityLiving instanceof Player player && this.areaEffectsEnabled(player, stack) /*&& this.effectiveMaterials.contains(state.getMaterial())*/ && !world.isClientSide && miningRadius.getValue() != -1) {
+		if (entityLiving instanceof Player player && this.areaEffectsEnabled(player, stack) && this.isCorrectToolForDrops(stack, state) && !world.isClientSide && miningRadius.getValue() != -1) {
 			HitResult trace = AOEMiningHelper.calcRayTrace(world, player, ClipContext.Fluid.ANY);
 
 			if (trace.getType() == HitResult.Type.BLOCK) {
 				BlockHitResult blockTrace = (BlockHitResult) trace;
 				Direction face = blockTrace.getDirection();
 
-				AOEMiningHelper.harvestCube(world, player, face, pos, (s) -> false, miningRadius.getValue() + EtheriumConfigHandler.instance().getAOEBoost(player), miningDepth.getValue(), true, pos, stack, (objPos, objState) -> {
+				AOEMiningHelper.harvestCube(world, player, face, pos, (s) -> this.isCorrectToolForDrops(stack, s), miningRadius.getValue() + EtheriumConfigHandler.instance().getAOEBoost(player), miningDepth.getValue(), true, pos, stack, (objPos, objState) -> {
 					stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(stack)));
 					this.spawnFlameParticles(world, objPos);
 				});
@@ -169,7 +177,7 @@ public class AstralBreaker extends ItemBaseTool implements IMultiblockMiningTool
 	public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
 		return toolAction == ToolActions.AXE_DIG || toolAction == ToolActions.PICKAXE_DIG
 				|| toolAction == ToolActions.SHOVEL_DIG || toolAction == ToolActions.HOE_DIG
-				|| toolAction == ToolActions.SWORD_DIG || toolAction == ToolActions.SHEARS_DIG;
+				|| toolAction == ToolActions.SWORD_DIG;
 	}
 
 }

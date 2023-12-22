@@ -423,9 +423,17 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 	@ObjectHolder(value = MODID + ":cosmic_scroll", registryName = "item")
 	public static final Item COSMIC_SCROLL = null;
 
+	@ConfigurableItem("Deception Amulet")
+	@ObjectHolder(value = MODID + ":deception_amulet", registryName = "item")
+	public static final Item DECEPTION_AMULET = null;
+
 	@ConfigurableItem("The Judgement")
 	@ObjectHolder(value = MODID + ":the_judgement", registryName = "item")
 	public static final Item THE_JUDGEMENT = null;
+
+	@ConfigurableItem("Soul Dust")
+	@ObjectHolder(value = MODID + ":soul_dust", registryName = "item")
+	public static final Item SOUL_DUST = null;
 
 	private EnigmaticItems() {
 		super(ForgeRegistries.ITEMS);
@@ -523,7 +531,9 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 		this.register("quote_player", QuotePlayer::new);
 		this.register("insignia", Insignia::new);
 		this.register("cosmic_scroll", CosmicScroll::new);
+		this.register("deception_amulet", DeceptionAmulet::new);
 		this.register("the_judgement", TheJudgement::new);
+		this.register("soul_dust", SoulDust::new);
 
 		this.register("common_potion", () ->  new UltimatePotionBase(Rarity.COMMON, PotionType.COMMON));
 		this.register("common_potion_splash", () ->  new UltimatePotionSplash(Rarity.COMMON, PotionType.COMMON));
