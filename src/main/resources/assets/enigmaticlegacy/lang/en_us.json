@@ -109,6 +109,7 @@
 	"item.enigmaticlegacy.ichor_bottle": "Bottle of Ichor",
 	"item.enigmaticlegacy.quote_player": "Quote Player",
 	"item.enigmaticlegacy.insignia": "Charming Insignia",
+	"item.enigmaticlegacy.deception_amulet": "Amulet of Deception [WIP]",
 	"item.enigmaticlegacy.the_judgement": "The Judgement",
 	"item.enigmaticlegacy.soul_dust": "Soul Dust",
 	
@@ -1001,6 +1002,18 @@
 	"tooltip.enigmaticlegacy.endAnchor2": "§5Requires §6Ender Pearls§5 to recharge.",
 	"tooltip.enigmaticlegacy.endAnchor3": "§5Has §6%1$s§5 chance to not spend charge",
 	"tooltip.enigmaticlegacy.endAnchor4": "§5upon respawn.",
+	
+	"tooltip.enigmaticlegacy.deceptionAmulet1": "§5Allows you to cheat Death itself. Instead",
+	"tooltip.enigmaticlegacy.deceptionAmulet2": "§5of dying, you recover §615%§5 of your health",
+	"tooltip.enigmaticlegacy.deceptionAmulet3": "§5and become §6Imperceptible§5 for §65 minutes§5.",
+	"tooltip.enigmaticlegacy.deceptionAmulet4": "§5To the eyes of others it will appear as",
+	"tooltip.enigmaticlegacy.deceptionAmulet5": "§5though you have perished.",
+	"tooltip.enigmaticlegacy.deceptionAmulet6": "§5While §6Imperceptible§5, no other creature",
+	"tooltip.enigmaticlegacy.deceptionAmulet7": "§5can see or target you, including players.",
+	"tooltip.enigmaticlegacy.deceptionAmulet8": "§5The effect will vanish if you attempt to",
+	"tooltip.enigmaticlegacy.deceptionAmulet9": "§5attack or interact with entities/blocks.",
+	"tooltip.enigmaticlegacy.deceptionAmulet10": "§5The amulet has a cooldown of §610 minutes§5,",
+	"tooltip.enigmaticlegacy.deceptionAmulet11": "§5and will break after §62 activations§5.",
 	
 	"tooltip.enigmaticlegacy.theJudgement1": "§5Upon attack, deals damage to every",
 	"tooltip.enigmaticlegacy.theJudgement2": "§5creature within a radius of §6%s§6 blocks§5",
