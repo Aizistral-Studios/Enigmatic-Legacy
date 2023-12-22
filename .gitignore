@@ -38,3 +38,5 @@ old_changelog.txt
 !gradlew.bat
 !updateResources.bat
 /.apt_generated_tests/
+
+model
