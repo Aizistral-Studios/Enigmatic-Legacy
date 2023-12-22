@@ -49,7 +49,7 @@ public class FabulousScroll extends HeavenScroll {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		if (context.entity().level.isClientSide)
+		if (context.entity().level().isClientSide)
 			return;
 
 		if (context.entity() instanceof Player player) {
@@ -63,7 +63,7 @@ public class FabulousScroll extends HeavenScroll {
 			final int fabConsumptionProbMod = 8;
 			//only check xp drain if flying.
 			//because we're only checking once per 20 ticks, increase the probability by 20
-			if (shouldCheckXpDrain(player) && !inRange && Math.random() <= ((this.baseXpConsumptionProbability * fabConsumptionProbMod) * 20)) {
+			if (this.shouldCheckXpDrain(player) && !inRange && Math.random() <= ((this.baseXpConsumptionProbability * fabConsumptionProbMod) * 20)) {
 				//cost modifier hooked up to drain xp cost
 				ExperienceHelper.drainPlayerXP(player, (int) (xpCostModifier.getValue()));
 			}

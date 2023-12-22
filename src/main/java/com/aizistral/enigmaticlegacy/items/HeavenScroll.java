@@ -83,12 +83,12 @@ public class HeavenScroll extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		if (context.entity().level.isClientSide)
+		if (context.entity().level().isClientSide)
 			return;
 
 		if (context.entity() instanceof Player player) {
 			//since we don't need to check if in range of beacon here, we can run this xp check every frame.
-			if (shouldCheckXpDrain(player) && Math.random() <= this.baseXpConsumptionProbability) {
+			if (this.shouldCheckXpDrain(player) && Math.random() <= this.baseXpConsumptionProbability) {
 				//hook into xp cost modifier from config.
 				ExperienceHelper.drainPlayerXP(player, (int) xpCostModifier.getValue());
 			}
@@ -107,7 +107,7 @@ public class HeavenScroll extends ItemBaseCurio {
 			return;
 
 		try {
-			if (canFly(player, inRangeCheckedAndSucceeded)) {
+			if (this.canFly(player, inRangeCheckedAndSucceeded)) {
 				player.getAbilities().mayfly = true;
 				//since we're only updating once per 20 ticks, we can leave this here as we won't be spamming update packets
 				player.onUpdateAbilities();
