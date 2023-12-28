@@ -101,7 +101,7 @@ public class EnigmaticUpdateHandler {
 	private static void getNewestVersion() {
 		try
 		{
-			URL url = new URL("https://raw.githubusercontent.com/Extegral/Enigmatic-Legacy/1.19.X/version.txt");
+			URL url = new URL("https://raw.githubusercontent.com/Extegral/Enigmatic-Legacy/1.20.X/version.txt");
 			Scanner s = new Scanner(url.openStream());
 			EnigmaticUpdateHandler.newestVersion = s.nextLine();
 			s.close();
