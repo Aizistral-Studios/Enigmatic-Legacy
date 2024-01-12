@@ -70,7 +70,7 @@ public class EnigmaticBlocks extends AbstractRegistry<Block> {
 		new GenericBlockItem(block, GenericBlockItem.getDefaultProperties().rarity(Rarity.RARE)));
 
 		this.register("astral_block", BlockAstralDust::new, block ->
-		new GenericBlockItem(block, GenericBlockItem.getDefaultProperties().rarity(Rarity.EPIC).tab(null)));
+		new GenericBlockItem(block, GenericBlockItem.getDefaultProperties().rarity(Rarity.EPIC)));
 	}
 
 	protected void register(String name, Supplier<Block> block, BlockItemSupplier item) {

@@ -1,20 +1,11 @@
 package com.aizistral.enigmaticlegacy.items;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ExperienceHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBaseCurio;
-
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -23,6 +14,9 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import top.theillusivec4.curios.api.SlotContext;
+
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class FabulousScroll extends HeavenScroll {
 
@@ -53,44 +47,29 @@ public class FabulousScroll extends HeavenScroll {
 			return;
 
 		if (context.entity() instanceof Player player) {
+			//don't check in range every tick as it is expensive. Particularly for multiple people.
+			//instead, check once per second, based on the player's tick count
+			if (player.tickCount % 20 != 0)
+				return;
+
 			boolean inRange = SuperpositionHandler.isInBeaconRange(player);
 
-			if (!SuperpositionHandler.isInBeaconRange(player))
-				if (Math.random() <= (this.baseXpConsumptionProbability*8) * xpCostModifier.getValue() && player.getAbilities().flying) {
-					ExperienceHelper.drainPlayerXP(player, 1);
-				}
+			final int fabConsumptionProbMod = 8;
+			//only check xp drain if flying.
+			//because we're only checking once per 20 ticks, increase the probability by 20
+			if (this.shouldCheckXpDrain(player) && !inRange && Math.random() <= ((this.baseXpConsumptionProbability * fabConsumptionProbMod) * 20)) {
+				//cost modifier hooked up to drain xp cost
+				ExperienceHelper.drainPlayerXP(player, (int) (xpCostModifier.getValue()));
+			}
 
-			this.handleFabulousFlight(player, inRange);
+			this.handleFlight(player, inRange);
 		}
 	}
 
-	protected void handleFabulousFlight(Player player, boolean inRange) {
-		try {
-			if (ExperienceHelper.getPlayerXP(player) > 0 || inRange) {
-
-				if (!player.getAbilities().mayfly) {
-					player.getAbilities().mayfly = true;
-				}
-
-				player.onUpdateAbilities();
-				this.flyMap.put(player, 100);
-
-			} else if (this.flyMap.get(player) > 1) {
-				this.flyMap.put(player, this.flyMap.get(player)-1);
-			} else if (this.flyMap.get(player) == 1) {
-				if (!player.isCreative()) {
-					player.getAbilities().mayfly = false;
-					player.getAbilities().flying = false;
-					player.onUpdateAbilities();
-					player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 200, 0, true, false));
-				}
-
-				this.flyMap.put(player, 0);
-			}
-
-		} catch (NullPointerException ex) {
-			this.flyMap.put(player, 0);
-		}
+	@Override
+	protected boolean canFly(Player player, boolean inRangeCheckedAndSucceeded)
+	{
+		return inRangeCheckedAndSucceeded || ExperienceHelper.getPlayerXP(player) > 0 || (SuperpositionHandler.isInBeaconRange(player));
 	}
 
 	@Override

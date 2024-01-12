@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"parent": "minecraft:block/cube_all",
 	"textures": {
-		"0": "enigmaticlegacy:blocks/astral_dust_sack",
-		"particle": "enigmaticlegacy:blocks/astral_dust_sack"
+		"0": "enigmaticlegacy:block/astral_dust_sack",
+		"particle": "enigmaticlegacy:block/astral_dust_sack"
 	},
 	"elements": [
 		{

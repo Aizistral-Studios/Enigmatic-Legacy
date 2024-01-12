@@ -12,6 +12,11 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.WeakHashMap;
 
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.LongArgumentType;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.commands.arguments.EntityArgument;
 import org.apache.commons.lang3.tuple.Triple;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
@@ -251,7 +256,6 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
-import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingTickEvent;
 import net.minecraftforge.event.entity.living.LivingExperienceDropEvent;
 import net.minecraftforge.event.entity.living.LivingGetProjectileEvent;
@@ -269,7 +273,6 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerChangedDimensionEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerLoggedInEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent.PlayerRespawnEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.furnace.FurnaceFuelBurnTimeEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
@@ -433,12 +436,11 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onCommandRegistry(RegisterCommandsEvent event) {
-		LiteralArgumentBuilder<CommandSourceStack> builder = Commands.literal("haveadv").requires((source) -> {
-			return source.hasPermission(2);
-		});
+		LiteralArgumentBuilder<CommandSourceStack> builder = Commands.literal("haveadv").requires((source) -> source.hasPermission(2));
 
 		builder.then(Commands.argument("advancement", ResourceLocationArgument.id())
-				.suggests(AccessorAdvancementCommands.getAdvancementSuggestions()).executes(source -> {
+				.suggests(AccessorAdvancementCommands.getAdvancementSuggestions())
+				.executes(source -> {
 					ServerPlayer player = source.getSource().getPlayerOrException();
 					Advancement adv = ResourceLocationArgument.getAdvancement(source, "advancement");
 
@@ -456,6 +458,47 @@ public class EnigmaticEventHandler {
 				}));
 
 		event.getDispatcher().register(builder);
+
+		builder = Commands.literal("getringtime").requires((source) -> source.hasPermission(4))
+				.then(Commands.argument("player", EntityArgument.player())
+						.executes(EnigmaticEventHandler::handleGetRingTime));
+
+		event.getDispatcher().register(builder);
+
+		builder = Commands.literal("setringtime").requires((source) -> source.hasPermission(4))
+				.then(Commands.argument("player", EntityArgument.player())
+						.then(Commands.argument("ticks", LongArgumentType.longArg(0))
+								.executes(EnigmaticEventHandler::handleSetRingTime)));
+
+		event.getDispatcher().register(builder);
+	}
+
+	private static int handleGetRingTime(CommandContext<CommandSourceStack> source) throws CommandSyntaxException {
+		ServerPlayer player = EntityArgument.getPlayer(source, "player");
+		IPlaytimeCounter counter =  IPlaytimeCounter.get(player);
+		String name = player.getDisplayName().getString();
+		long time = counter.getTimeWithCurses();
+		String percent = SuperpositionHandler.getSufferingTime(player);
+
+		Component reply =  Component.literal(name + " is bearing the Seven Curses for " + time
+				+ " ticks, or " + percent + " of their time in this world.").withStyle(ChatFormatting.GREEN);
+		source.getSource().sendSuccess(reply, true);
+		return Command.SINGLE_SUCCESS;
+	}
+
+	private static int handleSetRingTime(CommandContext<CommandSourceStack> source) throws CommandSyntaxException {
+		ServerPlayer player = EntityArgument.getPlayer(source, "player");
+		long ticks = LongArgumentType.getLong(source, "ticks");
+		IPlaytimeCounter counter =  IPlaytimeCounter.get(player);
+		String name = player.getDisplayName().getString();
+
+		counter.setTimeWithCurses(ticks);
+		ticks = counter.getTimeWithCurses();
+
+		Component reply =  Component.literal(name + "'s time with Seven Curses was set to " + ticks
+				+ " ticks.").withStyle(ChatFormatting.GREEN);
+		source.getSource().sendSuccess(reply, true);
+		return Command.SINGLE_SUCCESS;
 	}
 
 	@SubscribeEvent

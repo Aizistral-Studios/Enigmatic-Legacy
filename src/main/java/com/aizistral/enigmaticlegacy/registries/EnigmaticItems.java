@@ -1,22 +1,18 @@
 package com.aizistral.enigmaticlegacy.registries;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.aizistral.enigmaticlegacy.api.generic.ConfigurableItem;
-import com.aizistral.enigmaticlegacy.api.generic.ModRegistry;
 import com.aizistral.enigmaticlegacy.api.items.IAdvancedPotionItem.PotionType;
 import com.aizistral.enigmaticlegacy.items.*;
-import com.aizistral.enigmaticlegacy.items.generic.GenericBlockItem;
 import com.aizistral.etherium.items.*;
-
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegisterEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EnigmaticItems extends AbstractRegistry<Item> {
 	private static final EnigmaticItems INSTANCE = new EnigmaticItems();
@@ -522,7 +518,9 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 		this.register("quote_player", QuotePlayer::new);
 		this.register("insignia", Insignia::new);
 		this.register("cosmic_scroll", CosmicScroll::new);
+		this.register("deception_amulet", DeceptionAmulet::new);
 		this.register("the_judgement", TheJudgement::new);
+		this.register("soul_dust", SoulDust::new);
 
 		this.register("common_potion", () ->  new UltimatePotionBase(Rarity.COMMON, PotionType.COMMON));
 		this.register("common_potion_splash", () ->  new UltimatePotionSplash(Rarity.COMMON, PotionType.COMMON));

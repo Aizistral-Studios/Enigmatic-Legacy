@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
+import net.minecraft.world.entity.player.Player;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
@@ -47,10 +48,21 @@ public class SoulArchive {
 		this.saveFile = new File(saveFolder, "soul_archive.json");
 	}
 
+	public Optional<Tuple<UUID, BlockPos>> findNearest(Player player, BlockPos pos) {
+		var data =  this.data.get(player.level.dimension()).stream()
+				.filter(record -> record.type == 0)
+				.filter(record -> Objects.equals(record.ownerID, player.getUUID()))
+				.reduce((r1, r2) -> pos.distSqr(r1.pos) > pos.distSqr(r2.pos) ? r2 : r1)
+				.orElse(null);
+
+		return data != null ? Optional.of(new Tuple<>(data.id, data.pos)) : Optional.empty();
+	}
+
 	public Optional<Tuple<UUID, BlockPos>> findNearest(Level level, BlockPos pos) {
-		var data =  this.data.get(level.dimension()).stream().filter(record -> record.type == 0)
-				.reduce((record1, record2) -> pos.distSqr(record1.pos) > pos.distSqr(record2.pos) ?
-						record2 : record1).orElse(null);
+		var data =  this.data.get(level.dimension()).stream()
+				.filter(record -> record.type == 0)
+				.reduce((r1, r2) -> pos.distSqr(r1.pos) > pos.distSqr(r2.pos) ? r2 : r1)
+				.orElse(null);
 
 		return data != null ? Optional.of(new Tuple<>(data.id, data.pos)) : Optional.empty();
 	}

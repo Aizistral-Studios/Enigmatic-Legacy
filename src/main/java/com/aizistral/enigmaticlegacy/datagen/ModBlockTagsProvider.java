@@ -25,6 +25,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 .add(EnigmaticBlocks.BIG_REDSTONELAMP)
                 .add(EnigmaticBlocks.END_ANCHOR);
 
+        tag(BlockTags.MINEABLE_WITH_SHOVEL)
+                .add(EnigmaticBlocks.ASTRAL_BLOCK);
+
         tag(BlockTags.NEEDS_DIAMOND_TOOL)
                 .add(EnigmaticBlocks.ETHERIUM_BLOCK)
                 .add(EnigmaticBlocks.END_ANCHOR);

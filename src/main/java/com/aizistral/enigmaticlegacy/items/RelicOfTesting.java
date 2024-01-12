@@ -76,6 +76,9 @@ public class RelicOfTesting extends ItemBase implements IHidden {
 			//playerIn.sendMessage(Component.literal("FLOAT: " + UltimaTestConfig.floatTest.getValue()), playerIn.getUniqueID());
 			//playerIn.sendMessage(Component.literal("BOOLEAN: " + UltimaTestConfig.booleanTest.getValue()), playerIn.getUniqueID());
 
+			worldIn.broadcastEntityEvent(playerIn, (byte) 60);
+		} else {
+			playerIn.deathTime = 20;
 		}
 
 		/*

@@ -151,11 +151,19 @@ public class ClientProxy extends CommonProxy {
 	public void handleItemPickup(int pickuper_id, int item_id) {
 		try {
 			Entity pickuper = Minecraft.getInstance().level.getEntity(pickuper_id);
-			Entity entity = Minecraft.getInstance().level.getEntity(item_id);
+			Entity item = Minecraft.getInstance().level.getEntity(item_id);
+
+			if (pickuper == null) {
+				EnigmaticLegacy.LOGGER.getInternal().warn("Entity with the id [{}] could not be found", pickuper_id);
+				return;
+			} else if (item == null) {
+				EnigmaticLegacy.LOGGER.getInternal().warn("Entity (item) with the id [{}] could not be found", item_id);
+				return;
+			}
 
 			// TODO Verify fix... someday
 
-			Minecraft.getInstance().particleEngine.add(new PermanentItemPickupParticle(Minecraft.getInstance().getEntityRenderDispatcher(), Minecraft.getInstance().renderBuffers(), Minecraft.getInstance().level, pickuper, entity));
+			Minecraft.getInstance().particleEngine.add(new PermanentItemPickupParticle(Minecraft.getInstance().getEntityRenderDispatcher(), Minecraft.getInstance().renderBuffers(), Minecraft.getInstance().level, pickuper, item));
 			Minecraft.getInstance().level.playLocalSound(pickuper.getX(), pickuper.getY(), pickuper.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2F, (ClientProxy.RANDOM.nextFloat() - ClientProxy.RANDOM.nextFloat()) * 1.4F + 2.0F, false);
 		} catch (Throwable ex) {
 			Exception log = new Exception("Unknown error when rendering permanent item pickup", ex);
