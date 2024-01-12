@@ -792,7 +792,7 @@
 	"tooltip.enigmaticlegacy.cursedOnesOnly2": "сможет обуздать силу этой реликвии.",
 	
 	"tooltip.enigmaticlegacy.worthyOnesOnly1": "§5Жертва, необходимая для приобретения этого",
-	"tooltip.enigmaticlegacy.worthyOnesOnly2": "§5предмета, огромна, вы должны потратить §699.5%§5 своего времени",
+	"tooltip.enigmaticlegacy.worthyOnesOnly2": "§5предмета, огромна, вы должны потратить §6{0}%§5 своего времени",
 	"tooltip.enigmaticlegacy.worthyOnesOnly3": "§5в мире, страдая от §6Семи проклятий§5.",
 	"tooltip.enigmaticlegacy.worthyOnesOnly4": "На данный момент, ваше время измеряется в:",
 	

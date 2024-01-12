@@ -800,11 +800,12 @@
 	
 	"tooltip.enigmaticlegacy.cursedOnesOnly1": "Only those who bear the Seven Curses",
 	"tooltip.enigmaticlegacy.cursedOnesOnly2": "hold power to obtain and use this item.",
-	
+
 	"tooltip.enigmaticlegacy.worthyOnesOnly1": "§5The sacrifice neccessary to aquire this item",
-	"tooltip.enigmaticlegacy.worthyOnesOnly2": "§5is immense - you have to spend §699.5%§5 of your",
+	"tooltip.enigmaticlegacy.worthyOnesOnly2": "§5is immense - you have to spend §6{0}%§5 of your",
 	"tooltip.enigmaticlegacy.worthyOnesOnly3": "§5time in the world suffering the §6Seven Curses§5.",
 	"tooltip.enigmaticlegacy.worthyOnesOnly4": "For now, your time measures at:",
+	"tooltip.enigmaticlegacy.worthyOnesOnly5": "You are truly cursed but the time has not yet come...",
 	
 	"tooltip.enigmaticlegacy.tainted1": "§5Slightly tainted by cursed one's presence.",
 	"tooltip.enigmaticlegacy.tainted2": "§5Tainted by the touch of a cursed being.",
