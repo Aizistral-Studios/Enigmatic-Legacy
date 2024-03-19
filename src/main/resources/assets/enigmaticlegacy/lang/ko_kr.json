@@ -103,6 +103,7 @@
 	"item.enigmaticlegacy.enigmatic_elytra": "장엄한 겉날개",
   "block.enigmaticlegacy.etherium_block": "에테리움 블록",
   "block.enigmaticlegacy.cosmic_cake": "영원의 케이크",
+  "block.enigmaticlegacy.end_anchor": "다차원 정박기",
 	"item.enigmaticlegacy.enigmatic_eye_dormant": "휴면하는 눈",
 	"item.enigmaticlegacy.enigmatic_eye_active": "불가해한 눈",
 	"item.enigmaticlegacy.ichor_bottle": "이코르 병",
@@ -973,6 +974,13 @@
 	"tooltip.enigmaticlegacy.quotePlayer2": "§6Shift+마우스 오른쪽 버튼§5을 눌러 다음 구절을 선택합니다.",
 	"tooltip.enigmaticlegacy.quotePlayer3": "§5마지막 구절일 경우 첫 구절로 순환합니다.",
 	"tooltip.enigmaticlegacy.quotePlayerSelection": "§d현재 구절: §6%1$s",
+
+	"tooltip.enigmaticlegacy.endAnchor1": "§5모든 차원에서 작동합니다.",
+	"tooltip.enigmaticlegacy.endAnchor1_alt": "§6엔드§5 에서만 작동합니다.",
+	"tooltip.enigmaticlegacy.endAnchor1_alt2": "§5대부분의 차원에서 작동합니다.",
+	"tooltip.enigmaticlegacy.endAnchor2": "§6엔더 진주§5를 사용해 충전할 수 있습니다.",
+	"tooltip.enigmaticlegacy.endAnchor3": "§5리스폰 시 §635%§5의 확률로 충전한 엔더 진주를",
+	"tooltip.enigmaticlegacy.endAnchor4": "§5소모하지 않습니다.",
 
 "gui.enigmaticlegacy.lore_inscriber": "이름 & 설명 적기",
 "gui.enigmaticlegacy.blazing_core_bar_title": "열기",
