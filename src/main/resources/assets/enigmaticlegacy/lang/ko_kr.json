@@ -278,6 +278,7 @@
   "tooltip.enigmaticlegacy.subformat": "&",
   "tooltip.enigmaticlegacy.tilt": "&",
 
+
   "advancementTab.enigmaticlegacy": "불가사의한 유물",
   "advancementTab.enigmaticlegacy.desc": "옛 시대의 잔재",
 
@@ -467,6 +468,7 @@
   "tooltip.enigmaticlegacy.enigmaticAmuletModifierGREEN": "§6+25% §d채굴 속도",
   "tooltip.enigmaticlegacy.enigmaticAmuletModifierBLACK": "§6+10% §d생명 흡수",
   "tooltip.enigmaticlegacy.enigmaticAmuletModifierBLUE": "§6+25% §d수영 속도",
+
 
   "tooltip.enigmaticlegacy.magnetRing1": "§6%1$s§6블록§5 반경의 아이템을 끌어옵니다.",
   "tooltip.enigmaticlegacy.magnetRing2": "§6Shift§5를 누르고 있는 것으로 효과를 중단합니다.",
@@ -1087,39 +1089,55 @@
   "quote.toll_paid_1": "통행료를 지불하면 증오와 슬픔의 부담스러운 팽창에서 벗어날 수 있다...",
   "quote.toll_paid_2": "...그 반지에 갇혀 있는 그것들로부터.",
 
+  
   "book.enigmaticlegacy.category.accessories.name": "장신구",
   "book.enigmaticlegacy.category.accessories.desc": "몸에 착용할 수는 있지만, 언뜻 보기에는 뚜렷한 기능을 하지 못합니다.<br2/>그러나 여러분은 강력한 마법의 힘이 부여된 반지, 부적, 또는 무거운 갑옷이나 검처럼 주인에게 부담을 주지 않는 형태의 무언가를 발견하거나 제작할 수 있습니다.",
+
 
   "book.enigmaticlegacy.category.world.name": "세계",
   "book.enigmaticlegacy.category.world.desc": "어떤 이들은 보물을 찾기 위해 눈에 보이는 모든 것을 아무 생각 없이 헤집어 놓습니다. 완전히 정당하지 않은 길은 아니지만, 그래도 밤에 맹목적으로 피를 갈구하는 저 괴물들보단 낫지 않을까요?... 만약 당신이 조금 더 자세히 들여다본다면, 옛 시대의 폐허와 흔적이 가끔은 아주 많은 것을 들려줄 것입니다.",
 
+
   "book.enigmaticlegacy.category.materials.name": "자원 & 재료",
   "book.enigmaticlegacy.category.materials.desc": "당신은 이 세계가 가지고 있는 대부분의 일상적인 자원들과 재료에 완벽하게 익숙합니다. 하지만 조금 더 자세히 들여다 볼 필요가 있습니다 - 한 번도 본 적이 없는 것들을 발견할 지도 모릅니다.<br2/>당신이 더 나은 도구와 갑옷을 만들 새로운 재료를 계속 찾고 있었다면, 그 재료의 특성을 적어 두는 게 좋을 것 같습니다.",
+
 
   "book.enigmaticlegacy.category.tools.name": "도구 & 무기",
   "book.enigmaticlegacy.category.tools.desc": "반신조차 손에 적절한 도구를 들고 있지 않은 한, 그들의 창조와 파괴의 힘을 쉽게 발산하지 못합니다.<br2/>검은 다른 도구와 다를 바 없습니다 - 목적에 맞게 만들어지고, 설계에 순종합니다. 그들의 목적이 살육인 것은 단지 우연입니다.",
 
+
   "book.enigmaticlegacy.category.armor.name": "갑옷",
   "book.enigmaticlegacy.category.armor.desc": "세상에는 많은 아름다움이 있지만, 반대로 어두운 면에는 많은 위험이 도사리기 마련입니다. 대부분의 사람들은 적절한 보호 수단이 없는 여행자를 쉽게 제거할 수 있습니다.<br2/>많은 전설적인 대장장이들이 갑옷을 만들기 위해 목숨을 바쳤습니다. 의심의 여지 없이, 당신은 그들을 능가하게 될 것입니다.",
+
 
   "book.enigmaticlegacy.category.decorations.name": "장식",
   "book.enigmaticlegacy.category.decorations.desc": "당신이 설계하고 건설한 것들 중 어떤 것들은, 아무런 목적이 없을 지 모릅니다.<br2/>그러나 무의미하다는 건 아닙니다. 당신과 같은 위대한 존재는, 의심할 필요 없이, 원한다면, 편안함과 아름다움에 둘러싸일 자격이 있으니까요.",
 
+
   "book.enigmaticlegacy.category.relics.name": "유물",
   "book.enigmaticlegacy.category.relics.desc": "수많은 유물들이 이 세상에 흩어져 있고, 대부분은 잊혀졌지만, 어떤 것들은 전설로 남았습니다...<br2/>탐험가이자 정복자로써, 그것들은 당신의 주된 관심사가 될 것입니다. 그것들은 상상도 할 수 없는 힘에 도달하는 열쇠이며, 당신이 찾는 답을 이끌어낼 수 있는 신호이기 때문입니다.",
+
 
   "book.enigmaticlegacy.category.brewing.name": "양조",
   "book.enigmaticlegacy.category.brewing.desc": "이전 시대의 인간들에게서 꽤 인기가 있던 것이었지만, 대부분의 반신들은 광범위한 조사와 재료에 대한 귀찮음을 이유로 양조를 과소평가하고 있습니다.<br2/>그러나 필요한 것을 기꺼이 제공하려는 자들에게는, 물약은 가장 강력한 도구가 될 것입니다.",
 
+
   "book.enigmaticlegacy.category.misc.name": "기타",
   "book.enigmaticlegacy.category.misc.desc": "어떤 지식들은 분류하기 매우 어려운 것으로 판명되었습니다. 때때로 그것들은 노력할 가치가 없다고 생각되곤 합니다.<br2/>그러나 테이블 위에 종이와 두루마리를 남겨놓게 하는 구조와 질서가 없는 그러한 것들에는 낭만이 있습니다. 위대함은 종종 순전한 혼돈으로 보이는 것으로부터 탄생합니다.",
+
 
   "book.enigmaticlegacy.category.enchantments.name": "마법 부여",
   "book.enigmaticlegacy.category.enchantments.desc": "마법 부여는 그 자체로 훌륭한 예술의 한 형태입니다. 다른 마스터들은 각자만의 방법으로 그것을 실행하지만, 궁극적인 정답은 존재하지 않습니다.<br2/>다른 예술들과 마찬가지로, 어찌되었든 배워야 하는 마법 부여의 초석이 존재합니다.",
 
+
+
+
+
+
   "book.enigmaticlegacy.entry.berserk_charm.name": "광전사의 표식",
   "book.enigmaticlegacy.entry.berserk_charm.page.1": "죽음은 공포의 그물 속에 있기 때문에, 사람들이 죽음을 두려워하는 건 놀랄 만한 일이 아닙니다. 하지만 거대한 저주를 감내하기로 결정한 사람들에겐 두려움이 용서할 수 없는 약점이 될 수 있습니다.<br2/>비틀린 심장과 일곱 가지 저주의 힘을 합치면 이 문장을 만들 수 있습니다. 그것은 당신에게 유리하게 판세를 뒤집을 수 있도록 해 줍니다 - 당신이 임박한 극에 가까워질수록,",
   "book.enigmaticlegacy.entry.berserk_charm.page.2": "더 큰 분노와 용기가 당신을 채울 것이고, 마지막 숨을 거둘 때까지 어떠한 상황에서도 당신이 출구를 위해 싸우도록 할 것입니다.",
+
 
   "book.enigmaticlegacy.entry.cursed_scroll.name": "천 개의 저주",
   "book.enigmaticlegacy.entry.cursed_scroll.page.1": "때때로 저주는 마법 부여와 몇 가지 정도 다르지만, 비슷한 형태를 취하곤 합니다. 일반 마법 부여와는 달리, 아이템에 귀속되면 아이템을 격리하는 것 이외에는 제거할 방법이 없습니다. 일반적으로, 당신이 사용하는 그 어떤 일반적인 마법 부여 기술도 우연히 그런 저주를 만들지는 않을 것입니다.",
@@ -1127,8 +1145,10 @@
   "book.enigmaticlegacy.entry.cursed_scroll.page.3": "일반적인 상황에선, 그것들은 당신이 피해야 할 성가신 것들일 뿐입니다. 하지만, 이제 당신은 일곱 저주의 반지를 끼고 있으므로, 그것들을 조작할 수 있고 심지어 다른 사람들이 접근할 수 없는 그것들로부터 이익을 얻을 수 있습니다.<br2/>비틀린 심장의 사악함이 집약된 이 주문서는 그러한 가능성을 보여줍니다. 당신이 장착한 모든 장비의 모든 저주의 수에 따라, 공격력, 채굴 속도 및 체력 재생력을 증가시킵니다.",
   "book.enigmaticlegacy.entry.cursed_scroll.page.4": "한두 개 정도의 저주론 간에 기별도 안 가겠지만, 조금 더 견딜 수만 있다면, 엄청난 힘을 얻을 수 있습니다.<br2/>갑옷, 양손에 든 아이템과 착용할 수 있는 모든 것, 심지어는 이 주문서 스스로도 효과에 영향을 줄 수 있습니다.",
 
+
   "book.enigmaticlegacy.entry.iron_ring.name": "철 반지",
   "book.enigmaticlegacy.entry.iron_ring.page.1": "디자인이 아주 단순해, 아무리 평범한 대장장이라도 만들 수 있을 겁니다. 당신 같은 반신은 말할 필요도 없습니다.<br2/>이 반지는 일반적인 철로만 만들어지기 때문에 편리합니다. 참수당하는 걸 막을 수는 없어도, 언젠가 손가락 하나 잘리는 걸 막아 줄지도 모르죠.",
+
 
   "book.enigmaticlegacy.entry.ceaseless_enchantment.name": "연발",
   "book.enigmaticlegacy.entry.ceaseless_enchantment.heading.1": "마법 부여",
@@ -1136,31 +1156,37 @@
   "book.enigmaticlegacy.entry.ceaseless_enchantment.page.2": "일반 화살에만 적용됩니다 - 물약이 묻은 화살이나 폭죽은 연발 마법 부여에 영향을 받지 않고, 평상시와 같이 사용할 수 있습니다.",
   "book.enigmaticlegacy.entry.ceaseless_enchantment.page.3": "명사수는 화살에만 영향을 미칩니다 - 예를 들어, 폭죽의 피해를 증가시키지 않습니다.<br2/>또한 다중발사나 관통과 함께 사용할 수 없습니다.",
 
+
   "book.enigmaticlegacy.entry.sharpshooter_enchantment.name": "명사수",
   "book.enigmaticlegacy.entry.sharpshooter_enchantment.heading.1": "마법 부여",
   "book.enigmaticlegacy.entry.sharpshooter_enchantment.page.1": "쇠뇌에 가능한 마법 부여로, 가장 유용한 마법 부여 중 하나입니다.<br2/>이 마법 부여는 활의 힘 마법 부여처럼, 쇠뇌로 발사한 화살의 피해량을 증가시킵니다. 좀 더 자세히 말하자면, 명사수 레벨마다 쇠뇌의 기본 피해의 <&l>+40%%$(clear) 만큼 피해가 증가합니다.",
   "book.enigmaticlegacy.entry.sharpshooter_enchantment.page.2": "명사수는 화살에만 영향을 미칩니다 - 예를 들어, 폭죽의 피해를 증가시키지 않습니다. 또한 다중발사나 관통과 함께 사용할 수 없습니다.",
 
+  
   "book.enigmaticlegacy.entry.nemesis_curse.name": "천벌",
   "book.enigmaticlegacy.entry.nemesis_curse.heading.1": "저주",
   "book.enigmaticlegacy.entry.nemesis_curse.page.1": "저주받은 마법 부여 중 하나인 이 마법 부여는 다른 마법 부여보다 신기하고 모호합니다.<br2/>검이나 도끼 같은 근거리 무기에서만 볼 수 있습니다. 천벌 저주가 담긴 무기로 직접 공격할 경우, 가한 피해의 25%%정도를 자신에게 돌려받게 됩니다.<br2/>",
   "book.enigmaticlegacy.entry.nemesis_curse.page.2": "그러나, 아무리 치명적인 피해라도 이 저주는 스스로를 죽일 수는 없습니다.<br2/>그래도 결국 체력을 아주 조금만 남기게 될 것이므로, 다른 무언가에 의해 끝내 사망에 이를 수 있습니다.",
+
 
   "book.enigmaticlegacy.entry.wrath_enchantment.name": "광분",
   "book.enigmaticlegacy.entry.wrath_enchantment.heading.1": "마법 부여",
   "book.enigmaticlegacy.entry.wrath_enchantment.page.1": "삼지창만의 마법 부여로, 날카로움 마법 부여가 검과 도끼에 부여하는 효과와 매우 유사하며, 일반적으로 모든 적에게 가하는 피해량을 증가시킵니다. 삼지창을 근거리 무기로써 사용할 때와 던질 때 모두 작동합니다.<br2/>",
   "book.enigmaticlegacy.entry.wrath_enchantment.page.2": "이 마법 부여에 의한 피해량 증가는 날카로움 마법 부여에 비해 눈에 띄게 개선되어, 등급 당 +1.25의 추가 피해를 제공합니다.<br2/>이 마법 부여는 찌르기 마법 부여와 수류 마법 부여와 같은 분류이므로, 서로 배타적입니다.",
 
+
   "book.enigmaticlegacy.entry.torrent_enchantment.name": "수류",
   "book.enigmaticlegacy.entry.torrent_enchantment.heading.1": "마법 부여",
   "book.enigmaticlegacy.entry.torrent_enchantment.page.1": "이 마법 부여는 불에 면역인 개체(블레이즈 또는 좀비화된 피글린 등)와 물에 민감한 생물(엔더맨 등)에게 삼지창이 가하는 피해를 증가시킵니다.<br2/>조건에 맞는 생명체에게 가해지는 정확한 피해 증가량은 마법 부여 등급 당 +2.5로 언데드에게 가하는 강타의 피해 증가량과 동일합니다.",
   "book.enigmaticlegacy.entry.torrent_enchantment.page.2": "또한 이 마법 부여는 찌르기 마법 부여와 광분 마법 부여와 같은 분류이므로, 서로 배타적입니다.",
+
 
   "book.enigmaticlegacy.entry.slayer_enchantment.name": "학살자",
   "book.enigmaticlegacy.entry.slayer_enchantment.heading.1": "마법 부여",
   "book.enigmaticlegacy.entry.slayer_enchantment.page.1": "검이나 도끼의 피해량을 늘릴 수 있는 또 다른 마법 부여로, 날카로움 마법 부여, 강타 마법 부여 또는 살충과 같은 분류이므로, 서로 배타적입니다.<br2/>몬스터로 분류되는 것들에 대해 무기가 가하는 피해량이 +1.5만큼 증가하며,",
   "book.enigmaticlegacy.entry.slayer_enchantment.page.2": "마법 부여의 등급이 곱해지는데, 이는 언데드에 대해 강타 마법 부여가 제공하는 +2.5 피해량보다 현저히 낮습니다. 그러나, 몬스터들은 당신이 맞서 싸우게 될 거의 모든 것을 포함하고 있는 반면,",
   "book.enigmaticlegacy.entry.slayer_enchantment.page.3": "언데드는 살충 마법 부여가 적용되는 것만큼이나 덜 포괄적이므로, 이 마법 부여는 범용적인 선택지일 것입니다.<br2/>또한 이 마법 부여가 적용된 무기는 몬스터의 속도를 잠시 느리게 합니다.",
+
 
   "book.enigmaticlegacy.entry.soul_loss.name": "영혼의 소실",
   "book.enigmaticlegacy.entry.soul_loss.heading.1": "수정",
@@ -1169,9 +1195,11 @@
   "book.enigmaticlegacy.entry.soul_loss.page.3": "다른 반신들도 당신의 수정을 차지하거나 파괴할 수 없습니다.<br2/>영혼의 조각을 잃을 때마다, 당신의 활력이 약해질 것이고, 죽기 쉬워질 것입니다. 그러나 영혼 수정에 접근하면 영혼 조각이 당신에게 다가올 것입니다. 잃어버린 영혼의 조각은 수정이라는 감옥에서 꺼내져 즉시 당신에게 흡수될 것입니다.",
   "book.enigmaticlegacy.entry.soul_loss.page.4": "최악의 상황에서도, 모든 생명력을 잃지는 않을 것입니다. 영혼의 천이 벗겨질수록, 한번 더 찢어지는 것에 대한 저항력이 강해지기 때문입니다.<br2/>몇 번이나 죽더라도 어느 시점에서는 영혼의 파편을 더 이상 잃지는 않을 것입니다 - 그러나 그 때쯤이면 어떤 물리적 위협에도 매우 취약한 상태가 될 것입니다.",
 
+
   "book.enigmaticlegacy.entry.first_glance.name": "첫 번째 개요",
   "book.enigmaticlegacy.entry.first_glance.page.1": "당신이 처음 이 땅에 발을 디뎠을 때, 무엇이 당신을 당신이 있어야 할 곳으로부터 멀리 내몰고 있는 지 확신하지 못했습니다...또 다시 말입니다. 이 곳은 당신이 방문한 첫 세계가 아닙니다. 하지만 이번엔 다를 것입니다.<br2/>무엇인가 가장 깊은 곳에서, 인간과 같은 존재는 결코 볼 수 없었던 가장 어두운 구석에서 당신을 부릅니다.",
   "book.enigmaticlegacy.entry.first_glance.page.2": "왠지 단서를 쫓아 이 땅의 신비를 풀라고 충고합니다. 당신은 두려움을 느꼈지만, 유혹을 뿌리칠 수는 없었습니다.<br2/>미지가 어떠한 도전을 제시하든, 두려워하지 마십시오.<br2/>어떤 대가를 치르더라도, 당신은 답을 찾을 것입니다.",
+
 
   "book.enigmaticlegacy.entry.forbidden_axe.name": "처형자의 도끼",
   "book.enigmaticlegacy.entry.forbidden_axe.page.1": "위더 스켈레톤은 상대하기 껄끄러운 존재들입니다. 당신이 그들의 존재에 관심을 가지는 유일하고도 중요한 이유는 그들의 해골입니다. 해골 그 자체라기보단, 더 중요하고 불가사의한 곳에 사용되곤 합니다.<br2/>하지만 그들은 당신이 얼마나 친절하게 부탁하든, 기꺼이 해골을 건네주진 않을 것입니다.",
@@ -1179,15 +1207,18 @@
   "book.enigmaticlegacy.entry.forbidden_axe.page.3": "당신의 정확한 칼질을 견디지 않기 때문입니다.<br2/>이 도끼는 그런 번거로운 작업에 도움이 되도록 특별히 제작되었습니다. 네더의 최고급 금속과 융합되고 어둡고 뒤틀린 성질이 스며든 이 도끼는, 적의 목을 찢고 머리를 공중으로 던져버립니다.<br2/>",
   "book.enigmaticlegacy.entry.forbidden_axe.page.4": "해골 외에도, 비록 전에는 참수할 수 없었던 생명체라도 목을 자를 수 있다는 것이 증명되었습니다.<br2/>이 무기가 가진 피의 갈망은 참수 능력이랑 별개로 꽤나 유용한데, 네더라이트 검보다 빠르고 파괴적인 타격을 가할 수 있기 때문입니다.",
 
+
   "book.enigmaticlegacy.entry.etherium_sword.name": "에테리움 검",
   "book.enigmaticlegacy.entry.etherium_sword.page.1": "거대한 외관에도 불구하고, 이 도구는 사실 일반적인 작은 칼보다 다루기가 조금 더 쉽습니다. 물론 당신에게만 그렇습니다 - 적들은 당신처럼 무기의 공격을 견디기가 쉽지 않을 겁니다.<br2/> 에테리움 대검은 다른 두 가지 에테리움 무기 사이의 정확히 중간 지점에 있습니다.",
   "book.enigmaticlegacy.entry.etherium_sword.page.2": "낫처럼 가볍고 민첩하지 않으며, 전쟁도끼처럼 무겁고 파괴적이지 않습니다. 하지만 두 가지에서 장점만을 챙겨와, 가장 튼튼한 적에게도 크게 한 방 먹여줄 수 있습니다.",
   "book.enigmaticlegacy.entry.etherium_sword.page.3": "합리적인 재사용 대기 시간과 함께 말입니다.<br2/>다른 도구들과 달리 대검의 기능은 전투와 관련이 있습니다. 당신의 명령에 따라 당신이 바라보는 곳의 반대 방향으로 밀어낼 것입니다. 이는 일련의 공격 사이에 빠르게 후퇴하거나 특히 치명적인 공격을 신속히 피해야 할 때 사용할 수 있습니다.",
   "book.enigmaticlegacy.entry.etherium_sword.page.4": "재사용 대기시간이 짧아, 적절하게 사용할 수만 있다면 치열한 전투 시나리오에서도 충분히 사용할 수 있는 기술입니다.<br2/>에테리움 대검은 다른 에테리움 도구와 마찬가지로 뛰어난 내구성을 가지고 있어 어떤 지상 무기보다도 훨씬 뛰어납니다.",
 
+  
   "book.enigmaticlegacy.entry.etherium_shovel.name": "에테리움 삽",
   "book.enigmaticlegacy.entry.etherium_shovel.page.1": "도끼나 낫과는 달리, 이 도구는 무기로써 그닥 유용하지는 않습니다. 그러나 이 도구는 다른 목적에 더 걸맞습니다 - 버터를 자르는 칼처럼 흙과 진흙을 찢어버릴 수 있습니다.<br2/>3x3 영역을 쉽게 파해칠 수 있으나, 그 기능을 억제해 한 블록만 파낼 수도 있습니다.",
   "book.enigmaticlegacy.entry.etherium_shovel.page.2": "에테리움으로 만든 다른 것들과 마찬가지로 내구성이 뛰어납니다.",
+
 
   "book.enigmaticlegacy.entry.etherium_scythe.name": "에테리움 낫",
   "book.enigmaticlegacy.entry.etherium_scythe.page.1": "평화로운 도구로 고안되었던 낫은 가장 정교한 무기 중 하나가 되었습니다. 이것 또한 예외가 아닙니다. 숙달되기는 어렵지만, 뿌린 농작물처럼 쉽게 적의 영혼을 수확하도록 도와줍니다.<br2/>에테리움 낫은 대상 블록을 기준으로 3x3x3 블록 공간 내의 농작물, 식물, 잎, 풀을 수확할 수 있습니다.",
@@ -1195,26 +1226,31 @@
   "book.enigmaticlegacy.entry.etherium_scythe.page.3": "무기로써는 에테리움 전쟁도끼와 대척점에 있습니다. 날이 면도칼처럼 얇고 날카로우며 가벼워 모든 공격에 대한 피해가 크지는 않지만, 더 빠르게 휘두를 수 있으며, 방해가 되는 모든 생물들을 빠르게 날려버릴 수 있습니다.",
   "book.enigmaticlegacy.entry.etherium_scythe.page.4": "에테리움 낫은 다른 에테리움 도구와 마찬가지로 뛰어난 내구성을 가지고 있습니다.",
 
+
   "book.enigmaticlegacy.entry.etherium_pickaxe.name": "에테리움 곡괭이",
   "book.enigmaticlegacy.entry.etherium_pickaxe.page.1": "간단하고 직선적인 디자인이지만, 이 곡괭이는 지금까지 만들어 왔던 일반적인 도구를 뛰어넘을 수 있습니다.",
   "book.enigmaticlegacy.entry.etherium_pickaxe.page.2": "에테리움 곡괭이는 3x3 면적의 블록을 하나만 파괴해도 채굴할 수 있어 거대한 터널을 쉽게 뚫을 수 있습니다. 또한 필요에 따라 개별 블록을 파괴하도록 능력을 억제할 수도 있습니다.",
   "book.enigmaticlegacy.entry.etherium_pickaxe.page.3": "그 외에, 이 곡괭이는 내구성이 매우 높고, 유효 재료의 범위가 넓어, 일반적인 곡괭이보다 유리나 얼음 등에 잘 대처할 수 있습니다.",
 
+  
   "book.enigmaticlegacy.entry.etherium_axe.name": "에테리움 도끼",
   "book.enigmaticlegacy.entry.etherium_axe.page.1": "일반적인 도끼와 달리, 이 거대한 야수는 도구와 무기로 동시에 사용할 수 있도록 설계되어 있어 두 분야에서 모두 탁월한 모습을 보여줍니다.<br2/>도구로 사용할 경우, 대상 블록을 기준으로 3x3x3 블록의 넓은 공간에서 나무를 자를 수 있습니다. 개별 블록을 처리해야 하는 경우 기능을 억제할 수 있습니다.",
   "book.enigmaticlegacy.entry.etherium_axe.page.2": "나무나 판자 이외에도 잎이나 선인장, 대나무와 같은 덜 튼튼한 식물에도 효과적입니다.<br2/>무기로서는 매우 큰 피해량을 입히며, 도끼이기 때문에 적이 방패를 들었을 경우 더 효과적입니다.",
   "book.enigmaticlegacy.entry.etherium_axe.page.3": "유일한 단점은 믿을 수 없을 만큼 무겁다는 것입니다. 그래서 더 큰 피해를 입힐 수 있지만, 다시 한 번 그러한 피해를 입히기 위해서라도, 각 공격에 대해 더 긴 휴식을 요구합니다.<br2/>다른 에테리움 도구와 마찬가지로 에테리움 전쟁도끼도 매우 내구성이 뛰어납니다.",
+
 
   "book.enigmaticlegacy.entry.astral_breaker.name": "천상의 파괴자",
   "book.enigmaticlegacy.entry.astral_breaker.page.1": "고전적인 에테리움 도구는 그 자체만으로도 매우 강력하고 유용하지만, 그것들이 에테리움의 한계점은 아닙니다.<br2/>천상의 가루의 마법적인 힘에 신비로운 재료를 첨가해, 그것들을 융합해 궁극의 다목적 도구를 만들 방법을 찾아냈습니다.",
   "book.enigmaticlegacy.entry.astral_breaker.page.2": "천상의 파괴자는 곡괭이, 도끼, 삽을 하나의 도구로 합쳐냈습니다 - 이 도구는 에테리움 도구들처럼 쉽게 바위, 나무, 흙을 파괴할 수 있어 별도의 도구를 사용할 필요가 없습니다.",
   "book.enigmaticlegacy.entry.astral_breaker.page.3": "에테리움 전쟁도끼에 비해 효과가 줄어든 것이 유일한 피해이지만, 대부분의 경우에선 큰 문제가 되지 않을 것입니다.<br2/>또한 다른 에테리움 도구들보다 내구성이 조금 더 뛰어납니다.",
 
+
   "book.enigmaticlegacy.entry.unholy_grail.name": "불경한 성배",
   "book.enigmaticlegacy.entry.unholy_grail.heading.1": "성배",
   "book.enigmaticlegacy.entry.unholy_grail.page.1": "이 유물에 대한 수많은 전설이 있었지만, 종국에는 폐허 한 가운데에 덩그러니 놓여져 있었습니다. 쓸모없는 쓰레기와 장신구들 사이에서 길을 잃은 것 처럼 말입니다 - 정말 특별해보이지 않게 말입니다.<br2/>그러나, 당신이 전설들로부터 기대했던 것만큼이나 아무 짝에도 쓸모가 없는 것으로 판명되었습니다.",
   "book.enigmaticlegacy.entry.unholy_grail.page.2": "성배는 항상 물로 채워져 있어, 아무리 많이 마셔도 예전처럼 가득 차 있습니다. 하지만 그 물은 재처럼 쓴 맛이 나고, 오염되었으며, 독이 있습니다. 그걸 깨닫기 전에 얼마나 마셨느나에 따라, 심각한 질병에 걸리거나, 아니면 그냥 죽게 될 것입니다.",
   "book.enigmaticlegacy.entry.unholy_grail.page.3": "그냥 독특한 전리품으로써 소장할 가치는 있겠군요.",
+
 
   "book.enigmaticlegacy.entry.void_stone.name": "위대한 공허의 문장",
   "book.enigmaticlegacy.entry.void_stone.heading.1": "초석",
@@ -1223,15 +1259,18 @@
   "book.enigmaticlegacy.entry.void_stone.page.3": "필요에 따라 다른 초석을 추가로 찾고 소유해, 원하는 대로 조정할 수 있습니다. 이 유물의 유일한 실질적 단점은 목록에서 한 가지 항목만을 제외할 수 없다는 것입니다. 즉, 어떤 항목을 제거하고 싶다면 목록을 완전히 지워야 하므로, 현명히 선택하세요.<br2/>현 시점에서는, 이 유물이 흡수한 아이템이 어디로 보내지는 지 알 수 없습니다. 다시 돌아오지 않는다는 것만 알 수 있습니다...",
   "book.enigmaticlegacy.entry.void_stone.page.4": "정말 다행히도, 지금까지 그것이 신체 일부를 흡수하려 하지는 않았고, 살아 있는 물질과 어떻게든 상호작용을 하려 들지는 않는 것 같습니다.<br2/>하지만 여전히, 그것을 만질 때마다 당신의 마음 속에 있는 막연한 불안감이 깨어나곤 합니다.",
 
+
   "book.enigmaticlegacy.entry.nether_star.name": "네더의 별",
   "book.enigmaticlegacy.entry.nether_star.heading.1": "별",
   "book.enigmaticlegacy.entry.nether_star.page.1": "여기에 일부 텍스트",
   "book.enigmaticlegacy.entry.nether_star.page.2": "저기에 일부 텍스트",
 
+
   "book.enigmaticlegacy.entry.spellstones.name": "주문석",
   "book.enigmaticlegacy.entry.spellstones.page.1": "주문석은 당신이 발견할 수 있는 대부분의 다른 유물들과는 다릅니다.<br2/>그것들은 강력한 원소 마법의 근간이자 그릇이며, 소지자에게 인간의 능력으로는 도달할 수 없는 막강한 힘을 부여합니다. 현대에는, 그것들을 재현할 수 있는 알려진 방법이 없습니다.",
   "book.enigmaticlegacy.entry.spellstones.page.2": "주문석의 기원은 차갑고 어두웠던 창조의 첫 순간으로 되돌아갑니다. 상호 작용하고, 싸우고, 서로를 소비하고, 절대적인 혼돈을 가져왔죠. 그 혼돈 속에서 태어났고, 안정적인 형태로 캡슐화되었습니다. 당신이 깨어나기 전까지 말입니다...<br2/>지금에 와서는, 그것들을 자연스럽게 접하는 것은 불가능합니다. 지금은 존재하지 않고 그들의 창조물의 유적으로 남아버린 고대 문명에 의해 발견되고 찾아졌던 것으로 보입니다.",
   "book.enigmaticlegacy.entry.spellstones.page.3": "그리고 그 폐허들 사이에 그들은 그들의 힘을 이용할 용감한 탐험가를 기다리며 누워 있습니다.",
+
 
   "book.enigmaticlegacy.entry.void_pearl.name": "공허의 진주",
   "book.enigmaticlegacy.entry.void_pearl.heading.1": "주문석",
@@ -1239,16 +1278,19 @@
   "book.enigmaticlegacy.entry.void_pearl.page.2": "공기조차 그곳에 존재하기를 거부하고, 섬을 헤매다 넘어질 정도로 어리석은 생명체는 어두운 무 속에서 임박해오는 죽음을 맞이하게 됩니다. 하지만 그 공백이 비어있지 않을 수도 있습니다. 이 진주는 그것과 매우 밀접하게 연관된 성질을 가지고 있는데, 마치 공허 그 자체로 하나의 요소로 취급하듯이 말입니다.",
   "book.enigmaticlegacy.entry.void_pearl.page.3": "이런 것이 어떻게 그 속으로 들어가 살아 돌아왔는지는 모르겠지만, 어쨌든 이 마법석은 한때의 그것으로부터 유래되었다고 가정하는 것이 맞을 것 같습니다.",
 
+
   "book.enigmaticlegacy.entry.ocean_stone.name": "바다의 의지",
   "book.enigmaticlegacy.entry.ocean_stone.heading.1": "주문석",
   "book.enigmaticlegacy.entry.ocean_stone.page.1": "세계의 표면을 덮고 있는 끝없는 바다의 가장 어두운 곳을 탐험하고 싶거나, 또는 그곳에 거주하고 싶다면 이 유물이 제격입니다.<br2/>침수된 폐허에 놓여 있는 이것들 중 하나를 얻게 되면, 마른 땅에 있는 것보다 물 속에 있을 때 훨씬 더 강한 자신을 보게 될 것입니다.",
   "book.enigmaticlegacy.entry.ocean_stone.page.2": "물을 공기처럼 쉽게 들이마시고, 땅에서 달리는 것보다 더 빨리 헤엄치며, 가장 맑은 날에 물 속을 보는 것보다 더 맑게 볼 수 있습니다. 만약 바다에 적대적인 대상이 있다면, 그것은 스스로 무력하고 무시당한다는 것을 알게 될 것입니다.",
   "book.enigmaticlegacy.entry.ocean_stone.page.3": "그리고 만약 물이 필요한데 너무 멀리 떨어져 있다면... 아주 약간의 경험치를 대가로, 하늘이 눈물을 흘리도록 만들 수 있을 것입니다.<br2/> 물을 사용하는 만큼 유용하진 않을 것이지만, 이 능력은 신들조차 노리고 있는 힘입니다.",
 
+
   "book.enigmaticlegacy.entry.blazing_core.name": "불타오르는 핵",
   "book.enigmaticlegacy.entry.blazing_core.heading.1": "주문석",
   "book.enigmaticlegacy.entry.blazing_core.page.1": "네더의 불길에 휩싸인 황무지와 용암이 들끓는 바다, 갈기갈기 찢겨져 잊혀진 영혼의 울부짖음, 그리고 이 황무지를 지배하고 통치하려고 시도했던 재들 사이에서, 불이라는 요소 자체를 형상화한 주문석을 발견하는 것은 당연한 일일지도 모릅니다.",
   "book.enigmaticlegacy.entry.blazing_core.page.2": "불타오르는 핵은 지하세계의 극한의 열기에서 살아남는 데 필요한 모든 것을 제공합니다. 화염과 용암은 당신에게 전혀 해를 끼치지 않을 것입니다. 그리고 추가로, 화염이 당신을 공격하려는 자들로부터 보호... 음, 보호하지 않을 지는 몰라도, 최소한 순간적인 복수를 돕긴 합니다.",
+
 
   "book.enigmaticlegacy.entry.golem_heart.name": "골렘의 심장",
   "book.enigmaticlegacy.entry.golem_heart.heading.1": "주문석",
@@ -1256,16 +1298,19 @@
   "book.enigmaticlegacy.entry.golem_heart.page.2": "하지만 그 힘을 과소평가하는 사람은 없을 것입니다.<br2/>대지의 요소와 관련된 이 주문석은 다른 주문석만큼 기발하고 정교하진 않지만, 착용자가 폭력에 더 잘 견딜 수 있도록 만들어줍니다.",
   "book.enigmaticlegacy.entry.golem_heart.page.3": "그것은 피부를 강철같이 만들고, 고압, 절단, 관통을 견디게 해 줍니다.<br2/>심장의 효과는 심장에 부담을 주는 갑옷이 없을 때 최고로 향상되며, 가죽을 완전히 갑옷처럼 바꾸어줍니다.",
 
+
   "book.enigmaticlegacy.entry.eye_of_nebula.name": "성운의 눈",
   "book.enigmaticlegacy.entry.eye_of_nebula.heading.1": "주문석",
   "book.enigmaticlegacy.entry.eye_of_nebula.page.1": "이상하고 불가사의한 엔드의 땅에서 발견된 이 주문석은 차원 자체의 특성과 연관된 엔드의 에너지로 가득 차 있습니다.<br2/>착용 시 엔더맨과 같은 능력을 얻게 되고, 순식간에 순간이동할 수 있는 능력을 얻습니다.",
   "book.enigmaticlegacy.entry.eye_of_nebula.page.2": "때때로 공격으로부터 벗어나 공격을 완전히 피할 수 있습니다.<br2/>단, 이 마지막 능력은 완전히 제어될 수 없으며, 경우에 따라서는 자신에게 유리하지 않고 불리하게 작용할 수 있습니다.",
+
 
   "book.enigmaticlegacy.entry.enigmatic_item.name": "창조의 심장",
   "book.enigmaticlegacy.entry.enigmatic_item.heading.1": "주문석",
   "book.enigmaticlegacy.entry.enigmatic_item.page.1": "이 돌의 힘은 매우 방대하고 압도적이어서, 반신에게 주어질 의도는 아니었던 것 같습니다.<br2/>대부분의 환경적 위협으로부터 궁극적인 보호를 제공합니다.",
   "book.enigmaticlegacy.entry.enigmatic_item.page.2": "대부분의 적대적인 존재들은 여전히 당신을 해칠 수는 있지만, 죽이지는 못할 것입니다. 아무리 죽음의 문턱에 서 있다 해도, 그 안으로 밀어넣을 수는 없을 것입니다.",
   "book.enigmaticlegacy.entry.enigmatic_item.page.3": "'창조의 심장'이라는 이름에도 불구하고, 위더가 소환하는 것과 유사한 파괴적인 해골을 쏟아내며 파괴의 씨앗을 뿌리는 가장 궁극적인 수단 중 하나를 제공합니다.<br2/>이들은 당신이 바라보는 대상의 형체를 빠르게 없애버릴 것입니다.",
+
 
   "book.enigmaticlegacy.entry.enigmatic_amulet.name": "불가사의한 부적",
   "book.enigmaticlegacy.entry.enigmatic_amulet.heading.1": "부적",
@@ -1275,11 +1320,13 @@
   "book.enigmaticlegacy.entry.enigmatic_amulet.page.4": "당신의 죽은 자리에서, 당신이 이계의 그릇이라 이름 붙인, 그 틈새와 연결된 열쇠로 보이는 것을 찾을 수 있을 겁니다. 일반적인 아이템과는 달리 그릇은 파괴할 수 없고, 일부만 소유하게 된 경건한 자연의 속성을 제외하고 어떤 힘에도 영향 받지 않습니다.",
   "book.enigmaticlegacy.entry.enigmatic_amulet.page.5": "그것은 당신이 그것에 접근할 때까지 완전히 비활성 상태로 떠다니다, 접촉하면 쉽게 부서지고 그것이 보관하던 보이지 않는 모든 공간을 해방시킵니다.",
 
+
   "book.enigmaticlegacy.entry.angel_blessing.name": "천사의 축복",
   "book.enigmaticlegacy.entry.angel_blessing.heading.1": "주문석",
   "book.enigmaticlegacy.entry.angel_blessing.page.1": "이 주문석은 고대 사원의 유적에서 발견될 수 있습니다. 여러분이 알지 못하는 목적을 달성한 사원들 말입니다. 그러나 이 주문석의 목적을 알아내는 것은 훨씬 덜 복잡한 작업이라는 것이 증명되었습니다.<br2/>이 주문석은 날아오는 화살을 날려버리기 위해 바람을 휘게 하거나, 낙하 시 다리가 부러지는 것을 막거나, 또는 도달할 수 없는 목적지에 도달하는 것을 돕습니다. 원하신다면요.",
   "book.enigmaticlegacy.entry.angel_blessing.page.2": "점프하기 전 액티브 효과를 사용하면 주문석이 만들어내는 그 모멘텀이 현재 속도에 더해져 정말 길고 높은 점프를 할 수 있기 때문에, 점프할 때 매우 유용합니다.",
   "book.enigmaticlegacy.entry.angel_blessing.page.3": "설명할 수는 없지만, 가까이 가지고 있는 것만으로도 매우 안정되는 것 같습니다.",
+
 
   "book.enigmaticlegacy.entry.cursed_ring.name": "암흑의 반지",
   "book.enigmaticlegacy.entry.cursed_ring.heading.1": "반지",
@@ -1295,12 +1342,14 @@
   "book.enigmaticlegacy.entry.cursed_ring.page.10": "이러한 축복의 정확한 목록은 아마도 이미 알려져 있을 것이므로, 여기에 그것을 요약할 만한 가치는 없는 듯 합니다. 반지가 한번 끼워지는 바로 적용되는 영구적인 특성이며, 저주와 동일하게 제거할 수 없습니다.",
   "book.enigmaticlegacy.entry.cursed_ring.page.11": "결론적으로, 이 저주받은 반지가 담고 있는 힘은 다른 어떤 것들과도 다르며, 만약 이를 잘 이용한다면, 당신은 다른 반신들이 결코 가질 수 없는 유물을 발견하고 창조할 수 있는 위업을 달성할 수 있을 것입니다. 그러나 일곱 저주의 반지가 약속하는 끊임없는 고통과 절망을 견디는 것은 미친 짓임이 틀림없습니다. 세상 어느 누가 그런 운명을 선택할까요?...",
 
+
   "book.enigmaticlegacy.entry.earth_heart.name": "대지의 심장",
   "book.enigmaticlegacy.entry.earth_heart.heading.1": "심장",
   "book.enigmaticlegacy.entry.earth_heart.page.1": "끝없는 바다와 세계의 표면을 덮고 있는 바다의 자연으로 묶인 아이템인 바다의 심장이 있는 것과 비슷하게, 바위 깊은 곳에서 태어나 그들의 원시 에너지의 일부를 캡슐로 감싸고 있는 대지의 심장이 있습니다.",
   "book.enigmaticlegacy.entry.earth_heart.page.2": "그것은 세계의 표면 아래 어둠 속에서 잃어버리고 잊혀진 깊은 곳의 가장 깊은 방과 지하 감옥의 홀에서 발견될 수 있습니다. 이 심장이 가지고 있는 원소의 힘은 주문석에 저장된 것과 유사하지만, 후자와는 달리, 그것은 모든 세계의 시작을 알린 원시적인 혼란에서 비롯되지 않고, 대신에 훨씬 늦게 태어나, 많은 세월 동안 지각에서 서서히 응결되었습니다.",
   "book.enigmaticlegacy.entry.earth_heart.page.3": "결과적인 모양은 그것의 소유자에게 영향을 주지 않고 안에 저장된 정제되지 않은 에너지를 자유롭게 전달할 수 없지만, 적절하게 활용된다면 그러한 에너지를 필요로 하는 강력한 유물의 핵심이 될 수 있습니다.",
 
+  
   "book.enigmaticlegacy.entry.twisted_heart.name": "비틀린 심장",
   "book.enigmaticlegacy.entry.twisted_heart.page.1": "...그래서 말인데, 이 운명을 선택한 것을 바로 당신입니다. 당신은 이 선택이 앞으로 긴 여정에서 당신에게 어떤 슬픔과 후회를 줄 지를 분명히 인지했지만, 당신은 결국 잘 해내고 있습니다. 이유는 모르겠지만요?<br2/>어쨌든, 이제 돌아갈 길은 없습니다 - 당신에게 귀속된 큰 저주의 힘을 이용하기 위해 앞으로 나아갈 수밖에 없습니다.",
   "book.enigmaticlegacy.entry.twisted_heart.page.2": "이 일은 당신이 필요한 재료에 접근할 수 있다면 보이는 것만큼 복잡하지는 않습니다. 왜냐하면 저주들은 그들 자신이 적극적으로 부패를 당신 주변의 세상에 퍼뜨리기 위한 새로운 방법을 찾고 있기 때문입니다.",
@@ -1308,19 +1357,23 @@
   "book.enigmaticlegacy.entry.twisted_heart.page.4": "이 영향은 심장을 즉시 변화시킬 정도로 충분히 강하진 않아서, 일반적인 제작에 사용할 수 없지는 않을 것입니다. 하지만 신중하게 고른 신비한 재료들과 당신의 반신적 힘의 일부분이 들어간다면, 심장의 핵심과 저주 사이의 연결을 강화시킬 수 있고, 심장을 부패시키고 완전히 다른 무언가로 변화시킬 수 있습니다.",
   "book.enigmaticlegacy.entry.twisted_heart.page.5": "비틀린 심장은 이 불경한 의식의 산물이며, 거대한 저주의 일부를 상징하는 유물로, 대지의 심장이 가지고 있던 것보다 더 어둡고 강력합니다. 그것은 대지의 심장의 목적이었던 것에 사용될 수는 없지만, 확실히 응용할 수는 있을 것 같습니다.",
 
+
   "book.enigmaticlegacy.entry.mending_mixture.name": "수선 혼합물",
   "book.enigmaticlegacy.entry.mending_mixture.page.1": "필요한 자재와 도구를 즉시 사용할 수 없는 상황에 장비 수리는 종종 지루한 작업이 될 수 있습니다.<br2/>이 아이템은 꽤 비싼 신비로운 성분들을 섞어야 만들 수 있지만, 확실히 그만한 가치가 있습니다.",
   "book.enigmaticlegacy.entry.mending_mixture.page.2": "그것을 조심스럽게 도구, 갑옷 또는 무기에 바르면 어떤 심각한 손상이라도 순식간에 고칠 수 있고, 물건을 완벽한 모양으로 되돌릴 수 있습니다.<br2/>그냥 마시려고 하지 마세요. 그닥 좋은 결과가 나오진 않을 것입니다.",
+
 
   "book.enigmaticlegacy.entry.mega_sponge.name": "거대 스폰지",
   "book.enigmaticlegacy.entry.mega_sponge.page.1": "일반적인 스펀지조차도 꽤나 많은 양의 물을 흡수할 수 있고, 작은 물웅덩이나 물 속에 잠긴 구조물 내부를 정리하는 데 도움을 줄 수 있는 편리한 도구입니다. 하지만 모든 도구는 언제나 더 좋아질 수 있는 법이죠.",
   "book.enigmaticlegacy.entry.mega_sponge.page.2": "초장력 거대 스펀지는 스펀지가 가진 유일한 단점인 흡수할 수 있는 물의 양에 제한이 있다는 것을 해결했습니다. 흡수된 모든 액체를 세계 이상의 공간 어딘가에 버리는 것은 물을 무한히 흡수할 수 있다는 뜻이기도 합니다.",
   "book.enigmaticlegacy.entry.mega_sponge.page.3": "이제 뒷마당에 있는 보잘것없는 연못보다 훨씬 더 큰 무언가를 쉽게 배수해버릴 수 있습니다.<br2/>분명히 이해할 수 있는 이유 때문에라도, 이것을 바다에 버리는 것은 피하는 것이 좋습니다.",
 
+
   "book.enigmaticlegacy.entry.twisted_mirror.name": "비틀린 거울",
   "book.enigmaticlegacy.entry.twisted_mirror.page.1": "비틀린 심장을 사용할 수 있는 것들 중 하나입니다.<br2/>먼저, 반지를 착용하기로 결정했던 것을 후회하면서 자신을 바라보는 데 사용할 수 있습니다. 또한 조합 과정에서 사용되는 귀환의 물약과 같은 목적의 효과도 제공합니다. 마실 수 있는 형태로 확산되는 엔더릭 에너지 대신",
   "book.enigmaticlegacy.entry.twisted_mirror.page.2": "저주의 순수한 힘에 집중하여 이를 가능하게 하였습니다.<br2/>이 거울을 사용하는 것이 물약을 마시는 것 보다 훨씬 적은 시간이 걸리며 그 과정에서 소모되지도 않기 때문에 결과는 놀라울 정도로 효율적이게 됩니다.",
   "book.enigmaticlegacy.entry.twisted_mirror.page.3": "순간이동한 후에는 거울을 다시 사용하려면 상당한 쿨타운이 발생하지만 일반적인 상황이라면 크게 중요하지는 않습니다.",
+
 
   "book.enigmaticlegacy.entry.lore_inscriber.name": "설명 작성하기",
   "book.enigmaticlegacy.entry.lore_inscriber.heading.1": "GUI",
@@ -1350,21 +1403,25 @@
   "book.enigmaticlegacy.entry.lore_inscriber.page.17": "글을 새기는 작업을 완료하면 이름과 지식을 아이템으로 이전하기 위해 모루에서 합치세요.",
   "book.enigmaticlegacy.entry.lore_inscriber.page.18": "그렇게 하면 항상 정확히 4레벨의 경험치가 필요합니다.<br2/>사용자 정의 이름과 지식을 모두 정의할 필요는 없습니다. 둘 중 하나만 정의할 수 있습니다. 사용자 지정 이름이 없는 조각을 첨부할 때 원래 항목의 이름을 덮어쓰지 않습니다. 이름만 있는 경우 해당 지식 라인은 그대로 유지됩니다(존재하는 경우).",
 
+
   "book.enigmaticlegacy.entry.extradimensional_eye.name": "이계의 눈",
   "book.enigmaticlegacy.entry.extradimensional_eye.page.1": "당신은 더 면밀한 연구를 위한 집에 데려오고 싶지 않은 생물체나 애완동물이나 가축으로 기를 생물체를 종종 마주합니다.<br2/>하지만 가장 유순한 동물이라도 광활한 거리를 옮겨가는 것은 매우 어려운 것으로 판명되었습니다. 그들이 기꺼이 당신을 따라갈 때에도 느리고 장애물을 잘 못 피하며 주의깊게 살피지 않으면 쉽게 길을 잃어버릴 것입니다.",
   "book.enigmaticlegacy.entry.extradimensional_eye.page.2": "그러나 이 눈 중 하나를 마음대로 사용할 수 있다면 거의 모든 생물이 원하는 위치에 눈의 힘을 해제하는 것 처럼 간단하게 작업을 수행할 수 있습니다.",
   "book.enigmaticlegacy.entry.extradimensional_eye.page.3": "먼저 대상이 될 위치에 눈을 결속시켜야 합니다. 그런 다음 모든 종류의 생물 근처로 걸어가서 눈의 힘을 사용하여 대상 지점에 나타나도록 허공에서 사라지게 할 수 있습니다.<br2/>불행히도 눈 자체는 그 과정에서 사라지며, 당신이 수송하는 생물과 달리 최종 목적지에 결코 도달하지 못합니다.",
   "book.enigmaticlegacy.entry.extradimensional_eye.page.4": "그것이 사라지면 물리적으로 현실에 존재했다는 흔적이 아예 없어지기 때문에 정확히 어디로 갔는지는 여전히 불확실합니다.",
 
+
   "book.enigmaticlegacy.entry.enchantment_transposer.name": "지식을 갈구하다",
   "book.enigmaticlegacy.entry.enchantment_transposer.page.1": "이 책은 그 자체로는 많은 신비한 지식이나 힘을 가지고 있지는 않지만, 가장 큰 욕망은 그런 것을 얻는 것 같습니다.<br2/>마법이 부여된 어떤 아이템과도 가까이 닿게 하면 마법이 부여된 책 처럼 즉시 이러한 마법을 흡수하여 저장합니다.",
   "book.enigmaticlegacy.entry.enchantment_transposer.page.2": "아이템은 이 과정에서 어떠한 손상도 입지 않으며, 손상되지 않은 상태로 유지됩니다. 흡수된 마법 부여를 제외하고는 모든 것이 동일하게 유지됩니다.<br2/>결과물로 만들어진 책은 평소와 같이 사용할 수 있습니다.",
   "book.enigmaticlegacy.entry.enchantment_transposer.page.3": "이는 욕망이 충족되면 다른 마법 부여 책과 차별화되는 속성을 잃는 것으로 추정됩니다.",
 
+
   "book.enigmaticlegacy.entry.netherite.name": "네더라이트",
   "book.enigmaticlegacy.entry.netherite.page.1": "고대 파편은 매우 희귀하고 찾기 어려운 것으로 밝혀졌지만. 그럴만한 가치가 없다고 주장하기는 어렵습니다.<br2/>그것을 파편으로 제련하고 그 파편을 금과 조심스럽게 융합하면 네더라이트로 알려진 재료를 만들 수 있습니다.<br2/>화염에 노출되거나 용암에 잠겨도 큰 손상없이 멀쩡하며 다이아몬드보다 훨씬 더 단단합니다.",
   "book.enigmaticlegacy.entry.netherite.page.2": "그러나 완전한 대체물이 아닌 다이아몬드를 기반으로 한 보다 정교한 화합물 상태일 때 가장 효과적인 것으로 입증되었습니다.",
   "book.enigmaticlegacy.entry.netherite.page.3": "이것이 만들어낼 수 있는 가장 효과적인 화합물이 아닐 수도 있다고 가정해야 하므로 훨씬 더 뛰어난 품질을 가질 수 있는 재료를 만들기 위해 이 금속을 계속 실험해봐야 합니다.",
+
 
   "book.enigmaticlegacy.entry.etherium_ore.name": "에테리움 광석",
   "book.enigmaticlegacy.entry.etherium_ore.heading.1": "광석",
@@ -1373,19 +1430,23 @@
   "book.enigmaticlegacy.entry.etherium_ore.page.3": "당신은 일단 '그들이 압도적인 양의 엔더릭 에너지를 활용하는 데 성공했고, 이를 사용하여 이 광물을 물리적 현실로 구체화하여 제조하였다' 라고 이론을 세웠습니다.<br2/>불행히도 그들의 방법이 구체적으로 어떠한지는 확신할 수는 없지만 그들의 작업으로 탄생한 결과물을 보면 더 많은 답이 드러날 것입니다.",
   "book.enigmaticlegacy.entry.etherium_ore.page.4": "순전히 과학적 관심 외에도 마법사와 대장장이 둘 다에게 흥미를 끌게 만들 것입니다. 이 재료의 속성은 종종 의심될 정도로 너무 경이로운 방식으로 설명되기 때문에 이러한 재료가 많지 않다면 그런 설명이 사실인지 확인할 수 없을 것입니다.",
 
+
   "book.enigmaticlegacy.entry.etherium.name": "에테리움",
   "book.enigmaticlegacy.entry.etherium.page.1": "이름과는 달리 이 재료는 물리적으로 아주 견고합니다.<br2/>이야기는 사실로 밝혀졌습니다. 그리고 더욱이 그들은 진실을 과장하지 않았습니다. 에테리움은 여러분이 이전에 겪은 지식의 조각들이 적용된 놀라운 속성을 진정으로 가지고 있습니다.",
   "book.enigmaticlegacy.entry.etherium.page.2": "녹는점이 상당히 높아 네더라이트와 마찬가지로 불과 용암에 강하고 내구성이 훨씬 뛰어납니다. 그 외에도 이 금속은 맥동하는 에너지로 가득 차 있어 당신이 생각해낼 수 있는 어떠한 모양이나 형태로든 만들어지도록 촉구할 수 있습니다.<br2/>당신 같은 사람들에게 주어진다면 모양과 형태를 만드는 능력은 의심의 여지가 없습니다.",
   "book.enigmaticlegacy.entry.etherium.page.3": "이 세계는 곧 당신이 새로 단조한 에테리움 도구의 위력을 보게 될 것입니다.",
 
+
   "book.enigmaticlegacy.entry.ender_rod.name": "엔더 막대기",
   "book.enigmaticlegacy.entry.ender_rod.page.1": "블레이즈 막대에 엔더의 에너지와 천상의 가루가 지닌 힘을 주입하면 이 막대를 만들 수 있습니다.<br2/>앞으로 더 많은 응용 분야를 가지게 될 수도 있지만, 일단은 일반적인 나무로는 충분하지 않은 에테리움 도구의 손잡이를 위한 기초로써 사용하는 것이 좋다고 생각합니다.",
   "book.enigmaticlegacy.entry.ender_rod.page.2": " ",
+
 
   "book.enigmaticlegacy.entry.astral_dust.name": "천상의 가루",
   "book.enigmaticlegacy.entry.astral_dust.heading.1": "먼지로",
   "book.enigmaticlegacy.entry.astral_dust.page.1": "엔드 도시의 방 안에 숨겨져 있는 이 파악하기 힘든 물질은 믿을 수 없을 정도로 흥미로운 특성을 가지고 있습니다. 모든 요소의 힘이 그 안에 주입되고 혼합되어 어떻게든 상대적으로 안정적인 형태를 유지하는 것 같습니다. 천상의 가루는 혼돈스럽고 영원하지 않은 창조물 그 자체와 비슷하지만 시간이 지나면서 어떻게든 얼어붙어 그 한 순간의 모든 아름다움을 볼 수 있게 해줍니다.",
   "book.enigmaticlegacy.entry.astral_dust.page.2": "그것이 가지고 있는 신비한 힘은 엄청나지만 건설적인 방식으로 유용하려면 신중하게 처리하고 주조해야 합니다. 그러나 시간이 지남에 따라 응용이 가능한 많은 요소들을 발견하게 될 것이라는 데는 의심의 여지가 없습니다.",
+
 
   "book.enigmaticlegacy.entry.evil_essence.name": "악명의 정수",
   "book.enigmaticlegacy.entry.evil_essence.heading.1": "정수",
@@ -1393,12 +1454,14 @@
   "book.enigmaticlegacy.entry.evil_essence.page.2": "당신을 붙잡고 싶은 욕망으로 구부러진 것처럼 당신이 다가갈수록 그것은 당신에게 더 가까이 다가옵니다. 아마도 그렇게 하도록 받아들일 수 있을까요...? 아뇨, 그것은 얼마나 어리석은 생각이겠습니까.",
   "book.enigmaticlegacy.entry.evil_essence.page.3": "그러나 한 가지는 의심할 여지가 없습니다 - 이 문제에는 엄청난 양의 어둡고 뒤틀린 힘이 포함되어 있어 우연히 사용할 수 있게 되었습니다. 당신은 분명히 그것과 관련이 있는 것을 찾을 것입니다.",
 
+
   "book.enigmaticlegacy.entry.forbidden_fruit.name": "금단의 과실",
   "book.enigmaticlegacy.entry.forbidden_fruit.heading.1": "과실",
   "book.enigmaticlegacy.entry.forbidden_fruit.page.1": "네더에 있는 고대 요새의 잔재 보물 사이에서 발견할 수 있는 희귀한 유물인 이 과일은 언뜻 보기에는 그 누구도 먹고 싶지 않은 것처럼 보입니다. 그 모양은 참으로 기만적이지 않습니다. - 이것은 재와 부패의 끔찍한 맛을 가지고 있으며 절묘한 기름진 쓴맛이 가미되어 있습니다.",
   "book.enigmaticlegacy.entry.forbidden_fruit.page.2": "당신이 어떻게든 맛 수용체의 비명을 참아내고 그것을 소비할 수 있다면, 즉각적인 효과는 당신을 죽일 가능성이 매우 높으므로, 치료할 몸이 더 이상 남아 있지 않기 전에 어떻게든 치료할 수 있도록 미리 준비하는 것이 좋습니다.<br2/>그러나 즉각적인 독성 영향이 중단된 후 장기적인 영향이 작용합니다.",
   "book.enigmaticlegacy.entry.forbidden_fruit.page.3": "당신은 어떤 형태로든 굶주림을 경험하는 것이 영원히 사라질 것이며, 따라서 대부분의 일반 유형의 음식을 섭취할 수 없게 될 것입니다. 이 효과가 유익한 것처럼 보일 수 있지만 그 대가는 영구적인 불포화 상태이며 어떤 형태로든 체력 재생을 크게 늦춥니다.",
   "book.enigmaticlegacy.entry.forbidden_fruit.page.4": "과일을 한 번 먹으면 그 효과를 되돌릴 방법이 없음을 명심하십시오. - 속죄할 수 없는 죄와 마찬가지로 죽음의 순간에도 당신에게 영향을 미칠 것입니다.<br2/>현명한 선택을 하세요.",
+
 
   "book.enigmaticlegacy.entry.guardian_heart.name": "가디언의 심장",
   "book.enigmaticlegacy.entry.guardian_heart.heading.1": "심장",
@@ -1412,14 +1475,17 @@
   "book.enigmaticlegacy.entry.guardian_heart.page.8": "당신이 시선을 돌리기로 선택한 몬스터가 가까이에 볼 수 있는 다른 몬스터가 없는 경우 심장의 활성 능력은 전혀 작동하지 않을 것입니다.<br2/>이 능력은 상당한 재사용 대기시간을 가지고 있으므로, 그것만으로도 당신을 쫓는 좀비 피글린 무리로부터 당신을 구할 것이라고 기대하지 마십시오.",
   "book.enigmaticlegacy.entry.guardian_heart.page.9": "그들이 그룹의 내부 갈등을 해결하느라 바쁜 동안 당신과 그들 사이에 가능한 한 최대한 멀리 떨어지는 것이 좋습니다.",
 
+
   "book.enigmaticlegacy.entry.animal_guidebook.name": "동물 조련사의 안내서",
   "book.enigmaticlegacy.entry.animal_guidebook.page.1": "오버월드의 사랑스러운 동물들과 친구가 되고 싶다면 이 종합 가이드가 확실히 도움이 될 것입니다. 이것은 당신이 훨씬 덜 친근한 것들과 싸우느라 바쁠 때 동물 친구들을 우발적으로 다치게 하는 것을 피하는 방법과 그들의 충성심과 존경을 얻는 많은 방법을 배우는 데 도움이 될 것입니다.",
   "book.enigmaticlegacy.entry.animal_guidebook.page.2": "그러나 신중한 연구와 주제에 대한 세부 사항을 요약한 수백 페이지를 기억하는 것은 어렵습니다. 따라서 한 두 가지 내용을 신속하게 찾아봐야 할 경우에 대비하여 품에 가지고 다니는 것이 좋습니다.",
+
 
   "book.enigmaticlegacy.entry.hunter_guidebook.name": "사냥꾼의 안내서",
   "book.enigmaticlegacy.entry.hunter_guidebook.page.1": "또 다른 포괄적인 안내인 이 안내서는 길들일 수 있는 야수와 나란히 사냥하는 방법을 배우는 데 도움이 될 것입니다. 당신은 동물들이 전투에서 보여줄 수 있는 모든 충성심과 용기에도 불구하고 당신보다 지각력이 훨씬 낮고 복잡한 전투 기술을 개발하고 명백하지 않은 공격 패턴을 효과적으로 피할 수 없다는 것을 이미 알고 있을 것입니다.",
   "book.enigmaticlegacy.entry.hunter_guidebook.page.2": "이 책은 당신이 그들의 주인으로서 배울 수 있는 전투에 대한 많은 독특한 접근 방식을 개괄적으로 설명합니다. 이를 통해 일반적으로 자신에게 가하는 공격을 받아 그들이 견딜 수 있는 것보다 더 강한 공격에 죽임을 당하는 것을 방지할 수 있습니다.",
   "book.enigmaticlegacy.entry.hunter_guidebook.page.3": "방어 수단이 훨씬 더 정교하고 효과적이기를 바랍니다. 예를 들어 물약을 사용하여 전투에서 훨씬 더 빨리 자신을 치유할 수 있습니다.",
+
 
   "book.enigmaticlegacy.entry.the_twist.name": "비틀림",
   "book.enigmaticlegacy.entry.the_twist.page.1": "아는 것이 힘이다. 이 책이 그 말을 그대로 증명하듯이.<br2/>위더의 영혼의 사악한 본질은 당신이 지금 보고있는 지식의 그릇의 물리적 체현을 비틀고 타락시키는 것을 허용합니다. 결과는 내부 내용에 큰 영향을 미치지는 않습니다.",
@@ -1427,11 +1493,13 @@
   "book.enigmaticlegacy.entry.the_twist.page.3": "특히 책보다는 무기로 가지고 있다는 능력에서, 이것으로 공격하면 큰 피해를 입히고 훨씬 더 무거운 밀치기를 가하며 높은 공격 속도와 결합하여 진정으로 파괴적인 연속 공격을 할 수 있습니다.<br2/>저주의 정수가 주입되고 위더의 존재 에너지가 부여된 이 유물은 일곱 저주의 고리에서 힘을 끌어내어 네 번째 저주의 영향을 극복할 수 있도록 합니다.",
   "book.enigmaticlegacy.entry.the_twist.page.4": "무기로 사용하기를 선택한다면, 다른 생물과 마찬가지로 항상 몬스터에게 최대 피해를 가합니다.<br2/>게다가 그 본질은 상위 존재의 그릇과 영혼을 열렬히 먹어치우고, 불태우고, 찢어버리는 위더 그 자체의 힘이 반신에게 부여될 것입니다.",
 
+
   "book.enigmaticlegacy.entry.infernal_shield.name": "지옥의 방패",
   "book.enigmaticlegacy.entry.infernal_shield.page.1": "가장 단단한 재료로 만들어지고 영혼이 결속되어 있는 저주받은 힘이 깃든 이 방패는 당신을 걸어다니는 요새로 만들 수 있습니다.<br2/>관통 마법이 부여된 화살이나 도끼와 같은 방패에 대항하는 기존의 수단은 완전히 무력합니다. 이것은 당신을 해치려는 어리석은 시도로 너무 가까이 접근하는 사람들은 이것의 지옥의 불꽃에 타버릴 것입니다.",
   "book.enigmaticlegacy.entry.infernal_shield.page.2": "무엇보다도 적이 그것을 돌파하려는 시도가 실패할 때마다 자신의 힘이 증가하여 잔인하고 자비 없이 보복할 수 있습니다.",
   "book.enigmaticlegacy.entry.infernal_shield.page.3": "그러나 그러한 강력한 방어에는 위험한 대가가 따릅니다. 이 방패를 당신과 공격자 사이에 단단히 붙잡지 못하고 방어하려는 시도에도 불구하고 그들의 공격이 당신을 찾아낸다면, 당신의 육체와 자존심은 똑같이 잔혹하게 산산조각이 날 것입니다.<br2/>알 가치가 있는 또 다른 사실은 내구성이 엄청나지만 무한하지는 않습니다. 그러나 그것을 복원하는 방법 중 하나는 모루에서 흑요석과 결합하거나 수선과 같은 마법이 처리되도록 하는 것입니다.",
   "book.enigmaticlegacy.entry.infernal_shield.page.4": "자부심을 가지고 참되, 과신은 느리고 교활한 살인자임을 상기하십시오.",
+
 
   "book.enigmaticlegacy.entry.ancient_tomes.name": "고대의 서적",
   "book.enigmaticlegacy.entry.ancient_tomes.heading.1": "서적",
@@ -1440,23 +1508,28 @@
   "book.enigmaticlegacy.entry.ancient_tomes.page.3": "더 자주 이러한 작품에는 세계와 광대한 역사에 대한 민속과 예술적 묘사가 포함되어 있어 정복하는 데 도움이 되지 않을 수 있지만 처음에는 정복할 가치가 더 높을 것입니다.",
   "book.enigmaticlegacy.entry.ancient_tomes.page.4": "당신은 또한 당신이 주장하는 데 관심이 있을 수 있지만 아직 그것들을 어디에서 찾아야 할지 모를 수 있는 전설적인 유물과 다른 힘의 물체로 당신을 인도할 여러 단서를 발견할 수도 있습니다.",
 
+
   "book.enigmaticlegacy.entry.ancient_debris.name": "고대 잔해",
   "book.enigmaticlegacy.entry.ancient_debris.heading.1": "잔해",
   "book.enigmaticlegacy.entry.ancient_debris.page.1": "네더의 지각 깊숙한 곳에 고대 파편이 있습니다.<br2/>그 기원은 정확히 알려져 있지 않습니다. 당신이 접한 지식의 파편은 이것을 정제하는 과정과 그것을 통해 얻을 수 있는 재료의 예상되는 특성을 아주 정확하게 묘사하지만 그것이 어디서 왔는지에 대한 단서는 남기지 않습니다.",
   "book.enigmaticlegacy.entry.ancient_debris.page.2": "네더의 지질학적 역사는 그 자체로 미스터리지만, 어떻게 그 잔해와 같은 특이한 것이 그 역사에서 그 과정으로 남게 되었는지는 훨씬 더 수수께끼입니다.<br2/>그러나 그런 역사보다는 당신은 파편 자체의 실제 샘플에 손을 대는 데 더 관심이 있습니다.",
   "book.enigmaticlegacy.entry.ancient_debris.page.3": "당신이 인정한 바에 따르면, 그것은 다이아몬드의 경도를 능가하는 금속 단조의 핵심일 수 있습니다. 다이아몬드는 이전의 많은 영겁 동안 인간과 반신이 작업에 사용해야 하는 가장 내구성 있는 재료로 남아 있었습니다.",
 
+
   "book.enigmaticlegacy.entry.redstone_lantern.name": "레드스톤 등",
   "book.enigmaticlegacy.entry.redstone_lantern.heading.1": "등 제작하기",
   "book.enigmaticlegacy.entry.redstone_lantern.page.1": "레드스톤 등은 원시 발광석 대신 레드스톤 등으로 제조된 램프 디자인의 또 다른 변형입니다.<br2/>레드스톤 램프 자체와 달리 레드스톤 랜턴은 구조 내에 전원을 내장하여 켜져 있는 상태를 유지합니다. 그러나 해당 신호는 외부의 영향을 직접 받지 않는 방식으로 둘러싸여 있습니다.",
   "book.enigmaticlegacy.entry.redstone_lantern.page.2": "레드스톤 신호로 인해 랜턴이 꺼지지 않도록 합니다.<br2/>다른 모든 면에서 이것들은 발광석과 완전히 유사하며, 코어만 약간 다른 모양을 하고 있습니다.",
 
+
   "book.enigmaticlegacy.entry.shroomlamp.name": "버섯등",
   "book.enigmaticlegacy.entry.shroomlamp.page.1": "버섯등은 식물이 우거진 네더의 흔한 공간에서의 아름다운 전등입니다. 전등을 만들기 위한 대체 재료로 사용할 수 있도록 조정할 수 있습니다.<br2/>버섯등을 코어로 하는 전등은 외형은 다르지만 발광석과 완전히 동일합니다.",
+
 
   "book.enigmaticlegacy.entry.lamp.name": "전등",
   "book.enigmaticlegacy.entry.lamp.page.1": "발광석은 훌륭하고 신뢰할 수 있는 광원이지만 원시 발광석 덩어리를 놓는 것은 실제로 많은 미학을 만들어내지 못합니다. 그 대신 일반 랜턴과 비슷한 디자인을 내놓았고 이것은 더 크고 더 밝았습니다.<br2/>랜턴처럼 바닥에 놓을 수도 있고 천장에 매달 수도 있습니다.",
   "book.enigmaticlegacy.entry.lamp.page.2": "광범위한 실험을 통해 유리 블록 안에 램프를 넣어 더욱 정교한 디자인을 만들었습니다.<br2/>이렇게하여 바닥으로 지지되거나 그 위에 부착할 수 있는 것이 있어야 할 필요가 없어졌습니다.",
+
 
   "book.enigmaticlegacy.entry.recall_potion.name": "귀환의 물약",
   "book.enigmaticlegacy.entry.recall_potion.heading.1": "물약 양조하기",
@@ -1464,11 +1537,13 @@
   "book.enigmaticlegacy.entry.recall_potion.page.2": "또는 적어도 기술적으로 집이라고 부를 수 있는 곳으로 돌아갑니다.<br2/>만약 이런 지점을 가지고 있지 않다면, 여행이 처음 시작된 곳 주변 어딘가로 가게 될 것입니다.",
   "book.enigmaticlegacy.entry.recall_potion.page.3": "그곳이 그 장소와 가까운 어딘가에 있다는 것을 아는 것 외에는 목적지가 정확히 어디인지 확신할 수는 없지만 말입니다.<br2/>물약은 당신과 당신의 목적지까지 떨어진 거리에 관계없이, 그리고 당신이 같은 차원에 있는지 여부에 관계없이 효과가 있습니다.",
 
+
   "book.enigmaticlegacy.entry.twisted_potion.name": "비틀린 자비의 물약",
   "book.enigmaticlegacy.entry.twisted_potion.heading.1": "물약 양조하기",
   "book.enigmaticlegacy.entry.twisted_potion.page.1": "비틀린 심장의 힘으로 이제 귀환의 물약의 정수를 변형하여 새로운 목적을 제공할 수 있습니다.",
   "book.enigmaticlegacy.entry.twisted_potion.page.2": "당신이 부르는 대로 비틀린 자비의 물약은 당신이 정확히 마지막 죽음이 발생한 곳으로 워프할 수 있게 해 줄 것이며 희망적으로 당신이 그곳에 남겨둔 영혼의 일부와 함께 당신의 소유물을 기억할 수 있게 해 줄 것입니다.",
   "book.enigmaticlegacy.entry.twisted_potion.page.3": "그러나 그러한 기회에는 대가가 따르므로 주의하십시오. 순간이동이 완료되자마자 다시 거의 죽을 뻔한 자신을 발견하게 될 것이며, 얼마 지나지 않아 마지막에 죽인 사람이 다시 한 번 당신을 잡을 수 있습니다.",
+
 
   "book.enigmaticlegacy.entry.haste_potion.name": "성급함의 물약",
   "book.enigmaticlegacy.entry.haste_potion.heading.1": "물약 양조하기",
@@ -1483,6 +1558,7 @@
   "book.enigmaticlegacy.entry.haste_potion.page.5": "투척형으로 양조할 수도 있습니다...",
   "book.enigmaticlegacy.entry.haste_potion.page.6": "...또는 다른 일반 물약과 마찬가지로 잔류형도 있습니다.",
 
+
   "book.enigmaticlegacy.entry.molten_heart_potion.name": "녹아내리는 심장의 물약",
   "book.enigmaticlegacy.entry.molten_heart_potion.heading.1": "물약 양조하기",
   "book.enigmaticlegacy.entry.molten_heart_potion.heading.2": "지속 시간 연장하기",
@@ -1493,6 +1569,7 @@
   "book.enigmaticlegacy.entry.molten_heart_potion.page.3": "레드스톤 가루를 사용하여 효과를 확장할 수 있습니다.",
   "book.enigmaticlegacy.entry.molten_heart_potion.page.4": "투척형으로 양조할 수도 있습니다...",
   "book.enigmaticlegacy.entry.molten_heart_potion.page.5": "...또는 다른 일반 물약과 마찬가지로 잔류형도 있습니다.",
+
 
   "book.enigmaticlegacy.entry.advanced_brewing.name": "고급 포션들",
   "book.enigmaticlegacy.entry.advanced_brewing.heading.1": "궁극의 물약 양조하기",
@@ -1507,6 +1584,7 @@
   "book.enigmaticlegacy.entry.advanced_brewing.page.5": "물약에 즉각적인 효과가 있는 경우 한 단계의 추가 효과만 받습니다. 따라서 치유의 물약은 궁극적 인 버전으로 양조 된 경우 즉시 치유 III를 적용합니다.",
   "book.enigmaticlegacy.entry.advanced_brewing.page.6": "또한 그것들은 전통적인 수단을 통해 투척형과 잔류형 모두 양조하고 변환할 수 있습니다.",
 
+
   "book.enigmaticlegacy.entry.etherium_armor.name": "에테리움 갑옷",
   "book.enigmaticlegacy.entry.etherium_armor.heading.1": "갑옷 세트",
   "book.enigmaticlegacy.entry.etherium_armor.page.1": "확실히, 새로운 에테리움의 힘이 궁극의 갑옷을 만드는 데 도움이 될 것이라고 추측하는 데 그리 오랜 시간이 걸리지 않았습니다.<br2/>에테리움 갑옷은 진정한 궁극기는 아니지만, 만들 수 있다고 알려져있는 모든 것을 훨씬 능가합니다.",
@@ -1516,15 +1594,18 @@
   "book.enigmaticlegacy.entry.etherium_armor.page.5": "갑옷 자체의 뛰어난 보호에도 불구하고 소지자가 심각한 부상을 입었을 때만 활성화됩니다. 그들이 완전한 체력을 유지하여 추가적인 보호 조치 없이 다가오는 위협에 대처할 수 있을 때, 보호막은 해제되고 에테리움은 다시 나타날 필요가 생길 때까지 내부 에너지를 천천히 보충합니다.",
   "book.enigmaticlegacy.entry.etherium_armor.page.6": "위더가 생명력을 절반으로 줄였을 때 위더가 불러일으키는 보호막과 그 방패의 유사성을 알아차리기 어렵습니다. 그것은 이더리움의 힘의 기원과 본질과 어떤 관련이 있음을 암시할 것이지만, 당신은 아직 이 이야기의 조각들을 정리할 충분한 단서가 없는 것 같습니다.<br2/>다음 페이지에는 조합법에 따라 이더리움 갑옷을 만드는 방법에 대한 설명이 포함되어 있습니다.",
 
+
   "book.enigmaticlegacy.entry.xp_scroll.name": "지식 저장소",
   "book.enigmaticlegacy.entry.xp_scroll.page.1": "경험이라고 알려진 미묘한 물질은 종종 다루기가 매우 어렵고 불편합니다.<br2/>자신에게는 얼마든지 흡수할 수 있는 능력이 있지만, 소유하지 않은 것은 나중에 효과적으로 분배할 수 있는 가능성을 말입니다.",
   "book.enigmaticlegacy.entry.xp_scroll.page.2": "한 번에 더 많이 흡수하고 빼면 할수록 마법 부여와 같은 예술이 수행되는 데 더 많은 양을 소비하고 때로는 상상할 수 없을 정도로 낭비됩니다. 더욱이 짜증나는 것은, 일단 물리적인 껍질이 찢어지면 대부분의 경험이 사라지고 미미한 부분만 남게 된다는 것입니다.",
   "book.enigmaticlegacy.entry.xp_scroll.page.3": "그러나 이 장엄한 주문서에 손을 대면 그 좌절은 마침내 끝날 것입니다.<br2/>그것은 당신의 경험을 빠르고 쉽게 흡수할 수 있고 당신이 그것을 되찾기로 선택할 때까지 그것을 보관할 수 있습니다. 영원한 지혜의 주문서를 사용하면 앞뒤로 전송되는 양을 정확하게 제어할 수 있으며 주문서에 저장된 경험은 자신의 총계에 포함되지 않으므로 원하는 만큼 효과적으로 귀중한 경험을 관리할 수 있습니다.",
   "book.enigmaticlegacy.entry.xp_scroll.page.4": "보기만 해도 바라본 시간에 따라 얼마나 많은 경험치를 저장하는지 편리하게 추정할 수 있습니다.<br2/>활성화되어 다른 액세서리와 함께 휴대하는 동안 이 두루마리는 주변의 넓은 지역에 떨어질 수 있는 경험 덩어리도 흡수합니다.",
 
+
   "book.enigmaticlegacy.entry.super_magnet_ring.name": "변위의 반지",
   "book.enigmaticlegacy.entry.super_magnet_ring.page.1": "오랫동안 기다려온 자석 반지의 강화 형태, 변위의 반지는 모든 면에서 더 좋습니다.<br2/>엔드의 신비한 에너지의 일부를 주입하여 기존보다 2배 더 넓은 면적을 덮고, 떨어뜨린 물건을 끌어당기는 대신... 물건 쪽으로 끌어당깁니다.",
   "book.enigmaticlegacy.entry.super_magnet_ring.page.2": "모든 면에서 영향을 받는 아이템은 마치 사용자가 바로 옆에 서 있는 것처럼 작동하여 한 번에 여러 위치에 효과적으로 존재할 수 있습니다. 이 반지는 또한 기존의 속성을 상속받아 당신이 그 힘을 완전히 억제하지 않는 한 당신의 아이템을 떨어뜨리지 않습니다.",
+
 
   "book.enigmaticlegacy.entry.monster_charm.name": "학살자의 표식",
   "book.enigmaticlegacy.entry.monster_charm.page.1": "때로 어둠 속을 아무 생각 없이 방황하는 그 괴물들은 큰 성가심이 될 때가 있습니다. 이제 네더라이트를 단조할 수 있는 권한을 갖게 되었고, 한때 상당한 위협이었던 네더라이트가 검을 더럽히는 약간의 불편함으로 감소하는 경우가 많습니다. 그러나 때때로 그들의 영혼이 육체에 더 이상 달라붙지 않도록 하는 것만으로는 더 이상 보람을 느끼지 못합니다.",
@@ -1532,24 +1613,29 @@
   "book.enigmaticlegacy.entry.monster_charm.page.3": "그것을 지니고 있을 때 죽임을 당한 생물은 수집할 수 있는 더 유용한 물건을 남깁니다. 그 생물들이 몬스터라면, 당신은 또한 경험의 형태로 그들의 생명력의 더 많은 부분을 흡수할 수 있을 것입니다.<br2/>한 번 몬스터과 싸우는 데 일생을 바쳤지만 결국 스스로 괴물이 된 영웅의 이야기를 몇 번 접했습니다.",
   "book.enigmaticlegacy.entry.monster_charm.page.4": "그러나 일반적인 좀비를 보면 그런 운명을 겪지 않아도 될 것이라고 확신합니다. 어떻게 공통점이 있을 수 있을까요..?",
 
+
   "book.enigmaticlegacy.entry.mining_charm.name": "광부의 꿈",
   "book.enigmaticlegacy.entry.mining_charm.page.1": "이 세계의 귀중한 금속과 광물의 대부분은 표면 아래 깊숙이 숨겨져 있습니다. 그 때문에 습하고 춥고 어두운 지하에서 수많은 시간을 보내고 필요한 자원을 찾기 위해 끝이 없어 보이는 터널을 파야 하는 경우가 종종 있습니다.",
   "book.enigmaticlegacy.entry.mining_charm.page.2": "이 부적은 당신이 그것을 통과해야 하는 부담을 덜어줄 수는 없지만 적어도 그 시간을 약간 덜 어둡고 지루하게 지속할 수 있게 해줍니다.",
   "book.enigmaticlegacy.entry.mining_charm.page.3": "광부라면 누구나 질투할 수 있는 능력을 부여하여 블록을 다른 방법보다 훨씬 빠르게 분해하고, 어둠 속에서도 대낮처럼 선명하게 볼 수 있으며, 곡괭이로 훨씬 더 멀리서도 무언가에 접근할 수 있습니다.<br2/>또한 보물을 찾는 데 유리하게 확률이 약간 바뀔 수도 있습니다... 아마도 말입니다. 그 부분은 결국 소문일 뿐일 수도 있습니다.",
 
+
   "book.enigmaticlegacy.entry.magnet_ring.name": "자석 반지",
   "book.enigmaticlegacy.entry.magnet_ring.page.1": "디자인의 단순성에도 불구하고 자석 반지는 이미 약간의 신비한 힘을 보유하고 있습니다.<br2/>아마도 창조 자체를 거부하는 것은 아니지만 여전히 매우 유용한 것입니다. - 당신 주위의 땅에 놓여 있는 것이 무엇이든 이 반지는 그것을 당신에게 가져다 줄 것입니다.",
   "book.enigmaticlegacy.entry.magnet_ring.page.2": "그것의 주목할만한 속성 중 하나는 당신이 반지의 힘을 기꺼이 억제하지 않는 한 버리려고 하는 아이템이 당신을 떠나기를 거부하고 즉시 인벤토리에 다시 들어가려고 시도한다는 것입니다.",
 
+
   "book.enigmaticlegacy.entry.golden_ring.name": "정교한 반지",
   "book.enigmaticlegacy.entry.golden_ring.page.1": "조금 더 노력하여 그만큼의 귀중한 금을 사용하면 평범한 철제 반지를 훨씬 더 빛나고 멋진 형태로 재조명할 수 있습니다.",
   "book.enigmaticlegacy.entry.golden_ring.page.2": "이 액세서리의 유일한 주목할만한 속성은 반짝이고 순금이라는 점 외에도 금 갑옷을 입는 것과 유사한 방식으로 피글린에 영향을 미친다는 것입니다. - 시야에 들어오자마자 죽일듯이 달려들지 않습니다.",
+
 
   "book.enigmaticlegacy.entry.enchanter_pearl.name": "마법 부여자의 진주",
   "book.enigmaticlegacy.entry.enchanter_pearl.page.1": "위더의 영혼의 힘을 활용할 수 있는 여러 가지 방법 중에서 마법 부여대로 작업할 때 일반적으로 대처해야 하는 한계를 깨뜨릴 수 있는 진정으로 귀중한 진주가 있습니다.<br2/>첫 번 째로, 처음으로 청금석을 가져오는 것을 깜빡하여 무언가에 마법을 부여하고 싶을 때마다 테이블로 두 번 달려가야 하는 것을 완전히 잊어버릴 수 있습니다.",
   "book.enigmaticlegacy.entry.enchanter_pearl.page.2": "진주는 청금석을 사용하는 대신 일곱 저주의 반지 내부에서 힘을 끌어내어 마법을 부여하는 촉매제로 사용합니다.",
   "book.enigmaticlegacy.entry.enchanter_pearl.page.3": "결과적으로, 마법을 부여할 때 얻을 수 있는 마법의 양과 힘은 일반 마법을 부여할 때보다 평균적으로 훨씬 더 높습니다.<br2/>또한 이 프로세스를 통해 이전에는 불가능하다고 생각되었던 일을 달성할 수 있습니다. - 즉, 장비에 고유한 보물 마법을 부여하는 것과 같은 장비를 바로 당신의 마법 부여대 내에서 생성할 수 있습니다.",
   "book.enigmaticlegacy.entry.enchanter_pearl.page.4": "불행히도 일반적으로 얻을 수 없는 저주를 대신 받을 수도 있으므로 후자의 능력은 양날의 검과 같습니다.",
+
 
   "book.enigmaticlegacy.entry.cursed_stone.name": "반지의 파괴",
   "book.enigmaticlegacy.entry.cursed_stone.page.1": "일곱 저주의 반지를 짊어지기로 선택한 이후로, 당신은 반지를 제거할 가능성에 대해 생각했습니다. - 실제로 이것을 하지 않는다면 적어도 그것이 존재하는지 알고 있어야 합니다. 그것이 단조된 재료는 결코 파괴할 수 없지만, 반지의 물리적 화신은 형이상학적 힘과 본성의 단지 일부에 불과합니다.",
@@ -1560,36 +1646,43 @@
   "book.enigmaticlegacy.entry.cursed_stone.page.6": "절벽과 난간을 등반하여 그 아래에서 내려다보는 것을 - 발견할 수 있는 만큼 광대하고 깊은 발 아래 용암의 바다를 발견할 때까지 말입니다. 잠시 숨을 참았다가 마지막으로 숨을 들이쉬고 아래의 불타는 바다 한가운데로 뛰어들어 몸을 녹은 암석에 익사하고 불에 태워 버리십시오.<br2/>모든 것이 올바르게 실행된다면 반지는 녹아 영원히 파괴될 것입니다.",
   "book.enigmaticlegacy.entry.cursed_stone.page.7": "그러나 그 사슬로부터의 해방은 값싸게 이루어지지 않습니다. 그것은 당신이 부정한 돌을 통해 그것에 얽힌 당신의 영혼의 일부를 드러내기 때문에 가능한 것입니다. 이 의식이 성공하려면 먼저 그 부분을 파괴해야 합니다. 그렇지 않으면 불가능합니다. 그러나 적어도 이 희생으로 당신은 저주받은 반지를 다시는 볼 수 없을 것입니다... 물론 당신의 세계에 둘 이상이 있다는 것이 밝혀지지 않는 한, 그럴 가능성은 거의 없습니다.",
 
+
   "book.enigmaticlegacy.entry.heaven_scroll.name": "천국의 선물",
   "book.enigmaticlegacy.entry.heaven_scroll.page.1": "다른 반신이나 인간이 그랬던 것처럼, 여행을 시작할 때부터 당신은 연약한 신체의 한계를 초월하는 꿈을 꾸었습니다. 그 꿈에는 다른 모든 속성 중에서 다른 무엇보다도 신처럼 이 세상의 하늘을 자유롭게 돌아다니는 것이 포함되어있었습니다. 글쎄요, 이 주문서로는 당신이 모든 하늘을 돌아다닐 수는 없을지도 모릅니다. 그러나 네더의 별의 엄청난 힘으로 조금은 가능합니다.",
   "book.enigmaticlegacy.entry.heaven_scroll.page.2": "활동적인 신호기 내에 있는 자신을 발견한 경우 - 그리고 천국의 선물은 신호기의 신비한 오라에서 멀리 떨어져 있다고 생각하지 않는 한 매우 편리한 비행 능력을 부여합니다.",
   "book.enigmaticlegacy.entry.heaven_scroll.page.3": "불행히도 그 오라는 그 자체만으로는 비행에 동력을 공급하는 데 필요한 많은 에너지를 지속적으로 소모할 만큼 충분히 강하지 않습니다. 두루마리는 천천히, 그러나 꾸준히 당신이 흡수한 경험을 소모하여 당신을 공중에 띄울 것입니다.",
   "book.enigmaticlegacy.entry.heaven_scroll.page.4": "당신은 그 힘을 향상시키고 한계를 극복할 방법이 분명히 있을 것이라고 확신하지만, 잠시 동안은 당신이 해야 할 일만 남았습니다.",
 
+
   "book.enigmaticlegacy.entry.fabulous_scroll.name": "창조주의 은혜",
   "book.enigmaticlegacy.entry.fabulous_scroll.page.1": "당신의 기대는 결국 확인되었습니다. 이제 종말의 문이 열리고 그 끝이 없는 범위가 당신의 우월한 힘 앞에 떨어졌으므로 마침내 당신은 천국의 선물의 개선된 버전을 설계할 수 있었습니다.<br2/>전구체의 한계를 완전히 제거하지는 못하지만 최소한 크게 확장합니다.",
   "book.enigmaticlegacy.entry.fabulous_scroll.page.2": "이 주문서를 사용하면 신호기 가까이에 있을 필요 없이 모든 세계와 차원의 하늘을 자유롭게 날 수 있습니다. 경험 만으로 비행에 동력을 공급하는 것은 상당히 비싸므로 비행이 신호기 범위 내에서 지속되는 것처럼 거의 지속되는 것을 기대하지 마십시오.",
   "book.enigmaticlegacy.entry.fabulous_scroll.page.3": "반면에 창조주의 은혜는 신호기의 힘을 훨씬 더 효율적으로 소모할 수 있으며, 그 범위 안에 머물기로 선택하면 다른 모든 것보다 우위에 있기 위해 경험을 전혀 희생할 필요가 없습니다.",
+
 
   "book.enigmaticlegacy.entry.escape_scroll.name": "사후 유언",
   "book.enigmaticlegacy.entry.escape_scroll.page.1": "죽음은 당신과 같은 반신에게 일시적인 불편함일 뿐임이 입증되었지만, 때때로 이 불편함은 큰 피해를 입힙니다.<br/>당신이 지불하고 싶은 것보다 훨씬 더 많은 - 당신이 어디에서 죽느냐에 따라, 최고의 재료로 만들어지고 오버월드의 구석구석에서 수집된 당신의 소중한 장비는 망각에 의해 분실되거나 복구하기가 엄청나게 어려울 수 있습니다. 이 주문서는 그러한 일이 일어나지 않도록 하는 보증서입니다.",
   "book.enigmaticlegacy.entry.escape_scroll.page.2": "이것은 운반자를 죽음으로부터 보호할 수 없지만 그들의 생명이 빼앗긴다면 죽었을 때 떨어뜨리는 것이 무엇이든 거리와 차원에 관계없이 재생성 지점으로 되돌아갑니다.",
   "book.enigmaticlegacy.entry.escape_scroll.page.3": "두루마리 자체는 소지자가 사망한 위치에 남아 있지만 일반적으로 떨어뜨리는 아이템과 달리 타지 않거나 죽음을 맞이했을 수 있는 공허에 빠지거나 너무 오랫동안 방치해두어도 무로 사라지지 않습니다.<br2/>반신의 손만이 반드시 당신의 것이 아니라도 그것을 되찾을 수 있습니다.",
 
+
   "book.enigmaticlegacy.entry.ender_ring.name": "엔더의 반지",
   "book.enigmaticlegacy.entry.ender_ring.page.1": "엔더 상자는 거리와 차원에 관계없이 원하는 아이템에 접근할 수 있도록 하여 매우 유용한 것으로 입증되었습니다. 직접 휴대하고있는 아이템과는 달리 엔더 상자에 있는 아이템은 물리적 껍질이 파괴될 때 위험에 처하지 않습니다.<br2/>그러나 그것은 약간의 문제가 있습니다.",
   "book.enigmaticlegacy.entry.ender_ring.page.2": "그 커다란 상자를 가지고 다니며, 초차원적 깊이에 있는 것을 꺼낼 때마다 던져놓은 다음 당신이 섬세하게 합쳤던 흑요석 조각으로 깨지는 것을 원하지 않는 한, 믿을 수 없을 정도로 섬세한 도구로 제거해야 한다는 점입니다.",
   "book.enigmaticlegacy.entry.ender_ring.page.3": "엔더의 반지는 이 문제를 정확히 해결하기 위해 설계되었으며, 순수한 의지만으로 공간의 구조를 찢어 엔더 상자의 내용물에 접근할 수 있습니다.<br2/>균열을 풀 때 손을 빼는 것을 잊지 마세요.",
+
 
   "book.enigmaticlegacy.entry.arcane_scrolls.name": "신비로운 주문서",
   "book.enigmaticlegacy.entry.arcane_scrolls.page.1": "필기 재료와 평범한 백지 주문서 외에 신비로운 주문서를 만드는 데에는 일반적으로 두 가지 신비한 재료가 필요하며 만든 주문서는 단순히 존재하는 것 이상의 기능을 수행하는 것으로 확인되었습니다. 다른 장신구처럼 휴대할 수 있습니다.<br2/>",
   "book.enigmaticlegacy.entry.arcane_scrolls.page.2": "책이 이미 오래전에 발명되었다는 점을 감안할 때, 이것들은 끔찍하고 강력한 마법사의 이미지에 그다지 기여하지 않을 것입니다.  그러나 그것들이 훌륭하게 설계되고 결합된다면 그들이 제공할 수 있는 실제 가능성이 얼마나 광대한지를 고려할 때 그다지 문제되지는 않습니다.<br2/>이상하게도 가장 오래된 문헌 중에서 기록만 보관하는 주문서는 찾아보기 힘듭니다.<br2/>결국 이렇게 뻔한 구조인 것일까요...?",
   "book.enigmaticlegacy.entry.arcane_scrolls.page.3": "여기에 빈 주문서를 만드는 방법이 설명되어 있습니다.<br2/>그 자체로는 별로 유용하지 않을 수 있지만, 신비로운 주문서를 만들기 위한 기초 역할을 합니다.",
 
+
   "book.enigmaticlegacy.entry.darkest_scroll.name": "가장 어두운 주문서",
   "book.enigmaticlegacy.entry.darkest_scroll.heading.1": "주문서",
   "book.enigmaticlegacy.entry.darkest_scroll.page.1": "위험한 요새의 보물에서 발견된 이 검은색 천은 언뜻 보기에는 거의 수상한 물건으로 보이지 않습니다. 그러나 사실은 일곱 저주의 반지를 강화하는 마법에 대해 이상하게도 친숙해 보이는 알려지지 않는 일종의 암흑 마법이 주입되어 있습니다.",
   "book.enigmaticlegacy.entry.darkest_scroll.page.2": "그러나 그 마법은 깊은 곳에 잠자고 있으며, 깨어나 이용되기를 기다리고 있는 것처럼 보이는 잠자고 있는 원시 에너지입니다. 어쩌면 가장 어두운 주문서가 새롭고 더 강력한 비전 주문서를 만들기 위한 기반이 될 수 있을까요?",
+
 
   "book.enigmaticlegacy.entry.avarice_scroll.name": "무한한 탐욕의 조약",
   "book.enigmaticlegacy.entry.avarice_scroll.page.1": "일곱 저주의 무한한 힘을 활용하는 또 다른 유물인 이 우아한 주문서는 당신이 영혼 속에 조심스럽게 숨겨둔 무한한 내면의 탐욕을 충족시키도록 설계되었습니다.<br2/>이것의 주요 효과는 당신이 거래하거나 물물교환하는 생물의 마음을 혼란시켜 거래의 진정한 가격과 이익을...훨씬 당신에게 유리하도록 오인시키는 능력입니다.",
@@ -1598,14 +1691,17 @@
   "book.enigmaticlegacy.entry.avarice_scroll.page.4": "이 외에도, 살아있는 생물을 죽일 때 마다 탐욕스러운 꿈 속에서 에메랄드 자체가 현실화되는 약간의 기회를 얻을 수 있으며, 광산에 내려가고 싶은 기분이 들 때마다 더 많은 재물을 손에 넣는 데 확실히 도움이 되는 <&l>+1 행운 등급<clear/>을 얻습니다.",
   "book.enigmaticlegacy.entry.avarice_scroll.page.5": "그 욕심이 마음을 지배하게 두지 마세요. 그러면 괜찮을 겁니다.",
 
+
   "book.enigmaticlegacy.entry.infinimeal.name": "맹렬한 생명의 정수",
   "book.enigmaticlegacy.entry.infinimeal.page.1": "대지의 심장에 내재된 힘을 활용하는 또 다른 방법인 이 신비한 물질은 자연 자체의 힘을 구현하며, 땅 전체에 뿌리를 내리고 어떤 일이 있어도 성장하고 번성하려는 영원한 욕망을 가지고 있습니다. 뼛가루를 사용할 때 발현되는 효과와 유사하게 대부분의 식물과 접촉하게 하면 성장을 크게 가속화하기에 충분합니다.",
   "book.enigmaticlegacy.entry.infinimeal.page.2": "그러나 뼛가루와는 다르게 알갱이 한 알 만으로도 이런 효과를 볼 수 있습니다. 그대로 내버려 두면 주변의 힘을 끌어낼 수 있을 것 같습니다.",
   "book.enigmaticlegacy.entry.infinimeal.page.3": "자연은 사용 후 양적으로 스스로 성장하고 보충하지만 본래 생성된 것 보다 많지 않습니다.<br2/>또한 일반 비료가 효과가 없는 특정 식물들, 특히 사탕수수, 선인장, 덩굴 및 네더 사마귀에도 효과가 있습니다.",
 
+
   "book.enigmaticlegacy.entry.cosmic_heart.name": "우주의 심장",
   "book.enigmaticlegacy.entry.cosmic_heart.page.1": "다른 차원의 힘을 포함하는 신비한 재료의 정밀한 선택으로 바다의 심장의 지상 특성을 변경하여 다른 것으로 바꿀 수 있습니다...훨씬 더 강력합니다. 우주 자체의 힘을 이제 당신의 손바닥에 달려 있습니다.",
   "book.enigmaticlegacy.entry.cosmic_heart.page.2": "상상할 수 없는 위업이 무엇인지, 현실을 바꾸는 에너지로 어떤 멋진 인공물을 만들 수 있는지는 시간이 말해줄 것입니다.<br2/>하지만 한 가지는 확실합니다. 세상은 그들의 발자취 아래에서 떨고 있을 것입니다.",
+
 
   "book.enigmaticlegacy.entry.abyssal_heart.name": "심연의 심장",
   "book.enigmaticlegacy.entry.abyssal_heart.heading.1": "심장",
@@ -1614,11 +1710,13 @@
   "book.enigmaticlegacy.entry.abyssal_heart.page.3": "그 빌어먹을 존재는 스스로를 세상에 내놓기로 선택했습니다. 어쩌면 이런 일이 일어나게 한 것은 단순한 우연, 현실 그 자체의 우연일지도 모릅니다. 어떤 악몽같은 열병에서 이 공포를 생각한 것은 아마도 당신의 병든 마음 때문일 것입니다. 그리고 그 성장과 함께 저주의 타락이 그것을 필멸의 영역으로 나타날 수 있었던 걸까요?",
   "book.enigmaticlegacy.entry.abyssal_heart.page.4": "아마도 모르는 것이 최선일 것입니다. 어떤 진실은 인간이 상상할 수 있는 것보다 훨씬 더 불안하기 때문입니다.<br2/>어쨋든, 이제 당신은 이 물건의 정당한 소유자입니다. 그리고 머지 않아 상상할 수 없을 정도로 폭력적이고 무서운 용도로 사용하게 될 것입니다... 세상은 당신에게 가한 모든 고통에 대해 10배의 고통을 겪을 것입니다.",
 
+
   "book.enigmaticlegacy.entry.astral_fruit.name": "천상의 과실",
   "book.enigmaticlegacy.entry.astral_fruit.heading.1": "과실",
   "book.enigmaticlegacy.entry.astral_fruit.page.1": "많은 사람들이 이 유물을 찾았지만 당신은 이 유물을 찾은 몇 안되는 사람인 것 같습니다. 사실 그렇게 어려운 일도 아니었습니다. 여행 자체는 위업에 불과했지만 일단 엔드 시티로 이동하여 첫 번째 보물 상자를 열면 그곳에 기다리고 있었기 때문입니다.",
   "book.enigmaticlegacy.entry.astral_fruit.page.2": "확실히 일곱 가지의 저주와 관련이 있지만, 다른 상자도 아닌 당신이 열었던 바로 그 상자에 있을 수 있었는지에 대한 정렬이 어떻게 되어있는지 상상할 수 없습니다. 결정론은 당신이 선호하는 신념에 포함된 적이 없었긴 하지만...어쩌면 운명이였을까요?",
   "book.enigmaticlegacy.entry.astral_fruit.page.3": "어쨌든 맛은 신성하며, 또 다른 반지를 짊어질 수 있도록 권한을 부여하는 능력은 부인할 수 없이 유용합니다.",
+
 
   "book.enigmaticlegacy.entry.eternal_binding_curse.name": "영원 귀속",
   "book.enigmaticlegacy.entry.eternal_binding_curse.heading.1": "저주",
@@ -1626,16 +1724,19 @@
   "book.enigmaticlegacy.entry.eternal_binding_curse.page.2": "부서진다면 해제되지만, 대부분의 장신구에 대해 이 저주가 적용되면 영구적인 죽음, 세상의 종말 둘 중 하나가 도래하기 전 까지 그 장신구를 짊어져야 합니다.<br2/>대부분의 다른 저주와 달리 이것을 얻는 유일한 방법은 고전적인 방법을 사용해야 되는 것 같습니다.",
   "book.enigmaticlegacy.entry.eternal_binding_curse.page.3": "마법 부여대, 마법 부여자의 진주로 강화됨.",
 
+
   "book.enigmaticlegacy.entry.sorrow_curse.name": "비애",
   "book.enigmaticlegacy.entry.sorrow_curse.heading.1": "저주",
   "book.enigmaticlegacy.entry.sorrow_curse.page.1": "갑옷에만 적용되는 이 저주는 적으로부터 받는 피해에 여파를 더합니다. 당신이 받는 모든 공격에 대해 심각한 디버프가 닥쳐오며, 더 큰 피해를 입을 수록 더 큰 디버프가 발생합니다.<br2/>다행히도, 그런 일이 일어날 확률은 당신이 짊어진 이 저주가 걸린 갑옷 하나 당 10분의 1에 불과합니다.",
   "book.enigmaticlegacy.entry.sorrow_curse.page.2": "평소와 같이 주기적으로 약탈하는 고대 보물에서 가끔 이 저주가 담긴 아이템을 찾을 수 있습니다. 천 개의 저주 주문서가 있다면 그것을 강화하기 위해 유용할 수 있지만, 절충안이 가치가 있는지 여부는 당신이 판단해야 합니다.",
   "book.enigmaticlegacy.entry.sorrow_curse.page.3": "마법 부여대, 마법 부여자의 진주로 강화됨.",
 
+
   "book.enigmaticlegacy.entry.the_infinitum.name": "무저갱",
   "book.enigmaticlegacy.entry.the_infinitum.page.1": "이것이 잉태되었습니다. 이 어둡고 살로 덮힌 책과 결합하여 그 페이지가 감추고 있는 공포와 함께, 당신은 당신을 위협한 자들을 파괴할 것입니다.<br2/>당신을 비웃던 사람들, 당신을 과소평가한 사람들, 당신을 부수기 위해 온갖 노력을 다한 사람들, 당신의 존재로부터 세상을 정화하기 위해 노력한 사람들은 당신이 짊어진 부패에 혐오감을 느끼거나 단순히 쉬운 먹잇감으로 여길 것입니다.",
   "book.enigmaticlegacy.entry.the_infinitum.page.2": "당신은 불태울 수 없는 글이요, 잊혀지지 않는 지식이요, 부인할 수 없는 진리이기 때문입니다.<br2/>당신은 이 영역이 끈질기게 지우려고 했던 것을 드러낼 것이며, 숨기려 한 진실을 영원의 판에 새길 것입니다.",
   "book.enigmaticlegacy.entry.the_infinitum.page.3": "당신은 그들이 결코 잊지 못할 교훈을 그들 모두에게 가르칠 것입니다.",
+
 
   "book.enigmaticlegacy.entry.ender_slayer.name": "엔더 학살자",
   "book.enigmaticlegacy.entry.ender_slayer.page.1": "일곱 저주의 반지를 처음 장착한 이후 가장 힘든 교훈 중 하나는 엔더맨이 더 이상 당신의 존재를 용납할 수 없다는 것입니다. 그들은 당신의 존재를 말살시키고자 하는 굽힐 수 없는 욕망에 사로잡혀있는 외침, 무서운 공포, 밤의 별빛 아래에서도, 땅 아래 뒤틀린 소금에 젖은 동굴의 숨 막히는 어둠 속에서도 당신을 쫓고 있는 이래로 당신을 괴롭혀왔습니다.",
@@ -1644,35 +1745,42 @@
   "book.enigmaticlegacy.entry.ender_slayer.page.4": "그 차원에는 그들이 완전히 서식하고 있으므로, 거기에 들어가는 것 은 생존하는 것조차 반신으로서 당신의 힘의 한계를 넘어 선 위업인 것 같습니다.<br2/>아마도 이제는 물러서서 이 세상의 난관을 극복하고 저주의 타락을 이용하려는 희망을 마침내 포기해야 할 때일 것입니다. 그러나 전투는 아직 승리할 수 있습니다. 이 검과 당신의 순수한 의지로 당신은 이겨낼 수 있을 것입니다.",
   "book.enigmaticlegacy.entry.ender_slayer.page.5": "평화가 이루어질 수 없다면...그것은 전쟁을 의미할 수 있기 때문입니다.",
 
+
   "book.enigmaticlegacy.entry.the_cube.name": "비유클리드 입방체",
   "book.enigmaticlegacy.entry.the_cube.page.1": "6개의 강력한 주문석을 소유했던 많은 사람들은 아마도 그것들의 힘을 어떻게 해서든 전에 본 적이 없는 힘의 유물로 결합시킬 수 있는 가능성을 생각해 왔습니다.",
   "book.enigmaticlegacy.entry.the_cube.page.2": "많은 사람들이 시도했고, 많은 사람들이 실패했습니다. 지금까지는요.<br2/>하지만 결국 발견해내고 말았습니다. 우주의 힘을 손에 쥐고 현실 그 자체를 거스르는 그런 형태로 만들어낸 것입니다.",
   "book.enigmaticlegacy.entry.the_cube.page.3": "당신의 탐험과 연구의 정점, 그것은 세 개의 위대한 세계의 땅을 걸었던 어떤 인간보다 당신의 우월함의 상징이 될 것입니다. 그 무수한 힘으로, 심지어 죽음도 이제 초월할 것입니다... 이 입방체가 유지될 때까지, 당신은 불멸의 존재입니다.",
+
 
   "book.enigmaticlegacy.entry.desolation_ring.name": "적막함의 부담",
   "book.enigmaticlegacy.entry.desolation_ring.page.1": "당신은 심연의 심장이 현실에 부과한 존재감을 거의 이해할 수 없지만, 최근에 당신이 발견했듯이, 그것을 활용하는 능력을 위해 이해는 필요하지 않습니다.<br2/>그것으로부터 힘을 끌어낼 수 있는 마찬가지로 놀랍고 끔찍한 몇 가지 것들 중에, 이 반지가 있습니다 - 아마도 이름 모를 성질에서, 일곱 개의 저주의 반지보다 더 악몽적일 것입니다.",
   "book.enigmaticlegacy.entry.desolation_ring.page.2": "그것은 한때 당신의 존재를 용인할 수 있었지만, 일곱 번의 저주의 짐에 자신을 굴복시키자마자 그러한 능력을 잃은 생물들을 끝없이 도살해야 하는 필요성에서 벗어나게 하고 싶은 당신의 욕구를 편리하게 충족시켜 줍니다.",
   "book.enigmaticlegacy.entry.desolation_ring.page.3": "당신을 둘러싼 존재로부터 그들을 지움으로써.<br2/>그런 현실 왜곡의 힘의 대가는 위험하지만, 당신이 그것을 원한다고 결정한다면, 당신은 영원히 그것에 얽매이게 될 것입니다. 아시겠지만, 공허함은 가장 무섭고, 항상 존재하는 위협보다 더 견디기 힘들 수 있습니다.",
 
+
   "book.enigmaticlegacy.entry.astral_potato.name": "텔레포테이토",
   "book.enigmaticlegacy.entry.astral_potato.page.1": "당근 애호가와 감자 애호가의 끊임없는 싸움에서, 후자는 꾸준히 불리한 입장에 있다는 것을 깨닫게 될 겁니다. 비록 약간의 금으로 덮여있기는 하지만, 엄청난 영양적 가치와 활력을 되살리는 당근 앞에서, 구운 감자가 다 뭐랍니까?",
   "book.enigmaticlegacy.entry.astral_potato.page.2": "우리는 오늘, \"여기서 끝냅니다\". 우주의 가장 최신 요리의 발명은 두 가지 목적을 달성할 것입니다 - 배고픔을 채우는 것과, 당근과의 전쟁에서 이점을 가져가는 것입니다. 이 대단한 섬세함에 붙은 이름은 적을 조롱하고 사기를 꺾을 것입니다.",
   "book.enigmaticlegacy.entry.astral_potato.page.3": "그들이 \"텔레포테이토\"에게 완전히 패배했다는 걸 알면 얼마나 수치스러울까요? 그걸 알게 된 그들이 어떤 표정을 지을까요?<br2/>곧 알게 될 겁니다...",
+
 
   "book.enigmaticlegacy.entry.cosmic_cake.name": "영원의 케이크",
   "book.enigmaticlegacy.entry.cosmic_cake.page.1": "평범한 케이크에는 딱 한 가지 문제가 있는데, 그 문제가 케이크를 완벽하지 못하게 만듭니다 - 바로 끝난다는 것이죠. 마침내, 당신은 이 짜증나는 결함을 고칠 방법을 고안해냈고, 영원히 그 우아함을 즐길 수 있게 되었습니다.",
   "book.enigmaticlegacy.entry.cosmic_cake.page.2": "원초적인 힘과 이계의 힘을 통합하고 원소적인 에너지로 향기를 더하는 이 케이크는 시간의 흐름을 거스르며 엔트로피 자체를 뒤집고 화려하고 입에 맞는 형태를 회복합니다. 아무리 과식하는 죄악에 굴복하더라도, 그것은 언제나 당신의 맹렬한 공격으로부터 회복될 것입니다.",
   "book.enigmaticlegacy.entry.cosmic_cake.page.3": "이런 맛 앞에서 누가 견딜 수 있을까요, 권력, 영향력, 부, 심지어 생명 자체를 교환하려는 욕망을, 끝없이 무한한 소비 행위에 잠기게 하는 것에 누가 저항할 수 있을까요? 그런 것들은 결국 일시적입니다... 하지만 케이크는 영원합니다.",
 
+
   "book.enigmaticlegacy.entry.eldritch_amulet.name": "경멸의 증표",
   "book.enigmaticlegacy.entry.eldritch_amulet.page.1": "비록 승천의 부적의 형태가 완벽하고 순수할지라도, 그것은 더 많은 힘을 얻을 수 있습니다. 순수함을 희생하는 대가를 치르겠지만, 왜 당신 같은 저주받은 존재가 이런 상실을 걱정하겠어요?<br2/>심연의 심장이라고 알려진 살점 덩어리가 당신의 부적에 달라붙어 묘사할 수 없는 왜곡된 형태로 만들어버릴 것입니다.",
   "book.enigmaticlegacy.entry.eldritch_amulet.page.2": "일단 그 중심에 있는 생생하고 우아했던 돌은 우울하고 오닉스 같은 눈으로 대체되어 불안한 암시와 알 수 없는 의도를 가지고 당신과 같은 세계를 바라보고 있습니다. 광인도 이 가증스러운 손길은 거부하겠지만, 당신은 그것을 당신의 목에 걸고 환영하는군요.",
   "book.enigmaticlegacy.entry.eldritch_amulet.page.3": "광인은 당신과 달리 세상에 대한 망상적 인식의 희생자인 반면, 당신은 지금 그것이 무엇인지 확인하고 있습니다...<br2/>그리고 그것은 무한한 심연의 모든 눈들보다 더 끔찍합니다.",
 
+
   "book.enigmaticlegacy.entry.ascension_amulet.name": "승천의 부적",
   "book.enigmaticlegacy.entry.ascension_amulet.page.1": "지금쯤이면 당신이 가지고 있는 불가사의한 부적은 독특하지 않다는 것을 알고 있을 것이고, 실제로 그것은 당신과 같이 시간과 공간을 초월한 많은 반신들에게 주어지고 있습니다. 그것은 다른 색과 다른 힘을 가진 몇 가지 종류가 존재하는 것 같습니다.",
   "book.enigmaticlegacy.entry.ascension_amulet.page.2": "현재 소지하고 있는 색상을 정확히 결정하는 법은 알려지지 않았지만, 그것들은 모두 의미가 있고 어떤 방식으로든 연결되어 있는 것처럼 보입니다.<br2/>우주의 심장 안에 담긴 힘으로 부적을 무의식적인 힘과 야망의 형태로 바꿀 수 있습니다.",
   "book.enigmaticlegacy.entry.ascension_amulet.page.3": "승천의 부적이라는 자랑스러운 이름을 가진 이 부적을 통해 가능한 모든 색상의 능력을 얻을 수 있습니다...<br2/>운명이 이 영역에서 당신의 존재의 시작을 결정했을 지 모르지만, 그것의 끝은 당신이 형성하는 것입니다.",
+
 
   "book.enigmaticlegacy.entry.soul_compass.name": "영혼 나침반",
   "book.enigmaticlegacy.entry.soul_compass.page.1": "충분한 죽음과 함께, 각각의 영혼의 일부를 잃는 끔찍한 참신함은 시들해졌고, 그것들을 기억하기 위한 노력으로 당신의 사망 장소를 찾는 골치 아픈 경험만 남았습니다. 그러한 장소들은 마치 반지 착용자의 또 다른 저주라고 불릴 정도로 종종 도착하기 어려운 지점이곤 합니다.",
@@ -1684,15 +1792,18 @@
   "book.enigmaticlegacy.entry.curse_transposer.page.2": "하지만 한 아이템에서 다른 아이템으로 그것들을 옮겨 놓을 수는 있어도, 그것들을 마법 부여와 분리할 방법은 없었기에, 그들은 때때로 매우 골칫거리였습니다.",
   "book.enigmaticlegacy.entry.curse_transposer.page.3": "그러나 이 작은 발명이 당신의 저주 관리 능력을 크게 향상시킬 것입니다. 싸게는 안 먹히겠지만, 저주를 장비에서 분리할 수 있습니다.",
 
+
   "book.enigmaticlegacy.entry.enigmatic_elytra.name": "장엄한 겉날개",
   "book.enigmaticlegacy.entry.enigmatic_elytra.page.1": "겉날개는 폭죽과 병행한다면 말, 보트, 수레를 뛰어넘는 교통 수단을 제공합니다. 하지만 그것을 오래 사용하려면 두 가지를 염두에 두어야 하는데, 하나는 빠른 마모이고, 다른 하나는 지속적인 폭죽의 공급입니다.<br2/>장엄한 겉날개는 그 두 가지를 모두 해결합니다.",
   "book.enigmaticlegacy.entry.enigmatic_elytra.page.2": "그것은 놀라운 내구성을 지니며, 착용자가 비행하는 동안 내장된 에너지를 이용해 폭죽과 같은 방식으로 앞으로 나아갈 수 있습니다. 겉날개의 내구성에 큰 부담을 주지만, 기존의 모루에서 에테리움으로 수리할 수 있습니다. 이 점은 크게 걱정할 필요가 없습니다.",
   "book.enigmaticlegacy.entry.enigmatic_elytra.page.3": "그 외에도, 이것은 훨씬 더 선명한 색의 무늬로 덮혀 있어, 그것의 웅장하고 비범한 특징을 나타냅니다.",
 
+
   "book.enigmaticlegacy.entry.ichor_bottle.name": "이코르 병",
   "book.enigmaticlegacy.entry.ichor_bottle.heading.1": "병",
   "book.enigmaticlegacy.entry.ichor_bottle.page.1": "소위 \"신의 피\"라고 불리는 이것이 정확히 어디에서 오는지는 아직 해결되지 않은 질문이며, 아마도 그렇게 남겨두는 것이 더 나을 것입니다. 하지만 이제 이것을 마음대로 사용할 수 있게 되었으니, 당신은 신체가 난해한 에너지를 전달하는 능력을 증가시키기 위해 그것을 소비할 수 있고, 당신이 어떤 식으로든 당신의 능력을 확장시키는 소중한 부적들 중 하나를 더 갖추게 할 수 있습니다.",
   "book.enigmaticlegacy.entry.ichor_bottle.page.2": "이렇게 희귀한 유물은 찾기 거의 불가능하며, 어떻게 해서 손에 쥐게 되었는지 궁금하지 않을 수 없습니다. 당신의 신성한 본성에 이끌린 것인지, 아니면 어떤 더 큰 힘에 의해 이끌린 것일지도?..",
+
 
   "book.enigmaticlegacy.entry.enigmatic_eye.name": "불가해한 눈",
   "book.enigmaticlegacy.entry.enigmatic_eye.heading.1": "눈",
@@ -1701,16 +1812,19 @@
   "book.enigmaticlegacy.entry.enigmatic_eye.page.3": "확실히 말할 수 있는 것은 그가 당신이 현재 살고 있는 세계와 당신 같은 더 높은 존재에게도 낯선 사람이 아니라는 것입니다. 확실히 그는 이 땅을 직접 걸어본 적이 있지만, 그가 과거 역사에 얼마나 관여했는지는 아직 미스터리로 남아 있습니다. 그가 지금 어디에 있는지, 왜 그가 여러분에게 말하기를 선택했는지, 그리고 그가 당신의 여정에 어떤 기대를 걸고 있는지와 같은 것들 말입니다.",
   "book.enigmaticlegacy.entry.enigmatic_eye.page.4": "지금으로서는 그가 원하는 답을 제때에 제공해 주기를 바랄 수밖에 없습니다.",
 
+  
   "book.enigmaticlegacy.entry.insignia.name": "고혹적인 휘장",
   "book.enigmaticlegacy.entry.insignia.page.1": "비록 이 작은 장신구가 당신에게 힘, 속도 또는 의지를 증가시킬 수는 없을 것입니다 - 그러나 그것은 언뜻 보이는 것 보다 더 많은 것을 내재하고 있습니다. 그것은 다른 반신들로부터 당신의 이름을 숨기고, 당신이 좋아하는 것으로 바꿀 수 있습니다. 편리한 점은, 그것은 장착할 수 있는 다른 부적들의 갯수를 줄이지 않는다는 것입니다.<br2/>아마 그것을 활용할 수 있는",
   "book.enigmaticlegacy.entry.insignia.page.2": "가장 분명한 방법은 속임수일 것입니다. 그러나 안타깝게도, 그것의 잠재력은 제한되어 있습니다. 휘장은 오직 다른 사람들이 당신을 직접 관찰할 때 보이는 이름에만 영향을 주기 때문입니다. 게다가, 신과 같은 힘을 소유하고 있거나 연결되어 있는 사람들은 여전히",
   "book.enigmaticlegacy.entry.insignia.page.3": "당신의 진짜 이름을 볼 수 있을 것입니다.<br2/>또 다른 방법은 다른 이들과 자신을 구별 짓는 것입니다. 이 방법에는 무궁무진한 가능성이 존재합니다. 설계자의 잉크병으로 만들 수 있는 색상과 스타일은 이 휘장에도 동일하게 적용되며, 이름으로 새길 수도 있습니다.",
+
 
   "book.enigmaticlegacy.entry.end_anchor.name": "차원 정박기",
   "book.enigmaticlegacy.entry.end_anchor.page.1": "엔드가 척박하고 황량한 땅일지언정, 누군가는 그곳에 거주하고 싶은 이유가 있습니다. 그 이유는 보통 두 가지 입니다 - 무언가로부터 숨거나, 무언가를 숨기기 위해서 입니다. 최근까지 그러한 욕망을 방해하는 작은 불편함이 있었지만, 차원 정박기의 발명으로 당신의 스폰 지점을 그 땅 어딘가로 설정해야 하는 문제를",
   "book.enigmaticlegacy.entry.end_anchor.page.2": "드디어 극복할 수 있게 되었습니다.<br2/>차원 정박기는 리스폰 정박기와 작동 방식이 다르진 않지만, 저렴한 발광석 대신 더 희귀한",
   "book.enigmaticlegacy.entry.end_anchor.page.3": "엔더 진주를 충전해야 합니다. 대신, 유지 비용 증가에 따른 상환이 있습니다 - 그것은 리스폰 정박기가 작동하지 않는 곳에서 작동하며, 또한 당신이 부활할 때 충전량을 소모하지 않을 수 있는 유의미한 확률이 있습니다. 귀환의 물약 같은 아이템은 여전히 이전처럼 작동할 것이며, 발사기를 통한 충전 자동화 또한 여전히 가능합니다. <br2/>그러나 한 가지 우려되는 점은, 우리보다 높은 존재들에게도",
   "book.enigmaticlegacy.entry.end_anchor.page.4": "세계 사이의 공간은 안전한 통행장소가 아니라는 것입니다. 특히 살이 찢겨 나갈 때 말입니다... 당신은 어쩔 수 없이 궁금해하게 될겁니다. 그들의 신호기에서 나온 빛에 이끌려 온 자들을 기다리고 있는 끔찍한 장소를, 그리고 그곳에서 어떤 참혹한 운명이 그들을 기다리고 있는지 말입니다...",
+
 
   "book.enigmaticlegacy.landing_text": "당신 앞에 놓여 있는 것은 이 세상의 위대한 비밀들 중 일부가 속해 있는 곳인 위대한 지식의 우물이 꼼꼼하게 연구되고 목록화 된 것입니다.<br2/>당신의 여정이 계속되고 세상이 당신에게 스스로를 드러낼 때, 당신은 이 책을 다시 펴고 모아온 지식을 다시 보게 될 것입니다.",
 
@@ -1738,7 +1852,7 @@
   "tooltip.enigmaticlegacy.cosmicScroll9": "§5치명적인 피해를 입을 시, 체력을",
   "tooltip.enigmaticlegacy.cosmicScroll10": "§650%§5 까지 회복하고, 강력한 효과를 얻습니다.",
   "tooltip.enigmaticlegacy.cosmicScroll11": "§5이 효과는 §6%1$s §6초§5의 재사용 대기시간을 갖습니다.",
-  "tooltip.enigmaticlegacy.cosmicScroll12": "§5선택받지 못한 플레이어를 공격하면, 추가로 §6+%1$s의 §d피해량§5과 §6+%2$s",
+  "tooltip.enigmaticlegacy.cosmicScroll12": "§5선택받지 못한 플레이어를 공격하면, 추가로 §6+%1$s의 §d피해량§5과",
   "tooltip.enigmaticlegacy.cosmicScroll13": "§5§6+%2$s의 §d밀치기§5가 적용됩니다. 또한, 당신의 근접 공격이",
   "tooltip.enigmaticlegacy.cosmicScroll14": "§5대상을 불태웁니다.",
   "tooltip.enigmaticlegacy.cosmicScrollCooldown": "§d남은 재사용 대기 시간: §6%1$s §6초",
@@ -1746,4 +1860,5 @@
   "book.enigmaticlegacy.entry.cosmic_scroll.name": "설계자의 은혜",
   "book.enigmaticlegacy.entry.cosmic_scroll.page.1": "이 루머로 쌓여있는 주문서는 대부분의 반신에게 거부당했습니다. 심지어 신격에 가까이 도달은 이들에게도 말입니다. 설계자 자신의 재량에 따라 어떤 이가 그것을 소유할 수 있는지 결정되며, 또한 소문에 따르면 - $(l:https://discord.gg/fuWK8ns)그의 영역$(/l)으로의 여정은 길고 위험으로 가득 차 있으며, 그 신성한 존재에게 주목받는 것은 지금까지 거주민들 중 소수만이 경험한 영광입니다.",
   "book.enigmaticlegacy.entry.cosmic_scroll.page.2": "그러나 이를 달성한 이들은 그 무엇과도 비교할 수 없는 힘을 부여받습니다; 그들의 영광으로 세상이 빛날 수 있도록 하며, 그들이 다른 이들의 귀와 눈에 신념을 전파할 수 있도록 합니다."
+
 }
