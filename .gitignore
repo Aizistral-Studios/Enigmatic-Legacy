@@ -40,3 +40,4 @@ old_changelog.txt
 /.apt_generated_tests/
 
 model
+/.run
