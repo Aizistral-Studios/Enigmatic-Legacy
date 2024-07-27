@@ -79,6 +79,8 @@ public class CursedRing extends ItemBaseCurio {
 	public static Omniconfig.BooleanParameter autoEquip;
 	public static final List<ResourceLocation> neutralAngerBlacklist = new ArrayList<>();
 
+	public static Omniconfig.DoubleParameter superCursedTime;
+
 	@SubscribeConfig(receiveClient = true)
 	public static void onConfig(OmniconfigWrapper builder) {
 		String prevCategory = builder.getCurrentCategory();
@@ -169,6 +171,10 @@ public class CursedRing extends ItemBaseCurio {
 					.comment("Range in which Endermen can try to randomly teleport to bearers of the ring.")
 					.min(8)
 					.getDouble("EndermenRandomportRange", 32);
+
+			superCursedTime = builder
+					.comment("A fraction of time the player should bear the Seven Curses to use Abyssal Artifacts.")
+					.getDouble("SuperCursedTime", 0.995);
 
 			builder.popCategory();
 			builder.pushCategory("Save the Bees", "This category exists solely because of Jusey1z who really wanted to protect his bees."

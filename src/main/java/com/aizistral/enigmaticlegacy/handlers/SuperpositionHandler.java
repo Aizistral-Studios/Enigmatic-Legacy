@@ -21,6 +21,16 @@ import java.util.function.Predicate;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import com.aizistral.enigmaticlegacy.items.*;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.entity.projectile.Fireball;
+import net.minecraft.world.entity.projectile.LargeFireball;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.food.FoodData;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.gameevent.GameEvent;
 import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.apache.commons.lang3.tuple.ImmutableTriple;
 import org.joml.Matrix4f;
@@ -34,8 +44,6 @@ import com.aizistral.enigmaticlegacy.api.items.ISpellstone;
 import com.aizistral.enigmaticlegacy.api.quack.IProperShieldUser;
 import com.aizistral.enigmaticlegacy.config.OmniconfigHandler;
 import com.aizistral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
-import com.aizistral.enigmaticlegacy.items.GolemHeart;
-import com.aizistral.enigmaticlegacy.items.InfernalShield;
 import com.aizistral.enigmaticlegacy.items.TheAcknowledgment;
 import com.aizistral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.aizistral.enigmaticlegacy.objects.DimensionalPosition;
@@ -153,6 +161,9 @@ import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
 import top.theillusivec4.curios.api.type.inventory.IDynamicStackHandler;
 import top.theillusivec4.curios.api.type.util.ICuriosHelper;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 /**
  * The core and vessel for most most of the handling methods in the Enigmatic Legacy.
@@ -1326,59 +1337,75 @@ public class SuperpositionHandler {
 
 	public static boolean isTheWorthyOne(Player player) {
 		if (isTheCursedOne(player)) {
-			var counter = IPlaytimeCounter.get(player);
-			long timeWithRing = counter.getTimeWithCurses();
-			long timeWithoutRing = counter.getTimeWithoutCurses();
-
-			if (timeWithRing <= 0)
-				return false;
-			else if (timeWithoutRing <= 0)
-				return true;
-
-			return timeWithRing/timeWithoutRing >= 199L;
+			return getSufferingFraction(player) >= CursedRing.superCursedTime.getValue();
 		} else
 			return false;
 	}
 
-	public static String getSufferingTime(@Nullable Player player) {
+	public static double getSufferingFraction(@Nullable Player player) {
 		if (player == null)
-			return "0%";
-		else {
-			var counter = IPlaytimeCounter.get(player);
-			long timeWithRing = counter.getTimeWithCurses();
-			long timeWithoutRing = counter.getTimeWithoutCurses();
+			return 0;
+
+		var counter = IPlaytimeCounter.get(player);
+		long timeWithRing = counter.getTimeWithCurses();
+		long timeWithoutRing = counter.getTimeWithoutCurses();
+
+		if (timeWithRing <= 0)
+			return 0;
+		else if (timeWithoutRing <= 0)
+			return 1;
+
+		if (timeWithRing > 100000 || timeWithoutRing > 100000) {
+			timeWithRing = timeWithRing / 100;
+			timeWithoutRing = timeWithoutRing / 100;
+
 			if (timeWithRing <= 0)
-				return "0%";
+				return 0;
 			else if (timeWithoutRing <= 0)
-				return "100%";
-
-			if (timeWithRing > 100000 || timeWithoutRing > 100000) {
-				timeWithRing = timeWithRing / 100;
-				timeWithoutRing = timeWithoutRing / 100;
-
-				if (timeWithRing <= 0)
-					return "0%";
-				else if (timeWithoutRing <= 0)
-					return "100%";
-			}
-
-			double total = timeWithRing + timeWithoutRing;
-			double ringPercent = (timeWithRing / total) * 100;
-			ringPercent = Math.round(ringPercent * 10.0)/10.0;
-			String text = "";
-
-			if (ringPercent - Math.round(ringPercent) == 0) {
-				text += ((int)ringPercent) + "%";
-			} else {
-				text += ringPercent + "%";
-			}
-
-			if ("99.5%".equals(text) && !isTheWorthyOne(player)) {
-				text = "99.4%";
-			}
-
-			return text;
+				return 1;
 		}
+
+		double total = timeWithRing + timeWithoutRing;
+		double ringFraction = (timeWithRing / total);
+		ringFraction = roundToPlaces(ringFraction, 3);
+
+		return ringFraction;
+	}
+
+	public static String getSufferingTime(@Nullable Player player) {
+		String text = "";
+
+		double ringPercent = 100 * getSufferingFraction(player);
+
+		ringPercent = roundToPlaces(ringPercent, 1);
+		if (ringPercent - Math.floor(ringPercent) == 0) {
+			text += ((int) ringPercent) + "%";
+		} else {
+			text += ringPercent + "%";
+		}
+
+		return text;
+	}
+
+	public static String getNoSufferingTime(@Nullable Player player) {
+		String text = "";
+
+		double noRingPercent = 100 * (1.0 - getSufferingFraction(player));
+
+		if (noRingPercent - Math.floor(noRingPercent) == 0) {
+			text += ((int) noRingPercent) + "%";
+		} else {
+			text += noRingPercent + "%";
+		}
+
+		return text;
+	}
+
+	public static double roundToPlaces(double value, int places) {
+		BigDecimal bd = new BigDecimal(Double.toString(value));
+		bd = bd.setScale(places, RoundingMode.HALF_UP);
+
+		return bd.doubleValue();
 	}
 
 	public static float getMissingHealthPool(Player player) {

@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 
+import com.aizistral.enigmaticlegacy.items.CursedRing;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
@@ -47,11 +48,17 @@ public class ItemLoreHelper {
 			format = SuperpositionHandler.isTheWorthyOne(Minecraft.getInstance().player) ? ChatFormatting.GOLD : ChatFormatting.DARK_RED;
 		}
 
+		double requiredCurse = SuperpositionHandler.roundToPlaces(100 * CursedRing.superCursedTime.getValue(), 1);
+
 		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly1"));
-		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly2"));
+		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly2",
+						Component.literal(requiredCurse + "%").withStyle(ChatFormatting.GOLD))
+				.withStyle(format));
 		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly3"));
 		list.add(Component.translatable("tooltip.enigmaticlegacy.void"));
-		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly4").withStyle(format).append(Component.literal(" " + SuperpositionHandler.getSufferingTime(player)).withStyle(ChatFormatting.LIGHT_PURPLE)));
+		list.add(Component.translatable("tooltip.enigmaticlegacy.worthyOnesOnly4")
+				.withStyle(format).append(Component.literal(" " + SuperpositionHandler.getSufferingTime(player))
+						.withStyle(ChatFormatting.LIGHT_PURPLE)));
 	}
 
 	@OnlyIn(Dist.CLIENT)
