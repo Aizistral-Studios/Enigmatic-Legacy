@@ -437,7 +437,6 @@ public class EnigmaticLegacy {
 
 	/**
 	 * Alright boys, it's cleanup time!
-	 * @param event
 	 */
 
 	public void performCleanup() {

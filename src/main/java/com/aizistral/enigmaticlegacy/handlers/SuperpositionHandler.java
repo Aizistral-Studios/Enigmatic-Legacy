@@ -44,7 +44,6 @@ import com.aizistral.enigmaticlegacy.api.items.ISpellstone;
 import com.aizistral.enigmaticlegacy.api.quack.IProperShieldUser;
 import com.aizistral.enigmaticlegacy.config.OmniconfigHandler;
 import com.aizistral.enigmaticlegacy.helpers.AdvancedSpawnLocationHelper;
-import com.aizistral.enigmaticlegacy.items.TheAcknowledgment;
 import com.aizistral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.aizistral.enigmaticlegacy.objects.DimensionalPosition;
 import com.aizistral.enigmaticlegacy.objects.EnigmaticTransience;
@@ -1747,32 +1746,35 @@ public class SuperpositionHandler {
 		return player.isCreative() || EnigmaticLegacy.SOUL_OF_THE_ARCHITECT.equals(player.getUUID());
 	}
 
-	public static void onDamageSourceBlocking(LivingEntity blocker, ItemStack useItem, DamageSource source, CallbackInfoReturnable<Boolean> info) {
+	public static boolean onDamageSourceBlocking(LivingEntity blocker, ItemStack useItem, DamageSource source,
+												 CallbackInfoReturnable<Boolean> info) {
 		if (blocker instanceof Player player && useItem != null) {
 			boolean blocking = ((IProperShieldUser)blocker).isActuallyReallyBlocking();
 
-			if (blocking && useItem.getItem() instanceof InfernalShield) {
+			if (!blocking)
+				return false;
+
+			if (useItem.getItem() instanceof InfernalShield) {
 				boolean piercingArrow = false;
 				Entity entity = source.getDirectEntity();
 
-				if (entity instanceof AbstractArrow) {
-					AbstractArrow abstractarrow = (AbstractArrow)entity;
-					if (abstractarrow.getPierceLevel() > 0) {
+				if (entity instanceof AbstractArrow arrow) {
+					if (arrow.getPierceLevel() > 0) {
 						piercingArrow = true;
 					}
 				}
 
 				piercingArrow = false; // defend against Piercing... for now
 
-				if (!source.is(DamageTypeTags.BYPASSES_SHIELD) && ((IProperShieldUser) blocker).isActuallyReallyBlocking() && !piercingArrow) {
+				if (!source.is(DamageTypeTags.BYPASSES_SHIELD) && !piercingArrow) {
 					Vec3 sourcePos = source.getSourcePosition();
+
 					if (sourcePos != null) {
 						Vec3 lookVec = blocker.getViewVector(1.0F);
 						Vec3 sourceToSelf = sourcePos.vectorTo(blocker.position()).normalize();
 						sourceToSelf = new Vec3(sourceToSelf.x, 0.0D, sourceToSelf.z);
-						if (sourceToSelf.dot(lookVec) < 0.0D) {
-							info.setReturnValue(true);
 
+						if (sourceToSelf.dot(lookVec) < 0.0D) {
 							int strength = -1;
 
 							if (player.hasEffect(EnigmaticEffects.BLAZING_STRENGTH)) {
@@ -1800,15 +1802,72 @@ public class SuperpositionHandler {
 								}
 							}
 
-							return;
+							return true;
 						}
 					}
 				}
+			} else if (useItem.getItem() instanceof EldritchPan) {
+				Entity projectile = source.getDirectEntity();
 
-				info.setReturnValue(false);
-				return;
+				if (!(projectile instanceof Projectile))
+					return false;
+
+				if (!source.is(DamageTypeTags.BYPASSES_SHIELD)) {
+					Vec3 sourcePos = source.getSourcePosition();
+
+					if (sourcePos != null) {
+						Vec3 lookVec = blocker.getViewVector(1.0F);
+						Vec3 sourceToSelf = sourcePos.vectorTo(blocker.position()).normalize();
+						sourceToSelf = new Vec3(sourceToSelf.x, 0.0D, sourceToSelf.z);
+
+						if (sourceToSelf.dot(lookVec) < 0.0D) {
+							projectile.kill();
+
+							FoodData data = player.getFoodData();
+							data.eat(4, 0.5F);
+
+							player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
+									SoundEvents.PLAYER_BURP, SoundSource.PLAYERS, 0.5F,
+									player.level().random.nextFloat() * 0.1F + 0.9F);
+
+							player.gameEvent(GameEvent.EAT);
+
+							if (projectile instanceof LargeFireball fireball) {
+								fireball.explosionPower = 0;
+							}
+
+							if (player.level() instanceof ServerLevel level) {
+								Vec3 angle = player.getLookAngle();
+								angle.multiply(1, 0, 1).normalize().multiply(0.5, 0.5, 0.5);
+
+								level.sendParticles(new ItemParticleOption(ParticleTypes.ITEM,
+										new ItemStack(Items.FIRE_CHARGE)), player.getX() + angle.x,
+										player.getY() + player.getEyeHeight() - 0.1, player.getZ() + angle.z,
+										10, 0.3D, 0.3D, 0.3D, 0.03D);
+							}
+
+							return true;
+						}
+					}
+				}
 			}
 		}
+
+		return false;
+	}
+
+	public static boolean cannotHunger(@Nullable Player player) {
+		boolean noHunger = false;
+
+		if (player != null) {
+			if (EnigmaticItems.FORBIDDEN_FRUIT.haveConsumedFruit(player)) {
+				noHunger = true;
+			} else if (player.level().getDifficulty() == Difficulty.PEACEFUL) {
+				noHunger = true;
+			}
+		}
+
+		return noHunger;
 	}
 
 	public static <K, V extends Comparable<? super V>> void sortByKey(Map<K, V> map) {

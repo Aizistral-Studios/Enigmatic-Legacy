@@ -50,6 +50,28 @@
       }
     ]
   },
+  "misc.pan_clang": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:misc/pan_clang_1",
+        "stream": false
+      }, {
+        "name": "enigmaticlegacy:misc/pan_clang_2",
+        "stream": false
+      }, {
+        "name": "enigmaticlegacy:misc/pan_clang_3",
+        "stream": false
+      }
+    ]
+  },
+  "misc.pan_clang_fr": {
+    "sounds": [
+      {
+        "name": "enigmaticlegacy:misc/pan_clang_fr",
+        "stream": false
+      }
+    ]
+  },
   "misc.uneat": {
     "sounds": [
       {

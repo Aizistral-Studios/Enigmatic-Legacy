@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Supplier;
 
+import com.aizistral.enigmaticlegacy.items.EldritchPan;
 import com.aizistral.etherium.core.IEtheriumConfig;
 
 import net.minecraft.resources.ResourceLocation;
@@ -19,8 +20,7 @@ import net.minecraftforge.common.TierSortingRegistry;
  */
 
 public enum EnigmaticMaterials implements Tier {
-	FORBIDDENAXE(0, 2000, 6.0F, 3.0F, 16, () -> Ingredient.EMPTY),
-	ENDERSLAYER(0, 2000, 6.0F, 3.0F, 16, () -> Ingredient.of(Blocks.OBSIDIAN)),
+	ELDRITCH_PAN(0, 4000, 6.0F, 3.0F, 24, EldritchPan::getRepairMaterial),
 	FORBIDDEN_AXE(0, 2000, 6.0F, 3.0F, 16, () -> Ingredient.EMPTY),
 	ENDER_SLAYER(0, 2000, 6.0F, 3.0F, 16, () -> Ingredient.of(Blocks.OBSIDIAN)),
 	ETHERIUM(5, 3000, 8.0F, 5.0F, 32, () -> getEtheriumConfig().getRepairMaterial()),

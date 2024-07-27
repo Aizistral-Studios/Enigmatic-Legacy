@@ -12,6 +12,13 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.WeakHashMap;
 
+import com.aizistral.enigmaticlegacy.effects.GrowingBloodlustEffect;
+import com.aizistral.enigmaticlegacy.effects.GrowingHungerEffect;
+import com.aizistral.enigmaticlegacy.items.*;
+import com.google.common.collect.ImmutableList;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
 import org.apache.commons.lang3.tuple.Triple;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
@@ -38,27 +45,6 @@ import com.aizistral.enigmaticlegacy.helpers.EnigmaticEnchantmentHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.helpers.ItemNBTHelper;
 import com.aizistral.enigmaticlegacy.helpers.PotionHelper;
-import com.aizistral.enigmaticlegacy.items.AngelBlessing;
-import com.aizistral.enigmaticlegacy.items.AvariceScroll;
-import com.aizistral.enigmaticlegacy.items.BerserkEmblem;
-import com.aizistral.enigmaticlegacy.items.BlazingCore;
-import com.aizistral.enigmaticlegacy.items.CosmicScroll;
-import com.aizistral.enigmaticlegacy.items.CursedRing;
-import com.aizistral.enigmaticlegacy.items.CursedScroll;
-import com.aizistral.enigmaticlegacy.items.EnderSlayer;
-import com.aizistral.enigmaticlegacy.items.EnigmaticAmulet;
-import com.aizistral.enigmaticlegacy.items.EyeOfNebula;
-import com.aizistral.enigmaticlegacy.items.ForbiddenAxe;
-import com.aizistral.enigmaticlegacy.items.ForbiddenFruit;
-import com.aizistral.enigmaticlegacy.items.HunterGuidebook;
-import com.aizistral.enigmaticlegacy.items.InfernalShield;
-import com.aizistral.enigmaticlegacy.items.MiningCharm;
-import com.aizistral.enigmaticlegacy.items.MonsterCharm;
-import com.aizistral.enigmaticlegacy.items.OceanStone;
-import com.aizistral.enigmaticlegacy.items.RevelationTome;
-import com.aizistral.enigmaticlegacy.items.TheInfinitum;
-import com.aizistral.enigmaticlegacy.items.TheTwist;
-import com.aizistral.enigmaticlegacy.items.VoidPearl;
 import com.aizistral.enigmaticlegacy.items.EnigmaticAmulet.AmuletColor;
 import com.aizistral.enigmaticlegacy.items.generic.ItemSpellstoneCurio;
 import com.aizistral.enigmaticlegacy.mixin.AccessorAbstractArrowEntity;
@@ -292,6 +278,8 @@ import top.theillusivec4.caelus.api.RenderCapeEvent;
 import top.theillusivec4.curios.api.event.DropRulesEvent;
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
+
+import javax.tools.Tool;
 
 /**
  * Generic event handler of the whole mod.
@@ -1012,7 +1000,7 @@ public class EnigmaticEventHandler {
 	}
 
 	@SubscribeEvent
-	public void onPlayerTick(PlayerChangedDimensionEvent event) {
+	public void onPlayerTravel(PlayerChangedDimensionEvent event) {
 		if (event.getEntity() instanceof ServerPlayer player) {
 			LAST_SOUL_COMPASS_UPDATE.remove(player);
 
@@ -1186,7 +1174,7 @@ public class EnigmaticEventHandler {
 				}
 			 */
 
-			if (player instanceof ServerPlayer) {
+			if (player instanceof ServerPlayer  serverPlayer) {
 
 				/*
 				 * Handler for players' spellstone cooldowns.
@@ -1237,6 +1225,38 @@ public class EnigmaticEventHandler {
 							}
 						}
 					}
+				}
+
+				/*
+				 * Handle Growing Hunger application.
+				 */
+
+				List<ItemStack> handItems = ImmutableList.of(player.getMainHandItem()/*, player.getOffhandItem()*/);
+
+				if (handItems.stream().anyMatch(s -> s.is(EnigmaticItems.ELDRITCH_PAN))) {
+					int currentTicks = EldritchPan.HOLDING_DURATIONS.getOrDefault(player, 0);
+
+					if (SuperpositionHandler.cannotHunger(player)) {
+						int bloodlustAmplifier = currentTicks / GrowingBloodlustEffect.ticksPerLevel.getValue();
+
+						bloodlustAmplifier = Math.min(bloodlustAmplifier, 9);
+
+						player.addEffect(new MobEffectInstance(EnigmaticEffects.GROWING_BLOODLUST,
+								MobEffectInstance.INFINITE_DURATION, bloodlustAmplifier, true, true));
+					} else {
+						int hungerAmplifier = currentTicks / GrowingHungerEffect.ticksPerLevel.getValue();
+
+						hungerAmplifier = Math.min(hungerAmplifier, 9);
+
+						player.addEffect(new MobEffectInstance(EnigmaticEffects.GROWING_HUNGER,
+								MobEffectInstance.INFINITE_DURATION, hungerAmplifier, true, true));
+					}
+
+					EldritchPan.HOLDING_DURATIONS.put(player, currentTicks + 1);
+				} else {
+					EldritchPan.HOLDING_DURATIONS.put(player, 0);
+					player.removeEffect(EnigmaticEffects.GROWING_HUNGER);
+					player.removeEffect(EnigmaticEffects.GROWING_BLOODLUST);
 				}
 			}
 
@@ -1350,9 +1370,22 @@ public class EnigmaticEventHandler {
 				SuperpositionHandler.setPersistentInteger(player, "TimesKilledWither", killedWither);
 			}
 		}
+
+		if (event.getSource().getDirectEntity() instanceof ServerPlayer attacker) {
+			ItemStack weapon = attacker.getMainHandItem();
+
+			if (weapon.is(EnigmaticItems.ELDRITCH_PAN)) {
+				ResourceLocation killedType = ForgeRegistries.ENTITY_TYPES.getKey(event.getEntity().getType());
+
+				if (EldritchPan.addKillIfNotPresent(weapon, killedType)) {
+					attacker.sendSystemMessage(Component.translatable("message.enigmaticlegacy.eldritch_pan_buff")
+							.withStyle(ChatFormatting.GOLD));
+				}
+			}
+		}
 	}
 
-	@SubscribeEvent
+							   @SubscribeEvent
 	public void onCurioDrops(DropRulesEvent event) {
 		event.addOverride(stack -> stack.getEnchantmentLevel(EnigmaticEnchantments.ETERNAL_BINDING) > 0,
 				DropRule.ALWAYS_KEEP);
@@ -1419,6 +1452,60 @@ public class EnigmaticEventHandler {
 		else
 			return false;
 	}
+
+//	@OnlyIn(Dist.CLIENT)
+//	@SubscribeEvent(priority = EventPriority.HIGHEST)
+//	public void onEarlyTooltip(ItemTooltipEvent event) {
+//		if (event.getItemStack().is(EnigmaticItems.ELDRITCH_PAN)) {
+//			List<Integer> modifierIndexes = new ArrayList<>();
+//
+//			for (int i = 0; i < event.getToolTip().size(); i++) {
+//				Component line = event.getToolTip().get(i);
+//
+//				if (line.getContents() instanceof TranslatableContents contents) {
+//					if (contents.getKey().startsWith("item.modifiers.")
+//							|| contents.getKey().startsWith("attribute.modifier.")) {
+//						modifierIndexes.add(i);
+//					}
+//				}
+//			}
+//
+//			List<Integer> modifierIndexesCopy = new ArrayList<>(modifierIndexes);
+//
+//			for (int i = 0; i < modifierIndexesCopy.size(); i++) {
+//				int prevIndex = i - 1;
+//				int currentValue = modifierIndexesCopy.get(i);
+//
+//				if (prevIndex < 0) {
+//					modifierIndexes.add(currentValue - 1);
+//					continue;
+//				}
+//
+//				int prevValue = modifierIndexesCopy.get(prevIndex);
+//
+//				if (currentValue - prevValue > 1) {
+//					modifierIndexes.add(currentValue - 1);
+//				}
+//			}
+//
+//			//modifierIndexes.stream().map(event.getToolTip()::get).forEach(event.getToolTip()::remove);
+//
+//			List<Component> removedLines = new ArrayList<>();
+//
+//			try {
+//				for (int index : modifierIndexes) {
+//					Component line = event.getToolTip().get(index);
+//					removedLines.add(line);
+//				}
+//
+//				for (Component line : removedLines) {
+//					event.getToolTip().remove(line);
+//				}
+//			} catch (Throwable ex) {
+//				ex.printStackTrace();
+//			}
+//		}
+//	}
 
 	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public void onLivingDeath(LivingDeathEvent event) {
@@ -1834,8 +1921,54 @@ public class EnigmaticEventHandler {
 				}
 			}
 
+			if (player.getMainHandItem() != null && player.getMainHandItem().getItem() == EnigmaticItems.ELDRITCH_PAN) {
+				if (SuperpositionHandler.isTheWorthyOne(player)) {
+					lifesteal += event.getAmount() * EldritchPan.lifeSteal.getValue();
+				}
+			}
+
+			if (player.hasEffect(EnigmaticEffects.GROWING_BLOODLUST)) {
+				int amplifier = 1 + player.getEffect(EnigmaticEffects.GROWING_BLOODLUST).getAmplifier();
+				lifesteal += event.getAmount() * (GrowingBloodlustEffect.lifestealBoost.getValue() * amplifier);
+			}
+
 			if (lifesteal > 0) {
 				player.heal(lifesteal);
+			}
+
+			float hungersteal = 0F;
+
+			if (player.getMainHandItem() != null && player.getMainHandItem().getItem() == EnigmaticItems.ELDRITCH_PAN) {
+				if (SuperpositionHandler.isTheWorthyOne(player)) {
+					hungersteal += EldritchPan.hungerSteal.getValue();
+				}
+			}
+
+			if (hungersteal > 0) {
+				boolean noHunger = SuperpositionHandler.cannotHunger(player);
+
+				if (event.getEntity() instanceof ServerPlayer victim) {
+					FoodData victimFood = victim.getFoodData();
+					FoodData attackerFood = player.getFoodData();
+
+					int foodSteal = Math.min((int) Math.ceil(hungersteal), victimFood.getFoodLevel());
+					float saturationSteal = Math.min(hungersteal / 5F, victimFood.getSaturationLevel());
+
+					victimFood.setSaturation(victimFood.getSaturationLevel() - saturationSteal);
+					victimFood.setFoodLevel(victimFood.getFoodLevel() - foodSteal);
+
+					if (noHunger) {
+						player.heal((float) foodSteal / 2);
+					} else {
+						attackerFood.eat(foodSteal, saturationSteal);
+					}
+				} else {
+					if (noHunger) {
+						player.heal(hungersteal / 2);
+					} else {
+						player.getFoodData().eat((int) Math.ceil(hungersteal), hungersteal / 5F);
+					}
+				}
 			}
 		}
 	}
@@ -1977,6 +2110,10 @@ public class EnigmaticEventHandler {
 						player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 300, 3, false, true));
 						player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN,      300, 3, false, true));
 						player.addEffect(new MobEffectInstance(MobEffects.BLINDNESS,         100, 3, false, true));
+					}
+				} else if (mainhandStack.is(EnigmaticItems.ELDRITCH_PAN)) {
+					if (!SuperpositionHandler.isTheWorthyOne(player)) {
+						event.setCanceled(true);
 					}
 				} else if (mainhandStack.is(EnigmaticItems.ENDER_SLAYER)) {
 					if (SuperpositionHandler.isTheCursedOne(player)) {
@@ -2135,7 +2272,9 @@ public class EnigmaticEventHandler {
 					boolean bypass = false;
 
 					if (event.getSource().getDirectEntity() == player)
-						if (player.getMainHandItem().getItem() == EnigmaticItems.THE_TWIST || player.getMainHandItem().getItem() == EnigmaticItems.THE_INFINITUM) {
+						if (player.getMainHandItem().getItem() == EnigmaticItems.THE_TWIST
+								|| player.getMainHandItem().getItem() == EnigmaticItems.THE_INFINITUM
+								|| player.getMainHandItem().getItem() == EnigmaticItems.ELDRITCH_PAN) {
 							// Don't do worthiness check since event is gonna be canceled for non-worthy already
 							bypass = true;
 						}
@@ -2521,6 +2660,37 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public void onLivingDropsLowest(LivingDropsEvent event) {
+		Level level = event.getEntity().level();
+
+		/*
+		 * Eldritch Pan cooking logic.
+		 */
+
+        if (event.getSource().getDirectEntity() instanceof ServerPlayer player)
+            if (SuperpositionHandler.isTheWorthyOne(player))
+                if (player.getMainHandItem().is(EnigmaticItems.ELDRITCH_PAN)
+                        || player.getOffhandItem().is(EnigmaticItems.ELDRITCH_PAN))
+                    for (ItemEntity drop : new ArrayList<>(event.getDrops())) {
+                        ItemStack stack = drop.getItem();
+                        Optional<SmeltingRecipe> optional = level.getRecipeManager().getRecipeFor(
+                                RecipeType.SMELTING, new SimpleContainer(stack), level);
+
+                        optional.ifPresent(recipe -> {
+                            ItemStack result = recipe.getResultItem(level.registryAccess());
+
+                            if (!result.isEmpty()) {
+                                ItemStack cooked = result.copyWithCount(stack.getCount() * result.getCount());
+
+                                event.getDrops().remove(drop);
+                                this.addDrop(event, cooked);
+                            }
+                        });
+                    }
+
+		/*
+		 * Escape Scroll logic.
+		 */
+
 		if (event.getEntity() instanceof ServerPlayer player) {
 			CompoundTag deathLocation = new CompoundTag();
 			deathLocation.putDouble("x", player.getX());
@@ -2617,7 +2787,7 @@ public class EnigmaticEventHandler {
 		}
 
 		/*
-		 * Unique drops for Ring of the Seven Curses.
+		 * Ender Slayer XP conversion.
 		 */
 
 		if (event.isRecentlyHit() && event.getSource() != null && event.getSource().getEntity() instanceof Player && SuperpositionHandler.isTheCursedOne((Player) event.getSource().getEntity())) {

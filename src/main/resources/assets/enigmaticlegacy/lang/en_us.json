@@ -112,6 +112,7 @@
 	"item.enigmaticlegacy.deception_amulet": "Amulet of Deception [WIP]",
 	"item.enigmaticlegacy.the_judgement": "The Judgement",
 	"item.enigmaticlegacy.soul_dust": "Soul Dust",
+	"item.enigmaticlegacy.eldritch_pan": "The Voracious Pan",
 	
 	"block.enigmaticlegacy.big_lamp": "Lamp",
 	"block.enigmaticlegacy.massive_lamp": "Encased Lamp",
@@ -123,6 +124,8 @@
 	
 	"effect.enigmaticlegacy.blazing_strength": "Blazing Might",
 	"effect.enigmaticlegacy.molten_heart": "Molten Heart",
+	"effect.enigmaticlegacy.growing_hunger": "Growing Hunger",
+	"effect.enigmaticlegacy.growing_bloodlust": "Growing Bloodlust",
 	
 	"stat.enigmaticlegacy.play_time_with_seven_curses": "Time Played with Seven Curses",
 	"stat.enigmaticlegacy.play_time_without_seven_curses": "Time Played without Seven Curses",
@@ -248,6 +251,7 @@
 	"death.attack.darkness": "%1$s was devoured by darkness",
 	"message.enigmaticlegacy.permadeath": "In attempting the feat, one proves their courage.\nMay your fractured soul at last find rest.",
 	"message.enigmaticlegacy.cursed_sleep": "Seven Curses awaken unspeakable fear and gnawing uncertainty within as you approach the tempting realm of dreams. No hope for the hopeless, no sleep for the sleepless...",
+	"message.enigmaticlegacy.eldritch_pan_buff": "With the taste of this new soul, The Voracious Pan grows ever stronger.",
 	"message.enigmaticlegacy.gen_sim_complete": "Estimated generation complete in §632768§5 instances; check §6latest.log§5 file to see the results.",
 	"message.enigmaticlegacy.animal_analysis_complete": "Entity registry analysis is complete; check §6latest.log§5 file to see the results.",
 	"message.enigmaticlegacy.voiceover_experimental": "§eHello there! §6Enigmatic Legacy§e developer on the line. Since voiceover is not a common thing for mods to add, I would like you to know that this feature is experimental, and I am actively looking for player feedback on it. Join my §6Discord§e and inform me of your impression once you play with it for some while: §6https://discord.gg/fuWK8ns",
@@ -802,7 +806,7 @@
 	"tooltip.enigmaticlegacy.cursedOnesOnly2": "hold power to obtain and use this item.",
 	
 	"tooltip.enigmaticlegacy.worthyOnesOnly1": "§5The sacrifice neccessary to aquire this item",
-	"tooltip.enigmaticlegacy.worthyOnesOnly2": "§5is immense - you have to spend §699.5%§5 of your",
+	"tooltip.enigmaticlegacy.worthyOnesOnly2": "§5is immense - you have to spend §6%s§5 of your",
 	"tooltip.enigmaticlegacy.worthyOnesOnly3": "§5time in the world suffering the §6Seven Curses§5.",
 	"tooltip.enigmaticlegacy.worthyOnesOnly4": "For now, your time measures at:",
 	
@@ -1023,6 +1027,24 @@
 	"tooltip.enigmaticlegacy.theJudgement6": "§dMode: %s",
 	"tooltip.enigmaticlegacy.theJudgementMode0": "§6Normal",
 	"tooltip.enigmaticlegacy.theJudgementMode1": "§6Clear Drops",
+	
+	"tooltip.enigmaticlegacy.eldritchPan1": "§5Alteration of the §6Fourth Curse§d:",
+	"tooltip.enigmaticlegacy.eldritchPan2": "§6- Always deals its full damage.",
+	"tooltip.enigmaticlegacy.eldritchPan3": "§6%s §dLifesteal",
+	"tooltip.enigmaticlegacy.eldritchPan4": "§6%s §dHungersteal",
+	"tooltip.enigmaticlegacy.eldritchPan4_alt": "§6%s §dHungersteal (converts to health)",
+	"tooltip.enigmaticlegacy.eldritchPan5": "§5Cooks the meat of slain creatures.",
+	"tooltip.enigmaticlegacy.eldritchPan6": "§5Can be used as a shield, and consume projectiles while blocking.",
+	"tooltip.enigmaticlegacy.eldritchPan7": "§5Continuosly holding the pan grants a §6Growing Hunger§5 effect,",
+	"tooltip.enigmaticlegacy.eldritchPan8": "§5which makes you hungrier, but stronger.",
+	"tooltip.enigmaticlegacy.eldritchPan7_alt": "§5Continuosly holding the pan grants a §6Growing Bloodlust§5 effect,",
+	"tooltip.enigmaticlegacy.eldritchPan8_alt": "§5which makes you lose health, but grants strength and lifesteal.",
+	"tooltip.enigmaticlegacy.eldritchPan8p_alt": "§5This effect cannot kill you.",
+	"tooltip.enigmaticlegacy.eldritchPan9": "§5Each new creature slain with the pan gives it a permanent §6%s",
+	"tooltip.enigmaticlegacy.eldritchPan10": "§5§dDamage§5 and §6%s §dArmor§5 when held.",
+	"tooltip.enigmaticlegacy.eldritchPanLore1": "§5Raw and primal hunger given form.",
+	"tooltip.enigmaticlegacy.eldritchPanKills1": "§dUnique Kills: %s",
+	"tooltip.enigmaticlegacy.eldritchPanKillsMax": "§6The pan is sated... but you are not.",
 	
 	"gui.enigmaticlegacy.lore_inscriber": "Write Name & Lore",
 	"gui.enigmaticlegacy.blazing_core_bar_title": "Heat",
@@ -1753,7 +1775,7 @@
 	
 	
 	"book.enigmaticlegacy.entry.desolation_ring.name": "Burden of Desolation",
-	"book.enigmaticlegacy.entry.desolation_ring.page.1": "You can scarce comprehend presence imposed upon reality by Heart of the Abyss, but, as you have recently discovered, comprehension is not neccessary for the ability to make use of it. Among few equally wonderful and terrible things that can draw power from it, there is this ring - even more nightmarish, perhaps, than Ring of the Seven Curses, in its",
+	"book.enigmaticlegacy.entry.desolation_ring.page.1": "You can barely comprehend presence imposed upon reality by Heart of the Abyss, but, as you have recently discovered, comprehension is not neccessary for the ability to make use of it. Among few equally wonderful and terrible things that can draw power from it, there is this ring - even more nightmarish, perhaps, than Ring of the Seven Curses, in its",
 	"book.enigmaticlegacy.entry.desolation_ring.page.2": "unnameable nature.<br2/>It offers to conveniently fulfill your gnawing desire to set yourself free of neccessity to endlessly slaughter creatures that could once tolerate your presence,",
 	"book.enigmaticlegacy.entry.desolation_ring.page.3": "but have lost such ability soon as you submitted yourself to the burden of Seven Curses... By erasing them from the very existence surrounding you.<br2/>The cost of such reality-bending power is perilous, however, as should you decide that you desire it - you will be bound to it forevermore. And as you know by now, void can be more unbearable than even most frightening, ever-present threat...",
 	
@@ -1824,6 +1846,14 @@
 	"book.enigmaticlegacy.entry.end_anchor.page.2": "within those lands is finally overcome.<br2/>Dimensional Anchor works in the manner not dissimilar to that of Respawn Anchor, but will require Ender Pearls to be recharged instead of much",
 	"book.enigmaticlegacy.entry.end_anchor.page.3": "cheaper Glowstone. As a repayment for increased maintenance costs - it can function where Respawn Anchor cannot, and has a noticeable chance to not spend a charge upon your revival. Things such as Potion of Recall will work with it much as they do with its predecessor, and Dispenser can still be used to automate recharging.<br2/>Only one thing remains of concern. Even for higher beings, space between worlds",
 	"book.enigmaticlegacy.entry.end_anchor.page.4": "is not the safest of places to traverse, most so when stripped of flesh... You cannot help but wonder what terrible places await those who are mislead by the light of their beacons, and what grisly fate befalls them in there.",
+	
+	
+	"book.enigmaticlegacy.entry.eldritch_pan.name": "The Voracious Pan",
+	"book.enigmaticlegacy.entry.eldritch_pan.page.1": "The very bones of the universe, both celestial and eldritch, lay at your fingertips. And yet, you still crave more...<br2/>Fortunately, the unthinkable nature of Heart of the Abyss can be employed in this pursuit of yours. Less fortunately, another kind of insatiable craving now plagues your mind and body alike.",
+	"book.enigmaticlegacy.entry.eldritch_pan.page.2": "This boundless hunger demands that you keep hunting for all manner of creature that walk the lands of this, and many other worlds. Consumed by it, you cannot quite tell if this influence fully comes from the artifact that you have forged,",
+	"book.enigmaticlegacy.entry.eldritch_pan.page.3": "or it has become so deeply engraved in your soul that it will continue haunting you even without it.<br2/>The maw of The Voracious Pan stays ever-open, leading into what you presume is a stomach belonging to a vast entity of incomprehensible dimensions. Has this being granted you the Heart of the Abyss, or is it merely an entity that shares the same insatiable appetite you suffer from? It might be better not to know.",
+	"book.enigmaticlegacy.entry.eldritch_pan.page.4": "The promise of The Forbidden Fruit to quench any hunger once and for all is more tempting than ever, but you remain cautious. Things are never quite so simple for a cursed being such as yourself, and once you lose your ability to hunger, some other calamity will surely take its place.<br2/>Few dare to cross paths with you now. Ones that witnessed flesh torn and consumed, hearts crushed and forgotten, and veins sucked dry of blood",
+	"book.enigmaticlegacy.entry.eldritch_pan.page.5": "in your never-ending feast, are shaken. Those you struck down have not returned to tell the tales.<br2/>What, or indeed who, will be your next meal?",
 	
 	
 	"book.enigmaticlegacy.landing_text": "In front of you lies the well of great knowledge, a place where some of this world's greatest mysteries belong, scrupulously researched and carefully catalogized.<br2/>As your journey continues and the world reveals itself to you, you may revisit and behold knowledge you gathered within these pages.",

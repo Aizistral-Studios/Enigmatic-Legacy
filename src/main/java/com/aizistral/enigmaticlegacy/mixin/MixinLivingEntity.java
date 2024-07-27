@@ -30,7 +30,9 @@ public abstract class MixinLivingEntity extends Entity implements IProperShieldU
 
 	@Inject(method = "isDamageSourceBlocked", at = @At("HEAD"), cancellable = true)
 	private void onDamageSourceBlocking(DamageSource source, CallbackInfoReturnable<Boolean> info) {
-		SuperpositionHandler.onDamageSourceBlocking(((LivingEntity)(Object)this), this.useItem, source, info);
+		if (SuperpositionHandler.onDamageSourceBlocking(((LivingEntity)(Object)this), this.useItem, source, info)) {
+			info.setReturnValue(true);
+		}
 	}
 
 	@Override

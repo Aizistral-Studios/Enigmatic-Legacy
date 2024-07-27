@@ -1,0 +1,38 @@
+{
+    "name": "book.enigmaticlegacy.entry.eldritch_pan.name",
+    "icon": "enigmaticlegacy:eldritch_pan",
+    "category": "enigmaticlegacy:tools",
+	"advancement": "enigmaticlegacy:book/tools/eldritch_pan",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 120,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.eldritch_pan.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:eldritch_pan",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.eldritch_pan.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.eldritch_pan.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.eldritch_pan.page.4"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.eldritch_pan.page.5"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

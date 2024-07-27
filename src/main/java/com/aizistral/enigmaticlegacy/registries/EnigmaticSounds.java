@@ -37,6 +37,12 @@ public class EnigmaticSounds extends AbstractRegistry<SoundEvent> {
 	@ObjectHolder(value = MODID + ":misc.uneat", registryName = "sound_event")
 	public static final SoundEvent EAT_REVERSE = null;
 
+	@ObjectHolder(value = MODID + ":misc.pan_clang", registryName = "sound_event")
+	public static final SoundEvent PAN_CLANG = null;
+
+	@ObjectHolder(value = MODID + ":misc.pan_clang_fr", registryName = "sound_event")
+	public static final SoundEvent PAN_CLANG_FR = null;
+
 	private EnigmaticSounds() {
 		super(ForgeRegistries.SOUND_EVENTS);
 		this.register("misc.hhon");
@@ -47,6 +53,8 @@ public class EnigmaticSounds extends AbstractRegistry<SoundEvent> {
 		this.register("misc.learn");
 		this.register("misc.sword_hit_reject");
 		this.register("misc.uneat");
+		this.register("misc.pan_clang");
+		this.register("misc.pan_clang_fr");
 	}
 
 	private void register(String name) {

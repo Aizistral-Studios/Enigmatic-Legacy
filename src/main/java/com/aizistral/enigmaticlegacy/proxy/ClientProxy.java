@@ -191,11 +191,16 @@ public class ClientProxy extends CommonProxy {
 		}
 	}
 
+	private void registerBlockingProperty(Item item) {
+		ItemProperties.register(item, new ResourceLocation("blocking"),
+				(stack, world, entity, seed) -> entity != null && entity.isUsingItem()
+						&& entity.getUseItem() == stack ? 1 : 0);
+	}
+
 	@OnlyIn(Dist.CLIENT)
 	public void onClientSetup(FMLClientSetupEvent event) {
-		ItemProperties.register(EnigmaticItems.INFERNAL_SHIELD, new ResourceLocation("blocking"),
-				(stack, world, entity, seed) -> entity != null && entity.isUsingItem()
-				&& entity.getUseItem() == stack ? 1 : 0);
+		this.registerBlockingProperty(EnigmaticItems.INFERNAL_SHIELD);
+		this.registerBlockingProperty(EnigmaticItems.ELDRITCH_PAN);
 
 		ItemProperties.register(EnigmaticItems.THE_INFINITUM, new ResourceLocation(EnigmaticLegacy.MODID, "the_infinitum_open"), (stack, world, entity, seed) -> {
 			if (entity instanceof Player player) {
