@@ -95,6 +95,12 @@ public class LootGenerator extends ItemBase implements Vanishable {
 		this.lootList.add(BuiltInLootTables.VILLAGE_TAIGA_HOUSE);
 		this.lootList.add(BuiltInLootTables.VILLAGE_SNOWY_HOUSE);
 		this.lootList.add(BuiltInLootTables.VILLAGE_SAVANNA_HOUSE);
+		this.lootList.add(BuiltInLootTables.DESERT_WELL_ARCHAEOLOGY);
+		this.lootList.add(BuiltInLootTables.DESERT_PYRAMID_ARCHAEOLOGY);
+		this.lootList.add(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_COMMON);
+		this.lootList.add(BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_RARE);
+		this.lootList.add(BuiltInLootTables.OCEAN_RUIN_WARM_ARCHAEOLOGY);
+		this.lootList.add(BuiltInLootTables.OCEAN_RUIN_COLD_ARCHAEOLOGY);
 	}
 
 	@Override
