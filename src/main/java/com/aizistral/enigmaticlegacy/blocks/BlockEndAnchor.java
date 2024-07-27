@@ -80,6 +80,9 @@ public class BlockEndAnchor extends BaseEntityBlock {
 						stack.shrink(1);
 						this.setSuccess(true);
 						return stack;
+					} else {
+						this.setSuccess(false);
+						return stack;
 					}
 				}
 
