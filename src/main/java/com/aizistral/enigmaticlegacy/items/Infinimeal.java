@@ -3,6 +3,7 @@ package com.aizistral.enigmaticlegacy.items;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
@@ -11,10 +12,18 @@ import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.BlockSource;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
+import net.minecraft.core.dispenser.OptionalDispenseItemBehavior;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
@@ -26,6 +35,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CactusBlock;
 import net.minecraft.world.level.block.ChorusFlowerBlock;
 import net.minecraft.world.level.block.ChorusPlantBlock;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.NetherWartBlock;
 import net.minecraft.world.level.block.SugarCaneBlock;
 import net.minecraft.world.level.block.VineBlock;
@@ -33,11 +43,30 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.FakePlayerFactory;
 
 public class Infinimeal extends ItemBase implements Vanishable {
+	private static final DispenseItemBehavior DISPENSE_ITEM_BEHAVIOR = new OptionalDispenseItemBehavior() {
+
+		@Override
+		protected ItemStack execute(BlockSource source, ItemStack stack) {
+			this.setSuccess(true);
+			Level level = source.getLevel();
+			BlockPos pos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
+
+			if (!tryApply(stack, level, pos, Optional.empty(), Optional.empty())) {
+				this.setSuccess(false);
+			}
+
+			return stack;
+		};
+
+	};
+
 
 	public Infinimeal() {
 		super(getDefaultProperties().stacksTo(1).rarity(Rarity.UNCOMMON));
+		DispenserBlock.registerBehavior(this, DISPENSE_ITEM_BEHAVIOR);
 	}
 
 	@Override
@@ -56,114 +85,145 @@ public class Infinimeal extends ItemBase implements Vanishable {
 	@Override
 	public InteractionResult useOn(UseOnContext context) {
 		ItemStack stack = context.getItemInHand();
-		int savedCount = stack.getCount();
+		Level level = context.getLevel();
+		BlockPos pos = context.getClickedPos();
 
-		InteractionResult result = Items.BONE_MEAL.useOn(context);
-		stack.setCount(savedCount);
+		boolean success = tryApply(stack, level, pos, Optional.of(context.getPlayer()), Optional.of(context.getClickedFace()));
 
-		if (result == InteractionResult.PASS) {
-			BlockPos pos = context.getClickedPos();
-			Level world = context.getLevel();
-			BlockState state = world.getBlockState(pos);
-			Block block = state.getBlock();
-
-			if (block instanceof CactusBlock || block instanceof SugarCaneBlock) {
-				BlockPos topMostPos = this.findTopmostGrowable(world, pos, block, true);
-				BlockState topMostState = world.getBlockState(topMostPos);
-
-				if (topMostState.hasProperty(BlockStateProperties.AGE_15) && world.isEmptyBlock(topMostPos.above())) {
-					int age = topMostState.getValue(BlockStateProperties.AGE_15);
-
-					int plantHeight;
-					for(plantHeight = 1; world.getBlockState(topMostPos.below(plantHeight)).is(block); ++plantHeight) {}
-
-					if (plantHeight >= 3)
-						return result;
-
-					if (!world.isClientSide) {
-						world.levelEvent(2005, pos, 0);
-					}
-
-					age += world.random.nextInt(20);
-					world.setBlock(topMostPos, topMostState.setValue(BlockStateProperties.AGE_15, Integer.valueOf(Math.min(age, 15))), 4);
-
-					if (world instanceof ServerLevel) {
-						world.getBlockState(topMostPos).randomTick((ServerLevel)world, topMostPos, world.random);
-					}
-
-					return InteractionResult.sidedSuccess(world.isClientSide);
-				}
-			} else if (block instanceof VineBlock) {
-				if (!block.isRandomlyTicking(state))
-					return result;
-
-				if (world.isClientSide) {
-					EnigmaticLegacy.PROXY.spawnBonemealParticles(world, pos, 0);
-				}
-
-				int cycles = 7+world.random.nextInt(7);
-
-				if (world instanceof ServerLevel) {
-					for (int i = 0; i <= cycles; i++) {
-						state.randomTick((ServerLevel)world, pos, world.random);
-					}
-
-					state.updateNeighbourShapes(world, pos, 4);
-				}
-
-				return InteractionResult.sidedSuccess(world.isClientSide);
-			} else if (block instanceof NetherWartBlock) {
-				if (!block.isRandomlyTicking(state))
-					return result;
-
-				if (!world.isClientSide) {
-					world.levelEvent(2005, pos, 0);
-				}
-
-				int cycles = 1+world.random.nextInt(1);
-				cycles*=11;
-
-				if (world instanceof ServerLevel) {
-					for (int i = 0; i <= cycles; i++) {
-						state.randomTick((ServerLevel)world, pos, world.random);
-					}
-				}
-
-				return InteractionResult.sidedSuccess(world.isClientSide);
-			} else if (block instanceof ChorusPlantBlock || block instanceof ChorusFlowerBlock) {
-				if (!world.isClientSide) {
-					world.levelEvent(2005, pos, 0);
-				}
-
-				if (world instanceof ServerLevel serverWorld) {
-					List<BlockPos> flowers = this.findChorusFlowers(world, pos);
-
-					flowers.forEach(flowerPos -> {
-						int cycles = 1 + world.random.nextInt(2);
-						cycles *= 11;
-
-						for (int i = 0; i <= cycles; i++) {
-							BlockState flowerState = world.getBlockState(flowerPos);
-							flowerState.randomTick(serverWorld, flowerPos, world.random);
-						}
-					});
-				}
-
-				return InteractionResult.sidedSuccess(world.isClientSide);
-			}
-		}
-
-		return result;
+		if (success)
+			return InteractionResult.sidedSuccess(level.isClientSide);
+		else
+			return InteractionResult.PASS;
 	}
 
-	private List<BlockPos> findChorusFlowers(Level level, BlockPos pos) {
+	private static boolean tryApply(ItemStack stack, Level world, BlockPos pos, Optional<Player> optionalPlayer,
+			Optional<Direction> clickedFace) {
+		ItemStack stackCopy = new ItemStack(stack.getItem());
+
+		if (applyVanillaBonemeal(stackCopy, world, pos, optionalPlayer, clickedFace)) {
+			if (!world.isClientSide) {
+				world.levelEvent(1505, pos, 0);
+			}
+
+			return true;
+		}
+
+		BlockState state = world.getBlockState(pos);
+		Block block = state.getBlock();
+
+		if (block instanceof CactusBlock || block instanceof SugarCaneBlock) {
+			BlockPos topMostPos = findTopmostGrowable(world, pos, block, true);
+			BlockState topMostState = world.getBlockState(topMostPos);
+
+			if (topMostState.hasProperty(BlockStateProperties.AGE_15) && world.isEmptyBlock(topMostPos.above())) {
+				int age = topMostState.getValue(BlockStateProperties.AGE_15);
+
+				int plantHeight;
+				for(plantHeight = 1; world.getBlockState(topMostPos.below(plantHeight)).is(block); ++plantHeight) {}
+
+				if (plantHeight >= 3)
+					return false;
+
+				if (!world.isClientSide) {
+					world.levelEvent(2005, pos, 0);
+				}
+
+				age += world.random.nextInt(20);
+				world.setBlock(topMostPos, topMostState.setValue(BlockStateProperties.AGE_15, Integer.valueOf(Math.min(age, 15))), 4);
+
+				if (world instanceof ServerLevel) {
+					world.getBlockState(topMostPos).randomTick((ServerLevel)world, topMostPos, world.random);
+				}
+
+				return true;
+			}
+		} else if (block instanceof VineBlock) {
+			if (!block.isRandomlyTicking(state))
+				return false;
+
+			if (world.isClientSide) {
+				EnigmaticLegacy.PROXY.spawnBonemealParticles(world, pos, 0);
+			}
+
+			int cycles = 7+world.random.nextInt(7);
+
+			if (world instanceof ServerLevel) {
+				for (int i = 0; i <= cycles; i++) {
+					state.randomTick((ServerLevel)world, pos, world.random);
+				}
+
+				state.updateNeighbourShapes(world, pos, 4);
+			}
+
+			return true;
+		} else if (block instanceof NetherWartBlock) {
+			if (!block.isRandomlyTicking(state))
+				return false;
+
+			if (!world.isClientSide) {
+				world.levelEvent(2005, pos, 0);
+			}
+
+			int cycles = 1+world.random.nextInt(1);
+			cycles*=11;
+
+			if (world instanceof ServerLevel) {
+				for (int i = 0; i <= cycles; i++) {
+					state.randomTick((ServerLevel)world, pos, world.random);
+				}
+			}
+
+			return true;
+		} else if (block instanceof ChorusPlantBlock || block instanceof ChorusFlowerBlock) {
+			if (!world.isClientSide) {
+				world.levelEvent(2005, pos, 0);
+			}
+
+			if (world instanceof ServerLevel serverWorld) {
+				List<BlockPos> flowers = findChorusFlowers(world, pos);
+
+				flowers.forEach(flowerPos -> {
+					int cycles = 1 + world.random.nextInt(2);
+					cycles *= 11;
+
+					for (int i = 0; i <= cycles; i++) {
+						BlockState flowerState = world.getBlockState(flowerPos);
+						flowerState.randomTick(serverWorld, flowerPos, world.random);
+					}
+				});
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean applyVanillaBonemeal(ItemStack stack, Level level, BlockPos pos, Optional<Player> optionalPlayer,
+			Optional<Direction> clickedFace) {
+		if (!growCrop(stack, level, pos, optionalPlayer))
+			return BoneMealItem.growWaterPlant(stack, level, pos, clickedFace.orElse(null));
+		else
+			return true;
+	}
+
+	public static boolean growCrop(ItemStack stack, Level level, BlockPos pos, Optional<Player> optionalPlayer) {
+		if (!optionalPlayer.isPresent()) {
+			if (level instanceof ServerLevel)
+				return BoneMealItem.applyBonemeal(stack, level, pos, FakePlayerFactory.getMinecraft((ServerLevel)level));
+			return false;
+		} else
+			return BoneMealItem.applyBonemeal(stack, level, pos, optionalPlayer.get());
+	}
+
+	private static List<BlockPos> findChorusFlowers(Level level, BlockPos pos) {
 		List<BlockPos> chorusTree = new ArrayList<>();
 		chorusTree.add(pos);
 
 		while (true) {
 			int formerSize = chorusTree.size();
 			for (BlockPos treePos : new ArrayList<>(chorusTree)) {
-				chorusTree.addAll(this.getNeighboringBlocks(level, treePos, chorusTree, ChorusFlowerBlock.class,
+				chorusTree.addAll(getNeighboringBlocks(level, treePos, chorusTree, ChorusFlowerBlock.class,
 						ChorusPlantBlock.class));
 			}
 
@@ -177,14 +237,14 @@ public class Infinimeal extends ItemBase implements Vanishable {
 	}
 
 	@SafeVarargs
-	private List<BlockPos> getNeighboringBlocks(Level level, BlockPos pos, List<BlockPos> exclude, Class<? extends Block>... classes) {
+	private static List<BlockPos> getNeighboringBlocks(Level level, BlockPos pos, List<BlockPos> exclude, Class<? extends Block>... classes) {
 		BlockPos[] neighbors = new BlockPos[] { pos.above(), pos.below(), pos.east(), pos.north(), pos.south(), pos.west() };
 
 		return Arrays.stream(neighbors).filter(neighbor -> !exclude.contains(neighbor) && Arrays.stream(classes)
 				.anyMatch(theClass -> theClass.isInstance(level.getBlockState(neighbor).getBlock()))).collect(Collectors.toList());
 	}
 
-	private BlockPos findTopmostGrowable(Level world, BlockPos pos, Block block, boolean goUp) {
+	private static BlockPos findTopmostGrowable(Level world, BlockPos pos, Block block, boolean goUp) {
 		BlockPos top = pos;
 
 		while (true) {
