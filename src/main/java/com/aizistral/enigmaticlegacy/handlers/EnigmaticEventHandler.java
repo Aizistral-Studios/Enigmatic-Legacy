@@ -480,6 +480,47 @@ public class EnigmaticEventHandler {
 								.executes(EnigmaticEventHandler::handleSetRingTime)));
 
 		event.getDispatcher().register(builder);
+
+		builder = Commands.literal("setnoringtime").requires((source) -> source.hasPermission(4))
+				.then(Commands.argument("player", EntityArgument.player())
+						.then(Commands.argument("ticks", LongArgumentType.longArg(0))
+								.executes(EnigmaticEventHandler::handleSetNoRingTime)));
+
+		event.getDispatcher().register(builder);
+
+		builder = Commands.literal("getnoringtime").requires((source) -> source.hasPermission(4))
+				.then(Commands.argument("player", EntityArgument.player())
+						.executes(EnigmaticEventHandler::handleGetNoRingTime));
+
+		event.getDispatcher().register(builder);
+	}
+
+	private static int handleGetNoRingTime(CommandContext<CommandSourceStack> source) throws CommandSyntaxException {
+		ServerPlayer player = EntityArgument.getPlayer(source, "player");
+		IPlaytimeCounter counter =  IPlaytimeCounter.get(player);
+		String name = player.getDisplayName().getString();
+		long time = counter.getTimeWithoutCurses();
+		String percent = SuperpositionHandler.getNoSufferingTime(player);
+
+		Component reply =  Component.literal(name + " is not bearing the Seven Curses for " + time
+				+ " ticks, or " + percent + " of their time in this world.").withStyle(ChatFormatting.GREEN);
+		source.getSource().sendSuccess(() -> reply, true);
+		return Command.SINGLE_SUCCESS;
+	}
+
+	private static int handleSetNoRingTime(CommandContext<CommandSourceStack> source) throws CommandSyntaxException {
+		ServerPlayer player = EntityArgument.getPlayer(source, "player");
+		long ticks = LongArgumentType.getLong(source, "ticks");
+		IPlaytimeCounter counter =  IPlaytimeCounter.get(player);
+		String name = player.getDisplayName().getString();
+
+		counter.setTimeWithoutCurses(ticks);
+		ticks = counter.getTimeWithoutCurses();
+
+		Component reply =  Component.literal(name + "'s time without Seven Curses was set to " + ticks
+				+ " ticks.").withStyle(ChatFormatting.GREEN);
+		source.getSource().sendSuccess(() -> reply, true);
+		return Command.SINGLE_SUCCESS;
 	}
 
 	private static int handleGetRingTime(CommandContext<CommandSourceStack> source) throws CommandSyntaxException {
