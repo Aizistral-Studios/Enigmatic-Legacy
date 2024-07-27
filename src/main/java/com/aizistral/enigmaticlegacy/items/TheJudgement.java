@@ -50,7 +50,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 public class TheJudgement extends ItemBase {
-	public static final float ATTACK_DAMAGE = 1000F;
+	public static final float ATTACK_DAMAGE = Float.POSITIVE_INFINITY;
 	public static final double ATTACK_RADIUS = 64D;
 	private final Multimap<Attribute, AttributeModifier> defaultModifiers;
 
