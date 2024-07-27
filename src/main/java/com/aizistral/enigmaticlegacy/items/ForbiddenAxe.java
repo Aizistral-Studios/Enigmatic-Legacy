@@ -49,7 +49,7 @@ public class ForbiddenAxe extends SwordItem implements ICreativeTabMember {
 	}
 
 	public ForbiddenAxe() {
-		super(EnigmaticMaterials.FORBIDDENAXE, 6, -2.4F, ItemBaseTool.getDefaultProperties().defaultDurability(2000).rarity(Rarity.EPIC).fireResistant());
+		super(EnigmaticMaterials.FORBIDDEN_AXE, 6, -2.4F, ItemBaseTool.getDefaultProperties().defaultDurability(2000).rarity(Rarity.EPIC).fireResistant());
 	}
 
 	@Override
