@@ -72,7 +72,7 @@ public class EnderSlayer extends SwordItem implements ICursed, ICreativeTabMembe
 	}
 
 	public EnderSlayer() {
-		super(EnigmaticMaterials.ENDERSLAYER, attackDamage.getValue(), (float) attackSpeed.getValue(), ItemBaseTool.getDefaultProperties().defaultDurability(2000).rarity(Rarity.EPIC).fireResistant());
+		super(EnigmaticMaterials.ENDER_SLAYER, attackDamage.getValue(), (float) attackSpeed.getValue(), ItemBaseTool.getDefaultProperties().defaultDurability(2000).rarity(Rarity.EPIC).fireResistant());
 	}
 
 	public boolean isEndDweller(LivingEntity entity) {
