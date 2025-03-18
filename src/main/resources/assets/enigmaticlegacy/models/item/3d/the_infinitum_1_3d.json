@@ -1,9 +1,0 @@
-{
-	"credit": "Made with Blockbench",
-	"parent": "enigmaticlegacy:item/3d/the_infinitum_0_3d",
-	"texture_size": [32, 32],
-	"textures": {
-		"0": "enigmaticlegacy:item/3d/the_infinitum_3d",
-		"1": "enigmaticlegacy:item/3d/the_infinitum_3d_eye_1"
-	}
-}

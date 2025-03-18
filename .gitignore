@@ -20,24 +20,7 @@ build
 # other
 eclipse
 run
+runs
+run-data
 
-# Aizistral
-.apt_generated
-logs
-omniconfig_first
-*works
-Users
-.factorypath
-deps/Soulbound*
-docs/copybruh.txt
-multiuser_args.txt
-old_enigmatic_desc.txt
-old_changelog.txt
-
-*.bat
-!gradlew.bat
-!updateResources.bat
-/.apt_generated_tests/
-
-model
-/.run
+repo

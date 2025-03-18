@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-		maven { url "file:///${project.projectDir}/deps/" }
+        maven { url "file:///${project.projectDir}/deps/" }
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven {
             name "Sponge"
@@ -8,40 +8,35 @@ buildscript {
             content { includeGroup "org.spongepowered" }
         }
         maven {
-			name "Gradle Plugin Portal"
-			url 'https://plugins.gradle.org/m2/'
-			content { 
-				includeGroup "gradle.plugin.com.matthewprenger"
-				includeGroup "com.modrinth"
-			}
-		}
+            name "Gradle Plugin Portal"
+            url 'https://plugins.gradle.org/m2/'
+            content {
+                includeGroup "gradle.plugin.com.matthewprenger"
+                includeGroup "com.modrinth"
+            }
+        }
         maven {
-			url = 'https://maven.parchmentmc.org/'
-		}
+            url = 'https://maven.parchmentmc.org/'
+        }
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-		classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-1.0.0-SNAPSHOT'
-		classpath 'org.parchmentmc:librarian:1.+'
+        classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.4.0'
+        classpath 'org.parchmentmc:librarian:1.+'
     }
 }
 
 plugins {
+    id 'idea'
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.neoforged.moddev.legacyforge' version '2.0.78'
     id "com.modrinth.minotaur" version "2.+"
 }
 
 println("Applying plugins...")
 
-apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'maven-publish'
-apply plugin: 'net.minecraftforge.gradle'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'com.matthewprenger.cursegradle'
-apply plugin: 'org.spongepowered.mixin'
-apply from: 'common.gradle'
 
 subprojects {
     dep_forge     = rootProject.dep_forge
@@ -51,136 +46,219 @@ subprojects {
     version_mcp   = rootProject.version_mcp
 }
 
+tasks.named('wrapper', Wrapper).configure {
+    // Define wrapper values here so as to not have to always do so when updating gradlew.properties.
+    // Switching this to Wrapper.DistributionType.ALL will download the full gradle sources that comes with
+    // documentation attached on cursor hover of gradle classes and methods. However, this comes with increased
+    // file size for Gradle. If you do switch this to ALL, run the Gradle wrapper task twice afterwards.
+    // (Verify by checking gradle/wrapper/gradle-wrapper.properties to see if distributionUrl now points to `-all`)
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+version = mod_version
+group = mod_group
+
+repositories {
+    mavenLocal()
+}
+
+base {
+    archivesName = mod_id
+}
+
+// Mojang ships Java 21 to end users in 1.20.1, so mods should target Java 17.
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+legacyForge {
+    // Specify the version of MinecraftForge to use.
+    version = project.version_mc + '-' + project.version_forge
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+
+    // This line is optional. Access Transformers are automatically detected
+    // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
+
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
+    runs {
+        client {
+            client()
+
+            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
+            systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        // This run config launches GameTestServer and runs all registered gametests, then exits.
+        // By default, the server will crash when no gametests are provided.
+        // The gametest system is also enabled by default for other run configs under the /test command.
+        gameTestServer {
+            type = "gameTestServer"
+            systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        data {
+            data()
+
+            // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
+            // gameDirectory = project.file('run-data')
+
+            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+
+        // applies to all the run configs above
+        configureEach {
+            // Recommended logging data for a userdev environment
+            // The markers can be added/remove as needed separated by commas.
+            // "SCAN": For mods scan.
+            // "REGISTRIES": For firing of registry events.
+            // "REGISTRYDUMP": For getting the contents of all registries.
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+
+            // Recommended logging level for the console
+            // You can set various levels here.
+            // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        // define mod <-> source bindings
+        // these are used to tell the game which sources are for which mod
+        // mostly optional in a single mod project
+        // but multi mod projects should define one per mod
+        "patchouli" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+// Include resources generated by data generators.
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+// Sets up a dependency configuration called 'localRuntime' and a deobfuscating one called 'modLocalRuntime'
+// These configurations should be used instead of 'runtimeOnly' to declare
+// a dependency that will be present for runtime testing but that is
+// "optional", meaning it will not be pulled by dependents of this mod.
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+obfuscation {
+    createRemappingConfiguration(configurations.localRuntime)
+}
+
 mixin {
-	println("Specifying refmaps for Mixin...")
-	
+    println("Specifying refmaps for Mixin...")
+
     add sourceSets.main, "enigmaticlegacy.refmap.json"
 }
 
-minecraft {
-	println("Specifying Access Transformer configuration...")	
-	accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+repositories {
+    println("Specifying repositories...")
+
+
+    //flatDir {  dirs 'deps' }
+    maven {  url "file:///${project.projectDir}/deps/" } // local files
+    maven {  url = "https://maven.theillusivec4.top/" } // curios
+    maven {  url 'https://maven.blamejared.com' } // patchouli & jei
+    maven {  url = "https://repo.spongepowered.org/maven" } // mixin
+    maven {  url = 'https://maven.parchmentmc.org'  }
 }
 
 dependencies {
-	println("Processing dependencies...")
-   
-	// Mixin
-    annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
+    println("Processing dependencies...")
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     annotationProcessor 'com.google.code.gson:gson:2.8.0'
     annotationProcessor 'com.google.guava:guava:21.0'
     annotationProcessor 'org.ow2.asm:asm-tree:7.2'
     annotationProcessor 'org.ow2.asm:asm-commons:7.2'
     annotationProcessor 'org.ow2.asm:asm-util:7.2'
-	
-	// These are 1.20.1 dependencies
-	implementation fg.deobf('generic:curios:forge-5.2.0-beta.3+1.20.1')
-	implementation fg.deobf('generic:Patchouli:1.20.1-81-FORGE')
-	implementation fg.deobf('generic:caelus:forge-3.1.0+1.20')
-	implementation fg.deobf('generic:jei:1.18.2-forge-10.2.1.283-stripped')
-	
-	// These are 1.19 dependencies
-	//compileOnly fg.deobf('generic:curios:forge-1.19.4-5.1.5.3')
-	//compileOnly fg.deobf('generic:caelus:forge-1.19.4-3.0.0.10')
-	//compileOnly fg.deobf('generic:Patchouli:1.19.4-79.1-FORGE')
-	//compileOnly fg.deobf('generic:jei:1.18.2-forge-10.2.1.283-stripped')
-	//compileOnly fg.deobf('generic:WorldNameRandomizer:FORGE-1.19.2-v1.5.0')
-	
-	// These are 1.18 dependencies
-	//compileOnly fg.deobf('generic:curios:forge-1.18.2-5.0.6.3')
-	//compileOnly fg.deobf('generic:Patchouli:1.18.2-71.1')
-	//compileOnly fg.deobf('generic:WorldNameRandomizer:FORGE-1.18.1-v1.3.0')
-	//compileOnly fg.deobf('generic:caelus:forge-1.18.1-3.0.0.2')
-	//compileOnly fg.deobf('generic:jei:1.18.2-9.7.0.193')
-	//compileOnly fg.deobf('generic:Quark:3.2-346')
-	//compileOnly fg.deobf('generic:AutoRegLib:1.7-53')
-	
-	// These are 1.17 dependencies
-	//compileOnly fg.deobf('generic:curios:forge-1.17.1-5.0.2.7-spec')
-	//compileOnly fg.deobf('generic:Patchouli:1.17.1-57')
-	//compileOnly fg.deobf('generic:WorldNameRandomizer:FORGE-1.17.1-v1.2.0')
-	
-	// These are 1.16.3 - 1.16.5 dependencies
-	//implementation name: 'BuildResourceUpdater-1.0-deobf'
-	//implementation name: 'curios-forge-1.16.5-4.0.6.8-dev'
-	//implementation name: 'Patchouli-1.16.4-53.2-dev'
-	//implementation name: 'WorldNameRandomizer-FORGE-1.16.4-v1.1.1-dev'
-	//implementation name: 'decorativeblocks-1.16.1-1.5.2-deobf'
-	//implementation name: 'playerex-1.1.8-1.16.5-dev'
-	
-	//compile fg.deobf('generic:Survive:1.16.3-3.0.2')
-	//compile fg.deobf('generic:EnchantmentDescriptions:1.16.4-6.0.1')
-    //compile fg.deobf("generic:Apotheosis:1.16.3-4.4.1")
-    //compile fg.deobf("generic:Placebo:1.16.3-4.3.3")
-	
-	// These are 1.16.2 dependencies
-	//compile fg.deobf('top.theillusivec4.curios:curios-forge:1.16.2-4.0.0.1')
-    //compile fg.deobf("vazkii.patchouli:Patchouli:1.16-41")
-	
-	// These are 1.16.1 dependencies
-	//compile fg.deobf('generic:decorativeblocks:1.16.1-1.4')
-	//compile fg.deobf('top.theillusivec4.curios:curios:FORGE-1.16.1-3.0.0.2')
-    //compile fg.deobf("vazkii.patchouli:Patchouli:1.16-39")
 
+    implementation 'org.jetbrains:annotations:24.0.0'
+
+    // Curios
+    modLocalRuntime "top.theillusivec4.curios:curios-forge:${ver_curios}"
+    modCompileOnly "top.theillusivec4.curios:curios-forge:${ver_curios}"
+
+    // Patchouli
+    modLocalRuntime "vazkii.patchouli:Patchouli:${ver_patchouli}"
+    modCompileOnly "vazkii.patchouli:Patchouli:${ver_patchouli}"
+
+    // Caelus
+    modLocalRuntime "top.theillusivec4.caelus:caelus-forge:${ver_caelus}"
+    modCompileOnly "top.theillusivec4.caelus:caelus-forge:${ver_caelus}"
+
+    // JEI
+    // compile against the JEI API but do not include it at runtime
+    modCompileOnly "mezz.jei:jei-1.20.1-common-api:15.8.2.26"
 }
 
-tasks.withType(Jar) {
-    manifest {
-        attributes([
-            "MixinConnector": "${project.group}.MixinConnector"
-        ])
-    }
+jar {
+    manifest.attributes([
+            "MixinConfigs": "${mod_id}.mixins.json"
+    ])
 }
 
-processResources {
-	doFirst {
-		println("Processing resources...")
-		println("Specifying The Acknowledgment version in book.json...")	
-	}
-	
-	filesMatching('data/enigmaticlegacy/patchouli_books/the_acknowledgment/book.json') {
-        filter {
-			// Bold of you to assume I know how to inflate with Gradle
-            it.replaceAll("~the_acknowledgment_edition", findProperty('the_acknowledgment_edition') ?: 'invalid_edition')
+
+// This block of code expands all declared replace properties in the specified resource targets.
+// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    var replaceProperties = [
+            minecraft_version        : version_mc,
+            minecraft_version_range  : version_mc_range,
+            forge_version            : version_forge,
+            forge_version_range      : version_forge_range,
+            loader_version_range     : version_loader_range,
+            mod_id                   : mod_id,
+            mod_name                 : mod_name,
+            mod_license              : mod_license,
+            mod_version              : mod_version,
+            mod_authors              : mod_author,
+            mod_description          : mod_description
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
+}
+// Include the output of "generateModMetadata" as an input directory for the build
+// this works with both building through Gradle and the IDE.
+sourceSets.main.resources.srcDir generateModMetadata
+// To avoid having to run "generateModMetadata" manually, make it run on every project reload
+legacyForge.ideSyncTask generateModMetadata
+
+// Example configuration to allow publishing using the maven-publish plugin
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            from components.java
         }
     }
-	
-	exclude 'META-INF/mods.toml'
-	
-    from("${project.projectDir}/docs/META-INF") {
-		println("Inflating mods.toml...")	
-	
-		// Replace properties in mods.toml with ones derived from settings.gradle
-        include 'mods.toml'
-        expand 'mod_license': mod_license, 
-		'mod_version': project.version, 
-		'mod_id': mod_id, 
-		'mod_name': mod_name, 
-		'mod_url': mod_url, 
-		'mod_author': mod_author, 
-		'mod_description': mod_description, 
-		'mod_icon': mod_icon, 
-		'issue_tracker_url': issue_tracker_url, 
-		'mod_credits': mod_credits, 
-		'dep_forge': dep_forge, 
-		'dep_minecraft': dep_minecraft, 
-		'dep_patchouli': dep_patchouli, 
-		'dep_curios': dep_curios,
-		'dep_caelus': dep_caelus
-		rename 'mods.toml', 'META-INF/mods.toml'
-    }
-
-    from("${project.projectDir}/docs") {
-        include 'changelog.html'
-    }
-
-    from("${project.projectDir}") {
-       include 'LICENSE.md'
+    repositories {
+        maven {
+            url "file://${project.projectDir}/repo"
+        }
     }
 }
 
-task updateResources() {
-    // NO-OP
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
 
-tasks.updateResources.dependsOn processResources
+// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
