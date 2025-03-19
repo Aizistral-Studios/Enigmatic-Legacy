@@ -1,0 +1,34 @@
+{
+    "name": "book.enigmaticlegacy.entry.recall_potion.name",
+    "icon": "enigmaticlegacy:recall_potion",
+    "category": "enigmaticlegacy:brewing",
+	"advancement": "enigmaticlegacy:book/brewing/recall_potion",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 20,
+	"extra_recipe_mappings": {
+			"enigmaticlegacy:recall_potion": 1
+		},
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.recall_potion.page.1"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:recall_potion",
+			"index": 0,
+            "heading": "book.enigmaticlegacy.entry.recall_potion.heading.1",
+            "text": "book.enigmaticlegacy.entry.recall_potion.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.recall_potion.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

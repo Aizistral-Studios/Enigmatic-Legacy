@@ -1,0 +1,21 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "rewards": {},
+  "criteria": {
+    "has_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:golem_heart"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ]
+}

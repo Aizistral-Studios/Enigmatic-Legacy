@@ -1,0 +1,34 @@
+{
+    "name": "book.enigmaticlegacy.entry.avarice_scroll.name",
+    "icon": "enigmaticlegacy:avarice_scroll",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/avarice_scroll",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 130,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.avarice_scroll.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:avarice_scroll",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.avarice_scroll.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.avarice_scroll.page.3"
+        },
+		{
+            "type": "text",
+			"text": "book.enigmaticlegacy.entry.avarice_scroll.page.4"
+		},
+		{
+            "type": "text",
+			"text": "book.enigmaticlegacy.entry.avarice_scroll.page.5"
+		}
+    ]
+}

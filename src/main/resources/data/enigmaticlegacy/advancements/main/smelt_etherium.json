@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:etherium_ingot"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:smeltEtherium"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:smeltEtherium.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+	"frame": "task"
+  },
+  "parent": "enigmaticlegacy:main/astral_dust",
+  "criteria": {
+    "etherium": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:etherium_ingot"]
+          }
+        ]
+      }
+    }
+  }
+}

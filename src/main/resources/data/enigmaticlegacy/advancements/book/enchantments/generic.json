@@ -1,0 +1,17 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "criteria": {
+    "has_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:enchanting_table"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

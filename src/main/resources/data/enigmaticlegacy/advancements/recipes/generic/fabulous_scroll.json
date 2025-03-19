@@ -1,0 +1,54 @@
+{
+  "parent": "enigmaticlegacy:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enigmaticlegacy:fabulous_scroll"
+    ]
+  },
+  "criteria": {
+    "has_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:astral_dust"]
+          }
+        ]
+      }
+    },
+	"has_recipe_result": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:fabulous_scroll"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:fabulous_scroll"
+      }
+    },
+    "has_parent_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:heaven_scroll"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_recipe_result",
+      "has_the_recipe",
+	  "has_items"
+    ],
+	[
+	  "has_recipe_result",
+      "has_the_recipe",
+	  "has_parent_recipe"
+	]
+  ]
+}

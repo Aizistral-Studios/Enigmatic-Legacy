@@ -1,0 +1,40 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "rewards": {},
+  "criteria": {
+    "generic_revelation": {
+      "trigger": "enigmaticlegacy:embrace_revelation",
+      "conditions": {
+        "point_type": "generic",
+		"point_amount": 10
+      }
+    },
+	"has_scrap": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:netherite_scrap"]
+          }
+        ]
+      }
+    },
+	"has_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:netherite_ingot"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "generic_revelation",
+	  "has_scrap",
+	  "has_ingot"
+    ]
+  ]
+}

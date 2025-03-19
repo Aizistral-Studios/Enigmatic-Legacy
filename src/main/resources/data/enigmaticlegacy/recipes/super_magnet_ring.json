@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:super_magnet_ring"
+    }
+  ],
+  "pattern": [
+    "LEL",
+    "GXG",
+    "LGL"
+  ],
+  "key": {
+    "X": {
+      "item": "enigmaticlegacy:magnet_ring"
+    },
+	"G": {
+      "item": "minecraft:gold_ingot"
+    },
+	"E": {
+      "item": "minecraft:ender_eye"
+    },
+	"L": {
+      "item": "minecraft:lapis_lazuli"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:super_magnet_ring"
+  }
+}

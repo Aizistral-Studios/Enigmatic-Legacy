@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:evil_ingot"
+    }
+  ],
+  "pattern": [
+    "TET",
+    "EXE",
+    "TET"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:netherite_ingot"
+    },
+	"E": {
+      "item": "enigmaticlegacy:evil_essence"
+    },
+	"T": {
+      "item": "minecraft:ghast_tear"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:evil_ingot"
+  }
+}

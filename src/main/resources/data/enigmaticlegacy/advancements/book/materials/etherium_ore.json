@@ -1,0 +1,29 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "rewards": {},
+  "criteria": {
+    "generic_revelation": {
+      "trigger": "enigmaticlegacy:embrace_revelation",
+      "conditions": {
+        "point_type": "generic",
+		"point_amount": 16
+      }
+    },
+	"has_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:etherium_ingot"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "generic_revelation",
+	  "has_items"
+    ]
+  ]
+}

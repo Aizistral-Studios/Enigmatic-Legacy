@@ -1,0 +1,7 @@
+{
+	"name": "book.enigmaticlegacy.category.misc.name",
+	"description": "book.enigmaticlegacy.category.misc.desc",
+	"icon": "enigmaticlegacy:enchantment_transposer",
+	"sortnum": 80,
+	"secret": false
+}

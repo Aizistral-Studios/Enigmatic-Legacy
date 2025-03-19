@@ -1,0 +1,7 @@
+{
+	"name": "book.enigmaticlegacy.category.decorations.name",
+	"description": "book.enigmaticlegacy.category.decorations.desc",
+	"icon": "enigmaticlegacy:massive_lamp",
+	"sortnum": 40,
+	"secret": false
+}

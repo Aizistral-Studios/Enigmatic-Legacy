@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:enchantment_transposer"
+    }
+  ],
+  "pattern": [
+    "pnp",
+    "lXl",
+    "brb"
+  ],
+  "key": {
+	"X": {
+      "item": "minecraft:book"
+    },
+	"b": {
+      "item": "minecraft:blaze_powder"
+    },
+	"l": {
+      "item": "minecraft:lapis_lazuli"
+    },
+	"p": {
+      "item": "minecraft:prismarine_crystals"
+    },
+	"n": {
+      "item": "minecraft:gold_nugget"
+    },
+	"r": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:enchantment_transposer"
+  }
+}

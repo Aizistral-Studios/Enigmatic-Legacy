@@ -1,0 +1,79 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:etherium_axe"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:etheriumTool"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:etheriumTool.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+	"frame": "task"
+  },
+  "parent": "enigmaticlegacy:main/smelt_etherium",
+  "criteria": {
+    "etherium_pickaxe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:etherium_pickaxe"]
+          }
+        ]
+      }
+    },
+	"etherium_scythe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:etherium_scythe"]
+          }
+        ]
+      }
+    },
+	"etherium_shovel": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:etherium_shovel"]
+          }
+        ]
+      }
+    },
+	"etherium_axe": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:etherium_axe"]
+          }
+        ]
+      }
+    },
+	"etherium_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:etherium_sword"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "etherium_pickaxe",
+      "etherium_axe",
+      "etherium_shovel",
+      "etherium_scythe",
+      "etherium_sword"
+    ]
+  ]
+}

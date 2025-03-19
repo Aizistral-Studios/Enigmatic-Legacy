@@ -1,0 +1,25 @@
+{
+    "parent": "enigmaticlegacy:item/infernal_shield_idle_in_hand",
+	"display": {
+        "thirdperson_righthand": {
+            "rotation": [ 45, 135, 0 ],
+			"translation": [4.52, -10, -4],
+            "scale": [ 1, 1, 1 ]
+        },
+        "thirdperson_lefthand": {
+            "rotation": [ 45, 135, 0 ],
+			"translation": [0.0, -8, -7],
+            "scale": [ 1, 1, 1 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, 180, -5 ],
+            "translation": [ -1.75, -14.5, -2.5 ],
+            "scale": [ 1.25, 1.25, 1.25 ]
+        },
+        "firstperson_lefthand": {
+            "rotation": [ 0, 180, -5 ],
+            "translation": [ -6.75, -15, -2.5 ],
+            "scale": [ 1.25, 1.25, 1.25 ]
+        }
+    }
+}

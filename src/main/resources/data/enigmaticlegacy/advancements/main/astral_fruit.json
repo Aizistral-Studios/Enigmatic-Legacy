@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:astral_fruit"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:astralFruit"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:astralFruit.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+	"frame": "challenge"
+  },
+  "rewards": {
+    "experience": 1000
+  },
+  "parent": "enigmaticlegacy:main/cursed_ring",
+  "criteria": {
+    "fruit": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "items": [
+            "enigmaticlegacy:astral_fruit"
+          ]
+        }
+      }
+    }
+  }
+}

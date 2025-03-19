@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.enigmatic_elytra.name",
+    "icon": "enigmaticlegacy:enigmatic_elytra",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/enigmatic_elytra",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 190,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.enigmatic_elytra.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:enigmatic_elytra",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.enigmatic_elytra.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.enigmatic_elytra.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

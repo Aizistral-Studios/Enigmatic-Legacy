@@ -1,0 +1,44 @@
+{
+  "parent": "enigmaticlegacy:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enigmaticlegacy:lamps/big_lamp",
+      "enigmaticlegacy:lamps/massive_lamp"
+    ]
+  },
+  "criteria": {
+    "has_core_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:glowstone"]
+          }
+        ]
+      }
+    },
+	"has_recipe_result": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:big_lamp"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:lamps/big_lamp"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_core_block",
+      "has_recipe_result",
+      "has_the_recipe"
+    ]
+  ]
+}

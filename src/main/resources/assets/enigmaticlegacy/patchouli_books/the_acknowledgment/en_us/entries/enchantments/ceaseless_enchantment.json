@@ -1,0 +1,23 @@
+{
+    "name": "book.enigmaticlegacy.entry.ceaseless_enchantment.name",
+    "icon": "minecraft:enchanted_book",
+    "category": "enigmaticlegacy:enchantments",
+	"advancement": "enigmaticlegacy:book/enchantments/generic",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 10,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ceaseless_enchantment.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "minecraft:crossbow#1{Enchantments:[{lvl:1s,id:'enigmaticlegacy:ceaseless'}]}",
+			"link_recipe": false,
+			"title": "book.enigmaticlegacy.entry.ceaseless_enchantment.heading.1",
+            "text": "book.enigmaticlegacy.entry.ceaseless_enchantment.page.2"
+        }
+    ]
+}

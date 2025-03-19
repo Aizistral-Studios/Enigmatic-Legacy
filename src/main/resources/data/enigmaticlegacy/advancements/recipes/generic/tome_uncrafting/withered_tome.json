@@ -1,0 +1,32 @@
+{
+  "parent": "enigmaticlegacy:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enigmaticlegacy:tome_uncrafting/withered_tome"
+    ]
+  },
+  "criteria": {
+    "has_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:withered_tome"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:tome_uncrafting/withered_tome"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_items",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:enigmatic_amulet"
+    },
+    "title": {
+      "translate": "advancementTab.enigmaticlegacy"
+    },
+    "description": {
+      "translate": "advancementTab.enigmaticlegacy.desc"
+    },
+    "background": "minecraft:textures/block/end_stone_bricks.png",
+    "show_toast": false,
+    "announce_to_chat": false
+  },
+  "criteria": {
+    "flower": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:enigmatic_amulet"]
+          }
+        ]
+      }
+    }
+  }
+}

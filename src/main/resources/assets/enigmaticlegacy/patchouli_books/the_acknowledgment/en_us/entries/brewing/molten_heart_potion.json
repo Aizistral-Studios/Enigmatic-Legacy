@@ -1,0 +1,44 @@
+{
+    "name": "book.enigmaticlegacy.entry.molten_heart_potion.name",
+    "icon": "enigmaticlegacy:common_potion#1{EnigmaticPotion:'molten_heart'}",
+    "category": "enigmaticlegacy:brewing",
+	"advancement": "enigmaticlegacy:book/brewing/molten_heart_potion",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 15,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.molten_heart_potion.page.1"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:molten_heart",
+			"index": 0,
+            "heading": "book.enigmaticlegacy.entry.molten_heart_potion.heading.1",
+            "text": "book.enigmaticlegacy.entry.molten_heart_potion.page.2"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:long_molten_heart",
+			"index": 0,
+            "heading": "book.enigmaticlegacy.entry.molten_heart_potion.heading.2",
+            "text": "book.enigmaticlegacy.entry.molten_heart_potion.page.3"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:molten_heart",
+			"index": 1,
+            "heading": "book.enigmaticlegacy.entry.molten_heart_potion.heading.3",
+            "text": "book.enigmaticlegacy.entry.molten_heart_potion.page.4"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:molten_heart",
+			"index": 2,
+            "heading": "book.enigmaticlegacy.entry.molten_heart_potion.heading.4",
+            "text": "book.enigmaticlegacy.entry.molten_heart_potion.page.5"
+        }
+    ]
+}

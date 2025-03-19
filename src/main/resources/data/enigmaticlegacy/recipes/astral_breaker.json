@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:astral_breaker"
+    }
+  ],
+  "pattern": [
+    "aWa",
+    "PXS",
+    "aba"
+  ],
+  "key": {
+	"X": {
+      "item": "minecraft:ender_eye"
+    },
+	"b": {
+      "item": "minecraft:dragon_breath"
+    },
+	"a": {
+      "item": "enigmaticlegacy:astral_dust"
+    },
+	"P": {
+      "item": "enigmaticlegacy:etherium_pickaxe"
+    },
+	"W": {
+      "item": "enigmaticlegacy:etherium_axe"
+    },
+	"S": {
+      "item": "enigmaticlegacy:etherium_shovel"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:astral_breaker"
+  }
+}

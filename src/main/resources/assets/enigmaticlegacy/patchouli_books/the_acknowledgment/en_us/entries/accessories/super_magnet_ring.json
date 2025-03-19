@@ -1,0 +1,22 @@
+{
+    "name": "book.enigmaticlegacy.entry.super_magnet_ring.name",
+    "icon": "enigmaticlegacy:super_magnet_ring",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/super_magnet_ring",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 20,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.super_magnet_ring.page.1"
+        },
+		{
+            "type": "crafting",
+            "title": " ",
+			"recipe": "enigmaticlegacy:super_magnet_ring",
+            "text": "book.enigmaticlegacy.entry.super_magnet_ring.page.2"
+        }
+    ]
+}

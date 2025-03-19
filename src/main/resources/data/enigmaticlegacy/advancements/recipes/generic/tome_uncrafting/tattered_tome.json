@@ -1,0 +1,32 @@
+{
+  "parent": "enigmaticlegacy:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enigmaticlegacy:tome_uncrafting/tattered_tome"
+    ]
+  },
+  "criteria": {
+    "has_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:tattered_tome"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:tome_uncrafting/tattered_tome"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_items",
+      "has_the_recipe"
+    ]
+  ]
+}

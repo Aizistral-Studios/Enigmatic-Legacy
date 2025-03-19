@@ -1,0 +1,23 @@
+{
+    "name": "book.enigmaticlegacy.entry.blazing_core.name",
+    "icon": "enigmaticlegacy:blazing_core",
+    "category": "enigmaticlegacy:relics",
+	"advancement": "enigmaticlegacy:book/relics/blazing_core",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 80,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.blazing_core.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "enigmaticlegacy:blazing_core",
+			"link_recipe": true,
+			"title": "book.enigmaticlegacy.entry.blazing_core.heading.1",
+            "text": "book.enigmaticlegacy.entry.blazing_core.page.2"
+        }
+    ]
+}

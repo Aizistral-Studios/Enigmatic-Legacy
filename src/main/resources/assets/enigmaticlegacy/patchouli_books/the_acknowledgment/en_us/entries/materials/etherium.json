@@ -1,0 +1,29 @@
+{
+    "name": "book.enigmaticlegacy.entry.etherium.name",
+    "icon": "enigmaticlegacy:etherium_ingot",
+    "category": "enigmaticlegacy:materials",
+	"advancement": "enigmaticlegacy:book/materials/etherium",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 30,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium.page.1"
+        },
+		{
+            "type": "smelting",
+			"recipe": "enigmaticlegacy:etherium_ingot",
+            "text": "book.enigmaticlegacy.entry.etherium.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

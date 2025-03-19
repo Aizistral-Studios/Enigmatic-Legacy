@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:astral_dust"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:astralDust"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:astralDust.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+	"frame": "goal"
+  },
+  "parent": "enigmaticlegacy:main/root",
+  "criteria": {
+    "etherium": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:astral_dust"]
+          }
+        ]
+      }
+    }
+  }
+}

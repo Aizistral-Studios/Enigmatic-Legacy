@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.enchanter_pearl.name",
+    "icon": "enigmaticlegacy:enchanter_pearl",
+    "category": "enigmaticlegacy:accessories",
+    "advancement": "enigmaticlegacy:book/accessories/enchanter_pearl",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 55,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.enchanter_pearl.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:enchanter_pearl",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.enchanter_pearl.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.enchanter_pearl.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.enchanter_pearl.page.4"
+        }
+    ]
+}

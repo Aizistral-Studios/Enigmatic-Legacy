@@ -1,0 +1,17 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "rewards": {},
+  "criteria": {
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:etherium_shovel"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe"
+    ]
+  ]
+}

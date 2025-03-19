@@ -1,0 +1,25 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "rewards": {},
+  "criteria": {
+    "has_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:cursed_ring"]
+          }
+        ]
+      }
+    },
+    "is_cursed_one": {
+      "trigger": "enigmaticlegacy:equip_cursed_ring"
+    }
+  },
+  "requirements": [
+    [
+      "has_items",
+	  "is_cursed_one"
+    ]
+  ]
+}

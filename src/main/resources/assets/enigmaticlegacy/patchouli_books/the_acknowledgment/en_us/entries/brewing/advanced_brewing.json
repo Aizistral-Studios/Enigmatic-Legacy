@@ -1,0 +1,56 @@
+{
+    "name": "book.enigmaticlegacy.entry.advanced_brewing.name",
+    "icon": "enigmaticlegacy:ultimate_potion#1{EnigmaticPotion:'ultimate_healing'}",
+    "category": "enigmaticlegacy:brewing",
+	"advancement": "enigmaticlegacy:book/brewing/advanced_brewing",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+	"extra_recipe_mappings": {
+		"enigmaticlegacy:ultimate_potion": 1,
+		"enigmaticlegacy:ultimate_potion_splash": 1,
+		"enigmaticlegacy:ultimate_potion_lingering": 1
+	},
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.advanced_brewing.page.1"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:ultimate_leaping",
+			"index": 0,
+            "heading": "book.enigmaticlegacy.entry.advanced_brewing.heading.1",
+            "text": "book.enigmaticlegacy.entry.advanced_brewing.page.2"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:ultimate_strength",
+			"index": 0,
+            "heading": "book.enigmaticlegacy.entry.advanced_brewing.heading.2",
+            "text": "book.enigmaticlegacy.entry.advanced_brewing.page.3"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:ultimate_invisibility",
+			"index": 0,
+            "heading": "book.enigmaticlegacy.entry.advanced_brewing.heading.3",
+            "text": "book.enigmaticlegacy.entry.advanced_brewing.page.4"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:ultimate_healing",
+			"index": 0,
+            "heading": "book.enigmaticlegacy.entry.advanced_brewing.heading.4",
+            "text": "book.enigmaticlegacy.entry.advanced_brewing.page.5"
+        },
+		{
+            "type": "enigmaticlegacy:brewing",
+			"recipe": "enigmaticlegacy:ultimate_poison",
+			"index": 1,
+            "heading": "book.enigmaticlegacy.entry.advanced_brewing.heading.5",
+            "text": "book.enigmaticlegacy.entry.advanced_brewing.page.6"
+        }
+    ]
+}

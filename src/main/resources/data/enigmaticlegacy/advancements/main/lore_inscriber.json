@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:lore_inscriber"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:loreInscriber"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:loreInscriber.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true,
+	"frame": "task"
+  },
+  "parent": "enigmaticlegacy:main/astral_dust",
+  "criteria": {
+    "etherium": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:lore_inscriber"]
+          }
+        ]
+      }
+    }
+  }
+}

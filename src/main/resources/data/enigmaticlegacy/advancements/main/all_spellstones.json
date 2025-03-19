@@ -1,0 +1,84 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:enigmatic_item",
+	  "nbt": "{Enchantments: [{lvl: 4s, id: \"minecraft:protection\"}]}"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:allSpellstones"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:allSpellstones.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "frame": "challenge"
+  },
+  "rewards": {
+    "experience": 200
+  },
+  "parent": "enigmaticlegacy:main/discover_spellstone",
+  "criteria": {
+    "spellstone1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:golem_heart"]
+          }
+        ]
+      }
+    },
+	"spellstone2": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:angel_blessing"]
+          }
+        ]
+      }
+    },
+	"spellstone3": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:ocean_stone"]
+          }
+        ]
+      }
+    },
+	"spellstone4": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:blazing_core"]
+          }
+        ]
+      }
+    },
+	"spellstone5": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:eye_of_nebula"]
+          }
+        ]
+      }
+    },
+	"spellstone6": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:void_pearl"]
+          }
+        ]
+      }
+    }
+  }
+}

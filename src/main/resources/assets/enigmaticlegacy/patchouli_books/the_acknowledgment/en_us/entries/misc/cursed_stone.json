@@ -1,0 +1,42 @@
+{
+    "name": "book.enigmaticlegacy.entry.cursed_stone.name",
+    "icon": "enigmaticlegacy:cursed_stone",
+    "category": "enigmaticlegacy:misc",
+	"advancement": "enigmaticlegacy:book/misc/cursed_stone",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 80,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_stone.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:cursed_stone",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.cursed_stone.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_stone.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_stone.page.4"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_stone.page.5"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_stone.page.6"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_stone.page.7"
+        }
+    ]
+}

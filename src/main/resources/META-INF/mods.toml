@@ -1,0 +1,54 @@
+license="Enigmatic Legacy License"
+modLoader="javafml"
+loaderVersion="[47,)"
+issueTrackerURL="https://github.com/Aizistral-Studios/Enigmatic-Legacy/issues"
+
+[[mods]]
+modId="enigmaticlegacy"
+
+version="2.30.2"
+displayName="Enigmatic Legacy"
+
+displayURL="https://www.curseforge.com/minecraft/mc-mods/enigmatic-legacy"
+logoFile="EL_logo.png"
+
+credits='''
+Terraria and some of it's mods, for inspiring my creations functionally and visually; Minecraft Dungeons, for blocks and models that make me question why we don't have anything like this in Minecraft itself; Botania and it's creator known as Vazkii, for some basic code I could conveniently borrow instead of having to re-invent the wheel; frdovahkick, for amazing work over some of the textures in the mod; SkySem, for some models and textures created on-comission; SoulRacer65, for some textures overhauls and entirely new textures; Cartoony Clangs (hit with spade)_16bit.wav by Timbre -- https://freesound.org/s/91696/ -- License: Attribution NonCommercial 4.0; Shovel Thwack 1.wav by snardin42 -- https://freesound.org/s/73200/ -- License: Creative Commons 0
+'''
+
+authors="Aizistral"
+
+description='''
+This mod is designed to provide tools that will aid you in exploring seemingly endless reaches of Minecraft's worlds. As well as new resources, powerful gear and ancient relics - to reward you for doing so. Despite revolving around themes of arcane and mystery, Enigmatic Legacy doesn't stray too far away from what vanilla has to offer, instead attempting to expand upon it's mechanics and fill in the holes left open.
+'''
+
+[[dependencies.enigmaticlegacy]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47.4.0,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.enigmaticlegacy]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.20,1.21)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.enigmaticlegacy]]
+    modId="curios"
+    mandatory=true
+    versionRange="[1.20.1-5.9.1,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.enigmaticlegacy]]
+    modId="patchouli"
+    mandatory=true
+    versionRange="[1.20.1-84,)"
+    ordering="NONE"
+    side="BOTH"
+[[dependencies.enigmaticlegacy]]
+    modId="caelus"
+    mandatory=true
+    versionRange="[1.20.1-3.2.0,)"
+    ordering="NONE"
+    side="BOTH"

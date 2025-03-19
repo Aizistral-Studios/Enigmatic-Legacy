@@ -1,0 +1,7 @@
+{
+	"name": "book.enigmaticlegacy.category.enchantments.name",
+	"description": "book.enigmaticlegacy.category.enchantments.desc",
+	"icon": "enigmaticlegacy:textures/gui/flip_the_tables.png",
+	"sortnum": 80,
+	"secret": false
+}

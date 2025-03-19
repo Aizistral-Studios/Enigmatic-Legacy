@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.infernal_shield.name",
+    "icon": "enigmaticlegacy:infernal_shield",
+    "category": "enigmaticlegacy:tools",
+	"advancement": "enigmaticlegacy:book/tools/infernal_shield",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 65,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.infernal_shield.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:infernal_shield",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.infernal_shield.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.infernal_shield.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.infernal_shield.page.4"
+        }
+    ]
+}

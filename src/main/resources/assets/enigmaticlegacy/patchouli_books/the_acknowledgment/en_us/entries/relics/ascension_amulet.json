@@ -1,0 +1,33 @@
+{
+    "name": "book.enigmaticlegacy.entry.ascension_amulet.name",
+    "icon": "enigmaticlegacy:ascension_amulet",
+    "category": "enigmaticlegacy:relics",
+	"advancement": "enigmaticlegacy:book/relics/ascension_amulet",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 180,
+	"extra_recipe_mappings": {
+			"enigmaticlegacy:ascension_amulet": 1
+		},
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ascension_amulet.page.1"
+        },
+		{
+            "type": "enigmaticlegacy:hidden_crafting",
+			"recipe": "enigmaticlegacy:ascension_amulet",
+            "heading": " ",
+            "text": "book.enigmaticlegacy.entry.ascension_amulet.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ascension_amulet.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

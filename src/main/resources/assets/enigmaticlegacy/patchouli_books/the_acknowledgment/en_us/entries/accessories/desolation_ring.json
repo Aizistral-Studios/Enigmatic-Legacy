@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.desolation_ring.name",
+    "icon": "enigmaticlegacy:desolation_ring",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/desolation_ring",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 180,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.desolation_ring.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:desolation_ring",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.desolation_ring.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.desolation_ring.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:forbidden_fruit"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:forbiddenFruit"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:forbiddenFruit.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "parent": "enigmaticlegacy:main/root",
+  "criteria": {
+    "fruit": {
+      "trigger": "enigmaticlegacy:consume_forbidden_fruit"
+    }
+  }
+}

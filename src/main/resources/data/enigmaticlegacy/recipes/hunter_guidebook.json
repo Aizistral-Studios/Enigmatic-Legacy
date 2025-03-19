@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:hunter_guidebook"
+    }
+  ],
+  "pattern": [
+    "bp ",
+    "nXn",
+    " lb"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:book"
+    },
+	"n": {
+      "item": "minecraft:gold_nugget"
+    },
+	"p": {
+      "item": "minecraft:ender_pearl"
+    },
+	"l": {
+      "item": "minecraft:leather"
+    },
+	"b": {
+      "item": "minecraft:bone"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:hunter_guidebook"
+  }
+}

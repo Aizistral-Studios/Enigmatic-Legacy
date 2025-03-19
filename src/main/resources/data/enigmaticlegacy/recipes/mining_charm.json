@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:mining_charm"
+    }
+  ],
+  "pattern": [
+    "NDN",
+    "IXI",
+    "GTG"
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+	"N": {
+      "item": "minecraft:iron_nugget"
+    },
+	"I": {
+      "item": "minecraft:gold_ingot"
+    },
+	"G": {
+      "item": "minecraft:glowstone_dust"
+    },
+	"T": {
+      "item": "minecraft:ghast_tear"
+    },
+	"X": {
+      "item": "enigmaticlegacy:earth_heart"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:mining_charm"
+  }
+}

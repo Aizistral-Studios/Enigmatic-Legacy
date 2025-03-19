@@ -1,0 +1,33 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "criteria": {
+	"has_core": {
+	  "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+		  {
+            "items": ["enigmaticlegacy:twisted_heart"]
+          }
+        ]
+      }
+    },
+	"has_recall_potion": {
+	  "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+		  {
+            "items": ["enigmaticlegacy:recall_potion"]
+          }
+        ]
+      }
+    },
+    "is_cursed_one": {
+      "trigger": "enigmaticlegacy:equip_cursed_ring"
+    }
+  },
+  "requirements": [
+    [ "has_core" ],
+    [ "has_recall_potion" ],
+    [ "is_cursed_one" ]
+  ]
+}

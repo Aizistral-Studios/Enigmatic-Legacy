@@ -1,0 +1,32 @@
+{
+  "type": "enigmaticlegacy:shapeless_no_return_craft",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:mending_mixture"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "minecraft:dragon_breath"
+    },
+    {
+      "item": "minecraft:glistering_melon_slice"
+    },
+    {
+      "item": "minecraft:prismarine_crystals"
+    },
+    {
+      "item": "minecraft:phantom_membrane"
+    },
+    {
+      "item": "minecraft:blaze_powder"
+    },
+	{
+      "item": "minecraft:ghast_tear"
+    }
+  ],
+  "result": {
+    "item": "enigmaticlegacy:mending_mixture"
+  }
+}

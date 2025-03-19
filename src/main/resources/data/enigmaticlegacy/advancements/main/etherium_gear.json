@@ -1,0 +1,47 @@
+{
+  "parent": "enigmaticlegacy:main/smelt_etherium",
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:etherium_helmet"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:etheriumGear"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:etheriumGear.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 250
+  },
+  "criteria": {
+    "etherium_armor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:etherium_helmet"]
+          },
+		  {
+            "items": ["enigmaticlegacy:etherium_chestplate"]
+          },
+		  {
+            "items": ["enigmaticlegacy:etherium_leggings"]
+          },
+		  {
+            "items": ["enigmaticlegacy:etherium_boots"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "etherium_armor"
+    ]
+  ]
+}

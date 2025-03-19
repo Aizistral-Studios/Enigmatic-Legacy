@@ -1,0 +1,55 @@
+{
+  "parent": "enigmaticlegacy:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enigmaticlegacy:lamps/big_shroomlamp",
+      "enigmaticlegacy:lamps/massive_shroomlamp"
+    ]
+  },
+  "criteria": {
+    "has_core_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:shroomlight"]
+          }
+        ]
+      }
+    },
+	"has_recipe_result": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:big_shroomlamp"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:lamps/big_shroomlamp"
+      }
+    },
+    "has_parent_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:lamps/big_lamp"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_recipe_result",
+      "has_the_recipe",
+	  "has_core_block"
+    ],
+	[
+	  "has_recipe_result",
+      "has_the_recipe",
+	  "has_parent_recipe"
+	]
+  ]
+}

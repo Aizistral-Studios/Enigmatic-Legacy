@@ -1,0 +1,26 @@
+{
+    "name": "book.enigmaticlegacy.entry.infinimeal.name",
+    "icon": "enigmaticlegacy:infinimeal",
+    "category": "enigmaticlegacy:misc",
+	"advancement": "enigmaticlegacy:book/misc/infinimeal",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 100,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.infinimeal.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:infinimeal",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.infinimeal.page.2"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.infinimeal.page.3"
+        }
+    ]
+}

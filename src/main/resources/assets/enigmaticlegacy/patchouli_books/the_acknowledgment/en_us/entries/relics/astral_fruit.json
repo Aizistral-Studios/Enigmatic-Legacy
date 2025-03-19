@@ -1,0 +1,31 @@
+{
+    "name": "book.enigmaticlegacy.entry.astral_fruit.name",
+    "icon": "enigmaticlegacy:astral_fruit",
+    "category": "enigmaticlegacy:relics",
+	"advancement": "enigmaticlegacy:book/relics/astral_fruit",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 160,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.astral_fruit.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "enigmaticlegacy:astral_fruit",
+			"link_recipe": true,
+			"title": "book.enigmaticlegacy.entry.astral_fruit.heading.1",
+            "text": "book.enigmaticlegacy.entry.astral_fruit.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.astral_fruit.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

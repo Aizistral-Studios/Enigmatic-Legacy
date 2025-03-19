@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+	"enigmaticlegacy:enigmatic_item",
+	"enigmaticlegacy:loot_generator",
+	"enigmaticlegacy:the_judgement",
+	"enigmaticlegacy:soul_crystal",
+	"enigmaticlegacy:storage_crystal",
+	"enigmaticlegacy:relic_of_testing",
+	"enigmaticlegacy:quote_player",
+	"enigmaticlegacy:cosmic_scroll",
+	"enigmaticlegacy:redemption_potion"
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "parent": "enigmaticlegacy:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enigmaticlegacy:astral_block",
+      "enigmaticlegacy:astral_block_uncrafting"
+    ]
+  },
+  "criteria": {
+    "has_item": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:astral_dust"]
+          }
+        ]
+      }
+    },
+	"has_recipe_result": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:astral_block"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:astral_block"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_recipe_result",
+      "has_the_recipe",
+	  "has_item"
+    ]
+  ]
+}

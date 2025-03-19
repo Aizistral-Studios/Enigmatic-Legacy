@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:eldritch_pan"
+    }
+  ],
+  "pattern": [
+    "ESE",
+    "IHI",
+    "TRT"
+  ],
+  "key": {
+	"E": {
+      "item": "enigmaticlegacy:evil_essence"
+    },
+    "T": {
+      "item": "minecraft:ghast_tear"
+    },
+	"H": {
+      "item": "enigmaticlegacy:abyssal_heart"
+    },
+	"I": {
+      "item": "enigmaticlegacy:evil_ingot"
+    },
+	"S": {
+      "item": "enigmaticlegacy:void_stone"
+    },
+	"R": {
+      "item": "enigmaticlegacy:ender_rod"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:eldritch_pan"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "rewards": {},
+  "criteria": {
+    "has_scrap": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:netherite_scrap"]
+          }
+        ]
+      }
+    },
+	"has_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:netherite_ingot"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_scrap",
+      "has_ingot"
+    ]
+  ]
+}

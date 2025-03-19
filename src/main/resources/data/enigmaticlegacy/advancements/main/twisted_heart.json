@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:twisted_heart"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:twistedHeart"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:twistedHeart.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+	"frame": "goal"
+  },
+  "parent": "enigmaticlegacy:main/cursed_ring",
+  "criteria": {
+    "core": {
+      "trigger": "enigmaticlegacy:cursed_inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:twisted_heart"]
+          }
+        ]
+      }
+    }
+  }
+}

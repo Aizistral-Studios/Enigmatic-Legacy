@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.mega_sponge.name",
+    "icon": "enigmaticlegacy:mega_sponge",
+    "category": "enigmaticlegacy:misc",
+	"advancement": "enigmaticlegacy:book/misc/mega_sponge",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 20,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.mega_sponge.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:mega_sponge",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.mega_sponge.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.mega_sponge.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

@@ -1,0 +1,7 @@
+{
+	"name": "book.enigmaticlegacy.category.world.name",
+	"description": "book.enigmaticlegacy.category.world.desc",
+	"icon": "enigmaticlegacy:lore_fragment",
+	"sortnum": 0,
+	"secret": false
+}

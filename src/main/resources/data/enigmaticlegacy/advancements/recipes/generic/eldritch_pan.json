@@ -1,0 +1,50 @@
+{
+  "parent": "enigmaticlegacy:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enigmaticlegacy:eldritch_pan"
+    ]
+  },
+  "criteria": {
+    "has_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:abyssal_heart"]
+          }
+        ]
+      }
+    },
+	"has_recipe_result": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:eldritch_pan"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:eldritch_pan"
+      }
+    },
+    "is_cursed_one": {
+      "trigger": "enigmaticlegacy:equip_cursed_ring"
+    }
+  },
+  "requirements": [
+    [
+      "has_recipe_result",
+      "has_the_recipe",
+	  "has_items"
+    ],
+	[
+	  "is_cursed_one",
+	  "has_the_recipe"
+	]
+  ]
+}

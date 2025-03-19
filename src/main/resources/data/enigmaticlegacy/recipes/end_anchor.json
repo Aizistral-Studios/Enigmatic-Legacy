@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:end_anchor"
+    }
+  ],
+  "pattern": [
+    " E ",
+    "IXI",
+    "SNS"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:respawn_anchor"
+    },
+	"S": {
+      "item": "minecraft:end_stone"
+    },
+	"E": {
+      "item": "minecraft:ender_eye"
+    },
+	"I": {
+      "item": "enigmaticlegacy:etherium_ingot"
+    },
+	"N": {
+      "item": "enigmaticlegacy:eye_of_nebula"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:end_anchor"
+  }
+}

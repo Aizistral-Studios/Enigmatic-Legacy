@@ -1,0 +1,54 @@
+{
+  "parent": "enigmaticlegacy:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enigmaticlegacy:ender_ring"
+    ]
+  },
+  "criteria": {
+    "has_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:ender_chest"]
+          }
+        ]
+      }
+    },
+	"has_recipe_result": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:ender_ring"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:ender_ring"
+      }
+    },
+    "has_parent_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:iron_ring"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_recipe_result",
+      "has_the_recipe",
+	  "has_items"
+    ],
+	[
+	  "has_recipe_result",
+      "has_the_recipe",
+	  "has_parent_recipe"
+	]
+  ]
+}

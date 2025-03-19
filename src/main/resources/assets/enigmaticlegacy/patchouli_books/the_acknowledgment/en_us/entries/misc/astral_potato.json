@@ -1,0 +1,26 @@
+{
+    "name": "book.enigmaticlegacy.entry.astral_potato.name",
+    "icon": "enigmaticlegacy:astral_potato",
+    "category": "enigmaticlegacy:misc",
+	"advancement": "enigmaticlegacy:book/misc/astral_potato",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 110,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.astral_potato.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:astral_potato",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.astral_potato.page.2"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.astral_potato.page.3"
+        }
+    ]
+}

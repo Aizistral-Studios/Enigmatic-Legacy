@@ -1,0 +1,31 @@
+{
+    "name": "book.enigmaticlegacy.entry.golem_heart.name",
+    "icon": "enigmaticlegacy:golem_heart",
+    "category": "enigmaticlegacy:relics",
+	"advancement": "enigmaticlegacy:book/relics/golem_heart",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 70,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.golem_heart.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "enigmaticlegacy:golem_heart",
+			"link_recipe": true,
+			"title": "book.enigmaticlegacy.entry.golem_heart.heading.1",
+            "text": "book.enigmaticlegacy.entry.golem_heart.page.2"
+        },
+		{
+            "type": "text",
+			"text": "book.enigmaticlegacy.entry.golem_heart.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

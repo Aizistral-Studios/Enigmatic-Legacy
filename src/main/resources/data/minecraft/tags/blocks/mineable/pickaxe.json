@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "enigmaticlegacy:etherium_block",
+    "enigmaticlegacy:massive_lamp",
+    "enigmaticlegacy:massive_shroomlamp",
+    "enigmaticlegacy:massive_redstonelamp",
+    "enigmaticlegacy:big_lamp",
+    "enigmaticlegacy:big_shroomlamp",
+    "enigmaticlegacy:big_redstonelamp",
+    "enigmaticlegacy:end_anchor"
+  ]
+}

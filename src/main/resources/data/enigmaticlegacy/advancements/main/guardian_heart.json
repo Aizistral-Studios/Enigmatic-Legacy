@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:guardian_heart"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:guardianHeart"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:guardianHeart.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+	"frame": "challenge"
+  },
+  "rewards": {
+    "experience": 500
+  },
+  "parent": "enigmaticlegacy:main/cursed_ring",
+  "criteria": {
+    "heart": {
+      "trigger": "enigmaticlegacy:cursed_inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:guardian_heart"]
+          }
+        ]
+      }
+    }
+  }
+}

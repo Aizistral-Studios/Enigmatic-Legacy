@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:infernal_shield"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:infernalShield"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:infernalShield.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+	"frame": "goal"
+  },
+  "rewards": {
+    "experience": 300
+  },
+  "parent": "enigmaticlegacy:main/twisted_heart",
+  "criteria": {
+    "shield": {
+      "trigger": "enigmaticlegacy:cursed_inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:infernal_shield"]
+          }
+        ]
+      }
+    }
+  }
+}

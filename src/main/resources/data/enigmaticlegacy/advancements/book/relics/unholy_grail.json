@@ -1,0 +1,21 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "rewards": {},
+  "criteria": {
+    "has_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:unholy_grail"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ]
+}

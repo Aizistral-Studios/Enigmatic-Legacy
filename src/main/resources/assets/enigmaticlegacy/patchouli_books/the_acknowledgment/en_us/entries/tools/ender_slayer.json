@@ -1,0 +1,38 @@
+{
+    "name": "book.enigmaticlegacy.entry.ender_slayer.name",
+    "icon": "enigmaticlegacy:ender_slayer",
+    "category": "enigmaticlegacy:tools",
+	"advancement": "enigmaticlegacy:book/tools/ender_slayer",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 100,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ender_slayer.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:ender_slayer",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.ender_slayer.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ender_slayer.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ender_slayer.page.4"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ender_slayer.page.5"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

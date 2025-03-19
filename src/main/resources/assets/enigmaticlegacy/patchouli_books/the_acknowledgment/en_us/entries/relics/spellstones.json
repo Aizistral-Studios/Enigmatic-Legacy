@@ -1,0 +1,27 @@
+{
+    "name": "book.enigmaticlegacy.entry.spellstones.name",
+    "icon": "minecraft:writable_book",
+    "category": "enigmaticlegacy:relics",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 40,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.spellstones.page.1"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.spellstones.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.spellstones.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

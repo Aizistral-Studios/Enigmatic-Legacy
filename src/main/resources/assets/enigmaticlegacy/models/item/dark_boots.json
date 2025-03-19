@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "enigmaticlegacy:item/dark_boots"
+    }
+}

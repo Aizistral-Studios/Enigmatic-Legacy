@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:cursed_scroll"
+    }
+  ],
+  "pattern": [
+    "MHM",
+    "IXF",
+    "RBR"
+  ],
+  "key": {
+    "X": {
+      "item": "enigmaticlegacy:darkest_scroll"
+    },
+	"M": {
+      "item": "minecraft:phantom_membrane"
+    },
+	"B": {
+      "item": "minecraft:enchanted_book"
+    },
+	"H": {
+      "item": "enigmaticlegacy:twisted_heart"
+    },
+	"F": {
+      "item": "minecraft:feather"
+    },
+	"I": {
+      "item": "minecraft:ink_sac"
+    },
+	"R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:cursed_scroll"
+  }
+}

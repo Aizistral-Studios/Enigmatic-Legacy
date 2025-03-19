@@ -1,0 +1,107 @@
+{
+  "processor": "com.aizistral.enigmaticlegacy.handlers.HiddenRecipeProcessor",
+  "components": [
+    {
+      "type": "patchouli:header",
+      "text": "#heading",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:image",
+      "image": "enigmaticlegacy:textures/gui/hidden_crafting_overlay.png",
+      "x": 7,
+      "y": 2,
+      "width": 102,
+      "height": 64,
+      "u": 0,
+      "v": 0
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#input1",
+      "framed": "false",
+      "x": 12,
+      "y": 7
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#input2",
+      "framed": "false",
+      "x": 31,
+      "y": 7
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#input3",
+      "framed": "false",
+      "x": 50,
+      "y": 7
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#input4",
+      "framed": "false",
+      "x": 12,
+      "y": 26
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#input5",
+      "framed": "false",
+      "x": 31,
+      "y": 26
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#input6",
+      "framed": "false",
+      "x": 50,
+      "y": 26
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#input7",
+      "framed": "false",
+      "x": 12,
+      "y": 45
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#input8",
+      "framed": "false",
+      "x": 31,
+      "y": 45
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#input9",
+      "framed": "false",
+      "x": 50,
+      "y": 45
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#output",
+      "framed": false,
+	  "link_recipe": false,
+      "x": 88,
+      "y": 26
+    },
+    {
+      "type": "patchouli:item",
+      "item": "minecraft:crafting_table",
+      "framed": false,
+	  "link_recipe": false,
+      "x": 88,
+      "y": 45
+    },
+    {
+      "type": "patchouli:text",
+      "text": "#text",
+	  "x": 1,
+      "y": 70,
+	  "max_width": 115
+    }
+  ]
+}

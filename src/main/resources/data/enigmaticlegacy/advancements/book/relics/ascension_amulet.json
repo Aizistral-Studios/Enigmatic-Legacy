@@ -1,0 +1,45 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "criteria": {
+    "has_item_1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:cosmic_heart"]
+          }
+        ]
+      }
+    },
+    "has_item_2": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:etherium_ingot"]
+          }
+        ]
+      }
+    },
+	"has_recipe_result": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:ascension_amulet"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_recipe_result",
+	  "has_item_1"
+    ],
+	[
+	  "has_recipe_result",
+	  "has_item_2"
+	]
+  ]
+}

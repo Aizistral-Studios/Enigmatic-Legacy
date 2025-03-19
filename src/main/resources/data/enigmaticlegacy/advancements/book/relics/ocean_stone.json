@@ -1,0 +1,21 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "rewards": {},
+  "criteria": {
+    "has_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:ocean_stone"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_items"
+    ]
+  ]
+}

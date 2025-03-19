@@ -1,0 +1,31 @@
+{
+    "name": "book.enigmaticlegacy.entry.void_pearl.name",
+    "icon": "enigmaticlegacy:void_pearl",
+    "category": "enigmaticlegacy:relics",
+	"advancement": "enigmaticlegacy:book/relics/void_pearl",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 100,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.void_pearl.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "enigmaticlegacy:void_pearl",
+			"link_recipe": true,
+			"title": "book.enigmaticlegacy.entry.void_pearl.heading.1",
+            "text": "book.enigmaticlegacy.entry.void_pearl.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.void_pearl.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

@@ -1,0 +1,37 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:cosmic_cake"
+    }
+  ],
+  "pattern": [
+    "TBT",
+    "AXA",
+    "FCF"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:blaze_powder"
+    },
+	"T": {
+      "item": "minecraft:ghast_tear"
+    },
+	"F": {
+      "item": "minecraft:chorus_fruit"
+    },
+	"A": {
+      "item": "enigmaticlegacy:astral_dust"
+    },
+	"C": {
+      "item": "enigmaticlegacy:cosmic_heart"
+    },
+	"X": {
+      "item": "minecraft:cake"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:cosmic_cake"
+  }
+}

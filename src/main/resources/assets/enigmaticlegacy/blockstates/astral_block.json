@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "enigmaticlegacy:block/astral_block"
+      },
+      {
+        "model": "enigmaticlegacy:block/astral_block",
+        "y": 90
+      },
+      {
+        "model": "enigmaticlegacy:block/astral_block",
+        "y": 180
+      },
+      {
+        "model": "enigmaticlegacy:block/astral_block",
+        "y": 270
+      }
+    ]
+  }
+}

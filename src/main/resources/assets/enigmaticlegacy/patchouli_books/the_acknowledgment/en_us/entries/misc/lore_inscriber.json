@@ -1,0 +1,108 @@
+{
+    "name": "book.enigmaticlegacy.entry.lore_inscriber.name",
+    "icon": "enigmaticlegacy:lore_inscriber",
+    "category": "enigmaticlegacy:misc",
+	"advancement": "enigmaticlegacy:book/misc/lore_inscriber",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 40,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.lore_inscriber.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:lore_inscriber",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.lore_inscriber.page.2"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:lore_fragment",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.lore_inscriber.page.3"
+        },
+		{
+            "type": "image",
+            "images": ["enigmaticlegacy:textures/gui/book/inkwell_gui_demo.png"],
+			"border": true,
+			"title": "book.enigmaticlegacy.entry.lore_inscriber.heading.1",
+			"text": "book.enigmaticlegacy.entry.lore_inscriber.page.4"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.lore_inscriber.page.5"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.lore_inscriber.page.6"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.lore_inscriber.page.7"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.lore_inscriber.page.8"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.lore_inscriber.page.9"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.lore_inscriber.page.10"
+        },
+		{
+            "type": "text",
+			"title": "book.enigmaticlegacy.entry.lore_inscriber.heading.2",
+            "text": "book.enigmaticlegacy.entry.lore_inscriber.page.11"
+        },
+		{
+            "type": "text",
+            "title": "book.enigmaticlegacy.entry.lore_inscriber.heading.3",
+            "text": "book.enigmaticlegacy.entry.lore_inscriber.page.12"
+        },
+		{
+            "type": "image",
+            "images": ["enigmaticlegacy:textures/gui/book/inkwell_demo_1.png"],
+			"border": true,
+			"title": "book.enigmaticlegacy.entry.lore_inscriber.heading.4",
+			"text": "book.enigmaticlegacy.entry.lore_inscriber.page.13"
+        },
+		{
+            "type": "image",
+            "images": ["enigmaticlegacy:textures/gui/book/inkwell_demo_2.png"],
+			"border": true,
+			"title": "book.enigmaticlegacy.entry.lore_inscriber.heading.5",
+			"text": "book.enigmaticlegacy.entry.lore_inscriber.page.14"
+        },
+		{
+            "type": "image",
+            "images": ["enigmaticlegacy:textures/gui/book/inkwell_demo_3.png"],
+			"border": true,
+			"title": "book.enigmaticlegacy.entry.lore_inscriber.heading.6",
+			"text": "book.enigmaticlegacy.entry.lore_inscriber.page.15"
+        },
+		{
+            "type": "image",
+            "images": ["enigmaticlegacy:textures/gui/book/inkwell_demo_4.png"],
+			"border": true,
+			"title": "book.enigmaticlegacy.entry.lore_inscriber.heading.7",
+			"text": "book.enigmaticlegacy.entry.lore_inscriber.page.16"
+        },
+		{
+            "type": "image",
+            "images": ["enigmaticlegacy:textures/gui/book/inkwell_demo_5.png"],
+			"border": true,
+			"title": "book.enigmaticlegacy.entry.lore_inscriber.heading.8",
+			"text": "book.enigmaticlegacy.entry.lore_inscriber.page.17"
+        },
+		{
+            "type": "text",
+			"text": "book.enigmaticlegacy.entry.lore_inscriber.page.18"
+		}
+    ]
+}

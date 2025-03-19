@@ -1,0 +1,76 @@
+{
+  "parent": "enigmaticlegacy:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enigmaticlegacy:astral_breaker"
+    ]
+  },
+  "criteria": {
+    "has_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:astral_dust"]
+          }
+        ]
+      }
+    },
+	"has_recipe_result": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:astral_breaker"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:astral_breaker"
+      }
+    },
+    "has_parent_recipe_1": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:etherium_pickaxe"
+      }
+    },
+    "has_parent_recipe_2": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:etherium_axe"
+      }
+    },
+    "has_parent_recipe_3": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:etherium_shovel"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_recipe_result",
+      "has_the_recipe",
+	  "has_items"
+    ],
+	[
+	  "has_recipe_result",
+      "has_the_recipe",
+	  "has_parent_recipe_1"
+	],
+	[
+	  "has_recipe_result",
+      "has_the_recipe",
+	  "has_parent_recipe_2"
+	],
+	[
+	  "has_recipe_result",
+      "has_the_recipe",
+	  "has_parent_recipe_3"
+	]
+  ]
+}

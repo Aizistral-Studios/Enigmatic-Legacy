@@ -1,0 +1,19 @@
+{
+    "name": "book.enigmaticlegacy.entry.first_glance.name",
+    "icon": "minecraft:writable_book",
+    "category": "enigmaticlegacy:world",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.first_glance.page.1"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.first_glance.page.2"
+        }
+    ]
+}

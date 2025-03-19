@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:curse_transposer"
+    }
+  ],
+  "pattern": [
+    "RTR",
+    "PXP",
+    "RER"
+  ],
+  "key": {
+    "X": {
+      "item": "enigmaticlegacy:enchantment_transposer"
+    },
+    "E": {
+      "item": "enigmaticlegacy:evil_essence"
+    },
+	"T": {
+      "item": "minecraft:ghast_tear"
+    },
+	"P": {
+      "item": "minecraft:phantom_membrane"
+    },
+	"R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:curse_transposer"
+  }
+}

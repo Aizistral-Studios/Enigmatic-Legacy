@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [],
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+	"I": {
+      "item": "enigmaticlegacy:etherium_ingot"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:etherium_block"
+  }
+}

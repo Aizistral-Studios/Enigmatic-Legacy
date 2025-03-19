@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.heaven_scroll.name",
+    "icon": "enigmaticlegacy:heaven_scroll",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/heaven_scroll",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 70,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.heaven_scroll.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:heaven_scroll",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.heaven_scroll.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.heaven_scroll.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.heaven_scroll.page.4"
+        }
+    ]
+}

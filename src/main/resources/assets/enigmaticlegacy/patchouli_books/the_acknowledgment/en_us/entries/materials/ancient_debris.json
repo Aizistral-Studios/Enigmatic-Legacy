@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.ancient_debris.name",
+    "icon": "minecraft:ancient_debris",
+    "category": "enigmaticlegacy:materials",
+	"advancement": "enigmaticlegacy:book/materials/ancient_debris",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ancient_debris.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "minecraft:ancient_debris",
+            "title": "book.enigmaticlegacy.entry.ancient_debris.heading.1",
+            "text": "book.enigmaticlegacy.entry.ancient_debris.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ancient_debris.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

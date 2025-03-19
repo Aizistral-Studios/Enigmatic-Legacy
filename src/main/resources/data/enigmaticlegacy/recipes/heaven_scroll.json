@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:heaven_scroll"
+    }
+  ],
+  "pattern": [
+    "GSG",
+    "IXF",
+    "LAL"
+  ],
+  "key": {
+    "X": {
+      "item": "enigmaticlegacy:thicc_scroll"
+    },
+	"F": {
+      "item": "minecraft:feather"
+    },
+	"I": {
+      "item": "minecraft:ink_sac"
+    },
+	"S": {
+      "item": "minecraft:nether_star"
+    },
+	"G": {
+      "item": "minecraft:gold_ingot"
+    },
+	"L": {
+      "item": "minecraft:lapis_lazuli"
+    },
+	"A": {
+      "item": "enigmaticlegacy:angel_blessing"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:heaven_scroll"
+  }
+}

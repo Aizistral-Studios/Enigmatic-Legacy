@@ -1,0 +1,33 @@
+{
+    "name": "book.enigmaticlegacy.entry.the_cube.name",
+    "icon": "enigmaticlegacy:the_cube",
+    "category": "enigmaticlegacy:relics",
+	"advancement": "enigmaticlegacy:book/relics/the_cube",
+    "secret": true,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 170,
+	"extra_recipe_mappings": {
+			"enigmaticlegacy:the_cube": 1
+		},
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.the_cube.page.1"
+        },
+		{
+            "type": "enigmaticlegacy:hidden_crafting",
+			"recipe": "enigmaticlegacy:the_cube",
+            "heading": " ",
+            "text": "book.enigmaticlegacy.entry.the_cube.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.the_cube.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

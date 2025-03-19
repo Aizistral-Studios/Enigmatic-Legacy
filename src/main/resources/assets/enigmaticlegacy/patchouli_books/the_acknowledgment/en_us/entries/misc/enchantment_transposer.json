@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.enchantment_transposer.name",
+    "icon": "enigmaticlegacy:enchantment_transposer",
+    "category": "enigmaticlegacy:misc",
+	"advancement": "enigmaticlegacy:book/misc/enchantment_transposer",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.enchantment_transposer.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:enchantment_transposer",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.enchantment_transposer.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.enchantment_transposer.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

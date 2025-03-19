@@ -1,0 +1,115 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "criteria": {
+    "has_item_1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:golem_heart"]
+          }
+        ]
+      }
+    },
+    "has_item_2": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:angel_blessing"]
+          }
+        ]
+      }
+    },
+    "has_item_3": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:ocean_stone"]
+          }
+        ]
+      }
+    },
+    "has_item_4": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:blazing_core"]
+          }
+        ]
+      }
+    },
+    "has_item_5": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:eye_of_nebula"]
+          }
+        ]
+      }
+    },
+    "has_item_6": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:void_pearl"]
+          }
+        ]
+      }
+    },
+    "has_item_7": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:cosmic_heart"]
+          }
+        ]
+      }
+    },
+	"has_recipe_result": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:the_cube"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_recipe_result",
+	  "has_item_1"
+    ],
+	[
+	  "has_recipe_result",
+	  "has_item_2"
+	],
+	[
+	  "has_recipe_result",
+	  "has_item_3"
+	],
+	[
+	  "has_recipe_result",
+	  "has_item_4"
+	],
+	[
+	  "has_recipe_result",
+	  "has_item_5"
+	],
+	[
+	  "has_recipe_result",
+	  "has_item_6"
+	],
+	[
+	  "has_recipe_result",
+	  "has_item_7"
+	]
+  ]
+}

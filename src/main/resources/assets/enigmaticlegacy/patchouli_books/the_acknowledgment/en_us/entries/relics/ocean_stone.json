@@ -1,0 +1,31 @@
+{
+    "name": "book.enigmaticlegacy.entry.ocean_stone.name",
+    "icon": "enigmaticlegacy:ocean_stone",
+    "category": "enigmaticlegacy:relics",
+	"advancement": "enigmaticlegacy:book/relics/ocean_stone",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 60,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ocean_stone.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "enigmaticlegacy:ocean_stone",
+			"link_recipe": true,
+			"title": "book.enigmaticlegacy.entry.ocean_stone.heading.1",
+            "text": "book.enigmaticlegacy.entry.ocean_stone.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.ocean_stone.page.3"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

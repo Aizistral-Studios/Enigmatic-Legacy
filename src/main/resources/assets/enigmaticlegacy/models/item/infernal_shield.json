@@ -1,0 +1,16 @@
+{
+  "overrides": [
+    {
+      "predicate": {
+        "blocking": 0
+      },
+      "model": "enigmaticlegacy:item/infernal_shield_idle"
+    },
+    {
+      "predicate": {
+        "blocking": 1
+      },
+      "model": "enigmaticlegacy:item/infernal_shield_blocking"
+    }
+  ]
+}

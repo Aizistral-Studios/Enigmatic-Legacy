@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:unholy_grail"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:unholyGrail"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:unholyGrail.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "parent": "enigmaticlegacy:main/megasponge",
+  "criteria": {
+    "spellstone": {
+      "trigger": "enigmaticlegacy:unholy_grail_drink"
+    }
+  }
+}

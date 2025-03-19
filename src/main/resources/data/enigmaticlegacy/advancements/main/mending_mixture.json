@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:mending_mixture"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:mendingMixture"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:mendingMixture.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+	"frame": "goal"
+  },
+  "parent": "enigmaticlegacy:main/recall_potion",
+  "criteria": {
+    "spellstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:mending_mixture"]
+          }
+        ]
+      }
+    }
+  }
+}

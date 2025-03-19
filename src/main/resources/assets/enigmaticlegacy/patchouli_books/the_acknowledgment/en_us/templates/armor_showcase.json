@@ -1,0 +1,59 @@
+{
+  "components": [
+    {
+      "type": "patchouli:header",
+      "text": "#heading",
+      "x": -1,
+      "y": -1
+    },
+    {
+      "type": "patchouli:image",
+      "image": "enigmaticlegacy:textures/gui/armor_showcase_overlay.png",
+      "x": 5,
+      "y": 12,
+      "width": 101,
+      "height": 26,
+      "u": 0,
+      "v": 0
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#input1",
+      "framed": "false",
+	  "link_recipe": true,
+      "x": 10,
+      "y": 17
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#input2",
+      "framed": "false",
+	  "link_recipe": true,
+      "x": 35,
+      "y": 17
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#input3",
+      "framed": "false",
+	  "link_recipe": true,
+      "x": 60,
+      "y": 17
+    },
+    {
+      "type": "patchouli:item",
+      "item": "#input4",
+      "framed": "false",
+	  "link_recipe": true,
+      "x": 85,
+      "y": 17
+    },
+    {
+      "type": "patchouli:text",
+      "text": "#text",
+	  "x": 1,
+      "y": 43,
+	  "max_width": 115
+    }
+  ]
+}

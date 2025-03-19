@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:recall_potion"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:recallPotion"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:recallPotion.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+	"frame": "goal"
+  },
+  "parent": "enigmaticlegacy:main/root",
+  "criteria": {
+    "spellstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:recall_potion"]
+          }
+        ]
+      }
+    }
+  }
+}

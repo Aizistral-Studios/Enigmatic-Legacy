@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:twisted_mirror"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:twistedMirror"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:twistedMirror.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+	"frame": "goal"
+  },
+  "parent": "enigmaticlegacy:main/twisted_heart",
+  "criteria": {
+    "mirror": {
+      "trigger": "enigmaticlegacy:cursed_inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:twisted_mirror"]
+          }
+        ]
+      }
+    }
+  }
+}

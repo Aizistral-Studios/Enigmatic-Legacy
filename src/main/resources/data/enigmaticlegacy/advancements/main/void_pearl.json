@@ -1,0 +1,30 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:void_pearl"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:voidPearl"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:voidPearl.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true,
+    "frame": "challenge"
+  },
+  "parent": "enigmaticlegacy:main/discover_spellstone",
+  "criteria": {
+    "spellstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:void_pearl"]
+          }
+        ]
+      }
+    }
+  }
+}

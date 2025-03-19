@@ -1,0 +1,26 @@
+{
+    "name": "book.enigmaticlegacy.entry.soul_compass.name",
+    "icon": "enigmaticlegacy:soul_compass",
+    "category": "enigmaticlegacy:misc",
+	"advancement": "enigmaticlegacy:book/misc/soul_compass",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 140,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.soul_compass.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:soul_compass",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.soul_compass.page.2"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.soul_compass.page.3"
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "NPN",
+    "PAP",
+    "NPN"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:baked_potato"
+    },
+	"N": {
+      "item": "minecraft:gold_nugget"
+    },
+	"A": {
+      "item": "enigmaticlegacy:astral_dust"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:astral_potato",
+    "count": 4
+  }
+}

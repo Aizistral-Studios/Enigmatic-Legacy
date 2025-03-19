@@ -1,0 +1,46 @@
+{
+  "parent": "enigmaticlegacy:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enigmaticlegacy:wool/black_wool",
+      "enigmaticlegacy:wool/red_wool",
+      "enigmaticlegacy:wool/yellow_wool",
+      "enigmaticlegacy:wool/cyan_wool",
+      "enigmaticlegacy:wool/blue_wool",
+      "enigmaticlegacy:wool/light_blue_wool",
+      "enigmaticlegacy:wool/gray_wool",
+      "enigmaticlegacy:wool/light_gray_wool",
+      "enigmaticlegacy:wool/purple_wool",
+      "enigmaticlegacy:wool/magenta_wool",
+      "enigmaticlegacy:wool/green_wool",
+      "enigmaticlegacy:wool/lime_wool",
+      "enigmaticlegacy:wool/brown_wool",
+      "enigmaticlegacy:wool/orange_wool",
+      "enigmaticlegacy:wool/pink_wool"
+    ]
+  },
+  "criteria": {
+    "has_white_wool": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:white_wool"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:wool/black_wool"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_white_wool",
+      "has_the_recipe"
+    ]
+  ]
+}

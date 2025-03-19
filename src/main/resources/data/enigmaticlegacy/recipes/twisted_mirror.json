@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:twisted_mirror"
+    }
+  ],
+  "pattern": [
+    "IPI",
+    "RXR",
+    " I "
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:glass_pane"
+    },
+	"I": {
+      "item": "minecraft:iron_ingot"
+    },
+	"R": {
+      "item": "enigmaticlegacy:recall_potion"
+    },
+	"X": {
+      "item": "enigmaticlegacy:twisted_heart"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:twisted_mirror"
+  }
+}

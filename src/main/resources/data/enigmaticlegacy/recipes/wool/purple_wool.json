@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:bonuswoolrecipes"
+    }
+  ],
+  "group": "enigmaticlegacy_bonuswoolrecipes",
+  "pattern": [
+    "www",
+    "wXw",
+    "www"
+  ],
+  "key": {
+    "X": {
+      "item": "minecraft:purple_dye"
+    },
+	"w": {
+      "item": "minecraft:white_wool"
+    }
+  },
+  "result": {
+    "item": "minecraft:purple_wool",
+    "count": 8
+  }
+}

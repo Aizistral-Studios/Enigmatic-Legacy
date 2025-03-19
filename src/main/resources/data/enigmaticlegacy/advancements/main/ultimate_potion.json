@@ -1,0 +1,58 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:ultimate_potion",
+	  "nbt": "{EnigmaticPotion:\"ultimate_healing\"}"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:ultimatePotion"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:ultimatePotion.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+	"frame": "task"
+  },
+  "parent": "enigmaticlegacy:main/astral_dust",
+  "criteria": {
+    "ultimate_potion": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:ultimate_potion"]
+          }
+        ]
+      }
+    },
+	"ultimate_potion_splash": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:ultimate_potion_splash"]
+          }
+        ]
+      }
+    },
+	"ultimate_potion_lingering": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:ultimate_potion_lingering"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "ultimate_potion",
+      "ultimate_potion_splash",
+      "ultimate_potion_lingering"
+    ]
+  ]
+}

@@ -1,0 +1,75 @@
+{
+	"credit": "Made with Blockbench, by SoulRacer65",
+	"texture_size": [32, 32],
+	"textures": {
+		"1": "enigmaticlegacy:item/the_true_cube_distortion",
+		"layer0": "enigmaticlegacy:item/the_true_cube",
+		"particle": "enigmaticlegacy:item/the_true_cube_distortion"
+	},
+	"elements": [
+		{
+			"name": "THE_CUBE",
+			"from": [4, 0, 4],
+			"to": [12, 8, 12],
+			"faces": {
+				"north": {"uv": [4, 4, 8, 8], "texture": "#layer0"},
+				"east": {"uv": [0, 4, 4, 8], "texture": "#layer0"},
+				"south": {"uv": [12, 4, 16, 8], "texture": "#layer0"},
+				"west": {"uv": [8, 4, 12, 8], "texture": "#layer0"},
+				"up": {"uv": [8, 4, 4, 0], "texture": "#layer0"},
+				"down": {"uv": [12, 0, 8, 4], "texture": "#layer0"}
+			}
+		},
+		{
+			"name": "Spatial_Distortion",
+			"from": [12.35, 8.35, 12.35],
+			"to": [3.65, -0.35, 3.65],
+			"faces": {
+				"north": {"uv": [16, 0, 0, 16], "texture": "#1"},
+				"east": {"uv": [16, 0, 0, 16], "texture": "#1"},
+				"south": {"uv": [16, 0, 0, 16], "texture": "#1"},
+				"west": {"uv": [16, 0, 0, 16], "texture": "#1"},
+				"up": {"uv": [16, 0, 0, 16], "texture": "#1"},
+				"down": {"uv": [16, 0, 0, 16], "texture": "#1"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [45, 35, 0],
+			"translation": [0, 2, 0.25],
+			"scale": [0.45, 0.45, 0.45]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [45, 35, 0],
+			"translation": [0, 2, 0.25],
+			"scale": [0.45, 0.45, 0.45]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, -45, 0],
+			"translation": [2, 2.75, 0],
+			"scale": [0.45, 0.45, 0.45]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 45, 0],
+			"translation": [2, 2.75, 0],
+			"scale": [0.45, 0.45, 0.45]
+		},
+		"ground": {
+			"translation": [0, 3, 0],
+			"scale": [0.75, 0.75, 0.75]
+		},
+		"gui": {
+			"rotation": [35, 135, 0],
+			"translation": [0, 3.5, 0],
+			"scale": [1.05, 1.05, 1.05]
+		},
+		"head": {
+			"translation": [0, 15, 0]
+		},
+		"fixed": {
+			"translation": [0, 5.25, 0],
+			"scale": [1.4, 1.4, 1.4]
+		}
+	}
+}

@@ -1,0 +1,76 @@
+{
+  "parent": "enigmaticlegacy:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enigmaticlegacy:cursed_stone"
+    ]
+  },
+  "criteria": {
+    "has_items1": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:twisted_heart"]
+          }
+        ]
+      }
+    },
+	"has_items2": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:evil_essence"]
+          }
+        ]
+      }
+    },
+	"has_recipe_result": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:cursed_stone"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:cursed_stone"
+      }
+    },
+    "has_parent_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:twisted_heart"
+      }
+    },
+    "is_cursed_one": {
+      "trigger": "enigmaticlegacy:equip_cursed_ring"
+    }
+  },
+  "requirements": [
+    [
+      "has_recipe_result",
+      "has_the_recipe",
+	  "has_items1"
+    ],
+	[
+      "has_recipe_result",
+      "has_the_recipe",
+	  "has_items2"
+    ],
+	[
+	  "has_recipe_result",
+      "has_the_recipe",
+	  "has_parent_recipe"
+	],
+	[
+	  "is_cursed_one",
+	  "has_the_recipe"
+	]
+  ]
+}

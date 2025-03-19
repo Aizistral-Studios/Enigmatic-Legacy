@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:etherium_helmet"
+    }
+  ],
+  "pattern": [
+    "XXX",
+    "X X",
+    "   "
+  ],
+  "key": {
+    "X": {
+      "item": "enigmaticlegacy:etherium_ingot"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:etherium_helmet"
+  }
+}

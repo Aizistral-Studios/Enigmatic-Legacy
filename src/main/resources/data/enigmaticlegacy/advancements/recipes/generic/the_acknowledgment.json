@@ -1,0 +1,37 @@
+{
+  "parent": "enigmaticlegacy:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enigmaticlegacy:the_acknowledgment"
+    ]
+  },
+  "criteria": {
+    "has_iron_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {}
+    },
+	"has_recipe_result": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:the_acknowledgment"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:the_acknowledgment"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_iron_ingot",
+      "has_recipe_result",
+      "has_the_recipe"
+    ]
+  ]
+}

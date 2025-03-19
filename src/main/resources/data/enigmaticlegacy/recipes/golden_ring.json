@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:golden_ring"
+    }
+  ],
+  "pattern": [
+    "nIn",
+    "IXI",
+    "nIn"
+  ],
+  "key": {
+    "X": {
+      "item": "enigmaticlegacy:iron_ring"
+    },
+	"I": {
+      "item": "minecraft:gold_ingot"
+    },
+	"n": {
+      "item": "minecraft:gold_nugget"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:golden_ring"
+  }
+}

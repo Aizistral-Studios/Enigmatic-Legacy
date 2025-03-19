@@ -1,0 +1,34 @@
+{
+  "type": "enigmaticlegacy:crafting_shaped_cursed",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:twisted_heart"
+    }
+  ],
+  "pattern": [
+    " T ",
+    "PXP",
+    "RER"
+  ],
+  "key": {
+    "P": {
+      "item": "minecraft:blaze_powder"
+    },
+	"R": {
+      "item": "minecraft:redstone"
+    },
+	"E": {
+      "item": "minecraft:ender_eye"
+    },
+	"T": {
+      "item": "minecraft:ghast_tear"
+    },
+	"X": {
+      "item": "enigmaticlegacy:earth_heart"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:twisted_heart"
+  }
+}

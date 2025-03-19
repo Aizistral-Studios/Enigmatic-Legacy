@@ -1,0 +1,36 @@
+{
+  "parent": "enigmaticlegacy:recipes/root",
+  "rewards": {
+    "recipes": [
+      "enigmaticlegacy:etherium_ingot",
+      "enigmaticlegacy:etherium_block",
+      "enigmaticlegacy:etherium_block_uncrafting",
+      "enigmaticlegacy:etherium_ingot_nuggets",
+      "enigmaticlegacy:etherium_ingot_uncrafting"
+    ]
+  },
+  "criteria": {
+    "has_items": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["enigmaticlegacy:etherium_ore"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "enigmaticlegacy:etherium_ingot"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_items",
+      "has_the_recipe"
+    ]
+  ]
+}

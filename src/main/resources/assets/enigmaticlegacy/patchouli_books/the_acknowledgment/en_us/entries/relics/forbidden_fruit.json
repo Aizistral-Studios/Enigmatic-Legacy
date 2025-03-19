@@ -1,0 +1,31 @@
+{
+    "name": "book.enigmaticlegacy.entry.forbidden_fruit.name",
+    "icon": "enigmaticlegacy:forbidden_fruit",
+    "category": "enigmaticlegacy:relics",
+	"advancement": "enigmaticlegacy:book/relics/forbidden_fruit",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 120,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.forbidden_fruit.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "enigmaticlegacy:forbidden_fruit",
+			"link_recipe": true,
+			"title": "book.enigmaticlegacy.entry.forbidden_fruit.heading.1",
+            "text": "book.enigmaticlegacy.entry.forbidden_fruit.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.forbidden_fruit.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.forbidden_fruit.page.4"
+        }
+    ]
+}

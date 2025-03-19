@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.extradimensional_eye.name",
+    "icon": "enigmaticlegacy:extradimensional_eye",
+    "category": "enigmaticlegacy:misc",
+	"advancement": "enigmaticlegacy:book/misc/extradimensional_eye",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 10,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.extradimensional_eye.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:extradimensional_eye",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.extradimensional_eye.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.extradimensional_eye.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.extradimensional_eye.page.4"
+        }
+    ]
+}

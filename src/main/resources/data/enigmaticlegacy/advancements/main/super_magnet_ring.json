@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:super_magnet_ring"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:superMagnetRing"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:superMagnetRing.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "enigmaticlegacy:main/magnet_ring",
+  "criteria": {
+    "spellstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:super_magnet_ring"]
+          }
+        ]
+      }
+    }
+  }
+}

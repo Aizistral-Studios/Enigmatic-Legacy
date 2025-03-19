@@ -1,0 +1,29 @@
+{
+    "name": "book.enigmaticlegacy.entry.lamp.name",
+    "icon": "enigmaticlegacy:massive_lamp",
+    "category": "enigmaticlegacy:decorations",
+	"advancement": "enigmaticlegacy:book/decorations/lamp",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.lamp.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:lamps/big_lamp",
+			"recipe2": "enigmaticlegacy:lamps/massive_lamp"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.lamp.page.2"
+        },
+		{
+            "type": "empty",
+            "draw_filler": false
+        }
+    ]
+}

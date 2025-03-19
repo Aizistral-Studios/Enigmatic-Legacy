@@ -1,0 +1,27 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:desolation_ring"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:desolationRing"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:desolationRing.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "parent": "enigmaticlegacy:main/abyssal_heart",
+  "criteria": {
+    "infinitum": {
+      "trigger": "curios:equip_curio",
+      "conditions": {
+        "item": {
+			"items": ["enigmaticlegacy:desolation_ring"]
+		}
+      }
+    }
+  }
+}

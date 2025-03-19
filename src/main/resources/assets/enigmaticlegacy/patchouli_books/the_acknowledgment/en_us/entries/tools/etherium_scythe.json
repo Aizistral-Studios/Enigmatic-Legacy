@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.etherium_scythe.name",
+    "icon": "enigmaticlegacy:etherium_scythe",
+    "category": "enigmaticlegacy:tools",
+	"advancement": "enigmaticlegacy:book/tools/etherium_scythe",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 40,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_scythe.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:etherium_scythe",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.etherium_scythe.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_scythe.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.etherium_scythe.page.4"
+        }
+    ]
+}

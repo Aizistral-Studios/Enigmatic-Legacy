@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "enigmaticlegacy:etherium_ore"
+  },
+  "result": "enigmaticlegacy:etherium_ingot",
+  "experience": 8.0,
+  "cookingtime": 400
+}

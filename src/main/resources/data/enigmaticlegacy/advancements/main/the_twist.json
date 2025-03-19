@@ -1,0 +1,33 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:the_twist"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:theTwist"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:theTwist.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+	"frame": "challenge"
+  },
+  "rewards": {
+    "experience": 300
+  },
+  "parent": "enigmaticlegacy:main/twisted_heart",
+  "criteria": {
+    "twist": {
+      "trigger": "enigmaticlegacy:cursed_inventory_changed",
+      "conditions": {
+        "items": [
+          {
+             "items": ["enigmaticlegacy:the_twist"]
+          }
+        ]
+      }
+    }
+  }
+}

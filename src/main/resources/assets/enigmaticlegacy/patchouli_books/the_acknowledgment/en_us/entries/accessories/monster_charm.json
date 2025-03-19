@@ -1,0 +1,32 @@
+{
+    "name": "book.enigmaticlegacy.entry.monster_charm.name",
+    "icon": "enigmaticlegacy:monster_charm",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/monster_charm",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 40,
+    "pages": [
+        {
+            "type": "text",
+			"title": "meh",
+            "text": "book.enigmaticlegacy.entry.monster_charm.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:monster_charm",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.monster_charm.page.2"
+        },
+		{
+			"type": "text",
+			"text": "book.enigmaticlegacy.entry.monster_charm.page.3"
+		
+		},
+		{
+			"type": "text",
+			"text": "book.enigmaticlegacy.entry.monster_charm.page.4"
+		}
+    ]
+}

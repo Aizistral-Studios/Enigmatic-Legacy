@@ -1,0 +1,59 @@
+{
+    "name": "book.enigmaticlegacy.entry.cursed_ring.name",
+    "icon": "enigmaticlegacy:cursed_ring",
+    "category": "enigmaticlegacy:relics",
+	"advancement": "enigmaticlegacy:book/relics/cursed_ring",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 110,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.1"
+        },
+		{
+            "type": "spotlight",
+			"item": "enigmaticlegacy:cursed_ring",
+			"link_recipe": true,
+			"title": "book.enigmaticlegacy.entry.cursed_ring.heading.1",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.4"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.5"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.6"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.7"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.8"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.9"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.10"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_ring.page.11"
+        }
+    ]
+}

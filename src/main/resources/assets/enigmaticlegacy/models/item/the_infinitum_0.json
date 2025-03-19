@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:item/handheld",
+  "loader": "forge:separate_transforms",
+  "base": {
+    "parent": "enigmaticlegacy:item/3d/the_infinitum_0_3d"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "enigmaticlegacy:item/gui/the_infinitum_0_gui"
+    },
+    "fixed": {
+      "parent": "enigmaticlegacy:item/3d/the_infinitum_2_3d"
+    },
+    "ground": {
+      "parent": "enigmaticlegacy:item/3d/the_infinitum_2_3d"
+    }
+  }
+}

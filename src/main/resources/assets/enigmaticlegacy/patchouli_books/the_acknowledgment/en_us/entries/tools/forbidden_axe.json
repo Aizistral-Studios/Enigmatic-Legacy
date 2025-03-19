@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.forbidden_axe.name",
+    "icon": "enigmaticlegacy:forbidden_axe",
+    "category": "enigmaticlegacy:tools",
+	"advancement": "enigmaticlegacy:book/tools/forbidden_axe",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 0,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.forbidden_axe.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:forbidden_axe",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.forbidden_axe.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.forbidden_axe.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.forbidden_axe.page.4"
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "enigmaticlegacy:item/the_infinitum_1"
+    }
+}

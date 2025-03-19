@@ -1,0 +1,28 @@
+{
+    "name": "book.enigmaticlegacy.entry.soul_loss.name",
+    "icon": "enigmaticlegacy:soul_crystal",
+    "category": "enigmaticlegacy:world",
+    "priority": false,
+    "advancement": "enigmaticlegacy:book/soul_loss",
+    "sortnum": 10,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.soul_loss.page.1"
+        },
+        {
+            "type": "spotlight",
+            "item": "enigmaticlegacy:soul_crystal",
+            "title": "book.enigmaticlegacy.entry.soul_loss.heading.1",
+            "text": "book.enigmaticlegacy.entry.soul_loss.page.2"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.soul_loss.page.3"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.soul_loss.page.4"
+        }
+    ]
+}

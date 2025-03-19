@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.cursed_scroll.name",
+    "icon": "enigmaticlegacy:cursed_scroll",
+    "category": "enigmaticlegacy:accessories",
+	"advancement": "enigmaticlegacy:book/accessories/cursed_scroll",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 120,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_scroll.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:cursed_scroll",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.cursed_scroll.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.cursed_scroll.page.3"
+        },
+		{
+            "type": "text",
+			"text": "book.enigmaticlegacy.entry.cursed_scroll.page.4"
+		}
+    ]
+}

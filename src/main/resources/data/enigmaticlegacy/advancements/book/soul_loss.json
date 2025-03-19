@@ -1,0 +1,17 @@
+{
+  "parent": "enigmaticlegacy:book/root",
+  "criteria": {
+    "incompletable": {
+      "trigger": "minecraft:impossible"
+    },
+    "is_cursed_one": {
+      "trigger": "enigmaticlegacy:equip_cursed_ring"
+    }
+  },
+  "requirements": [
+    [
+      "incompletable",
+	  "is_cursed_one"
+    ]
+  ]
+}

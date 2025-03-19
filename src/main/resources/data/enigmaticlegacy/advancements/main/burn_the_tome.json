@@ -1,0 +1,23 @@
+{
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:withered_tome"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:burnTheTome"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:burnTheTome.desc"
+    },
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true,
+	"frame": "task"
+  },
+  "parent": "enigmaticlegacy:main/root",
+  "criteria": {
+    "burnitdown": {
+      "trigger": "enigmaticlegacy:revelation_tome_burnt"
+    }
+  }
+}

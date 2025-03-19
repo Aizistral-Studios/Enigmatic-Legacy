@@ -1,0 +1,30 @@
+{
+    "name": "book.enigmaticlegacy.entry.the_twist.name",
+    "icon": "enigmaticlegacy:the_twist",
+    "category": "enigmaticlegacy:tools",
+	"advancement": "enigmaticlegacy:book/tools/the_twist",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 70,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.the_twist.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:the_twist",
+            "title": " ",
+            "text": "book.enigmaticlegacy.entry.the_twist.page.2"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.the_twist.page.3"
+        },
+		{
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.the_twist.page.4"
+        }
+    ]
+}

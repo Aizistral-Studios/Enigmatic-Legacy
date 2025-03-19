@@ -1,0 +1,26 @@
+{
+  "parent": "enigmaticlegacy:main/astral_dust",
+  "display": {
+    "icon": {
+      "item": "enigmaticlegacy:cosmic_scroll"
+    },
+    "title": {
+      "translate": "advancement.enigmaticlegacy:cosmicScroll"
+    },
+    "description": {
+      "translate": "advancement.enigmaticlegacy:cosmicScroll.desc"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "rewards": {
+    "experience": 500
+  },
+  "criteria": {
+    "incompletable": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

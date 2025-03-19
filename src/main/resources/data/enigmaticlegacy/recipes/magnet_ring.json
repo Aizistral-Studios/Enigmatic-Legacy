@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:magnet_ring"
+    }
+  ],
+  "pattern": [
+    " D ",
+    "IXG",
+    " R "
+  ],
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+	"G": {
+      "item": "minecraft:gold_ingot"
+    },
+	"R": {
+      "item": "minecraft:redstone"
+    },
+	"I": {
+      "item": "minecraft:iron_ingot"
+    },
+	"X": {
+      "item": "enigmaticlegacy:iron_ring"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:magnet_ring"
+  }
+}

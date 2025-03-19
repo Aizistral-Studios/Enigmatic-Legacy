@@ -1,0 +1,26 @@
+{
+    "name": "book.enigmaticlegacy.entry.curse_transposer.name",
+    "icon": "enigmaticlegacy:curse_transposer",
+    "category": "enigmaticlegacy:misc",
+	"advancement": "enigmaticlegacy:book/misc/curse_transposer",
+    "secret": false,
+    "priority": false,
+    "read_by_default": false,
+    "sortnum": 130,
+    "pages": [
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.curse_transposer.page.1"
+        },
+		{
+            "type": "crafting",
+			"recipe": "enigmaticlegacy:curse_transposer",
+			"title": " ",
+            "text": "book.enigmaticlegacy.entry.curse_transposer.page.2"
+        },
+        {
+            "type": "text",
+            "text": "book.enigmaticlegacy.entry.curse_transposer.page.3"
+        }
+    ]
+}
