@@ -42,9 +42,8 @@ public class EtheriumEventHandler {
 			 */
 
 			if (EtheriumArmor.hasShield(player)) {
-				if (event.getSource().getDirectEntity() instanceof LivingEntity) {
-					LivingEntity attacker = ((LivingEntity) event.getSource().getEntity());
-					Vector3 vec = Vector3.fromEntityCenter(player).subtract(Vector3.fromEntityCenter(event.getSource().getEntity())).normalize();
+				if (event.getSource().getDirectEntity() instanceof LivingEntity attacker) {
+					Vector3 vec = Vector3.fromEntityCenter(player).subtract(Vector3.fromEntityCenter(attacker)).normalize();
 					attacker.knockback(0.75F, vec.x, vec.z);
 					player.level().playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundSource.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
 					player.level().playSound(null, player.blockPosition(), this.config.getShieldTriggerSound(), SoundSource.PLAYERS, 1.0F, 0.9F + (float) (Math.random() * 0.1D));
