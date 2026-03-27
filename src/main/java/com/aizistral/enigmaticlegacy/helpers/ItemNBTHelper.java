@@ -28,7 +28,8 @@ public final class ItemNBTHelper {
 
 	public static CompoundTag getNBT(final ItemStack stack) {
 		ItemNBTHelper.initNBT(stack);
-		return stack.getTag();
+		var tag = stack.getTag();
+		return tag == null ? new CompoundTag() : tag;
 	}
 
 	public static void setBoolean(final ItemStack stack, final String tag, final boolean b) {
