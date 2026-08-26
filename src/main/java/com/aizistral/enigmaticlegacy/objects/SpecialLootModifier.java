@@ -85,12 +85,9 @@ public class SpecialLootModifier extends LootModifier {
 
 			if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ASTRAL_FRUIT))
 				if ("minecraft:chests/end_city_treasure".equals(String.valueOf(context.getQueriedLootTableId()))) {
-					if (!SuperpositionHandler.hasPersistentTag(player, "LootedFirstEndCityChest")) {
+					if (SuperpositionHandler.isTheCursedOne(player) && !SuperpositionHandler.hasPersistentTag(player, "LootedFirstEndCityChest")) {
 						SuperpositionHandler.setPersistentBoolean(player, "LootedFirstEndCityChest", true);
-
-						if (SuperpositionHandler.isTheCursedOne(player)) {
-							generatedLoot.add(new ItemStack(EnigmaticItems.ASTRAL_FRUIT, 1));
-						}
+						generatedLoot.add(new ItemStack(EnigmaticItems.ASTRAL_FRUIT, 1));
 					}
 				}
 
