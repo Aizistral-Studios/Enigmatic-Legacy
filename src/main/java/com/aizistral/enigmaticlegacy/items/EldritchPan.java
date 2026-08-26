@@ -370,7 +370,7 @@ public class EldritchPan extends TieredItem implements Vanishable, ICursed, ICre
 	public static boolean addKillIfNotPresent(ItemStack pan, ResourceLocation mob) {
 		List<ResourceLocation> kills = getUniqueKills(pan);
 
-		if (kills.size() < 100 && !kills.contains(mob)) {
+		if (kills.size() < uniqueGainLimit.getValue() && !kills.contains(mob)) {
 			addUniqueKill(pan, mob);
 			return true;
 		}
