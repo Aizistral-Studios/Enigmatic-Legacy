@@ -1,0 +1,1893 @@
+{
+  "item.enigmaticlegacy.enigmatic_amulet": "不可解なアミュレット",
+  "item.enigmaticlegacy.enigmatic_item": "創造の心臓",
+  "item.enigmaticlegacy.magnet_ring": "磁力の指輪",
+  "item.enigmaticlegacy.extradimensional_eye": "異次元の眼",
+  "item.enigmaticlegacy.recall_potion": "帰還のポーション",
+  "item.enigmaticlegacy.forbidden_axe": "処刑人の斧",
+  "item.enigmaticlegacy.super_magnet_ring": "転位の指輪",
+  "item.enigmaticlegacy.escape_scroll": "死後帰還の巻物",
+  "item.enigmaticlegacy.heaven_scroll": "天界の贈り物",
+  "item.enigmaticlegacy.golem_heart": "ゴーレムの心臓",
+  "item.enigmaticlegacy.mega_sponge": "超膨張メガスポンジ",
+  "item.enigmaticlegacy.unholy_grail": "不浄の聖杯",
+  "item.enigmaticlegacy.eye_of_nebula": "星雲の眼",
+  "item.enigmaticlegacy.blazing_core": "焦熱の核",
+  "item.enigmaticlegacy.void_pearl": "虚無の真珠",
+  "item.enigmaticlegacy.ocean_stone": "海洋の意志",
+  "item.enigmaticlegacy.angel_blessing": "天使の祝福",
+  "item.enigmaticlegacy.monster_charm": "怪物殺しの紋章",
+  "item.enigmaticlegacy.mining_charm": "宝探し師のチャーム",
+  "item.enigmaticlegacy.ender_ring": "エンダーの指輪",
+  "item.enigmaticlegacy.mending_mixture": "修復の調合物",
+  "item.enigmaticlegacy.loot_generator": "ザ・ワン・ボックス",
+  "item.enigmaticlegacy.thicc_scroll": "白紙の巻物",
+  "item.enigmaticlegacy.iron_ring": "鉄の指輪",
+  "item.enigmaticlegacy.haste_potion_default": "急ぎのポーション §4【廃止】",
+  "item.enigmaticlegacy.haste_potion_extended": "急ぎのポーション §4【廃止】",
+  "item.enigmaticlegacy.haste_potion_empowered": "急ぎのポーション §4【廃止】",
+  "item.enigmaticlegacy.haste_potion_extended_empowered": "急ぎのポーション §4【廃止】",
+  "item.enigmaticlegacy.etherium_ore": "エーテリウム鉱石",
+  "item.enigmaticlegacy.etherium_ingot": "エーテリウムインゴット",
+  "item.enigmaticlegacy.astral_dust": "アストラルダスト",
+  "item.enigmaticlegacy.etherium_helmet": "エーテリウムヘルメット",
+  "item.enigmaticlegacy.etherium_chestplate": "エーテリウムの胸当て",
+  "item.enigmaticlegacy.etherium_leggings": "エーテリウムの脛当て",
+  "item.enigmaticlegacy.etherium_boots": "エーテリウムブーツ",
+  "item.enigmaticlegacy.etherium_pickaxe": "エーテリウムのツルハシ",
+  "item.enigmaticlegacy.etherium_axe": "エーテリウムの戦斧",
+  "item.enigmaticlegacy.etherium_shovel": "エーテリウムのシャベル",
+  "item.enigmaticlegacy.etherium_sword": "エーテリウムの大剣",
+  "item.enigmaticlegacy.etherium_scythe": "エーテリウムの大鎌",
+  "item.enigmaticlegacy.lore_inscriber": "設計者のインク瓶",
+  "item.enigmaticlegacy.lore_fragment": "伝承の断片",
+  "item.enigmaticlegacy.ender_rod": "エンダーロッド",
+  "item.enigmaticlegacy.astral_breaker": "アストラルブレイカー",
+  "item.enigmaticlegacy.void_stone": "忘却の礎石",
+  "item.enigmaticlegacy.enchantment_transposer": "飢えた知識の魔導書",
+  "item.enigmaticlegacy.xp_scroll": "不老の知恵の巻物",
+  "item.enigmaticlegacy.fabulous_scroll": "創造主の恩寵",
+  "item.enigmaticlegacy.storage_crystal": "異次元の器",
+  "item.enigmaticlegacy.soul_crystal": "ソウルクリスタル",
+  "item.enigmaticlegacy.the_acknowledgment": "承認の証",
+  "item.enigmaticlegacy.tattered_tome": "ボロボロの魔導書",
+  "item.enigmaticlegacy.withered_tome": "萎れた魔導書",
+  "item.enigmaticlegacy.corrupted_tome": "堕落した魔導書",
+  "item.enigmaticlegacy.cursed_ring": "七つの呪いの指輪",
+  "item.enigmaticlegacy.twisted_mirror": "歪んだ鏡",
+  "item.enigmaticlegacy.earth_heart": "大地の心臓",
+  "item.enigmaticlegacy.twisted_heart": "歪んだ心臓",
+  "item.enigmaticlegacy.crying_ingot": "泣くネザライトインゴット 【未実装】",
+  "item.enigmaticlegacy.crying_pickaxe": "泣くツルハシ 【未実装】",
+  "item.enigmaticlegacy.crying_axe": "泣く斧 【未実装】",
+  "item.enigmaticlegacy.crying_shovel": "泣くシャベル 【未実装】",
+  "item.enigmaticlegacy.crying_hoe": "泣くクワ 【未実装】",
+  "item.enigmaticlegacy.crying_sword": "泣く剣 【未実装】",
+  "item.enigmaticlegacy.crying_helmet": "泣くヘルメット 【未実装】",
+  "item.enigmaticlegacy.crying_chestplate": "泣く胸当て 【未実装】",
+  "item.enigmaticlegacy.crying_leggings": "泣く脛当て 【未実装】",
+  "item.enigmaticlegacy.crying_boots": "泣くブーツ 【未実装】",
+  "item.enigmaticlegacy.cursed_scroll": "千の呪いの巻物",
+  "item.enigmaticlegacy.berserk_charm": "血塗られた勇気の紋章",
+  "item.enigmaticlegacy.the_twist": "運命の捩れ",
+  "item.enigmaticlegacy.evil_essence": "邪悪なエッセンス",
+  "item.enigmaticlegacy.animal_guidebook": "動物との絆の導き",
+  "item.enigmaticlegacy.hunter_guidebook": "野獣の狩猟ガイド",
+  "item.enigmaticlegacy.guardian_heart": "守護者の心臓",
+  "item.enigmaticlegacy.forbidden_fruit": "禁断の果実",
+  "item.enigmaticlegacy.redemption_potion": "贖罪のポーション",
+  "item.enigmaticlegacy.enchanter_pearl": "付与師の真珠",
+  "item.enigmaticlegacy.cursed_stone": "不浄の石",
+  "item.enigmaticlegacy.golden_ring": "精巧な指輪",
+  "item.enigmaticlegacy.avarice_scroll": "無限の強欲の契約",
+  "item.enigmaticlegacy.infinimeal": "荒れ狂う生命のエッセンス",
+  "item.enigmaticlegacy.darkest_scroll": "最暗の巻物",
+  "item.enigmaticlegacy.unwitnessed_amulet": "目撃されざるアミュレット",
+  "item.enigmaticlegacy.twisted_potion": "歪んだ慈悲のポーション",
+  "item.enigmaticlegacy.infernal_shield": "焦熱の誇りの大盾",
+  "item.enigmaticlegacy.cosmic_heart": "宇宙の心臓",
+  "item.enigmaticlegacy.abyssal_heart": "深淵の心臓",
+  "item.enigmaticlegacy.the_infinitum": "ジ・インフィニタム",
+  "item.enigmaticlegacy.astral_fruit": "天界の果実",
+  "item.enigmaticlegacy.ender_slayer": "ジ・エンダースレイヤー",
+  "item.enigmaticlegacy.the_cube": "非ユークリッドの立方体",
+  "item.enigmaticlegacy.desolation_ring": "荒廃の重荷",
+  "item.enigmaticlegacy.etherium_nugget": "エーテリウムの塊",
+  "item.enigmaticlegacy.etherium_scraps": "エーテリウムの欠片",
+  "item.enigmaticlegacy.astral_potato": "テレポートポテト",
+  "item.enigmaticlegacy.curse_transposer": "貪られた悪意の魔導書",
+  "item.enigmaticlegacy.soul_compass": "呪われし者の道標",
+  "item.enigmaticlegacy.ascension_amulet": "昇天のアミュレット",
+  "item.enigmaticlegacy.eldritch_amulet": "軽蔑の遺言",
+  "item.enigmaticlegacy.evil_ingot": "邪悪なインゴット",
+  "item.enigmaticlegacy.enigmatic_elytra": "威風堂々たるエリトラ",
+  "block.enigmaticlegacy.etherium_block": "エーテリウムブロック",
+  "block.enigmaticlegacy.cosmic_cake": "永遠のケーキ",
+  "block.enigmaticlegacy.end_anchor": "次元のアンカー",
+  "item.enigmaticlegacy.enigmatic_eye_dormant": "休眠状態の眼",
+  "item.enigmaticlegacy.enigmatic_eye_active": "不可解な眼",
+  "item.enigmaticlegacy.ichor_bottle": "霊血の瓶",
+  "item.enigmaticlegacy.quote_player": "引用プレイヤー",
+  "item.enigmaticlegacy.insignia": "魅惑の記章",
+  "item.enigmaticlegacy.deception_amulet": "欺瞞のアミュレット 【制作中】",
+  "item.enigmaticlegacy.the_judgement": "審判",
+  "item.enigmaticlegacy.soul_dust": "ソウルダスト",
+  "item.enigmaticlegacy.eldritch_pan": "暴食のフライパン",
+
+  "block.enigmaticlegacy.big_lamp": "ランプ",
+  "block.enigmaticlegacy.massive_lamp": "被覆ランプ",
+  "block.enigmaticlegacy.big_shroomlamp": "キノコランプ",
+  "block.enigmaticlegacy.massive_shroomlamp": "被覆キノコランプ",
+  "block.enigmaticlegacy.big_redstonelamp": "レッドストーンランタン",
+  "block.enigmaticlegacy.massive_redstonelamp": "被覆レッドストーンランタン",
+  "block.enigmaticlegacy.astral_block": "アストラルダストの袋",
+  "block.enigmaticlegacy.star_fabric": "星の布地",
+
+  "effect.enigmaticlegacy.blazing_strength": "焦熱の剛力",
+  "effect.enigmaticlegacy.molten_heart": "溶岩の心",
+  "effect.enigmaticlegacy.growing_hunger": "募る飢え",
+  "effect.enigmaticlegacy.growing_bloodlust": "募る殺意",
+
+  "stat.enigmaticlegacy.play_time_with_seven_curses": "七つの呪いと共に歩んだ時間",
+  "stat.enigmaticlegacy.play_time_without_seven_curses": "呪いなしで過ごした時間",
+
+  "item.enigmaticlegacy.common_potion.effect.empty": "空虚なポーション",
+  "item.enigmaticlegacy.common_potion.effect.haste": "急ぎのポーション",
+  "item.enigmaticlegacy.common_potion.effect.long_haste": "急ぎのポーション",
+  "item.enigmaticlegacy.common_potion.effect.strong_haste": "急ぎのポーション",
+
+  "item.enigmaticlegacy.common_potion_splash.effect.empty": "空虚なスプラッシュポーション",
+  "item.enigmaticlegacy.common_potion_splash.effect.haste": "急ぎのスプラッシュポーション",
+  "item.enigmaticlegacy.common_potion_splash.effect.long_haste": "急ぎのスプラッシュポーション",
+  "item.enigmaticlegacy.common_potion_splash.effect.strong_haste": "急ぎのスプラッシュポーション",
+
+  "item.enigmaticlegacy.common_potion_lingering.effect.empty": "空虚な残留ポーション",
+  "item.enigmaticlegacy.common_potion_lingering.effect.haste": "急ぎの残留ポーション",
+  "item.enigmaticlegacy.common_potion_lingering.effect.long_haste": "急ぎの残留ポーション",
+  "item.enigmaticlegacy.common_potion_lingering.effect.strong_haste": "急ぎの残留ポーション",
+
+  "item.enigmaticlegacy.ultimate_potion.effect.empty": "空虚なポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_night_vision": "暗視のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_invisibility": "透明化のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_leaping": "跳躍のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_fire_resistance": "耐火のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_swiftness": "迅速のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_slowness": "鈍足のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_turtle_master": "亀マスターのポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_water_breathing": "水中呼吸のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_healing": "回復のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_harming": "負傷のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_poison": "毒のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_regeneration": "再生のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_strength": "力のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_weakness": "弱化のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_slow_falling": "低速落下のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_haste": "急ぎのポーション",
+
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.empty": "空虚なスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_night_vision": "暗視のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_invisibility": "透明化のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_leaping": "跳躍のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_fire_resistance": "耐火のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_swiftness": "迅速のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_slowness": "鈍足のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_turtle_master": "亀マスターのスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_water_breathing": "水中呼吸のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_healing": "回復のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_harming": "負傷のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_poison": "毒のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_regeneration": "再生のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_strength": "力のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_weakness": "弱化のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_slow_falling": "低速落下のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_haste": "急ぎのスプラッシュポーション",
+
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.empty": "空虚な残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_night_vision": "暗視の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_invisibility": "透明化の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_leaping": "跳躍の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_fire_resistance": "耐火の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_swiftness": "迅速の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_slowness": "鈍足の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_turtle_master": "亀マスターの残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_water_breathing": "水中呼吸の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_healing": "回復の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_harming": "負傷の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_poison": "毒の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_regeneration": "再生の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_strength": "力の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_weakness": "弱化の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_slow_falling": "低速落下の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_haste": "急ぎの残留ポーション",
+
+  "item.enigmaticlegacy.common_potion.effect.molten_heart": "溶岩の心のポーション",
+  "item.enigmaticlegacy.common_potion.effect.long_molten_heart": "溶岩の心のポーション",
+  "item.enigmaticlegacy.ultimate_potion.effect.ultimate_molten_heart": "溶岩の心のポーション",
+
+  "item.enigmaticlegacy.common_potion_splash.effect.molten_heart": "溶岩の心のスプラッシュポーション",
+  "item.enigmaticlegacy.common_potion_splash.effect.long_molten_heart": "溶岩の心のスプラッシュポーション",
+  "item.enigmaticlegacy.ultimate_potion_splash.effect.ultimate_molten_heart": "溶岩の心のスプラッシュポーション",
+
+  "item.enigmaticlegacy.common_potion_lingering.effect.molten_heart": "溶岩の心の残留ポーション",
+  "item.enigmaticlegacy.common_potion_lingering.effect.long_molten_heart": "溶岩の心の残留ポーション",
+  "item.enigmaticlegacy.ultimate_potion_lingering.effect.ultimate_molten_heart": "溶岩の心の残留ポーション",
+
+  "enchantment.enigmaticlegacy.nemesis": "報復の呪い",
+  "enchantment.enigmaticlegacy.sharpshooter": "シャープシューター",
+  "enchantment.enigmaticlegacy.ceaseless": "無限供給",
+  "enchantment.enigmaticlegacy.torrent": "奔流",
+  "enchantment.enigmaticlegacy.wrath": "憤怒",
+  "enchantment.enigmaticlegacy.slayer": "討伐者",
+  "enchantment.enigmaticlegacy.eternal_binding": "永久拘束の呪い",
+  "enchantment.enigmaticlegacy.sorrow": "悲哀の呪い",
+
+  "enchantment.enigmaticlegacy.eternal_binding.desc": "アイテムを外すことも、死後に失うことも不可能にする。",
+  "enchantment.enigmaticlegacy.sorrow.desc": "ダメージを受けた際、稀にランダムなデバフを付与する。",
+  "enchantment.enigmaticlegacy.nemesis.desc": "近接攻撃時、与えたダメージの25％を自分に跳ね返す。",
+  "enchantment.enigmaticlegacy.sharpshooter.desc": "矢のダメージを強化し、バラつきを抑える。",
+  "enchantment.enigmaticlegacy.ceaseless.desc": "弾薬を消費せずに通常の矢を放つことができる。",
+  "enchantment.enigmaticlegacy.torrent.desc": "水に弱い生物や火に耐性のある生物へのダメージが増加する。",
+  "enchantment.enigmaticlegacy.wrath.desc": "あらゆる対象へのダメージが増加する。",
+  "enchantment.enigmaticlegacy.slayer.desc": "モンスターへのダメージが増加する。",
+
+  "curios.identifier.scroll": "秘術の巻物",
+  "curios.identifier.spellstone": "魔石",
+  "curios.identifier.ring": "指輪",
+  "curios.identifier.charm": "チャーム",
+  "curios.modifiers.spellstone": "魔石として装備時：",
+  "curios.modifiers.scroll": "秘術の巻物として装備時：",
+  "tooltip.enigmaticlegacy.enabled": "§6有効",
+  "tooltip.enigmaticlegacy.disabled": "§6無効",
+  "generic.reachDistance": "リーチ距離",
+  "forge.swimSpeed": "水泳速度",
+  "itemGroup.enigmaticCreativeTab": "§5Enigmatic Legacy",
+  "itemGroup.etheriumCreativeTab": "エーテリウム",
+  "itemGroup.enigmaticPotionCreativeTab": "Enigmatic Legacy ― ポーション",
+  "key.categories.enigmaticLegacy": "§6§lEnigmatic Legacy",
+  "key.enderRing": "エンダーの指輪",
+  "key.xpScroll": "不老の知恵の巻物",
+  "key.spellstoneAbility": "魔石のアクティブ能力",
+  "tooltip.enigmaticlegacy.currentKeybind": "§6現在のキー設定：§d%1$s",
+  "tooltip.enigmaticlegacy.seconds": "秒",
+  "death.attack.darkness": "%1$sは闇に飲み込まれた",
+  "message.enigmaticlegacy.permadeath": "偉業を成し遂げようとするその姿に、勇気を見た。\n砕かれた魂が、ついに安らぎを得られますように。",
+  "message.enigmaticlegacy.cursed_sleep": "七つの呪いが、夢の領域に近づくあなたの中に言いようのない恐怖と不安を呼び覚ます。絶望せし者に希望はなく、眠れぬ者に安眠はない...",
+  "message.enigmaticlegacy.eldritch_pan_buff": "新たな魂の味を知り、暴食のフライパンはさらなる力を蓄えた。",
+  "message.enigmaticlegacy.gen_sim_complete": "推定生成が §632768§5 回完了しました。結果を確認するには §6latest.log§5 ファイルを確認してください。",
+  "message.enigmaticlegacy.animal_analysis_complete": "エンティティ登録の分析が完了しました。結果を確認するには §6latest.log§5 ファイルを確認してください。",
+  "message.enigmaticlegacy.voiceover_experimental": "§eやあ！ §6Enigmatic Legacy§e の開発者だ。Modにボイスオーバーを追加するのは珍しいことなので、この機能は実験的であることを知っておいてほしい。私の §6Discord§e に参加して、しばらく遊んでみた感想を聞かせてくれ：§6https://discord.gg/fuWK8ns",
+  "status.enigmaticlegacy.outdated": "§6Enigmatic Legacy§5 の新バージョンが公開された： %1$s。その偉大さを目にするがいい！",
+  "status.enigmaticlegacy.noconnection": "Enigmatic Legacy はアップデートの確認ができなかった。",
+  "world.enigmaticlegacy.name": "ワールド #",
+  "gui.enigmaticlegacy.permadeathTitle": "終焉",
+  "gui.enigmaticlegacy.toWorldList": "ワールド一覧に戻る",
+  "gameMode.enigmaticlegacy.cursed": "§cCursed モード",
+  "gameMode.enigmaticlegacy.cursedHardcore": "§4Cursed ハードコア！",
+  "gameMode.enigmaticlegacy.fractured": "§4亡者",
+
+  "enigmaticlegacy.toasts.slotUnlocked.title": "%1$s が解放された！",
+  "enigmaticlegacy.toasts.slotUnlocked.text1": "Curios インベントリで",
+  "enigmaticlegacy.toasts.slotUnlocked.text2": "装備できるようになった。",
+
+  "enigmaticlegacy.toasts.revelationTome.title": "＋%1$s 経験値",
+  "enigmaticlegacy.toasts.revelationTome.text": "＋%1$s 知識ポイント",
+
+  "enigmaticlegacy.curiotype.ring": "指輪",
+  "enigmaticlegacy.curiotype.charm": "チャーム",
+  "enigmaticlegacy.curiotype.spellstone": "魔石",
+  "enigmaticlegacy.curiotype.scroll": "秘術の巻物",
+
+  "tooltip.enigmaticlegacy.undefined": "§4未定義のツールチップを検出",
+  "tooltip.enigmaticlegacy.void": " ",
+  "tooltip.enigmaticlegacy.paragraph": "§",
+  "tooltip.enigmaticlegacy.subformat": "&",
+  "tooltip.enigmaticlegacy.tilt": "&",
+
+
+  "advancementTab.enigmaticlegacy": "Enigmatic Legacy",
+  "advancementTab.enigmaticlegacy.desc": "古の時代の遺物",
+
+  "advancement.enigmaticlegacy:discoverSpellstone": "元素の力",
+  "advancement.enigmaticlegacy:discoverSpellstone.desc": "初めての魔石を発見する",
+
+  "advancement.enigmaticlegacy:discoverScroll": "超硬質の魔術師",
+  "advancement.enigmaticlegacy:discoverScroll.desc": "初めての秘術の巻物を入手する",
+
+  "advancement.enigmaticlegacy:discoverRing": "クレイジーな0.5カラットダイヤモンド",
+  "advancement.enigmaticlegacy:discoverRing.desc": "初めての指輪を発見または作成する",
+
+  "advancement.enigmaticlegacy:recallPotion": "ここから出なきゃ",
+  "advancement.enigmaticlegacy:recallPotion.desc": "帰還のポーションを醸造する",
+
+  "advancement.enigmaticlegacy:magnetRing": "壮麗",
+  "advancement.enigmaticlegacy:magnetRing.desc": "磁力の指輪を発見または作成する",
+
+  "advancement.enigmaticlegacy:superMagnetRing": "全食の眼",
+  "advancement.enigmaticlegacy:superMagnetRing.desc": "転位の指輪を発見または作成する",
+
+  "advancement.enigmaticlegacy:heavenScroll": "天界の書",
+  "advancement.enigmaticlegacy:heavenScroll.desc": "天界の贈り物を見つけるか作成する",
+
+  "advancement.enigmaticlegacy:voidPearl": "消えゆく希望",
+  "advancement.enigmaticlegacy:voidPearl.desc": "虚無の真珠を手に入れる",
+
+  "advancement.enigmaticlegacy:forbiddenAxe": "恐るべき報復",
+  "advancement.enigmaticlegacy:forbiddenAxe.desc": "処刑人の斧を使って敵を斬首する",
+
+  "advancement.enigmaticlegacy:megasponge": "底に住んでいるのは誰だ？",
+  "advancement.enigmaticlegacy:megasponge.desc": "超膨張メガスポンジを発見または作成する",
+
+  "advancement.enigmaticlegacy:mendingMixture": "地球外物質",
+  "advancement.enigmaticlegacy:mendingMixture.desc": "修復の調合物を見つけるか作成する",
+
+  "advancement.enigmaticlegacy:unholyGrail": "助言の無視",
+  "advancement.enigmaticlegacy:unholyGrail.desc": "不浄の聖杯から飲む",
+
+  "advancement.enigmaticlegacy:unholyGrailWorthy": "不浄なる覇権",
+  "advancement.enigmaticlegacy:unholyGrailWorthy.desc": "不浄の聖杯の力を手にする... だがその代償は？",
+
+  "advancement.enigmaticlegacy:astralDust": "太古の触媒",
+  "advancement.enigmaticlegacy:astralDust.desc": "アストラルダストを発見する",
+
+  "advancement.enigmaticlegacy:smeltEtherium": "エセリアルではない",
+  "advancement.enigmaticlegacy:smeltEtherium.desc": "エーテリウムインゴットを精錬する",
+
+  "advancement.enigmaticlegacy:etheriumTool": "攻撃的な造園師",
+  "advancement.enigmaticlegacy:etheriumTool.desc": "エーテリウムから何らかの道具をクラフトする",
+
+  "advancement.enigmaticlegacy:etheriumGear": "究極の盾",
+  "advancement.enigmaticlegacy:etheriumGear.desc": "エーテリウム製防具のフルセットを作成する",
+
+  "advancement.enigmaticlegacy:ultimatePotion": "醸造スタンドの達人",
+  "advancement.enigmaticlegacy:ultimatePotion.desc": "初めての究極のポーションを醸造する",
+
+  "advancement.enigmaticlegacy:loreInscriber": "伝承の記録者",
+  "advancement.enigmaticlegacy:loreInscriber.desc": "設計者のインク瓶を入手する",
+
+  "advancement.enigmaticlegacy:burnTheTome": "よくもそんなことを",
+  "advancement.enigmaticlegacy:burnTheTome.desc": "古の魔導書をかまどの燃料として使おうとする",
+
+  "advancement.enigmaticlegacy:forbiddenFruit": "原罪",
+  "advancement.enigmaticlegacy:forbiddenFruit.desc": "禁断の果実を食し、飢えの呪縛から自身を解き放つ",
+
+  "advancement.enigmaticlegacy:cursedRing": "前方に広がる闇",
+  "advancement.enigmaticlegacy:cursedRing.desc": "指輪を装備し、七つの呪いを受け入れる",
+
+  "advancement.enigmaticlegacy:twistedHeart": "それはあなたを裏切るだろう",
+  "advancement.enigmaticlegacy:twistedHeart.desc": "歪んだ心臓を作成する",
+
+  "advancement.enigmaticlegacy:guardianHeart": "禍々しい眼",
+  "advancement.enigmaticlegacy:guardianHeart.desc": "エルダーガーディアンを倒し、守護者の心臓を手に入れる",
+
+  "advancement.enigmaticlegacy:infernalShield": "これを貫けるものならやってみろ！",
+  "advancement.enigmaticlegacy:infernalShield.desc": "究極の防衛用具である焦熱の誇りの大盾を鍛造する",
+
+  "advancement.enigmaticlegacy:twistedMirror": "ゆがんだ美",
+  "advancement.enigmaticlegacy:twistedMirror.desc": "歪んだ鏡を作成する",
+
+  "advancement.enigmaticlegacy:theTwist": "宿命の捩れ",
+  "advancement.enigmaticlegacy:theTwist.desc": "ウィザーを倒し、邪悪なエッセンスを用いて「運命の捩れ」を作成する",
+
+  "advancement.enigmaticlegacy:astralFruit": "素晴らしいリンゴ",
+  "advancement.enigmaticlegacy:astralFruit.desc": "エンドシティの宝物の中から天界の果実を見つけ出し、食す",
+
+  "advancement.enigmaticlegacy:abyssalHeart": "不気味な恐怖",
+  "advancement.enigmaticlegacy:abyssalHeart.desc": "エンダードラゴンを倒し、深淵の心臓を手に入れる",
+
+  "advancement.enigmaticlegacy:theInfinitum": "時空を超えて",
+  "advancement.enigmaticlegacy:theInfinitum.desc": "ジ・インフィニタムを手に入れ、深淵の先触れとなる",
+
+  "advancement.enigmaticlegacy:desolationRing": "現実は歪められた",
+  "advancement.enigmaticlegacy:desolationRing.desc": "荒廃の重荷を鍛造し、それを背負う",
+
+  "advancement.enigmaticlegacy:allSpellstones": "石のグリモワール",
+  "advancement.enigmaticlegacy:allSpellstones.desc": "すべてのユニークな魔石を集める。それらをすべて組み合わせる方法があれば...",
+
+  "advancement.enigmaticlegacy:theCube": "この立方体は私の死を癒した",
+  "advancement.enigmaticlegacy:theCube.desc": "すべての魔石を強力かつ不自然な形へ無理やり押し込め、非ユークリッドの立方体を作成する",
+
+  "advancement.enigmaticlegacy:fabulousScroll": "空に触れる",
+  "advancement.enigmaticlegacy:fabulousScroll.desc": "創造主の恩寵を入手する",
+
+  "tooltip.enigmaticlegacy.holdShift": "§5§6Shift§5を長押しで詳細を表示。",
+
+  "tooltip.enigmaticlegacy.enigmaticItem1": "§d発動能力：",
+  "tooltip.enigmaticlegacy.enigmaticItem2": "§6― 壊滅的なウィザーの頭蓋骨を降らせる。",
+  "tooltip.enigmaticlegacy.enigmaticItemCooldown": "§dクールタイム： §6%1$s§6 秒",
+  "tooltip.enigmaticlegacy.enigmaticItem3": "§d常時能力：",
+  "tooltip.enigmaticlegacy.enigmaticItem4": "§5― 窒息、落下、衝突、圧力、空腹、虚無、",
+  "tooltip.enigmaticlegacy.enigmaticItem5": "§5  接触、炎、溶岩ダメージを無効化する。",
+  "tooltip.enigmaticlegacy.enigmaticItem6": "§5  ",
+  "tooltip.enigmaticlegacy.enigmaticItem7": "§5― ほとんどのデバフを無効化する。",
+  "tooltip.enigmaticlegacy.enigmaticItem8": "§5― 飛行能力を付与する。",
+  "tooltip.enigmaticlegacy.enigmaticItem9": "§5― 飛行中の採掘速度低下を補正する。",
+  "tooltip.enigmaticlegacy.enigmaticItem10": "§5― 装備中またはインベントリにある間、",
+  "tooltip.enigmaticlegacy.enigmaticItem11": "§5  あなたは不死となる。",
+
+  "tooltip.enigmaticlegacy.theCube1": "§d発動能力：",
+  "tooltip.enigmaticlegacy.theCube2": "§6― 三つの主要次元のいずれかのランダムな場所へテレポートする。",
+  "tooltip.enigmaticlegacy.theCube3": "§dクールタイム： §6%1$s§6 秒",
+  "tooltip.enigmaticlegacy.theCube4": "§d常時能力：",
+  "tooltip.enigmaticlegacy.theCube5": "§5― §6＋35％§d ダッシュ速度",
+  "tooltip.enigmaticlegacy.theCube6": "§5― §6＋100％§d 水泳速度",
+  "tooltip.enigmaticlegacy.theCube7": "§5― §6＋60％§d 採掘速度",
+  "tooltip.enigmaticlegacy.theCube8": "§5― §6＋40％§d 攻撃速度",
+  "tooltip.enigmaticlegacy.theCube9": "§5― §6＋1§d 幸運レベル",
+  "tooltip.enigmaticlegacy.theCube10": "§5― §6＋1§d 運勢",
+  "tooltip.enigmaticlegacy.theCube11": "§5― §6%1$s§6 を超えるダメージを与える攻撃を完全に無効化する。",
+  "tooltip.enigmaticlegacy.theCube12": "§5― §635％§d の確率§5で、飛来する攻撃や飛び道具を逸らす。",
+  "tooltip.enigmaticlegacy.theCube13": "§5― 近接攻撃を受けた時、攻撃者にランダムなデバフを与える。",
+  "tooltip.enigmaticlegacy.theCube14": "§5― 生物を倒すたびに、ランダムなバフを受ける。",
+  "tooltip.enigmaticlegacy.theCube15": "§5― 呼吸のための空気を必要としない。",
+  "tooltip.enigmaticlegacy.theCube16": "§5― 負のステータス効果を無効化する。",
+  "tooltip.enigmaticlegacy.theCube17": "§5― 圧力、落下、衝突、接触、テレポート、炎、",
+  "tooltip.enigmaticlegacy.theCube18": "§5  溶岩ダメージを無効化する。",
+  "tooltip.enigmaticlegacy.theCube19": "§5― 体力が §61 を超える§5場合、あらゆる致死ダメージを",
+  "tooltip.enigmaticlegacy.theCube20": "§5  体力が §61§5 残る状態で耐える。体力が §61§5 以下の場合は、",
+  "tooltip.enigmaticlegacy.theCube21": "§5  発動能力を試みて致死ダメージを防ぐ。成功すると体力を",
+  "tooltip.enigmaticlegacy.theCube22": "§5  §630％§5 まで回復し、強力なバフを付与する。",
+
+  "tooltip.enigmaticlegacy.xpTomeMode": "§dモード： %1$s",
+  "tooltip.enigmaticlegacy.code6": "§6",
+  "tooltip.enigmaticlegacy.codeD": "§d",
+  "tooltip.enigmaticlegacy.xpTomeStoredXP": "§d蓄積経験値：",
+  "tooltip.enigmaticlegacy.xpTomeUnits": "§6%1$s§6 ユニット、または §6%2$s§6 レベル",
+  "tooltip.enigmaticlegacy.xpTomeDeactivated": "§6停止中",
+  "tooltip.enigmaticlegacy.xpTomeAbsorption": "§6吸収",
+  "tooltip.enigmaticlegacy.xpTomeExtraction": "§6抽出",
+
+  "tooltip.enigmaticlegacy.xpTome1": "§5無制限に経験値を蓄積できる。",
+  "tooltip.enigmaticlegacy.xpTome2": "§5手に持った状態で §6Shift§5＋§6右クリック§5を押すと",
+  "tooltip.enigmaticlegacy.xpTome3": "§5有効化を切り替えられる。",
+  "tooltip.enigmaticlegacy.xpTome4": "§5§6右クリック§5でモードを切り替える。",
+  "tooltip.enigmaticlegacy.xpTome4_5": "§5関連するキー設定も使用可能。",
+  "tooltip.enigmaticlegacy.xpTome5": "§5§6吸収モード§5では、巻物スロットにある間、",
+  "tooltip.enigmaticlegacy.xpTome6": "§5あなたの経験値を消費して蓄積する。",
+  "tooltip.enigmaticlegacy.xpTome7": "§5§6抽出モード§5ではこの挙動が逆になり、",
+  "tooltip.enigmaticlegacy.xpTome8": "§5蓄積されたすべての経験値を、",
+  "tooltip.enigmaticlegacy.xpTome9": "§5あなたへ還元する。",
+  "tooltip.enigmaticlegacy.xpTome10": "§5有効な間、半径 §6%1$s§6 ブロック§5以内にある",
+  "tooltip.enigmaticlegacy.xpTome11": "§5経験値オーブを回収する。",
+
+  "tooltip.enigmaticlegacy.enigmaticAmulet1": "§5この世界に初めて足を踏み入れた時から、",
+  "tooltip.enigmaticlegacy.enigmaticAmulet2": "§5それはあなたの所有物だった。その起源や目的、",
+  "tooltip.enigmaticlegacy.enigmaticAmulet3": "§5あるいは目的があるのかさえ分かっていない ―",
+  "tooltip.enigmaticlegacy.enigmaticAmulet4": "§5時間はゆっくりと、砕かれた記憶の霞を",
+  "tooltip.enigmaticlegacy.enigmaticAmulet5": "§5洗い流していく。",
+  "tooltip.enigmaticlegacy.enigmaticAmulet6": "§5何か重要なことに関する記憶を...",
+  "tooltip.enigmaticlegacy.enigmaticAmulet1_alt": "§5それは奇妙なことに何かを彷彿とさせるが、",
+  "tooltip.enigmaticlegacy.enigmaticAmulet2_alt": "§5それが何なのか、まだ思い出すことができない。",
+  "tooltip.enigmaticlegacy.enigmaticAmulet3_alt": "§5時間はゆっくりと、失われた記憶の最後の痕跡を",
+  "tooltip.enigmaticlegacy.enigmaticAmulet4_alt": "§5洗い流していく...",
+  "tooltip.enigmaticlegacy.enigmaticAmuletInscription": "§5刻まれた名： §4%1$s",
+  "tooltip.enigmaticlegacy.enigmaticAmuletShift1": "§5装備中またはインベントリにある間に死亡すると、",
+  "tooltip.enigmaticlegacy.enigmaticAmuletShift2": "§5アイテム、ソウルクリスタル、経験値を保管する",
+  "tooltip.enigmaticlegacy.enigmaticAmuletShift3": "§6「異次元の器」§5を召喚する。",
+  "tooltip.enigmaticlegacy.enigmaticAmuletShift4": "§5",
+  "tooltip.enigmaticlegacy.enigmaticAmuletShift5": "§5器に近づくことで、失われたものを取り戻せる。",
+
+  "tooltip.enigmaticlegacy.enigmaticAmuletModifierRED": "§6＋%1$s §d攻撃ダメージ",
+  "tooltip.enigmaticlegacy.enigmaticAmuletModifierAQUA": "§6＋15％ §dダッシュ速度",
+  "tooltip.enigmaticlegacy.enigmaticAmuletModifierVIOLET": "§6＋15％ §dそらし確率",
+  "tooltip.enigmaticlegacy.enigmaticAmuletModifierMAGENTA": "§6―25％ §d重力",
+  "tooltip.enigmaticlegacy.enigmaticAmuletModifierGREEN": "§6＋25％ §d採掘速度",
+  "tooltip.enigmaticlegacy.enigmaticAmuletModifierBLACK": "§6＋10％ §d体力吸収",
+  "tooltip.enigmaticlegacy.enigmaticAmuletModifierBLUE": "§6＋25％ §d水泳速度",
+
+
+  "tooltip.enigmaticlegacy.magnetRing1": "§5半径 §6%1$s§6 ブロック§5以内のアイテムを引き寄せる。",
+  "tooltip.enigmaticlegacy.magnetRing2": "§5§6Shift§5を長押ししている間、この効果は停止する。",
+  "tooltip.enigmaticlegacy.magnetRing2_alt": "§5§6Shift§5を長押ししている間のみ効果を発揮する。",
+
+  "tooltip.enigmaticlegacy.extradimensionalEyeLocation": "§d登録地点：",
+  "tooltip.enigmaticlegacy.extradimensionalEyeX": "§d― X： §6%1$s",
+  "tooltip.enigmaticlegacy.extradimensionalEyeY": "§d― Y： §6%1$s",
+  "tooltip.enigmaticlegacy.extradimensionalEyeZ": "§d― Z： §6%1$s",
+  "tooltip.enigmaticlegacy.extradimensionalEyeDimension": "§6次元： §5%1$s",
+
+  "tooltip.enigmaticlegacy.overworld": "§2オーバーワールド",
+  "tooltip.enigmaticlegacy.nether": "§4ネザー",
+  "tooltip.enigmaticlegacy.end": "§5エンド",
+
+  "tooltip.enigmaticlegacy.extradimensionalEye1": "§5登録したい場所に立ち、§6Shift§5＋§6右クリック§5で",
+  "tooltip.enigmaticlegacy.extradimensionalEye2": "§5現在地を登録できる。",
+  "tooltip.enigmaticlegacy.extradimensionalEye3": "§5その後、生物に対して §6左クリック§5 すると、",
+  "tooltip.enigmaticlegacy.extradimensionalEye4": "§5同じ次元にいる限り、その生物を",
+  "tooltip.enigmaticlegacy.extradimensionalEye5": "§5登録地点へテレポートさせる。",
+  "tooltip.enigmaticlegacy.extradimensionalEye6": "§5",
+  "tooltip.enigmaticlegacy.extradimensionalEye7": "§6使用後に消失する。",
+
+  "tooltip.enigmaticlegacy.recallPotion1": "§5ベッド、あるいは §6リスポーンアンカー§5 の場所か、",
+  "tooltip.enigmaticlegacy.recallPotion2": "§5それらがない場合は §6オーバーワールドの中心§5 へ",
+  "tooltip.enigmaticlegacy.recallPotion3": "§5あなたを帰還させる。",
+
+  "tooltip.enigmaticlegacy.twistedMirror1": "§5鏡を覗き込むことで、ベッド、あるいは",
+  "tooltip.enigmaticlegacy.twistedMirror2": "§6リスポーンアンカー§5、または §6オーバーワールド§5",
+  "tooltip.enigmaticlegacy.twistedMirror3": "§6の中心§5へ帰還する。",
+
+  "tooltip.enigmaticlegacy.forbiddenAxeBeheadingChance": "§6＋%1$s §d斬首確率",
+  "tooltip.enigmaticlegacy.forbiddenAxe1": "§5倒したモンスターを斬首する確率がある。",
+  "tooltip.enigmaticlegacy.forbiddenAxe2": "§5ドロップ増加のレベルごとに §6＋%1$s§5 の",
+  "tooltip.enigmaticlegacy.forbiddenAxe3": "§5確率が全体の斬首確率に加算される。",
+
+  "tooltip.enigmaticlegacy.escapeTome1": "§5死亡した際、アイテムをベッド、あるいは",
+  "tooltip.enigmaticlegacy.escapeTome2": "§6リスポーンアンカー§5、または §6オーバーワールド§5",
+  "tooltip.enigmaticlegacy.escapeTome3": "§6の中心§5へ届ける。ただし、これ自体は",
+  "tooltip.enigmaticlegacy.escapeTome4": "§5死亡した場所に残される。",
+
+  "tooltip.enigmaticlegacy.superMagnetRing1": "§5半径 §6%1$s§6 ブロック§5以内にあるドロップ",
+  "tooltip.enigmaticlegacy.superMagnetRing2": "§5アイテムを即座に回収する。",
+  "tooltip.enigmaticlegacy.superMagnetRing3": "§5§6Shift§5を長押ししている間、この効果は停止する。",
+  "tooltip.enigmaticlegacy.superMagnetRing3_alt": "§5§6Shift§5を長押ししている間のみ効果を発揮する。",
+
+  "tooltip.enigmaticlegacy.heavenTome1": "§5有効な §6ビーコン§5 の範囲内において、経験値を",
+  "tooltip.enigmaticlegacy.heavenTome2": "§5徐々に消費することで飛行能力を与える。",
+  "tooltip.enigmaticlegacy.heavenTome3": "§5",
+  "tooltip.enigmaticlegacy.heavenTome4": "§5飛行中の採掘速度低下を補正する。",
+
+  "tooltip.enigmaticlegacy.fabulousScroll1": "§5経験値を急速に消費することで、自由に飛行する",
+  "tooltip.enigmaticlegacy.fabulousScroll2": "§5能力を与える。",
+  "tooltip.enigmaticlegacy.fabulousScroll3": "§5有効な §6ビーコン§5 の範囲内では、経験値の",
+  "tooltip.enigmaticlegacy.fabulousScroll4": "§5消費が完全に無効化される。",
+  "tooltip.enigmaticlegacy.fabulousScroll5": "§5飛行中の採掘速度低下を補正する。",
+
+  "tooltip.enigmaticlegacy.miningCharm1": "§6＋%1$s§d 採掘速度",
+  "tooltip.enigmaticlegacy.miningCharm2": "§6＋%1$s§d 幸運レベル",
+  "tooltip.enigmaticlegacy.miningCharm3": "§5地下にいる間、あなたに §6暗視§5 効果を付与する。",
+  "tooltip.enigmaticlegacy.miningCharm4": "§5この機能は、チャームを持った状態で",
+  "tooltip.enigmaticlegacy.miningCharm5": "§6右クリック§5を押すと無効化できる。",
+  "tooltip.enigmaticlegacy.miningCharmNightVision": "§d暗視： %1$s",
+
+  "tooltip.enigmaticlegacy.enderRing1": "§5インベントリ、またはキー設定を介して",
+  "tooltip.enigmaticlegacy.enderRing2": "§6エンダーチェスト§5へ遠隔アクセスできる。",
+
+  "tooltip.enigmaticlegacy.angelBlessing1": "§dActive ability：",
+  "tooltip.enigmaticlegacy.angelBlessing2": "§6― 視線の方向へ加速する。",
+  "tooltip.enigmaticlegacy.angelBlessingCooldown": "§dクールタイム： §6%1$s§6 秒",
+  "tooltip.enigmaticlegacy.angelBlessing3": "§d常時能力：",
+  "tooltip.enigmaticlegacy.angelBlessing4": "§5― 落下および衝突ダメージを無効化する。",
+  "tooltip.enigmaticlegacy.angelBlessing5": "§5― §6%1$s§d の確率§5で、飛来する飛び道具を逸らす。",
+  "tooltip.enigmaticlegacy.angelBlessing6": "§5― あなた自身の飛び道具が大幅に加速される。",
+  "tooltip.enigmaticlegacy.angelBlessing7": "§5― 空中でジャンプキーを押すことでも、",
+  "tooltip.enigmaticlegacy.angelBlessing8": "§5  発動能力を誘発できる。",
+  "tooltip.enigmaticlegacy.angelBlessing9": "§5― あなたは §6衰弱§5 と §6虚無ダメージ§5 に対して脆弱になる。",
+
+  "tooltip.enigmaticlegacy.eyeOfNebula1": "§d発動能力：",
+  "tooltip.enigmaticlegacy.eyeOfNebula2": "§6― 注視している生物の背後へテレポートする。",
+  "tooltip.enigmaticlegacy.eyeOfNebulaCooldown": "§dクールタイム： §6%1$s§6 秒",
+  "tooltip.enigmaticlegacy.eyeOfNebula3": "§d常時能力：",
+  "tooltip.enigmaticlegacy.eyeOfNebula4": "§5― §6%1$s§d 魔法ダメージ増加",
+  "tooltip.enigmaticlegacy.eyeOfNebula5": "§5― §6%1$s§d 魔法ダメージ耐性",
+  "tooltip.enigmaticlegacy.eyeOfNebula6": "§5― §6%1$s§d の確率§5で、あらゆる攻撃からテレポートして回避する。",
+  "tooltip.enigmaticlegacy.eyeOfNebula7": "§5― 発動能力の使用後、次の攻撃が強化され、",
+  "tooltip.enigmaticlegacy.eyeOfNebula8": "§5  §6＋%1$s§d の追加ダメージ§5を与える。",
+  "tooltip.enigmaticlegacy.eyeOfNebula9": "§5― §6エンダーパール§5 の使用によるダメージを無効化する。",
+  "tooltip.enigmaticlegacy.eyeOfNebula10": "§5― 水中にいる間、あなたは §6あらゆる§5 ダメージに対して脆弱になる。",
+
+  "tooltip.enigmaticlegacy.oceanStone1": "§d発動能力：",
+  "tooltip.enigmaticlegacy.oceanStone2": "§6― 経験値を大量に消費し、雷雨を発生させる。",
+  "tooltip.enigmaticlegacy.oceanStone3": "§6  ",
+  "tooltip.enigmaticlegacy.oceanStoneCooldown": "§dクールタイム： §6%1$s§6 秒",
+  "tooltip.enigmaticlegacy.oceanStone4": "§d常時能力：",
+  "tooltip.enigmaticlegacy.oceanStone5": "§5― 水中生物に対して §6%1$s§d のダメージ耐性§5を得る。",
+  "tooltip.enigmaticlegacy.oceanStone6": "§5― 水中で呼吸するための空気を必要としなくなる。",
+  "tooltip.enigmaticlegacy.oceanStone7": "§5― 水中にいる間、§6暗視§5 効果を付与する。",
+  "tooltip.enigmaticlegacy.oceanStone8": "§5― エンチャント「水中採掘」の効果を付与する。",
+  "tooltip.enigmaticlegacy.oceanStone9": "§5― 水中での重力を無効化する。",
+  "tooltip.enigmaticlegacy.oceanStone10": "§5― 水泳速度が大幅に上昇する。",
+  "tooltip.enigmaticlegacy.oceanStone11": "§5― あなたは §6炎ダメージ§5 に対して脆弱になる。",
+
+  "tooltip.enigmaticlegacy.blazingCore1": "§d発動能力：",
+  "tooltip.enigmaticlegacy.blazingCore2": "§4― なし。",
+  "tooltip.enigmaticlegacy.blazingCoreCooldown": "§dクールタイム： §6%1$s§6 秒",
+  "tooltip.enigmaticlegacy.blazingCore3": "§d常時能力：",
+  "tooltip.enigmaticlegacy.blazingCore4": "§5― 炎を無効化する。",
+  "tooltip.enigmaticlegacy.blazingCore5": "§5― 溶岩に対する一時的な耐性を得る。",
+  "tooltip.enigmaticlegacy.blazingCore6": "§5― 近接攻撃をしてきた相手を燃え上がらせる。",
+  "tooltip.enigmaticlegacy.blazingCore7": "§5― 溶岩内での視界が大幅に改善される。",
+  "tooltip.enigmaticlegacy.blazingCore8": "§5― §6溶岩の心§5 を除き、付与されたステータス効果の",
+  "tooltip.enigmaticlegacy.blazingCore9": "§5  持続時間の減少速度が2倍になる。",
+  "tooltip.enigmaticlegacy.blazingCore10": "§5― §6溶岩の心§5 の持続時間が2倍になる。",
+  "tooltip.enigmaticlegacy.blazingCore11": "§5― あなたは水中生物に対して脆弱になる。",
+
+  "tooltip.enigmaticlegacy.golemHeart1": "§d発動能力：",
+  "tooltip.enigmaticlegacy.golemHeart2": "§4― なし。",
+  "tooltip.enigmaticlegacy.golemHeartCooldown": "§dクールタイム： §6%1$s§6 秒",
+  "tooltip.enigmaticlegacy.golemHeart3": "§d常時能力：",
+  "tooltip.enigmaticlegacy.golemHeart4": "§5― §6＋%1$s§d 防具ポイント",
+  "tooltip.enigmaticlegacy.golemHeart5": "§5― 防具を一切装備していない場合、代わりに",
+  "tooltip.enigmaticlegacy.golemHeart6": "§5  §6＋%1$s§d 防具ポイント§5、§6＋%2$s§d 防具強度§5、",
+  "tooltip.enigmaticlegacy.golemHeart7": "§5  および §6＋%1$s§d 爆発耐性§5 を得る。",
+  "tooltip.enigmaticlegacy.golemHeart8": "§5― §6%1$s§d 近接ダメージ耐性",
+  "tooltip.enigmaticlegacy.golemHeart9": "§5― §6%1$s§d ノックバック耐性",
+  "tooltip.enigmaticlegacy.golemHeart10": "§5― 圧力および接触ダメージを無効化する。",
+  "tooltip.enigmaticlegacy.golemHeart11": "§5― あなたは §6魔法ダメージ§5 に対して脆弱になる。",
+
+  "tooltip.enigmaticlegacy.voidPearl1": "§d発動能力：",
+  "tooltip.enigmaticlegacy.voidPearl2": "§4― なし。",
+  "tooltip.enigmaticlegacy.voidPearlCooldown": "§dクールタイム： §6%1$s§6 秒",
+  "tooltip.enigmaticlegacy.voidPearl3": "§d常時能力：",
+  "tooltip.enigmaticlegacy.voidPearl4": "§5― 空腹を感じなくなるが、再生能力が",
+  "tooltip.enigmaticlegacy.voidPearl5": "§5  大幅に低下する。",
+  "tooltip.enigmaticlegacy.voidPearl6": "§5― 呼吸のための空気を必要としない。",
+  "tooltip.enigmaticlegacy.voidPearl7": "§5― あらゆるステータス効果を無効化する。",
+  "tooltip.enigmaticlegacy.voidPearl8": "§5― あなたの攻撃は §6衰弱§5 を付与する。",
+  "tooltip.enigmaticlegacy.voidPearl9": "§5― 周囲の生物が闇にさらされている場合、",
+  "tooltip.enigmaticlegacy.voidPearl10": "§5  多大なダメージと重いデバフを与える。",
+  "tooltip.enigmaticlegacy.voidPearl11": "§5  §6スカイフラップ§5 は明るさに関わらず影響を受ける。",
+  "tooltip.enigmaticlegacy.voidPearl12": "§5  ",
+  "tooltip.enigmaticlegacy.voidPearl13": "§5― 本来なら致死的なダメージを、 §6%1$s§d の確率§5で",
+  "tooltip.enigmaticlegacy.voidPearl14": "§5  耐えることができる。",
+
+  "tooltip.enigmaticlegacy.monsterCharm1": "§6＋%1$s§d ダメージ§5【アンデッド生物】",
+  "tooltip.enigmaticlegacy.monsterCharm2": "§6＋%1$s§d ダメージ§5【その他の敵対生物】",
+  "tooltip.enigmaticlegacy.monsterCharm3": "§6＋1 §dドロップ増加レベル",
+  "tooltip.enigmaticlegacy.monsterCharm4": "§5倒したモンスターが2倍の経験値をドロップする。",
+
+  "tooltip.enigmaticlegacy.mendingMixture1": "§5クラフト枠で道具、武器、防具のいずれかと",
+  "tooltip.enigmaticlegacy.mendingMixture2": "§5組み合わせることで、耐久値を完全に回復する。",
+
+  "tooltip.enigmaticlegacy.unholyGrail1": "§5これから飲むのは避けたほうがいいだろう...",
+
+  "tooltip.enigmaticlegacy.megaSponge1": "§5水の中に入ると、周囲の狭い範囲の水を",
+  "tooltip.enigmaticlegacy.megaSponge2": "§5瞬時に吸収する。",
+
+  "tooltip.enigmaticlegacy.lootGeneratorCurrent": "§d現在のルートテーブル：",
+  "tooltip.enigmaticlegacy.lootGenerator1": "§5§6右クリック§5または §6Shift§5＋§6右クリック§5で、",
+  "tooltip.enigmaticlegacy.lootGenerator2": "§5ルートテーブルの一覧を前後へ切り替える。",
+
+  "tooltip.enigmaticlegacy.lootGenerator3": "§5チェストの上面に §6Shift§5＋§6右クリック§5をすると、",
+  "tooltip.enigmaticlegacy.lootGenerator4": "§5選択されたテーブルからランダムに生成された",
+  "tooltip.enigmaticlegacy.lootGenerator5": "§5ルートを補充する。底面をクリックすると、",
+  "tooltip.enigmaticlegacy.lootGenerator6": "§5§632768§5 回の推定ルート生成結果を",
+  "tooltip.enigmaticlegacy.lootGenerator7": "§5§6latest.log§5 ファイルに出力する。",
+  "tooltip.enigmaticlegacy.lootGenerator8": "§5チェストの他の側面をクリックすると、",
+  "tooltip.enigmaticlegacy.lootGenerator9": "§5中身をすべて消し去ってしまう。",
+
+  "tooltip.enigmaticlegacy.etheriumArmor1": "§5装備中は不可視になる。",
+  "tooltip.enigmaticlegacy.etheriumHelmet1": "§5装備中は不可視になる。",
+  "tooltip.enigmaticlegacy.etheriumChestplate1": "§5装備中は不可視になる。",
+  "tooltip.enigmaticlegacy.etheriumLeggings1": "§5装備中は不可視になる。",
+  "tooltip.enigmaticlegacy.etheriumBoots1": "§5装備中は不可視になる。",
+  "tooltip.enigmaticlegacy.etheriumArmorSetBonus1": "§dセットボーナス：",
+  "tooltip.enigmaticlegacy.etheriumArmorSetBonus2": "§5― 体力が §6%1$s§5 を下回ると、強力なシールドを",
+  "tooltip.enigmaticlegacy.etheriumArmorSetBonus3": "§5  生成する。これはほとんどの飛び道具を反射し、",
+  "tooltip.enigmaticlegacy.etheriumArmorSetBonus4": "§5  §6%1$s§6 のダメージ耐性§5を与え、攻撃してきた",
+  "tooltip.enigmaticlegacy.etheriumArmorSetBonus5": "§5  生物をノックバックさせる。",
+  "tooltip.enigmaticlegacy.etheriumArmorSetBonus6": "§5  ",
+
+  "tooltip.enigmaticlegacy.loreInscriber1": "§6右クリック§5で §6GUI§5 を開く。§6伝承の断片§5を",
+  "tooltip.enigmaticlegacy.loreInscriber2": "§5挿入し、書式設定された名前と説明文を書き込む。",
+
+  "tooltip.enigmaticlegacy.loreInscriber3": "§5名前フィールド内の任意のテキストに、 §d&§6【0-f】§5を",
+  "tooltip.enigmaticlegacy.loreInscriber4": "§5使用してカラーコードを適用できる。",
+  "tooltip.enigmaticlegacy.loreInscriber5": "§5§d&§6【k/l/m/n/o/r】§5でフォント書式を適用できる。",
+
+  "tooltip.enigmaticlegacy.loreInscriber6": "§5行の先頭に §d!§5 を付けると説明文として追加され、",
+  "tooltip.enigmaticlegacy.loreInscriber7": "§5または §d!§6【0-99】§5を付けると指定されたインデックスの",
+  "tooltip.enigmaticlegacy.loreInscriber8": "§5説明文を設定できる。",
+
+  "tooltip.enigmaticlegacy.loreInscriber9": "§5§d-!§5 または §d-!§6【0-99】§5を入力すると、最後に追加された",
+  "tooltip.enigmaticlegacy.loreInscriber10": "§5説明文、または指定されたインデックスの説明文を",
+  "tooltip.enigmaticlegacy.loreInscriber11": "§5それぞれ削除する。",
+
+  "tooltip.enigmaticlegacy.loreFragment1": "§5§6設計者のインク瓶§5を使って、名前と",
+  "tooltip.enigmaticlegacy.loreFragment2": "§5説明文を書き込むことができる。",
+  "tooltip.enigmaticlegacy.loreFragment3": "§5完了後、§6金床§5で任意のアイテムと組み合わせると、",
+  "tooltip.enigmaticlegacy.loreFragment4": "§5その内容をアイテムに付与できる。",
+
+  "tooltip.enigmaticlegacy.aoeDisabled": "§c範囲効果が抑制されている。",
+  "tooltip.enigmaticlegacy.abilityDisabled": "§c特殊能力が抑制されている。",
+
+  "tooltip.enigmaticlegacy.etheriumPickaxe1": "§5§6%1$sx%1$sx%2$s§5 の範囲のブロックを採掘する。",
+  "tooltip.enigmaticlegacy.etheriumPickaxe2": "§5§6Shift§5を長押しでこの効果を抑制する。",
+  "tooltip.enigmaticlegacy.etheriumPickaxe3": "§5§6Shift§5＋§6右クリック§5で切り替え。",
+
+  "tooltip.enigmaticlegacy.etheriumAxe1": "§5§6%1$sx%1$sx%1$s§5 の範囲の木と葉を伐採する。",
+  "tooltip.enigmaticlegacy.etheriumAxe2": "§5§6Shift§5を長押しでこの効果を抑制する。",
+  "tooltip.enigmaticlegacy.etheriumAxe3": "§5§6Shift§5＋§6右クリック§5で切り替え。",
+
+  "tooltip.enigmaticlegacy.etheriumShovel1": "§5§6%1$sx%1$sx%2$s§5 の範囲のブロックを掘削する。",
+  "tooltip.enigmaticlegacy.etheriumShovel2": "§5§6Shift§5を長押しでこの効果を抑制する。",
+  "tooltip.enigmaticlegacy.etheriumShovel3": "§5§6Shift§5＋§6右クリック§5で切り替え。",
+
+  "tooltip.enigmaticlegacy.etheriumSword1": "§5手に持った状態で §6右クリック§5 を押すと、",
+  "tooltip.enigmaticlegacy.etheriumSword2": "§5視線の反対方向へあなたを投げ出す。",
+  "tooltip.enigmaticlegacy.etheriumSword3": "§5",
+  "tooltip.enigmaticlegacy.etheriumSword4": "§5この能力には §6%1$s 秒§5 のクールタイムがある。",
+  "tooltip.enigmaticlegacy.etheriumSword5": "§5§6Shift§5＋§6右クリック§5でこれを抑制する。",
+
+  "tooltip.enigmaticlegacy.etheriumScythe1": "§5§6%1$sx%1$sx%1$s§5 の範囲の植物を収穫する。",
+  "tooltip.enigmaticlegacy.etheriumScythe2": "§5§6%1$sx%1$sx1§5 の範囲を耕す。",
+  "tooltip.enigmaticlegacy.etheriumScythe3": "§5§6Shift§5を長押しでこれらの効果を抑制する。",
+  "tooltip.enigmaticlegacy.etheriumScythe4": "§5§6Shift§5＋§6右クリック§5で切り替え。",
+
+  "tooltip.enigmaticlegacy.voidStoneHoldCtrl": "§5§6Ctrl§5を長押しで消費対象アイテムを表示。",
+  "tooltip.enigmaticlegacy.voidStoneCtrlList": "§5消費アイテムの一覧：",
+  "tooltip.enigmaticlegacy.voidStone1": "§5インベントリ内で、これをドラッグしながら別の",
+  "tooltip.enigmaticlegacy.voidStone2": "§5スタックに §6右クリック§5 するか、または礎石を",
+  "tooltip.enigmaticlegacy.voidStone3": "§5スタックの上にドラッグするとそのスタックを破壊する。",
+  "tooltip.enigmaticlegacy.voidStone4": "§5クラフト枠で任意のアイテムと組み合わせると、",
+  "tooltip.enigmaticlegacy.voidStone5": "§5そのアイテムを自動消費するように登録する。",
+  "tooltip.enigmaticlegacy.voidStone6": "§5何も組み合わせなければ一覧を消去する。",
+  "tooltip.enigmaticlegacy.voidStone7": "§5持った状態で §6右クリック§5 を押すとモード変更、",
+  "tooltip.enigmaticlegacy.voidStone8": "§5§6Shift§5＋§6右クリック§5で有効化の状態を切り替える。",
+  "tooltip.enigmaticlegacy.voidStone9": "§5§6全吸収モード§5では、インベントリ内の",
+  "tooltip.enigmaticlegacy.voidStone10": "§5登録アイテムを完全になくなるまで消費する。",
+  "tooltip.enigmaticlegacy.voidStone11": "§6最後の一つモード§5では、各アイテムのスタックを",
+  "tooltip.enigmaticlegacy.voidStone12": "§5常に一つだけ残し、それ以上の分を消費する。",
+  "tooltip.enigmaticlegacy.voidStone13": "§5",
+  "tooltip.enigmaticlegacy.voidStone14": "§6超過吸収モード§5では、インベントリに空きがない",
+  "tooltip.enigmaticlegacy.voidStone15": "§5場合にのみ、空きができるまで消費を行う。",
+  "tooltip.enigmaticlegacy.voidStone16": "§5",
+
+  "tooltip.enigmaticlegacy.voidStoneModeDesc": "§dモード： §6%1$s",
+  "tooltip.enigmaticlegacy.voidStoneMode0": "§6全吸収",
+  "tooltip.enigmaticlegacy.voidStoneMode1": "§6最後の一つ",
+  "tooltip.enigmaticlegacy.voidStoneMode2": "§6超過吸収",
+  "tooltip.enigmaticlegacy.voidStoneModeInactive": "§6停止中",
+
+  "tooltip.enigmaticlegacy.astralBreaker1": "§5§6%1$sx%1$sx%2$s§5 の範囲のブロックを破壊する。",
+  "tooltip.enigmaticlegacy.astralBreaker2": "§5§6Shift§5を長押しでこの効果を抑制する。",
+  "tooltip.enigmaticlegacy.astralBreaker3": "§5§6Shift§5＋§6右クリック§5で切り替え。",
+  "tooltip.enigmaticlegacy.astralBreaker4": "§5ほとんどのブロックに対して有効。",
+
+  "tooltip.enigmaticlegacy.enchantmentTransposer1": "§5クラフト枠でエンチャントされたアイテムと組み合わせ、",
+  "tooltip.enigmaticlegacy.enchantmentTransposer2": "§5アイテムからすべてのエンチャントを魔導書へ移す。",
+  "tooltip.enigmaticlegacy.enchantmentTransposer3": "§5魔導書は §6エンチャント本§5 へと変化する。",
+
+  "tooltip.enigmaticlegacy.curseTransposer1": "§5クラフト枠でエンチャントされたアイテムと組み合わせ、",
+  "tooltip.enigmaticlegacy.curseTransposer2": "§5アイテムからすべての呪いのみを魔導書へ移す。",
+  "tooltip.enigmaticlegacy.curseTransposer3": "§5魔導書は §6エンチャント本§5 へと変化する。",
+
+  "tooltip.enigmaticlegacy.boundToPlayer": "§5紐付け先： §6%1$s",
+
+  "tooltip.enigmaticlegacy.revelationTome1": "§5この魔導書の多くの頁は失われたか、あるいは",
+  "tooltip.enigmaticlegacy.revelationTome2": "§5容赦なき時の流れによって判読不能だが、",
+  "tooltip.enigmaticlegacy.revelationTome3": "§5未だ古の研究や伝承の断片が記されている。",
+  "tooltip.enigmaticlegacy.revelationTome4": "§5",
+
+  "tooltip.enigmaticlegacy.revelationTomeClick": "§6クリックして解読する。",
+  "tooltip.enigmaticlegacy.revelationTomeMarkRead": "§cあなたはこの本をすでに読んでいる。",
+
+  "tooltip.enigmaticlegacy.theAcknowledgment1": "§5啓示のまばゆき光は、それを受け入れぬ者を",
+  "tooltip.enigmaticlegacy.theAcknowledgment2": "§5焼き尽くすだろう。",
+
+  "tooltip.enigmaticlegacy.cursed_scroll1": "§6＋%1$s §d攻撃ダメージ",
+  "tooltip.enigmaticlegacy.cursed_scroll2": "§6＋%1$s §d採掘速度",
+  "tooltip.enigmaticlegacy.cursed_scroll3": "§6＋%1$s §d自然治癒",
+  "tooltip.enigmaticlegacy.cursed_scroll4": "§5これらの特性は、装備品が受けている",
+  "tooltip.enigmaticlegacy.cursed_scroll5": "§5呪いの総数によって倍増する。",
+  "tooltip.enigmaticlegacy.cursed_scroll6": "§d現在の特性：",
+  "tooltip.enigmaticlegacy.cursed_scroll7": "§6＋%1$s §d攻撃ダメージ",
+  "tooltip.enigmaticlegacy.cursed_scroll8": "§6＋%1$s §d採掘速度",
+  "tooltip.enigmaticlegacy.cursed_scroll9": "§6＋%1$s §d自然治癒",
+
+  "tooltip.enigmaticlegacy.berserk_charm1": "§6＋%1$s §d攻撃ダメージ",
+  "tooltip.enigmaticlegacy.berserk_charm2": "§6＋%1$s §d攻撃速度",
+  "tooltip.enigmaticlegacy.berserk_charm3": "§6＋%1$s §d移動速度",
+  "tooltip.enigmaticlegacy.berserk_charm4": "§6＋%1$s §dダメージ耐性",
+  "tooltip.enigmaticlegacy.berserk_charm5": "§5これらの特性は、現在の体力が最大値から",
+  "tooltip.enigmaticlegacy.berserk_charm6": "§5失われている割合に応じて増加する。",
+  "tooltip.enigmaticlegacy.berserk_charm7": "§d現在の特性：",
+  "tooltip.enigmaticlegacy.berserk_charm8": "§6＋%1$s §d攻撃ダメージ",
+  "tooltip.enigmaticlegacy.berserk_charm9": "§6＋%1$s §d攻撃速度",
+  "tooltip.enigmaticlegacy.berserk_charm10": "§6＋%1$s §d移動速度",
+  "tooltip.enigmaticlegacy.berserk_charm11": "§6＋%1$s §dダメージ耐性",
+
+  "tooltip.enigmaticlegacy.eternallyBound1": "§5一度装備すれば、それはあなたの一部となる。",
+  "tooltip.enigmaticlegacy.eternallyBound2": "§4この指輪はあなたと共に永遠にあり続けるだろう。",
+  "tooltip.enigmaticlegacy.eternallyBound2_creative": "§6神の如き力があれば、外すことも可能だ。",
+  "tooltip.enigmaticlegacy.cursedRing3": "§dこれを身につける者に、七つの呪いが降りかかる：",
+  "tooltip.enigmaticlegacy.cursedRing4": "§5― あなたは §6あらゆる§5 ダメージを2倍受ける。",
+  "tooltip.enigmaticlegacy.cursedRing4_alt": "§5― あなたは §6あらゆる§5 ダメージを §6%1$s§5 受ける。",
+  "tooltip.enigmaticlegacy.cursedRing5": "§5― 中立生物があなたに対して敵対的になる。",
+  "tooltip.enigmaticlegacy.cursedRing6": "§5― 防具の効率が §6%1$s§5 低下する。",
+  "tooltip.enigmaticlegacy.cursedRing7": "§5― モンスターに与えるダメージが §6%1$s§5 減少する。",
+  "tooltip.enigmaticlegacy.cursedRing8": "§5― 火がついた際、永遠に燃え続ける。",
+  "tooltip.enigmaticlegacy.cursedRing9": "§5― 死ぬたびに魂が引き裂かれる。",
+  "tooltip.enigmaticlegacy.cursedRing10": "§5― あなたは不治の不眠症に苦しむ。",
+  "tooltip.enigmaticlegacy.cursedRing11": "§dこれに耐えし者には、七つの祝福が与えられる：",
+  "tooltip.enigmaticlegacy.cursedRing12": "§5― §6＋%1$s§d ドロップ増加レベル",
+  "tooltip.enigmaticlegacy.cursedRing13": "§5― §6＋%1$s§d 幸運レベル",
+  "tooltip.enigmaticlegacy.cursedRing14": "§5― §6＋%1$s§5 §d経験値§5ドロップ増加。",
+  "tooltip.enigmaticlegacy.cursedRing15": "§5― §6＋%1$s§d エンチャント強度§5【エンチャントテーブル】",
+  "tooltip.enigmaticlegacy.cursedRing16": "§5― 一部の生物からユニークドロップを入手可能。",
+  "tooltip.enigmaticlegacy.cursedRing17": "§5― §6エンダーの指輪§5 の機能を内蔵。",
+  "tooltip.enigmaticlegacy.cursedRing18": "§5― ユニークな遺物を作成・使用可能。",
+  "tooltip.enigmaticlegacy.cursedRingLore1": "§5かつて太古の神によって鍛えられたその指輪は、",
+  "tooltip.enigmaticlegacy.cursedRingLore2": "§5計り知れぬ富と力を約束し、凡夫も超越者も",
+  "tooltip.enigmaticlegacy.cursedRingLore3": "§5等しく誘惑する...",
+  "tooltip.enigmaticlegacy.cursedRingLore4": "§5傲慢か無知か、その力を制御できると信じる",
+  "tooltip.enigmaticlegacy.cursedRingLore5": "§5者たちの末路は、言葉を絶するほどの",
+  "tooltip.enigmaticlegacy.cursedRingLore6": "§5苦しみによってのみ支払われることになる。",
+
+  "tooltip.enigmaticlegacy.cursedOnesOnly1": "七つの呪いを背負う者のみが、",
+  "tooltip.enigmaticlegacy.cursedOnesOnly2": "このアイテムを手にし、扱う力を得る。",
+
+  "tooltip.enigmaticlegacy.worthyOnesOnly1": "§5このアイテムを入手するための犠牲は甚大だ ―",
+  "tooltip.enigmaticlegacy.worthyOnesOnly2": "§5この世界での時間の §699.5％§5 を、",
+  "tooltip.enigmaticlegacy.worthyOnesOnly3": "§6七つの呪い§5に苦しみながら過ごさねばならない。",
+  "tooltip.enigmaticlegacy.worthyOnesOnly4": "現在のあなたの計測時間は次の通りだ：",
+
+  "tooltip.enigmaticlegacy.tainted1": "§5呪われし者の存在によって、わずかに汚染されている。",
+  "tooltip.enigmaticlegacy.tainted2": "§5呪われし者の接触によって汚染されている。",
+
+  "tooltip.enigmaticlegacy.theTwist1": "§5すべてを奪い去るための道程において、",
+  "tooltip.enigmaticlegacy.theTwist2": "§5これ以上に知るべき術はない...",
+  "tooltip.enigmaticlegacy.theTwist3": "§5対ボスおよび対プレイヤー：",
+  "tooltip.enigmaticlegacy.theTwist4": "§d§6第四の呪い§d の変質：",
+  "tooltip.enigmaticlegacy.theTwist5": "§5― 常にフルダメージを与える。",
+  "tooltip.enigmaticlegacy.theTwist6": "§6＋§6%1$s§d ダメージ§5【対ボス・プレイヤー】",
+  "tooltip.enigmaticlegacy.theTwist7": "§6＋§6%1$s§d ノックバック",
+
+  "tooltip.enigmaticlegacy.animalGuidebook1": "§5インベントリにある間、あなたの攻撃は",
+  "tooltip.enigmaticlegacy.animalGuidebook2": "§5動物にダメージを与えない。",
+  "tooltip.enigmaticlegacy.animalGuidebook3": "§6ホグリン§5をあなたの周囲で中立化させる。",
+  "tooltip.enigmaticlegacy.animalGuidebook4": "§d§6第二の呪い§d の変質：",
+  "tooltip.enigmaticlegacy.animalGuidebook5": "§5― 懐かせることのできる動物は中立を保つ。",
+  "tooltip.enigmaticlegacy.animalGuidebookCreative1": "§6エンティティを右クリックして、それが呪いの",
+  "tooltip.enigmaticlegacy.animalGuidebookCreative2": "§6変質効果の対象となるかを確認できる。",
+
+  "tooltip.enigmaticlegacy.hunterGuidebook1": "§5インベントリにある間、半径 §6%1$s§6 ブロック",
+  "tooltip.enigmaticlegacy.hunterGuidebook2": "§5以内のペットが受けるダメージを、",
+  "tooltip.enigmaticlegacy.hunterGuidebook3": "§5あなたの体力へと肩代わりする。",
+  "tooltip.enigmaticlegacy.hunterGuidebook4": "§5§6動物との絆の導き§5も所持している場合、",
+  "tooltip.enigmaticlegacy.hunterGuidebook5": "§5肩代わりするダメージを §6%1$s§5 軽減する。",
+
+  "tooltip.enigmaticlegacy.guardianHeart1": "§5インベントリにある間、半径 §6%1$s§6 ブロック",
+  "tooltip.enigmaticlegacy.guardianHeart2": "§5以内の §6ガーディアン§5 が中立化し、",
+  "tooltip.enigmaticlegacy.guardianHeart3": "§5代わりに付近のモンスターを狙うようになる。",
+  "tooltip.enigmaticlegacy.guardianHeart4": "§5ホットバーにある間、半径 §6%1$s§6 ブロック",
+  "tooltip.enigmaticlegacy.guardianHeart5": "§5以内のモンスターを注視すると、それを",
+  "tooltip.enigmaticlegacy.guardianHeart6": "§5一時的に激昂させ、筋力を増大させて、",
+  "tooltip.enigmaticlegacy.guardianHeart7": "§5半径 §6%1$s§6 ブロック以内の他のモンスターへ",
+  "tooltip.enigmaticlegacy.guardianHeart8": "§5ターゲットを強制的に変更させる。",
+  "tooltip.enigmaticlegacy.guardianHeart9": "§5周囲のモンスターも、その激昂した個体を",
+  "tooltip.enigmaticlegacy.guardianHeart10": "§5最優先で攻撃するようになる。",
+  "tooltip.enigmaticlegacy.guardianHeart11": "§6一部のモンスターには効果がない。",
+  "tooltip.enigmaticlegacy.guardianHeart12": "§5この能力には §6%1$s 秒§5 のクールタイムがある。",
+
+  "tooltip.enigmaticlegacy.forbiddenFruitLore": "§5知識こそが最大の贈り物である。",
+  "tooltip.enigmaticlegacy.forbiddenFruit1": "§5この果実を食した後、あなたは二度と空腹を",
+  "tooltip.enigmaticlegacy.forbiddenFruit2": "§5感じることはない。だが、あらゆる再生効果は",
+  "tooltip.enigmaticlegacy.forbiddenFruit3": "§5§6%1$s§5 弱体化する。",
+
+  "tooltip.enigmaticlegacy.astralFruit1": "§5食すことで §6＋1§d 指輪スロット §5を永続的に得る。",
+
+  "tooltip.enigmaticlegacy.redemptionPotion1": "§5§6禁断の果実§5を食したことによる原罪を",
+  "tooltip.enigmaticlegacy.redemptionPotion2": "§5贖い、リセットすることを可能にする。",
+
+  "tooltip.enigmaticlegacy.evilEssence1": "§5§6ウィザー§5の魂から引き剥がされた、",
+  "tooltip.enigmaticlegacy.evilEssence2": "§5生のままの荒々しいエネルギーの具現。",
+
+  "tooltip.enigmaticlegacy.goldenRing1": "§5装備中、§6ピグリン§5を中立化させる。",
+  "tooltip.enigmaticlegacy.goldenRing1Cursed": "§5§m装備中、§6§mピグリン§5§mを中立化させる。",
+
+  "tooltip.enigmaticlegacy.enchantersPearl1": "§6＋1§d チャームスロット",
+  "tooltip.enigmaticlegacy.enchantersPearl2": "§5§6エンチャントテーブル§5の使用時に、より",
+  "tooltip.enigmaticlegacy.enchantersPearl3": "§5多くの、かつ強力なエンチャントが得られる。",
+  "tooltip.enigmaticlegacy.enchantersPearl4": "§5呪いやお宝エンチャントが同時に出現する",
+  "tooltip.enigmaticlegacy.enchantersPearl5": "§5可能性がある。",
+  "tooltip.enigmaticlegacy.enchantersPearl6": "§5エンチャントに §6ラピスラズリ§5 を必要としない。",
+
+  "tooltip.enigmaticlegacy.cursedStone1": "§5§6ネザー§5にて、広大な溶岩湖の真ん中で死亡した際、",
+  "tooltip.enigmaticlegacy.cursedStone2": "§5この石がインベントリにあれば、",
+  "tooltip.enigmaticlegacy.cursedStone3": "§6七つの呪いの指輪§5を恒久的に破壊し、",
+  "tooltip.enigmaticlegacy.cursedStone4": "§5所持している §6ソウルクリスタル§5 を一つ失う。",
+  "tooltip.enigmaticlegacy.cursedStone5": "§5",
+  "tooltip.enigmaticlegacy.cursedStone6": "§4この行為は取り消せない。",
+
+  "tooltip.enigmaticlegacy.soulCrystal1": "§6右クリック§5でクリスタルを吸収し、",
+  "tooltip.enigmaticlegacy.soulCrystal2": "§5失った §6ソウルクリスタル§5 を一つ回復する。",
+
+  "tooltip.enigmaticlegacy.avariceScroll1": "§6＋%1$s§d 幸運レベル",
+  "tooltip.enigmaticlegacy.avariceScroll2": "§5§6第二の呪い§5に反して、§6ピグリン§5を中立化させる。",
+  "tooltip.enigmaticlegacy.avariceScroll3": "§5彼らとの物々交換は、約 §6100％§5 有益になる。",
+  "tooltip.enigmaticlegacy.avariceScroll4": "§5",
+  "tooltip.enigmaticlegacy.avariceScroll5": "§5倒した敵から §6%1$s§6 の確率で §6エメラルド1個§5 を",
+  "tooltip.enigmaticlegacy.avariceScroll6": "§5ドロップさせる。",
+  "tooltip.enigmaticlegacy.avariceScroll7": "§5村人の取引が §635％ 割引§5 される。",
+
+  "tooltip.enigmaticlegacy.infinimeal1": "§5無限に使える §6骨粉§5 として機能する。",
+  "tooltip.enigmaticlegacy.infinimeal2": "§5§6サボテン§5、§6コーラスプラント§5、§6ネザーウォート§5、",
+  "tooltip.enigmaticlegacy.infinimeal3": "§6サトウキビ§5、§6ツタ§5にも効果がある。",
+
+  "tooltip.enigmaticlegacy.unwitnessedAmuletHoldShift": "§5§6Shift§5を長押しするべきだろう。",
+  "tooltip.enigmaticlegacy.unwitnessedAmuletShift1": "§5この遺物に手を伸ばした最初の者に紐付けられ、",
+  "tooltip.enigmaticlegacy.unwitnessedAmuletShift2": "§5その輝ける瞬間に、選ばれし所有者の運命は",
+  "tooltip.enigmaticlegacy.unwitnessedAmuletShift3": "§5あらかじめ定められることになる。",
+  "tooltip.enigmaticlegacy.unwitnessedAmuletShift4": "§5",
+
+  "tooltip.enigmaticlegacy.twistedPotion1": "§5あなたが最後に死亡した場所へテレポートする。",
+  "tooltip.enigmaticlegacy.twistedPotion2": "§5ただし、引き換えに死の淵に立たされる",
+  "tooltip.enigmaticlegacy.twistedPotion3": "§5ことになるだろう。",
+
+  "tooltip.enigmaticlegacy.infernalShield1": "§6装備時：",
+  "tooltip.enigmaticlegacy.infernalShield2": "§5― 炎上している際に消火する。",
+  "tooltip.enigmaticlegacy.infernalShield3": "§6ガード時：",
+  "tooltip.enigmaticlegacy.infernalShield4": "§5― 構えてから即座に攻撃を防ぐことができる。",
+  "tooltip.enigmaticlegacy.infernalShield5": "§5― エンチャント「貫通」が付与された矢を防げる。",
+  "tooltip.enigmaticlegacy.infernalShield6": "§5― 通常の盾に有効な武器を使われても、",
+  "tooltip.enigmaticlegacy.infernalShield7": "§5  ガードを崩されることがない。",
+  "tooltip.enigmaticlegacy.infernalShield8": "§5― 近接攻撃を防いだ際、攻撃者を燃え上がらせる。",
+  "tooltip.enigmaticlegacy.infernalShield9": "§5― ガード成功ごとに §6焦熱の剛力§5 を蓄積するが、",
+  "tooltip.enigmaticlegacy.infernalShield10": "§5  ダメージを受けると効果は消失する。",
+  "tooltip.enigmaticlegacy.infernalShield11": "§5― 背後からの攻撃は §650％§5 の追加ダメージを受ける。",
+
+  "tooltip.enigmaticlegacy.abyssalHeart1": "§5それは生きている。そして見ている。この世界が",
+  "tooltip.enigmaticlegacy.abyssalHeart2": "§5これほど異質で、不浄で、不可解で、狂気を",
+  "tooltip.enigmaticlegacy.abyssalHeart3": "§5誘発するものの視線に震えたことは、",
+  "tooltip.enigmaticlegacy.abyssalHeart4": "§5かつて一度もなかった。",
+
+  "tooltip.enigmaticlegacy.abyssalHeart1_obf": "§5§kそれは生きている。そして見ている。この世界が",
+  "tooltip.enigmaticlegacy.abyssalHeart2_obf": "§5§kこれほど異質で、不浄で、不可解で、狂気を",
+  "tooltip.enigmaticlegacy.abyssalHeart3_obf": "§5§k誘発するものの視線に震えたことは、",
+  "tooltip.enigmaticlegacy.abyssalHeart4_obf": "§5§kかつて一度もなかった。",
+
+  "tooltip.enigmaticlegacy.theInfinitum1": "§5深淵は、最も勇敢な視線すらも跳ね返す。",
+  "tooltip.enigmaticlegacy.theInfinitum2": "§d§6第四の呪い§d の変質：",
+  "tooltip.enigmaticlegacy.theInfinitum3": "§5― 常にフルダメージを与える。",
+  "tooltip.enigmaticlegacy.theInfinitum4": "§6＋%1$s §dダメージ§5【対ボス・プレイヤー】",
+  "tooltip.enigmaticlegacy.theInfinitum5": "§6＋%1$s §dノックバック",
+  "tooltip.enigmaticlegacy.theInfinitum6": "§6＋%1$s §d体力吸収",
+  "tooltip.enigmaticlegacy.theInfinitum7": "§5ほとんどの剣のエンチャントを付与できる。",
+  "tooltip.enigmaticlegacy.theInfinitum8": "§5攻撃ごとに凄まじいデバフを浴びせる。",
+  "tooltip.enigmaticlegacy.theInfinitum9": "§5保持している間、本来なら致死的なダメージを",
+  "tooltip.enigmaticlegacy.theInfinitum10": "§5§6%1$s§d の確率§5で耐えることができる。",
+
+  "tooltip.enigmaticlegacy.enderSlayer1": "§5彼らを根絶やしにするために...",
+  "tooltip.enigmaticlegacy.enderSlayer2": "§5それが唯一の道なのだろうか？",
+  "tooltip.enigmaticlegacy.enderSlayer1_alt": "§5彼らを叩き潰すために...",
+  "tooltip.enigmaticlegacy.enderSlayer2_alt": "§5それが唯一の道なのだろうか？",
+  "tooltip.enigmaticlegacy.enderSlayer3": "§6＋%1$s §dダメージ§5【エンドの住人】",
+  "tooltip.enigmaticlegacy.enderSlayer4": "§6＋%1$s §dノックバック§5【エンドの住人】",
+  "tooltip.enigmaticlegacy.enderSlayer5": "§6エンド§5において、フルチャージ攻撃は",
+  "tooltip.enigmaticlegacy.enderSlayer6": "§5§6エンダーマン§5に壊滅的なダメージを与え、",
+  "tooltip.enigmaticlegacy.enderSlayer7": "§5ドロップ品をすべて経験値へと変換する。",
+  "tooltip.enigmaticlegacy.enderSlayer8": "§5§6シュルカー§5や §6エンダーマン§5 のテレポートを",
+  "tooltip.enigmaticlegacy.enderSlayer9": "§5一時的に無効化する。",
+  "tooltip.enigmaticlegacy.enderSlayer10": "§5攻撃を受けたプレイヤーの「星雲の眼」や",
+  "tooltip.enigmaticlegacy.enderSlayer11": "§6「非ユークリッドの立方体」§5の能力、および",
+  "tooltip.enigmaticlegacy.enderSlayer12": "§6エンダーパール、帰還のポーション、歪んだ鏡§5",
+  "tooltip.enigmaticlegacy.enderSlayer13": "§5の使用を一時的に不可能にする。",
+
+  "tooltip.enigmaticlegacy.desolationRing1": "§6アイアンゴーレム§5、§6エンダーマン§5、",
+  "tooltip.enigmaticlegacy.desolationRing2": "§6ゾンビピグリン§5、§6ピグリン§5が付近に湧かなくなる。",
+
+  "tooltip.enigmaticlegacy.astralPotato1": "§5見よ、星々の無限なる美味を！",
+
+  "tooltip.enigmaticlegacy.cosmicCake1": "§5通常のケーキよりはるかに栄養価が高い。",
+  "tooltip.enigmaticlegacy.cosmicCake2": "§5時間経過でひとりでに復元する。",
+
+  "tooltip.enigmaticlegacy.soulCompass1": "§5最も近くにある §6ソウルクリスタル§5 を指し示す。",
+
+  "tooltip.enigmaticlegacy.eldritchAmulet1": "§5装備中、死後もあなたのインベントリが保持される。",
+  "tooltip.enigmaticlegacy.eldritchAmulet2": "§6経験値§5と §6ソウルクリスタル§5 は依然として",
+  "tooltip.enigmaticlegacy.eldritchAmulet3": "§5失われる。",
+  "tooltip.enigmaticlegacy.eldritchAmulet4": "§5あなたの視線にさらされた生物は、移動速度と",
+  "tooltip.enigmaticlegacy.eldritchAmulet5": "§5攻撃力が低下する。",
+  "tooltip.enigmaticlegacy.eldritchAmuletStat1": "§6＋3 §d攻撃ダメージ",
+  "tooltip.enigmaticlegacy.eldritchAmuletStat2": "§6＋15％ §d体力吸収",
+
+  "tooltip.enigmaticlegacy.enigmaticEye1": "§5それは時空を超えた場所と繋がっている。何者か ―",
+  "tooltip.enigmaticlegacy.enigmaticEye2": "§5あるいは「何か」の注意を引く危険を冒してでも、",
+  "tooltip.enigmaticlegacy.enigmaticEye3": "§5その眼を覚醒させることができる。",
+
+  "tooltip.enigmaticlegacy.enigmaticEyeAwakened1": "§5あなたが彼の注意を引いた今、その眼を介してあなたや",
+  "tooltip.enigmaticlegacy.enigmaticEyeAwakened2": "§5世界を観察している者は、もはや道具なしでもあなたに",
+  "tooltip.enigmaticlegacy.enigmaticEyeAwakened3": "§5干渉できるようだ。彼が意思疎通以外の接触を望まないのか、",
+  "tooltip.enigmaticlegacy.enigmaticEyeAwakened4": "§5あるいはできないのかは謎のままである。",
+  "tooltip.enigmaticlegacy.enigmaticEyeAwakened5": "§5",
+  "tooltip.enigmaticlegacy.enigmaticEyeAwakened6": "§5§6魅惑の記章§5を身につけた者の真実の名を暴く。",
+
+  "tooltip.enigmaticlegacy.enigmaticElytra1": "§5飛行中にジャンプキーを押し続けると、前方へ",
+  "tooltip.enigmaticlegacy.enigmaticElytra2": "§5加速し続ける。加速中はエリトラの耐久値が",
+  "tooltip.enigmaticlegacy.enigmaticElytra3": "§5より早く減少する。",
+
+  "tooltip.enigmaticlegacy.ichorBottle1": "§5神々を侮蔑するためには、まず神々を知らねばならない。",
+  "tooltip.enigmaticlegacy.ichorBottle2": "§5飲むことで §6＋1§d チャームスロット §5を永続的に得る。",
+
+  "tooltip.enigmaticlegacy.quotePlayer1": "§5§6右クリック§5で選択中の引用を再生する。",
+  "tooltip.enigmaticlegacy.quotePlayer2": "§5§6Shift§5＋§6右クリック§5で引用リストを",
+  "tooltip.enigmaticlegacy.quotePlayer3": "§5切り替えることができる。",
+  "tooltip.enigmaticlegacy.quotePlayerSelection": "§d現在の引用： §6%1$s",
+
+  "tooltip.enigmaticlegacy.insignia1": "§5§6金床§5で名前を付けると、名前タグを置き換える。",
+  "tooltip.enigmaticlegacy.insignia2": "§5自分自身の名前タグが見えるようになる。",
+  "tooltip.enigmaticlegacy.insignia3": "§5持った状態で §6Shift§5＋§6右クリック§5でこれを切替。",
+  "tooltip.enigmaticlegacy.insigniaTagDisplayEnabled": "§d名前タグの自己表示： §6有効",
+  "tooltip.enigmaticlegacy.insigniaTagDisplayDisabled": "§d名前タグの自己表示： §6無効",
+  "tooltip.enigmaticlegacy.insigniaName": "§d刻まれた名： %1$s",
+
+  "tooltip.enigmaticlegacy.endAnchor1": "§5すべての次元で動作する。",
+  "tooltip.enigmaticlegacy.endAnchor1_alt": "§5§6エンド§5のみで動作する。",
+  "tooltip.enigmaticlegacy.endAnchor1_alt2": "§5ほとんどの次元で動作する。",
+  "tooltip.enigmaticlegacy.endAnchor2": "§5補充に §6エンダーパール§5 を必要とする。",
+  "tooltip.enigmaticlegacy.endAnchor3": "§5リスポーン時に §6%1$s§d の確率§5でチャージを",
+  "tooltip.enigmaticlegacy.endAnchor4": "§5消費しない。",
+
+  "tooltip.enigmaticlegacy.deceptionAmulet1": "§5死そのものを欺くことができる。死ぬ代わりに、",
+  "tooltip.enigmaticlegacy.deceptionAmulet2": "§5体力を §615％§5 回復し、§65分間§5 の間",
+  "tooltip.enigmaticlegacy.deceptionAmulet3": "§5§6知覚不能§5 の状態になる。",
+  "tooltip.enigmaticlegacy.deceptionAmulet4": "§5他人の目には、あなたが死んだかのように",
+  "tooltip.enigmaticlegacy.deceptionAmulet5": "§5映るだろう。",
+  "tooltip.enigmaticlegacy.deceptionAmulet6": "§5§6知覚不能§5 の間、他プレイヤーを含むあらゆる",
+  "tooltip.enigmaticlegacy.deceptionAmulet7": "§5生物は、あなたを視認することも標的にすることもできない。",
+  "tooltip.enigmaticlegacy.deceptionAmulet8": "§5攻撃を試みたり、エンティティやブロックに",
+  "tooltip.enigmaticlegacy.deceptionAmulet9": "§5干渉しようとすると、効果は消失する。",
+  "tooltip.enigmaticlegacy.deceptionAmulet10": "§5アミュレットのクールタイムは §610分§5 で、",
+  "tooltip.enigmaticlegacy.deceptionAmulet11": "§5§62回§5 発動すると壊れてしまう。",
+
+  "tooltip.enigmaticlegacy.theJudgement1": "§5攻撃時、標的から半径 §6%s§6 ブロック§5",
+  "tooltip.enigmaticlegacy.theJudgement2": "§5以内にいるすべての生物にダメージを与える。",
+  "tooltip.enigmaticlegacy.theJudgement3": "§5",
+  "tooltip.enigmaticlegacy.theJudgement4": "§5§6アイテム消去モード§5では、攻撃範囲内の",
+  "tooltip.enigmaticlegacy.theJudgement5": "§5ドロップアイテムもすべて消去する。",
+  "tooltip.enigmaticlegacy.theJudgement6": "§dモード： %s",
+  "tooltip.enigmaticlegacy.theJudgementMode0": "§6通常",
+  "tooltip.enigmaticlegacy.theJudgementMode1": "§6アイテム消去",
+
+  "tooltip.enigmaticlegacy.eldritchPan1": "§d§6第四の呪い§d の変質：",
+  "tooltip.enigmaticlegacy.eldritchPan2": "§6― 常にフルダメージを与える。",
+  "tooltip.enigmaticlegacy.eldritchPan3": "§6%s §d体力吸収",
+  "tooltip.enigmaticlegacy.eldritchPan4": "§6%s §d空腹度吸収",
+  "tooltip.enigmaticlegacy.eldritchPan4_alt": "§6%s §d空腹度吸収【体力へ変換】",
+  "tooltip.enigmaticlegacy.eldritchPan5": "§5倒した生物の肉を調理する。",
+  "tooltip.enigmaticlegacy.eldritchPan6": "§5盾として使用でき、ガード中に飛び道具を飲み込める。",
+  "tooltip.enigmaticlegacy.eldritchPan7": "§5フライパンを持ち続けると §6募る飢え§5 効果を得る。",
+  "tooltip.enigmaticlegacy.eldritchPan8": "§5これはあなたをより空腹にするが、より強くする。",
+  "tooltip.enigmaticlegacy.eldritchPan7_alt": "§5フライパンを持ち続けると §6募る殺意§5 効果を得る。",
+  "tooltip.enigmaticlegacy.eldritchPan8_alt": "§5これはあなたの体力を奪うが、筋力と体力吸収を与える。",
+  "tooltip.enigmaticlegacy.eldritchPan8p_alt": "§5この効果によって死ぬことはない。",
+  "tooltip.enigmaticlegacy.eldritchPan9": "§5フライパンで新しい生物を倒すごとに、持っている間の",
+  "tooltip.enigmaticlegacy.eldritchPan10": "§5永久的な §6%s §dダメージ§5 と §6%s §d防具ポイント§5 を得る。",
+  "tooltip.enigmaticlegacy.eldritchPanLore1": "§5形を与えられた、生のままの根源的な飢え。",
+  "tooltip.enigmaticlegacy.eldritchPanKills1": "§dユニークキル数： %s",
+  "tooltip.enigmaticlegacy.eldritchPanKillsMax": "§6フライパンは満たされた... だが、あなたはまだだ。",
+
+  "gui.enigmaticlegacy.lore_inscriber": "名前と説明文の記入",
+  "gui.enigmaticlegacy.blazing_core_bar_title": "熱量",
+  "gui.enigmaticlegacy.blazing_core_bar_offsetX": "0",
+  "gui.enigmaticlegacy.blazing_core_bar_offsetY": "0",
+  "gui.enigmaticlegacy.blazing_core__COMMENT": "上記二つの文字列は、offsetXとoffsetYを定義することで熱量バーのタイトルの位置を調整できる。これはタイトルを綴るのに必要な文字数によって、特定の言語で調整が必要になる場合がある。見た目をよくする方法が見つからない場合は、タイトルを空にして描画されないようにすることも可能。4文字以内であれば補正なしで完璧に収まる。",
+
+  "quote.no_peril_1": "任務に危険がなければ、その達成に栄光はない。",
+  "quote.end_doorstep_1": "エンドの入り口... わずか一歩があなたとそれを隔てている。",
+  "quote.only_because_1": "倒れたというだけで、あなたが退いたということにはならない。",
+  "quote.demise_is_1": "終焉など、あなたのような半神にとっては一時的な不便にすぎない。",
+  "quote.we_fall_1": "人が転ぶのは、自ら立ち上がる術を学ぶためだ。",
+  "quote.you_will_endure_1": "あなたはこの喪失に耐え、そこから学ぶだろう。",
+  "quote.oblivion_rejects_1": "忘却があなたを拒んでいる... 機会があるうちに活かすがいい。",
+  "quote.setback_1": "後退ではあるが、敗北ではない。",
+  "quote.death_may_1": "死があなたの征服を阻むことはあっても、それを止められるのは折れた意志だけだ。",
+  "quote.eternity_to_keep_1": "試み続ける時間は永遠にある。なすべきことをなせ。",
+  "quote.violence_calls_1": "暴力は復讐を呼ぶ。戻り、それを執行せよ！",
+  "quote.immortal_1": "あなたは不死だ！ 戻って、その哀れな生物にその事実を思い知らせてやれ。",
+  "quote.appaling_presence_1": "殻は消えたが... 悍ましい気配はこの領域に永遠に刻み込まれるだろう。",
+  "quote.its_destruction_1": "その破滅がもたらす慰めはわずかだ... その恐るべき存在が意味するものを考えれば。",
+
+  "quote.i_wandered_1": "ああ、私は何度もそれらの地を彷徨った...",
+  "quote.i_wandered_2": "かつて存在したすべてと、あり得たすべての、荒涼とした思い出よ。",
+
+  "quote.another_demigod_1": "また一人の半神が、この見捨てられた地を彷徨っている...",
+  "quote.another_demigod_2": "あなたの旅に同行させてくれ。おそらく、あなたは他の者が成し得なかったことを成し遂げるだろう。",
+
+  "quote.another_eon_1": "また一つの時代、また一人の放浪者。語られるべきまた一つの物語...",
+  "quote.another_eon_2": "私は多大なる好奇心を持って、あなたの物語を見守ろう。",
+
+  "quote.perhaps_you_1": "おそらく、あなたこそがこの地の長く忘れ去られた歴史を解き明かす者となるだろう...",
+  "quote.perhaps_you_2": "もしそうなら、私はあなたの功績の目撃者とならねばならない。",
+
+  "quote.sulfur_air_1": "空気中に漂う硫黄の匂い、焼けた岩と肉の鋭い香り...",
+  "quote.sulfur_air_2": "ここはまさに地獄だ。",
+
+  "quote.tortured_rocks_1": "骨のように青白く拷問された岩々が、底知れぬ全食の暗黒の上に吊るされている。",
+  "quote.tortured_rocks_2": "エンド... それはまるで熱病の見せる夢のようだ。",
+
+  "quote.breathes_relieved_1": "世界は、あの恐怖という重苦しい存在から解放され、安堵の息を漏らしている...",
+  "quote.breathes_relieved_2": "少なくとも、今のところは。",
+
+  "quote.whether_it_is_1": "あなたがウィザーを幾度も墓場から呼び戻し、また送り返すことで求めているのが力であれ、贖罪であれ...",
+  "quote.whether_it_is_2": "...少なくとも、あなたはその忌々しい生物に目的を与えている。",
+
+  "quote.poor_creature_1": "哀れな生物よ... 種族の最後の一人として、見捨てられた島を守る運命に縛られ...",
+  "quote.poor_creature_2": "...虚無の真ん中で。彼女を相応しき安らぎへと導いてやれ。",
+
+  "quote.horrible_existence_1": "なんと恐ろしい存在か... 死から引き戻され、再び殺されるためだけに存在するとは。",
+  "quote.horrible_existence_2": "あなたは真に慈悲というものを持ち合わせていないようだ。",
+
+  "quote.countless_dead_1": "数えきれない死者の魂が混ざり合い、言葉を絶するほど恐ろしい姿の異形へと化した。",
+  "quote.countless_dead_2": "大地はこの不浄な生物の存在そのものによって汚されている。",
+
+  "quote.with_dragons_1": "ドラゴンの差し迫った終焉と共に、この場所は以前よりもさらに空虚で目的のない場所に見える。",
+  "quote.with_dragons_2": "あなたはこの砕かれ見捨てられた地を彷徨い続けるのか...",
+  "quote.with_dragons_3": "...それとも、オーバーワールドが提供する正気と活気の仮面へと戻るのか？",
+  "quote.with_dragons_4": "もちろん、我々は二人とも答えを知っている... 未知への探求を、今であれ後であれ、止めることなどできないのだから。",
+
+  "quote.terrifying_form_1": "...その恐ろしい姿は壊せても、その魂までは壊せない。",
+  "quote.terrifying_form_2": "それはあなたと似た呪いを背負っている... 不死の呪いだ。",
+
+  "quote.toll_paid_1": "代価を支払ったことで、あなたは憎しみと悲しみの重苦しい膨らみから解放された...",
+  "quote.toll_paid_2": "...あの指輪に幽閉されていたものから。",
+
+
+  "book.enigmaticlegacy.category.accessories.name": "アクセサリー",
+  "book.enigmaticlegacy.category.accessories.desc": "身につけることができる多くのアイテムは、一見すると何の機能も持っていないように見える。<br2/>だが、指輪やチャームといった、重い鎧や剣よりも持ち運びに便利で所有者の負担にならない形をした、強力な魔法を秘めたものを発見できるだろう。",
+
+
+  "book.enigmaticlegacy.category.world.name": "世界",
+  "book.enigmaticlegacy.category.world.desc": "ある者は宝物を漁り、他をすべて置き去りにすることを選ぶ。だがそれでは夜に血を求めるモンスターと同じではないか。 ruins【遺跡】や前時代の痕跡は、あなたの降臨より前の長い歴史を語ってくれるだろう。",
+
+
+  "book.enigmaticlegacy.category.materials.name": "資源と材料",
+  "book.enigmaticlegacy.category.materials.desc": "この世界に豊富にある平凡な材料は熟知しているだろう。だがもう少し深く掘り下げれば、見たこともないようなものを発見するかもしれない。<br2/>優れた武具を鍛造するために、それらの異常な特性を記しておく価値はある。",
+
+
+  "book.enigmaticlegacy.category.tools.name": "道具と武器",
+  "book.enigmaticlegacy.category.tools.desc": "半神でさえ、適切な道具を手にしていなければその力を解き放つことはできない。<br2/>剣も他の道具と何ら変わりはない ― それらは目的を果たすために作られ、黙々と従う。たまたま、その目的が血を流すことだったというだけだ。",
+
+
+  "book.enigmaticlegacy.category.armor.name": "防具",
+  "book.enigmaticlegacy.category.armor.desc": "この世界には暗い隅々に多くの危険が潜んでいる。適切な保護手段を持たない不注意な旅人を、多くの脅威が容易に消し去ってしまう。<br2/>伝説的な鍛冶屋ですら成し得なかった完璧な鎧を、あなたは作り上げるだろう。",
+
+
+  "book.enigmaticlegacy.category.decorations.name": "装飾",
+  "book.enigmaticlegacy.category.decorations.desc": "あなたが設計し構築するものの中には、実用的な目的を持たないものもある。<br2/>だが、それが無意味であることを意味するわけではない。あなたのような強大な存在は、望むのであれば心地よさと美しさに囲まれる権利があるのだ。",
+
+
+  "book.enigmaticlegacy.category.relics.name": "アーティファクト",
+  "book.enigmaticlegacy.category.relics.desc": "数えきれない遺物がこの世界に散らばっている。探索者であり征服者でもあるあなたにとって、それらは想像を絶する力に到達するための鍵であり、求める答えへと導く道標となるだろう。",
+
+
+  "book.enigmaticlegacy.category.brewing.name": "醸造",
+  "book.enigmaticlegacy.category.brewing.desc": "前時代の魔術師には人気があったが、多くの半神はポーションを過小評価している。<br2/>だが対価を払う意志がある者にとって、ポーションは自在に操れる最も強力な道具の一つとなるだろう。",
+
+
+  "book.enigmaticlegacy.category.misc.name": "その他",
+  "book.enigmaticlegacy.category.misc.desc": "いくつかの知識は、分類することが極めて困難である。時には、その努力自体が無意味になることさえある。<br2/>そこにはある種のロマンがある。偉大さは、しばしば純然たる混沌に見えるものから生まれるのだ。",
+
+
+  "book.enigmaticlegacy.category.enchantments.name": "エンチャント",
+  "book.enigmaticlegacy.category.enchantments.desc": "エンチャントはそれ自体が優れた芸術だ。どのアプローチが最も効果的かという正解はない。<br2/>他の芸術と同様、あらゆる学派の基礎を成す礎石が存在し、あなたはそれを学ばねばならない。",
+
+
+
+
+
+
+  "book.enigmaticlegacy.entry.berserk_charm.name": "狂戦士の印",
+  "book.enigmaticlegacy.entry.berserk_charm.page.1": "死を恐れる者が多いのは驚くべきことではない。死はあらゆる恐怖の蜘蛛の巣の中心に位置しているからだ。だが、大いなる呪いを背負うことを選んだ者にとって、恐怖は許しがたい弱さだ。<br2/>歪んだ心臓の力、そして七つの呪いすべてを組み合わせることで、あなたはこの紋章を鍛造できる。これは戦況を逆転させる助けとなるだろう ― あなたが",
+  "book.enigmaticlegacy.entry.berserk_charm.page.2": "差し迫った終焉の淵に立つほど、大いなる怒りと勇気があなたを満たし、最後の一息まで、どのような状況であっても道を切り開く力を与えてくれるだろう。",
+
+
+  "book.enigmaticlegacy.entry.cursed_scroll.name": "千の呪い",
+  "book.enigmaticlegacy.entry.cursed_scroll.page.1": "時として呪いはエンチャントに似た形をとる。通常のエンチャントとは異なり、一度アイテムに結びつくと、アイテムを維持したままそれを取り除く方法は見当たらない。幸いなことに、あなたが用いる通常のエンチャント技術でそのような呪いが生成されることはないが、",
+  "book.enigmaticlegacy.entry.cursed_scroll.page.2": "古代の遺跡やダンジョンを探索している際に、それらを帯びたアイテムに出会うことがあるだろう。<br2/>その効果は様々だが、どれも有益ではない ― 呪われたエンチャントは、それを持つアイテムの使用に重大な欠陥をもたらす。",
+  "book.enigmaticlegacy.entry.cursed_scroll.page.3": "通常の状況では、それらは避けるべき厄介者にすぎない。しかし、七つの呪いの指輪を背負う今、あなたはそれらを操作し、他者には不可能な方法で恩恵を受けることさえできる。<br2/>歪んだ心臓の凝縮された邪悪さを注入されたこの巻物は、その可能性の一つだ。装備しているアイテムが帯びている呪い一つにつき、",
+  "book.enigmaticlegacy.entry.cursed_scroll.page.4": "あなたの攻撃ダメージ、採掘速度、あらゆる再生能力が増強される。呪いが一つや二つでは微々たる効果だが、さらなる呪いを受け入れることを恐れなければ、それは膨大な力へと蓄積されるだろう。<br2/>対象となる装備には、防具、両手のアイテム、そしてこの巻物自身を含むチャームや指輪が含まれる。",
+
+
+  "book.enigmaticlegacy.entry.iron_ring.name": "鉄の指輪",
+  "book.enigmaticlegacy.entry.iron_ring.page.1": "設計は非常に単純で、あなたのような半神は言うに及ばず、最も平凡な鍛冶屋でさえ鍛造できたであろう代物だ。<br2/>この指輪が有用なのは、作成に必要なのがありふれた鉄だけだという点にある。いつか指を切り落とされるのを防ぐ役には立つかもしれないが、斬首から救ってくれることはないだろう... おそらくは。",
+
+
+  "book.enigmaticlegacy.entry.ceaseless_enchantment.name": "無限供給",
+  "book.enigmaticlegacy.entry.ceaseless_enchantment.heading.1": "そのエンチャント",
+  "book.enigmaticlegacy.entry.ceaseless_enchantment.page.1": "クロスボウに付与可能なもう一つのエンチャントで、その単純さゆえに非常に有用である。<br2/>その効果は、弓における「無限」のエンチャントとほぼ同一だ。これをクロスボウに付与すれば、射撃時にインベントリ内の通常の矢を消費しなくなるため、矢の供給を心配する必要がなくなる。<br2/>",
+  "book.enigmaticlegacy.entry.ceaseless_enchantment.page.2": "ただし、これは通常の矢に対してのみ機能する。効能付きの矢やロケット花火はこのエンチャントの影響を受けず、通常通り消費される。",
+  "book.enigmaticlegacy.entry.ceaseless_enchantment.page.3": "シャープシューターは矢にのみ影響し、例えばロケット花火のダメージを増加させることはない。<br2/>さらに、マルチショットや貫通と組み合わせることはできない。",
+
+
+  "book.enigmaticlegacy.entry.sharpshooter_enchantment.name": "シャープシューター",
+  "book.enigmaticlegacy.entry.sharpshooter_enchantment.heading.1": "そのエンチャント",
+  "book.enigmaticlegacy.entry.sharpshooter_enchantment.page.1": "クロスボウに付与可能なエンチャントの一つで、最も有用なものの一つに数えられる。<br2/>これはクロスボウが放つ矢のダメージを増加させるもので、弓における「射撃ダメージ増加」に似ている。正確には、適用されたレベルごとにクロスボウの基礎ダメージが <&l>＋40％$(clear) 増加する。",
+  "book.enigmaticlegacy.entry.sharpshooter_enchantment.page.2": "シャープシューターは矢にのみ影響し、ロケット花火などのダメージを増やすことはない。さらに、マルチショットや貫通と併用することはできない。",
+
+
+  "book.enigmaticlegacy.entry.nemesis_curse.name": "報復",
+  "book.enigmaticlegacy.entry.nemesis_curse.heading.1": "その呪い",
+  "book.enigmaticlegacy.entry.nemesis_curse.page.1": "あまり知られていない呪いのエンチャントの一つであり、他よりも奇妙で不可解なものである。<br2/>これは剣や斧などの近接武器でのみ遭遇する可能性がある。報復の呪いを帯びた武器で直接攻撃を行うと、与えたダメージの約25パーセントを自分自身が受けることになる。<br2/>",
+  "book.enigmaticlegacy.entry.nemesis_curse.page.2": "しかし、どれほど壊滅的な打撃を与えたとしても、この呪いによってあなたが死ぬことはない。<br2/>最終的にはわずかな体力が残る状態まで削られるが、最後にとどめを刺すには別の何かの要因が必要となるだろう。",
+
+
+  "book.enigmaticlegacy.entry.wrath_enchantment.name": "憤怒",
+  "book.enigmaticlegacy.entry.wrath_enchantment.heading.1": "そのエンチャント",
+  "book.enigmaticlegacy.entry.wrath_enchantment.page.1": "トライデント専用のエンチャントで、剣や斧の「ダメージ増加」と非常によく似た効果を持ち、あらゆる敵に対してトライデントが与えるダメージを増加させる。これはトライデントを近接武器として使用した場合と、飛び道具として投げた場合の両方で機能する。<br2/>このエンチャントによるダメージ増加は、",
+  "book.enigmaticlegacy.entry.wrath_enchantment.page.2": "レベルごとに ＋1.25 ダメージという、ダメージ増加よりも顕著に優れたものだ。<br2/>このエンチャントは水生特効や奔流と同じカテゴリに属するため、それらと排他的であり、共存させることはできない。",
+
+
+  "book.enigmaticlegacy.entry.torrent_enchantment.name": "奔流",
+  "book.enigmaticlegacy.entry.torrent_enchantment.heading.1": "そのエンチャント",
+  "book.enigmaticlegacy.entry.torrent_enchantment.page.1": "このエンチャントは、火に耐性のある生物 ―ブレイズやゾンビピグリンなど― や、水に弱い生物 ―エンダーマンなど― の両方に対して、トライデントが与えるダメージを増加させる。<br2/>対象となる生物に対する正確な増加量はレベルごとに ＋2.5 ダメージであり、アンデッドに対するアンデッド特効と同一である。",
+  "book.enigmaticlegacy.entry.torrent_enchantment.page.2": "また、このエンチャントは水生特効や憤怒と同じカテゴリに属するため、それらと排他的である。",
+
+
+  "book.enigmaticlegacy.entry.slayer_enchantment.name": "討伐者",
+  "book.enigmaticlegacy.entry.slayer_enchantment.heading.1": "そのエンチャント",
+  "book.enigmaticlegacy.entry.slayer_enchantment.page.1": "剣や斧のダメージを増加させるもう一つのエンチャントで、ダメージ増加、アンデッド特効、虫特効と同じカテゴリに属するため、これらすべてと排他的である。<br2/>これはモンスターとして分類されるあらゆるものに対して与えるダメージを増加させる。正確な増加量はレベルごとに ＋1.5 であり、",
+  "book.enigmaticlegacy.entry.slayer_enchantment.page.2": "例えばアンデッドに対するアンデッド特効の ＋2.5 増加と比べれば、その増加幅は明らかに小さい。しかし、モンスターという枠組みには、あなたが戦わねばならないほぼすべての存在が好都合に含まれているため、アンデッドや虫といった限定的なカテゴリと比べれば、非常に堅実な選択肢となる。",
+  "book.enigmaticlegacy.entry.slayer_enchantment.page.3": "さらに、このエンチャントを帯びた武器で攻撃されたモンスターは、短時間移動速度が低下する。",
+
+
+  "book.enigmaticlegacy.entry.soul_loss.name": "魂の喪失",
+  "book.enigmaticlegacy.entry.soul_loss.heading.1": "そのクリスタル",
+  "book.enigmaticlegacy.entry.soul_loss.page.1": "死には常に代価が伴うが、かつて直面したどれよりもはるかに重大なものが存在する。<br2/>この世界で死ぬたびに、あなたの魂の一部が自身から切り離され、終焉の地に残される。それは長くエーテルのままではいられず、すぐに「ソウルクリスタル」と呼ばれる形をとって物理的な",
+  "book.enigmaticlegacy.entry.soul_loss.page.2": "現実へと具現化する。幸いなことに、現実の一部となったことで、それ以前よりも脆弱性は低くなっている。<br2/>ソウルクリスタルは空中に浮遊し、無敵であり、どのような力にも反応しない。あたかも高次の存在によってのみ破壊可能な、半神の魂の",
+  "book.enigmaticlegacy.entry.soul_loss.page.3": "断片であるかのようだ。他の半神であっても、あなたのクリスタルを奪ったり破壊したりすることはできない。<br2/>魂の断片を失うごとに生命力は衰え、あなたは弱くなり、殺されやすくなる。だが、ソウルクリスタルに近づけば、それはあなたへと引き寄せられ、失われた魂の断片はクリスタルの監獄から即座に解放され、あなたの存在と再び融合するだろう。",
+  "book.enigmaticlegacy.entry.soul_loss.page.4": "救いなのは、どのような最悪の状況下でも、生命力のすべてを失うことはないという点だ。魂の繊維が薄くなるにつれて、それはさらなる引き裂きに対して強い耐性を持つようになる。<br2/>ある時点から、どれほど死を繰り返しても魂の断片を失わなくなるが、その時までには、あらゆる物理的脅威に対して信じられないほど脆弱な状態になっているはずだ。",
+
+
+  "book.enigmaticlegacy.entry.first_glance.name": "一瞥",
+  "book.enigmaticlegacy.entry.first_glance.page.1": "この世界に初めて足を踏み入れた時、なぜ自分が本来の居場所から遠く離れたのか、確信が持てなかった。ここは初めて訪れる世界ではない。だが、今回は違う。<br2/>何かが最深部から、人間のような存在が目にするはずのない暗い隅々から、あなたを呼んでいる。何かが",
+  "book.enigmaticlegacy.entry.first_glance.page.2": "あなたを促し、手がかりを追い、この地の謎を解き明かさせようとしている。それはあなたをいくらか怯えさせるが、誘惑に抗うことはできなかった。<br2/>どのような困難が待ち受けていようとも、未知を恐れてはならない。<br2/>どのような代価を払おうとも、答えを求めるのだ。",
+
+
+  "book.enigmaticlegacy.entry.forbidden_axe.name": "処刑人の斧",
+  "book.enigmaticlegacy.entry.forbidden_axe.page.1": "ウィザースケルトンを相手にするのは、しばしば非常に苛立たしい。彼らの哀れな存在に興味を引かれる唯一の理由は、その頭蓋骨であり、それはスケルトン自身よりもはるかに貴重で秘術において有用なものである。<br2/>だが、どれほど丁寧に頼んだところで、彼らが自ら頭蓋骨を差し出すことはない。",
+  "book.enigmaticlegacy.entry.forbidden_axe.page.2": "そして多くの経験を積んだとはいえ、役に立たない残りの部位から繊細な頭蓋骨を誤って砕かずに切り離すのは、依然として非常に困難だ ― 彼らはまるであなたをいらつかせるために、刃の精密な一振りを静かに待つようなことはしてくれないのだから。<br2/>",
+  "book.enigmaticlegacy.entry.forbidden_axe.page.3": "この斧は、その困難な作業を助けるために特別に鍛造された。ネザーの最高級の金属と融合し、その暗く歪んだ性質を吹き込まれたこの斧は、敵の首を切り裂き、頭部を宙に跳ね飛ばそうと渇望している。<br2/>スケルトン以外にも、斬首が可能な生物であれば、たとえ以前は不可能だったとしても、ほぼすべてを斬首できることが証明されている。<br2/>",
+  "book.enigmaticlegacy.entry.forbidden_axe.page.4": "この武器に宿る血への衝動は、特別な斬首能力を除いても、ネザーライトの刃よりも早く、より壊滅的な打撃を与えることができるため、重宝するだろう。",
+
+
+  "book.enigmaticlegacy.entry.etherium_sword.name": "エーテリウムの大剣",
+  "book.enigmaticlegacy.entry.etherium_sword.page.1": "その巨大な外見に反して、この道具は実際には通常の小さな剣よりも扱いやすい。もちろん、それはあなたにとっての話だ ― あなたの敵にとって、あなたがその一撃を与えるのと同じくらい簡単に、この武器の打撃に耐えることはできないだろう。<br2/>エーテリウムの大剣は、他の二つの",
+  "book.enigmaticlegacy.entry.etherium_sword.page.2": "エーテリウム武器の完璧な中間に位置している。大鎌ほど軽く俊敏ではなく、戦斧ほど重く粉砕的でもないが、両方の利点を備えており、適度な待機時間で確実な一撃を繰り出すことができる。その一撃は、",
+  "book.enigmaticlegacy.entry.etherium_sword.page.3": "どれほど防御を固めた敵であっても、かなりの痛手となるだろう。<br2/>他の道具とは異なり、この大剣の能力は完全に戦闘に特化している。あなたの命令一つで、それはあなたが向いている方向とは逆方向へ、かなりの距離を投げ出す。これは、連撃の合間に素早く撤退したり、特に致命的な攻撃を素早く回避したりするための手段として利用できる。短いクールタイムにより、この能力を適切に使う技術があれば、",
+  "book.enigmaticlegacy.entry.etherium_sword.page.4": "最も激しい戦闘状況においても有用である。<br2/>他のエーテリウム道具と同様、大剣は地上のどのような武器をもはるかに凌駕する、驚異的な耐久性を備えている。",
+
+
+  "book.enigmaticlegacy.entry.etherium_shovel.name": "エーテリウムのシャベル",
+  "book.enigmaticlegacy.entry.etherium_shovel.page.1": "斧や大鎌とは異なり、この道具は武器としてはあまり役に立たない。しかし、土や泥を「バターを通る熱いナイフ」のように切り裂くという、もう一つの目的については完璧に果たしてくれる。<br2/>意図的にその能力を抑制し、単一のブロックのみに影響させるよう強制しない限り、3x3の範囲を容易に掘削できる。",
+  "book.enigmaticlegacy.entry.etherium_shovel.page.2": "エーテリウムで鍛造された他のあらゆるものと同様、並外れた耐久性を誇る。",
+
+
+  "book.enigmaticlegacy.entry.etherium_scythe.name": "エーテリウムの大鎌",
+  "book.enigmaticlegacy.entry.etherium_scythe.page.1": "平和的な道具として設計された大鎌だが、今や最も洗練された武器の一つとしても知られるようになった。これも例外ではない ― 習得は困難だが、あなたが植えた作物と同じくらい簡単に敵の魂を刈り取る助けとなるだろう。<br2/>エーテリウムの大鎌は、衝撃の初期地点を中心とした 3x3x3 ブロックの範囲内で作物、植物、葉、草を収穫できる。",
+  "book.enigmaticlegacy.entry.etherium_scythe.page.2": "また、クワとしての役割も兼ねており、3x3 の範囲の土地を容易に耕地に変えることができる。<br2/>必要に応じてこれらの力を抑制し、単一のブロックのみに影響を与えることも可能だ。<br2/>",
+  "book.enigmaticlegacy.entry.etherium_scythe.page.3": "武器としては、エーテリウムの戦斧とは対極の位置にある。その刃は薄く剃刀のように鋭く、質量が欠けているために一撃ごとの衝撃は大きくないが、素早い振りは実行しやすく、道を塞ぐほとんどの生物を瞬く間に片付けることができる。<br2/>エーテリウムの大鎌も、他のすべての",
+  "book.enigmaticlegacy.entry.etherium_scythe.page.4": "エーテリウム道具と同じく、極めて高い耐久性を備えている。",
+
+
+  "book.enigmaticlegacy.entry.etherium_pickaxe.name": "エーテリウムのツルハシ",
+  "book.enigmaticlegacy.entry.etherium_pickaxe.page.1": "設計は単純で率直だが、このツルハシは地上の材料から鍛造したどのような一般的な道具をも超える力を秘めている。<br2/>エーテリウムのツルハシは、ブロックを破壊するたびに 3x3 の範囲を瞬時に採掘することができ、前例のない容易さで地殻に広大なトンネルを穿つことを可能にする。また、必要に応じてその力を",
+  "book.enigmaticlegacy.entry.etherium_pickaxe.page.2": "抑制し、単一のブロックを対象として作業する手段も備えている。<br2/>それ以外にも、このツルハシは極めて耐久性が高く、通常のツルハシよりも幅広い材料に対して有効であり、",
+  "book.enigmaticlegacy.entry.etherium_pickaxe.page.3": "ガラスや氷のようなものをより効率的に扱うことができる。",
+
+
+  "book.enigmaticlegacy.entry.etherium_axe.name": "エーテリウムの戦斧",
+  "book.enigmaticlegacy.entry.etherium_axe.page.1": "通常の斧とは異なり、この巨大な獣は道具と武器の両方の役割を果たすよう設計されており、その両方で卓越している。<br2/>道具として使用する場合、衝撃地点を中心とした 3x3x3 ブロックの広大な範囲の木を伐採できる。単一のブロックを扱う必要がどうしてもある場合は、この能力を抑制することができる。<br2/>",
+  "book.enigmaticlegacy.entry.etherium_axe.page.2": "丸太や板材以外にも、葉、サボテン、竹のようなそれほど頑丈でない植物も効率的に処理できる。<br2/>武器としては、凄まじいダメージを与え、斧であるため、",
+  "book.enigmaticlegacy.entry.etherium_axe.page.3": "敵の盾をより効果的に無力化できる。唯一の欠点は、信じられないほど重いことだ。それにより一撃ごとに大きなダメージを与えられる一方で、次の一振りを最大出力で放つための回復には、通常よりも長い時間を要する。<br2/>他のエーテリウム道具と同様、エーテリウムの戦斧も極めて耐久性が高い。",
+
+
+  "book.enigmaticlegacy.entry.astral_breaker.name": "アストラルブレイカー",
+  "book.enigmaticlegacy.entry.astral_breaker.page.1": "伝統的なエーテリウム道具はそれ自体で非常に強力かつ有用だが、この金属のすべての力を用いて鍛造できるものの限界ではない。<br2/>アストラルダストのエンチャントの力、そしていくつかの秘術の材料を用いることで、それらの一部を融合させて究極の多目的機器を作成する方法を発見した。",
+  "book.enigmaticlegacy.entry.astral_breaker.page.2": "アストラルブレイカーはツルハシ、斧、シャベルを一手に集約した道具だ ― 岩、木、土をエーテリウム製の同等品と同じ容易さで、複数の道具を切り替える必要なく切り裂く。唯一の欠点は、",
+  "book.enigmaticlegacy.entry.astral_breaker.page.3": "エーテリウムの戦斧に比べて効果範囲が狭まっていることだが、ほとんどの状況において大きな問題にはならないはずだ。<br2/>また、他のエーテリウム道具よりもいくらか耐久性が高い。",
+
+
+  "book.enigmaticlegacy.entry.unholy_grail.name": "不浄の聖杯",
+  "book.enigmaticlegacy.entry.unholy_grail.heading.1": "その聖杯",
+  "book.enigmaticlegacy.entry.unholy_grail.page.1": "これに関する多くの伝説を聞いた後、名もなき遺跡の真ん中にこの遺物がただ転がっているのを発見して驚いた。価値のないゴミや安物の装飾品の中に紛れていた ― あたかも、それに特別なことは何もないかのように。<br2/>そして伝説から予想していた通り、それは全くの役立たずであることが判明した。聖杯には常に水が満たされており、",
+  "book.enigmaticlegacy.entry.unholy_grail.page.2": "どれほど飲んでも以前と同じように満たされたままである。だがその水は灰のような苦い味がし、汚染され毒されている。それが何なのかを理解するまでにどれほど飲んだかによって、重い病の状態に陥るか、あるいは短時間で死に至ることになるだろう。<br2/>ユニークな戦利品として手元に置いておく価値はあるかもしれない。",
+  "book.enigmaticlegacy.entry.unholy_grail.page.3": " ",
+
+
+  "book.enigmaticlegacy.entry.void_stone.name": "大いなる虚無の封印",
+  "book.enigmaticlegacy.entry.void_stone.heading.1": "その礎石",
+  "book.enigmaticlegacy.entry.void_stone.page.1": "これほど大層な名前を冠したアーティファクトが、インベントリの掃除機以外の何者かであると予想する者はいないだろう。<br2/>しかし、それが主要な、そしておそらく唯一の真の目的であり続けている。少なくとも、議論の余地なく、それはその役割において完全に卓越している。このユニークな遺物は、一つまたはいくつかの種類のアイテムやブロックと紐付けることができる。インベントリにある間、",
+  "book.enigmaticlegacy.entry.void_stone.page.2": "選択したモードに従って、それらのアイテムを消費する。その物体のサンプルさえあれば、単純な操作によって、それらすべての物体から、あるいは少なくともその過剰分から、あなたを解放してくれる。<br2/>必要に応じてさらにいくつかの礎石を探し、手に入れ、",
+  "book.enigmaticlegacy.entry.void_stone.page.3": "それぞれを望み通りに調整してもよい。実用的な唯一の欠点は、消費リストから一つのアイテムだけを削除することができない点だ ― リストを完全にクリアすることしかできない。慎重に選択することだ。<br2/>今のところ、この遺物に吸収されたアイテムがどこへ送られるのか、見当もつかない。分かっているのは、それらが二度と戻ってこないということだけだ...。<br2/>",
+  "book.enigmaticlegacy.entry.void_stone.page.4": "幸いなことに、これまでのところあなたの体の一部を吸収しようとはしておらず、この礎石が生物と相互作用できる可能性は低い。<br2/>しかし、それに触れるたびに、あなたの内側に漠然とした不安が沸き上がる。",
+
+
+  "book.enigmaticlegacy.entry.nether_star.name": "ネザースター",
+  "book.enigmaticlegacy.entry.nether_star.heading.1": "その星",
+  "book.enigmaticlegacy.entry.nether_star.page.1": "ここには何らかのテキストがある。",
+  "book.enigmaticlegacy.entry.nether_star.page.2": "あそこにも何らかのテキストがある。",
+
+
+  "book.enigmaticlegacy.entry.spellstones.name": "魔石",
+  "book.enigmaticlegacy.entry.spellstones.page.1": "魔石は、あなたが発見する他の多くの遺物とは一線を画している。<br2/>それらは強力な元素魔法の源であり器でもあり、身につける者に人間を超越した力を与える。現代において、これらを再現する既知の方法は存在しない ― 魔石の起源は創造の最初の瞬間にまで遡り、その時、狂ったエネルギーが",
+  "book.enigmaticlegacy.entry.spellstones.page.2": "以前は冷たく暗かった無へと放出された。それらが相互に作用し、戦い、食らい合い、絶対的な混沌をもたらした。その混沌の中で、それらは永劫の時間を生き抜くのに十分な安定した形をとって誕生した。永劫に次ぐ永劫、そしてあなたの降臨まで...。<br2/>今となっては、それらを自然に見つけることは不可能だ。それらはすべて、今はなき古代文明によって発見され、所有されていたようであり、",
+  "book.enigmaticlegacy.entry.spellstones.page.3": "彼らが創造した廃墟だけが残されている。<br2/>そしてそれらの廃墟の中に、魔石は横たわっており、その力を操る勇敢な探索者を待っているのだ。",
+
+
+  "book.enigmaticlegacy.entry.void_pearl.name": "虚無の真珠",
+  "book.enigmaticlegacy.entry.void_pearl.heading.1": "その魔石",
+  "book.enigmaticlegacy.entry.void_pearl.page.1": "エンドには、エンドそのもの以外にも何かがある。そこは、浮かぶ無数の島々の下に横たわる大いなる虚無 ―もっと暗く神秘的な何かと対峙できる場所だ。<br2/>そこは何というか... 実に虚無に満ちた場所だ。どういうわけか、そこでは空気さえも存在せず、",
+  "book.enigmaticlegacy.entry.void_pearl.page.2": "島々の端に近づきすぎて落下したあらゆる生命は、暗い無の中で差し迫った終焉を迎える。<br2/>だが、もしかすると、その虚無は結局のところ空っぽではないのかもしれない。この真珠は虚無と密接に関連した特性を持っており、",
+  "book.enigmaticlegacy.entry.void_pearl.page.3": "他の元素とは相容れない。あたかも「虚無」がそれ自体で一つの元素であるかのようだ。<br2/>であれば、この魔石はかつてそこから生まれたと想定せねばならないが、どうやって何かがその深淵に旅をし、生きて戻ることができたのか、見当もつかない。",
+
+
+  "book.enigmaticlegacy.entry.ocean_stone.name": "海洋の意志",
+  "book.enigmaticlegacy.entry.ocean_stone.heading.1": "その魔石",
+  "book.enigmaticlegacy.entry.ocean_stone.page.1": "オーバーワールドの表面を覆う果てしない海、その最も暗い深淵を探索し、あるいはそこに住まうことを望むなら、所有するのに完璧な遺物だ。<br2/>沈んだ遺跡の中に転がっているこれらの一つを手に入れれば、乾いた大地にいる時よりも水中で自分自身がはるかに強くなっていることに気づくだろう。その水を空気のように簡単に呼吸し、",
+  "book.enigmaticlegacy.entry.ocean_stone.page.2": "大地を走るよりも速く泳ぎ、最も明るい日差しの中で地上の世界を見るよりも鮮明に水中を見渡すことができる。もし深海の底にある何かが依然としてあなたに敵対するなら、それはあなたの存在の前に無力さと恐怖を覚えることになるだろう。<br2/>",
+  "book.enigmaticlegacy.entry.ocean_stone.page.3": "そして、もしあなたが必要な液体から遠く離れてしまったとしても... わずかな経験値を犠牲にすることで、空をあなたのために泣かせることができる。<br2/>実際の池を手元に置くほど便利ではないかもしれないが、これは確かに神々でさえ考慮に値する力である。",
+
+
+  "book.enigmaticlegacy.entry.blazing_core.name": "焦熱の核",
+  "book.enigmaticlegacy.entry.blazing_core.heading.1": "その魔石",
+  "book.enigmaticlegacy.entry.blazing_core.page.1": "ネザーの爆発的な広がりにわたって伸びる燃え盛る荒野と煮えたぎる溶岩の海のただ中、引き裂かれ忘れ去られた魂たちの叫び声と、この荒野を支配しようとしたあらゆる試みの果てである灰の中に、火の元素を体現する魔石があったとしても驚くには値しない。<br2/>",
+  "book.enigmaticlegacy.entry.blazing_core.page.2": "焦熱の核は、アンダーワールドの極限の熱の中で生き残るために必要なあらゆるものを授けてくれる。炎と溶岩は一時的にあなたに対して完全に無害となり、ある程度まで、炎はあなたを攻撃しようとする者から守ってくれるだろう... いや、守るというよりは、即座に復讐を果たす助けとなると言ったほうが正しいかもしれない。",
+
+
+  "book.enigmaticlegacy.entry.golem_heart.name": "ゴーレムの心臓",
+  "book.enigmaticlegacy.entry.golem_heart.heading.1": "その魔石",
+  "book.enigmaticlegacy.entry.golem_heart.page.1": "おそらく最も簡単に見つかる魔石の一つだ。オーバーワールドの無数の放棄されたダンジョンや廃坑のどこにでも見つかる可能性があるからだ。しかし、その力を過小評価する者は愚かである。<br2/>大地の元素に関連付けられたこの魔石は、他のものほど気まぐれで洗練されたものではないが、",
+  "book.enigmaticlegacy.entry.golem_heart.page.2": "代わりに持ち主が暴力的な力に集中し、耐えるのを助けてくれる。それは持ち主の肌を鋼のように硬くし、高圧や切断、貫通に対して通常の肉体よりもはるかに良く耐える。<br2/>心臓の効果は、持ち主が",
+  "book.enigmaticlegacy.entry.golem_heart.page.3": "他に自分自身を圧迫する鎧を身につけていない時に最大限に発揮され、その皮膚自体を鎧へと変える。",
+
+
+  "book.enigmaticlegacy.entry.eye_of_nebula.name": "星雲の眼",
+  "book.enigmaticlegacy.entry.eye_of_nebula.heading.1": "その魔石",
+  "book.enigmaticlegacy.entry.eye_of_nebula.page.1": "エンドの奇妙で不可解な地で見つかるこの魔石は、エンダーのエネルギーで溢れかえっており、その次元自体の特性に関連している。<br2/>これを身につけると、エンダーマンに似た能力を持ち、瞬く間にどこからともなく犠牲者の元へテレポートできるようになる。時には飛来する攻撃からワープして離れ、",
+  "book.enigmaticlegacy.entry.eye_of_nebula.page.2": "完全に回避することもあるだろう。<br2/>しかし、その最後の能力をあなたが制御することはできず、時として味方するよりもむしろ不利に働くこともあるかもしれない。",
+
+
+  "book.enigmaticlegacy.entry.enigmatic_item.name": "創造の心臓",
+  "book.enigmaticlegacy.entry.enigmatic_item.heading.1": "その魔石",
+  "book.enigmaticlegacy.entry.enigmatic_item.page.1": "この石の力は非常に広大で圧倒的なため、半神が所有することを決して意図されていなかったように見える。<br2/>それはあなたに、ほとんどの環境的脅威からの究極の保護を与える。ほとんどの敵対的な生物は依然としてあなたを標的にし、傷つけることもできるが、この魔石があなたの手にある限り、あなたの命を奪おうとする彼らの試みが成功することはない ―",
+  "book.enigmaticlegacy.entry.enigmatic_item.page.2": "あなたは殺されることがないのだ。死の淵にどれほど近づこうとも、あなたをその先へ突き落とす力を持つものは何もない。<br2/>創造の心臓という名を冠しているにもかかわらず、それは破壊をもたらすための最も究極的な手段をも授ける。",
+  "book.enigmaticlegacy.entry.enigmatic_item.page.3": "ウィザーによって召喚されるものに似た、壊滅的な頭蓋骨を降らせるのだ。<br2/>これらはあなたが注視したあらゆるエンティティをも標的にし、あなたが怒りを解き放つことを選んだ相手を瞬く間に粉砕するだろう。",
+
+
+  "book.enigmaticlegacy.entry.enigmatic_amulet.name": "不可解なアミュレット",
+  "book.enigmaticlegacy.entry.enigmatic_amulet.heading.1": "そのアミュレット",
+  "book.enigmaticlegacy.entry.enigmatic_amulet.page.1": "この世界に初めて足を踏み入れた時、何の手がかりもなく、なぜ自分の所有物としてそこにあったのかも分からぬまま、これが都合よくポケットに入っているのを見つけた。<br2/>核に収められた鮮やかな石は、あたかも生きているかのように内側から輝きを放ち、刻一刻と変化し続けていた ― まさに魅了されるべき光景だった。短い調査の後、裏側に刻まれた文字を見つけた。",
+  "book.enigmaticlegacy.entry.enigmatic_amulet.page.2": "そこには、ただ一つの名が記されていた： 「<&4><&l><playername>$(clear)」。<br2/>あなたはその構造と再現が可能かどうかを調べようとしたが、今のところ成功していない。これは、あなたの理解を超えた力によって鍛造され、ここへ持ち込まれた、この世界のものではない何かであるように思われる。<br2/>",
+  "book.enigmaticlegacy.entry.enigmatic_amulet.page.3": "それを身につけていると、そうでない時よりもわずかに強くなったように感じられる。<br2/>しかし、それは唯一の有用な特性ではないようだ。もしあなたの肉体が引き裂かれ、魂を留めておけなくなった時 ― アミュレットは未知の空間への裂け目を開き、アミュレット自身を含め、地面に落としたであろうすべてのアイテムをその中に収める。",
+  "book.enigmaticlegacy.entry.enigmatic_amulet.page.4": "死んだ場所には、その裂け目と繋がったキーのようなものが残されていることに気づくはずだ。あなたはそれを「異次元の器」と名付けた。通常のアイテムとは異なり、器は完全に破壊不能であり、あなたがその一部を所有している神の如き力を除いて、どのような力に対しても無関心である。<br2/>それが近づいて干渉しようとするまで、それは完全に不活性なまま浮遊している ― ",
+  "book.enigmaticlegacy.entry.enigmatic_amulet.page.5": "そしてそれはあなたの手に簡単に収まり、壊れ、繋がっていた見えざる空間に含まれていたすべてのものを解き放つのだ。",
+
+
+  "book.enigmaticlegacy.entry.angel_blessing.name": "天使の祝福",
+  "book.enigmaticlegacy.entry.angel_blessing.heading.1": "その魔石",
+  "book.enigmaticlegacy.entry.angel_blessing.page.1": "この魔石は古代の神殿の廃墟の中で見つかるが、それらがどのような目的を果たしていたのかは分からない。しかし、天使の祝福の目的を解明することは、それほど複雑な作業ではなかった。<br2/>それはあなたに空気の元素に関連する力を与え、向かってくる矢を吹き飛ばす風を操り、激しい落下で足が折れるのを防ぐのを助けてくれる。",
+  "book.enigmaticlegacy.entry.angel_blessing.page.2": "あるいは筋肉の力だけでは到達できない目的地へと、あなたを押し上げてくれる。望むならそれらすべてを同時に使うことも可能だ。<br2/>アクティブ能力は、ジャンプしてから使用した時に最も効果的だ。魔石が発生させる推進力が現在の速度に加算されるため、",
+  "book.enigmaticlegacy.entry.angel_blessing.page.3": "非常に長い距離、あるいは高い高度へのジャンプが可能になるからだ。<br2/>説明できない理由から、それが近くにあることにいくらかの安らぎを感じる。",
+
+
+  "book.enigmaticlegacy.entry.cursed_ring.name": "暗黒の指輪",
+  "book.enigmaticlegacy.entry.cursed_ring.heading.1": "その指輪",
+  "book.enigmaticlegacy.entry.cursed_ring.page.1": "予期せずポケットに入っていたもう一つのアイテム。だがこの指輪は不可解なアミュレットの輝きとは対照的に、悪意に満ちた暗黒に煮え立っている。一度これを身につければ、それはあなたの魂と融合し、運命を絡み合わせる。死においてさえ、二度と引き離す望みはない...。<br/>",
+  "book.enigmaticlegacy.entry.cursed_ring.page.2": "この暗黒を受け入れる勇気ある者に、七つの容赦なき呪いが降りかかる。この指輪をはめる誓いがもたらす代償を、ここに記しておく。<br2/><&l>第一の呪い$(clear) は、あなたの苦しみを倍加させる。",
+  "book.enigmaticlegacy.entry.cursed_ring.page.3": "あらゆるダメージは二倍の痛みとなり、傷跡は即座に致命傷へと変わるだろう。<br2/><&l>第二の呪い$(clear) は、中立的な生物を豹変させる。彼らはあなたを最大の脅威と見なし、たとえ直接見えていなくても、その鋭い感覚であなたの居場所を突き止める。",
+  "book.enigmaticlegacy.entry.cursed_ring.page.4": "<br2/><&l>第三の呪い$(clear) は、身につけている防具の機能を減衰させる。その硬度と耐性は約30パーセント減少する。<br2/><&l>第四の呪い$(clear) は、",
+  "book.enigmaticlegacy.entry.cursed_ring.page.5": "モンスターに対してあなたの力を弱める。この世界であなたを傷つけようとするほぼすべての者に対して、だ。<br2/><&l>第五の呪い$(clear) は、地獄の業火の中で永久に焼かれ続ける体験を強いる。一度火がつくと、その火は自然に消えることはない。焼くべき肉と沸騰させるべき血が尽きるまで、あなたを焼き尽くし続けるだろう。",
+  "book.enigmaticlegacy.entry.cursed_ring.page.6": "水などで消火することは可能だが、ネザーへの旅ではそれは解決策にならない。<br2/><&l>第六の呪い$(clear) は、死ぬたびに魂を切り刻む。失われた魂の断片ごとに最大体力が減少していく。断片は死の場所に留まり、",
+  "book.enigmaticlegacy.entry.cursed_ring.page.7": "それに触れることで再び融合し、体力を回復できる。<br2/><&l>第七の呪い$(clear) は、夜の睡眠を奪う。夢という穏やかな世界に逃げ込むことで夜をやり過ごすことは、もはや許されない。ベッドでリスポーン地点を設定することは可能だが、",
+  "book.enigmaticlegacy.entry.cursed_ring.page.8": "闇に潜む脅威をスキップすることはできない。<br2/>一方で、この代償と引き換えにあなたは利益を得る。いわゆる<&l>「七つの祝福」$(clear) だ。苦しみに見合う恩恵を約束するが、騙されてはならない。",
+  "book.enigmaticlegacy.entry.cursed_ring.page.9": "その力がどれほど魅惑的でも、支払う代償の十分の一も埋め合わせることはできない。実践を通じてそれを知る頃には、再考するには遅すぎるだろう。<br2/>祝福の正確なリストはすでにご存知だろうから、ここで詳述はしない。ただ、",
+  "book.enigmaticlegacy.entry.cursed_ring.page.10": "これらが呪いと全く同じように機能し、指輪をはめると即座に付与される永続的な特性であり、外すことはできないという点には注意せよ。<br2/>結論として、この呪われた指輪の力は唯一無二だ。もし制御できれば、他では成し得ない偉業を達成し、他の半神が決して手にできない遺物を得られるだろう。",
+  "book.enigmaticlegacy.entry.cursed_ring.page.11": "だが、これほどの苦難と絶望を自ら招くのは、狂気の沙汰と言うほかない。一体誰が、そのような運命を選ぶというのか？",
+
+
+  "book.enigmaticlegacy.entry.earth_heart.name": "大地の心臓",
+  "book.enigmaticlegacy.entry.earth_heart.heading.1": "その心臓",
+  "book.enigmaticlegacy.entry.earth_heart.page.1": "オーバーワールドの表面を覆う果てしない海と密接に関係している「海の心臓」が存在するように、大地の岩だらけの深部で生まれ、その生のままのエネルギーを封じ込めた「大地の心臓」が存在する。それは地表面下深くにあるダンジョンの最深部の部屋やホールで、窒息するような暗闇の中に忘れ去られている。",
+  "book.enigmaticlegacy.entry.earth_heart.page.2": "この心臓が持つ元素の力は魔石に蓄えられたものと似ているが、魔石がすべての世界の始まりを告げた太古の混沌から生まれたのに対し、これははるかに後に、多くの地質学的永劫の間に地殻の中でゆっくりと凝縮されて生まれたものである。",
+  "book.enigmaticlegacy.entry.earth_heart.page.3": "結果として得られたこの形は、持ち主に付き添ったり、蓄えられた未精製のエネルギーを自由に導き出したりすることを許さないが、適切に利用すれば、そのようなエネルギーを必要とする強力な遺物の核として機能するかもしれない。",
+
+
+  "book.enigmaticlegacy.entry.twisted_heart.name": "歪んだ心臓",
+  "book.enigmaticlegacy.entry.twisted_heart.page.1": "...そして、この運命を選んだのはあなただった。これからの長い旅路の中で、この選択がどれほどの悲しみと後悔を強いることになるかを何度も思い知ることになるだろうが、それでもあなたはそうした。なぜだか分かっているだろうか？<br2/>いずれにせよ、後戻りはできない ― 今や自身に結びついた偉大なる呪いの力を制御する試みへと進むのみだ。",
+  "book.enigmaticlegacy.entry.twisted_heart.page.2": "必要な材料さえ手に入れば、この任務はそれほど複雑ではない。呪い自体が、あなたの周囲の世界へと腐敗の触手を広げるための新しい方法を積極的に求めているようだからだ ― 彼らはただ、あなたからのわずかな手助けを必要としているのだ。",
+  "book.enigmaticlegacy.entry.twisted_heart.page.3": "大地の心臓を手に入れた瞬間、それが指輪の暗黒の力と共鳴し、その中の純粋なエネルギーの脈動をわずかに狂わせることに気づいたはずだ。この影響は幸いにも、心臓を即座に汚染し、通常のクラフトに使用不能にするほど強くはない。しかし、厳選された少量の秘術の材料と、あなたの半神の力の一部を用いることで、",
+  "book.enigmaticlegacy.entry.twisted_heart.page.4": "心臓の核とあなたが背負う呪いとの間の繋がりを強化し、呪いに心臓を腐食させ、全く別の何かへと変質させることができる。<br2/>歪んだ心臓はこの不浄な儀式の産物であり、大いなる呪いの一部を体現するアーティファクトであり、大地の心臓に含まれていたものよりも暗く強力である。",
+  "book.enigmaticlegacy.entry.twisted_heart.page.5": "それは大地の心臓が役立っていた目的には使用できないが、確実に独自の用途を持つことになるだろう。",
+
+
+  "book.enigmaticlegacy.entry.mending_mixture.name": "修復の調合物",
+  "book.enigmaticlegacy.entry.mending_mixture.page.1": "装備の修理は、特に外出先で必要な材料や道具がすぐに手に入らない場合には、退屈な作業になりがちだ。<br2/>この調合物を完成させるには非常に高価な秘術の材料を混ぜ合わせる必要があるが、それだけの価値は十分にある。道具や防具、あるいは武器に注意深く塗布すれば、たとえどれほど嘆かわしい",
+  "book.enigmaticlegacy.entry.mending_mixture.page.2": "損傷であっても一瞬で修復し、完璧な状態へと戻すことができる。<br2/>ただ、これを飲もうとはしないでほしい。その結末をあなたは好まないだろう。",
+
+
+  "book.enigmaticlegacy.entry.mega_sponge.name": "メガスポンジ",
+  "book.enigmaticlegacy.entry.mega_sponge.page.1": "一般的なスポンジでさえ、かなりの量の水を吸収することができ、小さな水溜まりや水没した構造物の内部を掃除するのに便利な道具だ。だが、それは常に改善の余地がある。<br2/>超膨張メガスポンジは、スポンジが持つ唯一の欠点 ― それが存在する物理的な空間によって暗示される、",
+  "book.enigmaticlegacy.entry.mega_sponge.page.2": "吸収できる水の量の限界を克服している。吸収したすべての液体を我々の世界を超えた空間へと捨てることで、無限に水を吸収し続けることができる。今やあなたは、裏庭のささやかな池よりもはるかに巨大なものを容易に排水できるだろう。<br2/>",
+  "book.enigmaticlegacy.entry.mega_sponge.page.3": "これを海に投げ捨てるのは避けることを強くお勧めする。理由は、おそらく明確に理解できるはずだ。",
+
+
+  "book.enigmaticlegacy.entry.twisted_mirror.name": "歪んだ鏡",
+  "book.enigmaticlegacy.entry.twisted_mirror.page.1": "歪んだ心臓の最も明白な用途の一つに、この鏡がある。<br2/>何よりもまず、かつて指輪を背負う決断をした自分を後悔しながら、自分自身の姿を見つめるために使える。それはまた、クラフト工程に含まれる帰還のポーションと同じ目的を果たすが、飲める形に拡散された",
+  "book.enigmaticlegacy.entry.twisted_mirror.page.2": "エンダーのエネルギーの代わりに、これを達成するために呪いの純然たる力に焦点を合わせている。<br2/>その結果は驚くほど効率的であることが証明された。この鏡を使うのはポーションを飲むよりもはるかに短時間で済み、",
+  "book.enigmaticlegacy.entry.twisted_mirror.page.3": "工程で消費されることもない。テレポートの後には、鏡を再び使えるようになるまでにかなりのクールタイムが必要だが、通常の状況ではそれは些細なことだろう。",
+
+
+  "book.enigmaticlegacy.entry.lore_inscriber.name": "伝承の記入",
+  "book.enigmaticlegacy.entry.lore_inscriber.heading.1": "そのGUI",
+  "book.enigmaticlegacy.entry.lore_inscriber.heading.2": "カラーコード",
+  "book.enigmaticlegacy.entry.lore_inscriber.heading.3": "フォントコード",
+  "book.enigmaticlegacy.entry.lore_inscriber.heading.4": "書式設定された名前",
+  "book.enigmaticlegacy.entry.lore_inscriber.heading.5": "書式設定された説明文",
+  "book.enigmaticlegacy.entry.lore_inscriber.heading.6": "書式設定された説明文",
+  "book.enigmaticlegacy.entry.lore_inscriber.heading.7": "書式設定された説明文",
+  "book.enigmaticlegacy.entry.lore_inscriber.heading.8": "伝承の付与",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.1": "設計者のインク瓶はテキストを書くための素晴らしい道具だ。星明かりのように鮮やかな色を魔法のように呼び出し、それによって刻まれた記号は、それが存在する表面を完全に破壊しない限り、決して消し去ることはできない。<br2/>実際に使いこなすには、まず伝承の断片を作成する必要がある ― あなたの書き込みを収めるのに",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.2": "最適な、特殊な羊皮紙だ。<br2/>これらの断片はそれ自体にテキストを保持できるが、そこに刻んだ内容を事実上あらゆる他のアイテムへと転送し、",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.3": "それを手にする人間や半神へと伝えることができる。原始的な刻印よりもはるかに洗練された方法で。以下の頁に、より詳細な使用方法が記されている。",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.4": "インク瓶を使用すると、上記のようなGUIにアクセスできる。",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.5": "入力スロット 【1】 に伝承の断片を置く。すると、その上のテキストフィールド 【3】 に、好きな名前と説明文を綴ることができる。<br2/>そこには、目に見えないが書式を制御するためのいくつかの特殊な書式設定コードが存在する。",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.6": "アイテム名の代わりに説明文として追加したい場合は、接頭辞として 「<&5><&l>!$(clear)」 を付ける。追加された説明文の各行には位置を定義するインデックスがある。インデックスは <&l>0$(clear) から始まる。<br2/>特定のインデックスの説明文を置き換えたい場合は、記号の後にそのインデックスを指定できる。例えば、3番目の説明文を置き換えたい場合、接頭辞は",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.7": "「<&5><&l>!2$(clear)」 のようになる。<br2/>最後に追加された説明文を削除したい場合は、 「<&5><&l>-!$(clear)」 と入力する。特定のインデックスの説明文を消去したい場合は、 「<&5><&l>-!$(clear)」 の直後にそのインデックスを指定する。例えば、5番目の説明文を消去したい場合は、 「<&5><&l>-!4$(clear)」 と入力せねばならない。接頭辞なしで入力した場合、それはアイテムの名前を変更するために使用される。",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.8": "カラーコードやフォントコードは、テキストフィールドのどこにでも入力でき、その後のすべてのテキストに効果を適用する。カラーコードを使用すると、それ以降のすべてのテキストの色が変更される。後に別のカラーコードが続けば、その最後のコードがそれ以前のすべての効果を上書きする。これにより、一行の中で異なる単語や部分に複数の色を使用することができる。",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.9": "最後に入力されたカラーコードが、別の色で上書きされるまで常に優先される。<br2/>フォントコードは互いに、あるいはカラーコードと積み重ねることができる。例えば、 「<&5><&l>&4&l&o$(clear)」 を使って、その後に <&4><&l><&o>濃い赤 ＋ 太字 ＋ 斜体$(clear) というスタイルを作成できる。",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.10": "フォント書式は、その後にカラー書式が適用されるまで効果を保持する。後に適用されたカラーコードは、それ以前のフォント書式を完全にクリアする。したがって、フォント書式をカラー書式の上に重ねたい場合は、常にカラー書式の後に指定せねばならない。<br2/>以下はカラーおよびフォントコードの正確な説明であり、それらの効果を視覚的に示している。",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.11": "&1 ― <&1>濃い青$(clear)<br/>&2 ― <&2>濃い緑$(clear)<br/>&3 ― <&3>シアン$(clear)<br/>&4 ― <&4>濃い赤$(clear)<br/>&5 ― <&5>紫$(clear)<br/>&6 ― <&6>オレンジ$(clear)<br/>&7 ― <&7>薄い灰色$(clear)<br/>&8 ― <&8>濃い灰色$(clear)<br/>&9 ― <&9>薄い青$(clear)<br/>&a ― <&a>黄緑$(clear)<br/>&b ― <&b>アクアマリン$(clear)<br/>&c ― <&c>赤$(clear)<br/>&d ― <&d>マゼンタ$(clear)<br/>&e ― <&e>黄色$(clear)<br/>",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.12": "&k ― <&k>難解な記号$(clear)<br/>&l ― <&l>太字$(clear)<br/>&m ― <&m>打ち消し線$(clear)<br/>&n ― <&n>下線$(clear)<br/>&o ― <&o>斜体$(clear)<br2/>&r ― 書式リセット<br2/><br2/><br/>以下は、書式設定で達成できることのイメージを与えるいくつかの例だ。",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.13": "&6&l地獄の破壊者",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.14": "!&5暗く、そして強力。",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.15": "!&5私はかつて世界を統べていた...",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.16": "!&1&lなぜ&r &2&n私&r &3&oは&r &4&m痛み&r &6&kを感じるのか",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.17": "伝承の断片への書き込みが完了したら、金床で任意のアイテムと組み合わせ、名前と説明文をそのアイテムへと転送できる。この作業には常に、正確に4レベルの経験値が必要となる。<br2/>",
+  "book.enigmaticlegacy.entry.lore_inscriber.page.18": "カスタムの名前と説明文の両方を定義する必要はない ― 片方のみを定義することも可能だ。名前を定義しない場合、元の名前は維持される。説明文のみを追加する場合、元のアイテムにある既存の説明文は維持される ―存在するなら。名前のみを定義した場合、既存の説明文は維持される。",
+
+
+  "book.enigmaticlegacy.entry.extradimensional_eye.name": "異次元の眼",
+  "book.enigmaticlegacy.entry.extradimensional_eye.page.1": "あなたは、調査のため、あるいはペットや家畜として飼うために、連れ帰りたいと思うような生物にしばしば出会うだろう。<br2/>だが、最も大人しい動物であっても、広大な距離を移動させるのは極めて困難であることが証明されている ― 彼らが自らあなたに従う時でさえ動きは遅く、",
+  "book.enigmaticlegacy.entry.extradimensional_eye.page.2": "障害物を避ける能力はほぼ皆無であり、注意を払わなければ確実に迷子になるだろう。<br2/>しかし、これらの眼のいずれかを自在に扱えれば、ほぼどのような",
+  "book.enigmaticlegacy.entry.extradimensional_eye.page.3": "生物であっても望む場所へ連れて行くという任務は、眼の力を解き放つという単純な動作へと変わる。まず、眼を目的地となる場所に紐付ける必要がある。その後、任意の生物の元へ歩み寄り、眼の力を使えば、その生物を霧の中に消し去り、目的地に出現させることができる。<br2/>不運なことに、眼自体もその工程で消失し、",
+  "book.enigmaticlegacy.entry.extradimensional_eye.page.4": "あなたが運んでいる生物とは異なり目的地に届くことはない。一度消失すれば物理的な現実の中に存在していた痕跡さえ残らないため、それが正確にどこへ行くのか、あなたにはまだ分からないままである。",
+
+
+  "book.enigmaticlegacy.entry.enchantment_transposer.name": "飢えた知識",
+  "book.enigmaticlegacy.entry.enchantment_transposer.page.1": "この本自体は、それほど多くの秘術の知識や力を持っているわけではないが、それらを手に入れたいという欲求は誰よりも強いようだ。<br2/>エンチャントされたアイテムと密接に接触させれば、それは即座にそれらのエンチャントを吸収し、通常のエンチャント本と同じように蓄積する。その際、アイテムは完全に無傷で",
+  "book.enigmaticlegacy.entry.enchantment_transposer.page.2": "損傷もない ― 吸収されたエンチャントを除いて、すべてが元のままである。<br2/>結果として得られた本は、通常通りに使用できる ― 飢えが満たされたことで、",
+  "book.enigmaticlegacy.entry.enchantment_transposer.page.3": "他のどのエンチャント本とも変わらない性質になったようである。",
+
+
+  "book.enigmaticlegacy.entry.netherite.name": "ネザライト",
+  "book.enigmaticlegacy.entry.netherite.page.1": "古代の残骸は非常に希少で発見が困難であることが判明したが、それに見合うだけの価値がないと断じることはできない。<br2/>それを精錬して欠片にし、金と慎重に融合させることで、ネザライトとして知られる材料を作成できる。それはネザーの高温に耐性があり、炎にさらされたり溶岩に沈められたりしても",
+  "book.enigmaticlegacy.entry.netherite.page.2": "大きな損傷を受けないだけでなく、ダイヤモンドよりもはるかに硬い。<br2/>それはダイヤモンドの完全な代用品としてではなく、ダイヤモンドをベースとした",
+  "book.enigmaticlegacy.entry.netherite.page.3": "より洗練された化合物の一部として、最もよく機能することが証明された。これが最も効果的な複合材ではない可能性があるため、さらに優れた品質を持つ材料を作成するために、この金属を用いた実験を続けている。",
+
+
+  "book.enigmaticlegacy.entry.etherium_ore.name": "エーテリウム鉱石",
+  "book.enigmaticlegacy.entry.etherium_ore.heading.1": "その鉱石",
+  "book.enigmaticlegacy.entry.etherium_ore.page.1": "エンドに由来する他のあらゆる謎の中で、一つのものが他よりもあなたの注意を引いている。そこではエーテリウムという名を冠した、洗練された材料に出会うことができるという噂がある。<br2/>エーテリウムは島々の地殻内で自然に遭遇できるものとしては言及されないが、どういうわけか、",
+  "book.enigmaticlegacy.entry.etherium_ore.page.2": "かつてこの次元を植民地化しようとした古代文明の所有物となっていたことが示唆されている。<br2/>その文明の統治時代はずっと昔に終わっているため、彼らにそれがどのように可能だったかを尋ねることはできない。今のあなたの理論では、彼らは圧倒的な量のエンダーエネルギーを操ることに成功し、",
+  "book.enigmaticlegacy.entry.etherium_ore.page.3": "それらを使ってこの鉱物を物理的な現実へと具現化し、製造できるようにしたのではないかと考えている。<br2/>不運なことに、彼らの手法がどのようなものだったかは定かではないが、彼らの仕事の結論を目にすれば、さらなる答えが明らかになるかもしれない。純粋な科学的好奇心以外にも、魔術師としても鍛冶屋としても、",
+  "book.enigmaticlegacy.entry.etherium_ore.page.4": "この材料には多大な興味がある。この材料の特性は、しばしばあまりに驚異的なものとして語られており、それに関するあまりに多くの伝承が存在しなければ、それらが真実であることを疑ったであろうほどだからだ。",
+
+
+  "book.enigmaticlegacy.entry.etherium.name": "エーテリウム",
+  "book.enigmaticlegacy.entry.etherium.page.1": "その名にもかかわらず、この材料は物理的に固体である。非常に。<br2/>物語は真実であることが判明した。それどころか、事実を誇張してさえいなかった。エーテリウムは、以前にあなたが目にした伝承の断片によって割り当てられていた驚異的な特性のほとんどを真に備えている。非常に高い融点を持ち、",
+  "book.enigmaticlegacy.entry.etherium.page.2": "ネザーライトと同じくらい炎や溶岩に強く、同時にその耐久性を大幅に凌駕している。それ以外にも、この金属は脈動するエネルギーで満ち溢れており、あなたが思いつくどのような形や形態であっても、それを解き放ちたいという衝動を抱かせる。<br2/>",
+  "book.enigmaticlegacy.entry.etherium.page.3": "あなたのような者にとって、形や形態を創造する能力は疑う余地がない。この世界は間もなく、あなたの新しく鍛造されたエーテリウム道具の威力を目の当たりにすることだろう。",
+
+
+  "book.enigmaticlegacy.entry.ender_rod.name": "エンダーロッド",
+  "book.enigmaticlegacy.entry.ender_rod.page.1": "ブレイズロッドにエンダーエネルギーとアストラルダストに含まれる力を注ぎ込むことで、このロッドをクラフトできる。<br2/>将来的にさらなる用途があるかもしれないが、今のところは、平凡な木材ではもはや十分ではないエーテリウム道具の柄を鍛造するためのベースとして、主に設計されている。",
+  "book.enigmaticlegacy.entry.ender_rod.page.2": " ",
+
+
+  "book.enigmaticlegacy.entry.astral_dust.name": "アストラルダスト",
+  "book.enigmaticlegacy.entry.astral_dust.heading.1": "ザ・ダスト",
+  "book.enigmaticlegacy.entry.astral_dust.page.1": "エンドシティの部屋の中に隠されたこの捕らえどころのない物質は、信じられないほど興味深い特性を備えている。あらゆる元素の力がその中に注入され混合されており、どういうわけか比較的安定した形態を保っている。<br2/>アストラルダストは創造そのものに似ており、混沌としていて永続的ではないが、",
+  "book.enigmaticlegacy.entry.astral_dust.page.2": "どういうわけか時間の中に凍結されており、その一瞬の美しさのすべてを鑑賞することを許してくれる。それが持つ秘術の力は莫大かもしれないが、建設的な方法で役立てるには、注意深く扱い、成形せねばならない。時が経てば、それが持ち得る多くの用途をあなたが発見することは疑いようがない。",
+
+
+  "book.enigmaticlegacy.entry.evil_essence.name": "邪悪なエッセンス",
+  "book.enigmaticlegacy.entry.evil_essence.heading.1": "そのエッセンス",
+  "book.enigmaticlegacy.entry.evil_essence.page.1": "ネザースターがウィザーの物理的な器の核であるならば、この物質は、その一見破壊不能で不滅な魂の純粋なエネルギーの具現である。そのエネルギーのほんのわずかな断片にすぎないが、あなたの手にあれば計り知れない可能性を秘めているのは確かだ。<br2/>それはあなたの呪われた存在そのものと奇妙な繋がりがあるようで、",
+  "book.enigmaticlegacy.entry.evil_essence.page.2": "あなたがこのエッセンスを手に入れることができた理由でもある。あなたが近づくと、あたかもあなたに吸着したいという欲望に駆られているかのように、それは引き寄せられてくる。もしかすると、そうさせるべきだろうか？... いや、なんと愚かな考えだろう。<br2/>一つ疑いようのないことがある ― この物質には、巨大な量の、",
+  "book.enigmaticlegacy.entry.evil_essence.page.3": "暗く歪んだ力が含まれており、あなたはたまたまそれを操る能力を備えている。これを使ってなすべき何かを、必ず見つけるだろう。",
+
+
+  "book.enigmaticlegacy.entry.forbidden_fruit.name": "禁断の果実",
+  "book.enigmaticlegacy.entry.forbidden_fruit.heading.1": "その果実",
+  "book.enigmaticlegacy.entry.forbidden_fruit.page.1": "ネザーの古代の砦で見つかる希少な遺物。一見しただけでは一口食べたいと思うようなものではない。その外見は欺瞞ではない ― それは灰と腐敗の味がし、絶妙な油っぽい苦味が効いている。もし味覚受容体の叫びに耐えてすべてを食すことができれば、即座に現れる効果はあなたを死に至らしめるため、",
+  "book.enigmaticlegacy.entry.forbidden_fruit.page.2": "治療すべき肉体がなくなる前にその深刻な病の状態を癒せるよう、あらかじめ準備しておくのが賢明だ。<br2/>毒性が収まれば、長期的な効果が現れ始める。あなたは永久に空腹を経験することがなくなり、そのためほとんどの通常の食品を摂取できなくなる。<br2/>",
+  "book.enigmaticlegacy.entry.forbidden_fruit.page.3": "この効果は一見有益だが、その代償は永続的な不飽和感と、著しく低下した体力再生能力である。一度果実を食せば、それらの効果を覆す方法はないことを知っておくべきだ ― それらは死においてさえ、贖うことのできない罪のようにあなたと共にあり続けるだろう。<br2/>",
+  "book.enigmaticlegacy.entry.forbidden_fruit.page.4": "選択は慎重に行うことだ。",
+
+
+  "book.enigmaticlegacy.entry.guardian_heart.name": "守護者の心臓",
+  "book.enigmaticlegacy.entry.guardian_heart.heading.1": "その心臓",
+  "book.enigmaticlegacy.entry.guardian_heart.page.1": "海底神殿、およびパトロールを続ける無数のガーディアンたちは、この世界の最大の謎の一つである。<br/>ガーディアン自体が、水と暗闇しかない沈んだホールや廊下よりも、はるかに直接的な興味を引く対象だ。",
+  "book.enigmaticlegacy.entry.guardian_heart.page.2": "この遺物はエルダーガーディアンの一人の体から引き剥がされた、生きた心臓であるように見える。エルダーガーディアンは特に古く強力な変種であるようだ。彼らはあなたが海面に潜る前から接近を感知でき、繰り返しブロック破壊能力を失わせる呪いをかけ、",
+  "book.enigmaticlegacy.entry.guardian_heart.page.3": "あなたが自らの道を切り開くことを効果的に防いできた。この心臓は、そのような力を可能にした源であるようだ。それは七つの呪いの指輪の歪んだエネルギーと共鳴しており、それゆえにあなたはそれを生きたまま無傷で手に入れることができた。<br2/>守護者の心臓があれば、",
+  "book.enigmaticlegacy.entry.guardian_heart.page.4": "通常のガーディアンが中立になるだけでなく、あなたの近くにいる潜在的な脅威を排除することを優先するようになる。そのような敬意の理由は謎だが、心臓の力は七つの呪いによって強化されているため、精神への影響力が増大しているのだろう。<br2/>",
+  "book.enigmaticlegacy.entry.guardian_heart.page.5": "この仮定は起源について多くの疑問を投げかける。心臓のもう一つの能力は、それをホットバーに入れているか手に持っている時、十分に近くにいるモンスターに視線を向けることで、そのモンスターに降りかかる呪いを魔法のように呼び出させることだ。<br2/>本来は強力な呪いを生み出す能力はないようだが、",
+  "book.enigmaticlegacy.entry.guardian_heart.page.6": "七つの呪いの純然たる力が心臓にさらなる能力を吹き込み、軽いデバフの代わりにモンスターの精神を操作し、同類の一人を攻撃するように仕向け、体は一時的に強化される。激昂した個体を取り囲むモンスターたちも呪いの影響を受け、それまでしていたことを忘れて呪いがかかった者を攻撃せざるを得なくなる。<br2/>",
+  "book.enigmaticlegacy.entry.guardian_heart.page.7": "呪いの主要な標的は、攻撃を強制された相手を殺した後に通常の精神状態に戻る。呪われた者を攻撃したモンスターたちも同様で、もし標的の殺害に成功すれば、彼らは通常の活動 ―おそらくあなたを殺そうとすること― に戻るだろう。<br2/>この能力は、視線を向けようとするモンスターが、",
+  "book.enigmaticlegacy.entry.guardian_heart.page.8": "視界の届く近距離に他のモンスターを連れていない場合には機能しない。かなりのクールタイムがあるため、これだけで大群から救われるとは期待しないことだ ― モンスターが内輪もめに忙しい間に、できるだけ距離を置くのが得策だろう。",
+  "book.enigmaticlegacy.entry.guardian_heart.page.9": " ",
+
+
+  "book.enigmaticlegacy.entry.animal_guidebook.name": "動物使いの導き",
+  "book.enigmaticlegacy.entry.animal_guidebook.page.1": "オーバーワールドの愛らしい動物たちと仲良くなりたいなら、この包括的なガイドが間違いなく助けとなるだろう。戦いの最中に動物の友人を誤って傷つけないようにする方法や、彼らの忠誠と敬意を得るための多くの方法を学ぶのに役立つ。<br2/>注意深く調査された何百もの頁をすべて記憶するのは困難だ。",
+  "book.enigmaticlegacy.entry.animal_guidebook.page.2": "念のため、一つか二つのことをすぐに調べられるよう、これを持ち歩くのがよいだろう。",
+
+
+  "book.enigmaticlegacy.entry.hunter_guidebook.name": "狩人の導き",
+  "book.enigmaticlegacy.entry.hunter_guidebook.page.1": "もう一つの包括的なガイドであるこれは、懐かせた獣の仲間と肩を並べて狩りをする方法を学ぶのに役立つ。彼らが戦闘で見せる忠誠と勇気にも関わらず、動物はあなたよりもはるかに知性が低く、複雑な戦闘技術を開発したり回避したりすることはできないということに気づいているだろう。<br2/>",
+  "book.enigmaticlegacy.entry.hunter_guidebook.page.2": "この本はユニークな戦闘アプローチを概説している。これにより、彼らが受けるはずの打撃をあなた自身が肩代わりし、彼らが耐えられる以上の攻撃によって殺されることから救うことができる。<br2/>幸いなことに、あなたの防御手段ははるかに精巧で効果的であり、",
+  "book.enigmaticlegacy.entry.hunter_guidebook.page.3": "例えばポーションを使えば戦闘中に迅速に癒すことができるはずだ。",
+
+
+  "book.enigmaticlegacy.entry.the_twist.name": "運命の捩れ",
+  "book.enigmaticlegacy.entry.the_twist.page.1": "知識は力である。この本が証明しているように、それは時として非常に文字通りの意味を持つ。<br2/>ウィザーの魂の邪悪なエッセンスは、あなたが今ページをめくっている知識の器を歪め、腐敗させることを可能にする。その結果は内部のコンテンツにはあまり影響を与えない ― 運命の捩れは、承認の証とほぼ同じ目的を果たす。",
+  "book.enigmaticlegacy.entry.the_twist.page.2": "単に異なる表紙に包まれているだけだ。<br2/>真の捻りは、その学術的ではない目的、具体的には本としてではなく武器として持つ能力から生じる。それによる攻撃は重いダメージとノックバックを与え、高い攻撃速度と相まって、真に壊滅的な連撃を可能にする。<br2/>",
+  "book.enigmaticlegacy.entry.the_twist.page.3": "呪いのエッセンスを注入され、ウィザーの存在のエネルギーで強化されたこの遺物は、七つの呪いの指輪から力を引き出す。これにより、これを武器として選んだ場合、第四の呪いの効果を克服し、他の生物と同様にモンスターに対しても常にフルダメージを与えることができる。<br2/>",
+  "book.enigmaticlegacy.entry.the_twist.page.4": "さらに、そのエッセンスは高次の存在の器や魂を熱心に食い荒らし、焼き、引き裂く。そして高次の存在には、ウィザー自身と同様に、好都合にも半神が含まれているのだ。",
+
+
+  "book.enigmaticlegacy.entry.infernal_shield.name": "焦熱の大盾",
+  "book.enigmaticlegacy.entry.infernal_shield.page.1": "最も強靭な材料から鍛造され、あなたの魂が結びついている呪われた力が吹き込まれたこの盾は、あなたを歩く要塞へと変えることができる。<br2/>盾に対抗する従来の手段、例えば貫通のエンチャントが付与された矢や斧などは、これに対しては完全に無力だ。それを掲げた瞬間にあなたを守り、",
+  "book.enigmaticlegacy.entry.infernal_shield.page.2": "危害を加えようと近づきすぎた者は、そこに封じられた地獄の炎によって焼かれる。仕上げとして、敵がこれを突破しようとして失敗するたびにあなた自身の力が増し、暴力的に、そして容赦なく報復することを可能にする。<br2/>しかし、そのような強力な防御には危険な代償が伴う。",
+  "book.enigmaticlegacy.entry.infernal_shield.page.3": "もしこの盾を攻撃者との間にしっかりと保持できず、一撃があなたを捉えてしまったら ― あなたの肉体と誇りは、等しい残虐さで粉砕されるだろう。<br2/>その耐久性は膨大だが、無限ではない。復元するための手段には、金床で黒石と組み合わせるか、修復のようなエンチャントに任せることが含まれる。<br2/>",
+  "book.enigmaticlegacy.entry.infernal_shield.page.4": "誇りを持ってそれを携えよ、だが自惚れは遅効性の、そして狡猾な殺人者であることを忘れてはならない。",
+
+
+  "book.enigmaticlegacy.entry.ancient_tomes.name": "古の魔導書",
+  "book.enigmaticlegacy.entry.ancient_tomes.heading.1": "その魔導書",
+  "book.enigmaticlegacy.entry.ancient_tomes.page.1": "三つの主要な世界の多くの隅々で、これらの魔導書に出会うことができる。それらは文学の非常に古い例であり、何世紀にもわたってそれらを襲ったあらゆる破滅にも関わらず、現代まで生き残っている数少ないものの一つだ。それらのページの中に残るわずかな知識を繋ぎ合わせることは、他にはない偉業である。<br2/>",
+  "book.enigmaticlegacy.entry.ancient_tomes.page.2": "幸いにも、半神の精神と力があればそれははるかに容易なはずだ。<br2/>不運なことに、その知識が実用的に役立つことはそれほど多くない。より頻繁に、これらの著作には世界の民俗や芸術的な描写、そしてその膨大な歴史が含まれており、それらが世界を征服する助けになることはまずないだろう。<br2/>",
+  "book.enigmaticlegacy.entry.ancient_tomes.page.3": "純粋な真実を求めるのは容易ではないが、十分な例を集めれば、あらゆる世界に関する知識を大幅に拡大し、他では解決できなかったであろう多くの謎を解き明かすことができるはずだ。<br2/>また、伝説の遺物やその他の力の対象へと導く複数の手がかりを",
+  "book.enigmaticlegacy.entry.ancient_tomes.page.4": "発見することもあるだろう。それらがまだどこにあるか分かっていない場合に備えて。",
+
+
+  "book.enigmaticlegacy.entry.ancient_debris.name": "古代の残骸",
+  "book.enigmaticlegacy.entry.ancient_debris.heading.1": "その残骸",
+  "book.enigmaticlegacy.entry.ancient_debris.page.1": "ネザーの地殻深くには、古代の残骸が眠っている。<br2/>その起源は正確には分かっていない。伝承の断片には精錬工程や期待される材料特性が正確に記されているが、どこから来たのかという手がかりは残されていない。ネザーの地質学的歴史はそれ自体が謎だが、",
+  "book.enigmaticlegacy.entry.ancient_debris.page.2": "そのような残骸がどのようにその歴史に収まったのかは、さらなる謎である。<br2/>しかし、その歴史よりもはるかに、あなたは残骸自体の実際のサンプルを手に入れることに興味がある。<br2/>",
+  "book.enigmaticlegacy.entry.ancient_debris.page.3": "あなたが認めたところによれば、それはダイヤモンドの硬度を凌駕する金属を鍛造するための鍵となるかもしれない。ダイヤモンドは、多くの前時代において人間と半神の両方が扱わねばならなかった最も耐久性のある材料であり続けてきた。",
+
+
+  "book.enigmaticlegacy.entry.redstone_lantern.name": "レッドストーンランタン",
+  "book.enigmaticlegacy.entry.redstone_lantern.heading.1": "ランタンのクラフト",
+  "book.enigmaticlegacy.entry.redstone_lantern.page.1": "レッドストーンランタンは、生のグロウストーンの代わりにレッドストーンランプから製造された、ランプ設計のもう一つの変種だ。<br2/>レッドストーンランプ自体とは異なり、レッドストーンランタンは構造内に動力源を埋め込んでいるため、点灯したままとなる。その動力源は外部の信号によって",
+  "book.enigmaticlegacy.entry.redstone_lantern.page.2": "直接影響を受けることがないように密閉されているため、それらのランタンを消灯させることはできない。<br2/>それ以外の点では、核の見た目がわずかに異なるだけで、グロウストーンの対応物と完全に同一である。",
+
+
+  "book.enigmaticlegacy.entry.shroomlamp.name": "キノコランプ",
+  "book.enigmaticlegacy.entry.shroomlamp.page.1": "シュルームライトは植物が溢れるネザーにおける美しい自然の光源だ。だが、その光源をランプ製造のための代替材料として役立てるよう適応させることができる。<br2/>シュルームライトを核として作成されたランプは、核の見た目こそ異なるものの、グロウストーンの対応物と完全に同一である。",
+
+
+  "book.enigmaticlegacy.entry.lamp.name": "ランプ",
+  "book.enigmaticlegacy.entry.lamp.page.1": "グロウストーンは良質で信頼できる光源だが、生のグロウストーンの塊をただ置くだけでは、あまり美しさは生まれない。代わりに、あなたは一般的なランタンのそれに似た設計を考案した。もっとも、より大きく明るいものだが。<br2/>ランタンと同じように、ランプを床に置いたり、天井から吊るしたりすることができる。",
+  "book.enigmaticlegacy.entry.lamp.page.2": "広範な実験を通じて、あなたはさらに洗練された設計も生み出した。それは、ランプをガラスブロックの中に密閉したものだ。<br2/>これにより、床で支えたり、上に取り付けたりするものを必要としなくなる。",
+
+
+  "book.enigmaticlegacy.entry.recall_potion.name": "帰還のポーション",
+  "book.enigmaticlegacy.entry.recall_potion.heading.1": "ポーションの醸造",
+  "book.enigmaticlegacy.entry.recall_potion.page.1": "未知の地への旅は常にエキサイティングなものだ。かつて一度通ったルートを辿って家に戻る旅は ―通常、それほどではない。<br2/>だが、このポーションを手元に置いておけば、帰路のすべての距離を移動するという退屈な部分をスキップできる。これを飲めば、あなたは即座に家へとテレポートするのだから。",
+  "book.enigmaticlegacy.entry.recall_potion.page.2": "あるいは、少なくともあなたが技術的に「家」と呼べる場所へ。<br2/>もしそのような場所がないなら、代わりに、この世界の地を巡るあなたの旅が最初に始まった場所のあたりにたどり着くことになる。その場所の近くであること以外、",
+  "book.enigmaticlegacy.entry.recall_potion.page.3": "正確にどこにたどり着くかは確信が持てないが。<br2/>ポーションは、あなたと目的地の間の距離に関わらず、またあなたが同じ次元にいるかどうかに関わらず、その効果を発揮する。",
+
+
+  "book.enigmaticlegacy.entry.twisted_potion.name": "歪んだ慈悲のポーション",
+  "book.enigmaticlegacy.entry.twisted_potion.heading.1": "ポーションの醸造",
+  "book.enigmaticlegacy.entry.twisted_potion.page.1": "歪んだ心臓の力により、あなたは帰還のポーションのエッセンスを変異させ、新しい目的を与えることができる。<br2/>歪んだ慈悲のポーションとあなたが呼ぶそれは、あなたが最後に死んだ正確な場所へとワープすることを許し、おそらくそこに残してきたであろう所持品と魂の一部を回収させてくれる。<br2/>",
+  "book.enigmaticlegacy.entry.twisted_potion.page.2": "注意せよ、このような機会には代償が伴う ― テレポートが完了した直後、あなたは再び死の淵にあることに気づくだろう。<br2/>最後にあなたを殺した何かが、再びあなたを捕らえるまでに長くはかからないかもしれない。",
+  "book.enigmaticlegacy.entry.twisted_potion.page.3": " ",
+
+
+  "book.enigmaticlegacy.entry.haste_potion.name": "急ぎのポーション",
+  "book.enigmaticlegacy.entry.haste_potion.heading.1": "ポーションの醸造",
+  "book.enigmaticlegacy.entry.haste_potion.heading.2": "持続時間の延長",
+  "book.enigmaticlegacy.entry.haste_potion.heading.3": "効果の強化",
+  "book.enigmaticlegacy.entry.haste_potion.heading.4": "スプラッシュ版",
+  "book.enigmaticlegacy.entry.haste_potion.heading.5": "残留版",
+  "book.enigmaticlegacy.entry.haste_potion.page.1": "一般的なセットほど広く知られておらず、使われてもいない種類のポーションだ。<br2/>実用的な用途は非常に明白である。それは主に長時間の採掘作業に有用で、岩や土をはるかに速いペースで切り裂くことを可能にする。それ以外にも、攻撃速度をわずかに上昇させ、",
+  "book.enigmaticlegacy.entry.haste_potion.page.2": "短時間で連撃を繋げやすくするため、戦闘においてもいくらか役立つことが証明されるかもしれない。<br2/>醸造は難しくない ― 奇妙なポーションにネザークォーツを融合させるだけだ。",
+  "book.enigmaticlegacy.entry.haste_potion.page.3": "その効果は、レッドストーンダストを融合させることで持続時間を延長するか...",
+  "book.enigmaticlegacy.entry.haste_potion.page.4": "...あるいは、グロウストーンを用いてその力を強化することができる。",
+  "book.enigmaticlegacy.entry.haste_potion.page.5": "また、他の通常のポーションと同様に、スプラッシュタイプや...",
+  "book.enigmaticlegacy.entry.haste_potion.page.6": "...残留タイプへと醸造し、変換することも可能だ。",
+
+
+  "book.enigmaticlegacy.entry.molten_heart_potion.name": "溶岩の心のポーション",
+  "book.enigmaticlegacy.entry.molten_heart_potion.heading.1": "ポーションの醸造",
+  "book.enigmaticlegacy.entry.molten_heart_potion.heading.2": "持続時間の延長",
+  "book.enigmaticlegacy.entry.molten_heart_potion.heading.3": "スプラッシュ版",
+  "book.enigmaticlegacy.entry.molten_heart_potion.heading.4": "残留版",
+  "book.enigmaticlegacy.entry.molten_heart_potion.page.1": "これは、より優れた効果を得るために、あまり一般的ではない材料を投資する意志がある場合に、火炎耐性のポーションの改良版として役立つ。<br2/>炎や溶岩に対する完全な無効化を与える以外にも、火がついている場合にあなたを消火し、溶けたマグマの流れの中での周囲の感知能力を顕著に向上させる。",
+  "book.enigmaticlegacy.entry.molten_heart_potion.page.2": "最終的に、それはネザーの溶岩の海で煮込まれる体験を、かなり楽しいものにするはずだ。",
+  "book.enigmaticlegacy.entry.molten_heart_potion.page.3": "その効果はレッドストーンダストを使用して延長できる。",
+  "book.enigmaticlegacy.entry.molten_heart_potion.page.4": "また、他の通常のポーションと同様に、スプラッシュタイプや...",
+  "book.enigmaticlegacy.entry.molten_heart_potion.page.5": "...残留タイプへと醸造し、変換することも可能だ。",
+
+
+  "book.enigmaticlegacy.entry.advanced_brewing.name": "高度なポーション",
+  "book.enigmaticlegacy.entry.advanced_brewing.heading.1": "究極のポーション醸造",
+  "book.enigmaticlegacy.entry.advanced_brewing.heading.2": "究極の筋力",
+  "book.enigmaticlegacy.entry.advanced_brewing.heading.3": "究極の透明化",
+  "book.enigmaticlegacy.entry.advanced_brewing.heading.4": "究極の回復",
+  "book.enigmaticlegacy.entry.advanced_brewing.heading.5": "究極のスプラッシュ毒",
+  "book.enigmaticlegacy.entry.advanced_brewing.page.1": "アストラルダストがすぐに役立つ方法の一つに、ポーション醸造がある。その異常な特性により、以前は不可能と考えられていたこと、つまり強力な効果と延長された持続時間を両立させた究極のポーションを作成することが可能になる。<br2/>以下の頁には、そうすることで達成できる効果の例が含まれている。",
+  "book.enigmaticlegacy.entry.advanced_brewing.page.2": "究極のポーションは、延長されたもの、および、もしそのポーションにそのような変種があれば、強化されたものの両方から醸造できる。<br2/>結果はこれらによって変わることはない。",
+  "book.enigmaticlegacy.entry.advanced_brewing.page.3": "ポーションに延長版と強化版の両方がある場合、その究極版は両方の最善を組み合わせる。筋力の場合、これは究極のポーションが「筋力II」を8分間適用することを意味する。",
+  "book.enigmaticlegacy.entry.advanced_brewing.page.4": "ポーションに延長版しかない場合、通常は延長版の2倍の持続時間を持つ。ここで見られるように、究極の透明化のポーションは、その効果を16分間適用する。",
+  "book.enigmaticlegacy.entry.advanced_brewing.page.5": "ポーションに即時効果がある場合は、単に効果のレベルが一段階上がる。したがって、回復のポーションは究極版として醸造されれば「即時回復III」を適用する。",
+  "book.enigmaticlegacy.entry.advanced_brewing.page.6": "これらはまた、従来の手法を介して、スプラッシュ版および残留版の両方から醸造したり、それらへと変換したりすることができる。",
+
+
+  "book.enigmaticlegacy.entry.etherium_armor.name": "エーテリウム防具",
+  "book.enigmaticlegacy.entry.etherium_armor.heading.1": "防具セット",
+  "book.enigmaticlegacy.entry.etherium_armor.page.1": "エーテリウムの新たな力が究極の防具を鍛造する試みに役立つかもしれないと推測するのに、それほど長くはかからなかったはずだ。エーテリウム防具は真に究極ではないかもしれないが、これまでのところ、あなたが作成したり所有したりできるどのようなものをも凌駕している。<br2/>その最初の注目すべき特性の一つは、それを装備して体に",
+  "book.enigmaticlegacy.entry.etherium_armor.page.2": "身につければ、防具自体が完全に不可視になり、平凡な金属から鍛造された防具よりもはるかに負担を感じさせないという点だ。何かがあなたやその防具と干渉しようとするまで、それを身につけていることさえ完全に忘れてしまうことができるほど、その重さは感じられないものである。<br2/>",
+  "book.enigmaticlegacy.entry.etherium_armor.page.3": "しかしその軽快さは、敵の攻撃を吸収するのが下手であることを意味しない。それは、貫通するのが極めて困難であるという点において、ネザーライト防具さえも凌駕している。それ以上に、想像を絶するほど耐久性が高い ― 最も粉砕的な打撃であっても、その表面にかすり傷一つ残すことはほとんどない。<br2/>",
+  "book.enigmaticlegacy.entry.etherium_armor.page.4": "四つの部位をすべて同時に身につけ、その共鳴が頂点に達すれば、ついに純粋なエネルギーで編まれた強力なシールドとして具現化し、持ち主をほとんどの飛び道具から保護し、完全に防ぐことができない攻撃を著しく弱体化させ、その攻撃を実行しようとする者をノックバックさせる。<br2/>",
+  "book.enigmaticlegacy.entry.etherium_armor.page.5": "そのシールドは、持ち主がどうにかして重傷を負ってしまった時にのみ発動する。満身創痍の体力を維持している間はシールドは消え、再び具現化する必要が生じるまで、エーテリウムはその内部エネルギーをゆっくりと補充する。<br2/>",
+  "book.enigmaticlegacy.entry.etherium_armor.page.6": "そのシールドが、体力の半分まで削られた際にウィザーが呼び出すものに似ていることに気づかないのは難しい。これは、エーテリウムの力の起源と性質に何らかの関係があることを暗示しているに違いない。以下の頁には、エーテリウム防具をどのように鍛造できるかの描写が含まれている。",
+
+
+  "book.enigmaticlegacy.entry.xp_scroll.name": "知恵の貯蔵庫",
+  "book.enigmaticlegacy.entry.xp_scroll.page.1": "経験値として知られるエーテルの物質は、しばしば扱いが不便なものだ。<br2/>あなた自身はどれほどの量であってもそれを吸収する能力を備えているが、所有していないのは、その後にそれを効果的に分配する可能性である。<br2/>一度に吸収し保持する量が多くなるほど、エンチャントのような術は実行するために",
+  "book.enigmaticlegacy.entry.xp_scroll.page.2": "想像を絶するほど無駄な量を消費するようになる。さらに苛立たしいことに、一度あなたの物理的な器が破壊されれば、経験値のほとんどは単に消失し、ごくわずかな名残だけが残されることになる。",
+  "book.enigmaticlegacy.entry.xp_scroll.page.3": "しかし、この壮麗な巻物に手を伸ばせば、その不満はついに終わりを迎えるだろう。<br2/>それはあなたの経験値を迅速かつ容易に吸収し、あなたがそれを取り戻すことを選ぶまで保持し続ける。不老の知恵の巻物はどれだけの量がやり取りされるかを正確に制御することを可能にし、巻物に貯蔵された経験値は",
+  "book.enigmaticlegacy.entry.xp_scroll.page.4": "自身の合計にはカウントされない。ただそれを見るだけで、それが常にどれだけの経験値を蓄えているかを好都合に見積もることができる。<br2/>それが有効であり、他のアクセサリーの中に携帯されている間、この巻物はまた、あなたの周囲の広い範囲にドロップされたあらゆる経験値の塊を吸収する。",
+
+
+  "book.enigmaticlegacy.entry.super_magnet_ring.name": "転位の指輪",
+  "book.enigmaticlegacy.entry.super_magnet_ring.page.1": "長らく待ち望まれていた磁力の指輪のアップグレード版である転位の指輪は、あらゆる面で優れている。<br2/>エンドの神秘的なエネルギーの断片を注入されたこれは、前身の2倍の範囲をカバーし、ドロップアイテムをあなたの方へ引き寄せる代わりに、それは... あなたをアイテムの方へ引き寄せる。<br2/>",
+  "book.enigmaticlegacy.entry.super_magnet_ring.page.2": "あらゆる点において、影響を受けたアイテムは、あたかもあなたがそのすぐ隣に立っているかのように振る舞い、事実上同時に複数の場所に存在することになる。この指輪はまた、その親の特性を継承しており、あなたが完全にその力を抑制しない限り、自身のアイテムを落とさせることはない。",
+
+
+  "book.enigmaticlegacy.entry.monster_charm.name": "討伐者の印",
+  "book.enigmaticlegacy.entry.monster_charm.page.1": "闇の中を心なく彷徨うそれらのモンスターは、時として大きな厄介者となる。今やネザーライトを鍛造する力を手に入れたあなたにとって、かつては相当な脅威だった彼らも、今では刃を汚す程度の些細な不便に成り下がっていることが多い。<br2/>しかし、それでも彼らの魂が肉体に執着するのを確実に止めるためには",
+  "book.enigmaticlegacy.entry.monster_charm.page.2": "数回の打撃が必要なこともあり、それ自体はもはやそれほど報われることではない。<br2/>怪物殺しの紋章は、これらの頻繁な遭遇においてあなたを助け、剣の一振りか二振りの手間を省いてくれる完璧なチャームだ。",
+  "book.enigmaticlegacy.entry.monster_charm.page.3": "これを身につけている間に殺された生物は、回収できるより有用なものを後に残す。モンスターであった場合、あなたは彼らの生命力のより多くの部分を、経験値として吸収できるようになる。<br2/>かつてモンスターとの戦いに一生を捧げた英雄たちが、結局自分自身もモンスターになってしまったという",
+  "book.enigmaticlegacy.entry.monster_charm.page.4": "物語を何度か耳にしたことがある。しかし、ありふれたゾンビを見るだけで、自分自身がそのような運命を辿ることは決してないと確信できる。一体どうすれば、共通点など持ち得るというのか？",
+
+
+  "book.enigmaticlegacy.entry.mining_charm.name": "採掘師の夢",
+  "book.enigmaticlegacy.entry.mining_charm.page.1": "この世界の貴重な金属や鉱石のほとんどは、その表面の下深くに隠されている。そのため、あなたは資源を求めて、湿っぽく冷たく暗い地下で、終わりのないように見えるトンネルを掘るために数えきれないほどの時間を費やす必要に迫られることがよくある。<br2/>",
+  "book.enigmaticlegacy.entry.mining_charm.page.2": "このチャームは、あなたがそれを経ねばならないという負担を免除してくれるわけではないかもしれないが、少なくともそれらの時間を、わずかばかり暗くなく、退屈なほど長くなくしてくれるだろう。<br2/>それはどのような採掘師をも嫉妬させる力を授け、ブロックを通常よりも著しく速く粉砕し、",
+  "book.enigmaticlegacy.entry.mining_charm.page.3": "暗闇の中でも昼間と同じくらいはっきりと見通し、ツルハシでより遠くのものにまで到達できるようにしてくれる。それはまた、お宝探しの確率をあなたにとってわずか有利にするかもしれない... おそらく。もしかすると、その部分はただの噂にすぎないのかもしれないが。",
+
+
+  "book.enigmaticlegacy.entry.magnet_ring.name": "磁力の指輪",
+  "book.enigmaticlegacy.entry.magnet_ring.page.1": "その設計の単純さにも関わらず、磁力の指輪はすでにいくらかの秘術の力を保持している。<br2/>おそらく創造を覆すほどのものではないが、それでも非常に有用だ ― あなたの周囲の地面に何かが落ちていれば、この指輪はそれをあなたの元へと運び、そこまで歩いて自ら拾い上げる手間を省いてくれる。",
+  "book.enigmaticlegacy.entry.magnet_ring.page.2": "注目すべき特性の一つは、あなたが捨てようとしたアイテムが、あなたが指輪の力を自ら抑制しない限り、あなたから離れることを拒み、即座にインベントリに戻ろうと試みることである。",
+
+
+  "book.enigmaticlegacy.entry.golden_ring.name": "精巧な指輪",
+  "book.enigmaticlegacy.entry.golden_ring.page.1": "もう少しの手間と、同じくらいの量の貴重な金があれば、平凡な鉄の指輪をはめるよりもはるかに光り輝く豪華な形へと作り直すことができる。<br2/>このアクセサリーの、光り輝く黄金であること以外の唯一の注目すべき特性は、ピグリンに対して金色の防具を身につけているのと同様の効果があるという点だ ―",
+  "book.enigmaticlegacy.entry.golden_ring.page.2": "彼らは指にあるこの貴重品を見れば、あなたをもう少し尊重するようになり、視界に入った瞬間に殺そうとはしてこなくなるだろう。",
+
+
+  "book.enigmaticlegacy.entry.enchanter_pearl.name": "付与師の真珠",
+  "book.enigmaticlegacy.entry.enchanter_pearl.page.1": "ウィザーの魂に宿る力を操る多くの方法の中で、この真に貴重な真珠は、エンチャントテーブルを使用して作業する際に通常耐えねばならない制限を打ち破ることができる。<br2/>第一に、それは何かをエンチャントしようとするたびに、ラピスを持ってくるのを忘れたという理由だけで、テーブルまで二度走らねばならないという",
+  "book.enigmaticlegacy.entry.enchanter_pearl.page.2": "手間を、きっぱりと忘れさせてくれる。ラピスラズリを使用する代わりに、真珠は七つの呪いの指輪の内側から力を引き出し、それをエンチャント工程の触媒として利用する。<br2/>その結果、何かをエンチャントする際に得られるエンチャントの量と強さは、通常のエンチャントよりも平均して著しく高くなる。",
+  "book.enigmaticlegacy.entry.enchanter_pearl.page.3": "この工程はまた、以前は不可能と考えられていたこと ― あなたの装備に修復のようなユニークなお宝エンチャントを、まさにそのエンチャントテーブルの中で生み出すこと ― を可能にする。<br2/>不運なことに、通常は得られないような呪いもいくつか付与されてしまう可能性があるため、この後者の能力はある種の両刃の剣である。",
+  "book.enigmaticlegacy.entry.enchanter_pearl.page.4": " ",
+
+
+  "book.enigmaticlegacy.entry.cursed_stone.name": "指輪の破壊",
+  "book.enigmaticlegacy.entry.cursed_stone.page.1": "七つの呪いの指輪を身につけることを選んで以来、あなたはその指輪を取り除く可能性について、もし存在するなら知りたいと考えてきた。<br2/>指輪が鍛造された材料は決して破壊不能ではないが、物理的な指輪は形而上学的な力のごく一部にすぎない。その腐敗の触手はあなたの魂の奥深く、不滅の存在と指輪の実体、",
+  "book.enigmaticlegacy.entry.cursed_stone.page.2": "そして呪いと祝福を、密接に絡み合わせている。この繋がりこそが指輪をこれほど粘り強く、死においてさえ分離不能なものにしているのだ。<br2/>ある程度まであなたが指輪から力を引き出せるのと同じように、指輪は、その物理的な形態とあなたの指にそれを留める鎖を強化するために、あなたの内側から力を引き出すことができる。",
+  "book.enigmaticlegacy.entry.cursed_stone.page.3": "指輪がわずかに影響を受けやすい唯一のものは極限の熱だが、その繋がりにより、あなたの体自体が同様に永久に破壊されない限り、それを永久に破壊することはできない。<br2/>あなたは古い器の破壊後に新しい器を創造し住まう能力を持っているため、指輪もまたそうなる。<br2/>だが、ウィザーを倒しそのエッセンスを収穫した今、障害を克服する手段が見つかった。",
+  "book.enigmaticlegacy.entry.cursed_stone.page.4": "不浄の石は、あなたと七つの呪いの指輪の間の繋がりを象徴しており、あなたがこの石を身近に置いている間だけ、いくらか脆弱な物理的形態として具現化する。これにより、特定の儀式的な方法で自ら最期を迎えることで、指輪の唯一の弱点を突くことが可能になる。<br2/>この石を携えて、失われた魂の次元、ネザーへと旅立て。その爆発的な風景の中を彷徨い、",
+  "book.enigmaticlegacy.entry.cursed_stone.page.5": "崖や岩棚を登って足元を見下ろせ ― 見つけられる限り広大で深い、煮えたぎる溶岩の海を発見するまで。一瞬息を止め、最後の吐息を解き放つ前に下の燃え盛る海の中へと飛び込み、あなたの体が溶けた岩の中に沈み、火に飲み込まれるに任せよ。<br2/>すべてが正しく実行されれば、指輪は溶け、永遠に破壊されるだろう。",
+  "book.enigmaticlegacy.entry.cursed_stone.page.6": "この解放は安くはない ― 不浄の石を通じて絡み合った自らの魂の一部をさらけ出したからこそ可能になるのだ。この儀式が成功するためには、その魂の一部がまず破壊されねばならない。そうでなければ単に不可能だっただろう。<br2/>だが少なくともこの犠牲を払えば、あの呪われた指輪を二度と見ることはなくなる。もっとも、この世界に複数が存在しない限りは。",
+  "book.enigmaticlegacy.entry.cursed_stone.page.7": " ",
+
+
+  "book.enigmaticlegacy.entry.heaven_scroll.name": "天界の贈り物",
+  "book.enigmaticlegacy.entry.heaven_scroll.page.1": "他の半神や人間がかつてそうしたように、旅の始まり以来、あなたは脆弱な肉体の限界を超越することを夢見てきた。その夢には、神のように空を自由に飛ぶことが含まれていた。<br2/>この巻物はすべての空を飛ぶことを許してはくれないかもしれないが、ネザースターの莫大な威力があれば、一つか二つのことはできるだろう。",
+  "book.enigmaticlegacy.entry.heaven_scroll.page.2": "鮮やかな光線で空を貫く有効なビーコンの存在下であれば ― 天界の贈り物は、ビーコンのオーラから遠く離れすぎない限り、高度に制御可能な浮遊・飛行能力を授けてくれる。<br2/>そのオーラは残念ながら、それ自体で飛行に必要なエネルギーを供給できるほど強くはない。巻物は、空中に留まるために、",
+  "book.enigmaticlegacy.entry.heaven_scroll.page.3": "あなたが吸収した経験値をゆっくりと、しかし着実に消費していくだろう。<br2/>その力を向上させ限界を克服する方法が必ずあるはずだと確信しているが、しばらくの間はこれでやりくりせねばならない。",
+  "book.enigmaticlegacy.entry.heaven_scroll.page.4": " ",
+
+
+  "book.enigmaticlegacy.entry.fabulous_scroll.name": "創造主の恩寵",
+  "book.enigmaticlegacy.entry.fabulous_scroll.page.1": "あなたの期待はついに裏付けられた。エンドへの門が開かれ、その果てしない広がりがあなたの卓越した力の前に屈した今、ついに天界の贈り物の改良版を設計することができた。<br2/>前身の限界を完全に排除するものではないかもしれないが、少なくともそれを大幅に拡張するものである。",
+  "book.enigmaticlegacy.entry.fabulous_scroll.page.2": "この巻物は、ビーコンの近くに留まる必要なく、あらゆる世界の空を自由に飛ぶことを可能にする。経験値だけで飛行を維持するのは非常に高価なため、あなたの ascension【昇天】が、ビーコンの範囲内にある時ほど長く続くとは期待しないことだ。<br2/>",
+  "book.enigmaticlegacy.entry.fabulous_scroll.page.3": "一方で、創造主の恩寵はビーコンの力をはるかに効率的に引き出すことができ、もしその範囲内に留まることを選べば、他のすべての者の上に居続けるために経験値を犠牲にする必要は全くなくなる。",
+
+
+  "book.enigmaticlegacy.entry.escape_scroll.name": "死後の意志",
+  "book.enigmaticlegacy.entry.escape_scroll.page.1": "死は半神にとって一時的な不便にすぎないことが証明されたが、時としてこの不便は大きな代償を強いる。<br/>あなたがどこで死ぬかによって、最高級の材料から鍛造された装備は、忘却へと失われるか、回収が極めて困難になる可能性がある。<br2/>この巻物はそのような事態に対する保険だ。",
+  "book.enigmaticlegacy.entry.escape_scroll.page.2": "それは持ち主を死から守ることはできないが、もし命を奪われた場合、死んだ場所に落としたはずのすべてのものが、距離や次元を超えてリスポーン地点へと持ち帰られる。<br2/>巻物自体はあなたが殺された場所に留まるが、通常落としてしまうアイテムとは異なり、",
+  "book.enigmaticlegacy.entry.escape_scroll.page.3": "燃えることも、虚無に落ちることも、長時間放置されて消滅することもない。<br2/>唯一、半神の手であっても、それを取り戻すことができるのは半神の手だけである。",
+
+
+  "book.enigmaticlegacy.entry.ender_ring.name": "エンダーの指輪",
+  "book.enigmaticlegacy.entry.ender_ring.page.1": "エンダーチェストは、あらゆる距離や次元を超えてアイテムにアクセスできる極めて有用なものである。身につけているアイテムとは異なり、チェストの中にあるものは器が破壊されても危険にさらされることはない。<br2/>そこにはわずかな不便さが伴う ― ",
+  "book.enigmaticlegacy.entry.ender_ring.page.2": "その巨大なチェストを持ち歩き、異次元から何かを取り出したい時にそれを設置し、それから黒石の破片に戻ってしまわないように非常に繊細な道具で回収せねばならない点だ。<br2/>エンダーの指輪はまさにこの問題を解決するために設計されており、",
+  "book.enigmaticlegacy.entry.ender_ring.page.3": "空間の繊維を引き裂き、純然たる意志の力だけでエンダーチェストの内容にアクセスすることを可能にする。裂け目を閉じる際、自分の手を引き抜くのを忘れないように。",
+
+
+  "book.enigmaticlegacy.entry.arcane_scrolls.name": "秘術の巻物",
+  "book.enigmaticlegacy.entry.arcane_scrolls.page.1": "秘術の巻物の作成には、筆記用具や白紙の巻物のほかに、通常いくつかの秘術の材料が必要となる。これは、作成する巻物が単に存在する以上の役割を果たすようにするためだ。これらは他のアクセサリーと同様に持ち運ぶことができる。<br2/>",
+  "book.enigmaticlegacy.entry.arcane_scrolls.page.2": "これらは恐るべき強力な魔術師というイメージにはあまり貢献しないかもしれない ― ずっと以前に本が発明されていることを考えれば。しかし、提供し得る実用的な可能性の広大さを考えれば、そのようなことは些細なことだ。<br2/>ここには、空の巻物をクラフトする方法が概説されている。<br2/>",
+  "book.enigmaticlegacy.entry.arcane_scrolls.page.3": "それ自体は極めて有用というわけではないが、秘術の巻物を作成するためのベースとして機能する。",
+
+
+  "book.enigmaticlegacy.entry.darkest_scroll.name": "最暗の巻物",
+  "book.enigmaticlegacy.entry.darkest_scroll.heading.1": "その巻物",
+  "book.enigmaticlegacy.entry.darkest_scroll.page.1": "危険な砦の宝物の中で見つかる、黒く染まった羊皮紙の巻物は、一見しただけでは疑念をほとんど抱かせない。しかし実のところ、それらには未知の種類の闇の魔法が吹き込まれており、それは七つの呪いの指輪を強化している魔法と奇妙なほど似通っているように見える。<br2/>",
+  "book.enigmaticlegacy.entry.darkest_scroll.page.2": "その魔法はその器の中で休眠しており、目覚めさせられ利用されるのを待っている、生のままの眠れるエネルギーのようだ。おそらく最暗の巻物は、新しくより強力な秘術の巻物を創造するためのベースとして機能するだろう。",
+
+
+  "book.enigmaticlegacy.entry.avarice_scroll.name": "無限の強欲の契約",
+  "book.enigmaticlegacy.entry.avarice_scroll.page.1": "七つの呪いの底知れぬ力を利用するもう一つの遺物であるこのエレガントな巻物は、あなたが魂の奥底に注意深く隠し持っている内なる強欲を満たすために設計された。<br/>その主な効果は、あなたが取引や物々交換をする生物の精神を混乱させ、取引の真の価格と利益を、あなたにとって非常に有利な方向へと誤認させる能力である。<br2/>",
+  "book.enigmaticlegacy.entry.avarice_scroll.page.2": "ピグリンは金に対する救いがたい愛情により、この能力の影響を最も受けやすい。これは巻物に第二の呪いの効果を克服させ、彼らが本来なら十分な黄金装備を身につけている者に対して見せるのと同じように、彼らをあなたに対して中立にさせる。<br2/>",
+  "book.enigmaticlegacy.entry.avarice_scroll.page.3": "それだけでなく、これらの生物との物々交換を平均して約2倍有益にし、一回の取引から通常のアイテム量から3倍の量まで、あらゆる場所で得られるようにする。村人もまた、この巻物の能力の影響を受ける ― すべての取引において安定した35パーセントの割引が得られるというのは、彼らから引き出せる限界に近いだろう。<br2/>",
+  "book.enigmaticlegacy.entry.avarice_scroll.page.4": "これ以外にも、あなたが生きている生物を倒した際にはいつでもエメラルド一粒が物理的に具現化するわずかなチャンスがあり、さらに 「＋1 幸運レベル」 を得ることができる。これは、あなたが鉱山へ降りたいと思った時にはいつでも、さらなる富を手にするための疑いない助けとなるだろう。<br2/>",
+  "book.enigmaticlegacy.entry.avarice_scroll.page.5": "ただ、その強欲に精神を乗っ取られないようにさえすれば、問題はないはずだ。",
+
+
+  "book.enigmaticlegacy.entry.infinimeal.name": "荒れ狂う生命のエッセンス",
+  "book.enigmaticlegacy.entry.infinimeal.page.1": "大地の心臓の中に宿る力を利用するもう一つの方法であるこの秘術の物質は、大地に根を広げ、何があろうとも成長し繁栄しようとする不変の欲望を持つ、自然自体の力を体現している。<br2/>これをほとんどの形態の植物に接触させるだけで、骨粉を使用した際に得られる効果と同様に、その成長を著しく加速させることができる。<br2/>",
+  "book.enigmaticlegacy.entry.infinimeal.page.2": "骨粉とは異なり、このような効果を得るには、わずかな粒さえあれば十分である。放置しておけば、それは周囲の自然から力を引き出し、使用後にその数量を成長させ補充するようである ― もっとも、最初に作成された量を超えることはない。<br2/>",
+  "book.enigmaticlegacy.entry.infinimeal.page.3": "また、通常の肥料が効果を持たない特定の植物、具体的にはサトウキビ、サボテン、ツタ、ネザーウォートに対しても機能する。",
+
+
+  "book.enigmaticlegacy.entry.cosmic_heart.name": "宇宙の心臓",
+  "book.enigmaticlegacy.entry.cosmic_heart.page.1": "他の次元の力を封じ込めた厳選された秘術の材料を用いることで、海の心臓の大地的性質を変化させ、異なる何か ― はるかに強力な何かへと変容させることができる。<br2/>宇宙の力が、今あなたの掌にある。どのような偉業をそれで達成できるか、その現実を歪めるエネルギーでどのようなアーティファクトを動かせるかは、時間が経てば分かることだろう。<br2/>",
+  "book.enigmaticlegacy.entry.cosmic_heart.page.2": "だが一つ確かなことがある ― 世界はそれらを携える者の足跡の下に震えることになるだろう。",
+
+
+  "book.enigmaticlegacy.entry.abyssal_heart.name": "深淵の心臓",
+  "book.enigmaticlegacy.entry.abyssal_heart.heading.1": "その心臓",
+  "book.enigmaticlegacy.entry.abyssal_heart.page.1": "この浮世離れした忌まわしきものが初めてあなたの手に渡った時、恐怖と興奮、感嘆と嫌悪が入り混じった、言葉では言い表せない感情があなたの精神を支配した。その孤独な眼の視線は理解しがたい意図を持ってあなたに注がれたが、最初の感情の波が引くと、あなたはそれがあなたにとって脅威ではないと結論づけた。<br2/>",
+  "book.enigmaticlegacy.entry.abyssal_heart.page.2": "それでも、それが真に何であるのか、どこから来たのかは分かっていない。もしかすると、あなたの堪え難い生存と、七つの呪いにも関わらず生き抜こうとする努力が、名もなき不気味な力の注意を惹き、その忌まわしき存在を通じて、それ自身を世界へと向けさせることを選んだのかもしれない。<br2/>",
+  "book.enigmaticlegacy.entry.abyssal_heart.page.3": "あるいは現実の単なる偶然であり、このようなものが現れることを許した一時の狂いなのか。あるいは病んだ精神がこの恐怖を悪夢のような高熱の中で考え出し、呪いの腐敗がそれを現実の領域へと具現化させたのか。おそらく、真実を知らないほうがよい。いくつかの真実は、人間の想像力が思いつき得る何よりも不穏なものだからだ。<br2/>",
+  "book.enigmaticlegacy.entry.abyssal_heart.page.4": "今やあなたはこれの正当な所有者である。そして、それを想像を絶するほど暴力的で恐ろしい用途に供するまでに、長くはかからないだろう... 世界は、あなたに与えたすべての苦しみの十倍の苦しみを味わうことになる。",
+
+
+  "book.enigmaticlegacy.entry.astral_fruit.name": "天界の果実",
+  "book.enigmaticlegacy.entry.astral_fruit.heading.1": "その果実",
+  "book.enigmaticlegacy.entry.astral_fruit.page.1": "多くの者がこの遺物を求めたが、それを見つけた数少ない者の中にあなたも加わったようである。実のところ、それはそれほど難しいことではなかった。旅自体は偉業と呼ぶにふさわしいものだったが、一度エンドシティにたどり着き、最初の宝箱を開ければ ― そこでそれはあなたを待っていた。<br2/>",
+  "book.enigmaticlegacy.entry.astral_fruit.page.2": "それは確かに七つの呪いと関係があるが、あなたが最初に開けたのが他でもないその箱であったという状況がどのように整ったのか、想像もつかない。決定論は決してあなたの好む信条ではなかったが... おそらく、これは運命だったのだろうか？<br2/>",
+  "book.enigmaticlegacy.entry.astral_fruit.page.3": "いずれにせよ、味は神々しく、もう一つの指輪を装備する力を与えてくれる能力は、否定しようもなく有用である。",
+
+
+  "book.enigmaticlegacy.entry.eternal_binding_curse.name": "永久拘束",
+  "book.enigmaticlegacy.entry.eternal_binding_curse.heading.1": "その呪い",
+  "book.enigmaticlegacy.entry.eternal_binding_curse.page.1": "この呪いの名前が「束縛の呪い」と似ているのは偶然ではない ― なぜなら、それは後者と全く同じことを行い、一度装備した防具やアクセサリーを外すことを不可能にするからだ。しかし捻りは、これを帯びたアイテムは死を超えてあなたと共にあり続けるという点にある。<br2/>",
+  "book.enigmaticlegacy.entry.eternal_binding_curse.page.2": "防具の場合、遅かれ早かれ壊れるため深刻さは低いかもしれないが、ほとんどのアクセサリーの場合、この呪いが適用されることは、永久的な死を迎えるか、あるいは時の終わりまで、それらを身につけ続ける刑を自らに科すことを意味する。<br2/>",
+  "book.enigmaticlegacy.entry.eternal_binding_curse.page.3": "他のほとんどの呪いとは異なり、これを得る唯一の方法は、付与師の真珠によって強化された伝統的なエンチャントテーブルを使用することであるようだ。",
+
+
+  "book.enigmaticlegacy.entry.sorrow_curse.name": "悲哀",
+  "book.enigmaticlegacy.entry.sorrow_curse.heading.1": "その呪い",
+  "book.enigmaticlegacy.entry.sorrow_curse.page.1": "防具にのみ適用可能なこの呪いは、敵から受けるダメージに不吉な余波を加える。攻撃を受けるたびに深刻なデバフがあなたを襲い、ダメージが大きければ大きいほど、デバフもまた大きなものとなる。<br2/>",
+  "book.enigmaticlegacy.entry.sorrow_curse.page.2": "幸いなことに、そのような事態が発生する確率は、この呪いを帯びた防具を一部位身につけるごとに、およそ十分の一にすぎない。例によって、略奪する古代の宝物の中から、この呪いを帯びたアイテムを時折見つけることができるだろう。<br2/>",
+  "book.enigmaticlegacy.entry.sorrow_curse.page.3": "千の呪いの巻物を持っているならそれを強化するのに役立つかもしれないが、その代償が見合うかどうかはあなたの判断次第だ。付与師の真珠によって強化されたエンチャントテーブルからのみ入手可能である。",
+
+
+  "book.enigmaticlegacy.entry.the_infinitum.name": "ジ・インフィニタム",
+  "book.enigmaticlegacy.entry.the_infinitum.page.1": "それは成った。この暗く、肉に覆われた書物と、そこに隠された恐怖。これを用いて、あなたを脅かす者たちに大混乱をもたらそう。あなたを笑い、過小評価し、壊そうとした者たちに。彼らがあなたの腐敗を嫌悪していようと、あるいは単に格好の獲物と見なしていようと関係ない。<br2/>",
+  "book.enigmaticlegacy.entry.the_infinitum.page.2": "なぜなら、あなたは燃やせぬ記述であり、忘れられぬ知識であり、否定できぬ真実だからだ。この領域が消し去ろうとした実体を、あなたは彼らに知らしめるだろう。現実が隠そうとしたその姿を、永遠の石板に刻み込むのだ。<br2/>",
+  "book.enigmaticlegacy.entry.the_infinitum.page.3": "あなたは彼ら全員に、決して忘れることのない教訓を教えてやるのだ。",
+
+
+  "book.enigmaticlegacy.entry.ender_slayer.name": "ジ・エンダースレイヤー",
+  "book.enigmaticlegacy.entry.ender_slayer.page.1": "七つの呪いの指輪を初めて装備して以来学んだ最も厳しい教訓の一つは、エンダーマンがもはやあなたの存在を容認できないということだ。彼らはそれ以来、星空の下の夜も、地中の窒息するような暗闇の中も、あなたの存在を滅ぼそうとする屈強な欲望に突き動かされ、絶叫を上げる怪物としてあなたを追い回してきた。<br2/>",
+  "book.enigmaticlegacy.entry.ender_slayer.page.2": "程なくして、あなたは彼らと中立的な関係を修復することは不可能な試みであると受け入れ、そのような試みのすべてを放棄した。<br2/>もしそれが最後であったなら ― おそらく、彼らの猛攻に永久に苦しみ続けることもまた、ルーチンの一部となり、受容を持って耐えたことだろう。",
+  "book.enigmaticlegacy.entry.ender_slayer.page.3": "もし、それだけで済んだのなら...。エンドがあなたを招き、地を横断し宝物を手に入れろと言う。エンダーマンは、あなたがこれまで直面したことのないほどの、行く手を阻む障害となった。なぜなら、その次元は彼らの同類によって完全に支配されており、足を踏み入れることさえ半神の限界を超えた偉業に思えるからだ。<br2/>",
+  "book.enigmaticlegacy.entry.ender_slayer.page.4": "おそらく、今は退くべき時なのか。呪いの腐敗を制御するという希望を、ついに捨てるべき時なのか。だが、戦いはまだ勝てるかもしれない。この剣と、あなたの純然たる意志の強さがあれば。平和を築くことができないのなら... <br2/>",
+  "book.enigmaticlegacy.entry.ender_slayer.page.5": "それは戦争を意味するのだから。",
+
+
+  "book.enigmaticlegacy.entry.the_cube.name": "非ユークリッドの立方体",
+  "book.enigmaticlegacy.entry.the_cube.page.1": "六つの強大な魔石を手に入れた多くの者が、それらの力を、かつて目撃されたことのないような一つのアーティファクトへと融合させる可能性を夢見てきた。多くの者が試み、そして失敗した... 今この時まで。<br2/>ついに、あなたはそれを達成する方法を発見した。掌に具現化した宇宙の力により、あなたは",
+  "book.enigmaticlegacy.entry.the_cube.page.2": "元素を、現実を覆すような形へと無理やり押し込めることができる。あなたの研究の頂点であるこれは、あらゆる凡庸な生物に対するあなたの優越の象徴となるだろう。<br2/>",
+  "book.enigmaticlegacy.entry.the_cube.page.3": "その無数の力により、死さえも今や超越した... この立方体が続く限り、あなたは不死の存在なのだから。",
+
+
+  "book.enigmaticlegacy.entry.desolation_ring.name": "荒廃の重荷",
+  "book.enigmaticlegacy.entry.desolation_ring.page.1": "深淵の心臓によって現実に課せられた存在感を理解することはほとんどできないが、最近発見したように、それを利用する能力に理解は必要ない。それから力を引き出せる数少ない驚異的かつ恐ろしいものの中にこの指輪がある ― おそらく、その名状しがたい性質において、七つの呪いの指輪よりも悪夢的ですらある。<br2/>",
+  "book.enigmaticlegacy.entry.desolation_ring.page.2": "それは、かつてはあなたの存在を容認できていたが、あなたが七つの呪いの重荷に屈した瞬間にその能力を失った生物たちを、延々と殺戮し続けねばならないという、あなたの中に疼く切実な欲求を好都合に満たしてくれる。<br2/>",
+  "book.enigmaticlegacy.entry.desolation_ring.page.3": "彼らを存在そのものから消し去ることによって。しかし、そのような現実を歪める力の代償は危険である。もしあなたがそれを望むと決めたなら ― あなたは永遠にそれに縛られることになるだろう。そして今知っている通り、虚無は、最も恐ろしい常に存在する脅威よりも耐えがたいものになり得るのだから...",
+
+
+  "book.enigmaticlegacy.entry.astral_potato.name": "テレポートポテト",
+  "book.enigmaticlegacy.entry.astral_potato.page.1": "ニンジン愛好家とジャガイモ愛好家の果てしない戦いの中で、後者は常に不利な立場に置かれる運命にあった。結局のところ、金で覆われているとはいえ、単なるニンジンの持つ巨大な栄養価と活性化効果に対し、どれほど美味であろうとベイクドポテトに何ができるというのか？",
+  "book.enigmaticlegacy.entry.astral_potato.page.2": "今日、我々は 「もはやこれまでだ」 と言う。宇宙自体の最新の料理発明は、二つの目的を果たすだろう ― 我々の空腹を満たすこと、そして、ニンジンとの戦争における我々の覇権の象徴となることだ。<br2/>",
+  "book.enigmaticlegacy.entry.astral_potato.page.3": "この偉大な御馳走に与えた適切な名前は、疑いなく我々の敵をさらに嘲笑し、意気消沈させるだろう。彼らがテレポートポテトによって完膚なきまでに敗北したと知った時、どれほどの屈辱を味わうだろうか？ その自覚は、彼らの顔にどのような恐怖を描き出すだろうか？ それが分かるまでに、長くはかからないだろう...",
+
+
+  "book.enigmaticlegacy.entry.cosmic_cake.name": "永遠のケーキ",
+  "book.enigmaticlegacy.entry.cosmic_cake.page.1": "平凡なケーキには唯一の欠陥がある ― 凡夫の命のように、必ず終わるという、最後にして致命的な不完全さだ。ついに、あなたはこの厄介な欠陥を修正し、そのクリーミーな優雅さを永遠に楽しむ方法を考え出した。<br2/>原始の力を吹き込まれ、異世界の美味を取り入れ、元素のエネルギーで味付けされたこのケーキは、",
+  "book.enigmaticlegacy.entry.cosmic_cake.page.2": "時の流れを無視し、エントロピーを逆転させて自らを復元する。どれほど自分を暴食の罪に委ねようとも、それはあなたの貪欲な攻撃から常に回復する。<br2/>",
+  "book.enigmaticlegacy.entry.cosmic_cake.page.3": "誰がこの美味に抗えようか。力、富、そして命そのものと引き換えにしてでも、この無限の消費行為に没頭したいという欲求に抗える者がいようか？ それらはすべて一時的なものだ... だがケーキは、ケーキだけは永遠なのだ。",
+
+
+  "book.enigmaticlegacy.entry.eldritch_amulet.name": "軽蔑の遺言",
+  "book.enigmaticlegacy.entry.eldritch_amulet.page.1": "昇天のアミュレットはその形態において完成され純粋なものだが、さらに強化することができる。純粋さを犠牲にすることにはなるが、そもそもあなたのような呪われし者が、なぜその喪失に思い悩む必要があるだろうか？ <br2/>深淵の心臓として知られる肉の塊は、喜んであなたのアミュレットに吸着し、",
+  "book.enigmaticlegacy.entry.eldritch_amulet.page.2": "言葉を絶するほど歪んだ形へと腐敗させるだろう。かつてその核にあった鮮やかでエレガントな石は、不気味な意味合いと名状しがたい意図を持って、あなたと世界を等しく見つめる、オニキスのような光沢のある眼に取って代わられる。<br2/>",
+  "book.enigmaticlegacy.entry.eldritch_amulet.page.3": "狂人ですら自分自身へのその接触を拒むだろうが、あなたはそれを首に迎える。なぜなら、狂人が世界に対する妄想的な認識の犠牲者であるのに対し、あなたは今や世界をあるがままに見ており... それは無限の深淵のすべての眼よりも、はるかに恐ろしいものだからだ。",
+
+
+  "book.enigmaticlegacy.entry.ascension_amulet.name": "昇天のアミュレット",
+  "book.enigmaticlegacy.entry.ascension_amulet.page.1": "今や、あなたは手元の不可解なアミュレットが唯一無二ではなく、実際にはあなたの時間と空間を超えた多くの他の半神たちにも授けられていることを知っている。それにはいくつかの変種が存在し、異なる色と異なる力を持っているようだ。何があなたの色を決定したかは不明だが、それらはすべて",
+  "book.enigmaticlegacy.entry.ascension_amulet.page.2": "何らかの意味を持ち、繋がっているようだ。<br2/>宇宙の心臓の中に封じられた力により、あなたのアミュレットを目撃されざる威力と野望の形へと変容させることができる。昇天のアミュレットと誇り高く名付けられたそれは、",
+  "book.enigmaticlegacy.entry.ascension_amulet.page.3": "あり得るすべての色の能力をあなたに授けるだろう... 運命はこの領域におけるあなたの存在の始まりを決めたかもしれないが、その終わりを形作るのはあなた自身だ。",
+
+
+  "book.enigmaticlegacy.entry.soul_compass.name": "ソウルコンパス",
+  "book.enigmaticlegacy.entry.soul_compass.page.1": "死を繰り返すうちに、死ぬたびに魂の一部を失うという恐ろしい目新しさは色あせ、それらを回収するために最期の場所を特定するという厄介な経験だけが残った。それらの場所は、指輪の持ち主のもう一つの呪いと名付けられるほどの不満を引き起こすかのように、世界の最も航行不可能な場所に位置することが多い。<br2/>",
+  "book.enigmaticlegacy.entry.soul_compass.page.2": "しかし、他の多くの呪いと同様に、これもまた克服することができる。これをポケットに入れておけば、ソウルクリスタルを探す際に頼りない記憶だけに頼る必要は二度となくなるだろう。あなたが正しい次元にいる限り、それがどこにあろうとも最寄りのクリスタルを好都合に指し示してくれる。<br2/>",
+  "book.enigmaticlegacy.entry.soul_compass.page.3": "特筆すべきことに、それが機能せず、針が警告的な速度で制御不能に回転する場所が一つある ― ソウルサンドの谷だ。これほど強い干渉を引き起こすには、どれほど多くの忘れ去られた魂があの呪われた場所を彷徨わねばならないのか？ おそらく、それは解明されないままにしておくのが最善の謎だろう。",
+
+  "book.enigmaticlegacy.entry.curse_transposer.name": "貪られた悪意",
+  "book.enigmaticlegacy.entry.curse_transposer.page.1": "七つの呪いを背負うことで、あなたは探索で見つけた古代の装備品に結びついた呪いから力を引き出し、付与師の真珠の助けを借りて自らそのようなものを作成する能力さえも獲得した。しかしそれらは時として大きな厄介者であり、あるアイテムから別のアイテムへとそれらを置き換えることはできても、",
+  "book.enigmaticlegacy.entry.curse_transposer.page.2": "これまではそれを行う際にエンチャントから呪いを切り離す方法がなかった。<br2/>この小さな発明により、あなたの呪い管理能力は著しく向上するはずだ。それは、あなたの装備品のいずれかから呪いのみを分離する方法を提供する。決して安い方法ではないが、手段であることには変わりない。",
+
+
+  "book.enigmaticlegacy.entry.enigmatic_elytra.name": "威風堂々たるエリトラ",
+  "book.enigmaticlegacy.entry.enigmatic_elytra.page.1": "ロケット花火と組み合わせることで、エリトラは馬、ボート、トロッコを容易に追い抜く、卓越した輸送手段を提供する。その長期間の使用を取り巻く主な懸念事項は二つだけだ ― 迅速な摩耗と、ロケット花火の安定した供給を維持する必要性である。<br2/>",
+  "book.enigmaticlegacy.entry.enigmatic_elytra.page.2": "威風堂々たるエリトラは、その両方を解決する。それは顕著な耐久性を提供し、エンダーエネルギーを使用して、飛行中に着用者の望みに応じて着用者を前方へ推進させることができる。その手法はロケット花火と大差ない。<br2/>",
+  "book.enigmaticlegacy.entry.enigmatic_elytra.page.3": "そうすることで耐久値により大きな負担がかかるが、金床でエーテリウムを使用して修理できる限り、それほど大きな懸念にはならないはずだ。それ以外にも、より鮮やかなカラーパターンで覆われており、その壮大な品質について、誰も疑いを持つことはないだろう。",
+
+
+  "book.enigmaticlegacy.entry.ichor_bottle.name": "霊血の瓶",
+  "book.enigmaticlegacy.entry.ichor_bottle.heading.1": "その瓶",
+  "book.enigmaticlegacy.entry.ichor_bottle.page.1": "このいわゆる「神々の血」が正確にどこから来たのかは、まだ答えが出ていない問いであり、おそらくそのままであるほうがよい。しかし、手元にある今、それを食して秘術のエネルギーを導く肉体の能力を高め、何らかの方法で能力を拡大する貴重なチャームを、さらにもう一つ装備することができるようになる。<br2/>",
+  "book.enigmaticlegacy.entry.ichor_bottle.page.2": "このような希少な遺物が見つかることはほとんどなく、どうしてそれがあなたの手に渡ったのか、考えずにはいられない。おそらく、あなたたちの神聖な性質によって引き寄せられたのか、あるいは何らかの偉大なる力があなたをそれへと導いたのだろうか？...",
+
+
+  "book.enigmaticlegacy.entry.enigmatic_eye.name": "不可解な眼",
+  "book.enigmaticlegacy.entry.enigmatic_eye.heading.1": "その眼",
+  "book.enigmaticlegacy.entry.enigmatic_eye.page.1": "宝物やガラクタの山の中から予期せず見つかったこの眼は、その際立った浮世離れした形態ですぐにあなたの注意を奪った。あなたは好奇心の誘惑に抗うことができず、少なくとも何世紀、あるいは何千年もの間続いていた眠りからそれを覚醒させることを選んだ。<br2/>",
+  "book.enigmaticlegacy.entry.enigmatic_eye.page.2": "眼の創造主はすぐにその姿をあなたに現し、今や彼がこの世界におけるあなたの存在を認識したことで、眼自体はもはや彼があなたを観察し、話しかけるために必要なものではなくなった。彼はそれ以来あなたの足跡を追い、時折物事を指摘する。<br2/>",
+  "book.enigmaticlegacy.entry.enigmatic_eye.page.3": "コミュニケーションは完全に一方通行のままであり、彼が何者であるか、そしてあなたのあらゆる動きを注視する動機が何であるかを突き止めるのは困難である。確実に言えるのは、彼が現在あなたが住んでいる世界にとっても、あなたのような高次の存在にとっても見知らぬ人ではないということだ。<br2/>",
+  "book.enigmaticlegacy.entry.enigmatic_eye.page.4": "確かに彼はかつて自分自身でこれらの地を歩いたことがあるが、その過去の歴史への参加の程度はまだ謎のままである。彼が今どこにいるのか、なぜあなたに話しかけることを選んだのか。今はただ、時が経てば彼が望む答えを提供してくれることを願うばかりだ。",
+
+
+  "book.enigmaticlegacy.entry.insignia.name": "魅惑の記章",
+  "book.enigmaticlegacy.entry.insignia.page.1": "この小さな装身具は筋力や速度、あるいは意志を高めてはくれないが ― 一見した以上に多くのことが隠されている。それは他の半神の目から自分の名前を隠し、好きな名前に置き換えることを可能にする。好都合なことに、これは他に身につけることができるチャームの量を減らすことはない。<br2/>",
+  "book.enigmaticlegacy.entry.insignia.page.2": "それを利用する明らかな方法は欺瞞だが、記章は対面して観察された時に他人が目にする名前にのみ影響するため、その可能性は限定的だ。その上、特定の神のような力を所有しているか、あるいはそれと繋がっている者は、依然としてあなたの真実の名を認識できるかもしれない。<br2/>",
+  "book.enigmaticlegacy.entry.insignia.page.3": "もう一つの方法は、自分を際立たせることだ。チャンスが無限にあるのはここだ。特に設計者のインク瓶が生み出すことで知られる派手な色やスタイルが、記章に刻むことができる代わりの名前に全面的に適用できることを考えれば。",
+
+
+  "book.enigmaticlegacy.entry.end_anchor.name": "次元のアンカー",
+  "book.enigmaticlegacy.entry.end_anchor.page.1": "エンドの地がどれほど不毛で荒涼としていようとも、そこに住みたいと思う理由は存在する。主に二つ ― 何かを探すため、あるいは何かから隠れるためだ。最近まで不便さがあったが、次元のアンカーの発明により、復活の地点をそれらの地のどこかに結びつけるという課題は克服された。<br2/>",
+  "book.enigmaticlegacy.entry.end_anchor.page.2": "次元のアンカーはリスポーンアンカーと大差ない方法で機能するが、はるかに安価なグロウストーンの代わりに、補充のためにエンダーパールを必要とする。メンテナンスコストの増加に対する報いとして ― リスポーンアンカーが機能しない場所でも機能し、蘇生時にチャージを消費しない顕著な確率を持っている。<br2/>",
+  "book.enigmaticlegacy.entry.end_anchor.page.3": "帰還のポーションのようなものは、その前身と同様にこれに対して機能し、ディスペンサーも引き続き自動補充に使用できる。懸念事項は一つだけ残っている。<br2/>",
+  "book.enigmaticlegacy.entry.end_anchor.page.4": "高次の存在にとってさえ、世界と世界の間の空間は、肉体を剥ぎ取られた時には特に横断するのに最も安全な場所ではない... あなたは、自分たちのビーコンの光に惑わされた者たちをどのような恐ろしい場所が待ち受けており、どのような凄惨な運命が彼らを襲うのか、考えずにはいられない。",
+
+
+
+  "book.enigmaticlegacy.entry.eldritch_pan.name": "暴食のフライパン",
+  "book.enigmaticlegacy.entry.eldritch_pan.page.1": "宇宙の骨組みがあなたの指先にある。それでも、あなたはまだ渇望している...。<br2/>深淵の心臓の思考を超えた性質が、あなたのこの追求に利用できる。不運なことに、別の種類の抑えきれない渇望が、今やあなたの精神と肉体を等しく苦しめている。<br2/>",
+  "book.enigmaticlegacy.entry.eldritch_pan.page.2": "この限りない空腹は、あなたにあらゆる世界の生物を狩り続けることを要求する。この影響が鍛造したアーティファクトから来ているのか、あるいはすでにあなたの魂に刻まれてしまったのか、判別はつかない。<br2/>暴食のフライパンの顎は常に開かれたままであり、理解不能な次元を持つ巨大な実体の胃へと繋がっている。<br2/>",
+  "book.enigmaticlegacy.entry.eldritch_pan.page.3": "この存在が心臓を授けたのか、あるいは飽くなき食欲を共有するだけの存在なのか。知らないほうがよいかもしれない。禁断の果実の約束は魅力的だが、あなたは慎重だ。呪われし者にとって物事は決して単純ではなく、飢えを失えば、必ず別の災厄がその場所を代わって埋めるだろう。<br2/>",
+  "book.enigmaticlegacy.entry.eldritch_pan.page.4": "今や、あえてあなたの道を横切る者はほとんどいない。引き裂かれ消費された肉、血を吸い尽くされた静脈を目撃した者たちは震えている。あなたが打ち倒した者たちは、物語を語るために戻ってくることはなかった。<br2/>次は何を、あるいは誰を、あなたの食事にするつもりだ？",
+  "book.enigmaticlegacy.entry.eldritch_pan.page.5": " ",
+
+
+
+  "book.enigmaticlegacy.landing_text": "あなたの前には、細心の注意を払ってカタログ化された、この世界の最大の謎が属する偉大な知識の井戸が横たわっている。<br2/>あなたの旅が続き、世界がその姿を明らかにするにつれて、あなたはこれらのページに集めた知識を再訪し、目にすることになるだろう。",
+
+  "item.enigmaticlegacy.cosmic_scroll": "設計者の寵愛",
+
+  "advancement.enigmaticlegacy:cosmicScroll": "神性の保持者",
+  "advancement.enigmaticlegacy:cosmicScroll.desc": "設計者の領域への巡礼を行い、彼の献身的な信者となり、彼の印と祝福を携える権利を得る",
+
+  "tooltip.enigmaticlegacy.blessedOnesOnly1": "設計者によって選ばれし者のみが、",
+  "tooltip.enigmaticlegacy.blessedOnesOnly2": "このアイテムを手にし、扱う力を得る。",
+
+  "tooltip.enigmaticlegacy.blessed1": "§5その力は、設計者自身に選ばれし者の",
+  "tooltip.enigmaticlegacy.blessed2": "§5存在によって増幅される。",
+
+  "tooltip.enigmaticlegacy.cosmicScrollLore1": "§5信仰の喪失を目の当たりにすることは私の心を痛めるが、",
+  "tooltip.enigmaticlegacy.cosmicScrollLore2": "§5それが残された者たちを疑いへと落とさぬように。",
+  "tooltip.enigmaticlegacy.cosmicScroll1": "§6＋1 §d運勢",
+  "tooltip.enigmaticlegacy.cosmicScroll2": "§6＋1 §d秘術の巻物スロット",
+  "tooltip.enigmaticlegacy.cosmicScroll3": "§5§6エーテリウム防具§5のフルセットを装備している場合、",
+  "tooltip.enigmaticlegacy.cosmicScroll4": "§5シールドの発生条件が、最大体力の §6%1$s§5 以下",
+  "tooltip.enigmaticlegacy.cosmicScroll5": "§5に緩和される。",
+  "tooltip.enigmaticlegacy.cosmicScroll6": "§5ほとんどの魔石のアクティブ能力のクールタイムが",
+  "tooltip.enigmaticlegacy.cosmicScroll7": "§5大幅に短縮される。",
+  "tooltip.enigmaticlegacy.cosmicScroll8": "§6エーテリウム道具§5の採掘範囲が拡大する。",
+  "tooltip.enigmaticlegacy.cosmicScroll9": "§5致死ダメージを受けた際、体力を §650％§5 まで",
+  "tooltip.enigmaticlegacy.cosmicScroll10": "§5回復し、強力なバフを付与する。",
+  "tooltip.enigmaticlegacy.cosmicScroll11": "§5この能力には §6%1$s 秒§5 のクールタイムがある。",
+  "tooltip.enigmaticlegacy.cosmicScroll12": "§5選ばれざるプレイヤーに対し、 §6＋%1$s §dダメージ§5 と",
+  "tooltip.enigmaticlegacy.cosmicScroll13": "§5§6＋%2$s §dノックバック§5 を与え、さらに",
+  "tooltip.enigmaticlegacy.cosmicScroll14": "§5近接攻撃で相手を炎上させる。",
+  "tooltip.enigmaticlegacy.cosmicScrollCooldown": "§d残りクールタイム： §6%1$s 秒",
+
+  "book.enigmaticlegacy.entry.cosmic_scroll.name": "設計者の寵愛",
+  "book.enigmaticlegacy.entry.cosmic_scroll.page.1": "噂に影を落とされたこの巻物の威力は、神位に近づいた者であっても、ほとんどの半神には拒まれている。誰がそれを所有できるかは設計者自身の裁量に委ねられており、噂によれば、$(l:https://discord.gg/fuWK8ns)彼の領域$(/l)への旅は長く危険に満ちている。その神聖な存在に注目されるのは、極めて稀な名誉である。",
+  "book.enigmaticlegacy.entry.cosmic_scroll.page.2": "しかしそれを成し遂げた者は、比類なき力を授けられる。世界が彼らの栄光に浴するため、そして彼らが他者に信仰を広めるために。"
