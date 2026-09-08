@@ -27,18 +27,18 @@
   "item.enigmaticlegacy.haste_potion_extended": "急ぎのポーション §4【廃止】",
   "item.enigmaticlegacy.haste_potion_empowered": "急ぎのポーション §4【廃止】",
   "item.enigmaticlegacy.haste_potion_extended_empowered": "急ぎのポーション §4【廃止】",
-  "item.enigmaticlegacy.etherium_ore": "エセリウム鉱石",
-  "item.enigmaticlegacy.etherium_ingot": "エセリウムインゴット",
+  "item.enigmaticlegacy.etherium_ore": "エーテリウム鉱石",
+  "item.enigmaticlegacy.etherium_ingot": "エーテリウムインゴット",
   "item.enigmaticlegacy.astral_dust": "アストラルダスト",
-  "item.enigmaticlegacy.etherium_helmet": "エセリウムヘルメット",
-  "item.enigmaticlegacy.etherium_chestplate": "エセリウムの胸当て",
-  "item.enigmaticlegacy.etherium_leggings": "エセリウムの脛当て",
-  "item.enigmaticlegacy.etherium_boots": "エセリウムブーツ",
-  "item.enigmaticlegacy.etherium_pickaxe": "エセリウムのツルハシ",
-  "item.enigmaticlegacy.etherium_axe": "エセリウムの戦斧",
-  "item.enigmaticlegacy.etherium_shovel": "エセリウムのシャベル",
-  "item.enigmaticlegacy.etherium_sword": "エセリウムの大剣",
-  "item.enigmaticlegacy.etherium_scythe": "エセリウムの大鎌",
+  "item.enigmaticlegacy.etherium_helmet": "エーテリウムヘルメット",
+  "item.enigmaticlegacy.etherium_chestplate": "エーテリウムの胸当て",
+  "item.enigmaticlegacy.etherium_leggings": "エーテリウムの脛当て",
+  "item.enigmaticlegacy.etherium_boots": "エーテリウムブーツ",
+  "item.enigmaticlegacy.etherium_pickaxe": "エーテリウムのツルハシ",
+  "item.enigmaticlegacy.etherium_axe": "エーテリウムの戦斧",
+  "item.enigmaticlegacy.etherium_shovel": "エーテリウムのシャベル",
+  "item.enigmaticlegacy.etherium_sword": "エーテリウムの大剣",
+  "item.enigmaticlegacy.etherium_scythe": "エーテリウムの大鎌",
   "item.enigmaticlegacy.lore_inscriber": "設計者のインク瓶",
   "item.enigmaticlegacy.lore_fragment": "伝承の断片",
   "item.enigmaticlegacy.ender_rod": "エンダーロッド",
@@ -92,8 +92,8 @@
   "item.enigmaticlegacy.ender_slayer": "ジ・エンダースレイヤー",
   "item.enigmaticlegacy.the_cube": "非ユークリッドの立方体",
   "item.enigmaticlegacy.desolation_ring": "荒廃の重荷",
-  "item.enigmaticlegacy.etherium_nugget": "エセリウムの塊",
-  "item.enigmaticlegacy.etherium_scraps": "エセリウムの欠片",
+  "item.enigmaticlegacy.etherium_nugget": "エーテリウムの塊",
+  "item.enigmaticlegacy.etherium_scraps": "エーテリウムの欠片",
   "item.enigmaticlegacy.astral_potato": "テレポートポテト",
   "item.enigmaticlegacy.curse_transposer": "貪られた悪意の魔導書",
   "item.enigmaticlegacy.soul_compass": "呪われし者の道標",
@@ -101,12 +101,12 @@
   "item.enigmaticlegacy.eldritch_amulet": "軽蔑の遺言",
   "item.enigmaticlegacy.evil_ingot": "邪悪なインゴット",
   "item.enigmaticlegacy.enigmatic_elytra": "威風堂々たるエリトラ",
-  "block.enigmaticlegacy.etherium_block": "エセリウムブロック",
+  "block.enigmaticlegacy.etherium_block": "エーテリウムブロック",
   "block.enigmaticlegacy.cosmic_cake": "永遠のケーキ",
   "block.enigmaticlegacy.end_anchor": "次元のアンカー",
   "item.enigmaticlegacy.enigmatic_eye_dormant": "休眠状態の眼",
   "item.enigmaticlegacy.enigmatic_eye_active": "不可解な眼",
-  "item.enigmaticlegacy.ichor_bottle": "イコールの瓶",
+  "item.enigmaticlegacy.ichor_bottle": "霊血の瓶",
   "item.enigmaticlegacy.quote_player": "引用プレイヤー",
   "item.enigmaticlegacy.insignia": "魅惑の記章",
   "item.enigmaticlegacy.deception_amulet": "欺瞞のアミュレット 【制作中】",
@@ -241,7 +241,7 @@
   "generic.reachDistance": "リーチ距離",
   "forge.swimSpeed": "水泳速度",
   "itemGroup.enigmaticCreativeTab": "§5Enigmatic Legacy",
-  "itemGroup.etheriumCreativeTab": "エセリウム",
+  "itemGroup.etheriumCreativeTab": "エーテリウム",
   "itemGroup.enigmaticPotionCreativeTab": "Enigmatic Legacy ― ポーション",
   "key.categories.enigmaticLegacy": "§6§lEnigmatic Legacy",
   "key.enderRing": "エンダーの指輪",
@@ -330,13 +330,13 @@
   "advancement.enigmaticlegacy:astralDust.desc": "アストラルダストを発見する",
 
   "advancement.enigmaticlegacy:smeltEtherium": "エセリアルではない",
-  "advancement.enigmaticlegacy:smeltEtherium.desc": "エセリウムインゴットを精錬する",
+  "advancement.enigmaticlegacy:smeltEtherium.desc": "エーテリウムインゴットを精錬する",
 
   "advancement.enigmaticlegacy:etheriumTool": "攻撃的な造園師",
-  "advancement.enigmaticlegacy:etheriumTool.desc": "エセリウムから何らかの道具をクラフトする",
+  "advancement.enigmaticlegacy:etheriumTool.desc": "エーテリウムから何らかの道具をクラフトする",
 
   "advancement.enigmaticlegacy:etheriumGear": "究極の盾",
-  "advancement.enigmaticlegacy:etheriumGear.desc": "エセリウム製防具のフルセットを作成する",
+  "advancement.enigmaticlegacy:etheriumGear.desc": "エーテリウム製防具のフルセットを作成する",
 
   "advancement.enigmaticlegacy:ultimatePotion": "醸造スタンドの達人",
   "advancement.enigmaticlegacy:ultimatePotion.desc": "初めての究極のポーションを醸造する",
@@ -1230,41 +1230,41 @@
   "book.enigmaticlegacy.entry.forbidden_axe.page.4": "この武器に宿る血への衝動は、特別な斬首能力を除いても、ネザーライトの刃よりも早く、より壊滅的な打撃を与えることができるため、重宝するだろう。",
 
 
-  "book.enigmaticlegacy.entry.etherium_sword.name": "エセリウムの大剣",
-  "book.enigmaticlegacy.entry.etherium_sword.page.1": "その巨大な外見に反して、この道具は実際には通常の小さな剣よりも扱いやすい。もちろん、それはあなたにとっての話だ ― あなたの敵にとって、あなたがその一撃を与えるのと同じくらい簡単に、この武器の打撃に耐えることはできないだろう。<br2/>エセリウムの大剣は、他の二つの",
-  "book.enigmaticlegacy.entry.etherium_sword.page.2": "エセリウム武器の完璧な中間に位置している。大鎌ほど軽く俊敏ではなく、戦斧ほど重く粉砕的でもないが、両方の利点を備えており、適度な待機時間で確実な一撃を繰り出すことができる。その一撃は、",
+  "book.enigmaticlegacy.entry.etherium_sword.name": "エーテリウムの大剣",
+  "book.enigmaticlegacy.entry.etherium_sword.page.1": "その巨大な外見に反して、この道具は実際には通常の小さな剣よりも扱いやすい。もちろん、それはあなたにとっての話だ ― あなたの敵にとって、あなたがその一撃を与えるのと同じくらい簡単に、この武器の打撃に耐えることはできないだろう。<br2/>エーテリウムの大剣は、他の二つの",
+  "book.enigmaticlegacy.entry.etherium_sword.page.2": "エーテリウム武器の完璧な中間に位置している。大鎌ほど軽く俊敏ではなく、戦斧ほど重く粉砕的でもないが、両方の利点を備えており、適度な待機時間で確実な一撃を繰り出すことができる。その一撃は、",
   "book.enigmaticlegacy.entry.etherium_sword.page.3": "どれほど防御を固めた敵であっても、かなりの痛手となるだろう。<br2/>他の道具とは異なり、この大剣の能力は完全に戦闘に特化している。あなたの命令一つで、それはあなたが向いている方向とは逆方向へ、かなりの距離を投げ出す。これは、連撃の合間に素早く撤退したり、特に致命的な攻撃を素早く回避したりするための手段として利用できる。短いクールタイムにより、この能力を適切に使う技術があれば、",
-  "book.enigmaticlegacy.entry.etherium_sword.page.4": "最も激しい戦闘状況においても有用である。<br2/>他のエセリウム道具と同様、大剣は地上のどのような武器をもはるかに凌駕する、驚異的な耐久性を備えている。",
+  "book.enigmaticlegacy.entry.etherium_sword.page.4": "最も激しい戦闘状況においても有用である。<br2/>他のエーテリウム道具と同様、大剣は地上のどのような武器をもはるかに凌駕する、驚異的な耐久性を備えている。",
 
 
-  "book.enigmaticlegacy.entry.etherium_shovel.name": "エセリウムのシャベル",
+  "book.enigmaticlegacy.entry.etherium_shovel.name": "エーテリウムのシャベル",
   "book.enigmaticlegacy.entry.etherium_shovel.page.1": "斧や大鎌とは異なり、この道具は武器としてはあまり役に立たない。しかし、土や泥を「バターを通る熱いナイフ」のように切り裂くという、もう一つの目的については完璧に果たしてくれる。<br2/>意図的にその能力を抑制し、単一のブロックのみに影響させるよう強制しない限り、3x3の範囲を容易に掘削できる。",
-  "book.enigmaticlegacy.entry.etherium_shovel.page.2": "エセリウムで鍛造された他のあらゆるものと同様、並外れた耐久性を誇る。",
+  "book.enigmaticlegacy.entry.etherium_shovel.page.2": "エーテリウムで鍛造された他のあらゆるものと同様、並外れた耐久性を誇る。",
 
 
-  "book.enigmaticlegacy.entry.etherium_scythe.name": "エセリウムの大鎌",
-  "book.enigmaticlegacy.entry.etherium_scythe.page.1": "平和的な道具として設計された大鎌だが、今や最も洗練された武器の一つとしても知られるようになった。これも例外ではない ― 習得は困難だが、あなたが植えた作物と同じくらい簡単に敵の魂を刈り取る助けとなるだろう。<br2/>エセリウムの大鎌は、衝撃の初期地点を中心とした 3x3x3 ブロックの範囲内で作物、植物、葉、草を収穫できる。",
+  "book.enigmaticlegacy.entry.etherium_scythe.name": "エーテリウムの大鎌",
+  "book.enigmaticlegacy.entry.etherium_scythe.page.1": "平和的な道具として設計された大鎌だが、今や最も洗練された武器の一つとしても知られるようになった。これも例外ではない ― 習得は困難だが、あなたが植えた作物と同じくらい簡単に敵の魂を刈り取る助けとなるだろう。<br2/>エーテリウムの大鎌は、衝撃の初期地点を中心とした 3x3x3 ブロックの範囲内で作物、植物、葉、草を収穫できる。",
   "book.enigmaticlegacy.entry.etherium_scythe.page.2": "また、クワとしての役割も兼ねており、3x3 の範囲の土地を容易に耕地に変えることができる。<br2/>必要に応じてこれらの力を抑制し、単一のブロックのみに影響を与えることも可能だ。<br2/>",
-  "book.enigmaticlegacy.entry.etherium_scythe.page.3": "武器としては、エセリウムの戦斧とは対極の位置にある。その刃は薄く剃刀のように鋭く、質量が欠けているために一撃ごとの衝撃は大きくないが、素早い振りは実行しやすく、道を塞ぐほとんどの生物を瞬く間に片付けることができる。<br2/>エセリウムの大鎌も、他のすべての",
-  "book.enigmaticlegacy.entry.etherium_scythe.page.4": "エセリウム道具と同じく、極めて高い耐久性を備えている。",
+  "book.enigmaticlegacy.entry.etherium_scythe.page.3": "武器としては、エーテリウムの戦斧とは対極の位置にある。その刃は薄く剃刀のように鋭く、質量が欠けているために一撃ごとの衝撃は大きくないが、素早い振りは実行しやすく、道を塞ぐほとんどの生物を瞬く間に片付けることができる。<br2/>エーテリウムの大鎌も、他のすべての",
+  "book.enigmaticlegacy.entry.etherium_scythe.page.4": "エーテリウム道具と同じく、極めて高い耐久性を備えている。",
 
 
-  "book.enigmaticlegacy.entry.etherium_pickaxe.name": "エセリウムのツルハシ",
-  "book.enigmaticlegacy.entry.etherium_pickaxe.page.1": "設計は単純で率直だが、このツルハシは地上の材料から鍛造したどのような一般的な道具をも超える力を秘めている。<br2/>エセリウムのツルハシは、ブロックを破壊するたびに 3x3 の範囲を瞬時に採掘することができ、前例のない容易さで地殻に広大なトンネルを穿つことを可能にする。また、必要に応じてその力を",
+  "book.enigmaticlegacy.entry.etherium_pickaxe.name": "エーテリウムのツルハシ",
+  "book.enigmaticlegacy.entry.etherium_pickaxe.page.1": "設計は単純で率直だが、このツルハシは地上の材料から鍛造したどのような一般的な道具をも超える力を秘めている。<br2/>エーテリウムのツルハシは、ブロックを破壊するたびに 3x3 の範囲を瞬時に採掘することができ、前例のない容易さで地殻に広大なトンネルを穿つことを可能にする。また、必要に応じてその力を",
   "book.enigmaticlegacy.entry.etherium_pickaxe.page.2": "抑制し、単一のブロックを対象として作業する手段も備えている。<br2/>それ以外にも、このツルハシは極めて耐久性が高く、通常のツルハシよりも幅広い材料に対して有効であり、",
   "book.enigmaticlegacy.entry.etherium_pickaxe.page.3": "ガラスや氷のようなものをより効率的に扱うことができる。",
 
 
-  "book.enigmaticlegacy.entry.etherium_axe.name": "エセリウムの戦斧",
+  "book.enigmaticlegacy.entry.etherium_axe.name": "エーテリウムの戦斧",
   "book.enigmaticlegacy.entry.etherium_axe.page.1": "通常の斧とは異なり、この巨大な獣は道具と武器の両方の役割を果たすよう設計されており、その両方で卓越している。<br2/>道具として使用する場合、衝撃地点を中心とした 3x3x3 ブロックの広大な範囲の木を伐採できる。単一のブロックを扱う必要がどうしてもある場合は、この能力を抑制することができる。<br2/>",
   "book.enigmaticlegacy.entry.etherium_axe.page.2": "丸太や板材以外にも、葉、サボテン、竹のようなそれほど頑丈でない植物も効率的に処理できる。<br2/>武器としては、凄まじいダメージを与え、斧であるため、",
-  "book.enigmaticlegacy.entry.etherium_axe.page.3": "敵の盾をより効果的に無力化できる。唯一の欠点は、信じられないほど重いことだ。それにより一撃ごとに大きなダメージを与えられる一方で、次の一振りを最大出力で放つための回復には、通常よりも長い時間を要する。<br2/>他のエセリウム道具と同様、エセリウムの戦斧も極めて耐久性が高い。",
+  "book.enigmaticlegacy.entry.etherium_axe.page.3": "敵の盾をより効果的に無力化できる。唯一の欠点は、信じられないほど重いことだ。それにより一撃ごとに大きなダメージを与えられる一方で、次の一振りを最大出力で放つための回復には、通常よりも長い時間を要する。<br2/>他のエーテリウム道具と同様、エーテリウムの戦斧も極めて耐久性が高い。",
 
 
   "book.enigmaticlegacy.entry.astral_breaker.name": "アストラルブレイカー",
-  "book.enigmaticlegacy.entry.astral_breaker.page.1": "伝統的なエセリウム道具はそれ自体で非常に強力かつ有用だが、この金属のすべての力を用いて鍛造できるものの限界ではない。<br2/>アストラルダストのエンチャントの力、そしていくつかの秘術の材料を用いることで、それらの一部を融合させて究極の多目的機器を作成する方法を発見した。",
-  "book.enigmaticlegacy.entry.astral_breaker.page.2": "アストラルブレイカーはツルハシ、斧、シャベルを一手に集約した道具だ ― 岩、木、土をエセリウム製の同等品と同じ容易さで、複数の道具を切り替える必要なく切り裂く。唯一の欠点は、",
-  "book.enigmaticlegacy.entry.astral_breaker.page.3": "エセリウムの戦斧に比べて効果範囲が狭まっていることだが、ほとんどの状況において大きな問題にはならないはずだ。<br2/>また、他のエセリウム道具よりもいくらか耐久性が高い。",
+  "book.enigmaticlegacy.entry.astral_breaker.page.1": "伝統的なエーテリウム道具はそれ自体で非常に強力かつ有用だが、この金属のすべての力を用いて鍛造できるものの限界ではない。<br2/>アストラルダストのエンチャントの力、そしていくつかの秘術の材料を用いることで、それらの一部を融合させて究極の多目的機器を作成する方法を発見した。",
+  "book.enigmaticlegacy.entry.astral_breaker.page.2": "アストラルブレイカーはツルハシ、斧、シャベルを一手に集約した道具だ ― 岩、木、土をエーテリウム製の同等品と同じ容易さで、複数の道具を切り替える必要なく切り裂く。唯一の欠点は、",
+  "book.enigmaticlegacy.entry.astral_breaker.page.3": "エーテリウムの戦斧に比べて効果範囲が狭まっていることだが、ほとんどの状況において大きな問題にはならないはずだ。<br2/>また、他のエーテリウム道具よりもいくらか耐久性が高い。",
 
 
   "book.enigmaticlegacy.entry.unholy_grail.name": "不浄の聖杯",
@@ -1445,22 +1445,22 @@
   "book.enigmaticlegacy.entry.netherite.page.3": "より洗練された化合物の一部として、最もよく機能することが証明された。これが最も効果的な複合材ではない可能性があるため、さらに優れた品質を持つ材料を作成するために、この金属を用いた実験を続けている。",
 
 
-  "book.enigmaticlegacy.entry.etherium_ore.name": "エセリウム鉱石",
+  "book.enigmaticlegacy.entry.etherium_ore.name": "エーテリウム鉱石",
   "book.enigmaticlegacy.entry.etherium_ore.heading.1": "その鉱石",
-  "book.enigmaticlegacy.entry.etherium_ore.page.1": "エンドに由来する他のあらゆる謎の中で、一つのものが他よりもあなたの注意を引いている。そこではエセリウムという名を冠した、洗練された材料に出会うことができるという噂がある。<br2/>エセリウムは島々の地殻内で自然に遭遇できるものとしては言及されないが、どういうわけか、",
+  "book.enigmaticlegacy.entry.etherium_ore.page.1": "エンドに由来する他のあらゆる謎の中で、一つのものが他よりもあなたの注意を引いている。そこではエーテリウムという名を冠した、洗練された材料に出会うことができるという噂がある。<br2/>エーテリウムは島々の地殻内で自然に遭遇できるものとしては言及されないが、どういうわけか、",
   "book.enigmaticlegacy.entry.etherium_ore.page.2": "かつてこの次元を植民地化しようとした古代文明の所有物となっていたことが示唆されている。<br2/>その文明の統治時代はずっと昔に終わっているため、彼らにそれがどのように可能だったかを尋ねることはできない。今のあなたの理論では、彼らは圧倒的な量のエンダーエネルギーを操ることに成功し、",
   "book.enigmaticlegacy.entry.etherium_ore.page.3": "それらを使ってこの鉱物を物理的な現実へと具現化し、製造できるようにしたのではないかと考えている。<br2/>不運なことに、彼らの手法がどのようなものだったかは定かではないが、彼らの仕事の結論を目にすれば、さらなる答えが明らかになるかもしれない。純粋な科学的好奇心以外にも、魔術師としても鍛冶屋としても、",
   "book.enigmaticlegacy.entry.etherium_ore.page.4": "この材料には多大な興味がある。この材料の特性は、しばしばあまりに驚異的なものとして語られており、それに関するあまりに多くの伝承が存在しなければ、それらが真実であることを疑ったであろうほどだからだ。",
 
 
-  "book.enigmaticlegacy.entry.etherium.name": "エセリウム",
-  "book.enigmaticlegacy.entry.etherium.page.1": "その名にもかかわらず、この材料は物理的に固体である。非常に。<br2/>物語は真実であることが判明した。それどころか、事実を誇張してさえいなかった。エセリウムは、以前にあなたが目にした伝承の断片によって割り当てられていた驚異的な特性のほとんどを真に備えている。非常に高い融点を持ち、",
+  "book.enigmaticlegacy.entry.etherium.name": "エーテリウム",
+  "book.enigmaticlegacy.entry.etherium.page.1": "その名にもかかわらず、この材料は物理的に固体である。非常に。<br2/>物語は真実であることが判明した。それどころか、事実を誇張してさえいなかった。エーテリウムは、以前にあなたが目にした伝承の断片によって割り当てられていた驚異的な特性のほとんどを真に備えている。非常に高い融点を持ち、",
   "book.enigmaticlegacy.entry.etherium.page.2": "ネザーライトと同じくらい炎や溶岩に強く、同時にその耐久性を大幅に凌駕している。それ以外にも、この金属は脈動するエネルギーで満ち溢れており、あなたが思いつくどのような形や形態であっても、それを解き放ちたいという衝動を抱かせる。<br2/>",
-  "book.enigmaticlegacy.entry.etherium.page.3": "あなたのような者にとって、形や形態を創造する能力は疑う余地がない。この世界は間もなく、あなたの新しく鍛造されたエセリウム道具の威力を目の当たりにすることだろう。",
+  "book.enigmaticlegacy.entry.etherium.page.3": "あなたのような者にとって、形や形態を創造する能力は疑う余地がない。この世界は間もなく、あなたの新しく鍛造されたエーテリウム道具の威力を目の当たりにすることだろう。",
 
 
   "book.enigmaticlegacy.entry.ender_rod.name": "エンダーロッド",
-  "book.enigmaticlegacy.entry.ender_rod.page.1": "ブレイズロッドにエンダーエネルギーとアストラルダストに含まれる力を注ぎ込むことで、このロッドをクラフトできる。<br2/>将来的にさらなる用途があるかもしれないが、今のところは、平凡な木材ではもはや十分ではないエセリウム道具の柄を鍛造するためのベースとして、主に設計されている。",
+  "book.enigmaticlegacy.entry.ender_rod.page.1": "ブレイズロッドにエンダーエネルギーとアストラルダストに含まれる力を注ぎ込むことで、このロッドをクラフトできる。<br2/>将来的にさらなる用途があるかもしれないが、今のところは、平凡な木材ではもはや十分ではないエーテリウム道具の柄を鍛造するためのベースとして、主に設計されている。",
   "book.enigmaticlegacy.entry.ender_rod.page.2": " ",
 
 
@@ -1607,14 +1607,14 @@
   "book.enigmaticlegacy.entry.advanced_brewing.page.6": "これらはまた、従来の手法を介して、スプラッシュ版および残留版の両方から醸造したり、それらへと変換したりすることができる。",
 
 
-  "book.enigmaticlegacy.entry.etherium_armor.name": "エセリウム防具",
+  "book.enigmaticlegacy.entry.etherium_armor.name": "エーテリウム防具",
   "book.enigmaticlegacy.entry.etherium_armor.heading.1": "防具セット",
-  "book.enigmaticlegacy.entry.etherium_armor.page.1": "エセリウムの新たな力が究極の防具を鍛造する試みに役立つかもしれないと推測するのに、それほど長くはかからなかったはずだ。エセリウム防具は真に究極ではないかもしれないが、これまでのところ、あなたが作成したり所有したりできるどのようなものをも凌駕している。<br2/>その最初の注目すべき特性の一つは、それを装備して体に",
+  "book.enigmaticlegacy.entry.etherium_armor.page.1": "エーテリウムの新たな力が究極の防具を鍛造する試みに役立つかもしれないと推測するのに、それほど長くはかからなかったはずだ。エーテリウム防具は真に究極ではないかもしれないが、これまでのところ、あなたが作成したり所有したりできるどのようなものをも凌駕している。<br2/>その最初の注目すべき特性の一つは、それを装備して体に",
   "book.enigmaticlegacy.entry.etherium_armor.page.2": "身につければ、防具自体が完全に不可視になり、平凡な金属から鍛造された防具よりもはるかに負担を感じさせないという点だ。何かがあなたやその防具と干渉しようとするまで、それを身につけていることさえ完全に忘れてしまうことができるほど、その重さは感じられないものである。<br2/>",
   "book.enigmaticlegacy.entry.etherium_armor.page.3": "しかしその軽快さは、敵の攻撃を吸収するのが下手であることを意味しない。それは、貫通するのが極めて困難であるという点において、ネザーライト防具さえも凌駕している。それ以上に、想像を絶するほど耐久性が高い ― 最も粉砕的な打撃であっても、その表面にかすり傷一つ残すことはほとんどない。<br2/>",
   "book.enigmaticlegacy.entry.etherium_armor.page.4": "四つの部位をすべて同時に身につけ、その共鳴が頂点に達すれば、ついに純粋なエネルギーで編まれた強力なシールドとして具現化し、持ち主をほとんどの飛び道具から保護し、完全に防ぐことができない攻撃を著しく弱体化させ、その攻撃を実行しようとする者をノックバックさせる。<br2/>",
-  "book.enigmaticlegacy.entry.etherium_armor.page.5": "そのシールドは、持ち主がどうにかして重傷を負ってしまった時にのみ発動する。満身創痍の体力を維持している間はシールドは消え、再び具現化する必要が生じるまで、エセリウムはその内部エネルギーをゆっくりと補充する。<br2/>",
-  "book.enigmaticlegacy.entry.etherium_armor.page.6": "そのシールドが、体力の半分まで削られた際にウィザーが呼び出すものに似ていることに気づかないのは難しい。これは、エセリウムの力の起源と性質に何らかの関係があることを暗示しているに違いない。以下の頁には、エセリウム防具をどのように鍛造できるかの描写が含まれている。",
+  "book.enigmaticlegacy.entry.etherium_armor.page.5": "そのシールドは、持ち主がどうにかして重傷を負ってしまった時にのみ発動する。満身創痍の体力を維持している間はシールドは消え、再び具現化する必要が生じるまで、エーテリウムはその内部エネルギーをゆっくりと補充する。<br2/>",
+  "book.enigmaticlegacy.entry.etherium_armor.page.6": "そのシールドが、体力の半分まで削られた際にウィザーが呼び出すものに似ていることに気づかないのは難しい。これは、エーテリウムの力の起源と性質に何らかの関係があることを暗示しているに違いない。以下の頁には、エーテリウム防具をどのように鍛造できるかの描写が含まれている。",
 
 
   "book.enigmaticlegacy.entry.xp_scroll.name": "知恵の貯蔵庫",
@@ -1817,10 +1817,10 @@
   "book.enigmaticlegacy.entry.enigmatic_elytra.name": "威風堂々たるエリトラ",
   "book.enigmaticlegacy.entry.enigmatic_elytra.page.1": "ロケット花火と組み合わせることで、エリトラは馬、ボート、トロッコを容易に追い抜く、卓越した輸送手段を提供する。その長期間の使用を取り巻く主な懸念事項は二つだけだ ― 迅速な摩耗と、ロケット花火の安定した供給を維持する必要性である。<br2/>",
   "book.enigmaticlegacy.entry.enigmatic_elytra.page.2": "威風堂々たるエリトラは、その両方を解決する。それは顕著な耐久性を提供し、エンダーエネルギーを使用して、飛行中に着用者の望みに応じて着用者を前方へ推進させることができる。その手法はロケット花火と大差ない。<br2/>",
-  "book.enigmaticlegacy.entry.enigmatic_elytra.page.3": "そうすることで耐久値により大きな負担がかかるが、金床でエセリウムを使用して修理できる限り、それほど大きな懸念にはならないはずだ。それ以外にも、より鮮やかなカラーパターンで覆われており、その壮大な品質について、誰も疑いを持つことはないだろう。",
+  "book.enigmaticlegacy.entry.enigmatic_elytra.page.3": "そうすることで耐久値により大きな負担がかかるが、金床でエーテリウムを使用して修理できる限り、それほど大きな懸念にはならないはずだ。それ以外にも、より鮮やかなカラーパターンで覆われており、その壮大な品質について、誰も疑いを持つことはないだろう。",
 
 
-  "book.enigmaticlegacy.entry.ichor_bottle.name": "イコールの瓶",
+  "book.enigmaticlegacy.entry.ichor_bottle.name": "霊血の瓶",
   "book.enigmaticlegacy.entry.ichor_bottle.heading.1": "その瓶",
   "book.enigmaticlegacy.entry.ichor_bottle.page.1": "このいわゆる「神々の血」が正確にどこから来たのかは、まだ答えが出ていない問いであり、おそらくそのままであるほうがよい。しかし、手元にある今、それを食して秘術のエネルギーを導く肉体の能力を高め、何らかの方法で能力を拡大する貴重なチャームを、さらにもう一つ装備することができるようになる。<br2/>",
   "book.enigmaticlegacy.entry.ichor_bottle.page.2": "このような希少な遺物が見つかることはほとんどなく、どうしてそれがあなたの手に渡ったのか、考えずにはいられない。おそらく、あなたたちの神聖な性質によって引き寄せられたのか、あるいは何らかの偉大なる力があなたをそれへと導いたのだろうか？...",
@@ -1874,12 +1874,12 @@
   "tooltip.enigmaticlegacy.cosmicScrollLore2": "§5それが残された者たちを疑いへと落とさぬように。",
   "tooltip.enigmaticlegacy.cosmicScroll1": "§6＋1 §d運勢",
   "tooltip.enigmaticlegacy.cosmicScroll2": "§6＋1 §d秘術の巻物スロット",
-  "tooltip.enigmaticlegacy.cosmicScroll3": "§5§6エセリウム防具§5のフルセットを装備している場合、",
+  "tooltip.enigmaticlegacy.cosmicScroll3": "§5§6エーテリウム防具§5のフルセットを装備している場合、",
   "tooltip.enigmaticlegacy.cosmicScroll4": "§5シールドの発生条件が、最大体力の §6%1$s§5 以下",
   "tooltip.enigmaticlegacy.cosmicScroll5": "§5に緩和される。",
   "tooltip.enigmaticlegacy.cosmicScroll6": "§5ほとんどの魔石のアクティブ能力のクールタイムが",
   "tooltip.enigmaticlegacy.cosmicScroll7": "§5大幅に短縮される。",
-  "tooltip.enigmaticlegacy.cosmicScroll8": "§6エセリウム道具§5の採掘範囲が拡大する。",
+  "tooltip.enigmaticlegacy.cosmicScroll8": "§6エーテリウム道具§5の採掘範囲が拡大する。",
   "tooltip.enigmaticlegacy.cosmicScroll9": "§5致死ダメージを受けた際、体力を §650％§5 まで",
   "tooltip.enigmaticlegacy.cosmicScroll10": "§5回復し、強力なバフを付与する。",
   "tooltip.enigmaticlegacy.cosmicScroll11": "§5この能力には §6%1$s 秒§5 のクールタイムがある。",
@@ -1891,4 +1891,3 @@
   "book.enigmaticlegacy.entry.cosmic_scroll.name": "設計者の寵愛",
   "book.enigmaticlegacy.entry.cosmic_scroll.page.1": "噂に影を落とされたこの巻物の威力は、神位に近づいた者であっても、ほとんどの半神には拒まれている。誰がそれを所有できるかは設計者自身の裁量に委ねられており、噂によれば、$(l:https://discord.gg/fuWK8ns)彼の領域$(/l)への旅は長く危険に満ちている。その神聖な存在に注目されるのは、極めて稀な名誉である。",
   "book.enigmaticlegacy.entry.cosmic_scroll.page.2": "しかしそれを成し遂げた者は、比類なき力を授けられる。世界が彼らの栄光に浴するため、そして彼らが他者に信仰を広めるために。"
-}
