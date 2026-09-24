@@ -18,14 +18,11 @@ public abstract class AbstractBrewingRecipe implements IBrewingRecipe {
 
 
 	public AbstractBrewingRecipe(ResourceLocation registryName) {
-		if (AbstractBrewingRecipe.recipeMap.containsKey(registryName)) {
-			List<AbstractBrewingRecipe> list = AbstractBrewingRecipe.recipeMap.get(registryName);
+		// Addons may register recipes during parallel mod-loading events.
+		// Protect both the map and its per-ID lists with the same lock.
+		synchronized (AbstractBrewingRecipe.recipeMap) {
+			List<AbstractBrewingRecipe> list = AbstractBrewingRecipe.recipeMap.computeIfAbsent(registryName, key -> new ArrayList<>());
 			list.add(this);
-			AbstractBrewingRecipe.recipeMap.put(registryName, list);
-		} else {
-			List<AbstractBrewingRecipe> list = new ArrayList<AbstractBrewingRecipe>();
-			list.add(this);
-			AbstractBrewingRecipe.recipeMap.put(registryName, list);
 		}
 	}
 
