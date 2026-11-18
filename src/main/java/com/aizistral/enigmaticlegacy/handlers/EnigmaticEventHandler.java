@@ -168,8 +168,6 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import top.theillusivec4.caelus.api.RenderCapeEvent;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.event.DropRulesEvent;
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
@@ -1479,8 +1477,6 @@ public class EnigmaticEventHandler {
 					event.setCanceled(true);
 					player.setHealth(player.getMaxHealth() * 0.15F);
 
-					// TODO: play fake death animation for others
-
 					player.addEffect(new MobEffectInstance(
 							EnigmaticEffects.IMPERCEPTIBLE,
 							5 * 60 * 20,
@@ -1489,6 +1485,10 @@ public class EnigmaticEventHandler {
 							false,
 							true
 					));
+
+					EnigmaticLegacy.packetInstance.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
+							new PacketSpawnFakeCorpse(player)
+					);
 
 					deceptionAmulet.hurtAndBreak(1, player, p ->
 							p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(deceptionAmulet))

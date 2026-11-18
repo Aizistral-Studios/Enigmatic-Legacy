@@ -357,6 +357,7 @@ public class EnigmaticLegacy {
 		packetInstance.registerMessage(30, PacketUpdateElytraBoosting.class, PacketUpdateElytraBoosting::encode, PacketUpdateElytraBoosting::decode, PacketUpdateElytraBoosting::handle);
 		packetInstance.registerMessage(31, PacketPermadeath.class, PacketPermadeath::encode, PacketPermadeath::decode, PacketPermadeath::handle);
 		packetInstance.registerMessage(32, PacketSyncEntityEffects.class, PacketSyncEntityEffects::toBytes, PacketSyncEntityEffects::new, PacketSyncEntityEffects::handle);
+		packetInstance.registerMessage(33, PacketSpawnFakeCorpse.class, PacketSpawnFakeCorpse::toBytes, PacketSpawnFakeCorpse::new, PacketSpawnFakeCorpse::handle);
 
 		LOGGER.info("Registering triggers...");
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);
