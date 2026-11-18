@@ -17,6 +17,7 @@ import com.aizistral.enigmaticlegacy.effects.GrowingHungerEffect;
 import com.aizistral.enigmaticlegacy.items.*;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.block.ChiseledBookShelfBlock;
@@ -194,11 +195,6 @@ import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.food.FoodData;
-import net.minecraft.world.item.ArrowItem;
-import net.minecraft.world.item.CrossbowItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Recipe;
@@ -1568,6 +1564,35 @@ public class EnigmaticEventHandler {
 
 					EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 128, player.level().dimension())),
 							new PacketCosmicRevive(player.getId(), 1));
+				}
+			}
+
+			ItemStack deceptionAmulet = SuperpositionHandler.getCurioStack(player, EnigmaticItems.DECEPTION_AMULET);
+			if (deceptionAmulet != null && !deceptionAmulet.isEmpty()) {
+				ItemCooldowns cooldowns = player.getCooldowns();
+				boolean canActivate = SuperpositionHandler.isTheCursedOne(player) && !cooldowns.isOnCooldown(EnigmaticItems.DECEPTION_AMULET);
+
+				if (canActivate) {
+					event.setCanceled(true);
+					player.setHealth(player.getMaxHealth() * 0.15F);
+
+					// TODO: play fake death animation for others
+
+					// TODO: replace with new effect
+					player.addEffect(new MobEffectInstance(
+							MobEffects.INVISIBILITY,
+							5 * 60 * 20,
+							0,
+							false,
+							false,
+							true
+					));
+
+					deceptionAmulet.hurtAndBreak(1, player, p ->
+							p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(deceptionAmulet))
+					);
+
+					cooldowns.addCooldown(EnigmaticItems.DECEPTION_AMULET, 10 * 60 * 20);
 				}
 			}
 		}
