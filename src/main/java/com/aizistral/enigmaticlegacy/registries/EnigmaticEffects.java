@@ -1,12 +1,7 @@
 package com.aizistral.enigmaticlegacy.registries;
 
-import com.aizistral.enigmaticlegacy.api.generic.ModRegistry;
 import com.aizistral.enigmaticlegacy.effects.*;
-import com.aizistral.enigmaticlegacy.gui.containers.LoreInscriberContainer;
-
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -25,12 +20,16 @@ public class EnigmaticEffects extends AbstractRegistry<MobEffect> {
 	@ObjectHolder(value = MODID + ":growing_bloodlust", registryName = "mob_effect")
 	public static final GrowingBloodlustEffect GROWING_BLOODLUST = null;
 
+	@ObjectHolder(value = MODID + ":imperceptible", registryName = "mob_effect")
+	public static final ImperceptibleEffect IMPERCEPTIBLE = null;
+
 	private EnigmaticEffects() {
 		super(ForgeRegistries.MOB_EFFECTS);
 		this.register("blazing_strength", BlazingStrengthEffect::new);
 		this.register("molten_heart", MoltenHeartEffect::new);
 		this.register("growing_hunger", GrowingHungerEffect::new);
 		this.register("growing_bloodlust", GrowingBloodlustEffect::new);
+		this.register("imperceptible", ImperceptibleEffect::new);
 	}
 
 }

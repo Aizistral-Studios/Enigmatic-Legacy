@@ -1481,9 +1481,8 @@ public class EnigmaticEventHandler {
 
 					// TODO: play fake death animation for others
 
-					// TODO: replace with new effect
 					player.addEffect(new MobEffectInstance(
-							MobEffects.INVISIBILITY,
+							EnigmaticEffects.IMPERCEPTIBLE,
 							5 * 60 * 20,
 							0,
 							false,

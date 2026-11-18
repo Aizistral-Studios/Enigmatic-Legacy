@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.aizistral.enigmaticlegacy.packets.clients.*;
 import org.apache.commons.lang3.tuple.Triple;
 import org.lwjgl.glfw.GLFW;
 
@@ -46,27 +47,6 @@ import com.aizistral.enigmaticlegacy.items.generic.GenericBlockItem;
 import com.aizistral.enigmaticlegacy.objects.LoggerWrapper;
 import com.aizistral.enigmaticlegacy.objects.RegisteredMeleeAttack;
 import com.aizistral.enigmaticlegacy.objects.SpecialLootModifier;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketCosmicRevive;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketFlameParticles;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketForceArrowRotations;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketGenericParticleEffect;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketHandleItemPickup;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketPatchouliForce;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketPermadeath;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketPlayQuote;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketPlayerMotion;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketPlayerRotations;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketPlayerSetlook;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketPortalParticles;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketRecallParticles;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketSetEntryState;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketSlotUnlocked;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketSyncPlayTime;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketSyncTransientData;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketUpdateCompass;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketUpdateExperience;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketUpdateNotification;
-import com.aizistral.enigmaticlegacy.packets.clients.PacketWitherParticles;
 import com.aizistral.enigmaticlegacy.packets.server.PacketAnvilField;
 import com.aizistral.enigmaticlegacy.packets.server.PacketConfirmTeleportation;
 import com.aizistral.enigmaticlegacy.packets.server.PacketEnchantingGUI;
@@ -376,6 +356,7 @@ public class EnigmaticLegacy {
 		packetInstance.registerMessage(29, PacketPlayQuote.class, PacketPlayQuote::encode, PacketPlayQuote::decode, PacketPlayQuote::handle);
 		packetInstance.registerMessage(30, PacketUpdateElytraBoosting.class, PacketUpdateElytraBoosting::encode, PacketUpdateElytraBoosting::decode, PacketUpdateElytraBoosting::handle);
 		packetInstance.registerMessage(31, PacketPermadeath.class, PacketPermadeath::encode, PacketPermadeath::decode, PacketPermadeath::handle);
+		packetInstance.registerMessage(32, PacketSyncEntityEffects.class, PacketSyncEntityEffects::toBytes, PacketSyncEntityEffects::new, PacketSyncEntityEffects::handle);
 
 		LOGGER.info("Registering triggers...");
 		CriteriaTriggers.register(UseUnholyGrailTrigger.INSTANCE);
