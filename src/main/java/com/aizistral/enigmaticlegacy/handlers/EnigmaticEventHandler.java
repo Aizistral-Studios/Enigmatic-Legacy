@@ -168,6 +168,8 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import top.theillusivec4.caelus.api.RenderCapeEvent;
+import top.theillusivec4.curios.api.CuriosApi;
+import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.event.DropRulesEvent;
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
@@ -1490,8 +1492,10 @@ public class EnigmaticEventHandler {
 							new PacketSpawnFakeCorpse(player)
 					);
 
-					deceptionAmulet.hurtAndBreak(1, player, p ->
-							p.broadcastBreakEvent(Mob.getEquipmentSlotForItem(deceptionAmulet))
+					CuriosApi.getCuriosHelper().findFirstCurio(player, EnigmaticItems.DECEPTION_AMULET).ifPresent(result ->
+							deceptionAmulet.hurtAndBreak(1, player, p ->
+									CuriosApi.getCuriosHelper().onBrokenCurio(result.slotContext())
+							)
 					);
 
 					cooldowns.addCooldown(EnigmaticItems.DECEPTION_AMULET, 10 * 60 * 20);
