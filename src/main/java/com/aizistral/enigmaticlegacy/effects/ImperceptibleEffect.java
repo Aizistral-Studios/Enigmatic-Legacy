@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 
 public class ImperceptibleEffect extends MobEffect {
     public ImperceptibleEffect() {
-        super(MobEffectCategory.BENEFICIAL, 16185078);
+        super(MobEffectCategory.BENEFICIAL, 10748041);
     }
 
     @Mod.EventBusSubscriber(modid = EnigmaticLegacy.MODID, value = Dist.CLIENT)
