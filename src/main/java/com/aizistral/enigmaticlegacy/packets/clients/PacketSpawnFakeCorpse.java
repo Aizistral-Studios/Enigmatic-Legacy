@@ -58,8 +58,6 @@ public class PacketSpawnFakeCorpse {
             Entity entity = level.getEntity(entityID);
             if (!(entity instanceof Player player)) return;
 
-            EnigmaticLegacy.LOGGER.info("send fake corpse");
-
             Corpse corpse = new Corpse(level, player.getGameProfile());
             corpse.setUUID(UUID.randomUUID());
 
