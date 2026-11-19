@@ -1,19 +1,24 @@
 package com.aizistral.enigmaticlegacy.items;
 
+import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.items.ICursed;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBaseCurio;
+import com.aizistral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticEffects;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.HoverEvent;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.PlayerList;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
@@ -22,6 +27,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.scores.Team;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.List;
@@ -85,7 +92,31 @@ public class DeceptionAmulet extends ItemBaseCurio implements ICursed {
 				true
 		));
 
-		// TODO: add SFX and VFX for the user
+		EnigmaticLegacy.packetInstance.send(
+				PacketDistributor.PLAYER.with(() -> player),
+				new PacketPortalParticles(
+						player.getX(),
+						player.getY() + (player.getBbHeight() / 2.0D),
+						player.getZ(),
+						48,
+						0.75D,
+						false
+				)
+		);
+
+		ForgeRegistries.SOUND_EVENTS.getHolder(SoundEvents.WITHER_HURT).ifPresent(sound ->
+				player.connection.send(new ClientboundSoundPacket(
+						sound,
+						SoundSource.PLAYERS,
+						player.getX(),
+						player.getY(),
+						player.getZ(),
+						0.5F,
+						0.7F,
+						player.level().getRandom().nextLong()
+				))
+		);
+
 
 //		EnigmaticLegacy.packetInstance.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
 //				new PacketSpawnFakeCorpse(player)
