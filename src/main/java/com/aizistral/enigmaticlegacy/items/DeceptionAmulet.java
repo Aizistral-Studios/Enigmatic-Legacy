@@ -28,13 +28,11 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.scores.Team;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.List;
-import java.util.UUID;
 
 public class DeceptionAmulet extends ItemBaseCurio implements ICursed {
 
@@ -131,7 +129,7 @@ public class DeceptionAmulet extends ItemBaseCurio implements ICursed {
 	}
 
 	private static void spawnFakeCorpse(ServerPlayer player) {
-		EnigmaticLegacy.packetInstance.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.TRACKING_ENTITY.with(() -> player),
 				new PacketSpawnFakeCorpse(player)
 		);
 	}

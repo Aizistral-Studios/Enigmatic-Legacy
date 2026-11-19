@@ -9,6 +9,7 @@ import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.client.player.RemotePlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
 import org.jetbrains.annotations.Nullable;
@@ -60,13 +61,11 @@ public class PacketSpawnFakeCorpse {
             EnigmaticLegacy.LOGGER.info("send fake corpse");
 
             Corpse corpse = new Corpse(level, player.getGameProfile());
-
-//            List<SynchedEntityData.DataValue<?>> playerData = player.getEntityData().getNonDefaultValues();
-//            if (playerData != null) {
-//                corpse.getEntityData().assignValues(playerData);
-//            }
-
             corpse.setUUID(UUID.randomUUID());
+
+            for (EquipmentSlot slot : EquipmentSlot.values()) {
+                corpse.setItemSlot(slot, player.getItemBySlot(slot).copy());
+            }
 
             corpse.setPos(x, y, z);
             corpse.setYRot(yRot);
