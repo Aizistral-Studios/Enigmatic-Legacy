@@ -7,6 +7,7 @@ import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBase;
 import com.aizistral.enigmaticlegacy.items.generic.ItemBaseCurio;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketPortalParticles;
+import com.aizistral.enigmaticlegacy.packets.clients.PacketSpawnFakeCorpse;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticEffects;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import net.minecraft.ChatFormatting;
@@ -27,11 +28,13 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.scores.Team;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.List;
+import java.util.UUID;
 
 public class DeceptionAmulet extends ItemBaseCurio implements ICursed {
 
@@ -117,11 +120,7 @@ public class DeceptionAmulet extends ItemBaseCurio implements ICursed {
 				))
 		);
 
-
-//		EnigmaticLegacy.packetInstance.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
-//				new PacketSpawnFakeCorpse(player)
-//		);
-
+		spawnFakeCorpse(player);
 		sendFakeDeathMessage(player);
 
 		CuriosApi.getCuriosHelper().findFirstCurio(player, EnigmaticItems.DECEPTION_AMULET).ifPresent(result ->
@@ -131,6 +130,11 @@ public class DeceptionAmulet extends ItemBaseCurio implements ICursed {
 		);
 	}
 
+	private static void spawnFakeCorpse(ServerPlayer player) {
+		EnigmaticLegacy.packetInstance.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
+				new PacketSpawnFakeCorpse(player)
+		);
+	}
 
 	private static void sendFakeDeathMessage(ServerPlayer player) {
 		MinecraftServer server = player.getServer();
