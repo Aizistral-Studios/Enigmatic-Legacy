@@ -69,18 +69,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.PacketSendListener;
-import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.HoverEvent;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
-import net.minecraft.network.protocol.game.ClientboundPlayerCombatKillPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.players.PlayerList;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.ServerRecipeBook;
@@ -139,7 +133,6 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.scores.Team;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
@@ -175,8 +168,6 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import top.theillusivec4.caelus.api.RenderCapeEvent;
-import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.event.DropRulesEvent;
 import top.theillusivec4.curios.api.type.capability.ICurio.DropRule;
 import top.theillusivec4.curios.client.gui.CuriosScreen;
@@ -1479,78 +1470,10 @@ public class EnigmaticEventHandler {
 
 			ItemStack deceptionAmulet = SuperpositionHandler.getCurioStack(player, EnigmaticItems.DECEPTION_AMULET);
 			if (deceptionAmulet != null && !deceptionAmulet.isEmpty()) {
-				ItemCooldowns cooldowns = player.getCooldowns();
-				boolean canActivate = SuperpositionHandler.isTheCursedOne(player) && !cooldowns.isOnCooldown(EnigmaticItems.DECEPTION_AMULET);
-
-				if (canActivate) {
+				if (DeceptionAmulet.tryActivate(player, deceptionAmulet)) {
 					event.setCanceled(true);
-					player.setHealth(player.getMaxHealth() * 0.15F);
-
-					player.addEffect(new MobEffectInstance(
-							EnigmaticEffects.IMPERCEPTIBLE,
-							5 * 60 * 20,
-							0,
-							false,
-							false,
-							true
-					));
-
-					// TODO: add SFX and VFX for the user
-
-//					EnigmaticLegacy.packetInstance.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
-//							new PacketSpawnFakeCorpse(player)
-//					);
-
-					sendFakeDeathMessage(player);
-
-					CuriosApi.getCuriosHelper().findFirstCurio(player, EnigmaticItems.DECEPTION_AMULET).ifPresent(result ->
-							deceptionAmulet.hurtAndBreak(1, player, p ->
-									CuriosApi.getCuriosHelper().onBrokenCurio(result.slotContext())
-							)
-					);
-
-					cooldowns.addCooldown(EnigmaticItems.DECEPTION_AMULET, 10 * 60 * 20);
-
-					return;
 				}
 			}
-		}
-	}
-
-	private static void sendFakeDeathMessage(ServerPlayer player) {
-		MinecraftServer server = player.getServer();
-		if (server == null) return;
-
-		Level level = player.level();
-		int playerId = player.getId();
-
-		boolean flag = level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES);
-
-		// Copy-paste from the mojunk code (with slight changes) because they
-		// didn't separate it with other method and just slapped it in to ServerPlayer#die method
-		if (flag) {
-			PlayerList playerList = server.getPlayerList();
-
-			Component component = player.getCombatTracker().getDeathMessage();
-
-			String s = component.getString(256);
-			Component component1 = Component.translatable("death.attack.message_too_long", Component.literal(s).withStyle(ChatFormatting.YELLOW));
-			Component component2 = Component.translatable("death.attack.even_more_magic", player.getDisplayName()).withStyle((p_143420_) -> {
-				return p_143420_.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, component1));
-			});
-
-			Team team = player.getTeam();
-			if (team != null && team.getDeathMessageVisibility() != Team.Visibility.ALWAYS) {
-				if (team.getDeathMessageVisibility() == Team.Visibility.HIDE_FOR_OTHER_TEAMS) {
-					playerList.broadcastSystemToTeam(player, component);
-				} else if (team.getDeathMessageVisibility() == Team.Visibility.HIDE_FOR_OWN_TEAM) {
-					playerList.broadcastSystemToAllExceptTeam(player, component);
-				}
-			} else {
-				playerList.broadcastSystemMessage(component, false);
-			}
-		} else {
-			player.connection.send(new ClientboundPlayerCombatKillPacket(playerId, CommonComponents.EMPTY));
 		}
 	}
 
