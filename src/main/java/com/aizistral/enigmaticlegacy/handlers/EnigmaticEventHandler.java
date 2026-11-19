@@ -1488,9 +1488,9 @@ public class EnigmaticEventHandler {
 							true
 					));
 
-					EnigmaticLegacy.packetInstance.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
-							new PacketSpawnFakeCorpse(player)
-					);
+//					EnigmaticLegacy.packetInstance.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player),
+//							new PacketSpawnFakeCorpse(player)
+//					);
 
 					CuriosApi.getCuriosHelper().findFirstCurio(player, EnigmaticItems.DECEPTION_AMULET).ifPresent(result ->
 							deceptionAmulet.hurtAndBreak(1, player, p ->

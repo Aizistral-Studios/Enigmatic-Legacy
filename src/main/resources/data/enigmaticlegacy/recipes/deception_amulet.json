@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "enigmaticlegacy:is_enabled",
+      "item": "enigmaticlegacy:deception_amulet"
+    }
+  ],
+  "pattern": [
+    "IXI",
+    "#O#",
+    " S "
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:chain"
+    },
+    "X": {
+      "item": "enigmaticlegacy:twisted_heart"
+    },
+    "#": {
+      "item": "minecraft:phantom_membrane"
+    },
+    "O": {
+      "item": "minecraft:crying_obsidian"
+    },
+    "S": {
+      "item": "minecraft:echo_shard"
+    }
+  },
+  "result": {
+    "item": "enigmaticlegacy:deception_amulet"
+  }
+}
