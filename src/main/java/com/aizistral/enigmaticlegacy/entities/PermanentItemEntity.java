@@ -57,12 +57,12 @@ public class PermanentItemEntity extends Entity {
 
 	public float hoverStart = (float) (Math.random() * Math.PI * 2.0D);
 
-	public PermanentItemEntity(EntityType<PermanentItemEntity> type, Level world) {
+	public PermanentItemEntity(EntityType<? extends PermanentItemEntity> type, Level world) {
 		super(type, world);
 	}
 
 	public PermanentItemEntity(Level world, double x, double y, double z) {
-		this(EnigmaticEntities.PERMANENT_ITEM_ENTITY, world);
+		this(EnigmaticEntities.PERMANENT_ITEM_ENTITY.get(), world);
 		y = y <= world.getMinBuildHeight() ? world.getMinBuildHeight() + 8 : y;
 
 		this.setPos(x, y, z);
