@@ -20,7 +20,7 @@ public class EnigmaticTiles {
 	public static final RegistryObject<BlockEntityType<TileEndAnchor>> END_ANCHOR = register(
 			"tile_end_anchor",
 			() -> BlockEntityType.Builder.<TileEndAnchor>of(
-					TileEndAnchor::new, EnigmaticBlocks.END_ANCHOR)
+					TileEndAnchor::new, EnigmaticBlocks.END_ANCHOR.get())
 	);
 
 	public static void registerTiles(IEventBus modEventBus) {
