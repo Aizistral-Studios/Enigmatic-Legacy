@@ -109,7 +109,7 @@ public class EnigmaticLegacy {
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
 		this.loadClass(EnigmaticItems.class);
-		this.loadClass(EnigmaticTiles.class);
+		EnigmaticTiles.registerTiles(modEventBus);
 		EnigmaticMenus.registerMenus(modEventBus);
 		this.loadClass(EnigmaticBlocks.class);
 		EnigmaticSounds.registerSounds(modEventBus);

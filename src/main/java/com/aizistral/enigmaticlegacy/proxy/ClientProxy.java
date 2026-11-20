@@ -213,7 +213,7 @@ public class ClientProxy extends CommonProxy {
 			return 0;
 		});
 
-		BlockEntityRenderers.register(EnigmaticTiles.END_ANCHOR, EndAnchorRenderer::new);
+		BlockEntityRenderers.register(EnigmaticTiles.END_ANCHOR.get(), EndAnchorRenderer::new);
 	}
 
 	@Override
