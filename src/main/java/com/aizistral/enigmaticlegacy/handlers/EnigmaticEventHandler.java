@@ -813,7 +813,7 @@ public class EnigmaticEventHandler {
 	@OnlyIn(Dist.CLIENT)
 	public void onFogRender(RenderFog event) {
 		if (event.getCamera().getFluidInCamera() == FogType.LAVA) {
-			if (Minecraft.getInstance().player.hasEffect(EnigmaticEffects.MOLTEN_HEART)) {
+			if (Minecraft.getInstance().player.hasEffect(EnigmaticEffects.MOLTEN_HEART.get())) {
 				RenderSystem.setShaderFogStart(0.0F);
 				RenderSystem.setShaderFogEnd((float) MoltenHeartEffect.lavafogDensity.getValue());
 			} else if (SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticItems.BLAZING_CORE)) {
@@ -1242,22 +1242,22 @@ public class EnigmaticEventHandler {
 
 						bloodlustAmplifier = Math.min(bloodlustAmplifier, 9);
 
-						player.addEffect(new MobEffectInstance(EnigmaticEffects.GROWING_BLOODLUST,
+						player.addEffect(new MobEffectInstance(EnigmaticEffects.GROWING_BLOODLUST.get(),
 								MobEffectInstance.INFINITE_DURATION, bloodlustAmplifier, true, true));
 					} else {
 						int hungerAmplifier = currentTicks / GrowingHungerEffect.ticksPerLevel.getValue();
 
 						hungerAmplifier = Math.min(hungerAmplifier, 9);
 
-						player.addEffect(new MobEffectInstance(EnigmaticEffects.GROWING_HUNGER,
+						player.addEffect(new MobEffectInstance(EnigmaticEffects.GROWING_HUNGER.get(),
 								MobEffectInstance.INFINITE_DURATION, hungerAmplifier, true, true));
 					}
 
 					EldritchPan.HOLDING_DURATIONS.put(player, currentTicks + 1);
 				} else {
 					EldritchPan.HOLDING_DURATIONS.put(player, 0);
-					player.removeEffect(EnigmaticEffects.GROWING_HUNGER);
-					player.removeEffect(EnigmaticEffects.GROWING_BLOODLUST);
+					player.removeEffect(EnigmaticEffects.GROWING_HUNGER.get());
+					player.removeEffect(EnigmaticEffects.GROWING_BLOODLUST.get());
 				}
 			}
 
@@ -1698,7 +1698,7 @@ public class EnigmaticEventHandler {
 		 */
 
 		if (event.getEntity() instanceof Player player) {
-			if (player.hasEffect(EnigmaticEffects.MOLTEN_HEART) && EnigmaticEffects.MOLTEN_HEART.providesImmunity(event.getSource())) {
+			if (player.hasEffect(EnigmaticEffects.MOLTEN_HEART.get()) && EnigmaticEffects.MOLTEN_HEART.get().providesImmunity(event.getSource())) {
 				event.setCanceled(true);
 				return;
 			}
@@ -1928,8 +1928,8 @@ public class EnigmaticEventHandler {
 				}
 			}
 
-			if (player.hasEffect(EnigmaticEffects.GROWING_BLOODLUST)) {
-				int amplifier = 1 + player.getEffect(EnigmaticEffects.GROWING_BLOODLUST).getAmplifier();
+			if (player.hasEffect(EnigmaticEffects.GROWING_BLOODLUST.get())) {
+				int amplifier = 1 + player.getEffect(EnigmaticEffects.GROWING_BLOODLUST.get()).getAmplifier();
 				lifesteal += event.getAmount() * (GrowingBloodlustEffect.lifestealBoost.getValue() * amplifier);
 			}
 
@@ -1988,8 +1988,8 @@ public class EnigmaticEventHandler {
 			 * Handler for stripping away Blazing Strength.
 			 */
 
-			if (player.hasEffect(EnigmaticEffects.BLAZING_STRENGTH)) {
-				player.removeEffect(EnigmaticEffects.BLAZING_STRENGTH);
+			if (player.hasEffect(EnigmaticEffects.BLAZING_STRENGTH.get())) {
+				player.removeEffect(EnigmaticEffects.BLAZING_STRENGTH.get());
 			}
 		}
 	}

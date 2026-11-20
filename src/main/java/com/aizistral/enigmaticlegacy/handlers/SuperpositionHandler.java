@@ -1763,14 +1763,14 @@ public class SuperpositionHandler {
 						if (sourceToSelf.dot(lookVec) < 0.0D) {
 							int strength = -1;
 
-							if (player.hasEffect(EnigmaticEffects.BLAZING_STRENGTH)) {
-								MobEffectInstance effectInstance = player.getEffect(EnigmaticEffects.BLAZING_STRENGTH);
+							if (player.hasEffect(EnigmaticEffects.BLAZING_STRENGTH.get())) {
+								MobEffectInstance effectInstance = player.getEffect(EnigmaticEffects.BLAZING_STRENGTH.get());
 								strength = effectInstance.getAmplifier();
-								player.removeEffect(EnigmaticEffects.BLAZING_STRENGTH);
+								player.removeEffect(EnigmaticEffects.BLAZING_STRENGTH.get());
 								strength = strength > 2 ? 2 : strength;
 							}
 
-							player.addEffect(new MobEffectInstance(EnigmaticEffects.BLAZING_STRENGTH, 1200, strength + 1, true, true));
+							player.addEffect(new MobEffectInstance(EnigmaticEffects.BLAZING_STRENGTH.get(), 1200, strength + 1, true, true));
 
 							if (source.getDirectEntity() instanceof LivingEntity living && living.isAlive()) {
 								if (!living.fireImmune() && !(living instanceof Guardian)) {
