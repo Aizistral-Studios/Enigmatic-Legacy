@@ -69,7 +69,7 @@ public class UltimatePotionSplash extends ItemBase implements IAdvancedPotionIte
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticTabs.POTIONS;
+		return EnigmaticTabs.POTIONS.get();
 	}
 
 	@Override

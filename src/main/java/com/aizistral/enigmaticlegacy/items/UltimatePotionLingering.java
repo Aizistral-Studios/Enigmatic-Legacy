@@ -69,7 +69,7 @@ public class UltimatePotionLingering extends ItemBase implements IAdvancedPotion
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticTabs.POTIONS;
+		return EnigmaticTabs.POTIONS.get();
 	}
 
 	@Override

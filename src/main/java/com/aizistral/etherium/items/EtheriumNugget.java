@@ -17,7 +17,7 @@ public class EtheriumNugget extends Item implements ICreativeTabMember {
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticTabs.MAIN;
+		return EnigmaticTabs.MAIN.get();
 	}
 
 }

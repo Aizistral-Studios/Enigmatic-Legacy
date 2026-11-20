@@ -144,7 +144,7 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticTabs.MAIN;
+		return EnigmaticTabs.MAIN.get();
 	}
 
 	@Override

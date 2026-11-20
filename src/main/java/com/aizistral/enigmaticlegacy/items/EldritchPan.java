@@ -308,7 +308,7 @@ public class EldritchPan extends TieredItem implements Vanishable, ICursed, ICre
 
 	@Override
 	public @Nullable CreativeModeTab getCreativeTab() {
-		return EnigmaticTabs.MAIN;
+		return EnigmaticTabs.MAIN.get();
 	}
 
 	private String toString(double value) {

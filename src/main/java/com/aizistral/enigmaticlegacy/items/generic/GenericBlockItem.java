@@ -21,7 +21,7 @@ public class GenericBlockItem extends BlockItem implements ICreativeTabMember {
 	}
 
 	public GenericBlockItem(Block blockIn, Properties props) {
-		this(blockIn, props, () -> EnigmaticTabs.MAIN);
+		this(blockIn, props, () -> EnigmaticTabs.MAIN.get());
 	}
 
 	public GenericBlockItem(Block blockIn, Properties props, Supplier<@Nullable CreativeModeTab> tab) {
