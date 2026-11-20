@@ -1,68 +1,41 @@
 package com.aizistral.enigmaticlegacy.registries;
 
-import com.aizistral.enigmaticlegacy.crafting.BindToPlayerRecipe;
-import com.aizistral.enigmaticlegacy.crafting.BlessedShapedRecipe;
-import com.aizistral.enigmaticlegacy.crafting.CursedShapedRecipe;
-import com.aizistral.enigmaticlegacy.crafting.EnchantmentTransposingRecipe;
-import com.aizistral.enigmaticlegacy.crafting.HiddenRecipe;
-import com.aizistral.enigmaticlegacy.crafting.MendingMixtureRepairRecipe;
-import com.aizistral.enigmaticlegacy.crafting.OblivionStoneCombineRecipe;
-import com.aizistral.enigmaticlegacy.crafting.ShapelessNoReturnRecipe;
+import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.crafting.*;
 import com.aizistral.enigmaticlegacy.objects.EnabledCondition;
-import com.aizistral.enigmaticlegacy.objects.SpecialLootModifier;
-import com.mojang.serialization.Codec;
-
+import net.minecraft.world.item.crafting.CraftingRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
-import net.minecraft.world.item.crafting.ShapelessRecipe.Serializer;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ObjectHolder;
-import net.minecraftforge.registries.RegisterEvent;
+import net.minecraftforge.registries.RegistryObject;
 
-public class EnigmaticRecipes extends AbstractRegistry<RecipeSerializer<?>> {
-	private static final EnigmaticRecipes INSTANCE = new EnigmaticRecipes();
+import java.util.function.Supplier;
 
-	@ObjectHolder(value = MODID + ":mending_mixture_repair", registryName = "recipe_serializer")
-	public static final RecipeSerializer<MendingMixtureRepairRecipe> MENDING_MIXTURE_REPAIR = null;
+public class EnigmaticRecipes {
 
-	@ObjectHolder(value = MODID + ":enchantment_transposing", registryName = "recipe_serializer")
-	public static final RecipeSerializer<EnchantmentTransposingRecipe> ENCHANTMENT_TRANSPOSING = null;
+	private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
+			DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, EnigmaticLegacy.MODID);
 
-	@ObjectHolder(value = MODID + ":void_stone_combine", registryName = "recipe_serializer")
-	public static final RecipeSerializer<OblivionStoneCombineRecipe> OBLIVION_STONE_COMBINE = null;
+	public static final RegistryObject<RecipeSerializer<MendingMixtureRepairRecipe>> MENDING_MIXTURE_REPAIR = register("mending_mixture_repair", () -> MendingMixtureRepairRecipe.SERIALIZER);
+	public static final RegistryObject<RecipeSerializer<EnchantmentTransposingRecipe>> ENCHANTMENT_TRANSPOSING = register("enchantment_transposing", () -> EnchantmentTransposingRecipe.SERIALIZER);
+	public static final RegistryObject<RecipeSerializer<OblivionStoneCombineRecipe>> OBLIVION_STONE_COMBINE = register("void_stone_combine", () -> OblivionStoneCombineRecipe.SERIALIZER);
+	public static final RegistryObject<RecipeSerializer<BindToPlayerRecipe>> BIND_TO_PLAYER = register("bind_to_player", () -> BindToPlayerRecipe.SERIALIZER);
+	public static final RegistryObject<RecipeSerializer<HiddenRecipe>> HIDDEN_SHAPED = register("crafting_shaped_hidden", () -> HiddenRecipe.SERIALIZER);
+	public static final RegistryObject<RecipeSerializer<ShapelessRecipe>> SHAPELESS_NO_RETURN = register("shapeless_no_return_craft", ShapelessNoReturnRecipe.Serializer::new);
+	public static final RegistryObject<RecipeSerializer<CursedShapedRecipe>> CURSED_SHAPED = register("crafting_shaped_cursed", CursedShapedRecipe.Serializer::new);
+	public static final RegistryObject<RecipeSerializer<BlessedShapedRecipe>> BLESSED_SHAPED = register("crafting_shaped_blessed", BlessedShapedRecipe.Serializer::new);
 
-	@ObjectHolder(value = MODID + ":bind_to_player", registryName = "recipe_serializer")
-	public static final RecipeSerializer<BindToPlayerRecipe> BIND_TO_PLAYER = null;
-
-	@ObjectHolder(value = MODID + ":crafting_shaped_hidden", registryName = "recipe_serializer")
-	public static final RecipeSerializer<HiddenRecipe> HIDDEN_SHAPED = null;
-
-	@ObjectHolder(value = MODID + ":shapeless_no_return_craft", registryName = "recipe_serializer")
-	public static final RecipeSerializer<ShapelessRecipe> SHAPELESS_NO_RETURN = null;
-
-	@ObjectHolder(value = MODID + ":crafting_shaped_cursed", registryName = "recipe_serializer")
-	public static final RecipeSerializer<CursedShapedRecipe> CURSED_SHAPED = null;
-
-	@ObjectHolder(value = MODID + ":crafting_shaped_blessed", registryName = "recipe_serializer")
-	public static final RecipeSerializer<BlessedShapedRecipe> BLESSED_SHAPED = null;
-
-	private EnigmaticRecipes() {
-		super(ForgeRegistries.RECIPE_SERIALIZERS);
-		this.register("mending_mixture_repair", () -> MendingMixtureRepairRecipe.SERIALIZER);
-		this.register("enchantment_transposing", () -> EnchantmentTransposingRecipe.SERIALIZER);
-		this.register("void_stone_combine", () -> OblivionStoneCombineRecipe.SERIALIZER);
-		this.register("bind_to_player", () -> BindToPlayerRecipe.SERIALIZER);
-		this.register("crafting_shaped_hidden", () -> HiddenRecipe.SERIALIZER);
-		this.register("shapeless_no_return_craft", ShapelessNoReturnRecipe.Serializer::new);
-		this.register("crafting_shaped_cursed", CursedShapedRecipe.Serializer::new);
-		this.register("crafting_shaped_blessed", BlessedShapedRecipe.Serializer::new);
-	}
-
-	@Override
-	protected void onRegister(RegisterEvent event) {
+    public static void registerRecipes(IEventBus modEventBus) {
+		RECIPE_SERIALIZERS.register(modEventBus);
 		CraftingHelper.register(EnabledCondition.Serializer.INSTANCE);
 	}
 
+	private static <T extends CraftingRecipe> RegistryObject<RecipeSerializer<T>> register(
+			String name, Supplier<RecipeSerializer<T>> recipe
+	) {
+		return RECIPE_SERIALIZERS.register(name, recipe);
+	}
 }

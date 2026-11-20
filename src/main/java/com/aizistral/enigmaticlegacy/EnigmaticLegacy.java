@@ -114,7 +114,7 @@ public class EnigmaticLegacy {
 		this.loadClass(EnigmaticBlocks.class);
 		EnigmaticSounds.registerSounds(modEventBus);
 		EnigmaticEffects.registerEffects(modEventBus);
-		this.loadClass(EnigmaticRecipes.class);
+		EnigmaticRecipes.registerRecipes(modEventBus);
 		EnigmaticEntities.registerEntities(modEventBus);
 		EnigmaticEnchantments.registerEnchantments(modEventBus);
 		EnigmaticLootModifiers.registerLootModifiers(modEventBus);
