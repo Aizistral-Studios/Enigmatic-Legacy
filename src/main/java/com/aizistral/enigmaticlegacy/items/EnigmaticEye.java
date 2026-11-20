@@ -157,7 +157,7 @@ public class EnigmaticEye extends ItemBaseCurio {
 				TransientPlayerData data = TransientPlayerData.get(player);
 				boolean wasNarratorUnlocked = data.getUnlockedNarrator();
 
-				level.playSound(null, player.blockPosition(), EnigmaticSounds.CHARGED_ON, SoundSource.PLAYERS, 1.0F, 1F);
+				level.playSound(null, player.blockPosition(), EnigmaticSounds.CHARGED_ON.get(), SoundSource.PLAYERS, 1.0F, 1F);
 
 				if (!wasNarratorUnlocked) {
 					data.setUnlockedNarrator(true);

@@ -1,22 +1,23 @@
 package com.aizistral.enigmaticlegacy.client;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.objects.TransientPlayerData;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketPlayQuote;
+import com.aizistral.enigmaticlegacy.registries.EnigmaticSounds;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Supplier;
 import com.google.common.collect.ImmutableList;
-
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.network.PacketDistributor;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class Quote {
 	private static final Random RANDOM = new Random();
@@ -64,14 +65,14 @@ public class Quote {
 
 	private static Quote lastQuote = null;
 
-	private final SoundEvent sound;
+	private final Supplier<SoundEvent> sound;
 	private final String name;
 	private Subtitles subtitles;
 	private final int id;
 
 	public Quote(String name) {
 		this.name = name;
-		this.sound = SuperpositionHandler.registerSound("quote." + name);
+		this.sound = () -> EnigmaticSounds.getQuote(this.name);
 		this.id = ALL_QUOTES.size();
 
 		ALL_QUOTES.add(this);
@@ -132,7 +133,7 @@ public class Quote {
 	}
 
 	public SoundEvent getSound() {
-		return this.sound;
+		return this.sound.get();
 	}
 
 	public Subtitles getSubtitles() {

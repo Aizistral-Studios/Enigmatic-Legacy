@@ -1676,7 +1676,7 @@ public class EnigmaticEventHandler {
 						arrow.addTag("AB_DEFLECTED:" + arrow.tickCount);
 
 						EnigmaticLegacy.packetInstance.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(player.getX(), player.getY(), player.getZ(), 64.0D, player.level().dimension())), new PacketForceArrowRotations(arrow.getId(), arrow.getYRot(), arrow.getXRot(), arrow.getDeltaMovement().x, arrow.getDeltaMovement().y, arrow.getDeltaMovement().z, arrow.getX(), arrow.getY(), arrow.getZ()));
-						player.level().playSound(null, player.blockPosition(), EnigmaticSounds.DEFLECT, SoundSource.PLAYERS, 1.0F, 0.95F + (float) (Math.random() * 0.1D));
+						player.level().playSound(null, player.blockPosition(), EnigmaticSounds.DEFLECT.get(), SoundSource.PLAYERS, 1.0F, 0.95F + (float) (Math.random() * 0.1D));
 					}
 				} /*else {
 					if (event.getEntity().getTags().contains("enigmaticlegacy.redirected")) {
@@ -2334,7 +2334,7 @@ public class EnigmaticEventHandler {
 				if (event.getAmount() <= EnigmaticItems.THE_CUBE.getDamageLimit(player) && THEY_SEE_ME_ROLLIN.nextDouble() <= 0.35) {
 					event.setCanceled(true);
 					living.hurt(event.getSource(), event.getAmount());
-					player.level().playSound(null, player.blockPosition(), EnigmaticSounds.SWORD_HIT_REJECT, SoundSource.PLAYERS, 1F, 1F);
+					player.level().playSound(null, player.blockPosition(), EnigmaticSounds.SWORD_HIT_REJECT.get(), SoundSource.PLAYERS, 1F, 1F);
 				} else {
 					EnigmaticItems.THE_CUBE.applyRandomEffect(living, false);
 				}

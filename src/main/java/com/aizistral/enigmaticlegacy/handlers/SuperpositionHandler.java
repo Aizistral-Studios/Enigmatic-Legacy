@@ -369,20 +369,6 @@ public class SuperpositionHandler {
 	}
 
 	/**
-	 * Registers a sound in Enigmatic Legacy namespace, for it to be lately defined
-	 * in respective .json file.
-	 *
-	 * @return SoundEvent usable by playSound() methods.
-	 */
-
-	public static SoundEvent registerSound(final String soundName) {
-		ResourceLocation location = new ResourceLocation("enigmaticlegacy", soundName);
-		SoundEvent event = SoundEvent.createVariableRangeEvent(location);
-		ForgeRegistries.SOUND_EVENTS.register(location, event);
-		return event;
-	}
-
-	/**
 	 * Creates and returns simple bounding box of given radius around the entity.
 	 */
 
