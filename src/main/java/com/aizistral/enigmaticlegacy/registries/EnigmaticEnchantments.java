@@ -1,62 +1,60 @@
 package com.aizistral.enigmaticlegacy.registries;
 
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.alchemy.Potion;
+import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.generic.ConfigurableItem;
+import com.aizistral.enigmaticlegacy.enchantments.*;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
+
+import java.util.function.Supplier;
 
 import static net.minecraft.world.entity.EquipmentSlot.*;
 
-import com.aizistral.enigmaticlegacy.api.generic.ConfigurableItem;
-import com.aizistral.enigmaticlegacy.enchantments.*;
-
-public class EnigmaticEnchantments extends AbstractRegistry<Enchantment> {
-	private static final EnigmaticEnchantments INSTANCE = new EnigmaticEnchantments();
+public class EnigmaticEnchantments {
+	private static final DeferredRegister<Enchantment> ENCHANTMENTS =
+			DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, EnigmaticLegacy.MODID);
 
 	@ConfigurableItem("Sharpshooter Enchantment")
-	@ObjectHolder(value = MODID + ":sharpshooter", registryName = "enchantment")
-	public static final SharpshooterEnchantment SHARPSHOOTER = null;
+	public static final RegistryObject<SharpshooterEnchantment> SHARPSHOOTER =
+			register("sharpshooter", () -> new SharpshooterEnchantment(MAINHAND, OFFHAND));
 
 	@ConfigurableItem("Ceaseless Enchantment")
-	@ObjectHolder(value = MODID + ":ceaseless", registryName = "enchantment")
-	public static final CeaselessEnchantment CEASELESS = null;
+	public static final RegistryObject<CeaselessEnchantment> CEASELESS =
+			register("ceaseless", () -> new CeaselessEnchantment(MAINHAND, OFFHAND));
 
 	@ConfigurableItem("Torrent Enchantment")
-	@ObjectHolder(value = MODID + ":torrent", registryName = "enchantment")
-	public static final TorrentEnchantment TORRENT = null;
+	public static final RegistryObject<TorrentEnchantment> TORRENT =
+			register("torrent", () -> new TorrentEnchantment(MAINHAND));
 
 	@ConfigurableItem("Wrath Enchantment")
-	@ObjectHolder(value = MODID + ":wrath", registryName = "enchantment")
-	public static final WrathEnchantment WRATH = null;
+	public static final RegistryObject<WrathEnchantment> WRATH =
+			register("wrath", () -> new WrathEnchantment(MAINHAND));
+
 
 	@ConfigurableItem("Slayer Enchantment")
-	@ObjectHolder(value = MODID + ":slayer", registryName = "enchantment")
-	public static final SlayerEnchantment SLAYER = null;
+	public static final RegistryObject<SlayerEnchantment> SLAYER =
+			register("slayer", () -> new SlayerEnchantment(MAINHAND));
 
 	@ConfigurableItem("Curse of Nemesis")
-	@ObjectHolder(value = MODID + ":nemesis", registryName = "enchantment")
-	public static final NemesisCurse NEMESIS = null;
+	public static final RegistryObject<NemesisCurse> NEMESIS =
+			register("nemesis", () -> new NemesisCurse(MAINHAND));
 
 	@ConfigurableItem("Curse of Eternal Binding")
-	@ObjectHolder(value = MODID + ":eternal_binding", registryName = "enchantment")
-	public static final EternalBindingCurse ETERNAL_BINDING = null;
+	public static final RegistryObject<EternalBindingCurse> ETERNAL_BINDING =
+			register("eternal_binding", () -> new EternalBindingCurse(HEAD, CHEST, LEGS, FEET));
 
 	@ConfigurableItem("Curse of Sorrow")
-	@ObjectHolder(value = MODID + ":sorrow", registryName = "enchantment")
-	public static final SorrowCurse SORROW = null;
+	public static final RegistryObject<SorrowCurse> SORROW =
+			register("sorrow", () -> new SorrowCurse(HEAD, CHEST, LEGS, FEET));
 
-	private EnigmaticEnchantments() {
-		super(ForgeRegistries.ENCHANTMENTS);
-
-		this.register("sharpshooter", () -> new SharpshooterEnchantment(MAINHAND, OFFHAND));
-		this.register("ceaseless", () -> new CeaselessEnchantment(MAINHAND, OFFHAND));
-		this.register("nemesis", () -> new NemesisCurse(MAINHAND));
-		this.register("torrent", () -> new TorrentEnchantment(MAINHAND));
-		this.register("wrath", () -> new WrathEnchantment(MAINHAND));
-		this.register("slayer", () -> new SlayerEnchantment(MAINHAND));
-		this.register("eternal_binding", () -> new EternalBindingCurse(HEAD, CHEST, LEGS, FEET));
-		this.register("sorrow", () -> new SorrowCurse(HEAD, CHEST, LEGS, FEET));
+	public static void registerEnchantments(IEventBus modEventBus) {
+		ENCHANTMENTS.register(modEventBus);
 	}
 
+	private static <T extends Enchantment> RegistryObject<T> register(String name, Supplier<T> enchantment) {
+		return ENCHANTMENTS.register(name, enchantment);
+	}
 }

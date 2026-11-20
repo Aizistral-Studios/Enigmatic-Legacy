@@ -20,6 +20,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 import vazkii.patchouli.api.PatchouliConfigAccess.TextOverflowMode;
 
 public class OmniconfigHandler {
@@ -56,6 +57,10 @@ public class OmniconfigHandler {
 					//System.out.println("Object: " + optionalItem);
 					//System.out.println("Passed object: " + item);
 					//System.out.println("Equal?: " + Objects.equal(item, optionalItem));
+
+					if (optionalItem instanceof RegistryObject<?> registryObject) {
+						optionalItem = registryObject.orElse(null);
+					}
 
 					if (Objects.equal(item, optionalItem) && ITEMS_OPTIONS.get(optionalItemField) != null)
 						//System.out.println("Checks out; returning this boy.");
