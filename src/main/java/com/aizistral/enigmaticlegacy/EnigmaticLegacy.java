@@ -110,7 +110,7 @@ public class EnigmaticLegacy {
 
 		this.loadClass(EnigmaticItems.class);
 		this.loadClass(EnigmaticTiles.class);
-		this.loadClass(EnigmaticMenus.class);
+		EnigmaticMenus.registerMenus(modEventBus);
 		this.loadClass(EnigmaticBlocks.class);
 		EnigmaticSounds.registerSounds(modEventBus);
 		EnigmaticEffects.registerEffects(modEventBus);
@@ -306,7 +306,7 @@ public class EnigmaticLegacy {
 		PROXY.initEntityRendering();
 
 		//MenuScreens.register(PORTABLE_CRAFTER, CraftingScreen::new);
-		MenuScreens.register(EnigmaticMenus.LORE_INSCRIBER_CONTAINER, LoreInscriberScreen::new);
+		MenuScreens.register(EnigmaticMenus.LORE_INSCRIBER_CONTAINER.get(), LoreInscriberScreen::new);
 
 		LOGGER.info("Client setup phase finished successfully.");
 	}

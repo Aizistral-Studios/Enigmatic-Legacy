@@ -51,7 +51,7 @@ public class LoreInscriberContainer extends AbstractContainerMenu {
 	}
 
 	private LoreInscriberContainer(int id, Inventory Inventory, ContainerLevelAccess worldPosCallable) {
-		this(EnigmaticMenus.LORE_INSCRIBER_CONTAINER, id, Inventory, worldPosCallable);
+		this(EnigmaticMenus.LORE_INSCRIBER_CONTAINER.get(), id, Inventory, worldPosCallable);
 	}
 
 	private LoreInscriberContainer(@Nullable MenuType<?> p_i231587_1_, int p_i231587_2_, Inventory playerInv, ContainerLevelAccess p_i231587_4_) {
