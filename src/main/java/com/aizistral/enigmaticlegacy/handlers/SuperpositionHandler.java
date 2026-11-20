@@ -1721,7 +1721,7 @@ public class SuperpositionHandler {
 
 				map.remove(Enchantments.VANISHING_CURSE);
 				int level = map.remove(Enchantments.BINDING_CURSE);
-				map.put(EnigmaticEnchantments.ETERNAL_BINDING, level);
+				map.put(EnigmaticEnchantments.ETERNAL_BINDING.get(), level);
 				EnchantmentHelper.setEnchantments(map, stack);
 			}
 

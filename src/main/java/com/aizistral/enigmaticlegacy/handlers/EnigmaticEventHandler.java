@@ -319,7 +319,7 @@ public class EnigmaticEventHandler {
 	public void onGetProjectile(LivingGetProjectileEvent event) {
 		ItemStack weapon = event.getProjectileWeaponItemStack();
 
-		if (weapon.getItem() instanceof CrossbowItem && weapon.getEnchantmentLevel(EnigmaticEnchantments.CEASELESS) > 0) {
+		if (weapon.getItem() instanceof CrossbowItem && weapon.getEnchantmentLevel(EnigmaticEnchantments.CEASELESS.get()) > 0) {
 			ItemStack arrows = event.getProjectileItemStack();
 
 			if (arrows.isEmpty() && CeaselessEnchantment.allowNoArrow.getValue()) {
@@ -1336,7 +1336,7 @@ public class EnigmaticEventHandler {
 				for (int i = 0; i < player.getInventory().armor.size(); i++) {
 					ItemStack armor = player.getInventory().armor.get(i);
 
-					if (armor.getEnchantmentLevel(EnigmaticEnchantments.ETERNAL_BINDING) > 0) {
+					if (armor.getEnchantmentLevel(EnigmaticEnchantments.ETERNAL_BINDING.get()) > 0) {
 						player.getInventory().armor.set(i, ItemStack.EMPTY);
 						SuperpositionHandler.setPersistentTag(player, "EternallyBoundArmor" + i, armor.serializeNBT());
 					}
@@ -1386,9 +1386,9 @@ public class EnigmaticEventHandler {
 		}
 	}
 
-							   @SubscribeEvent
+    @SubscribeEvent
 	public void onCurioDrops(DropRulesEvent event) {
-		event.addOverride(stack -> stack.getEnchantmentLevel(EnigmaticEnchantments.ETERNAL_BINDING) > 0,
+		event.addOverride(stack -> stack.getEnchantmentLevel(EnigmaticEnchantments.ETERNAL_BINDING.get()) > 0,
 				DropRule.ALWAYS_KEEP);
 
 		if (event.getEntity() instanceof ServerPlayer player) {
@@ -2043,12 +2043,12 @@ public class EnigmaticEventHandler {
 				int torrentLevel = 0;
 				int wrathLevel = 0;
 
-				if ((torrentLevel = mainhandStack.getEnchantmentLevel(EnigmaticEnchantments.TORRENT)) > 0) {
-					event.setAmount(event.getAmount() + EnigmaticEnchantments.TORRENT.bonusDamageByCreature(attacker, event.getEntity(), torrentLevel));
+				if ((torrentLevel = mainhandStack.getEnchantmentLevel(EnigmaticEnchantments.TORRENT.get())) > 0) {
+					event.setAmount(event.getAmount() + EnigmaticEnchantments.TORRENT.get().bonusDamageByCreature(attacker, event.getEntity(), torrentLevel));
 				}
 
-				if ((wrathLevel = mainhandStack.getEnchantmentLevel(EnigmaticEnchantments.WRATH)) > 0) {
-					event.setAmount(event.getAmount() + EnigmaticEnchantments.WRATH.bonusDamageByCreature(attacker, event.getEntity(), wrathLevel));
+				if ((wrathLevel = mainhandStack.getEnchantmentLevel(EnigmaticEnchantments.WRATH.get())) > 0) {
+					event.setAmount(event.getAmount() + EnigmaticEnchantments.WRATH.get().bonusDamageByCreature(attacker, event.getEntity(), wrathLevel));
 				}
 			}
 		}
@@ -2137,8 +2137,8 @@ public class EnigmaticEventHandler {
 				event.setAmount(event.getAmount() + bonusDamage);
 
 				int slayerLevel = 0;
-				if ((slayerLevel = mainhandStack.getEnchantmentLevel(EnigmaticEnchantments.SLAYER)) > 0) {
-					event.setAmount(event.getAmount() + EnigmaticEnchantments.SLAYER.bonusDamageByCreature(player, event.getEntity(), slayerLevel));
+				if ((slayerLevel = mainhandStack.getEnchantmentLevel(EnigmaticEnchantments.SLAYER.get())) > 0) {
+					event.setAmount(event.getAmount() + EnigmaticEnchantments.SLAYER.get().bonusDamageByCreature(player, event.getEntity(), slayerLevel));
 
 					if (event.getEntity() instanceof Monster) {
 						int i = 20 + player.getRandom().nextInt(10 * slayerLevel);
@@ -2348,11 +2348,11 @@ public class EnigmaticEventHandler {
 			int sorrowLevel = 0;
 
 			for (ItemStack armor : player.getInventory().armor) {
-				sorrowLevel += armor.getEnchantmentLevel(EnigmaticEnchantments.SORROW);
+				sorrowLevel += armor.getEnchantmentLevel(EnigmaticEnchantments.SORROW.get());
 			}
 
 			for (int i = 0; i < sorrowLevel; i++) {
-				EnigmaticEnchantments.SORROW.maybeApplyDebuff(player, event.getAmount());
+				EnigmaticEnchantments.SORROW.get().maybeApplyDebuff(player, event.getAmount());
 			}
 		}
 	}
