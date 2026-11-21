@@ -425,7 +425,7 @@ public class EnigmaticItems extends AbstractRegistry<Item> {
 
 	@ConfigurableItem("Deception Amulet")
 	@ObjectHolder(value = MODID + ":deception_amulet", registryName = "item")
-	public static final Item DECEPTION_AMULET = null;
+	public static final DeceptionAmulet DECEPTION_AMULET = null;
 
 	@ConfigurableItem("The Judgement")
 	@ObjectHolder(value = MODID + ":the_judgement", registryName = "item")

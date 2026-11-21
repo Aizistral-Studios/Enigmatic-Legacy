@@ -1470,7 +1470,7 @@ public class EnigmaticEventHandler {
 
 			ItemStack deceptionAmulet = SuperpositionHandler.getCurioStack(player, EnigmaticItems.DECEPTION_AMULET);
 			if (deceptionAmulet != null && !deceptionAmulet.isEmpty()) {
-				if (DeceptionAmulet.tryActivate(player, deceptionAmulet)) {
+				if (EnigmaticItems.DECEPTION_AMULET.tryActivate(player, deceptionAmulet)) {
 					event.setCanceled(true);
 				}
 			}

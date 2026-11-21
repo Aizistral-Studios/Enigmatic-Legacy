@@ -1,6 +1,7 @@
 package com.aizistral.enigmaticlegacy.items;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.api.generic.SubscribeConfig;
 import com.aizistral.enigmaticlegacy.api.items.ICursed;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.ItemLoreHelper;
@@ -10,6 +11,8 @@ import com.aizistral.enigmaticlegacy.packets.clients.PacketPortalParticles;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketSpawnFakeCorpse;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticEffects;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
+import com.aizistral.omniconfig.wrappers.Omniconfig;
+import com.aizistral.omniconfig.wrappers.OmniconfigWrapper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
@@ -21,10 +24,7 @@ import net.minecraft.server.players.PlayerList;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.item.ItemCooldowns;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.scores.Team;
@@ -33,13 +33,40 @@ import net.minecraftforge.registries.ForgeRegistries;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 public class DeceptionAmulet extends ItemBaseCurio implements ICursed {
 
-	private static final int EFFECT_DURATION = 5 * 60 * 20;
-	private static final int COOLDOWN = 10 * 60 * 20;
+	public static Omniconfig.IntParameter amuletCooldown;
+	public static Omniconfig.IntParameter effectDuration;
+	public static Omniconfig.PerhapsParameter restoredHealthPercent;
+	public static Omniconfig.EnumParameter<FakeDrop> fakeDropType;
 
-	private static final float RESTORED_HEALTH_PERCENT = 0.15F;
+	@SubscribeConfig
+	public static void onConfig(OmniconfigWrapper builder) {
+		builder.pushPrefix("DeceptionAmulet");
+
+		amuletCooldown = builder
+				.comment("Cooldown of the Amulet of Deception's death-cheating ability. Measured in minutes.")
+				.max(30)
+				.getInt("Cooldown", 10);
+
+		effectDuration = builder
+				.comment("Duration of the Imperceptible effect granted when the Amulet of Deception triggers. Measured in minutes.")
+				.max(20)
+				.getInt("EffectDuration", 5);
+
+		restoredHealthPercent = builder
+				.comment("Percentage of max health restored when the amulet cheats death.")
+				.max(100)
+				.getPerhaps("RestoredHealth", 15);
+
+		fakeDropType = builder
+				.comment("Fake item dropped visually on a fake death to deceive nearby players.")
+				.getEnum("FakeDropType", FakeDrop.EXTRADIMENSIONAL_VESSEL);
+
+		builder.popPrefix();
+	}
 
 	public DeceptionAmulet() {
 		super(ItemBase.getDefaultProperties().rarity(Rarity.EPIC).stacksTo(1).fireResistant().durability(2));
@@ -49,8 +76,8 @@ public class DeceptionAmulet extends ItemBaseCurio implements ICursed {
 	public void appendHoverText(ItemStack stack, Level worldIn, List<Component> list, TooltipFlag flagIn) {
 		if (Screen.hasShiftDown()) {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.deceptionAmulet1");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.deceptionAmulet2");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.deceptionAmulet3");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.deceptionAmulet2", ChatFormatting.GOLD, restoredHealthPercent.getValue().asPercentage() + "%");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.deceptionAmulet3", ChatFormatting.GOLD, effectDuration.getValue() + " minutes");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.deceptionAmulet4");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.deceptionAmulet5");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
@@ -59,7 +86,7 @@ public class DeceptionAmulet extends ItemBaseCurio implements ICursed {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.deceptionAmulet8");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.deceptionAmulet9");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.void");
-			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.deceptionAmulet10");
+			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.deceptionAmulet10", ChatFormatting.GOLD, amuletCooldown.getValue() + " minutes");
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.deceptionAmulet11");
 		} else {
 			ItemLoreHelper.addLocalizedString(list, "tooltip.enigmaticlegacy.holdShift");
@@ -69,24 +96,46 @@ public class DeceptionAmulet extends ItemBaseCurio implements ICursed {
 		ItemLoreHelper.indicateCursedOnesOnly(list);
 	}
 
+	public enum FakeDrop {
+		NONE(() -> Items.AIR),
+		SOUL_CRYSTAL(() -> EnigmaticItems.SOUL_CRYSTAL),
+		EXTRADIMENSIONAL_VESSEL(() -> EnigmaticItems.STORAGE_CRYSTAL);
+
+		private final Supplier<Item> display;
+
+		FakeDrop(Supplier<Item> display) {
+			this.display = display;
+		}
+
+		public ItemStack createStack() {
+			Item display = this.display.get();
+			return display != null ? display.getDefaultInstance() : ItemStack.EMPTY;
+		}
+
+		@Override
+		public String toString() {
+			return this.name();
+		}
+	}
+
 	public static boolean tryActivate(ServerPlayer player, ItemStack amulet) {
 		ItemCooldowns cooldowns = player.getCooldowns();
 		boolean activated = SuperpositionHandler.isTheCursedOne(player) && !cooldowns.isOnCooldown(EnigmaticItems.DECEPTION_AMULET);
 
 		if (activated) {
 			activate(player, amulet);
-			cooldowns.addCooldown(EnigmaticItems.DECEPTION_AMULET, COOLDOWN);
+			cooldowns.addCooldown(EnigmaticItems.DECEPTION_AMULET, minutesToTicks(amuletCooldown.getValue()));
 		}
 
 		return activated;
 	}
 
 	private static void activate(ServerPlayer player, ItemStack amulet) {
-		player.setHealth(player.getMaxHealth() * RESTORED_HEALTH_PERCENT);
+		player.setHealth((float) (player.getMaxHealth() * restoredHealthPercent.getValue().asMultiplier()));
 
 		player.addEffect(new MobEffectInstance(
 				EnigmaticEffects.IMPERCEPTIBLE,
-				EFFECT_DURATION,
+				minutesToTicks(effectDuration.getValue()),
 				0,
 				false,
 				false,
@@ -130,7 +179,7 @@ public class DeceptionAmulet extends ItemBaseCurio implements ICursed {
 
 	private static void spawnFakeCorpse(ServerPlayer player) {
 		EnigmaticLegacy.packetInstance.send(PacketDistributor.TRACKING_ENTITY.with(() -> player),
-				new PacketSpawnFakeCorpse(player)
+				new PacketSpawnFakeCorpse(player, fakeDropType.getValue().createStack())
 		);
 	}
 
@@ -138,9 +187,7 @@ public class DeceptionAmulet extends ItemBaseCurio implements ICursed {
 		MinecraftServer server = player.getServer();
 		if (server == null) return;
 
-		Level level = player.level();
-
-		boolean flag = level.getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES);
+		boolean flag = player.level().getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES);
 
 		// Copy-paste from the mojunk code (with slight changes) because they
 		// didn't separate it with other method and just slapped it in to ServerPlayer#die method
@@ -165,5 +212,9 @@ public class DeceptionAmulet extends ItemBaseCurio implements ICursed {
 		} else {
 			playerList.broadcastSystemMessage(component, false);
 		}
+	}
+
+	private static int minutesToTicks(int minutes) {
+		return minutes * 60 * 20;
 	}
 }
