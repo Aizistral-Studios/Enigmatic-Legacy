@@ -93,7 +93,7 @@ public class MixinPlayerList {
 		boolean usedAnchorCharge = false;
 		if (optional.isPresent()) {
 			BlockState respawnState = newLevel.getBlockState(pos);
-			boolean isAnchor = respawnState.is(Blocks.RESPAWN_ANCHOR) || respawnState.is(EnigmaticBlocks.END_ANCHOR);
+			boolean isAnchor = respawnState.is(Blocks.RESPAWN_ANCHOR) || respawnState.is(EnigmaticBlocks.END_ANCHOR.get());
 			Vec3 vec3 = optional.get();
 			float f1;
 			if (!respawnState.is(BlockTags.BEDS) && !isAnchor) {

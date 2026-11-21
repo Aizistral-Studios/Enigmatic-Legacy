@@ -67,9 +67,9 @@ public class EnigmaticPotions {
 		STRONG_HASTE = new AdvancedPotion("strong_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 1800, 1));
 		ULTIMATE_HASTE = new AdvancedPotion("ultimate_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 9600, 1));
 
-		MOLTEN_HEART = new AdvancedPotion("molten_heart", new MobEffectInstance(EnigmaticEffects.MOLTEN_HEART, 3600));
-		LONG_MOLTEN_HEART = new AdvancedPotion("long_molten_heart", new MobEffectInstance(EnigmaticEffects.MOLTEN_HEART, 9600));
-		ULTIMATE_MOLTEN_HEART = new AdvancedPotion("ultimate_molten_heart", new MobEffectInstance(EnigmaticEffects.MOLTEN_HEART, 19200));
+		MOLTEN_HEART = new AdvancedPotion("molten_heart", new MobEffectInstance(EnigmaticEffects.MOLTEN_HEART.get(), 3600));
+		LONG_MOLTEN_HEART = new AdvancedPotion("long_molten_heart", new MobEffectInstance(EnigmaticEffects.MOLTEN_HEART.get(), 9600));
+		ULTIMATE_MOLTEN_HEART = new AdvancedPotion("ultimate_molten_heart", new MobEffectInstance(EnigmaticEffects.MOLTEN_HEART.get(), 19200));
 
 		EMPTY_POTION = new AdvancedPotion("empty");
 

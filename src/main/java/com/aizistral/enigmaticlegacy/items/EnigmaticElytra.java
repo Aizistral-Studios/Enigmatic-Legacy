@@ -136,7 +136,7 @@ public class EnigmaticElytra extends ItemBaseCurio implements IBindable {
 
 	@Override
 	public boolean isValidRepairItem(ItemStack repairedItem, ItemStack material) {
-		return material.is(EnigmaticItems.ETHERIUM_INGOT);
+		return material.is(EnigmaticItems.ETHERIUM_INGOT.get());
 	}
 
 	@Override

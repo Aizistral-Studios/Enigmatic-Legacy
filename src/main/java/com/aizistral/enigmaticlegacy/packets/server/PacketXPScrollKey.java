@@ -37,9 +37,9 @@ public class PacketXPScrollKey {
 		ctx.get().enqueueWork(() -> {
 			ServerPlayer playerServ = ctx.get().getSender();
 
-			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticItems.XP_SCROLL)) {
-				ItemStack scroll = SuperpositionHandler.getCurioStack(playerServ, EnigmaticItems.XP_SCROLL);
-				EnigmaticItems.XP_SCROLL.trigger(playerServ.level(), scroll, playerServ, InteractionHand.MAIN_HAND, false);
+			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticItems.XP_SCROLL.get())) {
+				ItemStack scroll = SuperpositionHandler.getCurioStack(playerServ, EnigmaticItems.XP_SCROLL.get());
+				EnigmaticItems.XP_SCROLL.get().trigger(playerServ.level(), scroll, playerServ, InteractionHand.MAIN_HAND, false);
 			}
 
 		});

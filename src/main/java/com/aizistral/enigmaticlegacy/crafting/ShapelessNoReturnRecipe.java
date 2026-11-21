@@ -41,7 +41,7 @@ public class ShapelessNoReturnRecipe extends ShapelessRecipe {
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return EnigmaticRecipes.SHAPELESS_NO_RETURN;
+		return EnigmaticRecipes.SHAPELESS_NO_RETURN.get();
 	}
 
 	public static class Serialize implements RecipeSerializer<ShapelessNoReturnRecipe> {

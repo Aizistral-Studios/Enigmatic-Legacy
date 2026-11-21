@@ -41,7 +41,7 @@ public class MendingMixtureRepairRecipe extends CustomRecipe {
 
 		if (stackList.size() == 2)
 			if (stackList.get(0).isDamageableItem() || stackList.get(1).isDamageableItem())
-				if (stackList.get(0).getItem() == EnigmaticItems.MENDING_MIXTURE || stackList.get(1).getItem() == EnigmaticItems.MENDING_MIXTURE) {
+				if (stackList.get(0).getItem() == EnigmaticItems.MENDING_MIXTURE.get() || stackList.get(1).getItem() == EnigmaticItems.MENDING_MIXTURE.get()) {
 					ItemStack tool = stackList.get(0).isDamageableItem() ? stackList.get(0).copy() : stackList.get(1).copy();
 
 					tool.setDamageValue(0);
@@ -65,7 +65,7 @@ public class MendingMixtureRepairRecipe extends CustomRecipe {
 
 		if (stackList.size() == 2)
 			if (stackList.get(0).isDamageableItem() || stackList.get(1).isDamageableItem())
-				if (stackList.get(0).getItem() == EnigmaticItems.MENDING_MIXTURE || stackList.get(1).getItem() == EnigmaticItems.MENDING_MIXTURE)
+				if (stackList.get(0).getItem() == EnigmaticItems.MENDING_MIXTURE.get() || stackList.get(1).getItem() == EnigmaticItems.MENDING_MIXTURE.get())
 					return true;
 
 		return false;

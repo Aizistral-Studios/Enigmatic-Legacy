@@ -38,7 +38,7 @@ public class EtheriumArmor extends ArmorItem implements ICreativeTabMember {
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticTabs.MAIN;
+		return EnigmaticTabs.MAIN.get();
 	}
 
 	@Override

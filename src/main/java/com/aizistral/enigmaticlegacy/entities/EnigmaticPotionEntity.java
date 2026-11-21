@@ -43,16 +43,16 @@ public class EnigmaticPotionEntity extends ThrowableItemProjectile implements It
 	private static final EntityDataAccessor<ItemStack> ITEM = SynchedEntityData.defineId(
 			EnigmaticPotionEntity.class, EntityDataSerializers.ITEM_STACK);
 
-	public EnigmaticPotionEntity(EntityType<EnigmaticPotionEntity> type, Level world) {
+	public EnigmaticPotionEntity(EntityType<? extends EnigmaticPotionEntity> type, Level world) {
 		super(type, world);
 	}
 
 	public EnigmaticPotionEntity(Level world, LivingEntity entity) {
-		super(EnigmaticEntities.ENIGMATIC_POTION, entity, world);
+		super(EnigmaticEntities.ENIGMATIC_POTION.get(), entity, world);
 	}
 
 	public EnigmaticPotionEntity(Level world, double x, double y, double z) {
-		super(EnigmaticEntities.ENIGMATIC_POTION, x, y, z, world);
+		super(EnigmaticEntities.ENIGMATIC_POTION.get(), x, y, z, world);
 	}
 
 	@Override
@@ -181,7 +181,7 @@ public class EnigmaticPotionEntity extends ThrowableItemProjectile implements It
 	}
 
 	private boolean isLingering() {
-		return this.getItem().getItem() == EnigmaticItems.ULTIMATE_POTION_LINGERING;
+		return this.getItem().getItem() == EnigmaticItems.ULTIMATE_POTION_LINGERING.get();
 	}
 
 	/**

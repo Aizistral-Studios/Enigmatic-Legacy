@@ -70,35 +70,35 @@ public class SpecialLootModifier extends LootModifier {
 
 		if (entity instanceof ServerPlayer player) {
 			if (this.isVanillaChest(context)) {
-				if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ENIGMATIC_EYE))
+				if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ENIGMATIC_EYE.get()))
 					if (!SuperpositionHandler.hasPersistentTag(player, "LootedArchitectEye")) {
 						SuperpositionHandler.setPersistentBoolean(player, "LootedArchitectEye", true);
-						generatedLoot.add(new ItemStack(EnigmaticItems.ENIGMATIC_EYE, 1));
+						generatedLoot.add(new ItemStack(EnigmaticItems.ENIGMATIC_EYE.get(), 1));
 					}
 
 				if (SuperpositionHandler.hasPersistentTag(player, "LootedIchorBottle")) {
-					generatedLoot.removeIf(stack -> stack.is(EnigmaticItems.ICHOR_BOTTLE));
-				} else if (generatedLoot.stream().anyMatch(stack -> stack.is(EnigmaticItems.ICHOR_BOTTLE))) {
+					generatedLoot.removeIf(stack -> stack.is(EnigmaticItems.ICHOR_BOTTLE.get()));
+				} else if (generatedLoot.stream().anyMatch(stack -> stack.is(EnigmaticItems.ICHOR_BOTTLE.get()))) {
 					SuperpositionHandler.setPersistentBoolean(player, "LootedIchorBottle", true);
 				}
 			}
 
-			if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ASTRAL_FRUIT))
+			if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ASTRAL_FRUIT.get()))
 				if ("minecraft:chests/end_city_treasure".equals(String.valueOf(context.getQueriedLootTableId()))) {
 					if (!SuperpositionHandler.hasPersistentTag(player, "LootedFirstEndCityChest")) {
 						SuperpositionHandler.setPersistentBoolean(player, "LootedFirstEndCityChest", true);
 
 						if (SuperpositionHandler.isTheCursedOne(player)) {
-							generatedLoot.add(new ItemStack(EnigmaticItems.ASTRAL_FRUIT, 1));
+							generatedLoot.add(new ItemStack(EnigmaticItems.ASTRAL_FRUIT.get(), 1));
 						}
 					}
 				}
 
-			if (OmniconfigHandler.isItemEnabled(EnigmaticItems.EARTH_HEART))
+			if (OmniconfigHandler.isItemEnabled(EnigmaticItems.EARTH_HEART.get()))
 				if (SUSPICIOUS_TABLES.stream().anyMatch(table -> table.equals(context.getQueriedLootTableId()))) {
 					if (context.getRandom().nextDouble() < earthHeartChance.getValue()) {
 						generatedLoot.clear();
-						generatedLoot.add(new ItemStack(EnigmaticItems.EARTH_HEART, 1));
+						generatedLoot.add(new ItemStack(EnigmaticItems.EARTH_HEART.get(), 1));
 					}
 				}
 		}

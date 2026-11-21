@@ -26,7 +26,7 @@ public class CursedShapedRecipe extends ShapedRecipe {
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return EnigmaticRecipes.CURSED_SHAPED;
+		return EnigmaticRecipes.CURSED_SHAPED.get();
 	}
 
 	@Override

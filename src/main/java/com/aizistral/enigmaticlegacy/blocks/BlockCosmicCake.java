@@ -100,7 +100,7 @@ public class BlockCosmicCake extends CakeBlock {
 		if ((bites = state.getValue(BITES)) > 0) {
 			level.setBlock(pos, state.setValue(BITES, bites - 1), 3);
 			level.levelEvent(LevelEvent.PARTICLES_DESTROY_BLOCK, pos, Block.getId(state));
-			level.playSound(null, pos, EnigmaticSounds.EAT_REVERSE, SoundSource.BLOCKS, 1F, 0.5F + (float) Math.random() * 0.5F);
+			level.playSound(null, pos, EnigmaticSounds.EAT_REVERSE.get(), SoundSource.BLOCKS, 1F, 0.5F + (float) Math.random() * 0.5F);
 		}
 	}
 

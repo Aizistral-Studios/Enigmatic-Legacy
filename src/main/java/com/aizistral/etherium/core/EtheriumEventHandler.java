@@ -25,11 +25,13 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+import java.util.function.Supplier;
+
 public class EtheriumEventHandler {
 	private final IEtheriumConfig config;
-	private final Item etheriumOre;
+	private final Supplier<Item> etheriumOre;
 
-	public EtheriumEventHandler(IEtheriumConfig config, Item etheriumOre) {
+	public EtheriumEventHandler(IEtheriumConfig config, Supplier<Item> etheriumOre) {
 		this.config = config;
 		this.etheriumOre = etheriumOre;
 	}
@@ -86,7 +88,7 @@ public class EtheriumEventHandler {
 
 		if (event.getName().equals(BuiltInLootTables.END_CITY_TREASURE)) {
 			LootPool epic = constructLootPool("etherium", -11F, 2F,
-					LootItem.lootTableItem(this.etheriumOre)
+					LootItem.lootTableItem(this.etheriumOre.get())
 					.setWeight(60)
 					.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2F)))
 					);

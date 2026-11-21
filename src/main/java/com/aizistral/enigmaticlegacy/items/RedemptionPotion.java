@@ -39,12 +39,12 @@ public class RedemptionPotion extends ItemBasePotion {
 
 	@Override
 	public void onConsumed(Level worldIn, Player player, ItemStack potion) {
-		EnigmaticItems.FORBIDDEN_FRUIT.defineConsumedFruit(player, false);
+		EnigmaticItems.FORBIDDEN_FRUIT.get().defineConsumedFruit(player, false);
 	}
 
 	@Override
 	public boolean canDrink(Level world, Player player, ItemStack potion) {
-		return EnigmaticItems.FORBIDDEN_FRUIT.haveConsumedFruit(player);
+		return EnigmaticItems.FORBIDDEN_FRUIT.get().haveConsumedFruit(player);
 	}
 
 

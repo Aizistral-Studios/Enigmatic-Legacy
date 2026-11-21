@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 public class CosmicCake extends GenericBlockItem {
 
 	public CosmicCake() {
-		super(EnigmaticBlocks.COSMIC_CAKE, getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC));
+		super(EnigmaticBlocks.COSMIC_CAKE.get(), getDefaultProperties().stacksTo(1).rarity(Rarity.EPIC));
 	}
 
 	@Override

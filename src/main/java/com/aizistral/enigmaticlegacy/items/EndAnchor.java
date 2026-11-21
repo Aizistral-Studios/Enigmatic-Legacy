@@ -62,7 +62,7 @@ public class EndAnchor extends GenericBlockItem {
 	}
 
 	public EndAnchor() {
-		super(EnigmaticBlocks.END_ANCHOR, getDefaultProperties().stacksTo(1).fireResistant().rarity(Rarity.EPIC));
+		super(EnigmaticBlocks.END_ANCHOR.get(), getDefaultProperties().stacksTo(1).fireResistant().rarity(Rarity.EPIC));
 	}
 
 	@Override

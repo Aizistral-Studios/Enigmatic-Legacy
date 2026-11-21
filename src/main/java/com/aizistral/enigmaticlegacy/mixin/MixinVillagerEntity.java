@@ -22,7 +22,7 @@ public class MixinVillagerEntity {
 		if (forgottenObject instanceof Villager) {
 			Villager villager = (Villager) forgottenObject;
 
-			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.AVARICE_SCROLL)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.AVARICE_SCROLL.get())) {
 				for (MerchantOffer trade : villager.getOffers()) {
 					double discountValue = 0.35;
 					int discount = (int) Math.floor(discountValue * trade.getBaseCostA().getCount());

@@ -127,12 +127,12 @@ public class EnigmaticAmulet extends ItemBaseCurio {
 	}
 
 	public boolean hasColor(Player player, AmuletColor color) {
-		if (SuperpositionHandler.hasCurio(player, EnigmaticItems.ASCENSION_AMULET))
+		if (SuperpositionHandler.hasCurio(player, EnigmaticItems.ASCENSION_AMULET.get()))
 			return true;
 
-		ItemStack enigmaticAmulet = SuperpositionHandler.getCurioStack(player, EnigmaticItems.ENIGMATIC_AMULET);
+		ItemStack enigmaticAmulet = SuperpositionHandler.getCurioStack(player, EnigmaticItems.ENIGMATIC_AMULET.get());
 
-		if ((enigmaticAmulet != null) && (EnigmaticItems.ENIGMATIC_AMULET.getColor(enigmaticAmulet) == color))
+		if ((enigmaticAmulet != null) && (EnigmaticItems.ENIGMATIC_AMULET.get().getColor(enigmaticAmulet) == color))
 			return true;
 		else
 			return false;

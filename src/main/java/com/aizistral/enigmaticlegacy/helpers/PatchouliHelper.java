@@ -18,7 +18,7 @@ public class PatchouliHelper {
 	}
 
 	public static Book getAknowledgment() {
-		return PatchouliHelper.getBook(ForgeRegistries.ITEMS.getKey(EnigmaticItems.THE_ACKNOWLEDGMENT));
+		return PatchouliHelper.getBook(ForgeRegistries.ITEMS.getKey(EnigmaticItems.THE_ACKNOWLEDGMENT.get()));
 	}
 
 	private static void setEntryState(ResourceLocation entryLocation, boolean read) {

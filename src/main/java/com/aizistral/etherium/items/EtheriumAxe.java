@@ -52,7 +52,7 @@ public class EtheriumAxe extends AxeItem implements IEtheriumTool, ICreativeTabM
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticTabs.MAIN;
+		return EnigmaticTabs.MAIN.get();
 	}
 
 	@Override

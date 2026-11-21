@@ -1,13 +1,5 @@
 package com.aizistral.enigmaticlegacy.proxy;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
-import java.util.WeakHashMap;
-
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.client.QuoteHandler;
 import com.aizistral.enigmaticlegacy.client.fx.PermanentItemPickupParticle;
@@ -23,14 +15,12 @@ import com.aizistral.enigmaticlegacy.registries.EnigmaticEntities;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticItems;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticTiles;
 import com.aizistral.etherium.client.ShieldAuraLayer;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.client.gui.screens.GenericDirtMessageScreen;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.client.gui.screens.worldselection.SelectWorldScreen;
 import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -45,7 +35,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -65,6 +54,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import java.lang.ref.WeakReference;
+import java.util.*;
 
 public class ClientProxy extends CommonProxy {
 	private static final Random RANDOM = new Random();
@@ -123,7 +115,7 @@ public class ClientProxy extends CommonProxy {
 		Entity entity = player.level().getEntity(entityID);
 
 		if (entity != null) {
-			Item item = reviveType == 0 ? EnigmaticItems.COSMIC_SCROLL : EnigmaticItems.THE_CUBE;
+			Item item = reviveType == 0 ? EnigmaticItems.COSMIC_SCROLL.get() : EnigmaticItems.THE_CUBE.get();
 			int i = 40;
 			Minecraft.getInstance().particleEngine.createTrackingEmitter(entity, ParticleTypes.TOTEM_OF_UNDYING, 30);
 
@@ -199,10 +191,10 @@ public class ClientProxy extends CommonProxy {
 
 	@OnlyIn(Dist.CLIENT)
 	public void onClientSetup(FMLClientSetupEvent event) {
-		this.registerBlockingProperty(EnigmaticItems.INFERNAL_SHIELD);
-		this.registerBlockingProperty(EnigmaticItems.ELDRITCH_PAN);
+		this.registerBlockingProperty(EnigmaticItems.INFERNAL_SHIELD.get());
+		this.registerBlockingProperty(EnigmaticItems.ELDRITCH_PAN.get());
 
-		ItemProperties.register(EnigmaticItems.THE_INFINITUM, new ResourceLocation(EnigmaticLegacy.MODID, "the_infinitum_open"), (stack, world, entity, seed) -> {
+		ItemProperties.register(EnigmaticItems.THE_INFINITUM.get(), new ResourceLocation(EnigmaticLegacy.MODID, "the_infinitum_open"), (stack, world, entity, seed) -> {
 			if (entity instanceof Player player) {
 				for (InfinitumCounterEntry entry : this.theInfinitumHoldTicks) {
 					if (entry.getPlayer() == player && entry.getStack() == stack)
@@ -221,7 +213,7 @@ public class ClientProxy extends CommonProxy {
 			return 0;
 		});
 
-		BlockEntityRenderers.register(EnigmaticTiles.END_ANCHOR, EndAnchorRenderer::new);
+		BlockEntityRenderers.register(EnigmaticTiles.END_ANCHOR.get(), EndAnchorRenderer::new);
 	}
 
 	@Override
@@ -275,9 +267,9 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void initEntityRendering() {
-		EntityRenderers.register(EnigmaticEntities.PERMANENT_ITEM_ENTITY, renderManager -> new PermanentItemRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
-		EntityRenderers.register(EnigmaticEntities.ENIGMATIC_POTION, ThrownItemRenderer::new);
-		EntityRenderers.register(EnigmaticEntities.ULTIMATE_WITHER_SKULL, UltimateWitherSkullRenderer::new);
+		EntityRenderers.register(EnigmaticEntities.PERMANENT_ITEM_ENTITY.get(), renderManager -> new PermanentItemRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
+		EntityRenderers.register(EnigmaticEntities.ENIGMATIC_POTION.get(), ThrownItemRenderer::new);
+		EntityRenderers.register(EnigmaticEntities.ULTIMATE_WITHER_SKULL.get(), UltimateWitherSkullRenderer::new);
 	}
 
 	@Override

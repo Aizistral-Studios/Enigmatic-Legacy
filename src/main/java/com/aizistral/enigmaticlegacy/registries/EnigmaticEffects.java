@@ -1,36 +1,31 @@
 package com.aizistral.enigmaticlegacy.registries;
 
-import com.aizistral.enigmaticlegacy.api.generic.ModRegistry;
-import com.aizistral.enigmaticlegacy.effects.*;
-import com.aizistral.enigmaticlegacy.gui.containers.LoreInscriberContainer;
-
+import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
+import com.aizistral.enigmaticlegacy.effects.BlazingStrengthEffect;
+import com.aizistral.enigmaticlegacy.effects.GrowingBloodlustEffect;
+import com.aizistral.enigmaticlegacy.effects.GrowingHungerEffect;
+import com.aizistral.enigmaticlegacy.effects.MoltenHeartEffect;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 
-public class EnigmaticEffects extends AbstractRegistry<MobEffect> {
-	private static final EnigmaticEffects INSTANCE = new EnigmaticEffects();
+import java.util.function.Supplier;
 
-	@ObjectHolder(value = MODID + ":blazing_strength", registryName = "mob_effect")
-	public static final BlazingStrengthEffect BLAZING_STRENGTH = null;
+public class EnigmaticEffects {
+	private static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, EnigmaticLegacy.MODID);
 
-	@ObjectHolder(value = MODID + ":molten_heart", registryName = "mob_effect")
-	public static final MoltenHeartEffect MOLTEN_HEART = null;
+	public static final RegistryObject<BlazingStrengthEffect> BLAZING_STRENGTH = register("blazing_strength", BlazingStrengthEffect::new);
+	public static final RegistryObject<MoltenHeartEffect> MOLTEN_HEART = register("molten_heart", MoltenHeartEffect::new);
+	public static final RegistryObject<GrowingHungerEffect> GROWING_HUNGER = register("growing_hunger", GrowingHungerEffect::new);
+	public static final RegistryObject<GrowingBloodlustEffect> GROWING_BLOODLUST = register("growing_bloodlust", GrowingBloodlustEffect::new);
 
-	@ObjectHolder(value = MODID + ":growing_hunger", registryName = "mob_effect")
-	public static final GrowingHungerEffect GROWING_HUNGER = null;
-
-	@ObjectHolder(value = MODID + ":growing_bloodlust", registryName = "mob_effect")
-	public static final GrowingBloodlustEffect GROWING_BLOODLUST = null;
-
-	private EnigmaticEffects() {
-		super(ForgeRegistries.MOB_EFFECTS);
-		this.register("blazing_strength", BlazingStrengthEffect::new);
-		this.register("molten_heart", MoltenHeartEffect::new);
-		this.register("growing_hunger", GrowingHungerEffect::new);
-		this.register("growing_bloodlust", GrowingBloodlustEffect::new);
+	public static void registerEffects(IEventBus modEventBus) {
+		MOB_EFFECTS.register(modEventBus);
 	}
 
+	private static <T extends MobEffect> RegistryObject<T> register(String name, Supplier<T> effect) {
+		return MOB_EFFECTS.register(name, effect);
+	}
 }

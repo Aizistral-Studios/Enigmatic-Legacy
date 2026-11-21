@@ -43,7 +43,7 @@ public class OblivionStoneCombineRecipe extends CustomRecipe {
 			ItemStack checkedItemStack = inv.getItem(i);
 
 			if (!checkedItemStack.isEmpty()) {
-				if (checkedItemStack.getItem() == EnigmaticItems.VOID_STONE) {
+				if (checkedItemStack.getItem() == EnigmaticItems.VOID_STONE.get()) {
 					if (voidStone == null) {
 						voidStone = checkedItemStack;
 					} else
@@ -89,7 +89,7 @@ public class OblivionStoneCombineRecipe extends CustomRecipe {
 			return returnedStack;
 
 		} else if (voidStone != null && stackList.size() == 0) {
-			ItemStack returnedStack = new ItemStack(EnigmaticItems.VOID_STONE, 1);
+			ItemStack returnedStack = new ItemStack(EnigmaticItems.VOID_STONE.get(), 1);
 			returnedStack.setTag(voidStone.getOrCreateTag().copy());
 			returnedStack.removeTagKey("SupersolidID");
 			return returnedStack;
@@ -106,7 +106,7 @@ public class OblivionStoneCombineRecipe extends CustomRecipe {
 			ItemStack checkedItemStack = inv.getItem(i);
 
 			if (!checkedItemStack.isEmpty()) {
-				if (checkedItemStack.getItem() == EnigmaticItems.VOID_STONE) {
+				if (checkedItemStack.getItem() == EnigmaticItems.VOID_STONE.get()) {
 					if (voidStone == null) {
 						voidStone = checkedItemStack;
 					} else

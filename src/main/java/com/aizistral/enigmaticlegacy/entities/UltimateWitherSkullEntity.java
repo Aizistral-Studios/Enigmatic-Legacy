@@ -1,7 +1,5 @@
 package com.aizistral.enigmaticlegacy.entities;
 
-import java.util.List;
-
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.handlers.SuperpositionHandler;
 import com.aizistral.enigmaticlegacy.helpers.AOEMiningHelper;
@@ -9,7 +7,6 @@ import com.aizistral.enigmaticlegacy.objects.Vector3;
 import com.aizistral.enigmaticlegacy.objects.WitherExplosion;
 import com.aizistral.enigmaticlegacy.packets.clients.PacketWitherParticles;
 import com.aizistral.enigmaticlegacy.registries.EnigmaticEntities;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.Packet;
@@ -21,7 +18,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -42,6 +38,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PacketDistributor;
 
+import java.util.List;
+
 public class UltimateWitherSkullEntity extends AbstractHurtingProjectile {
 	private static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(UltimateWitherSkullEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Integer> BOUND_TARGET = SynchedEntityData.defineId(UltimateWitherSkullEntity.class, EntityDataSerializers.INT);
@@ -49,15 +47,15 @@ public class UltimateWitherSkullEntity extends AbstractHurtingProjectile {
 	int targetID;
 	LivingEntity target;
 
-	public UltimateWitherSkullEntity(EntityType<? extends UltimateWitherSkullEntity> p_i50147_1_, Level p_i50147_2_) {
-		super(p_i50147_1_, p_i50147_2_);
+	public UltimateWitherSkullEntity(EntityType<? extends UltimateWitherSkullEntity> type, Level level) {
+		super(type, level);
 
 		this.targetID = -1;
 		this.target = null;
 	}
 
 	public UltimateWitherSkullEntity(Level worldIn, LivingEntity shooter) {
-		super(EnigmaticEntities.ULTIMATE_WITHER_SKULL, shooter, 0, 0, 0, worldIn);
+		super(EnigmaticEntities.ULTIMATE_WITHER_SKULL.get(), shooter, 0, 0, 0, worldIn);
 		this.xPower = 0;
 		this.yPower = 0;
 		this.zPower = 0;
