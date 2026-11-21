@@ -269,7 +269,7 @@ public class PermanentItemEntity extends Entity {
 			boolean isPlayerOwner = player.getUUID().equals(this.getOwnerId());
 			boolean allowPickUp = false;
 
-			if (item instanceof StorageCrystal && (isPlayerOwner || !EnigmaticItems.ENIGMATIC_AMULET.isVesselOwnerOnly())) {
+			if (item instanceof StorageCrystal && (isPlayerOwner || !EnigmaticItems.ENIGMATIC_AMULET.get().isVesselOwnerOnly())) {
 				allowPickUp = true;
 			} else if (item instanceof SoulCrystal && isPlayerOwner) {
 				allowPickUp = true;
@@ -283,7 +283,7 @@ public class PermanentItemEntity extends Entity {
 					if (!isPlayerOwner && embeddedSoul != null)
 						return;
 
-					EnigmaticItems.STORAGE_CRYSTAL.retrieveDropsFromCrystal(itemstack, player, embeddedSoul);
+					EnigmaticItems.STORAGE_CRYSTAL.get().retrieveDropsFromCrystal(itemstack, player, embeddedSoul);
 					SoulArchive.getInstance().removeItem(this);
 
 					/*
@@ -295,7 +295,7 @@ public class PermanentItemEntity extends Entity {
 					 */
 
 				} else if (item instanceof SoulCrystal) {
-					if (!EnigmaticItems.SOUL_CRYSTAL.retrieveSoulFromCrystal(player, itemstack))
+					if (!EnigmaticItems.SOUL_CRYSTAL.get().retrieveSoulFromCrystal(player, itemstack))
 						return;
 					else {
 						SoulArchive.getInstance().removeItem(this);
@@ -329,9 +329,9 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	public boolean containsSoul() {
-		if (this.getItem().is(EnigmaticItems.SOUL_CRYSTAL))
+		if (this.getItem().is(EnigmaticItems.SOUL_CRYSTAL.get()))
 			return true;
-		else if (this.getItem().is(EnigmaticItems.STORAGE_CRYSTAL))
+		else if (this.getItem().is(EnigmaticItems.STORAGE_CRYSTAL.get()))
 			return ItemNBTHelper.getNBT(this.getItem()).contains("embeddedSoul");
 		else
 			return false;

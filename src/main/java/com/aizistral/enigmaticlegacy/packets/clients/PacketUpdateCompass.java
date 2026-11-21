@@ -33,7 +33,7 @@ public class PacketUpdateCompass {
 
 	public static void handle(PacketUpdateCompass msg, Supplier<NetworkEvent.Context> ctx) {
 		ctx.get().enqueueWork(() -> {
-			EnigmaticItems.SOUL_COMPASS.setNearestCrystal(msg.noValid ? null : new BlockPos(msg.x, msg.y, msg.z));
+			EnigmaticItems.SOUL_COMPASS.get().setNearestCrystal(msg.noValid ? null : new BlockPos(msg.x, msg.y, msg.z));
 		});
 
 		ctx.get().setPacketHandled(true);

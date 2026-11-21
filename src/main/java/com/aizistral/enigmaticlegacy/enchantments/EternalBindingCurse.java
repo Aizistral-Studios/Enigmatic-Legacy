@@ -53,8 +53,8 @@ public class EternalBindingCurse extends Enchantment {
 		if (!OmniconfigHandler.isItemEnabled(this))
 			return false;
 
-		if (stack.is(EnigmaticItems.CURSED_RING) || stack.is(EnigmaticItems.ESCAPE_SCROLL) ||
-				stack.is(EnigmaticItems.ENIGMATIC_AMULET) || stack.is(EnigmaticItems.DESOLATION_RING))
+		if (stack.is(EnigmaticItems.CURSED_RING.get()) || stack.is(EnigmaticItems.ESCAPE_SCROLL.get()) ||
+				stack.is(EnigmaticItems.ENIGMATIC_AMULET.get()) || stack.is(EnigmaticItems.DESOLATION_RING.get()))
 			return false;
 
 		return stack.getItem() instanceof IBindable || super.canEnchant(stack);

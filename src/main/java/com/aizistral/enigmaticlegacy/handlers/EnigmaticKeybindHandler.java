@@ -69,7 +69,7 @@ public class EnigmaticKeybindHandler {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketXPScrollKey(true));
 		}
 
-		if (this.spellstoneAbilityKey.isDown() && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticItems.ENIGMATIC_ITEM)) {
+		if (this.spellstoneAbilityKey.isDown() && SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticItems.ENIGMATIC_ITEM.get())) {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true));
 		} else if (this.spellstoneAbilityKey.consumeClick() && SuperpositionHandler.hasSpellstone(Minecraft.getInstance().player)) {
 			EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true));
@@ -77,7 +77,7 @@ public class EnigmaticKeybindHandler {
 			LocalPlayer player = Minecraft.getInstance().player;
 
 			if (!player.isInWater() && !player.onGround() && !player.isCreative() && !player.isSpectator()
-					&& SuperpositionHandler.hasCurio(player, EnigmaticItems.ANGEL_BLESSING)) {
+					&& SuperpositionHandler.hasCurio(player, EnigmaticItems.ANGEL_BLESSING.get())) {
 				EnigmaticLegacy.packetInstance.send(PacketDistributor.SERVER.noArg(), new PacketSpellstoneKey(true));
 			}
 		}

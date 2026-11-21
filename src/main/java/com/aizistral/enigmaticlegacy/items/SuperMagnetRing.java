@@ -113,7 +113,7 @@ public class SuperMagnetRing extends MagnetRing {
 
 	@Override
 	public boolean canEquip(SlotContext context, ItemStack stack) {
-		return super.canEquip(context, stack) && !SuperpositionHandler.hasCurio(context.entity(), EnigmaticItems.MAGNET_RING);
+		return super.canEquip(context, stack) && !SuperpositionHandler.hasCurio(context.entity(), EnigmaticItems.MAGNET_RING.get());
 	}
 
 	@Override

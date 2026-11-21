@@ -67,7 +67,7 @@ public class HiddenRecipe extends CustomRecipe {
 					if (slotStack.getItem() != entry.getKey()[r][i].getItem()) {
 						continue recipes;
 					} else {
-						if (slotStack.is(EnigmaticItems.ENIGMATIC_AMULET) || slotStack.is(EnigmaticItems.ASCENSION_AMULET)) {
+						if (slotStack.is(EnigmaticItems.ENIGMATIC_AMULET.get()) || slotStack.is(EnigmaticItems.ASCENSION_AMULET.get())) {
 							amuletNBT = Optional.of(slotStack.getTag().copy());
 						}
 					}
@@ -95,7 +95,7 @@ public class HiddenRecipe extends CustomRecipe {
 
 					if (slotStack.getItem() != array[r][i].getItem()) {
 						continue recipes;
-					} else if (RECIPES.get(array).is(EnigmaticItems.COSMIC_SCROLL) &&
+					} else if (RECIPES.get(array).is(EnigmaticItems.COSMIC_SCROLL.get()) &&
 							slotStack.getItem() instanceof CosmicHeart &&
 							!ItemNBTHelper.getBoolean(slotStack, "isBelieverBlessed", false)) {
 						continue recipes;

@@ -83,7 +83,7 @@ public class Insignia extends ItemBaseCurio {
 	}
 
 	public boolean canSeeTrueName(Player player) {
-		return player.isCreative() || SuperpositionHandler.hasCurio(player, EnigmaticItems.ENIGMATIC_EYE);
+		return player.isCreative() || SuperpositionHandler.hasCurio(player, EnigmaticItems.ENIGMATIC_EYE.get());
 	}
 
 	@Override

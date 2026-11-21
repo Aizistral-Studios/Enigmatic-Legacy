@@ -227,7 +227,7 @@ public class OblivionStone extends ItemBase implements Vanishable {
 		for (int slot = 0; slot < player.getInventory().items.size(); slot++) {
 			if (!player.getInventory().items.get(slot).isEmpty()) {
 				filledStacks += 1;
-				if (player.getInventory().items.get(slot).getItem() != EnigmaticItems.VOID_STONE) {
+				if (player.getInventory().items.get(slot).getItem() != EnigmaticItems.VOID_STONE.get()) {
 					stackMap.put(slot, player.getInventory().items.get(slot));
 				}
 			}

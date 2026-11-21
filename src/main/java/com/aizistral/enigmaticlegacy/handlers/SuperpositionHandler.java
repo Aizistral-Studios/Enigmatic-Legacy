@@ -1057,7 +1057,7 @@ public class SuperpositionHandler {
 
 	public static boolean isPermanentlyDead(Player player) {
 		// TODO Proper permadeath screen, Cursed Mode
-		return EnigmaticItems.SOUL_CRYSTAL.getLostCrystals(player) >= 10
+		return EnigmaticItems.SOUL_CRYSTAL.get().getLostCrystals(player) >= 10
 				&& OmniconfigHandler.maxSoulCrystalLoss.getValue() >= 10;
 	}
 
@@ -1184,7 +1184,7 @@ public class SuperpositionHandler {
 	public static boolean canDropSoulCrystal(Player player, boolean hadRing) {
 		if (isAffectedBySoulLoss(player, hadRing)) {
 			int maxCrystalLoss = OmniconfigHandler.maxSoulCrystalLoss.getValue();
-			return EnigmaticItems.SOUL_CRYSTAL.getLostCrystals(player) < maxCrystalLoss;
+			return EnigmaticItems.SOUL_CRYSTAL.get().getLostCrystals(player) < maxCrystalLoss;
 		} else
 			return false;
 	}
@@ -1306,7 +1306,7 @@ public class SuperpositionHandler {
 	}
 
 	public static boolean isTheCursedOne(Player player) {
-		return SuperpositionHandler.hasCurio(player, EnigmaticItems.CURSED_RING);
+		return SuperpositionHandler.hasCurio(player, EnigmaticItems.CURSED_RING.get());
 	}
 
 	public static boolean isTheBlessedOne(Player player) {
@@ -1317,7 +1317,7 @@ public class SuperpositionHandler {
 	}
 
 	public static boolean hasArchitectsFavor(Player player) {
-		return isTheBlessedOne(player) && SuperpositionHandler.hasCurio(player, EnigmaticItems.COSMIC_SCROLL);
+		return isTheBlessedOne(player) && SuperpositionHandler.hasCurio(player, EnigmaticItems.COSMIC_SCROLL.get());
 	}
 
 	public static boolean isTheWorthyOne(Player player) {
@@ -1407,7 +1407,7 @@ public class SuperpositionHandler {
 			}
 		}
 
-		if (stack.getItem() == EnigmaticItems.CURSED_RING) {
+		if (stack.getItem() == EnigmaticItems.CURSED_RING.get()) {
 			totalCurses+=7;
 		}
 
@@ -1420,10 +1420,10 @@ public class SuperpositionHandler {
 
 		for (ItemStack theStack : getFullEquipment(player)) {
 			if (theStack != null) {
-				if (theStack.getItem() != EnigmaticItems.CURSED_RING || !ringCounted) {
+				if (theStack.getItem() != EnigmaticItems.CURSED_RING.get() || !ringCounted) {
 					count += getCurseAmount(theStack);
 
-					if (theStack.getItem() == EnigmaticItems.CURSED_RING) {
+					if (theStack.getItem() == EnigmaticItems.CURSED_RING.get()) {
 						ringCounted = true;
 					}
 				}
@@ -1708,10 +1708,10 @@ public class SuperpositionHandler {
 	public static ItemStack getEnigmaticElytra(LivingEntity living) {
 		ItemStack stack = living.getItemBySlot(EquipmentSlot.CHEST);
 
-		if (stack.is(EnigmaticItems.ENIGMATIC_ELYTRA))
+		if (stack.is(EnigmaticItems.ENIGMATIC_ELYTRA.get()))
 			return stack;
 		else
-			return getCurioStack(living, EnigmaticItems.ENIGMATIC_ELYTRA);
+			return getCurioStack(living, EnigmaticItems.ENIGMATIC_ELYTRA.get());
 	}
 
 	public static ItemStack maybeApplyEternalBinding(ItemStack stack) {
@@ -1846,7 +1846,7 @@ public class SuperpositionHandler {
 		boolean noHunger = false;
 
 		if (player != null) {
-			if (EnigmaticItems.FORBIDDEN_FRUIT.haveConsumedFruit(player)) {
+			if (EnigmaticItems.FORBIDDEN_FRUIT.get().haveConsumedFruit(player)) {
 				noHunger = true;
 			} else if (player.level().getDifficulty() == Difficulty.PEACEFUL) {
 				noHunger = true;
@@ -1980,7 +1980,7 @@ public class SuperpositionHandler {
 			boolean override = false;
 
 			if (!render && entity != Minecraft.getInstance().player
-					&& EnigmaticItems.INSIGNIA.canSeeTrueName(Minecraft.getInstance().player)) {
+					&& EnigmaticItems.INSIGNIA.get().canSeeTrueName(Minecraft.getInstance().player)) {
 				name = entity.getDisplayName();
 				render = override = true;
 			}
@@ -2006,7 +2006,7 @@ public class SuperpositionHandler {
 			}
 
 			if (!override && entity != Minecraft.getInstance().player
-					&& EnigmaticItems.INSIGNIA.canSeeTrueName(Minecraft.getInstance().player)) {
+					&& EnigmaticItems.INSIGNIA.get().canSeeTrueName(Minecraft.getInstance().player)) {
 				stack.pushPose();
 				name = Component.literal("(" + entity.getDisplayName().getString() + ")");
 				f2 = -font.width(name) / 2;

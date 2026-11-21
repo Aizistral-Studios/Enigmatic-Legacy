@@ -58,7 +58,7 @@ public class MixinPhantomSpawner {
 									ServerStatsCounter serverstatisticsmanager = player.getStats();
 									int ticksSinceRest = Mth.clamp(serverstatisticsmanager.getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST)), 1, Integer.MAX_VALUE);
 
-									if (SuperpositionHandler.hasCurio(player, EnigmaticItems.CURSED_RING) && !CursedRing.disableInsomnia.getValue())
+									if (SuperpositionHandler.hasCurio(player, EnigmaticItems.CURSED_RING.get()) && !CursedRing.disableInsomnia.getValue())
 										if (random.nextInt(ticksSinceRest) <= 72000) {
 											BlockPos blockpos1 = blockpos.above(20 + random.nextInt(15)).east(-10 + random.nextInt(21)).south(-10 + random.nextInt(21));
 											BlockState blockstate = world.getBlockState(blockpos1);

@@ -43,7 +43,7 @@ public class PacketEnderRingKey {
 			ServerPlayer playerServ = ctx.get().getSender();
 
 			//if (playerServ.openContainer.windowId == 0)
-			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticItems.ENDER_RING) || SuperpositionHandler.hasCurio(playerServ, EnigmaticItems.CURSED_RING)) {
+			if (SuperpositionHandler.hasCurio(playerServ, EnigmaticItems.ENDER_RING.get()) || SuperpositionHandler.hasCurio(playerServ, EnigmaticItems.CURSED_RING.get())) {
 				//ChestContainer container = ChestContainer.createGeneric9X3(playerServ.currentWindowId+1, playerServ.inventory, playerServ.getInventoryEnderChest());
 				ChestMenu container = new ChestMenu(MenuType.GENERIC_9x3, playerServ.containerCounter + 1, playerServ.getInventory(), playerServ.getEnderChestInventory(), 3) {
 					@Override

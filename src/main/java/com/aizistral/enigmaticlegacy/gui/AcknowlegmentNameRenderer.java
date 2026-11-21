@@ -46,9 +46,9 @@ public class AcknowlegmentNameRenderer {
 
 		if (stack != null) {
 			if (stack.getItem() instanceof TheTwist) {
-				customName = EnigmaticItems.THE_TWIST.getName(stack);
+				customName = EnigmaticItems.THE_TWIST.get().getName(stack);
 			} else if (stack.getItem() instanceof TheInfinitum) {
-				customName = EnigmaticItems.THE_INFINITUM.getName(stack);
+				customName = EnigmaticItems.THE_INFINITUM.get().getName(stack);
 			}
 		}
 

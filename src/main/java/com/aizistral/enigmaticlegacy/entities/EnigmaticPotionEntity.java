@@ -181,7 +181,7 @@ public class EnigmaticPotionEntity extends ThrowableItemProjectile implements It
 	}
 
 	private boolean isLingering() {
-		return this.getItem().getItem() == EnigmaticItems.ULTIMATE_POTION_LINGERING;
+		return this.getItem().getItem() == EnigmaticItems.ULTIMATE_POTION_LINGERING.get();
 	}
 
 	/**

@@ -127,7 +127,7 @@ public class EtheriumConfigHandler implements IEtheriumConfig {
 
 	@Override
 	public Ingredient getRepairMaterial() {
-		return Ingredient.of(EnigmaticItems.ETHERIUM_INGOT);
+		return Ingredient.of(EnigmaticItems.ETHERIUM_INGOT.get());
 	}
 
 	@Override

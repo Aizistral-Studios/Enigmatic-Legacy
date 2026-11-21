@@ -307,7 +307,7 @@ public class CursedRing extends ItemBaseCurio {
 	}
 
 	public boolean isItemDeathPersistent(ItemStack stack) {
-		return stack.getItem().equals(this) || stack.getItem().equals(EnigmaticItems.ENIGMATIC_AMULET);
+		return stack.getItem().equals(this) || stack.getItem().equals(EnigmaticItems.ENIGMATIC_AMULET.get());
 	}
 
 	@Override
@@ -344,7 +344,7 @@ public class CursedRing extends ItemBaseCurio {
 				continue;
 			}
 
-			if (checkedEntity instanceof Piglin && !SuperpositionHandler.hasCurio(player, EnigmaticItems.AVARICE_SCROLL)) {
+			if (checkedEntity instanceof Piglin && !SuperpositionHandler.hasCurio(player, EnigmaticItems.AVARICE_SCROLL.get())) {
 				Piglin piglin = (Piglin) checkedEntity;
 
 				if (piglin.getTarget() == null || !piglin.getTarget().isAlive()) {
@@ -364,14 +364,14 @@ public class CursedRing extends ItemBaseCurio {
 
 				if (neutral instanceof TamableAnimal tamable && tamable.isTame()) {
 					continue;
-				} else if (SuperpositionHandler.hasItem(player, EnigmaticItems.ANIMAL_GUIDEBOOK)) {
-					if (EnigmaticItems.ANIMAL_GUIDEBOOK.isTamableAnimal(checkedEntity)) {
+				} else if (SuperpositionHandler.hasItem(player, EnigmaticItems.ANIMAL_GUIDEBOOK.get())) {
+					if (EnigmaticItems.ANIMAL_GUIDEBOOK.get().isTamableAnimal(checkedEntity)) {
 						continue;
 					}
 				} else if (neutral instanceof IronGolem golem && golem.isPlayerCreated()) {
 					continue;
 				} else if (neutral instanceof Bee) {
-					if (saveTheBees.getValue() || SuperpositionHandler.hasItem(player, EnigmaticItems.ANIMAL_GUIDEBOOK)) {
+					if (saveTheBees.getValue() || SuperpositionHandler.hasItem(player, EnigmaticItems.ANIMAL_GUIDEBOOK.get())) {
 						continue;
 					}
 				}

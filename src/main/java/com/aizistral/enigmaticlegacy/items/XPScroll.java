@@ -148,7 +148,7 @@ public class XPScroll extends ItemBaseCurio {
 
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
-		ItemStack itemstack = SuperpositionHandler.getCurioStack(context.entity(), EnigmaticItems.XP_SCROLL);
+		ItemStack itemstack = SuperpositionHandler.getCurioStack(context.entity(), EnigmaticItems.XP_SCROLL.get());
 
 		if (!(context.entity() instanceof Player) || context.entity().level().isClientSide || !ItemNBTHelper.getBoolean(itemstack, "IsActive", false))
 			return;

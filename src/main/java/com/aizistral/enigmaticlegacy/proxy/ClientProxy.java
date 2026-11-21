@@ -115,7 +115,7 @@ public class ClientProxy extends CommonProxy {
 		Entity entity = player.level().getEntity(entityID);
 
 		if (entity != null) {
-			Item item = reviveType == 0 ? EnigmaticItems.COSMIC_SCROLL : EnigmaticItems.THE_CUBE;
+			Item item = reviveType == 0 ? EnigmaticItems.COSMIC_SCROLL.get() : EnigmaticItems.THE_CUBE.get();
 			int i = 40;
 			Minecraft.getInstance().particleEngine.createTrackingEmitter(entity, ParticleTypes.TOTEM_OF_UNDYING, 30);
 
@@ -191,10 +191,10 @@ public class ClientProxy extends CommonProxy {
 
 	@OnlyIn(Dist.CLIENT)
 	public void onClientSetup(FMLClientSetupEvent event) {
-		this.registerBlockingProperty(EnigmaticItems.INFERNAL_SHIELD);
-		this.registerBlockingProperty(EnigmaticItems.ELDRITCH_PAN);
+		this.registerBlockingProperty(EnigmaticItems.INFERNAL_SHIELD.get());
+		this.registerBlockingProperty(EnigmaticItems.ELDRITCH_PAN.get());
 
-		ItemProperties.register(EnigmaticItems.THE_INFINITUM, new ResourceLocation(EnigmaticLegacy.MODID, "the_infinitum_open"), (stack, world, entity, seed) -> {
+		ItemProperties.register(EnigmaticItems.THE_INFINITUM.get(), new ResourceLocation(EnigmaticLegacy.MODID, "the_infinitum_open"), (stack, world, entity, seed) -> {
 			if (entity instanceof Player player) {
 				for (InfinitumCounterEntry entry : this.theInfinitumHoldTicks) {
 					if (entry.getPlayer() == player && entry.getStack() == stack)

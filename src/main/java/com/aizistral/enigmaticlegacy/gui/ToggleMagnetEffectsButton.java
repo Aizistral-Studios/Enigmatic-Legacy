@@ -20,7 +20,7 @@ public class ToggleMagnetEffectsButton extends PlayerInventoryButton {
 
 	@Override
 	protected boolean beforeRender(GuiGraphics graphics, int mouseX, int mouseY, float partialTicks) {
-		boolean hasRing = SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticItems.MAGNET_RING) || SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticItems.SUPER_MAGNET_RING);
+		boolean hasRing = SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticItems.MAGNET_RING.get()) || SuperpositionHandler.hasCurio(Minecraft.getInstance().player, EnigmaticItems.SUPER_MAGNET_RING.get());
 
 		if (!hasRing || !MagnetRing.inventoryButtonEnabled.getValue()) {
 			this.active = false;

@@ -30,7 +30,7 @@ public class MixinPiglinTasks {
 	private static final String AVARICE_SCROLL_TAG = EnigmaticLegacy.MODID + ":avarice_scroll_effect";
 
 	private static void markPiglinWithCondition(Piglin piglin, Player player) {
-		if (player != null && piglin != null && SuperpositionHandler.hasCurio(player, EnigmaticItems.AVARICE_SCROLL))
+		if (player != null && piglin != null && SuperpositionHandler.hasCurio(player, EnigmaticItems.AVARICE_SCROLL.get()))
 			if (!piglin.getTags().contains(AVARICE_SCROLL_TAG)) {
 				piglin.addTag(AVARICE_SCROLL_TAG);
 			}

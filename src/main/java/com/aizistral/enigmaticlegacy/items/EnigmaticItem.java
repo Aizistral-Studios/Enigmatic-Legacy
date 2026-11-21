@@ -125,7 +125,7 @@ public class EnigmaticItem extends ItemSpellstoneCurio implements ISpellstone {
 
 	public void handleEnigmaticFlight(final Player player) {
 		try {
-			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.ENIGMATIC_ITEM)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.ENIGMATIC_ITEM.get())) {
 				this.flightMap.put(player, true);
 				if (!player.getAbilities().mayfly) {
 					player.getAbilities().mayfly = true;
