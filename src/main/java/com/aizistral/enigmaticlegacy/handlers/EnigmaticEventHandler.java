@@ -1604,18 +1604,15 @@ public class EnigmaticEventHandler {
 
 	@SubscribeEvent
 	public void onProjectileImpact(ProjectileImpactEvent event) {
-		if (event.getRayTraceResult() instanceof EntityHitResult) {
-			EntityHitResult result = (EntityHitResult) event.getRayTraceResult();
+		if (event.getRayTraceResult() instanceof EntityHitResult result) {
 
-			if (result.getEntity() instanceof Player) {
-				Player player = (Player) result.getEntity();
-				Entity arrow = event.getEntity();
+            if (result.getEntity() instanceof Player player) {
+                Entity arrow = event.getEntity();
 
 				if (!player.level().isClientSide) {
-					if (arrow instanceof Projectile) {
-						Projectile projectile = (Projectile) arrow;
+					if (arrow instanceof Projectile projectile) {
 
-						if (projectile.getOwner() == player) {
+                        if (projectile.getOwner() == player) {
 							for (String tag : arrow.getTags()) {
 								if (tag.startsWith("AB_DEFLECTED")) {
 									try {
@@ -1650,7 +1647,7 @@ public class EnigmaticEventHandler {
 					}
 
 					if (trigger && Math.random() <= chance) {
-						event.setCanceled(true);
+						event.setImpactResult(ProjectileImpactEvent.ImpactResult.STOP_AT_CURRENT_NO_DAMAGE);
 
 						arrow.setDeltaMovement(arrow.getDeltaMovement().scale(-1.0D));
 						arrow.yRotO = arrow.getYRot() + 180.0F;
