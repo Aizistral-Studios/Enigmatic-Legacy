@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(modid = EnigmaticLegacy.MODID)
+@Mod.EventBusSubscriber(modid = EnigmaticLegacy.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EnigmaticItems {
 	private static final DeferredRegister<Item> ITEMS =
 			DeferredRegister.create(ForgeRegistries.ITEMS, EnigmaticLegacy.MODID);
@@ -339,7 +339,7 @@ public class EnigmaticItems {
 	@ConfigurableItem("Eldritch Frying Pan")
 	public static final RegistryObject<Item> ELDRITCH_PAN = register("eldritch_pan", EldritchPan::new);
 
-	public static void register(IEventBus modEventBus) {
+	public static void registerItems(IEventBus modEventBus) {
 		ITEMS.register(modEventBus);
 	}
 
@@ -348,7 +348,9 @@ public class EnigmaticItems {
 	}
 
 	@SubscribeEvent
-	public void onRegister(RegisterEvent event) {
+	public static void onRegister(RegisterEvent event) {
+		if (!event.getRegistryKey().equals(ForgeRegistries.Keys.ITEMS)) return;
+
 		EnigmaticBlocks.getBlockItemMap().forEach((block, item) ->
 				event.register(ForgeRegistries.Keys.ITEMS, block, () ->
 						item.apply(ForgeRegistries.BLOCKS.getValue(block))));

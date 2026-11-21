@@ -12,7 +12,6 @@ import com.aizistral.enigmaticlegacy.crafting.HiddenRecipe;
 import com.aizistral.enigmaticlegacy.gui.containers.LoreInscriberScreen;
 import com.aizistral.enigmaticlegacy.handlers.*;
 import com.aizistral.enigmaticlegacy.helpers.PotionHelper;
-import com.aizistral.enigmaticlegacy.items.EnigmaticItem;
 import com.aizistral.enigmaticlegacy.items.GolemHeart;
 import com.aizistral.enigmaticlegacy.objects.LoggerWrapper;
 import com.aizistral.enigmaticlegacy.objects.RegisteredMeleeAttack;
@@ -109,7 +108,7 @@ public class EnigmaticLegacy {
 
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-		EnigmaticItems.register(modEventBus);
+		EnigmaticItems.registerItems(modEventBus);
 		EnigmaticTiles.registerTiles(modEventBus);
 		EnigmaticMenus.registerMenus(modEventBus);
 		EnigmaticBlocks.registerBlocks(modEventBus);

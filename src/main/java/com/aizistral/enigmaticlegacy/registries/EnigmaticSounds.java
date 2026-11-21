@@ -12,7 +12,7 @@ public class EnigmaticSounds {
 	private static final String MISC_CATEGORY = "misc";
 	private static final String QUOTE_CATEGORY = "quote";
 
-	public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
+	private static final DeferredRegister<SoundEvent> SOUND_EVENTS =
 			DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, EnigmaticLegacy.MODID);
 
 	// Misc

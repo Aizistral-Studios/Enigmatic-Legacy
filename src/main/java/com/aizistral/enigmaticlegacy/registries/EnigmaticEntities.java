@@ -15,7 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
 import java.util.function.Supplier;
 
 public class EnigmaticEntities {
-	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
+	private static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
 			DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, EnigmaticLegacy.MODID);
 
 	public static final RegistryObject<EntityType<PermanentItemEntity>> PERMANENT_ITEM_ENTITY = register(

@@ -8,14 +8,17 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegisterEvent;
 import net.minecraftforge.registries.RegistryObject;
 
 import java.util.function.Supplier;
 
+@Mod.EventBusSubscriber(modid = EnigmaticLegacy.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EnigmaticRecipes {
-
 	private static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
 			DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, EnigmaticLegacy.MODID);
 
@@ -30,6 +33,12 @@ public class EnigmaticRecipes {
 
     public static void registerRecipes(IEventBus modEventBus) {
 		RECIPE_SERIALIZERS.register(modEventBus);
+	}
+
+	@SubscribeEvent
+	public static void onRegister(RegisterEvent event) {
+		if (!event.getRegistryKey().equals(ForgeRegistries.Keys.RECIPE_SERIALIZERS)) return;
+
 		CraftingHelper.register(EnabledCondition.Serializer.INSTANCE);
 	}
 
