@@ -123,6 +123,7 @@ public class PacketSpawnFakeCorpse {
                 );
             }
         };
+        fakeItem.makeFakeItem();
 
         level.putNonPlayerEntity(fakeItem.getId(), fakeItem);
     }
