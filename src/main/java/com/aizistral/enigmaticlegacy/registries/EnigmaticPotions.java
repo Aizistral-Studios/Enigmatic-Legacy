@@ -80,6 +80,18 @@ public class EnigmaticPotions {
 		POTIONS.register(modEventBus);
 	}
 
+	public static boolean isUltimate(Potion potion) {
+		for (Supplier<Potion> supplier : ULTIMATE_POTIONS) {
+            Potion p = supplier.get();
+
+            if (p.equals(potion)) {
+                return true;
+            }
+        }
+
+		return false;
+	}
+
 	public static List<Supplier<Potion>> getUltimatePotions() {
 		return Collections.unmodifiableList(ULTIMATE_POTIONS);
 	}
