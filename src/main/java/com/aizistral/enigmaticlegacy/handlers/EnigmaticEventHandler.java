@@ -203,10 +203,7 @@ import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.functions.SetItemDamageFunction;
-import net.minecraft.world.level.storage.loot.functions.SetNbtFunction;
+import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
@@ -2907,7 +2904,7 @@ public class EnigmaticEventHandler {
 					SuperpositionHandler.itemEntryBuilderED(Items.IRON_SHOVEL, 10, 20F, 30F, 1.0F, 0.8F),
 					SuperpositionHandler.itemEntryBuilderED(Items.BOW, 10, 20F, 30F, 1.0F, 0.8F),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticItems.IRON_RING.get(), 20),
-//					LootItem.lootTableItem(EnigmaticItems.COMMON_POTION.get()).setWeight(20).apply(SetNbtFunction.setTag(PotionHelper.createAdvancedPotion(EnigmaticItems.COMMON_POTION.get(), EnigmaticPotions.HASTE).getTag())),
+					LootItem.lootTableItem(Items.POTION).setWeight(20).apply(SetPotionFunction.setPotion(EnigmaticPotions.HASTE.get())),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticItems.MAGNET_RING.get(), 8),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticItems.UNHOLY_GRAIL.get(), 1),
 					SuperpositionHandler.createOptionalLootEntry(EnigmaticItems.LORE_INSCRIBER.get(), 5),
