@@ -25,7 +25,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -268,7 +267,6 @@ public class ClientProxy extends CommonProxy {
 	@Override
 	public void initEntityRendering() {
 		EntityRenderers.register(EnigmaticEntities.PERMANENT_ITEM_ENTITY.get(), renderManager -> new PermanentItemRenderer(renderManager, Minecraft.getInstance().getItemRenderer()));
-		EntityRenderers.register(EnigmaticEntities.ENIGMATIC_POTION.get(), ThrownItemRenderer::new);
 		EntityRenderers.register(EnigmaticEntities.ULTIMATE_WITHER_SKULL.get(), UltimateWitherSkullRenderer::new);
 	}
 

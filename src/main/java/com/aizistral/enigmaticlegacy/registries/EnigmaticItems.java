@@ -2,7 +2,6 @@ package com.aizistral.enigmaticlegacy.registries;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.generic.ConfigurableItem;
-import com.aizistral.enigmaticlegacy.api.items.IAdvancedPotionItem.PotionType;
 import com.aizistral.enigmaticlegacy.items.*;
 import com.aizistral.etherium.items.*;
 import net.minecraft.world.item.ArmorItem;
@@ -116,24 +115,6 @@ public class EnigmaticItems {
 
 	@ConfigurableItem("Etherium Scraps")
 	public static final RegistryObject<EtheriumScraps> ETHERIUM_SCRAPS = register("etherium_scraps", EtheriumScraps::new);
-
-	@ConfigurableItem("Ultimate Potions")
-	public static final RegistryObject<UltimatePotionBase> ULTIMATE_POTION = register("ultimate_potion", () ->  new UltimatePotionBase(Rarity.RARE, PotionType.ULTIMATE));
-
-	@ConfigurableItem("Ultimate Potions")
-	public static final RegistryObject<UltimatePotionSplash> ULTIMATE_POTION_SPLASH = register("ultimate_potion_splash", () ->  new UltimatePotionSplash(Rarity.RARE, PotionType.ULTIMATE));
-
-	@ConfigurableItem("Ultimate Potions")
-	public static final RegistryObject<UltimatePotionLingering> ULTIMATE_POTION_LINGERING = register("ultimate_potion_lingering", () ->  new UltimatePotionLingering(Rarity.RARE, PotionType.ULTIMATE));
-
-	@ConfigurableItem("Common Potions")
-	public static final RegistryObject<UltimatePotionBase> COMMON_POTION = register("common_potion", () ->  new UltimatePotionBase(Rarity.COMMON, PotionType.COMMON));
-
-	@ConfigurableItem("Common Potions")
-	public static final RegistryObject<UltimatePotionSplash> COMMON_POTION_SPLASH = register("common_potion_splash", () ->  new UltimatePotionSplash(Rarity.COMMON, PotionType.COMMON));
-
-	@ConfigurableItem("Common Potions")
-	public static final RegistryObject<UltimatePotionLingering> COMMON_POTION_LINGERING = register("common_potion_lingering", () ->  new UltimatePotionLingering(Rarity.COMMON, PotionType.COMMON));
 
 	@ConfigurableItem("Etherium Armor")
 	public static final RegistryObject<EtheriumArmor> ETHERIUM_HELMET = register("etherium_helmet", () -> new EtheriumArmor(ArmorItem.Type.HELMET));

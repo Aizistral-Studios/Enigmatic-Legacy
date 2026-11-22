@@ -1,112 +1,93 @@
 package com.aizistral.enigmaticlegacy.registries;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.aizistral.enigmaticlegacy.gui.containers.LoreInscriberContainer;
-import com.aizistral.enigmaticlegacy.objects.AdvancedPotion;
-import com.google.common.collect.ImmutableList;
-
+import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Supplier;
 
 public class EnigmaticPotions {
-	private static final EnigmaticPotions INSTANCE = new EnigmaticPotions();
+	private static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(ForgeRegistries.POTIONS, EnigmaticLegacy.MODID);
 
-	public static final List<AdvancedPotion> ULTIMATE_POTIONS;
-	public static final List<AdvancedPotion> COMMON_POTIONS;
+	private static final List<Supplier<Potion>> ULTIMATE_POTIONS = new ArrayList<>();
+	private static final List<Supplier<Potion>> COMMON_POTIONS =  new ArrayList<>();
 
-	public static final AdvancedPotion ULTIMATE_NIGHT_VISION;
-	public static final AdvancedPotion ULTIMATE_INVISIBILITY;
-	public static final AdvancedPotion ULTIMATE_FIRE_RESISTANCE;
-	public static final AdvancedPotion ULTIMATE_LEAPING;
-	public static final AdvancedPotion ULTIMATE_SWIFTNESS;
-	public static final AdvancedPotion ULTIMATE_SLOWNESS;
-	public static final AdvancedPotion ULTIMATE_TURTLE_MASTER;
-	public static final AdvancedPotion ULTIMATE_WATER_BREATHING;
-	public static final AdvancedPotion ULTIMATE_HEALING;
-	public static final AdvancedPotion ULTIMATE_HARMING;
-	public static final AdvancedPotion ULTIMATE_POISON;
-	public static final AdvancedPotion ULTIMATE_REGENERATION;
-	public static final AdvancedPotion ULTIMATE_STRENGTH;
-	public static final AdvancedPotion ULTIMATE_WEAKNESS;
-	public static final AdvancedPotion ULTMATE_SLOW_FALLING;
-	public static final AdvancedPotion HASTE;
-	public static final AdvancedPotion LONG_HASTE;
-	public static final AdvancedPotion STRONG_HASTE;
-	public static final AdvancedPotion ULTIMATE_HASTE;
-	public static final AdvancedPotion MOLTEN_HEART;
-	public static final AdvancedPotion LONG_MOLTEN_HEART;
-	public static final AdvancedPotion ULTIMATE_MOLTEN_HEART;
-	public static final AdvancedPotion EMPTY_POTION;
+	public static final RegistryObject<Potion> ULTIMATE_NIGHT_VISION = register("ultimate_night_vision", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.NIGHT_VISION, 19200));
+	public static final RegistryObject<Potion> ULTIMATE_INVISIBILITY = register("ultimate_invisibility", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.INVISIBILITY, 19200));
+	public static final RegistryObject<Potion> ULTIMATE_FIRE_RESISTANCE = register("ultimate_fire_resistance", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 19200));
+	public static final RegistryObject<Potion> ULTIMATE_LEAPING = register("ultimate_leaping", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.JUMP, 9600, 1));
+	public static final RegistryObject<Potion> ULTIMATE_SWIFTNESS = register("ultimate_swiftness", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 9600, 1));
+	public static final RegistryObject<Potion> ULTIMATE_SLOWNESS = register("ultimate_slowness", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 1200, 3));
+	public static final RegistryObject<Potion> ULTIMATE_TURTLE_MASTER = register("ultimate_turtle_master", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 800, 5), new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 800, 3));
+	public static final RegistryObject<Potion> ULTIMATE_WATER_BREATHING = register("ultimate_water_breathing", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.WATER_BREATHING, 19200));
+	public static final RegistryObject<Potion> ULTIMATE_HEALING = register("ultimate_healing", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.HEAL, 1, 2));
+	public static final RegistryObject<Potion> ULTIMATE_HARMING = register("ultimate_harming", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.HARM, 1, 2));
+	public static final RegistryObject<Potion> ULTIMATE_POISON = register("ultimate_poison", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.POISON, 1800, 1));
+	public static final RegistryObject<Potion> ULTIMATE_REGENERATION = register("ultimate_regeneration", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.REGENERATION, 1800, 1));
+	public static final RegistryObject<Potion> ULTIMATE_STRENGTH = register("ultimate_strength", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.DAMAGE_BOOST, 9600, 1));
+	public static final RegistryObject<Potion> ULTIMATE_WEAKNESS = register("ultimate_weakness", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.WEAKNESS, 9600));
+	public static final RegistryObject<Potion> ULTIMATE_SLOW_FALLING = register("ultimate_slow_falling", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.SLOW_FALLING, 9600));
+	public static final RegistryObject<Potion> ULTIMATE_MOLTEN_HEART = register("ultimate_molten_heart", PotionType.ULTIMATE, () -> new MobEffectInstance[]{new MobEffectInstance(EnigmaticEffects.MOLTEN_HEART.get(), 19200)});
+	public static final RegistryObject<Potion> ULTIMATE_HASTE = register("ultimate_haste", PotionType.ULTIMATE, new MobEffectInstance(MobEffects.DIG_SPEED, 9600, 1));
 
-	static {
-		ULTIMATE_NIGHT_VISION = new AdvancedPotion("ultimate_night_vision", new MobEffectInstance(MobEffects.NIGHT_VISION, 19200));
-		ULTIMATE_INVISIBILITY = new AdvancedPotion("ultimate_invisibility", new MobEffectInstance(MobEffects.INVISIBILITY, 19200));
-		ULTIMATE_LEAPING = new AdvancedPotion("ultimate_leaping", new MobEffectInstance(MobEffects.JUMP, 9600, 1));
-		ULTIMATE_FIRE_RESISTANCE = new AdvancedPotion("ultimate_fire_resistance", new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 19200));
-		ULTIMATE_SWIFTNESS = new AdvancedPotion("ultimate_swiftness", new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 9600, 1));
-		ULTIMATE_SLOWNESS = new AdvancedPotion("ultimate_slowness", new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 1200, 3));
-		ULTIMATE_TURTLE_MASTER = new AdvancedPotion("ultimate_turtle_master", new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 800, 5), new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 800, 3));
-		ULTIMATE_WATER_BREATHING = new AdvancedPotion("ultimate_water_breathing", new MobEffectInstance(MobEffects.WATER_BREATHING, 19200));
-		ULTIMATE_HEALING = new AdvancedPotion("ultimate_healing", new MobEffectInstance(MobEffects.HEAL, 1, 2));
-		ULTIMATE_HARMING = new AdvancedPotion("ultimate_harming", new MobEffectInstance(MobEffects.HARM, 1, 2));
-		ULTIMATE_POISON = new AdvancedPotion("ultimate_poison", new MobEffectInstance(MobEffects.POISON, 1800, 1));
-		ULTIMATE_REGENERATION = new AdvancedPotion("ultimate_regeneration", new MobEffectInstance(MobEffects.REGENERATION, 1800, 1));
-		ULTIMATE_STRENGTH = new AdvancedPotion("ultimate_strength", new MobEffectInstance(MobEffects.DAMAGE_BOOST, 9600, 1));
-		ULTIMATE_WEAKNESS = new AdvancedPotion("ultimate_weakness", new MobEffectInstance(MobEffects.WEAKNESS, 9600));
-		ULTMATE_SLOW_FALLING = new AdvancedPotion("ultimate_slow_falling", new MobEffectInstance(MobEffects.SLOW_FALLING, 9600));
+	public static final RegistryObject<Potion> HASTE = register("haste", new MobEffectInstance(MobEffects.DIG_SPEED, 3600));
+	public static final RegistryObject<Potion> LONG_HASTE = register("long_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 9600));
+	public static final RegistryObject<Potion> STRONG_HASTE = register("strong_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 1800, 1));
+	public static final RegistryObject<Potion> MOLTEN_HEART = register("molten_heart",() -> new MobEffectInstance[]{new MobEffectInstance(EnigmaticEffects.MOLTEN_HEART.get(), 3600)});
+	public static final RegistryObject<Potion> LONG_MOLTEN_HEART = register("long_molten_heart", () -> new MobEffectInstance[]{new MobEffectInstance(EnigmaticEffects.MOLTEN_HEART.get(), 9600)});
 
-		HASTE = new AdvancedPotion("haste", new MobEffectInstance(MobEffects.DIG_SPEED, 3600));
-		LONG_HASTE = new AdvancedPotion("long_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 9600));
-		STRONG_HASTE = new AdvancedPotion("strong_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 1800, 1));
-		ULTIMATE_HASTE = new AdvancedPotion("ultimate_haste", new MobEffectInstance(MobEffects.DIG_SPEED, 9600, 1));
+	public static final RegistryObject<Potion> EMPTY_POTION = register("empty", PotionType.NONE);
 
-		MOLTEN_HEART = new AdvancedPotion("molten_heart", new MobEffectInstance(EnigmaticEffects.MOLTEN_HEART.get(), 3600));
-		LONG_MOLTEN_HEART = new AdvancedPotion("long_molten_heart", new MobEffectInstance(EnigmaticEffects.MOLTEN_HEART.get(), 9600));
-		ULTIMATE_MOLTEN_HEART = new AdvancedPotion("ultimate_molten_heart", new MobEffectInstance(EnigmaticEffects.MOLTEN_HEART.get(), 19200));
-
-		EMPTY_POTION = new AdvancedPotion("empty");
-
-		ImmutableList.Builder<AdvancedPotion> ultimatePotions = ImmutableList.builder();
-		ImmutableList.Builder<AdvancedPotion> commonPotions = ImmutableList.builder();
-
-		ultimatePotions.add(ULTIMATE_NIGHT_VISION);
-		ultimatePotions.add(ULTIMATE_INVISIBILITY);
-		ultimatePotions.add(ULTIMATE_LEAPING);
-		ultimatePotions.add(ULTIMATE_FIRE_RESISTANCE);
-		ultimatePotions.add(ULTIMATE_SWIFTNESS);
-		ultimatePotions.add(ULTIMATE_SLOWNESS);
-		ultimatePotions.add(ULTIMATE_TURTLE_MASTER);
-		ultimatePotions.add(ULTIMATE_WATER_BREATHING);
-		ultimatePotions.add(ULTIMATE_HEALING);
-		ultimatePotions.add(ULTIMATE_HARMING);
-		ultimatePotions.add(ULTIMATE_POISON);
-		ultimatePotions.add(ULTIMATE_REGENERATION);
-		ultimatePotions.add(ULTIMATE_STRENGTH);
-		ultimatePotions.add(ULTIMATE_WEAKNESS);
-		ultimatePotions.add(ULTMATE_SLOW_FALLING);
-
-		commonPotions.add(HASTE);
-		commonPotions.add(LONG_HASTE);
-		commonPotions.add(STRONG_HASTE);
-		ultimatePotions.add(ULTIMATE_HASTE);
-
-		commonPotions.add(MOLTEN_HEART);
-		commonPotions.add(LONG_MOLTEN_HEART);
-		ultimatePotions.add(ULTIMATE_MOLTEN_HEART);
-
-		ULTIMATE_POTIONS = ultimatePotions.build();
-		COMMON_POTIONS = commonPotions.build();
+	// Vanilla Objects
+	private static RegistryObject<Potion> register(String name, MobEffectInstance... effects) {
+		return register(name, () -> effects);
 	}
 
-	private EnigmaticPotions() {
-		super();
+	private static RegistryObject<Potion> register(String name, PotionType type, MobEffectInstance... effects) {
+		return register(name, type, () -> effects);
 	}
 
+	// Supplier Objects
+	private static RegistryObject<Potion> register(String name, Supplier<MobEffectInstance[]> effects) {
+		return register(name, PotionType.COMMON, effects);
+	}
+
+	private static RegistryObject<Potion> register(String name, PotionType type, Supplier<MobEffectInstance[]> effects) {
+		RegistryObject<Potion> potion = POTIONS.register(name, () -> new Potion(name, effects.get()));
+
+		if (type == PotionType.ULTIMATE) {
+			ULTIMATE_POTIONS.add(potion);
+		}
+		else if (type == PotionType.COMMON) {
+			COMMON_POTIONS.add(potion);
+		}
+
+		return potion;
+	}
+
+	private enum PotionType {
+		COMMON,
+		ULTIMATE,
+		NONE
+	}
+
+	public static void registerPotions(IEventBus modEventBus) {
+		POTIONS.register(modEventBus);
+	}
+
+	public static List<Supplier<Potion>> getUltimatePotions() {
+		return Collections.unmodifiableList(ULTIMATE_POTIONS);
+	}
+
+	public static List<Supplier<Potion>> getCommonPotions() {
+		return Collections.unmodifiableList(COMMON_POTIONS);
+	}
 }

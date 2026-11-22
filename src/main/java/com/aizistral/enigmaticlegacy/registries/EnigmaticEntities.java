@@ -1,7 +1,6 @@
 package com.aizistral.enigmaticlegacy.registries;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
-import com.aizistral.enigmaticlegacy.entities.EnigmaticPotionEntity;
 import com.aizistral.enigmaticlegacy.entities.PermanentItemEntity;
 import com.aizistral.enigmaticlegacy.entities.UltimateWitherSkullEntity;
 import net.minecraft.world.entity.Entity;
@@ -24,14 +23,6 @@ public class EnigmaticEntities {
 					.sized(0.25F, 0.25F)
 					.clientTrackingRange(64)
 					.updateInterval(2)
-	);
-
-	public static final RegistryObject<EntityType<EnigmaticPotionEntity>> ENIGMATIC_POTION = register(
-			"enigmatic_potion_entity",
-			() -> EntityType.Builder.<EnigmaticPotionEntity>of(EnigmaticPotionEntity::new, MobCategory.MISC)
-					.sized(0.25F, 0.25F)
-					.clientTrackingRange(64)
-					.updateInterval(10)
 	);
 
 	public static final RegistryObject<EntityType<UltimateWitherSkullEntity>> ULTIMATE_WITHER_SKULL = register(
