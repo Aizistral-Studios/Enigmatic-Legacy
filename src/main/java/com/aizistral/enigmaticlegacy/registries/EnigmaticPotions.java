@@ -44,8 +44,6 @@ public class EnigmaticPotions {
 	public static final RegistryObject<Potion> MOLTEN_HEART = register("molten_heart",() -> new MobEffectInstance[]{new MobEffectInstance(EnigmaticEffects.MOLTEN_HEART.get(), 3600)});
 	public static final RegistryObject<Potion> LONG_MOLTEN_HEART = register("long_molten_heart", () -> new MobEffectInstance[]{new MobEffectInstance(EnigmaticEffects.MOLTEN_HEART.get(), 9600)});
 
-	public static final RegistryObject<Potion> EMPTY_POTION = register("empty", PotionType.NONE);
-
 	// Vanilla Objects
 	private static RegistryObject<Potion> register(String name, MobEffectInstance... effects) {
 		return register(name, () -> effects);
@@ -75,8 +73,7 @@ public class EnigmaticPotions {
 
 	private enum PotionType {
 		COMMON,
-		ULTIMATE,
-		NONE
+		ULTIMATE
 	}
 
 	public static void registerPotions(IEventBus modEventBus) {
