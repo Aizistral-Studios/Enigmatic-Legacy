@@ -35,16 +35,11 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.alchemy.PotionUtils;
-import net.minecraft.world.item.alchemy.Potions;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.common.crafting.StrictNBTIngredient;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
@@ -157,35 +152,7 @@ public class EnigmaticLegacy {
 		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.THE_CUBE.get());
 		EnigmaticItems.SPELLSTONES.add(EnigmaticItems.ENIGMATIC_ITEM.get());
 
-		LOGGER.info("Registering brewing recipes...");
-
-		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.RECALL_POTION)) {
-			BrewingRecipeRegistry.addRecipe(
-					StrictNBTIngredient.of(PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.AWKWARD)),
-					Ingredient.of(Items.ENDER_EYE),
-					new ItemStack(EnigmaticItems.RECALL_POTION.get())
-			);
-		}
-
-		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.TWISTED_POTION)) {
-			BrewingRecipeRegistry.addRecipe(
-					Ingredient.of(EnigmaticItems.RECALL_POTION.get()),
-					Ingredient.of(EnigmaticItems.TWISTED_HEART.get()),
-					new ItemStack(EnigmaticItems.TWISTED_POTION.get())
-			);
-		}
-
-//		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.COMMON_POTION)) {
-			// TODO: register potions
-//			PotionHelper.registerCommonPotions();
-//		}
-
-//		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.ULTIMATE_POTION)) {
-			// TODO: register potions
-//			PotionHelper.registerBasicUltimatePotions();
-//			PotionHelper.registerSplashUltimatePotions();
-//			PotionHelper.registerLingeringUltimatePotions();
-//		}
+		EnigmaticBrewing.registerBrewingRecipes();
 
 		if (OmniconfigHandler.isItemEnabled(EnigmaticItems.THE_CUBE)) {
 			HiddenRecipe.addRecipe(new ItemStack(EnigmaticItems.THE_CUBE.get()),
