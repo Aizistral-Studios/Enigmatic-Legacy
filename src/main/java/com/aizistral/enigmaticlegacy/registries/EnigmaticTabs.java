@@ -22,13 +22,6 @@ public class EnigmaticTabs {
 					.icon(() -> new ItemStack(EnigmaticItems.ENIGMATIC_ITEM.get()))
 			);
 
-	public static final RegistryObject<CreativeModeTab> POTIONS =
-			register("tab_potions", () -> CreativeModeTab.builder()
-					.title(Component.translatable("itemGroup.enigmaticPotionCreativeTab"))
-					.icon(() -> new ItemStack(EnigmaticItems.RECALL_POTION.get()))
-
-			);
-
 	private static RegistryObject<CreativeModeTab> register(String name, Supplier<CreativeModeTab.Builder> builder) {
 		return CREATIVE_MODE_TABS.register(name, () -> builder.get().build());
 	}
