@@ -2,6 +2,7 @@ package com.aizistral.enigmaticlegacy.registries;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.config.OmniconfigHandler;
+import com.aizistral.enigmaticlegacy.crafting.AdvancedBrewingRecipe;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -10,7 +11,6 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
-import net.minecraftforge.common.brewing.IBrewingRecipe;
 import net.minecraftforge.common.crafting.StrictNBTIngredient;
 
 import javax.annotation.Nonnull;
@@ -70,7 +70,7 @@ public class EnigmaticBrewing {
     }
 
     private static void register(Potion input, Item ingredient, Potion output) {
-        BrewingRecipeRegistry.addRecipe(new EPBrewingRecipe(input, ingredient, output));
+        BrewingRecipeRegistry.addRecipe(new AdvancedBrewingRecipe(input, ingredient, output));
     }
 
     private static void registerFull(Item ingredient, Potion result, Potion resultLong, Potion resultStrong, Potion resultUltimate) {
@@ -97,30 +97,5 @@ public class EnigmaticBrewing {
 
     private static @Nonnull StrictNBTIngredient getIngredientPotion(Item base, Potion potion) {
         return StrictNBTIngredient.of(getPotion(base, potion));
-    }
-
-    private record EPBrewingRecipe(Potion input, Item ingredient, Potion output) implements IBrewingRecipe {
-
-        @Override
-        public boolean isInput(@Nonnull ItemStack input) {
-            return PotionUtils.getPotion(input) == this.input;
-        }
-
-        @Override
-        public boolean isIngredient(ItemStack ingredient) {
-            return ingredient.getItem() == this.ingredient;
-        }
-
-        @Override
-        @Nonnull
-        public ItemStack getOutput(@Nonnull ItemStack input, @Nonnull ItemStack ingredient) {
-            if (!this.isInput(input) || !this.isIngredient(ingredient)) {
-                return ItemStack.EMPTY;
-            }
-
-            ItemStack itemStack = new ItemStack(input.getItem());
-            PotionUtils.setPotion(itemStack, this.output);
-            return itemStack;
-        }
     }
 }

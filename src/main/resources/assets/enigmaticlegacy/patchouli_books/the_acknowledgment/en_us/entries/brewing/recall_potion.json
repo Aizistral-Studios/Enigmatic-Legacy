@@ -17,8 +17,7 @@
         },
 		{
             "type": "enigmaticlegacy:brewing",
-			"recipe": "enigmaticlegacy:recall_potion",
-			"index": 0,
+			"item": "enigmaticlegacy:recall_potion",
             "heading": "book.enigmaticlegacy.entry.recall_potion.heading.1",
             "text": "book.enigmaticlegacy.entry.recall_potion.page.2"
         },

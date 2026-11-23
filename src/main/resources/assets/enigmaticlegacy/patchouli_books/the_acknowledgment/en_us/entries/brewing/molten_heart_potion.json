@@ -14,29 +14,25 @@
         },
 		{
             "type": "enigmaticlegacy:brewing",
-			"recipe": "enigmaticlegacy:molten_heart",
-			"index": 0,
+			"potion": "enigmaticlegacy:molten_heart",
             "heading": "book.enigmaticlegacy.entry.molten_heart_potion.heading.1",
             "text": "book.enigmaticlegacy.entry.molten_heart_potion.page.2"
         },
 		{
             "type": "enigmaticlegacy:brewing",
-			"recipe": "enigmaticlegacy:long_molten_heart",
-			"index": 0,
+			"potion": "enigmaticlegacy:long_molten_heart",
             "heading": "book.enigmaticlegacy.entry.molten_heart_potion.heading.2",
             "text": "book.enigmaticlegacy.entry.molten_heart_potion.page.3"
         },
 		{
             "type": "enigmaticlegacy:brewing",
-			"recipe": "enigmaticlegacy:molten_heart",
-			"index": 1,
+			"potion": "enigmaticlegacy:molten_heart",
             "heading": "book.enigmaticlegacy.entry.molten_heart_potion.heading.3",
             "text": "book.enigmaticlegacy.entry.molten_heart_potion.page.4"
         },
 		{
             "type": "enigmaticlegacy:brewing",
-			"recipe": "enigmaticlegacy:molten_heart",
-			"index": 2,
+			"potion": "enigmaticlegacy:molten_heart",
             "heading": "book.enigmaticlegacy.entry.molten_heart_potion.heading.4",
             "text": "book.enigmaticlegacy.entry.molten_heart_potion.page.5"
         }
