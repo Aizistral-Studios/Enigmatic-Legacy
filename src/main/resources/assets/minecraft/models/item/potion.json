@@ -1,0 +1,15 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "item/potion_overlay",
+        "layer1": "item/potion"
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "enigmaticlegacy:is_ultimate": 1
+            },
+            "model": "enigmaticlegacy:item/ultimate_potion"
+        }
+    ]
+}

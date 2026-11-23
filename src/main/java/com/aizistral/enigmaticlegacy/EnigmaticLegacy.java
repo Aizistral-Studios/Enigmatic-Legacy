@@ -24,6 +24,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
@@ -35,6 +37,7 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -274,6 +277,8 @@ public class EnigmaticLegacy {
 		EnigmaticItems.ENIGMATIC_AMULET.get().registerVariants();
 		EnigmaticItems.ENIGMATIC_EYE.get().registerVariants();
 		EnigmaticItems.SOUL_COMPASS.get().registerVariants();
+		ItemProperties.registerGeneric(new ResourceLocation(MODID, "is_ultimate"), (ClampedItemPropertyFunction) (pStack, pLevel, pEntity, pSeed) ->
+				EnigmaticPotions.isUltimate(PotionUtils.getPotion(pStack)) ? 1F : 0F);
 
 		PROXY.initEntityRendering();
 
