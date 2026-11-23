@@ -105,8 +105,8 @@ public class TheJudgement extends ItemBase {
 		boolean prevNoDrops = this.noDrops(stack);
 
 		this.setNoDrops(stack, !prevNoDrops);
-		world.playSound(null, player.blockPosition(), prevNoDrops ? EnigmaticSounds.CHARGED_OFF
-				: EnigmaticSounds.CHARGED_ON, SoundSource.PLAYERS, 1F, 0.8F + random.nextFloat() * 0.2F);
+		world.playSound(null, player.blockPosition(), prevNoDrops ? EnigmaticSounds.CHARGED_OFF.get()
+				: EnigmaticSounds.CHARGED_ON.get(), SoundSource.PLAYERS, 1F, 0.8F + random.nextFloat() * 0.2F);
 		player.swing(hand);
 
 		return new InteractionResultHolder<>(InteractionResult.SUCCESS, stack);

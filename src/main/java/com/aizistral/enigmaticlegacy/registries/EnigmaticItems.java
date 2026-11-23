@@ -1,558 +1,340 @@
 package com.aizistral.enigmaticlegacy.registries;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
 import com.aizistral.enigmaticlegacy.api.generic.ConfigurableItem;
-import com.aizistral.enigmaticlegacy.api.generic.ModRegistry;
-import com.aizistral.enigmaticlegacy.api.items.IAdvancedPotionItem.PotionType;
 import com.aizistral.enigmaticlegacy.items.*;
-import com.aizistral.enigmaticlegacy.items.generic.GenericBlockItem;
 import com.aizistral.etherium.items.*;
-
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegisterEvent;
+import net.minecraftforge.registries.RegistryObject;
 
-public class EnigmaticItems extends AbstractRegistry<Item> {
-	private static final EnigmaticItems INSTANCE = new EnigmaticItems();
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
+
+@Mod.EventBusSubscriber(modid = EnigmaticLegacy.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class EnigmaticItems {
+	private static final DeferredRegister<Item> ITEMS =
+			DeferredRegister.create(ForgeRegistries.ITEMS, EnigmaticLegacy.MODID);
+
 	public static final List<Item> SPELLSTONES = new ArrayList<>();
 
 	@ConfigurableItem
-	@ObjectHolder(value = MODID + ":enigmatic_item", registryName = "item")
-	public static final EnigmaticItem ENIGMATIC_ITEM = null;
+	public static final RegistryObject<EnigmaticItem> ENIGMATIC_ITEM = register("enigmatic_item", EnigmaticItem::new);
 
 	@ConfigurableItem("Scroll of Ageless Wisdom")
-	@ObjectHolder(value = MODID + ":xp_scroll", registryName = "item")
-	public static final XPScroll XP_SCROLL = null;
+	public static final RegistryObject<XPScroll> XP_SCROLL = register("xp_scroll", XPScroll::new);
 
 	@ConfigurableItem("Enigmatic Amulet")
-	@ObjectHolder(value = MODID + ":enigmatic_amulet", registryName = "item")
-	public static final EnigmaticAmulet ENIGMATIC_AMULET = null;
+	public static final RegistryObject<EnigmaticAmulet> ENIGMATIC_AMULET = register("enigmatic_amulet", EnigmaticAmulet::new);
 
 	@ConfigurableItem("Magnet Ring")
-	@ObjectHolder(value = MODID + ":magnet_ring", registryName = "item")
-	public static final MagnetRing MAGNET_RING = null;
+	public static final RegistryObject<MagnetRing> MAGNET_RING = register("magnet_ring", MagnetRing::new);
 
 	@ConfigurableItem("Extradimensional Eye")
-	@ObjectHolder(value = MODID + ":extradimensional_eye", registryName = "item")
-	public static final ExtradimensionalEye EXTRADIMENSIONAL_EYE = null;
+	public static final RegistryObject<ExtradimensionalEye> EXTRADIMENSIONAL_EYE = register("extradimensional_eye", ExtradimensionalEye::new);
 
 	@ConfigurableItem
-	@ObjectHolder(value = MODID + ":relic_of_testing", registryName = "item")
-	public static final RelicOfTesting RELIC_OF_TESTING = null;
+	public static final RegistryObject<RelicOfTesting> RELIC_OF_TESTING = register("relic_of_testing", RelicOfTesting::new);
 
 	@ConfigurableItem("Potion of Recall")
-	@ObjectHolder(value = MODID + ":recall_potion", registryName = "item")
-	public static final RecallPotion RECALL_POTION = null;
+	public static final RegistryObject<RecallPotion> RECALL_POTION = register("recall_potion", RecallPotion::new);
 
 	@ConfigurableItem("Axe of Executioner")
-	@ObjectHolder(value = MODID + ":forbidden_axe", registryName = "item")
-	public static final ForbiddenAxe FORBIDDEN_AXE = null;
+	public static final RegistryObject<ForbiddenAxe> FORBIDDEN_AXE = register("forbidden_axe", ForbiddenAxe::new);
 
 	@ConfigurableItem("Scroll of Postmortal Recall")
-	@ObjectHolder(value = MODID + ":escape_scroll", registryName = "item")
-	public static final EscapeScroll ESCAPE_SCROLL = null;
+	public static final RegistryObject<EscapeScroll> ESCAPE_SCROLL = register("escape_scroll", EscapeScroll::new);
 
 	@ConfigurableItem("Gift of the Heaven")
-	@ObjectHolder(value = MODID + ":heaven_scroll", registryName = "item")
-	public static final HeavenScroll HEAVEN_SCROLL = null;
+	public static final RegistryObject<HeavenScroll> HEAVEN_SCROLL = register("heaven_scroll", HeavenScroll::new);
 
 	@ConfigurableItem("Ring of Dislocation")
-	@ObjectHolder(value = MODID + ":super_magnet_ring", registryName = "item")
-	public static final SuperMagnetRing SUPER_MAGNET_RING = null;
+	public static final RegistryObject<SuperMagnetRing> SUPER_MAGNET_RING = register("super_magnet_ring", SuperMagnetRing::new);
 
 	@ConfigurableItem("Heart of the Golem")
-	@ObjectHolder(value = MODID + ":golem_heart", registryName = "item")
-	public static final GolemHeart GOLEM_HEART = null;
+	public static final RegistryObject<GolemHeart> GOLEM_HEART = register("golem_heart", GolemHeart::new);
 
 	@ConfigurableItem("Megasponge")
-	@ObjectHolder(value = MODID + ":mega_sponge", registryName = "item")
-	public static final MegaSponge MEGA_SPONGE = null;
+	public static final RegistryObject<MegaSponge> MEGA_SPONGE = register("mega_sponge", MegaSponge::new);
 
 	@ConfigurableItem("Unholy Grail")
-	@ObjectHolder(value = MODID + ":unholy_grail", registryName = "item")
-	public static final UnholyGrail UNHOLY_GRAIL = null;
+	public static final RegistryObject<UnholyGrail> UNHOLY_GRAIL = register("unholy_grail", UnholyGrail::new);
 
 	@ConfigurableItem("Eye of Nebula")
-	@ObjectHolder(value = MODID + ":eye_of_nebula", registryName = "item")
-	public static final EyeOfNebula EYE_OF_NEBULA = null;
+	public static final RegistryObject<EyeOfNebula> EYE_OF_NEBULA = register("eye_of_nebula", EyeOfNebula::new);
 
 	@ConfigurableItem("Blazing Core")
-	@ObjectHolder(value = MODID + ":blazing_core", registryName = "item")
-	public static final BlazingCore BLAZING_CORE = null;
+	public static final RegistryObject<BlazingCore> BLAZING_CORE = register("blazing_core", BlazingCore::new);
 
 	@ConfigurableItem("Pearl of the Void")
-	@ObjectHolder(value = MODID + ":void_pearl", registryName = "item")
-	public static final VoidPearl VOID_PEARL = null;
+	public static final RegistryObject<VoidPearl> VOID_PEARL = register("void_pearl", VoidPearl::new);
 
 	@ConfigurableItem("Will of the Ocean")
-	@ObjectHolder(value = MODID + ":ocean_stone", registryName = "item")
-	public static final OceanStone OCEAN_STONE = null;
+	public static final RegistryObject<OceanStone> OCEAN_STONE = register("ocean_stone", OceanStone::new);
 
 	@ConfigurableItem("Angel's Blessing")
-	@ObjectHolder(value = MODID + ":angel_blessing", registryName = "item")
-	public static final AngelBlessing ANGEL_BLESSING = null;
+	public static final RegistryObject<AngelBlessing> ANGEL_BLESSING = register("angel_blessing", AngelBlessing::new);
 
 	@ConfigurableItem("Emblem of Monster Slayer")
-	@ObjectHolder(value = MODID + ":monster_charm", registryName = "item")
-	public static final MonsterCharm MONSTER_CHARM = null;
+	public static final RegistryObject<MonsterCharm> MONSTER_CHARM = register("monster_charm", MonsterCharm::new);
 
 	@ConfigurableItem("Charm of Treasure Hunter")
-	@ObjectHolder(value = MODID + ":mining_charm", registryName = "item")
-	public static final MiningCharm MINING_CHARM = null;
+	public static final RegistryObject<MiningCharm> MINING_CHARM = register("mining_charm", MiningCharm::new);
 
 	@ConfigurableItem("Ring of Ender")
-	@ObjectHolder(value = MODID + ":ender_ring", registryName = "item")
-	public static final EnderRing ENDER_RING = null;
+	public static final RegistryObject<EnderRing> ENDER_RING = register("ender_ring", EnderRing::new);
 
 	@ConfigurableItem("Mending Mixture")
-	@ObjectHolder(value = MODID + ":mending_mixture", registryName = "item")
-	public static final MendingMixture MENDING_MIXTURE = null;
+	public static final RegistryObject<MendingMixture> MENDING_MIXTURE = register("mending_mixture", MendingMixture::new);
 
 	@ConfigurableItem
-	@ObjectHolder(value = MODID + ":loot_generator", registryName = "item")
-	public static final LootGenerator LOOT_GENERATOR = null;
+	public static final RegistryObject<LootGenerator> LOOT_GENERATOR = register("loot_generator", LootGenerator::new);
 
 	@ConfigurableItem("Blank Scroll")
-	@ObjectHolder(value = MODID + ":thicc_scroll", registryName = "item")
-	public static final ThiccScroll THICC_SCROLL = null;
+	public static final RegistryObject<ThiccScroll> THICC_SCROLL = register("thicc_scroll", ThiccScroll::new);
 
 	@ConfigurableItem("Iron Ring")
-	@ObjectHolder(value = MODID + ":iron_ring", registryName = "item")
-	public static final IronRing IRON_RING = null;
+	public static final RegistryObject<IronRing> IRON_RING = register("iron_ring", IronRing::new);
 
 	@ConfigurableItem("Etherium Ore")
-	@ObjectHolder(value = MODID + ":etherium_ore", registryName = "item")
-	public static final EtheriumOre ETHERIUM_ORE = null;
+	public static final RegistryObject<EtheriumOre> ETHERIUM_ORE = register("etherium_ore", EtheriumOre::new);
 
 	@ConfigurableItem("Etherium Ingot")
-	@ObjectHolder(value = MODID + ":etherium_ingot", registryName = "item")
-	public static final EtheriumIngot ETHERIUM_INGOT = null;
+	public static final RegistryObject<EtheriumIngot> ETHERIUM_INGOT = register("etherium_ingot", EtheriumIngot::new);
 
 	@ConfigurableItem("Etherium Nugget")
-	@ObjectHolder(value = MODID + ":etherium_nugget", registryName = "item")
-	public static final EtheriumNugget ETHERIUM_NUGGET = null;
+	public static final RegistryObject<EtheriumNugget> ETHERIUM_NUGGET = register("etherium_nugget", EtheriumNugget::new);
 
 	@ConfigurableItem("Etherium Scraps")
-	@ObjectHolder(value = MODID + ":etherium_scraps", registryName = "item")
-	public static final EtheriumScraps ETHERIUM_SCRAPS = null;
-
-	@ConfigurableItem("Ultimate Potions")
-	@ObjectHolder(value = MODID + ":ultimate_potion", registryName = "item")
-	public static final UltimatePotionBase ULTIMATE_POTION = null;
-
-	@ConfigurableItem("Ultimate Potions")
-	@ObjectHolder(value = MODID + ":ultimate_potion_splash", registryName = "item")
-	public static final UltimatePotionSplash ULTIMATE_POTION_SPLASH = null;
-
-	@ConfigurableItem("Ultimate Potions")
-	@ObjectHolder(value = MODID + ":ultimate_potion_lingering", registryName = "item")
-	public static final UltimatePotionLingering ULTIMATE_POTION_LINGERING = null;
-
-	@ConfigurableItem("Common Potions")
-	@ObjectHolder(value = MODID + ":common_potion", registryName = "item")
-	public static final UltimatePotionBase COMMON_POTION = null;
-
-	@ConfigurableItem("Common Potions")
-	@ObjectHolder(value = MODID + ":common_potion_splash", registryName = "item")
-	public static final UltimatePotionSplash COMMON_POTION_SPLASH = null;
-
-	@ConfigurableItem("Common Potions")
-	@ObjectHolder(value = MODID + ":common_potion_lingering", registryName = "item")
-	public static final UltimatePotionLingering COMMON_POTION_LINGERING = null;
+	public static final RegistryObject<EtheriumScraps> ETHERIUM_SCRAPS = register("etherium_scraps", EtheriumScraps::new);
 
 	@ConfigurableItem("Etherium Armor")
-	@ObjectHolder(value = MODID + ":etherium_helmet", registryName = "item")
-	public static final EtheriumArmor ETHERIUM_HELMET = null;
+	public static final RegistryObject<EtheriumArmor> ETHERIUM_HELMET = register("etherium_helmet", () -> new EtheriumArmor(ArmorItem.Type.HELMET));
 
 	@ConfigurableItem("Etherium Armor")
-	@ObjectHolder(value = MODID + ":etherium_chestplate", registryName = "item")
-	public static final EtheriumArmor ETHERIUM_CHESTPLATE = null;
+	public static final RegistryObject<EtheriumArmor> ETHERIUM_CHESTPLATE = register("etherium_chestplate", () -> new EtheriumArmor(ArmorItem.Type.CHESTPLATE));
 
 	@ConfigurableItem("Etherium Armor")
-	@ObjectHolder(value = MODID + ":etherium_leggings", registryName = "item")
-	public static final EtheriumArmor ETHERIUM_LEGGINGS = null;
+	public static final RegistryObject<EtheriumArmor> ETHERIUM_LEGGINGS = register("etherium_leggings", () -> new EtheriumArmor(ArmorItem.Type.LEGGINGS));
 
 	@ConfigurableItem("Etherium Armor")
-	@ObjectHolder(value = MODID + ":etherium_boots", registryName = "item")
-	public static final EtheriumArmor ETHERIUM_BOOTS = null;
+	public static final RegistryObject<EtheriumArmor> ETHERIUM_BOOTS = register("etherium_boots", () -> new EtheriumArmor(ArmorItem.Type.BOOTS));
 
 	@ConfigurableItem("Etherium Pickaxe")
-	@ObjectHolder(value = MODID + ":etherium_pickaxe", registryName = "item")
-	public static final EtheriumPickaxe ETHERIUM_PICKAXE = null;
+	public static final RegistryObject<EtheriumPickaxe> ETHERIUM_PICKAXE = register("etherium_pickaxe", EtheriumPickaxe::new);
 
 	@ConfigurableItem("Etherium Waraxe")
-	@ObjectHolder(value = MODID + ":etherium_axe", registryName = "item")
-	public static final EtheriumAxe ETHERIUM_AXE = null;
+	public static final RegistryObject<EtheriumAxe> ETHERIUM_AXE = register("etherium_axe", EtheriumAxe::new);
 
 	@ConfigurableItem("Etherium Shovel")
-	@ObjectHolder(value = MODID + ":etherium_shovel", registryName = "item")
-	public static final EtheriumShovel ETHERIUM_SHOVEL = null;
+	public static final RegistryObject<EtheriumShovel> ETHERIUM_SHOVEL = register("etherium_shovel", EtheriumShovel::new);
 
 	@ConfigurableItem("Etherium Broadsword")
-	@ObjectHolder(value = MODID + ":etherium_sword", registryName = "item")
-	public static final EtheriumSword ETHERIUM_SWORD = null;
+	public static final RegistryObject<EtheriumSword> ETHERIUM_SWORD = register("etherium_sword", EtheriumSword::new);
 
 	@ConfigurableItem("Etherium Scythe")
-	@ObjectHolder(value = MODID + ":etherium_scythe", registryName = "item")
-	public static final EtheriumScythe ETHERIUM_SCYTHE = null;
+	public static final RegistryObject<EtheriumScythe> ETHERIUM_SCYTHE = register("etherium_scythe", EtheriumScythe::new);
 
 	@ConfigurableItem("Astral Dust")
-	@ObjectHolder(value = MODID + ":astral_dust", registryName = "item")
-	public static final AstralDust ASTRAL_DUST = null;
+	public static final RegistryObject<AstralDust> ASTRAL_DUST = register("astral_dust", AstralDust::new);
 
 	@ConfigurableItem("The Architect's Inkwell")
-	@ObjectHolder(value = MODID + ":lore_inscriber", registryName = "item")
-	public static final LoreInscriber LORE_INSCRIBER = null;
+	public static final RegistryObject<LoreInscriber> LORE_INSCRIBER = register("lore_inscriber", LoreInscriber::new);
 
 	@ConfigurableItem("Lore Fragment")
-	@ObjectHolder(value = MODID + ":lore_fragment", registryName = "item")
-	public static final LoreFragment LORE_FRAGMENT = null;
+	public static final RegistryObject<LoreFragment> LORE_FRAGMENT = register("lore_fragment", LoreFragment::new);
 
 	@ConfigurableItem("Ender Rod")
-	@ObjectHolder(value = MODID + ":ender_rod", registryName = "item")
-	public static final EnderRod ENDER_ROD = null;
+	public static final RegistryObject<EnderRod> ENDER_ROD = register("ender_rod", EnderRod::new);
 
 	@ConfigurableItem("Astral Breaker")
-	@ObjectHolder(value = MODID + ":astral_breaker", registryName = "item")
-	public static final AstralBreaker ASTRAL_BREAKER = null;
+	public static final RegistryObject<AstralBreaker> ASTRAL_BREAKER = register("astral_breaker", AstralBreaker::new);
 
 	@ConfigurableItem("Keystone of The Oblivion")
-	@ObjectHolder(value = MODID + ":void_stone", registryName = "item")
-	public static final OblivionStone VOID_STONE = null;
+	public static final RegistryObject<OblivionStone> VOID_STONE = register("void_stone", OblivionStone::new);
 
 	@ConfigurableItem("Tome of Hungering Knowledge")
-	@ObjectHolder(value = MODID + ":enchantment_transposer", registryName = "item")
-	public static final EnchantmentTransposer ENCHANTMENT_TRANSPOSER = null;
+	public static final RegistryObject<EnchantmentTransposer> ENCHANTMENT_TRANSPOSER = register("enchantment_transposer", EnchantmentTransposer::new);
 
 	@ConfigurableItem("Tome of Devoured Malignancy")
-	@ObjectHolder(value = MODID + ":curse_transposer", registryName = "item")
-	public static final CurseTransposer CURSE_TRANSPOSER = null;
+	public static final RegistryObject<CurseTransposer> CURSE_TRANSPOSER = register("curse_transposer", CurseTransposer::new);
 
 	@ConfigurableItem("Grace of the Creator")
-	@ObjectHolder(value = MODID + ":fabulous_scroll", registryName = "item")
-	public static final FabulousScroll FABULOUS_SCROLL = null;
+	public static final RegistryObject<FabulousScroll> FABULOUS_SCROLL = register("fabulous_scroll", FabulousScroll::new);
 
 	@ConfigurableItem
-	@ObjectHolder(value = MODID + ":storage_crystal", registryName = "item")
-	public static final StorageCrystal STORAGE_CRYSTAL = null;
+	public static final RegistryObject<StorageCrystal> STORAGE_CRYSTAL = register("storage_crystal", StorageCrystal::new);
 
 	@ConfigurableItem
-	@ObjectHolder(value = MODID + ":soul_crystal", registryName = "item")
-	public static final SoulCrystal SOUL_CRYSTAL = null;
+	public static final RegistryObject<SoulCrystal> SOUL_CRYSTAL = register("soul_crystal", SoulCrystal::new);
 
 	@ConfigurableItem("The Acknowledgment")
-	@ObjectHolder(value = MODID + ":the_acknowledgment", registryName = "item")
-	public static final TheAcknowledgment THE_ACKNOWLEDGMENT = null;
+	public static final RegistryObject<TheAcknowledgment> THE_ACKNOWLEDGMENT = register("the_acknowledgment", TheAcknowledgment::new);
 
 	@ConfigurableItem("Tattered Tome")
-	@ObjectHolder(value = MODID + ":tattered_tome", registryName = "item")
-	public static final RevelationTome TATTERED_TOME = null;
+	public static final RegistryObject<RevelationTome> TATTERED_TOME = register("tattered_tome", () -> new RevelationTome(Rarity.UNCOMMON, RevelationTome.TomeType.OVERWORLD));
 
 	@ConfigurableItem("Withered Tome")
-	@ObjectHolder(value = MODID + ":withered_tome", registryName = "item")
-	public static final RevelationTome WITHERED_TOME = null;
+	public static final RegistryObject<RevelationTome> WITHERED_TOME = register("withered_tome", () -> new RevelationTome(Rarity.UNCOMMON, RevelationTome.TomeType.NETHER));
 
 	@ConfigurableItem("Corrupted Tome")
-	@ObjectHolder(value = MODID + ":corrupted_tome", registryName = "item")
-	public static final RevelationTome CORRUPTED_TOME = null;
+	public static final RegistryObject<RevelationTome> CORRUPTED_TOME = register("corrupted_tome", () -> new RevelationTome(Rarity.RARE, RevelationTome.TomeType.END));
 
 	@ConfigurableItem("Ring of the Seven Curses")
-	@ObjectHolder(value = MODID + ":cursed_ring", registryName = "item")
-	public static final CursedRing CURSED_RING = null;
+	public static final RegistryObject<CursedRing> CURSED_RING = register("cursed_ring", CursedRing::new);
 
 	@ConfigurableItem("Twisted Mirror")
-	@ObjectHolder(value = MODID + ":twisted_mirror", registryName = "item")
-	public static final TwistedMirror TWISTED_MIRROR = null;
+	public static final RegistryObject<TwistedMirror> TWISTED_MIRROR = register("twisted_mirror", TwistedMirror::new);
 
 	@ConfigurableItem("Scroll of a Thousand Curses")
-	@ObjectHolder(value = MODID + ":cursed_scroll", registryName = "item")
-	public static final CursedScroll CURSED_SCROLL = null;
+	public static final RegistryObject<CursedScroll> CURSED_SCROLL = register("cursed_scroll", CursedScroll::new);
 
 	@ConfigurableItem("Emblem of Bloodstained Valor")
-	@ObjectHolder(value = MODID + ":berserk_charm", registryName = "item")
-	public static final BerserkEmblem BERSERK_CHARM = null;
+	public static final RegistryObject<BerserkEmblem> BERSERK_CHARM = register("berserk_charm", BerserkEmblem::new);
 
 	@ConfigurableItem("Heart of the Earth")
-	@ObjectHolder(value = MODID + ":earth_heart", registryName = "item")
-	public static final EarthHeart EARTH_HEART = null;
+	public static final RegistryObject<EarthHeart> EARTH_HEART = register("earth_heart", EarthHeart::new);
 
 	@ConfigurableItem("Twisted Heart")
-	@ObjectHolder(value = MODID + ":twisted_heart", registryName = "item")
-	public static final TwistedHeart TWISTED_HEART = null;
+	public static final RegistryObject<TwistedHeart> TWISTED_HEART = register("twisted_heart", TwistedHeart::new);
 
 	@ConfigurableItem("Heart of the Guardian")
-	@ObjectHolder(value = MODID + ":guardian_heart", registryName = "item")
-	public static final GuardianHeart GUARDIAN_HEART = null;
+	public static final RegistryObject<GuardianHeart> GUARDIAN_HEART = register("guardian_heart", GuardianHeart::new);
 
 	@ConfigurableItem("The Twist")
-	@ObjectHolder(value = MODID + ":the_twist", registryName = "item")
-	public static final TheTwist THE_TWIST = null;
+	public static final RegistryObject<TheTwist> THE_TWIST = register("the_twist", TheTwist::new);
 
 	@ConfigurableItem("Nefarious Essence")
-	@ObjectHolder(value = MODID + ":evil_essence", registryName = "item")
-	public static final EvilEssence EVIL_ESSENCE = null;
+	public static final RegistryObject<EvilEssence> EVIL_ESSENCE = register("evil_essence", EvilEssence::new);
 
 	@ConfigurableItem("Nefarious Ingot")
-	@ObjectHolder(value = MODID + ":evil_ingot", registryName = "item")
-	public static final EvilIngot EVIL_INGOT = null;
+	public static final RegistryObject<EvilIngot> EVIL_INGOT = register("evil_ingot", EvilIngot::new);
 
 	@ConfigurableItem("Guite to Animal Companionship")
-	@ObjectHolder(value = MODID + ":animal_guidebook", registryName = "item")
-	public static final PetGuidebook ANIMAL_GUIDEBOOK = null;
+	public static final RegistryObject<PetGuidebook> ANIMAL_GUIDEBOOK = register("animal_guidebook", PetGuidebook::new);
 
 	@ConfigurableItem("Guide to Feral Hunt")
-	@ObjectHolder(value = MODID + ":hunter_guidebook", registryName = "item")
-	public static final HunterGuidebook HUNTER_GUIDEBOOK = null;
+	public static final RegistryObject<HunterGuidebook> HUNTER_GUIDEBOOK = register("hunter_guidebook", HunterGuidebook::new);
 
 	@ConfigurableItem("Forbidden Fruit")
-	@ObjectHolder(value = MODID + ":forbidden_fruit", registryName = "item")
-	public static final ForbiddenFruit FORBIDDEN_FRUIT = null;
+	public static final RegistryObject<ForbiddenFruit> FORBIDDEN_FRUIT = register("forbidden_fruit", ForbiddenFruit::new);
 
 	@ConfigurableItem
-	@ObjectHolder(value = MODID + ":redemption_potion", registryName = "item")
-	public static final RedemptionPotion REDEMPTION_POTION = null;
+	public static final RegistryObject<RedemptionPotion> REDEMPTION_POTION = register("redemption_potion", RedemptionPotion::new);
 
 	@ConfigurableItem("Exquisite Ring")
-	@ObjectHolder(value = MODID + ":golden_ring", registryName = "item")
-	public static final GoldenRing GOLDEN_RING = null;
+	public static final RegistryObject<GoldenRing> GOLDEN_RING = register("golden_ring", GoldenRing::new);
 
 	@ConfigurableItem("Unholy Stone")
-	@ObjectHolder(value = MODID + ":cursed_stone", registryName = "item")
-	public static final CursedStone CURSED_STONE = null;
+	public static final RegistryObject<CursedStone> CURSED_STONE = register("cursed_stone", CursedStone::new);
 
 	@ConfigurableItem("Enchanter's Pearl")
-	@ObjectHolder(value = MODID + ":enchanter_pearl", registryName = "item")
-	public static final EnchanterPearl ENCHANTER_PEARL = null;
+	public static final RegistryObject<EnchanterPearl> ENCHANTER_PEARL = register("enchanter_pearl", EnchanterPearl::new);
 
 	@ConfigurableItem("Pact of Infinite Avarice")
-	@ObjectHolder(value = MODID + ":avarice_scroll", registryName = "item")
-	public static final AvariceScroll AVARICE_SCROLL = null;
+	public static final RegistryObject<AvariceScroll> AVARICE_SCROLL = register("avarice_scroll", AvariceScroll::new);
 
 	@ConfigurableItem("Essence of Raging Life")
-	@ObjectHolder(value = MODID + ":infinimeal", registryName = "item")
-	public static final Infinimeal INFINIMEAL = null;
+	public static final RegistryObject<Infinimeal> INFINIMEAL = register("infinimeal", Infinimeal::new);
 
 	@ConfigurableItem("Darkest Scroll")
-	@ObjectHolder(value = MODID + ":darkest_scroll", registryName = "item")
-	public static final DarkestScroll DARKEST_SCROLL = null;
+	public static final RegistryObject<DarkestScroll> DARKEST_SCROLL = register("darkest_scroll", DarkestScroll::new);
 
 	@ConfigurableItem
-	@ObjectHolder(value = MODID + ":unwitnessed_amulet", registryName = "item")
-	public static final UnwitnessedAmulet UNWITNESSED_AMULET = null;
+	public static final RegistryObject<UnwitnessedAmulet> UNWITNESSED_AMULET = register("unwitnessed_amulet", UnwitnessedAmulet::new);
 
 	@ConfigurableItem("Potion of Twisted Mercy")
-	@ObjectHolder(value = MODID + ":twisted_potion", registryName = "item")
-	public static final TwistedPotion TWISTED_POTION = null;
+	public static final RegistryObject<TwistedPotion> TWISTED_POTION = register("twisted_potion", TwistedPotion::new);
 
 	@ConfigurableItem("Bulwark of Blazing Pride")
-	@ObjectHolder(value = MODID + ":infernal_shield", registryName = "item")
-	public static final InfernalShield INFERNAL_SHIELD = null;
+	public static final RegistryObject<InfernalShield> INFERNAL_SHIELD = register("infernal_shield", InfernalShield::new);
 
 	@ConfigurableItem("Heart of the Cosmos")
-	@ObjectHolder(value = MODID + ":cosmic_heart", registryName = "item")
-	public static final CosmicHeart COSMIC_HEART = null;
+	public static final RegistryObject<CosmicHeart> COSMIC_HEART = register("cosmic_heart", CosmicHeart::new);
 
 	@ConfigurableItem("Heart of the Abyss")
-	@ObjectHolder(value = MODID + ":abyssal_heart", registryName = "item")
-	public static final AbyssalHeart ABYSSAL_HEART = null;
+	public static final RegistryObject<AbyssalHeart> ABYSSAL_HEART = register("abyssal_heart", AbyssalHeart::new);
 
 	@ConfigurableItem("The Infinitum")
-	@ObjectHolder(value = MODID + ":the_infinitum", registryName = "item")
-	public static final TheInfinitum THE_INFINITUM = null;
+	public static final RegistryObject<TheInfinitum> THE_INFINITUM = register("the_infinitum", TheInfinitum::new);
 
 	@ConfigurableItem("Celestial Fruit")
-	@ObjectHolder(value = MODID + ":astral_fruit", registryName = "item")
-	public static final AstralFruit ASTRAL_FRUIT = null;
+	public static final RegistryObject<AstralFruit> ASTRAL_FRUIT = register("astral_fruit", AstralFruit::new);
 
 	@ConfigurableItem("The Ender Slayer")
-	@ObjectHolder(value = MODID + ":ender_slayer", registryName = "item")
-	public static final EnderSlayer ENDER_SLAYER = null;
+	public static final RegistryObject<EnderSlayer> ENDER_SLAYER = register("ender_slayer", EnderSlayer::new);
 
 	@ConfigurableItem("Non-Euclidean Cube")
-	@ObjectHolder(value = MODID + ":the_cube", registryName = "item")
-	public static final TheCube THE_CUBE = null;
+	public static final RegistryObject<TheCube> THE_CUBE = register("the_cube", TheCube::new);
 
 	@ConfigurableItem("The Burden of Desolation")
-	@ObjectHolder(value = MODID + ":desolation_ring", registryName = "item")
-	public static final DesolationRing DESOLATION_RING = null;
+	public static final RegistryObject<DesolationRing> DESOLATION_RING = register("desolation_ring", DesolationRing::new);
 
 	@ConfigurableItem("Astral Potato")
-	@ObjectHolder(value = MODID + ":astral_potato", registryName = "item")
-	public static final AstralPotato ASTRAL_POTATO = null;
+	public static final RegistryObject<AstralPotato> ASTRAL_POTATO = register("astral_potato", AstralPotato::new);
 
 	@ConfigurableItem("Wayfinder of the Damned")
-	@ObjectHolder(value = MODID + ":soul_compass", registryName = "item")
-	public static final SoulCompass SOUL_COMPASS = null;
+	public static final RegistryObject<SoulCompass> SOUL_COMPASS = register("soul_compass", SoulCompass::new);
 
 	@ConfigurableItem("Amulet of Ascension")
-	@ObjectHolder(value = MODID + ":ascension_amulet", registryName = "item")
-	public static final AscensionAmulet ASCENSION_AMULET = null;
+	public static final RegistryObject<AscensionAmulet> ASCENSION_AMULET = register("ascension_amulet", AscensionAmulet::new);
 
 	@ConfigurableItem("The Testament of Contempt")
-	@ObjectHolder(value = MODID + ":eldritch_amulet", registryName = "item")
-	public static final EldritchAmulet ELDRITCH_AMULET = null;
+	public static final RegistryObject<EldritchAmulet> ELDRITCH_AMULET = register("eldritch_amulet", EldritchAmulet::new);
 
 	@ConfigurableItem("Majestic Elytra")
-	@ObjectHolder(value = MODID + ":enigmatic_elytra", registryName = "item")
-	public static final EnigmaticElytra ENIGMATIC_ELYTRA = null;
+	public static final RegistryObject<EnigmaticElytra> ENIGMATIC_ELYTRA = register("enigmatic_elytra", EnigmaticElytra::new);
 
 	@ConfigurableItem("Inscrutable Eye")
-	@ObjectHolder(value = MODID + ":enigmatic_eye", registryName = "item")
-	public static final EnigmaticEye ENIGMATIC_EYE = null;
+	public static final RegistryObject<EnigmaticEye> ENIGMATIC_EYE = register("enigmatic_eye", EnigmaticEye::new);
 
 	@ConfigurableItem("Bottle of Ichor")
-	@ObjectHolder(value = MODID + ":ichor_bottle", registryName = "item")
-	public static final IchorBottle ICHOR_BOTTLE = null;
+	public static final RegistryObject<IchorBottle> ICHOR_BOTTLE = register("ichor_bottle", IchorBottle::new);
 
 	@ConfigurableItem
-	@ObjectHolder(value = MODID + ":quote_player", registryName = "item")
-	public static final QuotePlayer QUOTE_PLAYER = null;
+	public static final RegistryObject<QuotePlayer> QUOTE_PLAYER = register("quote_player", QuotePlayer::new);
 
 	@ConfigurableItem("Charming Insignia")
-	@ObjectHolder(value = MODID + ":insignia", registryName = "item")
-	public static final Insignia INSIGNIA = null;
+	public static final RegistryObject<Insignia> INSIGNIA = register("insignia", Insignia::new);
 
 	@ConfigurableItem("Cosmic Scroll")
-	@ObjectHolder(value = MODID + ":cosmic_scroll", registryName = "item")
-	public static final Item COSMIC_SCROLL = null;
+	public static final RegistryObject<Item> COSMIC_SCROLL = register("cosmic_scroll", CosmicScroll::new);
 
 	@ConfigurableItem("Deception Amulet")
-	@ObjectHolder(value = MODID + ":deception_amulet", registryName = "item")
-	public static final Item DECEPTION_AMULET = null;
+	public static final RegistryObject<Item> DECEPTION_AMULET = register("deception_amulet", DeceptionAmulet::new);
 
 	@ConfigurableItem("The Judgement")
-	@ObjectHolder(value = MODID + ":the_judgement", registryName = "item")
-	public static final Item THE_JUDGEMENT = null;
+	public static final RegistryObject<Item> THE_JUDGEMENT = register("the_judgement", TheJudgement::new);
 
 	@ConfigurableItem("Soul Dust")
-	@ObjectHolder(value = MODID + ":soul_dust", registryName = "item")
-	public static final Item SOUL_DUST = null;
+	public static final RegistryObject<Item> SOUL_DUST = register("soul_dust", SoulDust::new);
 
 	@ConfigurableItem("Eldritch Frying Pan")
-	@ObjectHolder(value = MODID + ":eldritch_pan", registryName = "item")
-	public static final Item ELDRITCH_PAN = null;
+	public static final RegistryObject<Item> ELDRITCH_PAN = register("eldritch_pan", EldritchPan::new);
 
-	private EnigmaticItems() {
-		super(ForgeRegistries.ITEMS);
-		this.register("enigmatic_item", EnigmaticItem::new);
-		this.register("xp_scroll", XPScroll::new);
-		this.register("enigmatic_amulet", EnigmaticAmulet::new);
-		this.register("magnet_ring", MagnetRing::new);
-		this.register("extradimensional_eye", ExtradimensionalEye::new);
-		this.register("relic_of_testing", RelicOfTesting::new);
-		this.register("recall_potion", RecallPotion::new);
-		this.register("forbidden_axe", ForbiddenAxe::new);
-		this.register("escape_scroll", EscapeScroll::new);
-		this.register("heaven_scroll", HeavenScroll::new);
-		this.register("super_magnet_ring", SuperMagnetRing::new);
-		this.register("golem_heart", GolemHeart::new);
-		this.register("mega_sponge", MegaSponge::new);
-		this.register("unholy_grail", UnholyGrail::new);
-		this.register("eye_of_nebula", EyeOfNebula::new);
-		this.register("blazing_core", BlazingCore::new);
-		this.register("void_pearl", VoidPearl::new);
-		this.register("ocean_stone", OceanStone::new);
-		this.register("angel_blessing", AngelBlessing::new);
-		this.register("monster_charm", MonsterCharm::new);
-		this.register("mining_charm", MiningCharm::new);
-		this.register("ender_ring", EnderRing::new);
-		this.register("mending_mixture", MendingMixture::new);
-		this.register("loot_generator", LootGenerator::new);
-		this.register("thicc_scroll", ThiccScroll::new);
-		this.register("iron_ring", IronRing::new);
-		this.register("etherium_ore", EtheriumOre::new);
-		this.register("etherium_ingot", EtheriumIngot::new);
-		this.register("etherium_nugget", EtheriumNugget::new);
-		this.register("etherium_scraps", EtheriumScraps::new);
-		this.register("etherium_pickaxe", EtheriumPickaxe::new);
-		this.register("etherium_axe", EtheriumAxe::new);
-		this.register("etherium_shovel", EtheriumShovel::new);
-		this.register("etherium_sword", EtheriumSword::new);
-		this.register("etherium_scythe", EtheriumScythe::new);
-		this.register("etherium_helmet", () -> new EtheriumArmor(ArmorItem.Type.HELMET));
-		this.register("etherium_chestplate", () -> new EtheriumArmor(ArmorItem.Type.CHESTPLATE));
-		this.register("etherium_leggings", () -> new EtheriumArmor(ArmorItem.Type.LEGGINGS));
-		this.register("etherium_boots", () -> new EtheriumArmor(ArmorItem.Type.BOOTS));
-		this.register("ender_rod", EnderRod::new);
-		this.register("astral_dust", AstralDust::new);
-		this.register("lore_inscriber", LoreInscriber::new);
-		this.register("lore_fragment", LoreFragment::new);
-		this.register("astral_breaker", AstralBreaker::new);
-		this.register("void_stone", OblivionStone::new);
-		this.register("enchantment_transposer", EnchantmentTransposer::new);
-		this.register("curse_transposer", CurseTransposer::new);
-		this.register("fabulous_scroll", FabulousScroll::new);
-		this.register("storage_crystal", StorageCrystal::new);
-		this.register("soul_crystal", SoulCrystal::new);
-		this.register("the_acknowledgment", TheAcknowledgment::new);
-		this.register("tattered_tome", () -> new RevelationTome(Rarity.UNCOMMON, RevelationTome.TomeType.OVERWORLD));
-		this.register("withered_tome", () -> new RevelationTome(Rarity.UNCOMMON, RevelationTome.TomeType.NETHER));
-		this.register("corrupted_tome", () -> new RevelationTome(Rarity.RARE, RevelationTome.TomeType.END));
-		this.register("cursed_ring", CursedRing::new);
-		this.register("twisted_mirror", TwistedMirror::new);
-		this.register("cursed_scroll", CursedScroll::new);
-		this.register("avarice_scroll", AvariceScroll::new);
-		this.register("berserk_charm", BerserkEmblem::new);
-		this.register("guardian_heart", GuardianHeart::new);
-		this.register("the_twist", TheTwist::new);
-		this.register("evil_essence", EvilEssence::new);
-		this.register("evil_ingot", EvilIngot::new);
-		this.register("forbidden_fruit", ForbiddenFruit::new);
-		this.register("redemption_potion", RedemptionPotion::new);
-		this.register("animal_guidebook", PetGuidebook::new);
-		this.register("hunter_guidebook", HunterGuidebook::new);
-		this.register("earth_heart", EarthHeart::new);
-		this.register("twisted_heart", TwistedHeart::new);
-		this.register("golden_ring", GoldenRing::new);
-		this.register("cursed_stone", CursedStone::new);
-		this.register("enchanter_pearl", EnchanterPearl::new);
-		this.register("infinimeal", Infinimeal::new);
-		this.register("darkest_scroll", DarkestScroll::new);
-		this.register("unwitnessed_amulet", UnwitnessedAmulet::new);
-		this.register("twisted_potion", TwistedPotion::new);
-		this.register("infernal_shield", InfernalShield::new);
-		this.register("cosmic_heart", CosmicHeart::new);
-		this.register("abyssal_heart", AbyssalHeart::new);
-		this.register("the_infinitum", TheInfinitum::new);
-		this.register("astral_fruit", AstralFruit::new);
-		this.register("ender_slayer", EnderSlayer::new);
-		this.register("the_cube", TheCube::new);
-		this.register("desolation_ring", DesolationRing::new);
-		this.register("astral_potato", AstralPotato::new);
-		this.register("soul_compass", SoulCompass::new);
-		this.register("ascension_amulet", AscensionAmulet::new);
-		this.register("eldritch_amulet", EldritchAmulet::new);
-		this.register("enigmatic_elytra", EnigmaticElytra::new);
-		this.register("enigmatic_eye", EnigmaticEye::new);
-		this.register("ichor_bottle", IchorBottle::new);
-		this.register("quote_player", QuotePlayer::new);
-		this.register("insignia", Insignia::new);
-		this.register("cosmic_scroll", CosmicScroll::new);
-		this.register("deception_amulet", DeceptionAmulet::new);
-		this.register("the_judgement", TheJudgement::new);
-		this.register("soul_dust", SoulDust::new);
-		this.register("eldritch_pan", EldritchPan::new);
-
-		this.register("common_potion", () ->  new UltimatePotionBase(Rarity.COMMON, PotionType.COMMON));
-		this.register("common_potion_splash", () ->  new UltimatePotionSplash(Rarity.COMMON, PotionType.COMMON));
-		this.register("common_potion_lingering", () ->  new UltimatePotionLingering(Rarity.COMMON, PotionType.COMMON));
-		this.register("ultimate_potion", () ->  new UltimatePotionBase(Rarity.RARE, PotionType.ULTIMATE));
-		this.register("ultimate_potion_splash", () ->  new UltimatePotionSplash(Rarity.RARE, PotionType.ULTIMATE));
-		this.register("ultimate_potion_lingering", () ->  new UltimatePotionLingering(Rarity.RARE, PotionType.ULTIMATE));
+	public static void registerItems(IEventBus modEventBus) {
+		ITEMS.register(modEventBus);
 	}
 
-	@Override
-	protected void onRegister(RegisterEvent event) {
+	private static <T extends Item> RegistryObject<T> register(String name, Supplier<T> builder) {
+		return ITEMS.register(name, builder);
+	}
+
+	@SubscribeEvent
+	public static void onRegister(RegisterEvent event) {
+		if (!event.getRegistryKey().equals(ForgeRegistries.Keys.ITEMS)) return;
+
 		EnigmaticBlocks.getBlockItemMap().forEach((block, item) ->
-		event.register(ForgeRegistries.Keys.ITEMS, block, () ->
-		item.apply(ForgeRegistries.BLOCKS.getValue(block))));
+				event.register(ForgeRegistries.Keys.ITEMS, block, () ->
+						item.apply(ForgeRegistries.BLOCKS.getValue(block))));
 	}
 
 }

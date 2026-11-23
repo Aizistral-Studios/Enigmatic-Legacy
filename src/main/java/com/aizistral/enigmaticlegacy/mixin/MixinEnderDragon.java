@@ -41,7 +41,7 @@ public abstract class MixinEnderDragon extends Mob implements Enemy, IAbyssalHea
 				int heartsGained = SuperpositionHandler.getPersistentInteger(this.abyssalHeartOwner, "AbyssalHeartsGained", 0);
 
 				Vector3 center = Vector3.fromEntityCenter(this);
-				PermanentItemEntity heart = new PermanentItemEntity(this.level(), center.x, center.y, center.z, new ItemStack(EnigmaticItems.ABYSSAL_HEART, 1));
+				PermanentItemEntity heart = new PermanentItemEntity(this.level(), center.x, center.y, center.z, new ItemStack(EnigmaticItems.ABYSSAL_HEART.get(), 1));
 				heart.setOwnerId(this.abyssalHeartOwner.getUUID());
 				this.level().addFreshEntity(heart);
 

@@ -98,8 +98,8 @@ public class AscensionAmulet extends EnigmaticAmulet {
 
 	@Override
 	public boolean canEquip(SlotContext context, ItemStack stack) {
-		return !SuperpositionHandler.hasCurio(context.entity(), EnigmaticItems.ENIGMATIC_AMULET)
-				&& !SuperpositionHandler.hasCurio(context.entity(), EnigmaticItems.ASCENSION_AMULET);
+		return !SuperpositionHandler.hasCurio(context.entity(), EnigmaticItems.ENIGMATIC_AMULET.get())
+				&& !SuperpositionHandler.hasCurio(context.entity(), EnigmaticItems.ASCENSION_AMULET.get());
 	}
 
 }

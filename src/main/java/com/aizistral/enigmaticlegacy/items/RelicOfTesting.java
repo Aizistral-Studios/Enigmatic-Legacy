@@ -66,7 +66,7 @@ public class RelicOfTesting extends ItemBase implements IHidden {
 
 		SuperpositionHandler.setSpellstoneCooldown(playerIn, 0);
 
-		SuperpositionHandler.setPersistentInteger(playerIn, EnigmaticItems.TATTERED_TOME.persistantPointsTag, 0);
+		SuperpositionHandler.setPersistentInteger(playerIn, EnigmaticItems.TATTERED_TOME.get().persistantPointsTag, 0);
 
 		ItemStack checkTag = playerIn.getInventory().offhand.get(0);
 
@@ -113,7 +113,7 @@ public class RelicOfTesting extends ItemBase implements IHidden {
 
 		for (Creeper creeper : list) {
 			creeper.goalSelector.addGoal(1, new AvoidEntityGoal<>(creeper, Player.class, (arg) -> {
-				return arg instanceof Player ? SuperpositionHandler.hasCurio(arg, EnigmaticItems.ENIGMATIC_AMULET) : false;
+				return arg instanceof Player ? SuperpositionHandler.hasCurio(arg, EnigmaticItems.ENIGMATIC_AMULET.get()) : false;
 			}, 6.0F, 1.0D, 1.2D, EntitySelector.NO_CREATIVE_OR_SPECTATOR::test));
 
 			if (creeper.getTarget() == entity) {

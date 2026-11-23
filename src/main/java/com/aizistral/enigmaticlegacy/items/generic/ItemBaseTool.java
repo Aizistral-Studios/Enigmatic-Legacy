@@ -63,7 +63,7 @@ public abstract class ItemBaseTool extends DiggerItem implements ICreativeTabMem
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticTabs.MAIN;
+		return EnigmaticTabs.MAIN.get();
 	}
 
 	public static Properties getDefaultProperties() {

@@ -205,7 +205,7 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	@Override
 	public void onUnequip(SlotContext context, ItemStack newStack, ItemStack stack) {
 		if (context.entity() instanceof ServerPlayer player) {
-			EnigmaticItems.MINING_CHARM.removeNightVisionEffect(player, this.nightVisionDuration);
+			EnigmaticItems.MINING_CHARM.get().removeNightVisionEffect(player, this.nightVisionDuration);
 			player.getAttributes().removeAttributeModifiers(this.createAttributeMap(player));
 		}
 	}
@@ -213,14 +213,14 @@ public class OceanStone extends ItemSpellstoneCurio implements ISpellstone {
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
 		if (context.entity() instanceof ServerPlayer player)
-			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.OCEAN_STONE)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.OCEAN_STONE.get())) {
 				if (player.isEyeInFluid(FluidTags.WATER)) {
 					EnigmaticEventHandler.isApplyingNightVision = true;
 					player.addEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, this.nightVisionDuration, 0, true, false));
 					EnigmaticEventHandler.isApplyingNightVision = false;
 					player.setAirSupply(300);
 				} else {
-					EnigmaticItems.MINING_CHARM.removeNightVisionEffect(player, this.nightVisionDuration);
+					EnigmaticItems.MINING_CHARM.get().removeNightVisionEffect(player, this.nightVisionDuration);
 				}
 
 				player.getAttributes().addTransientAttributeModifiers(this.createAttributeMap(player));

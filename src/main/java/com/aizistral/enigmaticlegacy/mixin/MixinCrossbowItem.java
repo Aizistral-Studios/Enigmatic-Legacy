@@ -36,10 +36,10 @@ public class MixinCrossbowItem {
 	private static void onGetArrow(Level level, LivingEntity shooter, ItemStack crossbowStack,
 			ItemStack ammoStack, CallbackInfoReturnable<AbstractArrow> info) {
 		AbstractArrow arrow = info.getReturnValue();
-		int sharpshooter = crossbowStack.getEnchantmentLevel(EnigmaticEnchantments.SHARPSHOOTER);
+		int sharpshooter = crossbowStack.getEnchantmentLevel(EnigmaticEnchantments.SHARPSHOOTER.get());
 		arrow.setBaseDamage(arrow.getBaseDamage() + (0.8 * sharpshooter));
 
-		if (crossbowStack.getEnchantmentLevel(EnigmaticEnchantments.CEASELESS) > 0) {
+		if (crossbowStack.getEnchantmentLevel(EnigmaticEnchantments.CEASELESS.get()) > 0) {
 			arrow.pickup = Pickup.CREATIVE_ONLY;
 		}
 	}

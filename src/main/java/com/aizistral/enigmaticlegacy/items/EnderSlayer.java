@@ -120,7 +120,7 @@ public class EnderSlayer extends SwordItem implements ICursed, ICreativeTabMembe
 
 	@Override
 	public @Nullable CreativeModeTab getCreativeTab() {
-		return EnigmaticTabs.MAIN;
+		return EnigmaticTabs.MAIN.get();
 	}
 
 }

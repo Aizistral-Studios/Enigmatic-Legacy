@@ -88,7 +88,7 @@ public class ForbiddenAxe extends SwordItem implements ICreativeTabMember {
 
 	@Override
 	public @Nullable CreativeModeTab getCreativeTab() {
-		return EnigmaticTabs.MAIN;
+		return EnigmaticTabs.MAIN.get();
 	}
 
 }

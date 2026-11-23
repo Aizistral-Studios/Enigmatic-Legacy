@@ -175,11 +175,11 @@ public class EldritchPan extends TieredItem implements Vanishable, ICursed, ICre
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		if (attacker.getRandom().nextDouble() < 0.0001) {
 			attacker.level().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
-					EnigmaticSounds.PAN_CLANG_FR, SoundSource.PLAYERS, 1F,
+					EnigmaticSounds.PAN_CLANG_FR.get(), SoundSource.PLAYERS, 1F,
 					attacker.level().random.nextFloat() * 0.2F + 0.8F);
 		} else {
 			attacker.level().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(),
-					EnigmaticSounds.PAN_CLANG, SoundSource.PLAYERS, 0.5F,
+					EnigmaticSounds.PAN_CLANG.get(), SoundSource.PLAYERS, 0.5F,
 					attacker.level().random.nextFloat() * 0.1F + 0.9F);
 		}
 
@@ -308,7 +308,7 @@ public class EldritchPan extends TieredItem implements Vanishable, ICursed, ICre
 
 	@Override
 	public @Nullable CreativeModeTab getCreativeTab() {
-		return EnigmaticTabs.MAIN;
+		return EnigmaticTabs.MAIN.get();
 	}
 
 	private String toString(double value) {

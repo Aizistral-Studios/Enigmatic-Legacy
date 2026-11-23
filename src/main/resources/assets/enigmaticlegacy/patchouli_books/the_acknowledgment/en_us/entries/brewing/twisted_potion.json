@@ -17,8 +17,7 @@
         },
 		{
             "type": "enigmaticlegacy:brewing",
-			"recipe": "enigmaticlegacy:twisted_potion",
-			"index": 0,
+			"item": "enigmaticlegacy:twisted_potion",
             "heading": "book.enigmaticlegacy.entry.twisted_potion.heading.1",
             "text": "book.enigmaticlegacy.entry.twisted_potion.page.2"
         },

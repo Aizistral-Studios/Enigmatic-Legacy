@@ -40,13 +40,13 @@ public class PacketSlotUnlocked {
 		      ItemStack stack;
 		      
 		      if (msg.type.equals("ring"))
-		    	  stack = new ItemStack(EnigmaticItems.IRON_RING);
+		    	  stack = new ItemStack(EnigmaticItems.IRON_RING.get());
 		      else if (msg.type.equals("scroll"))
-		    	  stack = new ItemStack(EnigmaticItems.THICC_SCROLL);
+		    	  stack = new ItemStack(EnigmaticItems.THICC_SCROLL.get());
 		      else if (msg.type.equals("spellstone"))
-		    	  stack = new ItemStack(EnigmaticItems.VOID_PEARL);
+		    	  stack = new ItemStack(EnigmaticItems.VOID_PEARL.get());
 		      else
-		    	  stack = new ItemStack(EnigmaticItems.IRON_RING);
+		    	  stack = new ItemStack(EnigmaticItems.IRON_RING.get());
 		      
 		      Toast toast = new SlotUnlockedToast(stack, msg.type);
 		      EnigmaticEventHandler.SCHEDULED_TOASTS.add(toast);

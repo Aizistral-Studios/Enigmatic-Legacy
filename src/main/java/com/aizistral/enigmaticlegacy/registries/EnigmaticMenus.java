@@ -1,25 +1,28 @@
 package com.aizistral.enigmaticlegacy.registries;
 
 import com.aizistral.enigmaticlegacy.EnigmaticLegacy;
-import com.aizistral.enigmaticlegacy.api.generic.ModRegistry;
 import com.aizistral.enigmaticlegacy.gui.containers.LoreInscriberContainer;
-
-import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.network.IContainerFactory;
+import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryObject;
 
-public class EnigmaticMenus extends AbstractRegistry<MenuType<?>> {
-	private static final EnigmaticMenus INSTANCE = new EnigmaticMenus();
+public class EnigmaticMenus {
+    private static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(ForgeRegistries.MENU_TYPES, EnigmaticLegacy.MODID);
 
-	@ObjectHolder(value = MODID + ":lore_inscriber_container", registryName = "menu")
-	public static final MenuType<LoreInscriberContainer> LORE_INSCRIBER_CONTAINER = null;
+    public static final RegistryObject<MenuType<LoreInscriberContainer>> LORE_INSCRIBER_CONTAINER = register("lore_inscriber_container", LoreInscriberContainer::new);
 
-	private EnigmaticMenus() {
-		super(ForgeRegistries.MENU_TYPES);
-		this.register("lore_inscriber_container", () -> IForgeMenuType.create(LoreInscriberContainer::new));
-	}
+    public static void registerMenus(IEventBus modEventBus) {
+        MENU_TYPES.register(modEventBus);
+    }
 
+    private static <T extends AbstractContainerMenu> RegistryObject<MenuType<T>> register(
+            String name, IContainerFactory<T> containerFactory
+    ) {
+        return MENU_TYPES.register(name, () -> IForgeMenuType.create(containerFactory));
+    }
 }

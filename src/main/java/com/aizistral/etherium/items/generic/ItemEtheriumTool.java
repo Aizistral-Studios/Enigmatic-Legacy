@@ -28,7 +28,7 @@ public abstract class ItemEtheriumTool extends DiggerItem implements IEtheriumTo
 
 	@Override
 	public CreativeModeTab getCreativeTab() {
-		return EnigmaticTabs.MAIN;
+		return EnigmaticTabs.MAIN.get();
 	}
 
 	@Override

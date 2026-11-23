@@ -115,7 +115,7 @@ public class MiningCharm extends ItemBaseCurio {
 	@Override
 	public void curioTick(SlotContext context, ItemStack stack) {
 		if (context.entity() instanceof Player player && !context.entity().level().isClientSide)
-			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.MINING_CHARM)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.MINING_CHARM.get())) {
 				if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
 					if (enableNightVision.getValue()) {
 						if (player.getY() < 50 && !player.level().dimension().equals(Level.NETHER)
@@ -143,11 +143,11 @@ public class MiningCharm extends ItemBaseCurio {
 
 		if (ItemNBTHelper.getBoolean(stack, "nightVisionEnabled", true)) {
 			ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", false);
-			world.playSound(null, player.blockPosition(), EnigmaticSounds.CHARGED_OFF, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+			world.playSound(null, player.blockPosition(), EnigmaticSounds.CHARGED_OFF.get(), SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 		} else {
 			if (enableNightVision.getValue()) {
 				ItemNBTHelper.setBoolean(stack, "nightVisionEnabled", true);
-				world.playSound(null, player.blockPosition(), EnigmaticSounds.CHARGED_ON, SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
+				world.playSound(null, player.blockPosition(), EnigmaticSounds.CHARGED_ON.get(), SoundSource.PLAYERS, (float) (0.8F + (Math.random() * 0.2F)), (float) (0.8F + (Math.random() * 0.2F)));
 			}
 		}
 

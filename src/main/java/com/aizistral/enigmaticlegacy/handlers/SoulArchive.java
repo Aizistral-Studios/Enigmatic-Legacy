@@ -113,7 +113,7 @@ public class SoulArchive {
 
 	private void synchronize() {
 		ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers().forEach(player -> {
-			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.SOUL_COMPASS)) {
+			if (SuperpositionHandler.hasCurio(player, EnigmaticItems.SOUL_COMPASS.get())) {
 				SuperpositionHandler.updateSoulCompass(player);
 			}
 		});

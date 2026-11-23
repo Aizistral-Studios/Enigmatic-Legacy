@@ -33,10 +33,10 @@ public abstract class MixinEntityRenderer {
 	@Inject(method = "renderNameTag", at = @At("HEAD"), cancellable = true)
 	private void onRenderNameTag(Entity entity, Component name, PoseStack stack, MultiBufferSource buffer, int packedLight, CallbackInfo info) {
 		if (entity instanceof Player player) {
-			ItemStack insignia = SuperpositionHandler.getCurioStack(player, EnigmaticItems.INSIGNIA);
+			ItemStack insignia = SuperpositionHandler.getCurioStack(player, EnigmaticItems.INSIGNIA.get());
 
 			if (insignia != null && !insignia.isEmpty()) {
-				Optional<Component> customName = EnigmaticItems.INSIGNIA.getCustomName(insignia);
+				Optional<Component> customName = EnigmaticItems.INSIGNIA.get().getCustomName(insignia);
 
 				if (customName.isPresent()) {
 					info.cancel();

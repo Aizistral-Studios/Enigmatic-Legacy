@@ -54,7 +54,7 @@ public class UnholyGrail extends ItemBase implements Vanishable {
 		Player player = (Player) entityLiving;
 
 		if (!worldIn.isClientSide) {
-			boolean isTheWorthyOne = SuperpositionHandler.isTheCursedOne(player) && EnigmaticItems.FORBIDDEN_FRUIT.haveConsumedFruit(player);
+			boolean isTheWorthyOne = SuperpositionHandler.isTheCursedOne(player) && EnigmaticItems.FORBIDDEN_FRUIT.get().haveConsumedFruit(player);
 
 			if (!isTheWorthyOne) {
 				player.addEffect(new MobEffectInstance(MobEffects.WITHER, 100, 2, false, true));

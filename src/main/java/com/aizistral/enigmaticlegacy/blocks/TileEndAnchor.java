@@ -15,7 +15,7 @@ public class TileEndAnchor extends BlockEntity {
 	}
 
 	public TileEndAnchor(BlockPos pos, BlockState state) {
-		this(EnigmaticTiles.END_ANCHOR, pos, state);
+		this(EnigmaticTiles.END_ANCHOR.get(), pos, state);
 	}
 
 	public boolean shouldRenderFace(Direction face) {
