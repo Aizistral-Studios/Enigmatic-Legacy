@@ -1,15 +1,15 @@
 {
     "name": "book.enigmaticlegacy.entry.advanced_brewing.name",
-    "icon": "enigmaticlegacy:ultimate_potion#1{EnigmaticPotion:'ultimate_healing'}",
+    "icon": "minecraft:potion#1{Potion:'enigmaticlegact:ultimate_healing'}",
     "category": "enigmaticlegacy:brewing",
 	"advancement": "enigmaticlegacy:book/brewing/advanced_brewing",
     "secret": false,
     "priority": false,
     "read_by_default": false,
 	"extra_recipe_mappings": {
-		"enigmaticlegacy:ultimate_potion": 1,
-		"enigmaticlegacy:ultimate_potion_splash": 1,
-		"enigmaticlegacy:ultimate_potion_lingering": 1
+		"minecraft:potion": 1,
+		"minecraft:splash_potion": 1,
+		"minecraft:lingering_potion": 1
 	},
     "sortnum": 0,
     "pages": [

@@ -1,6 +1,6 @@
 {
     "name": "book.enigmaticlegacy.entry.haste_potion.name",
-    "icon": "enigmaticlegacy:common_potion#1{EnigmaticPotion:'haste'}",
+    "icon": "minecraft:potion#1{Potion:'enigmaticlegacy:haste'}",
     "category": "enigmaticlegacy:brewing",
 	"advancement": "enigmaticlegacy:book/brewing/haste_potion",
     "secret": false,

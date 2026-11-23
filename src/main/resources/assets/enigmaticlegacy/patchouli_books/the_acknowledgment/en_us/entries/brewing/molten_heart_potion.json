@@ -1,6 +1,6 @@
 {
     "name": "book.enigmaticlegacy.entry.molten_heart_potion.name",
-    "icon": "enigmaticlegacy:common_potion#1{EnigmaticPotion:'molten_heart'}",
+    "icon": "minecraft:potion#1{Potion:'enigmaticlegacy:molten_heart'}",
     "category": "enigmaticlegacy:brewing",
 	"advancement": "enigmaticlegacy:book/brewing/molten_heart_potion",
     "secret": false,
