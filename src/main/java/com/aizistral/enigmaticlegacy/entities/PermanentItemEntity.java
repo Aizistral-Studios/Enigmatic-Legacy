@@ -29,6 +29,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.TraceableEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -46,12 +47,12 @@ import net.minecraftforge.network.PacketDistributor;
  * @author Integral
  */
 
-public class PermanentItemEntity extends Entity {
+public class PermanentItemEntity extends Entity implements TraceableEntity {
 	private static final EntityDataAccessor<ItemStack> ITEM = SynchedEntityData.defineId(PermanentItemEntity.class, EntityDataSerializers.ITEM_STACK);
 	private int age;
 	private int pickupDelay;
 	private int health = 5;
-	private UUID thrower;
+	@Nullable
 	private UUID owner;
 	private Vec3 position;
 
@@ -205,12 +206,9 @@ public class PermanentItemEntity extends Entity {
 		compound.putShort("Health", (short) this.health);
 		compound.putShort("Age", (short) this.age);
 		compound.putShort("PickupDelay", (short) this.pickupDelay);
-		if (this.getThrowerId() != null) {
-			compound.putUUID("Thrower", this.getThrowerId());
-		}
 
-		if (this.getOwnerId() != null) {
-			compound.putUUID("Owner", this.getOwnerId());
+		if (this.owner != null) {
+			compound.putUUID("Owner", this.owner);
 		}
 
 		if (!this.getItem().isEmpty()) {
@@ -232,12 +230,8 @@ public class PermanentItemEntity extends Entity {
 			this.pickupDelay = compound.getShort("PickupDelay");
 		}
 
-		if (compound.contains("Owner")) {
+		if (compound.hasUUID("Owner")) {
 			this.owner = compound.getUUID("Owner");
-		}
-
-		if (compound.contains("Thrower")) {
-			this.thrower = compound.getUUID("Thrower");
 		}
 
 		if (compound.contains("BoundX") && compound.contains("BoundY") && compound.contains("BoundZ")) {
@@ -266,7 +260,7 @@ public class PermanentItemEntity extends Entity {
 			int i = itemstack.getCount();
 
 			ItemStack copy = itemstack.copy();
-			boolean isPlayerOwner = player.getUUID().equals(this.getOwnerId());
+			boolean isPlayerOwner = player.getUUID().equals(this.owner);
 			boolean allowPickUp = false;
 
 			if (item instanceof StorageCrystal && (isPlayerOwner || !EnigmaticItems.ENIGMATIC_AMULET.isVesselOwnerOnly())) {
@@ -379,21 +373,22 @@ public class PermanentItemEntity extends Entity {
 	}
 
 	@Nullable
-	public UUID getOwnerId() {
-		return this.owner;
+	public Entity getOwner() {
+		if (this.owner != null) {
+			if (this.level() instanceof ServerLevel serverlevel) {
+				return serverlevel.getEntity(this.owner);
+			}
+		}
+
+		return null;
 	}
 
-	public void setOwnerId(@Nullable UUID ownerId) {
-		this.owner = ownerId;
+	public void setOwner(Entity owner) {
+		setOwner(owner.getUUID());
 	}
 
-	@Nullable
-	public UUID getThrowerId() {
-		return this.thrower;
-	}
-
-	public void setThrowerId(@Nullable UUID throwerId) {
-		this.thrower = throwerId;
+	public void setOwner(@Nullable UUID owner) {
+		this.owner = owner;
 	}
 
 	@OnlyIn(Dist.CLIENT)

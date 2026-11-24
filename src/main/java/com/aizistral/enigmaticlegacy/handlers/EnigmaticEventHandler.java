@@ -2746,7 +2746,7 @@ public class EnigmaticEventHandler {
 				ItemStack soulCrystal = SuperpositionHandler.canDropSoulCrystal(player, this.hadCursedRing(player)) ? EnigmaticItems.SOUL_CRYSTAL.createCrystalFrom(player) : null;
 				ItemStack storageCrystal = EnigmaticItems.STORAGE_CRYSTAL.storeDropsOnCrystal(event.getDrops(), player, soulCrystal);
 				PermanentItemEntity droppedStorageCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), storageCrystal);
-				droppedStorageCrystal.setOwnerId(player.getUUID());
+				droppedStorageCrystal.setOwner(player.getUUID());
 				dimPoint.world.addFreshEntity(droppedStorageCrystal);
 				EnigmaticLegacy.LOGGER.info("Summoned Extradimensional Storage Crystal for " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
 				event.getDrops().clear();
@@ -2759,7 +2759,7 @@ public class EnigmaticEventHandler {
 			} else if (SuperpositionHandler.canDropSoulCrystal(player, this.hadCursedRing(player))) {
 				ItemStack soulCrystal = EnigmaticItems.SOUL_CRYSTAL.createCrystalFrom(player);
 				PermanentItemEntity droppedSoulCrystal = new PermanentItemEntity(dimPoint.world, dimPoint.getPosX(), dimPoint.getPosY() + 1.5, dimPoint.getPosZ(), soulCrystal);
-				droppedSoulCrystal.setOwnerId(player.getUUID());
+				droppedSoulCrystal.setOwner(player.getUUID());
 				dimPoint.world.addFreshEntity(droppedSoulCrystal);
 				EnigmaticLegacy.LOGGER.info("Teared Soul Crystal from " + player.getGameProfile().getName() + " at X: " + dimPoint.getPosX() + ", Y: " + dimPoint.getPosY() + ", Z: " + dimPoint.getPosZ());
 
