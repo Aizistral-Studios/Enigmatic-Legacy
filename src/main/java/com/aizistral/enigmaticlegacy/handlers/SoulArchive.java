@@ -120,7 +120,7 @@ public class SoulArchive {
 	}
 
 	public void addItem(PermanentItemEntity item) {
-		SoulData record = new SoulData(item.level().dimension().location(), item.getUUID(), item.getOwnerId(),
+		SoulData record = new SoulData(item.level().dimension().location(), item.getUUID(), item.getOwner().getUUID(),
 				item.blockPosition(), item.containsSoul() ? 0 : 1);
 
 		if (this.data.put(item.level().dimension(), record)) {
@@ -190,7 +190,7 @@ public class SoulArchive {
 		}
 
 		boolean isEqual(PermanentItemEntity item) {
-			return Objects.equals(this.id, item.getUUID()) && Objects.equals(this.ownerID, item.getOwnerId());
+			return Objects.equals(this.id, item.getUUID()) && Objects.equals(this.ownerID, item.getOwner().getUUID());
 		}
 	}
 
